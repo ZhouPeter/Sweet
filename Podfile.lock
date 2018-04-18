@@ -1,0 +1,16 @@
+PODS:
+  - Reveal-SDK (13)
+
+DEPENDENCIES:
+  - Reveal-SDK
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Reveal-SDK
+
+SPEC CHECKSUMS:
+  Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
+
+PODFILE CHECKSUM: 2e68e827b23ed11b3a3d944b6c0b553c30a058c5
+
+COCOAPODS: 1.5.0
