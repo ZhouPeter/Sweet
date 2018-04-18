@@ -10,18 +10,22 @@
 		23562495F56AEB699EAC4653 /* Pods_SweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0135478D65C69FE268B22C5F /* Pods_SweetTests.framework */; };
 		2C4A2107023F0E35905AF719 /* Pods_Sweet_Sweet_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
-		ACA322EE2087410000BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA322ED2087410000BDC92E /* AppDelegate.swift */; };
-		ACA322F02087410000BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA322EF2087410000BDC92E /* ViewController.swift */; };
 		ACA322F32087410000BDC92E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F12087410000BDC92E /* Main.storyboard */; };
 		ACA322F52087410200BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
 		ACA323032087410200BDC92E /* SweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323022087410200BDC92E /* SweetTests.swift */; };
 		ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3230D2087410200BDC92E /* SweetUITests.swift */; };
-		ACA3231D2087411B00BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA322EF2087410000BDC92E /* ViewController.swift */; };
-		ACA3231E2087411B00BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA322ED2087410000BDC92E /* AppDelegate.swift */; };
 		ACA323212087411B00BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
 		ACA323222087411B00BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA323232087411B00BDC92E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F12087410000BDC92E /* Main.storyboard */; };
+		ACA32335208747D400BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32331208747D400BDC92E /* ViewController.swift */; };
+		ACA32336208747D400BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32331208747D400BDC92E /* ViewController.swift */; };
+		ACA32337208747D400BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32331208747D400BDC92E /* ViewController.swift */; };
+		ACA32338208747D400BDC92E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32331208747D400BDC92E /* ViewController.swift */; };
+		ACA32339208747D400BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32332208747D400BDC92E /* AppDelegate.swift */; };
+		ACA3233A208747D400BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32332208747D400BDC92E /* AppDelegate.swift */; };
+		ACA3233B208747D400BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32332208747D400BDC92E /* AppDelegate.swift */; };
+		ACA3233C208747D400BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA32332208747D400BDC92E /* AppDelegate.swift */; };
 		DF80169A86358114B4727C33 /* Pods_SweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228283EB6F84BFB0951930EC /* Pods_SweetUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,8 +57,6 @@
 		4FF84DB9CCEBB7F0B8F859CF /* Pods-Sweet-Sweet Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.release.xcconfig"; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACA322ED2087410000BDC92E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACA322EF2087410000BDC92E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ACA322F22087410000BDC92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ACA322F42087410200BDC92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACA322F72087410200BDC92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		ACA3230F2087410200BDC92E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACA323272087411B00BDC92E /* Sweet Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sweet Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA323292087416500BDC92E /* Sweet Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sweet Dev-Info.plist"; sourceTree = "<group>"; };
+		ACA32331208747D400BDC92E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACA32332208747D400BDC92E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sweet_Sweet_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,8 +149,10 @@
 		ACA322EC2087410000BDC92E /* Sweet */ = {
 			isa = PBXGroup;
 			children = (
-				ACA322ED2087410000BDC92E /* AppDelegate.swift */,
-				ACA322EF2087410000BDC92E /* ViewController.swift */,
+				ACA32330208747D400BDC92E /* Controllers */,
+				ACA32333208747D400BDC92E /* Models */,
+				ACA32334208747D400BDC92E /* ViewModels */,
+				ACA3232F208747D400BDC92E /* Views */,
 				ACA322F12087410000BDC92E /* Main.storyboard */,
 				ACA322F42087410200BDC92E /* Assets.xcassets */,
 				ACA322F62087410200BDC92E /* LaunchScreen.storyboard */,
@@ -172,6 +178,36 @@
 				ACA3230F2087410200BDC92E /* Info.plist */,
 			);
 			path = SweetUITests;
+			sourceTree = "<group>";
+		};
+		ACA3232F208747D400BDC92E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ACA32330208747D400BDC92E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ACA32332208747D400BDC92E /* AppDelegate.swift */,
+				ACA32331208747D400BDC92E /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		ACA32333208747D400BDC92E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ACA32334208747D400BDC92E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E1F1A8AFAF64592C032DDD1C /* Pods */ = {
@@ -525,8 +561,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA322F02087410000BDC92E /* ViewController.swift in Sources */,
-				ACA322EE2087410000BDC92E /* AppDelegate.swift in Sources */,
+				ACA32339208747D400BDC92E /* AppDelegate.swift in Sources */,
+				ACA32335208747D400BDC92E /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +570,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA3233B208747D400BDC92E /* AppDelegate.swift in Sources */,
+				ACA32337208747D400BDC92E /* ViewController.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -542,6 +580,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA3233C208747D400BDC92E /* AppDelegate.swift in Sources */,
+				ACA32338208747D400BDC92E /* ViewController.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,8 +590,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA3231D2087411B00BDC92E /* ViewController.swift in Sources */,
-				ACA3231E2087411B00BDC92E /* AppDelegate.swift in Sources */,
+				ACA3233A208747D400BDC92E /* AppDelegate.swift in Sources */,
+				ACA32336208747D400BDC92E /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
