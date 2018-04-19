@@ -5,6 +5,8 @@ target 'Sweet' do
   use_frameworks!
 
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'Moya', '~> 11.0'
+  
   target 'Sweet Dev' do
   end
   
