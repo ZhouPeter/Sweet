@@ -77,6 +77,8 @@
 		58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52D92089D69B00F7C3E1 /* SignUpPhoneController.swift */; };
 		58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */; };
 		58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */; };
+		58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
+		58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
@@ -116,8 +118,6 @@
 		ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235420874A2900BDC92E /* Coordinator.swift */; };
 		ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235420874A2900BDC92E /* Coordinator.swift */; };
 		ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235420874A2900BDC92E /* Coordinator.swift */; };
-		ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
-		ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235F20875B4100BDC92E /* Array+isNotEmpty.swift */; };
@@ -1007,13 +1007,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
-				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
-				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
@@ -1158,13 +1157,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
-				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
-				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
