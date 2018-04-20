@@ -78,6 +78,26 @@
 		58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */; };
 		58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
+		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
+		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
+		AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
+		AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
+		AC841213208881A40086891C /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC841212208881A40086891C /* AuthPlugin.swift */; };
+		AC841214208881A40086891C /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC841212208881A40086891C /* AuthPlugin.swift */; };
+		AC841215208881A40086891C /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC841212208881A40086891C /* AuthPlugin.swift */; };
+		AC841216208881A40086891C /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC841212208881A40086891C /* AuthPlugin.swift */; };
+		AC8412182088828E0086891C /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412172088828E0086891C /* WebAPI.swift */; };
+		AC8412192088828E0086891C /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412172088828E0086891C /* WebAPI.swift */; };
+		AC84121A2088828E0086891C /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412172088828E0086891C /* WebAPI.swift */; };
+		AC84121B2088828E0086891C /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412172088828E0086891C /* WebAPI.swift */; };
+		AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84121C2088B0E60086891C /* SignPlugin.swift */; };
+		AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84121C2088B0E60086891C /* SignPlugin.swift */; };
+		AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84121C2088B0E60086891C /* SignPlugin.swift */; };
+		AC8412202088B0E60086891C /* SignPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84121C2088B0E60086891C /* SignPlugin.swift */; };
+		AC8412222088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC8412232088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC8412242088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC8412252088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		ACA322F52087410200BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
 		ACA323032087410200BDC92E /* SweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323022087410200BDC92E /* SweetTests.swift */; };
@@ -160,6 +180,34 @@
 		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
+		ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
+		ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
+		ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
+		ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
+		ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB42089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB52089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB62089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB72089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBE2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEBF2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC02089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC12089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC32089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC42089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC52089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC62089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		DF80169A86358114B4727C33 /* Pods_SweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228283EB6F84BFB0951930EC /* Pods_SweetUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +272,11 @@
 		58BD52D92089D69B00F7C3E1 /* SignUpPhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPhoneController.swift; sourceTree = "<group>"; };
 		58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPhoneView.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
+		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
+		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
+		AC84121C2088B0E60086891C /* SignPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPlugin.swift; sourceTree = "<group>"; };
+		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA322F42087410200BDC92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACA322F72087410200BDC92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -255,6 +308,17 @@
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
+		ACD5A52F2088731C00B78CFD /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
+		ACD5A5342088737A00B78CFD /* Sweet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet Dev-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
+		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sweet_Sweet_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,6 +432,10 @@
 				ACA322EB2087410000BDC92E /* Products */,
 				E1F1A8AFAF64592C032DDD1C /* Pods */,
 				7F8036DAF360EED22D2BEB53 /* Frameworks */,
+				ACD5A5342088737A00B78CFD /* Sweet-Bridging-Header.h */,
+				ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */,
+				ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */,
+				ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -386,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				58BD5293208856B900F7C3E1 /* Views */,
+				ACD5A52420886C6600B78CFD /* Network */,
 				ACA323482087496800BDC92E /* Application */,
 				ACA3237520875D8C00BDC92E /* Flows */,
 				ACA3236A20875C0E00BDC92E /* Router */,
@@ -472,6 +541,8 @@
 				58BD52CD2088B93200F7C3E1 /* UIImage+Resize.swift */,
 				58BD52D0208991C100F7C3E1 /* UIViewController+Toast.swift */,
 				58BD52D62089BFE000F7C3E1 /* String+Length.swift */,
+				ACD5A52F2088731C00B78CFD /* String+MD5.swift */,
+				AC84120D20887C800086891C /* UIDevice+DeviceType.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,6 +609,31 @@
 				ACA323AC208763D900BDC92E /* Logger.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		ACD5A52420886C6600B78CFD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				AC8412172088828E0086891C /* WebAPI.swift */,
+				ACD5A52520886C7C00B78CFD /* WebProvider.swift */,
+				AC841212208881A40086891C /* AuthPlugin.swift */,
+				AC84121C2088B0E60086891C /* SignPlugin.swift */,
+				AC8412212088B1DE0086891C /* Signer.swift */,
+				ACF2DEAD2089C5C400660425 /* Models */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		ACF2DEAD2089C5C400660425 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ACF2DEB32089C63100660425 /* Gender.swift */,
+				ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */,
+				ACF2DEB82089E02F00660425 /* LoginResponse.swift */,
+				ACF2DEBD2089E04F00660425 /* Response.swift */,
+				ACF2DEC22089E58D00660425 /* Errors.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E1F1A8AFAF64592C032DDD1C /* Pods */ = {
@@ -650,14 +746,20 @@
 				TargetAttributes = {
 					ACA322E92087410000BDC92E = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 					};
 					ACA322FD2087410200BDC92E = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 						TestTargetID = ACA322E92087410000BDC92E;
 					};
 					ACA323082087410200BDC92E = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 						TestTargetID = ACA322E92087410000BDC92E;
+					};
+					ACA3231B2087411B00BDC92E = {
+						LastSwiftMigration = 0930;
 					};
 				};
 			};
@@ -762,11 +864,17 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -874,11 +982,17 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -893,15 +1007,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
+				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
+				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -916,7 +1036,9 @@
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
+				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
 				ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -926,6 +1048,7 @@
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58BD52A1208860CA00F7C3E1 /* LoginController.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -936,6 +1059,8 @@
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
+				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD52C52088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				58BD52732087701100F7C3E1 /* RegisterModel.swift in Sources */,
@@ -944,7 +1069,9 @@
 				58BD52912088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -957,21 +1084,33 @@
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
+				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
+				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
+				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
+				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
+				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
+				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -984,21 +1123,33 @@
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
+				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
+				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
+				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
+				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
+				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
+				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1007,15 +1158,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
+				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
+				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -1030,7 +1187,9 @@
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
+				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
 				ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -1040,6 +1199,7 @@
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58BD52A2208860CA00F7C3E1 /* LoginController.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -1050,6 +1210,8 @@
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
+				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD52C62088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				58BD52742087701100F7C3E1 /* RegisterModel.swift in Sources */,
@@ -1058,7 +1220,9 @@
 				58BD52922088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1209,6 +1373,7 @@
 			baseConfigurationReference = 1230DFC4DCAC8AC4D11FEA56 /* Pods-Sweet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
@@ -1218,6 +1383,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sweet-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1228,6 +1396,7 @@
 			baseConfigurationReference = 1282931D8A64E3D56BFE5EC4 /* Pods-Sweet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
@@ -1237,6 +1406,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sweet-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1248,6 +1419,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
@@ -1258,6 +1430,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sweet.app/Sweet";
@@ -1270,6 +1444,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
@@ -1280,6 +1455,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sweet.app/Sweet";
@@ -1291,6 +1467,7 @@
 			baseConfigurationReference = B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
@@ -1301,6 +1478,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Sweet;
@@ -1312,6 +1491,7 @@
 			baseConfigurationReference = B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
@@ -1322,6 +1502,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Sweet;
@@ -1333,6 +1514,7 @@
 			baseConfigurationReference = A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
@@ -1342,6 +1524,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sweet Dev-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1352,6 +1537,7 @@
 			baseConfigurationReference = 4FF84DB9CCEBB7F0B8F859CF /* Pods-Sweet-Sweet Dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
@@ -1361,6 +1547,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sweet Dev-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -6,6 +6,8 @@ target 'Sweet' do
 
   pod 'Reveal-SDK', :configurations => ['Debug']
   pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
+  pod 'Moya', '~> 11.0'
+  
   target 'Sweet Dev' do
   end
   
