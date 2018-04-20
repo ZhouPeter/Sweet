@@ -39,11 +39,11 @@ final class RouterImp: NSObject, Router {
         rootController?.dismiss(animated: animated, completion: completion)
     }
     
-    func push(_ flow: Presentable?)  {
+    func push(_ flow: Presentable?) {
         push(flow, animated: true)
     }
     
-    func push(_ flow: Presentable?, animated: Bool)  {
+    func push(_ flow: Presentable?, animated: Bool) {
         push(flow, animated: animated, completion: nil)
     }
     
@@ -59,11 +59,11 @@ final class RouterImp: NSObject, Router {
         rootController?.pushViewController(controller, animated: animated)
     }
     
-    func popFlow()  {
+    func popFlow() {
         popFlow(animated: true)
     }
     
-    func popFlow(animated: Bool)  {
+    func popFlow(animated: Bool) {
         if let controller = rootController?.popViewController(animated: animated) {
             runCompletion(for: controller)
         }

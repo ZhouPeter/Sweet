@@ -23,6 +23,11 @@ extension UIView {
         case bottom
     }
     
+    public enum Size {
+        case width
+        case height
+    }
+    
     public func fill(in view: UIView, left: CGFloat = 0, right: CGFloat = 0, top: CGFloat = 0, bottom: CGFloat = 0) {
         align(.left, to: view, inset: left)
         align(.right, to: view, inset: right)
@@ -46,6 +51,12 @@ extension UIView {
         centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: offset).isActive = true
     }
     
+    public func center(to view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) {
+        translatesAutoresizingMaskIntoConstraints = false
+        centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: offsetX).isActive = true
+        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: offsetY).isActive = true
+    }
+    
     public func constrain(width: CGFloat, height: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         widthAnchor.constraint(equalToConstant: width).isActive = true
@@ -62,6 +73,22 @@ extension UIView {
     @discardableResult public func constrain(width: CGFloat) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         let constraint = widthAnchor.constraint(equalToConstant: width)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult public func size(
+        _ size: Size,
+        to anchorView: UIView,
+        inset: CGFloat = 0) -> NSLayoutConstraint {
+        translatesAutoresizingMaskIntoConstraints = false
+        let constraint: NSLayoutConstraint
+        switch size {
+        case .width:
+            constraint = widthAnchor.constraint(equalTo: anchorView.widthAnchor, constant: inset)
+        case .height:
+            constraint = heightAnchor.constraint(equalTo: anchorView.heightAnchor, constant: inset)
+        }
         constraint.isActive = true
         return constraint
     }

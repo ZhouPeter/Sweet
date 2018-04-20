@@ -5,6 +5,7 @@ target 'Sweet' do
   use_frameworks!
 
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
   target 'Sweet Dev' do
   end
   

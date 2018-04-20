@@ -33,6 +33,8 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runOnboardingFlow()
             case .signUp:
                 runAuthFlow()
+            case .setting:
+                runSettingFlow()
             default:
                 childCoordinators.forEach { $0.start(with: option) }
             }
@@ -63,6 +65,19 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runAuthFlow() {
         logger.debug()
+        let coordinator = coordinatorFactory.makeAuthCoordinator(router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            guard let `self` = self else { return }
+            isAuthorized = true
+            self.start()
+            self.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    private func runSettingFlow() {
+        
     }
     
     private func runMainFlow() {

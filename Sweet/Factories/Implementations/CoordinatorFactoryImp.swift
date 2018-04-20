@@ -12,4 +12,8 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
         return OnboardingCoordinator(with: FlowFactoryImp(), router: router)
     }
+    
+    func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput {
+        return AuthCoordinator(with: FlowFactoryImp(), router: router)
+    }
 }

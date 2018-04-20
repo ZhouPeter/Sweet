@@ -12,5 +12,9 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem()
+        backBarButtonItem.title = ""
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationController?.navigationBar.tintColor = .black
     }
 }
