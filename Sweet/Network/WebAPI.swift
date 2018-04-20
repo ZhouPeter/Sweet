@@ -11,7 +11,8 @@ import Moya
 
 enum WebAPI {
     case verify(phoneNumber: String, type: VerificationType)
-    case login(phoneNumber: String, code: String)
+    case login(body: LoginRequestBody)
+    case logout
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -21,6 +22,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/user/send/verification"
         case .login:
             return "/v2/user/login"
+        case .logout:
+            return "/v2/user/logout"
         }
     }
     
@@ -29,8 +32,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         switch self {
         case let .verify(phoneNumber, type):
             parameters = ["phone": phoneNumber, "type": "\(type.rawValue)"]
-        case let .login(phoneNumber, code):
-            parameters = ["phone": phoneNumber, "smsCode": code]
+        case let .login(body):
+            return .requestJSONEncodable(body)
+        default:
+            parameters = [:]
         }
         return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
     }
@@ -43,6 +48,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         switch self {
         case .verify, .login:
             return false
+        default:
+            return true
         }
     }
     

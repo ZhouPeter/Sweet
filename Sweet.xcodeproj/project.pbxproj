@@ -120,6 +120,14 @@
 		ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
+		ACF2DEB42089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB52089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB62089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB72089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
 		DF80169A86358114B4727C33 /* Pods_SweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228283EB6F84BFB0951930EC /* Pods_SweetUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +200,8 @@
 		ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet Dev-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
+		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sweet_Sweet_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,8 +436,18 @@
 				AC841212208881A40086891C /* AuthPlugin.swift */,
 				AC84121C2088B0E60086891C /* SignPlugin.swift */,
 				AC8412212088B1DE0086891C /* Signer.swift */,
+				ACF2DEAD2089C5C400660425 /* Models */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		ACF2DEAD2089C5C400660425 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ACF2DEB32089C63100660425 /* Gender.swift */,
+				ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E1F1A8AFAF64592C032DDD1C /* Pods */ = {
@@ -797,6 +817,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
@@ -816,6 +837,7 @@
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3238220875E4400BDC92E /* BaseView.swift in Sources */,
@@ -836,6 +858,7 @@
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
+				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -849,6 +872,7 @@
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
@@ -870,6 +894,7 @@
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
+				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -883,6 +908,7 @@
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
@@ -898,6 +924,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
@@ -917,6 +944,7 @@
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3238320875E4400BDC92E /* BaseView.swift in Sources */,
