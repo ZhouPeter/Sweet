@@ -37,7 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     logger.error(error)
                 case let.success(response):
                     logger.debug(response)
+                    if response.code == 0 {
+                        web.tokenSource.token = response.data.token
+                    }
                 }
+        }
+        
+        web.request(.searchUniversity(name: "杭州")) { (result) in
+            logger.debug(result)
         }
         
         return true

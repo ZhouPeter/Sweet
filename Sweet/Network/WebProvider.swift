@@ -18,7 +18,7 @@ final class WebProvider {
     private lazy var provider = MoyaProvider<WebAPI>(
         plugins: [
             SignPlugin(signClosure: Signer.sign),
-            AuthPlugin(tokenClosure: { self.tokenSource.token })
+            AuthPlugin(tokenClosure: { self.tokenSource.token }),
 //            NetworkLoggerPlugin(verbose: true)
         ]
     )
@@ -36,6 +36,29 @@ final class WebProvider {
                 do {
                     let model = try JSONDecoder().decode(responseType, from: response.data)
                     completion(.success(model))
+                } catch {
+                    logger.error(error)
+                    completion(.failure(NSError(code: .parse)))
+                }
+            }
+        })
+    }
+    
+    @discardableResult func request(
+        _ api: WebAPI,
+        completion: @escaping (Result<[String: Any], NSError>) -> Void) -> Cancellable {
+        return provider.request(api, completion: { (result) in
+            switch result {
+            case let .failure(error):
+                logger.error(error)
+                completion(.failure(NSError(code: .http)))
+            case let .success(response):
+                do {
+                    if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any] {
+                        completion(.success(json))
+                    } else {
+                        completion(.failure(NSError(code: .parse)))
+                    }
                 } catch {
                     logger.error(error)
                     completion(.failure(NSError(code: .parse)))

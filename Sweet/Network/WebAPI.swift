@@ -13,6 +13,7 @@ enum WebAPI {
     case verify(phoneNumber: String, type: VerificationType)
     case login(body: LoginRequestBody)
     case logout
+    case searchUniversity(name: String)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -24,6 +25,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/user/login"
         case .logout:
             return "/v2/user/logout"
+        case .searchUniversity:
+            return "/v2/network/university/search"
         }
     }
     
@@ -34,6 +37,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phoneNumber, "type": "\(type.rawValue)"]
         case let .login(body):
             return .requestJSONEncodable(body)
+        case let .searchUniversity(name):
+            parameters = ["universityName": name]
         default:
             parameters = [:]
         }
