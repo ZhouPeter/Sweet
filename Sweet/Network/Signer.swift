@@ -10,13 +10,13 @@ import Foundation
 
 struct Signer {
     static func sign(_ parameters: [String: Any]) -> String {
-        var parameters = parameters
+        var queryString = query(parameters)
         #if DEV
-        parameters["secret"] = "ktjfbkwxhmkk6z3"
+        queryString += "&secret=ktjfbkwxhmkk6z3"
         #else
-        parameters["secret"] = "iulyn5yxzagkwo5"
+        queryString += "&secret=iulyn5yxzagkwo5"
         #endif
-        return query(parameters).md5
+        return queryString.md5
     }
     
     private static func query(_ parameters: [String: Any]) -> String {

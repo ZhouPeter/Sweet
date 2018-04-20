@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Result
 
 let web = WebProvider()
 
@@ -18,16 +19,27 @@ final class WebProvider {
         plugins: [
             SignPlugin(signClosure: Signer.sign),
             AuthPlugin(tokenClosure: { self.tokenSource.token })
+//            NetworkLoggerPlugin(verbose: true)
         ]
     )
     
-    func request(_ api: WebAPI, completion: () -> Void) -> Cancellable {
+    @discardableResult func request<T>(
+        _ api: WebAPI,
+        responseType: T.Type,
+        completion: @escaping (Result<T, NSError>) -> Void) -> Cancellable where T: Codable {
         return provider.request(api, completion: { (result) in
             switch result {
             case let .failure(error):
                 logger.error(error)
+                completion(.failure(NSError(code: .http)))
             case let .success(response):
-                logger.debug(response)
+                do {
+                    let model = try JSONDecoder().decode(responseType, from: response.data)
+                    completion(.success(model))
+                } catch {
+                    logger.error(error)
+                    completion(.failure(NSError(code: .parse)))
+                }
             }
         })
     }

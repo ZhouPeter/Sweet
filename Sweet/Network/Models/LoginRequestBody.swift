@@ -17,6 +17,7 @@ struct LoginRequestBody: Codable {
     var phone: String?
     var smsCode: String?
     var universityName: String?
+    var register: Bool = false
     
     init(phone: String? = nil, smsCode: String? = nil) {
         self.phone = phone

@@ -128,6 +128,18 @@
 		ACF2DEB52089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
 		ACF2DEB62089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
 		ACF2DEB72089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
+		ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		ACF2DEBE2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEBF2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC02089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC12089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
+		ACF2DEC32089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC42089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC52089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF2DEC62089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		DF80169A86358114B4727C33 /* Pods_SweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228283EB6F84BFB0951930EC /* Pods_SweetUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +214,9 @@
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sweet_Sweet_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,6 +461,9 @@
 			children = (
 				ACF2DEB32089C63100660425 /* Gender.swift */,
 				ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */,
+				ACF2DEB82089E02F00660425 /* LoginResponse.swift */,
+				ACF2DEBD2089E04F00660425 /* Response.swift */,
+				ACF2DEC22089E58D00660425 /* Errors.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -821,13 +839,16 @@
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235A20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
 				ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
@@ -856,6 +877,7 @@
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
@@ -866,11 +888,13 @@
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
@@ -892,6 +916,7 @@
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
@@ -902,11 +927,13 @@
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
@@ -928,13 +955,16 @@
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235B20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
+				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
 				ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,

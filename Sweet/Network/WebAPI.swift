@@ -59,9 +59,9 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
     
     var baseURL: URL {
         #if DEV
-        return URL(string: "https://mx-api-t.miaobo.me")!
+        return URL(string: "https://sweet-api-t.miaobo.me")!
         #else
-        return URL(string: "https://mx-api.miaobo.me")!
+        return URL(string: "https://sweet-api.miaobo.me")!
         #endif
     }
     

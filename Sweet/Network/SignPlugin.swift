@@ -17,11 +17,18 @@ struct SignPlugin: PluginType {
     let signClosure: ([String: Any]) -> String?
     
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
-        guard case let .requestParameters(parameters, _) = target.task, let signature = signClosure(parameters) else {
-            return request
+        var signature: String?
+        if case let .requestParameters(parameters, _) = target.task {
+            signature = signClosure(parameters)
+        } else if case .requestJSONEncodable = target.task {
+            if let data = request.httpBody,
+                let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] {
+                signature = signClosure(json)
+            }
         }
+        guard let sign = signature else { return request }
         var request = request
-        request.addValue(signature, forHTTPHeaderField: "sign")
+        request.addValue(sign, forHTTPHeaderField: "sign")
         return request
     }
 }
