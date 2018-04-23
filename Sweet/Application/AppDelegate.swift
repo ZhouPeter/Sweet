@@ -29,24 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
         
-        web.request(
-            .login(body: LoginRequestBody(phone: "10000001006", smsCode: "1")),
-            responseType: Response<LoginResponse>.self) { (result) in
-                switch result {
-                case let .failure(error):
-                    logger.error(error)
-                case let.success(response):
-                    logger.debug(response)
-                    if response.code == 0 {
-                        web.tokenSource.token = response.data.token
-                    }
-                }
-        }
-        
-        web.request(.searchUniversity(name: "杭州")) { (result) in
-            logger.debug(result)
-        }
-        
         return true
     }
     
