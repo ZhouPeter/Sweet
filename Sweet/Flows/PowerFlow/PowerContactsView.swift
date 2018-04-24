@@ -9,4 +9,5 @@
 import Foundation
 protocol PowerContactsView: BaseView {
     var showPush: (() -> Void)? { get set }
+    var onFinish: (() -> Void)? { get set }
 }

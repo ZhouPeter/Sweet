@@ -83,8 +83,10 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runPowerFlow() {
         let coordinator = coordinatorFactory.makePowerCoordinator(router: router)
-        coordinator.finishFlow = {
-            
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            guard let `self` = self else { return }
+            self.start()
+            self.removeDependency(coordinator)
         }
         addDependency(coordinator)
         coordinator.start()

@@ -99,6 +99,14 @@
 		58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5303208E00AB00F7C3E1 /* PowerContactsController.swift */; };
 		58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5306208E00C500F7C3E1 /* PowerContactsView.swift */; };
 		58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5306208E00C500F7C3E1 /* PowerContactsView.swift */; };
+		58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5309208ECE9B00F7C3E1 /* PowerPushController.swift */; };
+		58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5309208ECE9B00F7C3E1 /* PowerPushController.swift */; };
+		58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD530C208EEFE700F7C3E1 /* PowerPushView.swift */; };
+		58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD530C208EEFE700F7C3E1 /* PowerPushView.swift */; };
+		58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */; };
+		58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */; };
+		58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
+		58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
@@ -301,6 +309,11 @@
 		58BD5300208E004E00F7C3E1 /* PowerFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerFlowFactory.swift; sourceTree = "<group>"; };
 		58BD5303208E00AB00F7C3E1 /* PowerContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerContactsController.swift; sourceTree = "<group>"; };
 		58BD5306208E00C500F7C3E1 /* PowerContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerContactsView.swift; sourceTree = "<group>"; };
+		58BD5309208ECE9B00F7C3E1 /* PowerPushController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerPushController.swift; sourceTree = "<group>"; };
+		58BD530C208EEFE700F7C3E1 /* PowerPushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerPushView.swift; sourceTree = "<group>"; };
+		58BD530F208EF6BD00F7C3E1 /* Sweet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sweet.entitlements; sourceTree = "<group>"; };
+		58BD5310208EF6D200F7C3E1 /* Sweet Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Sweet Dev.entitlements"; sourceTree = "<group>"; };
+		58BD5313208F22CD00F7C3E1 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
 		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
@@ -439,6 +452,8 @@
 				58BD52FD208DFFAA00F7C3E1 /* PowerCoordinator.swift */,
 				58BD5303208E00AB00F7C3E1 /* PowerContactsController.swift */,
 				58BD5306208E00C500F7C3E1 /* PowerContactsView.swift */,
+				58BD5309208ECE9B00F7C3E1 /* PowerPushController.swift */,
+				58BD530C208EEFE700F7C3E1 /* PowerPushView.swift */,
 			);
 			path = PowerFlow;
 			sourceTree = "<group>";
@@ -457,6 +472,7 @@
 		ACA322E12087410000BDC92E = {
 			isa = PBXGroup;
 			children = (
+				58BD5310208EF6D200F7C3E1 /* Sweet Dev.entitlements */,
 				ACA322EC2087410000BDC92E /* Sweet */,
 				ACA323012087410200BDC92E /* SweetTests */,
 				ACA3230C2087410200BDC92E /* SweetUITests */,
@@ -484,6 +500,7 @@
 		ACA322EC2087410000BDC92E /* Sweet */ = {
 			isa = PBXGroup;
 			children = (
+				58BD530F208EF6BD00F7C3E1 /* Sweet.entitlements */,
 				58BD5293208856B900F7C3E1 /* Views */,
 				ACD5A52420886C6600B78CFD /* Network */,
 				ACA323482087496800BDC92E /* Application */,
@@ -634,6 +651,7 @@
 			children = (
 				ACA323AC208763D900BDC92E /* Logger.swift */,
 				58BD52F3208DDC3800F7C3E1 /* Upload.swift */,
+				58BD5313208F22CD00F7C3E1 /* Contacts.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -779,6 +797,14 @@
 					ACA322E92087410000BDC92E = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 0930;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					ACA322FD2087410200BDC92E = {
 						CreatedOnToolsVersion = 9.3;
@@ -792,6 +818,14 @@
 					};
 					ACA3231B2087411B00BDC92E = {
 						LastSwiftMigration = 0930;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1047,6 +1081,7 @@
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
+				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
@@ -1096,6 +1131,7 @@
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1108,6 +1144,7 @@
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EE208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
@@ -1147,6 +1184,7 @@
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -1186,6 +1224,7 @@
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -1207,6 +1246,7 @@
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
+				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
@@ -1256,6 +1296,7 @@
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1268,6 +1309,7 @@
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EF208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
@@ -1424,6 +1466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Sweet/Sweet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
@@ -1447,6 +1490,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Sweet/Sweet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
@@ -1565,6 +1609,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sweet Dev.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
@@ -1588,6 +1633,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sweet Dev.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";

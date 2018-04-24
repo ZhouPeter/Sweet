@@ -13,9 +13,13 @@ enum WebAPI {
     case verify(phoneNumber: String, type: VerificationType)
     case login(body: LoginRequestBody)
     case logout
+    case update(updateParameters: [String: Any])
+    case uploadContacts(contacts: [[String: Any]])
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
+    case uploadWithToken(type: UploadType)
+
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -27,11 +31,17 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/user/login"
         case .logout:
             return "/v2/user/logout"
+        case .update:
+            return "/v2/user/update"
+        case .uploadContacts:
+            return "/v2/user/contacts/upload"
         case .searchUniversity:
             return "/v2/network/university/search"
         case .searchCollege:
             return "/v2/network/college/search"
         case .upload:
+            return "/v2/service/upload/get"
+        case .uploadWithToken:
             return "/v2/service/upload/get"
         }
     }
@@ -43,6 +53,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phoneNumber, "type": "\(type.rawValue)"]
         case let .login(body):
             return .requestJSONEncodable(body)
+        case let .update(updateParameters):
+            parameters = updateParameters
+        case let .uploadContacts(contacts):
+            parameters = ["contacts": contacts]
         case let .searchUniversity(name):
             parameters = ["universityName": name]
         case let .searchCollege(collegeName, universityName):
@@ -61,7 +75,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
     
     var needsAuth: Bool {
         switch self {
-        case .verify, .login:
+        case .verify, .searchUniversity, .searchCollege, .uploadContacts:
             return false
         default:
             return true
@@ -95,4 +109,3 @@ enum VerificationType: Int {
     case login = 2
     case register = 3
 }
-

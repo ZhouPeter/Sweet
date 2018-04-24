@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Contacts
+let loginedKey = "loginedKey"
 class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     var onFinish: ((Bool) -> Void)?
     
@@ -113,6 +114,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         view.addSubview(smsCodeTextField)
         smsCodeTextField.centerX(to: view)
         smsCodeTextField.pin(to: codeLabel, edge: .bottom, spacing: -48)
+        smsCodeButton.constrain(height: 40)
         
         view.addSubview(bottomLineView)
         bottomLineView.align(.left, to: view, inset: 16)
@@ -154,16 +156,40 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                             message: "你的账号已存在，正在自动登录",
                             duration: 3,
                             completion: {
-                                self.successLogin(user: response.data.user)
+                                self.successLogin(loginResponse: response.data)
                         })
                     } else {
-                        self.successLogin(user: response.data.user)
+                        self.successLogin(loginResponse: response.data)
                     }
                 }
         })
     }
-    private func successLogin(user: LoginResponse.User) {
-        onFinish?(true)
+    private func successLogin(loginResponse: LoginResponse) {
+        let def = UserDefaults.standard
+        let logined = def.bool(forKey: loginedKey)
+        if !logined {
+            onFinish?(true)
+        } else {
+            if loginResponse.contactsUpload {
+                onFinish?(false)
+            } else {
+                onFinish?(true)
+            }
+        }
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        if status ==  .authorized {
+            let contacts = Contacts.getContacts()
+            web.request(.uploadContacts(contacts: contacts)) { (result) in
+                switch result {
+                case .success:
+                    logger.debug("登录上传通讯录成功")
+                case let .failure(error):
+                    logger.error(error)
+                }
+                
+            }
+        }
+        
     }
     
     @objc private func textFieldEditChanged(_ textField: UITextField) {

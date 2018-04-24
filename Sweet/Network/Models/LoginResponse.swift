@@ -8,6 +8,18 @@
 
 import Foundation
 
+enum UpdateUserType: UInt, Codable {
+    case unknown
+    case pushToken
+    case avatar
+    case nickname
+    case gender
+    case university
+    case college
+    case signature
+    case enrollment
+}
+
 struct LoginResponse: Codable {
     let contactsUpload: Bool
     let register: Bool //isNew

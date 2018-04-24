@@ -9,6 +9,10 @@
 import Foundation
 
 final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory, PowerFlowFactory {
+    func makePowerPushOutput() -> PowerPushView {
+        return PowerPushController()
+    }
+    
     func makePowerContactsOutput() -> PowerContactsView {
         return PowerContactsController()
     }

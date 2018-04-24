@@ -8,11 +8,15 @@ PODS:
     - Result (~> 3.0)
   - Result (3.2.4)
   - Reveal-SDK (13)
+  - UMCCommon (1.5.0)
+  - UMCPush (3.2.0):
+    - UMCCommon
 
 DEPENDENCIES:
   - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Moya (~> 11.0)
   - Reveal-SDK
+  - UMCPush
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -20,6 +24,8 @@ SPEC REPOS:
     - Moya
     - Result
     - Reveal-SDK
+    - UMCCommon
+    - UMCPush
 
 EXTERNAL SOURCES:
   APESuperHUD:
@@ -36,7 +42,9 @@ SPEC CHECKSUMS:
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
+  UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
+  UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
 
-PODFILE CHECKSUM: 6c50dddd22cad56ceea848e3e79fa74af26c7f18
+PODFILE CHECKSUM: b3978d2734ba25b4cc1ccbde5b9de429daf3206b
 
 COCOAPODS: 1.5.0

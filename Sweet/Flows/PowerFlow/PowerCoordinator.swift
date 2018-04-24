@@ -29,13 +29,17 @@ class PowerCoordinator: BaseCoordinator, PowerCoordinatorOutput {
     
     func showContacts() {
         let contactsOutput = factory.makePowerContactsOutput()
-        contactsOutput.showPush =  { [weak self] in
+        contactsOutput.showPush = { [weak self] in
             self?.showPush()
         }
         router.setRootFlow(contactsOutput.toPresent())
     }
     
     private func showPush() {
-    
+       let pushOutput = factory.makePowerPushOutput()
+        pushOutput.onFinish = { [weak self] in
+            self?.finishFlow?()
+        }
+        router.push(pushOutput)
     }
 }
