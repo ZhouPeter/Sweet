@@ -9,8 +9,8 @@
 import Foundation
 
 struct LoginResponse: Codable {
-    let isContactsUpload: Bool
-    let isNew: Bool
+    let contactsUpload: Bool
+    let register: Bool //isNew
     let token: String
     let user: User
     

@@ -11,8 +11,9 @@ import APESuperHUD
 
 extension UIViewController {
     
-    func toast(message: String, duration: Double) {
-        APESuperHUD.showOrUpdateHUD(icon: .info, message: message, duration: 2, presentingView: view)
+    func toast(message: String, duration: Double, completion: (() -> Void)? = nil) {
+        APESuperHUD.showOrUpdateHUD(icon: .info, message: message, duration: duration, presentingView: view) {
+            completion?()
+        }
     }
-  
 }

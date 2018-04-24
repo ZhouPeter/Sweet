@@ -14,6 +14,8 @@ enum WebAPI {
     case login(body: LoginRequestBody)
     case logout
     case searchUniversity(name: String)
+    case searchCollege(collegeName: String, universityName: String)
+    case upload(type: UploadType)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -27,6 +29,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/user/logout"
         case .searchUniversity:
             return "/v2/network/university/search"
+        case .searchCollege:
+            return "/v2/network/college/search"
+        case .upload:
+            return "/v2/service/upload/get"
         }
     }
     
@@ -39,6 +45,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return .requestJSONEncodable(body)
         case let .searchUniversity(name):
             parameters = ["universityName": name]
+        case let .searchCollege(collegeName, universityName):
+            parameters = ["collegeName": collegeName, "universityName": universityName]
+        case let .upload(type):
+            parameters = ["type": type.rawValue]
         default:
             parameters = [:]
         }
@@ -85,3 +95,4 @@ enum VerificationType: Int {
     case login = 2
     case register = 3
 }
+

@@ -9,7 +9,11 @@
 import Foundation
 
 /// 启动引导是否显示
-private var onboardingWasShown = false
+private var onboardingWasShown: Bool = {
+    let def = UserDefaults.standard
+    let isOpened = def.bool(forKey: OnboardingController.wasShownKey)
+    return isOpened
+}()
 /// 是否登录授权
 private var isAuthorized = false
 
@@ -33,8 +37,8 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runOnboardingFlow()
             case .signUp:
                 runAuthFlow()
-            case .setting:
-                runSettingFlow()
+            case .power:
+                runPowerFlow()
             default:
                 childCoordinators.forEach { $0.start(with: option) }
             }
@@ -58,6 +62,7 @@ final class ApplicationCoordinator: BaseCoordinator {
             guard let `self` = self else { return }
             onboardingWasShown = true
             self.start()
+            self.router.dismissFlow()
             self.removeDependency(coordinator)
         }
         addDependency(coordinator)
@@ -67,18 +72,23 @@ final class ApplicationCoordinator: BaseCoordinator {
     private func runAuthFlow() {
         logger.debug()
         let coordinator = coordinatorFactory.makeAuthCoordinator(router: router)
-        coordinator.finishFlow = { [weak self, weak coordinator] in
+        coordinator.finishFlow = { [weak self, weak coordinator] isSettingPower in
             guard let `self` = self else { return }
             isAuthorized = true
-            self.start()
+            isSettingPower ? self.start(with: .power) : self.start()
             self.removeDependency(coordinator)
         }
         addDependency(coordinator)
         coordinator.start()
     }
     
-    private func runSettingFlow() {
-        
+    private func runPowerFlow() {
+        let coordinator = coordinatorFactory.makePowerCoordinator(router: router)
+        coordinator.finishFlow = {
+            
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
     
     private func runMainFlow() {

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SignUpAvatarView: BaseView {
-    var showSignUpPhone: ((RegisterModel) -> Void)? { get set }
+    var showSignUpPhone: ((LoginRequestBody) -> Void)? { get set }
 }

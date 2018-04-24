@@ -9,9 +9,9 @@
 import UIKit
 
 class SignUpSexController: BaseViewController, SignUpSexView {
-    var showSignUpName: ((RegisterModel) -> Void)?
+    var showSignUpName: ((LoginRequestBody) -> Void)?
     
-    var registerModel: RegisterModel!
+    var loginRequestBody: LoginRequestBody!
     private var boyImageView: UIImageView!
     private var girlImageView: UIImageView!
     private lazy var boyStackView: UIStackView = {
@@ -80,15 +80,15 @@ class SignUpSexController: BaseViewController, SignUpSexView {
     @objc private func boyAction(_ sender: UITapGestureRecognizer) {
         boyImageView.backgroundColor = .white
         girlImageView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-       registerModel.gender = .male
-        showSignUpName?(registerModel)
+        loginRequestBody.gender = .male
+        showSignUpName?(loginRequestBody)
     }
     
     @objc private func girlAction(_ sender: UITapGestureRecognizer) {
         girlImageView.backgroundColor = .white
         boyImageView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        registerModel.gender = .female
-        showSignUpName?(registerModel)
+        loginRequestBody.gender = .female
+        showSignUpName?(loginRequestBody)
 
     }
    

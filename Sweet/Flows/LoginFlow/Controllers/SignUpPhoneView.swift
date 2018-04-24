@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SignUpPhoneView: BaseView {
-    var showSetting: (() -> Void)? { get set }
+    var onFinish: ((Bool) -> Void)? { get set }
 }

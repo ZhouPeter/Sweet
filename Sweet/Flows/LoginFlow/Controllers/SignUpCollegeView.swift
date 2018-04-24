@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SignUpCollegeView: BaseView {
-    var showSignUpEnrollment: ((RegisterModel) -> Void)? { get set }
+    var showSignUpEnrollment: ((LoginRequestBody) -> Void)? { get set }
 }

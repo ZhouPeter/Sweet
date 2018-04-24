@@ -10,12 +10,11 @@ import Foundation
 
 protocol AuthFlowFactory {
     func makeAuthOutput() -> AuthView
-    func makeLoginOutput() -> LoginView
-    func makeSignUpUniversityOutput(registerModel: RegisterModel) -> SignUpUniversityView
-    func makeSignUpCollegeOutput(registerModel: RegisterModel) -> SignUpCollegeView
-    func makeSignUpEnrollmentOutput(registerModel: RegisterModel) -> SignUpEnrollmentView
-    func makeSignUpSexOutput(registerModel: RegisterModel) -> SignUpSexView
-    func makeSignUpNameOutput(registerModel: RegisterModel) -> SignUpNameView
-    func makeSignUpAvatarOutput(registerModel: RegisterModel) -> SignUpAvatarView
-    func makeSignUpPhoneOutput(registerModel: RegisterModel) -> SignUpPhoneView
+    func makeSignUpUniversityOutput(loginRequestBody: LoginRequestBody) -> SignUpUniversityView
+    func makeSignUpCollegeOutput(loginRequestBody: LoginRequestBody) -> SignUpCollegeView
+    func makeSignUpEnrollmentOutput(loginRequestBody: LoginRequestBody) -> SignUpEnrollmentView
+    func makeSignUpSexOutput(loginRequestBody: LoginRequestBody) -> SignUpSexView
+    func makeSignUpNameOutput(loginRequestBody: LoginRequestBody) -> SignUpNameView
+    func makeSignUpAvatarOutput(loginRequestBody: LoginRequestBody) -> SignUpAvatarView
+    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody) -> SignUpPhoneView
 }

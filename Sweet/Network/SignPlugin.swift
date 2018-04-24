@@ -17,6 +17,9 @@ struct SignPlugin: PluginType {
     let signClosure: ([String: Any]) -> String?
     
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+        guard let target = target as? SignedTargetType, target.needsSign else {
+            return request
+        }
         var signature: String?
         if case let .requestParameters(parameters, _) = target.task {
             signature = signClosure(parameters)
