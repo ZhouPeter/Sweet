@@ -9,9 +9,11 @@
 import UIKit
 
 class SignUpPhoneController: BaseViewController, SignUpPhoneView {
+    var onFinish: ((Bool) -> Void)?
+    
     var showSetting: (() -> Void)?
     
-    var registeModel: RegisterModel!
+    var loginRequestBody: LoginRequestBody!
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
@@ -60,6 +62,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         button.backgroundColor = .black
         button.alpha = 0.5
         button.isUserInteractionEnabled = false
+        button.addTarget(self, action: #selector(enteringAction(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -79,6 +82,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpYellow()
         navigationItem.title = "手机验证"
+        navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barTintColor = UIColor.xpYellow()
         setupUI()
     }
@@ -129,12 +133,42 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     }
     
     @objc private func enteringAction(_ sender: UIButton) {
-        
+        if let text = phoneTextField.text, !text.checkPhone() {
+            self.toast(message: "你的手机号码不正确", duration: 1)
+            return
+        }
+        web.request(
+            .login(body: loginRequestBody),
+            responseType: Response<LoginResponse>.self,
+            completion: { result in
+                switch result {
+                case let .failure(error):
+                    logger.error(error)
+                case let.success(response):
+                    logger.debug(response)
+                    if response.code == 0 {
+                        web.tokenSource.token = response.data.token
+                    }
+                    if !response.data.register && self.loginRequestBody.register {
+                        self.toast(
+                            message: "你的账号已存在，正在自动登录",
+                            duration: 3,
+                            completion: {
+                                self.successLogin(user: response.data.user)
+                        })
+                    } else {
+                        self.successLogin(user: response.data.user)
+                    }
+                }
+        })
+    }
+    private func successLogin(user: LoginResponse.User) {
+        onFinish?(true)
     }
     
     @objc private func textFieldEditChanged(_ textField: UITextField) {
         if textField == smsCodeTextField {
-            registeModel.smsCode = textField.text
+            loginRequestBody.smsCode = textField.text
             if let text = textField.text, text.count > 0 {
                 enterButton.alpha = 1
                 enterButton.isUserInteractionEnabled = true
@@ -146,7 +180,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
             if let text = textField.text, text.count > 11 {
                 textField.text = String(text[text.startIndex..<text.index(text.startIndex, offsetBy: 11)])
             }
-            registeModel.phone = textField.text
+            loginRequestBody.phone = textField.text
         }
     }
 

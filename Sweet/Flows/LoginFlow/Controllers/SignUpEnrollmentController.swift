@@ -9,8 +9,8 @@
 import UIKit
 
 class SignUpEnrollmentController: BaseViewController, SignUpEnrollmentView {
-    var showSignUpSex: ((RegisterModel) -> Void)?
-    var registerModel: RegisterModel!
+    var showSignUpSex: ((LoginRequestBody) -> Void)?
+    var loginRequestBody: LoginRequestBody!
     var selectCompletion: ((String) -> Void)?
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -108,8 +108,8 @@ extension SignUpEnrollmentController {
     @objc private func done(_ sender: UIButton) {
         yearsPickerView.removeFromSuperview()
         buttonBackgroundView.removeFromSuperview()
-        registerModel?.enrollment = years[yearsPickerView.selectedRow(inComponent: 0)]
-        showSignUpSex?(registerModel)
+        loginRequestBody?.enrollment = years[yearsPickerView.selectedRow(inComponent: 0)]
+        showSignUpSex?(loginRequestBody)
     }
     
     @objc private func cancel(_ sender: UIButton) {
@@ -159,8 +159,8 @@ extension SignUpEnrollmentController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.row < 4 {
-            registerModel.enrollment = years[years.count - 4 + indexPath.row]
-            showSignUpSex?(registerModel)
+            loginRequestBody.enrollment = years[years.count - 4 + indexPath.row]
+            showSignUpSex?(loginRequestBody)
         } else {
             addYearsPickerView()
         }

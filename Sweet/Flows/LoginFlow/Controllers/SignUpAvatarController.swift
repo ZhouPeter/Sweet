@@ -9,8 +9,8 @@
 import UIKit
 import Photos
 class SignUpAvatarController: BaseViewController, SignUpAvatarView {
-    var showSignUpPhone: ((RegisterModel) -> Void)?
-    var registerModel: RegisterModel!
+    var showSignUpPhone: ((LoginRequestBody) -> Void)?
+    var loginRequestBody: LoginRequestBody!
     private lazy var cameraButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Camera_icon"), for: .normal)
@@ -89,28 +89,19 @@ extension SignUpAvatarController: UINavigationControllerDelegate, UIImagePickerC
         guard let newImage = image.thumbnail(withSize: CGSize(width: 800, height: 800)) else { return }
         do {
             try UIImageJPEGRepresentation(newImage, 0.7)?.write(to: localURL)
-            cameraButton.setImage(newImage, for: .normal)
-            showSignUpPhone?(registerModel)
-            //        XPClient.uploadFileToQiniu(with: localURL, type: .userAvatar, progress: { (_) in
-            //        }, completion: {[weak self] (token, error) in
-            //            guard let `self` = self else { return }
-            //            if error != nil {
-            //                let hud  = MBProgressHUD.showAdded(to: self.view, animated: true)
-            //                hud.mode = .text
-            //                hud.label.text = "头像上传失败"
-            //                hud.hide(animated: true, afterDelay: 1.5)
-            //                return
-            //            }
-            //            guard let token = token, let host = token.host, let key = token.key else { return }
-            //            let avatarURLString = host + key
-            //            self.userModel?.avatar = avatarURLString
-            //            let viewController = MobilePhoneViewController.instance()
-            //            viewController.userModel = self.userModel
-            //            self.navigationController?.pushViewController(viewController, animated: true)
-            //        })
+            Upload.uploadFileToQiniu(localURL: localURL, type: .userAvatar) { (response, error) in
+                guard let response = response, error == nil else {
+                    logger.debug(error ?? "")
+                    self.toast(message: "头像上传失败", duration: 2)
+                    return
+                }
+                self.cameraButton.setImage(newImage, for: .normal)
+                self.loginRequestBody.avatar = response.token + response.key
+                self.showSignUpPhone?(self.loginRequestBody)
+            }
         } catch {
             logger.debug(error)
+            self.toast(message: "头像上传失败", duration: 2)
         }
-
     }
 }

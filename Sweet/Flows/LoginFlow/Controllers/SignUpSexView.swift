@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SignUpSexView: BaseView {
-    var showSignUpName: ((RegisterModel) -> Void)? { get set }
+    var showSignUpName: ((LoginRequestBody) -> Void)? { get set }
 }

@@ -8,57 +8,56 @@
 
 import Foundation
 
-final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory {
-    func makeSignUpPhoneOutput(registerModel: RegisterModel) -> SignUpPhoneView {
+final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory, PowerFlowFactory {
+    func makePowerContactsOutput() -> PowerContactsView {
+        return PowerContactsController()
+    }
+    
+    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody) -> SignUpPhoneView {
         let viewController = SignUpPhoneController()
-        viewController.registeModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeSignUpAvatarOutput(registerModel: RegisterModel) -> SignUpAvatarView {
+    func makeSignUpAvatarOutput(loginRequestBody: LoginRequestBody) -> SignUpAvatarView {
         let viewController = SignUpAvatarController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeSignUpNameOutput(registerModel: RegisterModel) -> SignUpNameView {
+    func makeSignUpNameOutput(loginRequestBody: LoginRequestBody) -> SignUpNameView {
         let viewController = SignUpNameController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeSignUpSexOutput(registerModel: RegisterModel) -> SignUpSexView {
+    func makeSignUpSexOutput(loginRequestBody: LoginRequestBody) -> SignUpSexView {
         let viewController = SignUpSexController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
 
-    func makeSignUpEnrollmentOutput(registerModel: RegisterModel) -> SignUpEnrollmentView {
+    func makeSignUpEnrollmentOutput(loginRequestBody: LoginRequestBody) -> SignUpEnrollmentView {
         let viewController = SignUpEnrollmentController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeLoginOutput() -> LoginView {
-        return LoginController()
-    }
-    
-    func makeSignUpUniversityOutput(registerModel: RegisterModel) -> SignUpUniversityView {
+    func makeSignUpUniversityOutput(loginRequestBody: LoginRequestBody) -> SignUpUniversityView {
         let viewController = SignUpUniversityController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeSignUpCollegeOutput(registerModel: RegisterModel) -> SignUpCollegeView {
+    func makeSignUpCollegeOutput(loginRequestBody: LoginRequestBody) -> SignUpCollegeView {
         let viewController = SignUpCollegeController()
-        viewController.registerModel = registerModel
+        viewController.loginRequestBody = loginRequestBody
         return viewController
     }
     
-    func makeOnboardingFlow() -> OnboardingView {
+    func makeOnboardingModule() -> OnboardingView {
         return OnboardingController()
     }
-    
     func makeAuthOutput() -> AuthView {
         return AuthViewController()
     }

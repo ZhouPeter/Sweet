@@ -9,9 +9,9 @@
 import UIKit
 
 class SignUpNameController: BaseViewController, SignUpNameView {
-    var showSignUpAvatar: ((RegisterModel) -> Void)?
+    var showSignUpAvatar: ((LoginRequestBody) -> Void)?
     
-    var registerModel: RegisterModel!
+    var loginRequestBody: LoginRequestBody!
     private lazy var nicknameTextField: UITextField = {
         let textField = UITextField()
         textField.textAlignment = .center
@@ -70,14 +70,14 @@ class SignUpNameController: BaseViewController, SignUpNameView {
             toast(message: "名字不能为空", duration: 2)
             return
         }
-        self.registerModel.nickname = nicknameTextField.text
+        loginRequestBody.nickname = nicknameTextField.text
         let message = "请确认你的名字，若该名字不能被朋友认出，你被朋友选中的几率将大大降低"
-        let alertController = UIAlertController(title: registerModel.nickname,
+        let alertController = UIAlertController(title: loginRequestBody.nickname,
                                                 message: message,
                                                 preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "返回修改", style: .cancel, handler: nil)
         let doneAction = UIAlertAction(title: "确认无误", style: .default) { [weak self] (_) in
-            if let `self` = self, let model = self.registerModel {
+            if let `self` = self, let model = self.loginRequestBody {
                 self.showSignUpAvatar?(model)
             }
         }

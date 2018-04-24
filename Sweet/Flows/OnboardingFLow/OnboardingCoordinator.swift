@@ -28,8 +28,8 @@ final class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput 
     }
     
     func showOnboarding() {
-        let flow = factory.makeOnboardingFlow()
-        flow.onFinish = { [weak self] in self?.finishFlow?() }
-        router.setRootFlow(flow.toPresent())
+        let module = factory.makeOnboardingModule()
+        module.onFinish = { [weak self] in self?.finishFlow?() }
+        router.present(module)
     }
 }

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol AuthView: BaseView {
-    var showSignUp: ((RegisterModel) -> Void)? { get set }
-    var showLogin: (() -> Void)? { get set }
+    var showSignUp: ((LoginRequestBody) -> Void)? { get set }
+    var showLogin: ((LoginRequestBody) -> Void)? { get set }
 }

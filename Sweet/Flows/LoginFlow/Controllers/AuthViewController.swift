@@ -9,16 +9,17 @@
 import UIKit
 
 class AuthViewController: BaseViewController, AuthView {
-    var showSignUp: ((RegisterModel) -> Void)?
-    var showLogin: (() -> Void)?
+    var showSignUp: ((LoginRequestBody) -> Void)?
+    var showLogin: ((LoginRequestBody) -> Void)?
     
-    var registerModel = RegisterModel()
+    var loginRequestBody = LoginRequestBody()
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("登录", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.setTitleColor(UIColor.xpTextGray(), for: .normal)
+        button.addTarget(self, action: #selector(loginAction(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -84,9 +85,14 @@ class AuthViewController: BaseViewController, AuthView {
         }
     }
     
+    @objc private func loginAction(_ sender: UIButton) {
+        loginRequestBody.register = false
+        showLogin?(loginRequestBody)
+    }
+    
     @objc private func registerAction(_ sender: ShrinkButton) {
-        registerModel.isRegister = "true"
-        showSignUp?(registerModel)
+        loginRequestBody.register = true
+        showSignUp?(loginRequestBody)
     }
     
     private func setupUI() {

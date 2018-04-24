@@ -9,6 +9,10 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+    func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput {
+        return PowerCoordinator(with: FlowFactoryImp(), router: router)
+    }
+    
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput {
         return OnboardingCoordinator(with: FlowFactoryImp(), router: router)
     }

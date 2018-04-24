@@ -11,5 +11,6 @@ import Foundation
 protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
+    func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
 
 }

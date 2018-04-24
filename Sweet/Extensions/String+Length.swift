@@ -9,8 +9,7 @@
 import UIKit
 
 extension String {
-  
-    
+
     func substringLans(kMaxLength: Int, position: UITextPosition?) -> String? {
         var toBeString = trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         toBeString = toBeString.replacingOccurrences(of: "\r", with: "")

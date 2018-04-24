@@ -23,4 +23,8 @@ struct LoginRequestBody: Codable {
         self.phone = phone
         self.smsCode = smsCode
     }
+    
+    init() {
+        
+    }
 }

@@ -9,8 +9,9 @@
 import UIKit
 
 class SignUpCollegeController: BaseViewController, SignUpCollegeView {
-    var showSignUpEnrollment: ((RegisterModel) -> Void)?
-    var registerModel: RegisterModel!
+    var showSignUpEnrollment: ((LoginRequestBody) -> Void)?
+    var loginRequestBody: LoginRequestBody!
+    private var colleges = [College]()
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "搜索学院"
@@ -37,6 +38,7 @@ class SignUpCollegeController: BaseViewController, SignUpCollegeView {
         navigationController?.navigationBar.barTintColor = UIColor.xpYellow()
         navigationItem.title = "你的学院"
         setupUI()
+        searchCollege(collegeName: "")
 
     }
     
@@ -52,27 +54,41 @@ class SignUpCollegeController: BaseViewController, SignUpCollegeView {
         tableView.pin(to: searchBar, edge: .bottom)
         tableView.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 34 : 0)
     }
+    
+    private func searchCollege(collegeName: String) {
+        web.request(
+            .searchCollege(collegeName: collegeName, universityName: loginRequestBody.universityName!),
+            responseType: Response<SearchCollegeResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    self.colleges = response.data.collegeInfos
+                    self.tableView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+
+    }
 }
 
 extension SignUpCollegeController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return colleges.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             as? ContentTextTableViewCell
             else { fatalError() }
-        cell.updateWithText("教育学院")
+        cell.updateWithText(colleges[indexPath.row].collegeName)
         return cell
     }
 }
 
 extension SignUpCollegeController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collegeName = "杭州师范大学"
-        registerModel.collegeName = collegeName
-        showSignUpEnrollment?(registerModel)
+        loginRequestBody.collegeName = colleges[indexPath.row].collegeName
+        showSignUpEnrollment?(loginRequestBody)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,5 +97,11 @@ extension SignUpCollegeController: UITableViewDelegate {
 }
 
 extension SignUpCollegeController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchCollege(collegeName: searchText)
+    }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol OnboardingFlowFactory {
-    func makeOnboardingFlow() -> OnboardingView
+    func makeOnboardingModule() -> OnboardingView
 }
