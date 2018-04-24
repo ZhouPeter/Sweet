@@ -6,10 +6,13 @@
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
-
+    func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?)
+    func makeIMCoordinator(navigation: UINavigationController?) -> Coordinator
+    func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
+    func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
 }

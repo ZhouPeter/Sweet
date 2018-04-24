@@ -80,6 +80,42 @@
 		58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3235920874A3C00BDC92E /* DeepLinkOption.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
+		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
+		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
+		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
+		AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
+		AC525A95208DB1E9001070B2 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A94208DB1E9001070B2 /* MainController.swift */; };
+		AC525A96208DB1E9001070B2 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A94208DB1E9001070B2 /* MainController.swift */; };
+		AC525A97208DB1E9001070B2 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A94208DB1E9001070B2 /* MainController.swift */; };
+		AC525A98208DB1E9001070B2 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A94208DB1E9001070B2 /* MainController.swift */; };
+		AC525AA1208DD6E9001070B2 /* StoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */; };
+		AC525AA2208DD6E9001070B2 /* StoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */; };
+		AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */; };
+		AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */; };
+		AC525AA7208DD6F9001070B2 /* StoryRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */; };
+		AC525AA8208DD6F9001070B2 /* StoryRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */; };
+		AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */; };
+		AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */; };
+		AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
+		AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
+		AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
+		AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
+		AC525AB2208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
+		AC525AB3208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
+		AC525AB4208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
+		AC525AB5208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
+		AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
+		AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
+		AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
+		AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
+		AC525ABD208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
+		AC525ABE208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
+		AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
+		AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
+		AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
+		AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
+		AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
+		AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
 		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
@@ -100,6 +136,14 @@
 		AC8412232088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412242088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412252088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
+		AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
+		AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
+		AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
+		AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
+		AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
+		AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
+		AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
 		ACA322F52087410200BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
 		ACA323032087410200BDC92E /* SweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323022087410200BDC92E /* SweetTests.swift */; };
@@ -272,11 +316,22 @@
 		58BD52D92089D69B00F7C3E1 /* SignUpPhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPhoneController.swift; sourceTree = "<group>"; };
 		58BD52DC2089E5D400F7C3E1 /* SignUpPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPhoneView.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
+		AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordController.swift; sourceTree = "<group>"; };
+		AC525AAB208DD705001070B2 /* IMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMCoordinator.swift; sourceTree = "<group>"; };
+		AC525AB1208DD714001070B2 /* IMListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMListController.swift; sourceTree = "<group>"; };
+		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
+		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
+		AC525AC2208DF3F9001070B2 /* CardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsController.swift; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
 		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		AC84121C2088B0E60086891C /* SignPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPlugin.swift; sourceTree = "<group>"; };
 		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
+		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
+		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA322F42087410200BDC92E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACA322F72087410200BDC92E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -423,6 +478,74 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC525A88208D87B0001070B2 /* MainFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC525A89208D87CB001070B2 /* MainCoordinator.swift */,
+				AC525A93208D8B6F001070B2 /* Controllers */,
+			);
+			path = MainFlow;
+			sourceTree = "<group>";
+		};
+		AC525A93208D8B6F001070B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC525A94208DB1E9001070B2 /* MainController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC525A99208DB2A0001070B2 /* StoryFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */,
+				AC525AA5208DD6EC001070B2 /* Controllers */,
+			);
+			path = StoryFlow;
+			sourceTree = "<group>";
+		};
+		AC525A9A208DB2AC001070B2 /* IMFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC525AAB208DD705001070B2 /* IMCoordinator.swift */,
+				AC525AB0208DD708001070B2 /* Controllers */,
+			);
+			path = IMFlow;
+			sourceTree = "<group>";
+		};
+		AC525AA5208DD6EC001070B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC525AB0208DD708001070B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC525AB1208DD714001070B2 /* IMListController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC525ABB208DF3C2001070B2 /* CardsFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */,
+				AC525AC1208DF3EC001070B2 /* Controllers */,
+			);
+			path = CardsFlow;
+			sourceTree = "<group>";
+		};
+		AC525AC1208DF3EC001070B2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC525AC2208DF3F9001070B2 /* CardsController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		ACA322E12087410000BDC92E = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +677,9 @@
 				ACA3236520875BD500BDC92E /* CoordinatorFactory.swift */,
 				ACA3237C20875E0F00BDC92E /* OnboardingFlowFactory.swift */,
 				58BD528720883DAE00F7C3E1 /* AuthFlowFactory.swift */,
+				AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */,
+				AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */,
+				AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -570,8 +696,12 @@
 		ACA3237520875D8C00BDC92E /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				58BD526F20876EF100F7C3E1 /* LoginFlow */,
 				ACA3237620875D9300BDC92E /* OnboardingFLow */,
+				58BD526F20876EF100F7C3E1 /* LoginFlow */,
+				AC525A88208D87B0001070B2 /* MainFlow */,
+				AC525A9A208DB2AC001070B2 /* IMFlow */,
+				AC525ABB208DF3C2001070B2 /* CardsFlow */,
+				AC525A99208DB2A0001070B2 /* StoryFlow */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -1007,9 +1137,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
+				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
@@ -1021,6 +1153,7 @@
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC525AB2208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -1028,21 +1161,27 @@
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58BD52A4208860DA00F7C3E1 /* LoginView.swift in Sources */,
 				58BD52BF20888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
+				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD52C82088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
+				AC525AA1208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
+				AC525AA7208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */,
+				AC525ABD208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
@@ -1053,9 +1192,11 @@
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B0208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
@@ -1079,6 +1220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
@@ -1089,24 +1231,34 @@
 				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
+				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
+				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
+				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
+				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
+				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
+				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
+				AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
+				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
@@ -1118,6 +1270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
@@ -1128,24 +1281,34 @@
 				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
+				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
+				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
+				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
+				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
+				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
+				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
+				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
+				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
@@ -1157,9 +1320,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
+				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
@@ -1171,6 +1336,7 @@
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC525AB3208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -1178,21 +1344,27 @@
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58BD52A5208860DA00F7C3E1 /* LoginView.swift in Sources */,
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
+				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD52C92088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
+				AC525AA2208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
+				AC525AA8208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */,
+				AC525ABE208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
@@ -1203,9 +1375,11 @@
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B1208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,

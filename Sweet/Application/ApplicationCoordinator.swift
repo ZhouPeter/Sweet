@@ -43,7 +43,8 @@ final class ApplicationCoordinator: BaseCoordinator {
             case .onboarding:
                 runOnboardingFlow()
             case .auth:
-                runAuthFlow()
+//                runAuthFlow()
+                runMainFlow()
             case .main:
                 runMainFlow()
             }
@@ -82,6 +83,10 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runMainFlow() {
         logger.debug()
+        let (coordinator, flow) = coordinatorFactory.makeMainCoordinator()
+        addDependency(coordinator)
+        router.setRootFlow(flow)
+        coordinator.start()
     }
 }
 

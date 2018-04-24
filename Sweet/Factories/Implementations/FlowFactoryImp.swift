@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory {
+final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory, IMFlowFactory, StoryFlowFactory, CardsFlowFactory {
     func makeSignUpPhoneOutput(registerModel: RegisterModel) -> SignUpPhoneView {
         let viewController = SignUpPhoneController()
         viewController.registeModel = registerModel
@@ -63,4 +63,15 @@ final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory {
         return AuthViewController()
     }
     
+    func makeIMListView() -> IMListView {
+        return IMListController()
+    }
+    
+    func makeStoryRecordView() -> StoryRecordView {
+        return StoryRecordController()
+    }
+    
+    func makeCardsView() -> CardsView {
+        return CardsController()
+    }
 }
