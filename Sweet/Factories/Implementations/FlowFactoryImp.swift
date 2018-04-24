@@ -8,11 +8,18 @@
 
 import Foundation
 
-final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory, PowerFlowFactory {
+
+final class FlowFactoryImp:
+    OnboardingFlowFactory,
+    AuthFlowFactory,
+    IMFlowFactory,
+    StoryFlowFactory,
+    CardsFlowFactory,
+    PowerFlowFactory {
+    
     func makePowerPushOutput() -> PowerPushView {
         return PowerPushController()
     }
-    
     func makePowerContactsOutput() -> PowerContactsView {
         return PowerContactsController()
     }
@@ -66,4 +73,15 @@ final class FlowFactoryImp: OnboardingFlowFactory, AuthFlowFactory, PowerFlowFac
         return AuthViewController()
     }
     
+    func makeIMListView() -> IMListView {
+        return IMListController()
+    }
+    
+    func makeStoryRecordView() -> StoryRecordView {
+        return StoryRecordController()
+    }
+    
+    func makeCardsView() -> CardsView {
+        return CardsController()
+    }
 }
