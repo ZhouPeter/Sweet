@@ -68,7 +68,7 @@ extension UIImage {
         return transform
     }
     
-    
+    // swiftlint:disable function_body_length
     func thumbnail(withSize size: CGSize) -> UIImage? {
         guard let newImage = fixOrientation() else { return nil }
         let originalSize = newImage.size

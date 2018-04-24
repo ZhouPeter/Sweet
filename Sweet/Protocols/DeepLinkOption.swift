@@ -20,11 +20,9 @@ enum DeepLinkOption {
     case login
     case signUp
     case power
-    static func build(with dict: [String : AnyObject]?) -> DeepLinkOption? {
+    
+    static func build(with dict: [String: AnyObject]?) -> DeepLinkOption? {
         guard let id = dict?["launch_id"] as? String else { return nil }
-        
-        let itemID = dict?["item_id"] as? String
-        
         switch id {
         case DeepLinkURLConstants.Onboarding: return .onboarding
         case DeepLinkURLConstants.Login: return .login

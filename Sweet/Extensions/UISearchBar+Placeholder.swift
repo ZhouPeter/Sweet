@@ -8,15 +8,13 @@
 
 import UIKit
 
-
 extension UISearchBar {
     func setPlaceholderLeft(placeholder: String) {
         self.placeholder = placeholder
         let centerSelector = NSSelectorFromString("setCenterPlaceholder:")
         if responds(to: centerSelector) {
-            let centeredPlaceholder = false
-            let signature = UISearchBar.self.instanceMethod(for: centerSelector)
-           
+//            let centeredPlaceholder = false
+//            let signature = UISearchBar.self.instanceMethod(for: centerSelector)
         }
     }
 }

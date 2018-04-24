@@ -68,8 +68,7 @@ final class OnboardingController: BaseViewController, OnboardingView {
         def.synchronize()
         onFinish?()
     }
-    
-    
+        
 }
 
 extension OnboardingController: UIScrollViewDelegate {

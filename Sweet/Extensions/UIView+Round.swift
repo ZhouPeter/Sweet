@@ -87,4 +87,3 @@ extension UIView {
         setView(cornerRadius: cornerRadius, borderWidth: 0, borderColor: .clear)
     }
 }
-
