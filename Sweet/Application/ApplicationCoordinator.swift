@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 /// 启动引导是否显示
 private var onboardingWasShown: Bool = {
@@ -20,6 +21,7 @@ private var isAuthorized = false
 final class ApplicationCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private var storage: Storage?
     
     private var instructor: LaunchInstructor {
         return LaunchInstructor.configure()
@@ -28,9 +30,38 @@ final class ApplicationCoordinator: BaseCoordinator {
     init(router: Router, coordinatorFactory: CoordinatorFactory) {
         self.router = router
         self.coordinatorFactory = coordinatorFactory
+        
+        self.storage = Storage(userID: 123)
+        
     }
     
     override func start(with option: DeepLinkOption?) {
+        Defaults[.token]  = "234567890-"
+        logger.debug(Defaults[.token])
+        
+        if let storage = storage {
+            let user = storage.realm.object(ofType: User.self, forPrimaryKey: 123)
+            logger.debug(user)
+        }
+        
+//        var newUser: User?
+//        storage?.write({ (realm) in
+//            let user = User()
+//            user.userID = 123
+//            user.avatarURLString = "http://a.img"
+//            user.college = "wehklj"
+//            realm.add(user, update: true)
+//        }, callback: { (success) in
+//            logger.debug(success)
+//            self.storage?.read({ (realm) in
+//                if let user = realm.object(ofType: User.self, forPrimaryKey: 123) {
+//                    newUser = User(value: user)
+//                }
+//            }, callback: {
+//                logger.debug(newUser)
+//            })
+//        })
+        
         if let option = option {
             switch option {
             case .onboarding:

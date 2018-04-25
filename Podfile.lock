@@ -6,8 +6,14 @@ PODS:
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - Realm (3.3.2):
+    - Realm/Headers (= 3.3.2)
+  - Realm/Headers (3.3.2)
+  - RealmSwift (3.3.2):
+    - Realm (= 3.3.2)
   - Result (3.2.4)
   - Reveal-SDK (13)
+  - SwiftyUserDefaults (3.0.1)
   - UMCCommon (1.5.0)
   - UMCPush (3.2.0):
     - UMCCommon
@@ -15,15 +21,20 @@ PODS:
 DEPENDENCIES:
   - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Moya (~> 11.0)
+  - RealmSwift
   - Reveal-SDK
+  - SwiftyUserDefaults
   - UMCPush
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Moya
+    - Realm
+    - RealmSwift
     - Result
     - Reveal-SDK
+    - SwiftyUserDefaults
     - UMCCommon
     - UMCPush
 
@@ -40,11 +51,14 @@ SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   APESuperHUD: d18e9cc943c1e9229830d8381bbc3efc39ec279d
   Moya: a725035953bc1c0eb1be505ab903984501d82440
+  Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
+  RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
+  SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
 
-PODFILE CHECKSUM: b3978d2734ba25b4cc1ccbde5b9de429daf3206b
+PODFILE CHECKSUM: 23d26d72038ef9728e15c3cb834982ba44d9bab2
 
 COCOAPODS: 1.5.0

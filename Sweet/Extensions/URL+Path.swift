@@ -12,8 +12,12 @@ extension URL {
     func createDirectoryIfNeeded() -> URL {
         var isDirectory: ObjCBool = true
         let fileManager = FileManager.default
-        if fileManager.fileExists(atPath: path, isDirectory: &isDirectory) {
-            try? fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+        if fileManager.fileExists(atPath: path, isDirectory: &isDirectory) == false {
+            do {
+                try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                logger.error(error)
+            }
         }
         return self
     }
@@ -39,9 +43,9 @@ extension URL {
       return FileManager.default
     }
     
-    static func userDirectory(with userId: Int) -> URL {
+    static func userDirectory(with userID: UInt64) -> URL {
         let documentURL = userDomain(for: .documentDirectory)
-        return documentURL.appendingPathComponent("\(userId)", isDirectory: true).createDirectoryIfNeeded()
+        return documentURL.appendingPathComponent("\(userID)", isDirectory: true).createDirectoryIfNeeded()
     }
     
     static func userDomain(for directory: FileManager.SearchPathDirectory) -> URL {

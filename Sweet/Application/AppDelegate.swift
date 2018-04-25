@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
+        
         return true
     }
     
