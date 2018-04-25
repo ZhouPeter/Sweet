@@ -25,7 +25,7 @@ final class WebProvider {
     
     @discardableResult func request<T>(
         _ api: WebAPI,
-        responseType: T.Type,
+        responseType: Response<T>.Type,
         completion: @escaping (Result<T, NSError>) -> Void) -> Cancellable where T: Codable {
         return provider.request(api, completion: { (result) in
             switch result {
@@ -33,9 +33,17 @@ final class WebProvider {
                 logger.error(error)
                 completion(.failure(NSError(code: .http)))
             case let .success(response):
+                guard response.statusCode == 200 else {
+                    completion(.failure(NSError(code: .http)))
+                    return
+                }
                 do {
-                    let model = try JSONDecoder().decode(responseType, from: response.data)
-                    completion(.success(model))
+                    let responseBody = try JSONDecoder().decode(responseType, from: response.data)
+                    if responseBody.code == 0 {
+                        completion(.success(responseBody.data))
+                    } else {
+                        completion(.failure(NSError(code: responseBody.code)))
+                    }
                 } catch {
                     logger.error(error)
                     completion(.failure(NSError(code: .parse)))
@@ -53,9 +61,21 @@ final class WebProvider {
                 logger.error(error)
                 completion(.failure(NSError(code: .http)))
             case let .success(response):
+                guard response.statusCode == 200 else {
+                    completion(.failure(NSError(code: .http)))
+                    return
+                }
                 do {
                     if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any] {
-                        completion(.success(json))
+                        if let data = json["data"] as? [String: Any], let code = data["code"] as? Int {
+                            if code == 0 {
+                                completion(.success(data))
+                            } else {
+                                completion(.failure(NSError(code: code)))
+                            }
+                        } else {
+                            completion(.failure(NSError(code: .parse)))
+                        }
                     } else {
                         completion(.failure(NSError(code: .parse)))
                     }
@@ -66,4 +86,5 @@ final class WebProvider {
             }
         })
     }
+    
 }

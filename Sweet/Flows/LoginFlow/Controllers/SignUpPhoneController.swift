@@ -136,7 +136,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     
     @objc private func enteringAction(_ sender: UIButton) {
         if let text = phoneTextField.text, !text.checkPhone() {
-            self.toast(message: "你的手机号码不正确", duration: 1)
+            self.toast(message: "你的手机号码不正确", duration: 2)
             return
         }
         web.request(
@@ -148,18 +148,16 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     logger.error(error)
                 case let.success(response):
                     logger.debug(response)
-                    if response.code == 0 {
-                        web.tokenSource.token = response.data.token
-                    }
-                    if !response.data.register && self.loginRequestBody.register {
+                    web.tokenSource.token = response.token
+                    if !response.register && self.loginRequestBody.register {
                         self.toast(
                             message: "你的账号已存在，正在自动登录",
                             duration: 3,
                             completion: {
-                                self.successLogin(loginResponse: response.data)
+                                self.successLogin(loginResponse: response)
                         })
                     } else {
-                        self.successLogin(loginResponse: response.data)
+                        self.successLogin(loginResponse: response)
                     }
                 }
         })
@@ -189,6 +187,8 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                 
             }
         }
+        def.set(true, forKey: loginedKey)
+        def.synchronize()
         
     }
     

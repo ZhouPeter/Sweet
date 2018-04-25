@@ -10,7 +10,7 @@ target 'Sweet' do
   pod 'UMCPush'
   pod 'RealmSwift'
   pod 'SwiftyUserDefaults'
-
+  pod 'Kingfisher'
   target 'Sweet Dev' do
   end
   

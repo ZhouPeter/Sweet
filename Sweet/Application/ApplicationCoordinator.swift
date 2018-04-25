@@ -16,7 +16,9 @@ private var onboardingWasShown: Bool = {
     return isOpened
 }()
 /// 是否登录授权
-private var isAuthorized = false
+private var isAuthorized: Bool = {
+    return web.tokenSource.token != nil
+}()
 
 final class ApplicationCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory
@@ -78,8 +80,7 @@ final class ApplicationCoordinator: BaseCoordinator {
             case .onboarding:
                 runOnboardingFlow()
             case .auth:
-//                runAuthFlow()
-                runMainFlow()
+                runAuthFlow()
             case .main:
                 runMainFlow()
             }

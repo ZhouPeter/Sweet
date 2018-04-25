@@ -97,7 +97,7 @@ class SignUpUniversityController: BaseViewController, SignUpUniversityView {
                 logger.error(error)
             case let.success(response):
                 logger.debug(response)
-                self.universitys =  response.data.universityInfos
+                self.universitys =  response.universityInfos
                 self.tableView.reloadData()
             }
         }

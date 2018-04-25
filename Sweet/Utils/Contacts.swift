@@ -24,15 +24,18 @@ class Contacts {
             let familyName = contact.familyName
             let name = familyName + givenName
             contactMap["name"] = name
+            logger.debug(name)
             var phone: String?
             for labelValue in contact.phoneNumbers {
                 let number = labelValue.value
                 if number.stringValue.checkTel() {
+                    logger.debug(name)
+                    logger.debug(number.stringValue)
                     continue
                 }
-                contactMap["phone"] = number.stringValue
                 let number1 = number.stringValue.replacingOccurrences(of: "-", with: "")
                 let number2 = number1.replacingOccurrences(of: " ", with: "")
+                logger.debug(number2)
                 if number2.checkPhone() {
                     phone = number.stringValue
                     break

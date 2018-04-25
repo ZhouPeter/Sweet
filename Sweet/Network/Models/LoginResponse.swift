@@ -28,13 +28,13 @@ struct LoginResponse: Codable {
     
     struct User: Codable {
         let userId: UInt64
-        var nickname: String?
+        let nickname: String
         let avatar: String
-        var collegeName: String?
-        var enrollment: Int?
-        var gender: Gender?
-        var phone: String?
-        var signature: String?
-        var universityName: String?
+        let collegeName: String
+        let enrollment: Int
+        let gender: Gender
+        let phone: String
+        let signature: String
+        let universityName: String
     }
 }
