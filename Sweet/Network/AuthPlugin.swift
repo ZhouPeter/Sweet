@@ -8,10 +8,12 @@
 
 import Foundation
 import Moya
-
+import SwiftyUserDefaults
 class TokenSource {
     var token: String?
-    init() {}
+    init() {
+        token = Defaults[.token]
+    }
 }
 
 protocol AuthorizedTargetType: TargetType {

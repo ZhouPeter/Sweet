@@ -38,14 +38,14 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     override func start(with option: DeepLinkOption?) {
-        Defaults[.token]  = "234567890-"
-        logger.debug(Defaults[.token])
-        
-        if let storage = storage {
-            let user = storage.realm.object(ofType: User.self, forPrimaryKey: 123)
-            logger.debug(user)
-        }
-        
+//        Defaults[.token]  = "234567890-"
+//        logger.debug(Defaults[.token])
+//
+//        if let storage = storage {
+//            let user = storage.realm.object(ofType: User.self, forPrimaryKey: 123)
+//            logger.debug(user)
+//        }
+//
 //        var newUser: User?
 //        storage?.write({ (realm) in
 //            let user = User()
