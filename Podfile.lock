@@ -7,6 +7,7 @@ PODS:
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - Pageboy (2.5.1)
   - Realm (3.3.2):
     - Realm/Headers (= 3.3.2)
   - Realm/Headers (3.3.2)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Kingfisher
   - Moya (~> 11.0)
+  - Pageboy (~> 2.0)
   - RealmSwift
   - Reveal-SDK
   - SwiftyUserDefaults
@@ -33,6 +35,7 @@ SPEC REPOS:
     - Alamofire
     - Kingfisher
     - Moya
+    - Pageboy
     - Realm
     - RealmSwift
     - Result
@@ -55,6 +58,7 @@ SPEC CHECKSUMS:
   APESuperHUD: d18e9cc943c1e9229830d8381bbc3efc39ec279d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   Moya: a725035953bc1c0eb1be505ab903984501d82440
+  Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
   RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -63,6 +67,6 @@ SPEC CHECKSUMS:
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
 
-PODFILE CHECKSUM: 021c21f2e18a866d2c722e010098388e6d89e3c9
+PODFILE CHECKSUM: c0f5d0d5dd7610e523e384e27eba61faf8c1ef70
 
 COCOAPODS: 1.5.0

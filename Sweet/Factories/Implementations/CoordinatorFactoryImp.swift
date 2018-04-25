@@ -22,7 +22,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     }
     
     func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?) {
-        let controller = MainController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        let controller = MainController()
         let coordinator = MainCoordinator(mainView: controller, coordinatorFactory: CoordinatorFactoryImp())
         return (coordinator, controller)
     }

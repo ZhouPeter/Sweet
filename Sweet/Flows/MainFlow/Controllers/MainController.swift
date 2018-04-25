@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Pageboy
 
-final class MainController: UIPageViewController, MainView {
+final class MainController: PageboyViewController, MainView {
     var onProfileFlowSelect: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
@@ -32,31 +33,22 @@ final class MainController: UIPageViewController, MainView {
         controllers = [story, cards, imList]
         dataSource = self
         onCardsFlowSelect?(cards)
-        setViewControllers([cards], direction: .forward, animated: false, completion: nil)
     }
 }
 
-extension MainController: UIPageViewControllerDataSource {
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard
-            let nav = viewController as? UINavigationController,
-            let pageIndex = controllers.index(of: nav),
-            pageIndex > 0
-        else { return nil }
-        return viewControllerForPage(at: pageIndex - 1)
+extension MainController: PageboyViewControllerDataSource {
+    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+        return controllers.count
     }
     
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard
-            let nav = viewController as? UINavigationController,
-            let pageIndex = controllers.index(of: nav),
-            pageIndex < controllers.count - 1
-            else { return nil }
-        return viewControllerForPage(at: pageIndex + 1)
+    func viewController(
+        for pageboyViewController: PageboyViewController,
+        at index: PageboyViewController.PageIndex) -> UIViewController? {
+        return viewControllerForPage(at: index)
+    }
+    
+    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+        return .at(index: 1)
     }
     
     private func viewControllerForPage(at index: Int) -> UIViewController {
