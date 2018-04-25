@@ -8,13 +8,16 @@
 
 import UIKit
 import Contacts
-let loginedKey = "loginedKey"
+import SwiftyUserDefaults
+let loginedKey = DefaultsKey<Bool>("logined") // 定义了你的key
+
 class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     var onFinish: ((Bool) -> Void)?
     
     var showSetting: (() -> Void)?
     
     var loginRequestBody: LoginRequestBody!
+    private var storage: Storage?
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
@@ -149,22 +152,35 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                 case let.success(response):
                     logger.debug(response)
                     web.tokenSource.token = response.token
-                    if !response.register && self.loginRequestBody.register {
-                        self.toast(
-                            message: "你的账号已存在，正在自动登录",
-                            duration: 3,
-                            completion: {
-                                self.successLogin(loginResponse: response)
-                        })
-                    } else {
-                        self.successLogin(loginResponse: response)
-                    }
+                    Defaults[.token] =  response.token
+                    Defaults[.userID] = Int(response.user.userId)
+                    self.storage = Storage(userID: response.user.userId)
+                    self.storage?.write({ (realm) in
+                        let user = User()
+                        user.userID = Int64(response.user.userId)
+                        user.university = response.user.universityName
+                        user.college = response.user.collegeName
+                        user.avatarURLString = response.user.avatar
+                        user.phone = response.user.phone
+                        user.nickname = response.user.nickname
+                        realm.add(user, update: true)
+                    }, callback: { (_) in
+                        if !response.register && self.loginRequestBody.register {
+                            self.toast(
+                                message: "你的账号已存在，正在自动登录",
+                                duration: 3,
+                                completion: {
+                                    self.successLogin(loginResponse: response)
+                            })
+                        } else {
+                            self.successLogin(loginResponse: response)
+                        }
+                    })
                 }
         })
     }
     private func successLogin(loginResponse: LoginResponse) {
-        let def = UserDefaults.standard
-        let logined = def.bool(forKey: loginedKey)
+        let logined = Defaults[loginedKey]
         if !logined {
             onFinish?(true)
         } else {
@@ -187,9 +203,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                 
             }
         }
-        def.set(true, forKey: loginedKey)
-        def.synchronize()
-        
+        Defaults[loginedKey] = true
     }
     
     @objc private func textFieldEditChanged(_ textField: UITextField) {
