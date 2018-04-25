@@ -19,7 +19,7 @@ final class WebProvider {
         plugins: [
             SignPlugin(signClosure: Signer.sign),
             AuthPlugin(tokenClosure: { self.tokenSource.token })
-//            NetworkLoggerPlugin(verbose: true)
+            //            NetworkLoggerPlugin(verbose: true)
         ]
     )
     
@@ -66,23 +66,20 @@ final class WebProvider {
                     return
                 }
                 do {
-                    if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any] {
-                        if let data = json["data"] as? [String: Any], let code = data["code"] as? Int {
-                            if code == 0 {
-                                completion(.success(data))
-                            } else {
-                                completion(.failure(NSError(code: code)))
-                            }
+                    if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any],
+                        let data = json["data"] as? [String: Any],
+                        let code = json["code"] as? Int {
+                        if code == 0 {
+                            completion(.success(data))
                         } else {
-                            completion(.failure(NSError(code: .parse)))
+                            completion(.failure(NSError(code: code)))
                         }
-                    } else {
-                        completion(.failure(NSError(code: .parse)))
+                        return
                     }
                 } catch {
                     logger.error(error)
-                    completion(.failure(NSError(code: .parse)))
                 }
+                completion(.failure(NSError(code: .parse)))
             }
         })
     }
