@@ -47,10 +47,13 @@ class PowerContactsController: BaseViewController, PowerContactsView {
         navigationController?.navigationBar.barTintColor = UIColor.xpGray()
         navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: UIColor.black]
-        NotificationCenter.default.addObserver(self,
-                            selector: #selector(becomeAction),
-                                name: .UIApplicationDidBecomeActive,
-                              object: nil)
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        if status == .denied {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(becomeAction),
+                                                   name: .UIApplicationDidBecomeActive,
+                                                   object: nil)
+        }
         setupUI()
     }
     
@@ -146,7 +149,9 @@ extension PowerContactsController {
     }
     
     private func uploadContacts(contacts: [[String: Any]]) {
-        if contactsUpload { return }
+        if contactsUpload {
+            return
+        }
         web.request(.uploadContacts(contacts: contacts)) { (result) in
             switch result {
             case .success:

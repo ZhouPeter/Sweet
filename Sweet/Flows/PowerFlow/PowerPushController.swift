@@ -41,8 +41,8 @@ class PowerPushController: BaseViewController, PowerPushView {
         let appDelegate  = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.setUserNotificationCenter(completion: {
             DispatchQueue.main.async {
-                 logger.debug("推送授权完毕")
-
+                 logger.debug("推送授权完毕")  
+                 self.onFinish?()
             }
         })
     }

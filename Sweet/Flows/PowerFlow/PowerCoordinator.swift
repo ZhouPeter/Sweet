@@ -32,6 +32,9 @@ class PowerCoordinator: BaseCoordinator, PowerCoordinatorOutput {
         contactsOutput.showPush = { [weak self] in
             self?.showPush()
         }
+        contactsOutput.onFinish = { [weak self] in
+            self?.finishFlow?()
+        }
         router.setRootFlow(contactsOutput.toPresent())
     }
     

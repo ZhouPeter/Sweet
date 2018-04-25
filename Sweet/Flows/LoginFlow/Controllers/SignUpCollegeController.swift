@@ -61,7 +61,7 @@ class SignUpCollegeController: BaseViewController, SignUpCollegeView {
             responseType: Response<SearchCollegeResponse>.self) { (result) in
                 switch result {
                 case let .success(response):
-                    self.colleges = response.data.collegeInfos
+                    self.colleges = response.collegeInfos
                     self.tableView.reloadData()
                 case let .failure(error):
                     logger.error(error)

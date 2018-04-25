@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="FeedsTableViewCell" customModule="XPro" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_icon" translatesAutoresizingMaskIntoConstraints="NO" id="pWn-XY-U85">
+                        <rect key="frame" x="16" y="19" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="SiO-Kt-ymz"/>
+                            <constraint firstAttribute="width" constant="60" id="WOR-W9-8XF"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aty-kf-B6j">
+                        <rect key="frame" x="96" y="19" width="44" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="AZd-we-amk"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lq7-cb-0bC">
+                        <rect key="frame" x="96" y="48" width="42" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="31" id="dpQ-Fz-riY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFS-XV-k7y">
+                        <rect key="frame" x="264" y="30" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="PFH-kX-rv4"/>
+                            <constraint firstAttribute="height" constant="40" id="nHM-6P-VH8"/>
+                        </constraints>
+                        <state key="normal" image="HeartRed"/>
+                        <connections>
+                            <action selector="didPressActionButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hCC-mp-45B"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cti-F7-Cik">
+                        <rect key="frame" x="148" y="18" width="31" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="e7a-QX-gV6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pWn-XY-U85" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="29Q-GY-pz0"/>
+                    <constraint firstItem="Lq7-cb-0bC" firstAttribute="leading" secondItem="pWn-XY-U85" secondAttribute="trailing" constant="20" id="2Ji-eC-els"/>
+                    <constraint firstItem="aty-kf-B6j" firstAttribute="leading" secondItem="pWn-XY-U85" secondAttribute="trailing" constant="20" id="B7g-I5-hIv"/>
+                    <constraint firstItem="Lq7-cb-0bC" firstAttribute="bottom" secondItem="pWn-XY-U85" secondAttribute="bottom" id="E4w-HV-zLV"/>
+                    <constraint firstItem="aty-kf-B6j" firstAttribute="top" secondItem="pWn-XY-U85" secondAttribute="top" id="FWa-zC-kdl"/>
+                    <constraint firstItem="Cti-F7-Cik" firstAttribute="centerY" secondItem="aty-kf-B6j" secondAttribute="centerY" id="Lul-OJ-rSw"/>
+                    <constraint firstItem="Cti-F7-Cik" firstAttribute="leading" secondItem="aty-kf-B6j" secondAttribute="trailing" constant="8" id="Nq2-Uh-V7o"/>
+                    <constraint firstItem="pWn-XY-U85" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Qa2-2i-D8u"/>
+                    <constraint firstAttribute="trailing" secondItem="KFS-XV-k7y" secondAttribute="trailing" constant="16" id="Tmw-ix-nI0"/>
+                    <constraint firstItem="KFS-XV-k7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lq7-cb-0bC" secondAttribute="trailing" constant="10" id="c8U-HO-bxd"/>
+                    <constraint firstItem="KFS-XV-k7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cti-F7-Cik" secondAttribute="trailing" constant="10" id="dJ9-UV-5aF"/>
+                    <constraint firstItem="KFS-XV-k7y" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e0q-0B-mRl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="actionButton" destination="KFS-XV-k7y" id="BZw-3k-m7S"/>
+                <outlet property="avatarImageView" destination="pWn-XY-U85" id="V3x-N4-JcW"/>
+                <outlet property="bottomLabel" destination="Lq7-cb-0bC" id="PeE-AC-1lS"/>
+                <outlet property="topLabel" destination="aty-kf-B6j" id="6X2-sa-u4o"/>
+                <outlet property="topSubtitleLabel" destination="Cti-F7-Cik" id="qDP-ev-Hbl"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="82"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="HeartRed" width="25" height="25"/>
+        <image name="wechat_icon" width="100" height="100"/>
+    </resources>
+</document>

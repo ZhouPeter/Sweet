@@ -8,7 +8,7 @@ target 'Sweet' do
   pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
   pod 'Moya', '~> 11.0'
   pod 'UMCPush'
-
+  pod 'Kingfisher'
   target 'Sweet Dev' do
   end
   

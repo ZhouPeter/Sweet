@@ -18,8 +18,7 @@ enum WebAPI {
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
-    case uploadWithToken(type: UploadType)
-
+    
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -40,8 +39,6 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case .searchCollege:
             return "/v2/network/college/search"
         case .upload:
-            return "/v2/service/upload/get"
-        case .uploadWithToken:
             return "/v2/service/upload/get"
         }
     }
@@ -74,12 +71,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
     }
     
     var needsAuth: Bool {
-        switch self {
-        case .verify, .searchUniversity, .searchCollege, .uploadContacts:
-            return false
-        default:
-            return true
-        }
+        return web.tokenSource.token != nil
     }
     
     var method: Moya.Method {

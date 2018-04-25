@@ -9,6 +9,7 @@
 import UIKit
 
 final class MainController: UIPageViewController, MainView {
+    var onProfileFlowSelect: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?

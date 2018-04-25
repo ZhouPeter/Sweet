@@ -107,6 +107,42 @@
 		58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */; };
 		58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
 		58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
+		58BD531720902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */; };
+		58BD531820902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */; };
+		58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */; };
+		58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */; };
+		58BD531C20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */; };
+		58BD531D20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */; };
+		58BD531E20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */; };
+		58BD531F20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */; };
+		58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53202090302B00F7C3E1 /* CellConfigurator.swift */; };
+		58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53202090302B00F7C3E1 /* CellConfigurator.swift */; };
+		58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53202090302B00F7C3E1 /* CellConfigurator.swift */; };
+		58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53202090302B00F7C3E1 /* CellConfigurator.swift */; };
+		58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */; };
+		58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */; };
+		58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */; };
+		58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */; };
+		58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
+		58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
+		58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
+		58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
+		58BD53312090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
+		58BD53322090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
+		58BD53332090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
+		58BD53342090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
+		58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
+		58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
+		58BD533920905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
+		58BD533A20905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
+		58BD533B20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */; };
+		58BD533C20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */; };
+		58BD533D20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */; };
+		58BD533E20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */; };
+		58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
+		58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
+		58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
+		58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -358,6 +394,15 @@
 		58BD530F208EF6BD00F7C3E1 /* Sweet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sweet.entitlements; sourceTree = "<group>"; };
 		58BD5310208EF6D200F7C3E1 /* Sweet Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Sweet Dev.entitlements"; sourceTree = "<group>"; };
 		58BD5313208F22CD00F7C3E1 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
+		58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseInfoTableViewCell.swift; sourceTree = "<group>"; };
+		58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BaseInfoTableViewCell.xib; sourceTree = "<group>"; };
+		58BD53202090302B00F7C3E1 /* CellConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellConfigurator.swift; sourceTree = "<group>"; };
+		58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasInfoCellViewModel.swift; sourceTree = "<group>"; };
+		58BD532B2090466600F7C3E1 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSetTableViewCell.swift; sourceTree = "<group>"; };
+		58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
+		58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedsTableViewCell.xib; sourceTree = "<group>"; };
+		58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsCellViewModel.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -493,10 +538,16 @@
 		58BD5293208856B900F7C3E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58BD53202090302B00F7C3E1 /* CellConfigurator.swift */,
+				58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */,
+				58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */,
 				58BD52942088570C00F7C3E1 /* ShrinkButton.swift */,
 				58BD52A920886EFB00F7C3E1 /* ContentTextTableViewCell.swift */,
 				58BD52B52088818A00F7C3E1 /* EnrollmentTableViewCell.swift */,
 				58BD52E4208DAAD800F7C3E1 /* EmptyView.swift */,
+				58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */,
+				58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */,
+				58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -511,6 +562,15 @@
 				58BD530C208EEFE700F7C3E1 /* PowerPushView.swift */,
 			);
 			path = PowerFlow;
+			sourceTree = "<group>";
+		};
+		58BD53252090306E00F7C3E1 /* VIewModels */ = {
+			isa = PBXGroup;
+			children = (
+				58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */,
+				58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */,
+			);
+			path = VIewModels;
 			sourceTree = "<group>";
 		};
 		7F8036DAF360EED22D2BEB53 /* Frameworks */ = {
@@ -624,6 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				58BD530F208EF6BD00F7C3E1 /* Sweet.entitlements */,
+				58BD53252090306E00F7C3E1 /* VIewModels */,
 				58BD5293208856B900F7C3E1 /* Views */,
 				ACD5A52420886C6600B78CFD /* Network */,
 				ACA323482087496800BDC92E /* Application */,
@@ -739,7 +800,6 @@
 			isa = PBXGroup;
 			children = (
 				58BD52FC208DFF3F00F7C3E1 /* PowerFlow */,
-				58BD526F20876EF100F7C3E1 /* LoginFlow */,
 				ACA3237620875D9300BDC92E /* OnboardingFLow */,
 				58BD526F20876EF100F7C3E1 /* LoginFlow */,
 				AC525A88208D87B0001070B2 /* MainFlow */,
@@ -813,6 +873,7 @@
 				58BD52E1208DA51500F7C3E1 /* SearchUniversityResponse.swift */,
 				58BD52E7208DB5AD00F7C3E1 /* SearchCollegeResponse.swift */,
 				58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */,
+				58BD532B2090466600F7C3E1 /* UserResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -987,7 +1048,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */,
+				58BD533B20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */,
 				ACA322F52087410200BDC92E /* Assets.xcassets in Resources */,
+				58BD531C20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -995,6 +1058,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BD531E20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */,
+				58BD533D20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,6 +1067,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BD531F20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */,
+				58BD533E20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,7 +1077,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACA323212087411B00BDC92E /* LaunchScreen.storyboard in Resources */,
+				58BD533C20905C7900F7C3E1 /* FeedsTableViewCell.xib in Resources */,
 				ACA323222087411B00BDC92E /* Assets.xcassets in Resources */,
+				58BD531D20902C2300F7C3E1 /* BaseInfoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,6 +1131,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
@@ -1070,6 +1140,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
@@ -1180,6 +1251,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
@@ -1188,6 +1260,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
@@ -1210,6 +1283,7 @@
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
@@ -1219,6 +1293,7 @@
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
@@ -1252,6 +1327,7 @@
 				AC525AA7208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC525ABD208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
+				58BD531720902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
@@ -1267,6 +1343,7 @@
 				58BD52B0208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52FA208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
@@ -1278,6 +1355,7 @@
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
+				58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58BD52C52088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238220875E4400BDC92E /* BaseView.swift in Sources */,
 				58BD52D42089B74E00F7C3E1 /* SignUpAvatarView.swift in Sources */,
@@ -1287,7 +1365,9 @@
 				58BD52EE208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
+				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
+				58BD53312090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F7208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
@@ -1303,12 +1383,17 @@
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
+				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
+				58BD533920905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
+				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
+				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
@@ -1319,6 +1404,7 @@
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
@@ -1339,6 +1425,7 @@
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
+				58BD53332090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -1354,12 +1441,17 @@
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
+				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
+				58BD533A20905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
+				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
+				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
@@ -1370,6 +1462,7 @@
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
@@ -1390,6 +1483,7 @@
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
+				58BD53342090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -1408,6 +1502,7 @@
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
@@ -1417,6 +1512,7 @@
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
@@ -1450,6 +1546,7 @@
 				AC525AA8208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC525ABE208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
+				58BD531820902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
@@ -1465,6 +1562,7 @@
 				58BD52B1208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52FB208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
@@ -1476,6 +1574,7 @@
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
+				58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58BD52C62088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238320875E4400BDC92E /* BaseView.swift in Sources */,
 				58BD52D52089B77E00F7C3E1 /* SignUpAvatarView.swift in Sources */,
@@ -1485,7 +1584,9 @@
 				58BD52EF208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
+				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
+				58BD53322090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F8208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,

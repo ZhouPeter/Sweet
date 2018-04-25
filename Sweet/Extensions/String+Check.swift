@@ -17,6 +17,6 @@ extension String {
     func checkTel() -> Bool {
         let regex = "^(0[0-9]{2,3}/-)?([2-9][0-9]{6,7})+(/-[0-9]{1,4})?$"
         let pred = NSPredicate(format: "SELF MATCHES %@", regex)
-        return !pred.evaluate(with: self)
+        return pred.evaluate(with: self)
     }
 }
