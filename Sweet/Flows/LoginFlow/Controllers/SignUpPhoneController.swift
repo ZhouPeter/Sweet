@@ -17,6 +17,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     var showSetting: (() -> Void)?
     
     var loginRequestBody: LoginRequestBody!
+    private var storage: Storage?
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
@@ -153,8 +154,8 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     web.tokenSource.token = response.token
                     Defaults[.token] =  response.token
                     Defaults[.userID] = Int(response.user.userId)
-                    let storage = Storage(userID: response.user.userId)
-                    storage.write({ (realm) in
+                    self.storage = Storage(userID: response.user.userId)
+                    self.storage?.write({ (realm) in
                         let user = User()
                         user.userID = Int64(response.user.userId)
                         user.university = response.user.universityName

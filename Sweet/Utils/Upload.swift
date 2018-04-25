@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Moya
 class Upload {
     class func uploadFileToQiniu(localURL: URL,
                                  type: UploadType,
@@ -15,25 +15,26 @@ class Upload {
         web.request(.upload(type: .userAvatar)) { (result) in
             switch result {
             case  let .success(response):
-                guard let data = response["data"] as? [String: Any],
-                    let uploadToken = data["uploadToken"] as? [String: Any],
+                if  let uploadToken = response["uploadToken"] as? [String: Any],
                     let token = uploadToken["token"] as? String,
-                    let key = uploadToken["key"]  as? String else { return }
-    
-                qiniu.requestUpload(
-                    api: .uploadFile(token: token,
-                                       key: key,
-                                   fileURL: localURL,
-                                      type: type),
-                                    completion: { (qiniuResult) in
-                    switch qiniuResult {
-                    case .success:
-                        let model = try? JSONDecoder().decode(UploadTokenResponse.self, from: uploadToken)
-                        completion(model, nil)
-                    case let .failure(error):
-                        logger.error(error)
-                    }
-                })
+                    let key = uploadToken["key"]  as? String {
+                    qiniu.requestUpload(
+                        api: .uploadFile(token: token,
+                                         key: key,
+                                         fileURL: localURL,
+                                         type: type),
+                        completion: { (qiniuResult) in
+                            switch qiniuResult {
+                            case .success:
+                                let model = try? JSONDecoder().decode(UploadTokenResponse.self, from: uploadToken)
+                                completion(model, nil)
+                            case let .failure(error):
+                                logger.error(error)
+                            }
+                    })
+                } else {
+                    completion(nil, NSError(code: .parse))
+                }
             case let .failure(error):
                 logger.error(error)
                 completion(nil, error)
