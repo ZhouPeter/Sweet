@@ -65,7 +65,7 @@ final class WebProvider {
                     completion(.failure(NSError(code: .http)))
                     return
                 }
-                do {
+                do {                                      
                     if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any],
                         let data = json["data"] as? [String: Any],
                         let code = json["code"] as? Int {

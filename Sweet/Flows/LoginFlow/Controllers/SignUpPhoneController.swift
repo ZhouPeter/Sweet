@@ -111,25 +111,25 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         view.addSubview(topLineView)
         topLineView.align(.left, to: view, inset: 16)
         topLineView.align(.right, to: view, inset: 16)
-        topLineView.pin(to: codeLabel, edge: .bottom, spacing: -14)
+        topLineView.pin(to: codeLabel, edge: .bottom, spacing: 14)
         topLineView.constrain(height: 0.5)
         
         view.addSubview(smsCodeTextField)
         smsCodeTextField.centerX(to: view)
-        smsCodeTextField.pin(to: codeLabel, edge: .bottom, spacing: -48)
+        smsCodeTextField.pin(to: codeLabel, edge: .bottom, spacing: 48)
         smsCodeButton.constrain(height: 40)
         
         view.addSubview(bottomLineView)
         bottomLineView.align(.left, to: view, inset: 16)
         bottomLineView.align(.right, to: view, inset: 16)
-        bottomLineView.pin(to: smsCodeTextField, edge: .bottom, spacing: -14)
+        bottomLineView.pin(to: smsCodeTextField, edge: .bottom, spacing: 14)
         bottomLineView.constrain(height: 0.5)
         
         view.addSubview(enterButton)
         enterButton.constrain(height: 50)
         enterButton.align(.left, to: view, inset: 28)
         enterButton.align(.right, to: view, inset: 28)
-        enterButton.pin(to: smsCodeTextField, edge: .bottom, spacing: -120)
+        enterButton.pin(to: smsCodeTextField, edge: .bottom, spacing: 120)
         enterButton.setViewRounded()
     }
     

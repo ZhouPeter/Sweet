@@ -32,6 +32,7 @@ final class MainController: PageboyViewController, MainView {
         
         controllers = [story, cards, imList]
         dataSource = self
+        delegate = self
         onCardsFlowSelect?(cards)
     }
 }
@@ -61,5 +62,13 @@ extension MainController: PageboyViewControllerDataSource {
             onIMFlowSelect?(nav)
         }
         return nav
+    }
+}
+
+extension MainController: PageboyViewControllerDelegate {
+    func pageboyViewController(
+        _ pageboyViewController: PageboyViewController,
+        willScrollToPageAt index: Int, direction: PageboyViewController.NavigationDirection, animated: Bool) {
+        
     }
 }
