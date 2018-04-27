@@ -14,9 +14,16 @@ private let buttonWidth: CGFloat = 70
 private let buttonSpacing: CGFloat = 10
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
-    private lazy var bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
+        return view
+    } ()
+    
+    private var captureController = VideoCaptureController()
+    private lazy var renderView: UIView = {
+        let view = UIView(frame: self.view.bounds)
+        view.backgroundColor = .black
         return view
     } ()
     
@@ -31,6 +38,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
         
+        view.addSubview(renderView)
+        renderView.fill(in: view)
+        captureController.render(in: view)
+        
         setupBottomView()
         selectButton(at: 1, animated: false)
         
@@ -44,6 +55,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         shootButton.trackingDidEnd = { interval in
             logger.debug(interval)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        captureController.startPreview()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        captureController.stopPreview()
     }
     
     // MARK: - Actions

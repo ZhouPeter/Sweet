@@ -3,6 +3,6 @@
 //
 
 #import <CommonCrypto/CommonCrypto.h>
-
 #import <UMPush/UMessage.h>
 #import <UMCommon/UMCommon.h>
+#import "VideoCaptureController.h"

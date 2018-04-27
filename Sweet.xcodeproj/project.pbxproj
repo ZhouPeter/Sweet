@@ -300,6 +300,10 @@
 		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
+		ACD2C42D2092C78B006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
+		ACD2C42E2092C78C006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
+		ACD2C42F2092C78C006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
+		ACD2C4302092C78C006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
 		ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
 		ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
 		ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
@@ -470,6 +474,8 @@
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCaptureController.h; sourceTree = "<group>"; };
+		ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCaptureController.m; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
 		ACD5A52F2088731C00B78CFD /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		ACD5A5342088737A00B78CFD /* Sweet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -662,6 +668,8 @@
 			isa = PBXGroup;
 			children = (
 				AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */,
+				ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */,
+				ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1171,6 +1179,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1184,6 +1193,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1299,6 +1309,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1312,6 +1323,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1337,6 +1349,7 @@
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				ACD2C42D2092C78B006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -1490,6 +1503,7 @@
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD53332090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
+				ACD2C42F2092C78C006833C9 /* VideoCaptureController.m in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -1552,6 +1566,7 @@
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				58BD53342090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
+				ACD2C4302092C78C006833C9 /* VideoCaptureController.m in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -1568,6 +1583,7 @@
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				ACD2C42E2092C78C006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,

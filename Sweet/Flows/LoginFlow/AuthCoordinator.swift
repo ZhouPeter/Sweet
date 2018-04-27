@@ -101,5 +101,4 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
         }
         router.push(phoneOutput)
     }
-    
 }
