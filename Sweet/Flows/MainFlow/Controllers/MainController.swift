@@ -16,24 +16,21 @@ final class MainController: PageboyViewController, MainView {
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
     var onCardsFlowSelect: ((UINavigationController) -> Void)?
     
-    var controllers = [UINavigationController]()
+    private var controllers = [UINavigationController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        logger.debug("")
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
-        
         if let nav = navigationController { onViewDidLoad?(nav) }
-        
         let story = UINavigationController()
         let cards = UINavigationController()
         let imList = UINavigationController()
-        
         controllers = [story, cards, imList]
         dataSource = self
         delegate = self
         onCardsFlowSelect?(cards)
+        edgesForExtendedLayout = []
     }
 }
 
@@ -68,7 +65,17 @@ extension MainController: PageboyViewControllerDataSource {
 extension MainController: PageboyViewControllerDelegate {
     func pageboyViewController(
         _ pageboyViewController: PageboyViewController,
-        willScrollToPageAt index: Int, direction: PageboyViewController.NavigationDirection, animated: Bool) {
-        
+        didScrollToPageAt index: Int,
+        direction: PageboyViewController.NavigationDirection,
+        animated: Bool) {
+        updateStatusBar(at: index)
+    }
+    
+    private func updateStatusBar(at index: Int) {
+        if index == 0 {
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
+        } else {
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+        }
     }
 }

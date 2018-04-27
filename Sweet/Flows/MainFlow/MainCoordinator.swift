@@ -13,7 +13,7 @@ protocol MainView: BaseView {
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
     var onCardsFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onIMFlowSelect: ((UINavigationController) -> Void)? { get set }
-    var onProfileFlowSelect:((UINavigationController) -> Void)? { get set }
+    var onProfileFlowSelect: ((UINavigationController) -> Void)? { get set }
 }
 
 final class MainCoordinator: BaseCoordinator {

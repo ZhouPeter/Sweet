@@ -14,6 +14,12 @@ private let buttonWidth: CGFloat = 70
 private let buttonSpacing: CGFloat = 10
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
+    private let topView: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        return view
+    } ()
+    
     private let bottomView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
@@ -37,24 +43,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         super.viewDidLoad()
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
-        
-        view.addSubview(renderView)
-        renderView.fill(in: view)
-        captureController.render(in: view)
-        
+        setupCaptureView()
+        setupTopView()
         setupBottomView()
-        selectButton(at: 1, animated: false)
-        
-        view.addSubview(shootButton)
-        shootButton.centerX(to: view)
-        shootButton.constrain(width: 90, height: 90)
-        shootButton.pin(to: bottomView, edge: .top)
-        shootButton.trackingDidStart = {
-            logger.debug("")
-        }
-        shootButton.trackingDidEnd = { interval in
-            logger.debug(interval)
-        }
+        setupShootButton()
+        selectBottomButton(at: 1, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,12 +63,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     // MARK: - Actions
     
     @objc private func didPressBottomButton(_ button: UIButton) {
-        selectButton(at: button.tag, animated: true)
+        selectBottomButton(at: button.tag, animated: true)
     }
     
     // MARK: - Private
     
-    private func selectButton(at index: Int, animated: Bool) {
+    private func selectBottomButton(at index: Int, animated: Bool) {
         indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
         if animated {
             UIView.beginAnimations(nil, context: nil)
@@ -124,6 +117,40 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         indicator.constrain(width: 30, height: 30)
         indicator.pin(to: shootButton, edge: .bottom, spacing: -10)
         indicatorCenterX = indicator.centerX(to: shootButton)
+    }
+    
+    private func setupShootButton() {
+        view.addSubview(shootButton)
+        shootButton.centerX(to: view)
+        shootButton.constrain(width: 90, height: 90)
+        shootButton.pin(to: bottomView, edge: .top)
+        shootButton.trackingDidStart = {
+            logger.debug("")
+        }
+        shootButton.trackingDidEnd = { interval in
+            logger.debug(interval)
+        }
+    }
+    
+    private func setupCaptureView() {
+        view.addSubview(renderView)
+        renderView.fill(in: view)
+        captureController.render(in: view)
+    }
+    
+    private func setupTopView() {
+        view.addSubview(topView)
+        topView.constrain(height: 64)
+        topView.align(.top, to: view)
+        topView.align(.left, to: view)
+        topView.align(.right, to: view)
+        
+        let backButton = UIButton()
+        backButton.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
+        topView.addSubview(backButton)
+        backButton.constrain(width: 30, height: 30)
+        backButton.align(.top, to: topView, inset: 15)
+        backButton.align(.right, to: topView, inset: 5)
     }
     
     private func makeButton(withTitle title: String, tag: Int, action: Selector) -> UIButton {
