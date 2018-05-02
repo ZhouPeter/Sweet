@@ -68,6 +68,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     // MARK: - Private
     
+    private func shootDidBegin() {
+        captureController.startRecord()
+    }
+    
+    private func shootDidEnd(with interval: TimeInterval) {
+        let isPhoto = interval < 1
+        logger.debug(interval)
+        captureController.finishRecord(forPhotoCapture: isPhoto) { (url) in
+            logger.debug(url)
+        }
+    }
+    
     private func selectBottomButton(at index: Int, animated: Bool) {
         indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
         if animated {
@@ -124,12 +136,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         shootButton.centerX(to: view)
         shootButton.constrain(width: 90, height: 90)
         shootButton.pin(to: bottomView, edge: .top)
-        shootButton.trackingDidStart = {
-            logger.debug("")
-        }
-        shootButton.trackingDidEnd = { interval in
-            logger.debug(interval)
-        }
+        shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
+        shootButton.trackingDidEnd = { [weak self] interval in self?.shootDidEnd(with: interval) }
     }
     
     private func setupCaptureView() {

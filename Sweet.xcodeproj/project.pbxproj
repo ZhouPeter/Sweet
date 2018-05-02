@@ -312,6 +312,10 @@
 		ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
+		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
+		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
+		ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
@@ -482,6 +486,8 @@
 		ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet Dev-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
+		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
 		ACF1A70B20919FDF0046BF21 /* ShootButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootButton.swift; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -816,6 +822,8 @@
 				ACD5A52F2088731C00B78CFD /* String+MD5.swift */,
 				AC84120D20887C800086891C /* UIDevice+DeviceType.swift */,
 				58BD52F9208DFB6300F7C3E1 /* String+Check.swift */,
+				ACE560A420997AA900CE2564 /* NSURL+Path.h */,
+				ACE560A520997AA900CE2564 /* NSURL+Path.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1366,6 +1374,7 @@
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
+				ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				58BD52E2208DA51500F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				AC525AB2208DD714001070B2 /* IMListController.swift in Sources */,
@@ -1498,6 +1507,7 @@
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
@@ -1561,6 +1571,7 @@
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
@@ -1600,6 +1611,7 @@
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
+				ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				58BD52E3208DA52000F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				AC525AB3208DD714001070B2 /* IMListController.swift in Sources */,
@@ -1834,7 +1846,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1855,7 +1870,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -1875,7 +1893,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1896,7 +1918,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1915,7 +1941,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -1935,7 +1965,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -1954,11 +1988,19 @@
 				CODE_SIGN_ENTITLEMENTS = "Sweet Dev.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEV=1",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sweet Dev-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1975,11 +2017,19 @@
 				CODE_SIGN_ENTITLEMENTS = "Sweet Dev.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEV=1",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sweet Dev-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
