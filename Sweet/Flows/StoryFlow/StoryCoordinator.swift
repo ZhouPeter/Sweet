@@ -21,13 +21,27 @@ final class StoryCoordinator: BaseCoordinator {
     
     override func start() {
         logger.debug()
-        showStoryRecord()
+        showStoryRecordView()
     }
     
     // MARK: - Private
     
-    private func showStoryRecord() {
+    private func showStoryRecordView() {
         let controller = factory.makeStoryRecordView()
+        controller.onRecorded = { [weak self] url, isPhoto in
+            self?.showStoryEditView(with: url, isPhoto: isPhoto)
+        }
         router.setRootFlow(controller)
+    }
+    
+    private func showStoryEditView(with fileURL: URL, isPhoto: Bool) {
+        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto)
+        controller.onCancelled = { [weak self] in
+            self?.router.popFlow(animated: true)
+        }
+        controller.onFinished = { [weak self] _ in
+            self?.router.popFlow(animated: true)
+        }
+        router.push(controller)
     }
 }

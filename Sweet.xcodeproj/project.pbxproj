@@ -144,6 +144,14 @@
 		58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
 		58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
+		AC04E9882099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
+		AC04E9892099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
+		AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
+		AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
+		AC04E98E2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
+		AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
+		AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
+		AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
 		AC2F978720904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
 		AC2F978820904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
 		AC2F978920904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
@@ -316,6 +324,18 @@
 		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
+		ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AA2099834000CE2564 /* StoryEditController.swift */; };
+		ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AA2099834000CE2564 /* StoryEditController.swift */; };
+		ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AA2099834000CE2564 /* StoryEditController.swift */; };
+		ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AA2099834000CE2564 /* StoryEditController.swift */; };
+		ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AF209983AF00CE2564 /* StoryRecordView.swift */; };
+		ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AF209983AF00CE2564 /* StoryRecordView.swift */; };
+		ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AF209983AF00CE2564 /* StoryRecordView.swift */; };
+		ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560AF209983AF00CE2564 /* StoryRecordView.swift */; };
+		ACE560B5209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
+		ACE560B6209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
+		ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
+		ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
 		ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
@@ -428,6 +448,10 @@
 		58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedsTableViewCell.xib; sourceTree = "<group>"; };
 		58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsCellViewModel.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		AC04E9862099C87F004401AC /* LookupFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupFilter.m; sourceTree = "<group>"; };
+		AC04E9872099C87F004401AC /* LookupFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupFilter.h; sourceTree = "<group>"; };
+		AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryFilterPreviewController.h; sourceTree = "<group>"; };
+		AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryFilterPreviewController.m; sourceTree = "<group>"; };
 		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
@@ -488,6 +512,9 @@
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
 		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
+		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
+		ACE560AF209983AF00CE2564 /* StoryRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordView.swift; sourceTree = "<group>"; };
+		ACE560B4209984A000CE2564 /* StoryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditView.swift; sourceTree = "<group>"; };
 		ACF1A70B20919FDF0046BF21 /* ShootButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootButton.swift; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -673,9 +700,16 @@
 		AC525AA5208DD6EC001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				ACE560AF209983AF00CE2564 /* StoryRecordView.swift */,
 				AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */,
 				ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */,
 				ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */,
+				ACE560B4209984A000CE2564 /* StoryEditView.swift */,
+				ACE560AA2099834000CE2564 /* StoryEditController.swift */,
+				AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */,
+				AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */,
+				AC04E9872099C87F004401AC /* LookupFilter.h */,
+				AC04E9862099C87F004401AC /* LookupFilter.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1188,6 +1222,7 @@
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1202,6 +1237,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1318,6 +1354,7 @@
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1332,6 +1369,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1364,6 +1402,7 @@
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
@@ -1410,6 +1449,7 @@
 				58BD531720902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
+				AC04E98E2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
@@ -1421,14 +1461,17 @@
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B0208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
+				ACE560B5209984A000CE2564 /* StoryEditView.swift in Sources */,
 				58BD52FA208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC04E9882099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
 				AC2F978C20904F8000D5DE4F /* Storage.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
@@ -1468,6 +1511,7 @@
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD533920905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
@@ -1477,6 +1521,7 @@
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */,
+				ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
@@ -1485,15 +1530,18 @@
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
+				ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
+				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
@@ -1532,6 +1580,7 @@
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD533A20905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
@@ -1541,6 +1590,7 @@
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
+				ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
@@ -1549,15 +1599,18 @@
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				AC2F978F20904F8000D5DE4F /* Storage.swift in Sources */,
+				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
+				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
@@ -1601,6 +1654,7 @@
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
@@ -1647,6 +1701,7 @@
 				58BD531820902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
+				AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
@@ -1658,14 +1713,17 @@
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B1208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
+				ACE560B6209984A000CE2564 /* StoryEditView.swift in Sources */,
 				58BD52FB208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC04E9892099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,
 				AC2F978D20904F8000D5DE4F /* Storage.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
@@ -1846,10 +1904,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1870,10 +1925,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -1893,11 +1945,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1918,11 +1966,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1941,11 +1985,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -1965,11 +2005,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -1994,10 +2030,7 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2023,10 +2056,7 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";

@@ -7,13 +7,14 @@
 //
 
 import UIKit
-
-protocol StoryRecordView: BaseView {}
+import Hero
 
 private let buttonWidth: CGFloat = 70
 private let buttonSpacing: CGFloat = 10
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
+    var onRecorded: ((URL, Bool) -> Void)?
+    
     private let topView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
@@ -42,7 +43,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        navigationController?.navigationBar.isHidden = true
+        setupNavigation()
         setupCaptureView()
         setupTopView()
         setupBottomView()
@@ -75,8 +76,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     private func shootDidEnd(with interval: TimeInterval) {
         let isPhoto = interval < 1
         logger.debug(interval)
-        captureController.finishRecord(forPhotoCapture: isPhoto) { (url) in
-            logger.debug(url)
+        captureController.finishRecord(forPhotoCapture: isPhoto) { [weak self] (url) in
+            if let url = url {
+                self?.onRecorded?(url, isPhoto)
+            } else {
+                logger.error("record failed")
+            }
         }
     }
     
@@ -94,6 +99,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         if animated {
             UIView.commitAnimations()
         }
+    }
+    
+    // MARK: - UI
+    
+    private func setupNavigation() {
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.hero.navigationAnimationType = .fade
+        navigationController?.hero.isEnabled = true
     }
     
     private func setupBottomView() {
