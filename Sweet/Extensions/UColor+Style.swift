@@ -10,7 +10,7 @@ import UIKit
 
 extension UIColor {
     final class func xpGray() -> UIColor {
-        return UIColor(hex: 0xf2f2f2)
+        return UIColor(hex: 0xf7f7f7)
     }
     
     final class func xpTextGray() -> UIColor {
@@ -41,7 +41,4 @@ extension UIColor {
         return UIColor(hex: 0xb2b2b2)
     }
     
-    final class func xpPhColor() -> UIColor {
-        return UIColor(hex: 0xf7f7f7)
-    }
 }

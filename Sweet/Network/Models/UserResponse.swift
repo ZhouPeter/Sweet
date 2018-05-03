@@ -8,16 +8,21 @@
 
 import Foundation
 
+struct  ProfileResponse: Codable {
+    
+    let userProfile: UserResponse
+    
+}
 struct UserResponse: Codable {
     let userId: UInt64
-    let nickname: String
-    let avatar: String
-    let collegeName: String
-    let enrollment: Int
-    let gender: Gender
-    let phone: String
-    let signature: String
-    let universityName: String
+    var nickname: String
+    var avatar: String
+    var collegeName: String
+    var enrollment: Int
+    var gender: Gender
+    var phone: String
+    var signature: String
+    var universityName: String
     let likeCount: Int
-    let subscription: Bool
+    var subscription: Bool
 }

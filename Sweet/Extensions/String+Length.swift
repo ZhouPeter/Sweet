@@ -34,7 +34,7 @@ extension String {
         var length = 0
         for char in self {
             // 判断是否中文，是中文+2 ，不是+1
-            length += "\(char)".lengthOfBytes(using: String.Encoding.utf8) == 3 ? 2 : 1
+            length += "\(char)".lengthOfBytes(using: String.Encoding.utf8) >= 3 ? 2 : 1
         }
         return length
     }

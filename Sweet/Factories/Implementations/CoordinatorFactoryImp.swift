@@ -9,6 +9,7 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+    
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput {
         return PowerCoordinator(with: FlowFactoryImp(), router: router)
     }
@@ -49,6 +50,12 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()
         )
+    }
+    func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator {
+        return ProfileCoordinator(
+            router: makeRouter(with: navigation),
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp())
     }
     
     func makeRouter(with navigation: UINavigationController?) -> Router {

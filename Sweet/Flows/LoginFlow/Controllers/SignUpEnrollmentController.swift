@@ -22,39 +22,12 @@ class SignUpEnrollmentController: BaseViewController, SignUpEnrollmentView {
         return tableView
     }()
     
-    private lazy var yearsPickerView: UIPickerView = {
-        let yearsPickerView = UIPickerView()
-        yearsPickerView.translatesAutoresizingMaskIntoConstraints = false
-        yearsPickerView.delegate = self
-        yearsPickerView.dataSource = self
-        yearsPickerView.selectRow(years.count - 4 - 1, inComponent: 0, animated: false)
-        return yearsPickerView
-    }()
-    
-    private lazy var cancelButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setTitle("取消", for: .normal)
-        cancelButton.setTitleColor(.black, for: .normal)
-        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        cancelButton.addTarget(self, action: #selector(cancel(_:)), for: .touchUpInside)
-        return cancelButton
-    }()
-    
-    private lazy var doneButton: UIButton = {
-        let doneButton = UIButton()
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.setTitle("确定", for: .normal)
-        doneButton.setTitleColor(.black, for: .normal)
-        doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        doneButton.addTarget(self, action: #selector(done(_:)), for: .touchUpInside)
-        return doneButton
-    }()
-    private lazy var buttonBackgroundView: UIView = {
-        let buttonBackgroundView = UIView()
-        buttonBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        buttonBackgroundView.backgroundColor = UIColor(hex: 0xF2F2F2)
-        return buttonBackgroundView
+    private lazy var yearsPickerView: SweetPickerView = {
+        let pickerView = SweetPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.selectedIndex = years.count - 5
+        return pickerView
     }()
     
     private lazy var years: [Int] = {
@@ -84,52 +57,27 @@ class SignUpEnrollmentController: BaseViewController, SignUpEnrollmentView {
         yearsPickerView.align(.left, to: view)
         yearsPickerView.align(.right, to: view)
         yearsPickerView.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 34 : 0)
-        yearsPickerView.constrain(height: 230)
-        view.addSubview(buttonBackgroundView)
-        buttonBackgroundView.align(.left, to: view)
-        buttonBackgroundView.align(.right, to: view)
-        buttonBackgroundView.pin(to: yearsPickerView, edge: .top)
-        buttonBackgroundView.constrain(height: 40)
-        buttonBackgroundView.addSubview(cancelButton)
-        cancelButton.align(.left, to: buttonBackgroundView)
-        cancelButton.align(.top, to: buttonBackgroundView)
-        cancelButton.align(.bottom, to: buttonBackgroundView)
-        doneButton.constrain(width: 50)
-        buttonBackgroundView.addSubview(doneButton)
-        doneButton.align(.right, to: buttonBackgroundView)
-        doneButton.align(.top, to: buttonBackgroundView)
-        doneButton.align(.bottom, to: buttonBackgroundView)
-        cancelButton.constrain(width: 50)
-    
+        yearsPickerView.constrain(height: 270)
     }
 }
 
-extension SignUpEnrollmentController {
-    @objc private func done(_ sender: UIButton) {
+extension SignUpEnrollmentController: SweetPickerViewDelegate {
+   func done(index: Int) {
         yearsPickerView.removeFromSuperview()
-        buttonBackgroundView.removeFromSuperview()
-        loginRequestBody?.enrollment = years[yearsPickerView.selectedRow(inComponent: 0)]
+        loginRequestBody?.enrollment = years[index]
         showSignUpSex?(loginRequestBody)
     }
     
-    @objc private func cancel(_ sender: UIButton) {
+    func cancel() {
         yearsPickerView.removeFromSuperview()
-        buttonBackgroundView.removeFromSuperview()
     }
-
-}
-
-extension SignUpEnrollmentController: UIPickerViewDelegate {
     
-}
-extension SignUpEnrollmentController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(years[row])级"
     }
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
+}
+
+extension SignUpEnrollmentController: SweetPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return years.count
     }

@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 protocol BaseInfoTableViewCellDelegate: NSObjectProtocol {
-    func openHeartList()
+    
 }
 
 class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
@@ -27,13 +27,21 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
     private var viewModel: ViewModelType?
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
         senderButton.isHidden = true
         subscribeButton.isHidden = true
         avatarImageView.setViewRounded()
         senderButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
         subscribeButton.setViewRounded(borderWidth: 1, borderColor: .black)
-        likeCountButton.addTarget(self, action: #selector(openHeartList), for: .touchUpInside)
         subscribeButton.addTarget(self, action: #selector(subscribeAction), for: .touchUpInside)
+    }
+    
+    override var frame: CGRect {
+        didSet {
+            var newFrame = frame
+            newFrame.size.height -= 10
+            super.frame = newFrame
+        }
     }
     
     func updateWith(_ viewModel: BaseInfoCellViewModel) {
@@ -54,10 +62,6 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
                                       value: paragraphStyle,
                                       range: NSRange(location: 0, length: attributedString.length))
         return attributedString
-    }
-    
-    @objc private func openHeartList() {
-        delegate?.openHeartList()
     }
     
     @objc private func subscribeAction() {

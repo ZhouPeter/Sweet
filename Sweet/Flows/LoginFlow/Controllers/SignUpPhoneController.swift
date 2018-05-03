@@ -134,7 +134,27 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     }
     
     @objc private func sendCode(_ sender: UIButton) {
-        
+        if let phone = loginRequestBody.phone, phone.checkPhone() {
+            sender.isEnabled = false
+            web.request(.sendCode(phone: phone, type: 1)) { [weak self] (result) in
+                switch result {
+                case .success:
+                    self?.toast(message: "发送成功", duration: 2)
+                    TimerHelper.countDown(time: 60, countDownBlock: { (timeout) in
+                        sender.setTitle("剩余\(timeout)秒", for: .normal)
+                    }, endBlock: {
+                        sender.setTitle("获取验证码", for: .normal)
+                        sender.isEnabled = true
+                    })
+                case let .failure(error):
+                    self?.toast(message: "发送失败", duration: 2)
+                    sender.isEnabled = true
+                    logger.error(error)
+                }
+            }
+        } else {
+            self.toast(message: "你的手机号码不正确", duration: 2)
+        }
     }
     
     @objc private func enteringAction(_ sender: UIButton) {

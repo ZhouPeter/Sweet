@@ -18,6 +18,7 @@ class SignUpUniversityController: BaseViewController, SignUpUniversityView {
             showEmptyView(isShow: false)
         }
     }
+    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "搜索学校"

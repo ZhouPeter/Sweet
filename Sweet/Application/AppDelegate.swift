@@ -27,7 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(logoutAuth),
+                                               name: NSNotification.Name(logoutNotiName),
+                                               object: nil)
         return true
     }
     
@@ -66,6 +69,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - Privates
 extension AppDelegate {
+    
+    @objc func logoutAuth(notification: Notification) {
+        if let coordinator = applicationCoordinator as? ApplicationCoordinator {
+            coordinator.removeAllDependency()
+            applicationCoordinator.start(with: .signUp)
+        }
+    }
+    
     func makeCoordinator() -> Coordinator {
         return ApplicationCoordinator(
             router: RouterImp(rootController: rootController),

@@ -9,9 +9,9 @@
 import Foundation
 import Moya
 import Result
-
+import SwiftyUserDefaults
 let web = WebProvider()
-
+let logoutNotiName = "notificationLogout"
 final class WebProvider {
     let tokenSource = TokenSource()
     
@@ -41,6 +41,8 @@ final class WebProvider {
                     let responseBody = try JSONDecoder().decode(responseType, from: response.data)
                     if responseBody.code == 0 {
                         completion(.success(responseBody.data))
+                    } else if responseBody.code == WebErrorCode.authorization.rawValue {
+                       WebProvider.logout()
                     } else {
                         completion(.failure(NSError(code: responseBody.code)))
                     }
@@ -71,6 +73,8 @@ final class WebProvider {
                         let code = json["code"] as? Int {
                         if code == 0 {
                             completion(.success(data))
+                        } else if code == WebErrorCode.authorization.rawValue {
+                            WebProvider.logout()
                         } else {
                             completion(.failure(NSError(code: code)))
                         }
@@ -84,4 +88,15 @@ final class WebProvider {
         })
     }
     
+}
+
+extension WebProvider {
+    class func logout() {
+        LoginResponse.remove()
+        Defaults.remove(.token)
+        Defaults.remove(.userID)
+        web.tokenSource.token = nil
+        NotificationCenter.default.post(name: NSNotification.Name(logoutNotiName), object: nil)
+    }
+   
 }

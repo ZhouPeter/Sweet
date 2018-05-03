@@ -19,4 +19,11 @@ extension String {
         let pred = NSPredicate(format: "SELF MATCHES %@", regex)
         return pred.evaluate(with: self)
     }
+    
+    func phoneMiddleHidden() -> String {
+        let phone = "\(self[...self.index(self.startIndex, offsetBy: 2)])" +
+                    "****" +
+                    "\(self[self.index(self.startIndex, offsetBy: 7)...])"
+        return phone
+    }
 }

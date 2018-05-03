@@ -11,11 +11,10 @@ import UIKit
 protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
-
+    func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
     func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?)
     func makeIMCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
-
-    func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
+    func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator
 }

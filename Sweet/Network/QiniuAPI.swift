@@ -15,21 +15,23 @@ enum QiniuAPI {
 
 extension QiniuAPI: TargetType {
     var task: Task {
-        let parameters: [String: Any]
         switch self {
         case let .uploadFile(token, key, fileURL, type):
-            parameters = ["token": token, "key": key]
             let data = MultipartFormData(
                                 provider: MultipartFormData.FormDataProvider.file(fileURL),
                                 name: "file",
                                 fileName: fileURL.lastPathComponent,
                                 mimeType: type.mimeTypeString())
-            return .uploadCompositeMultipart([data], urlParameters: parameters)
+            let tokenValue = token.data(using: .utf8)
+            let tokenData = MultipartFormData(provider: .data(tokenValue!), name: "token")
+            let keyValue = key.data(using: .utf8)
+            let keyData = MultipartFormData(provider: .data(keyValue!), name: "key")
+            return .uploadMultipart([data, tokenData, keyData])
         }
     }
     
     var baseURL: URL {
-        return URL(string: "https://upload.qiniup.com")!
+        return URL(string: "http://upload.qiniu.com")!
     }
     
     var path: String {
@@ -48,7 +50,7 @@ extension QiniuAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return [:]
+        return nil
     }
     
 }

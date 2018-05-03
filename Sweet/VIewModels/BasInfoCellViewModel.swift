@@ -29,6 +29,6 @@ struct BaseInfoCellViewModel {
         signatureString = user.signature
         likeCountString = "获\(user.likeCount)♥️"
         subscribeButtonString = user.subscription ? "已订阅" : "订阅"
-        cellHeight = 130
+        cellHeight = 140
     }
 }

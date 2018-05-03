@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyUserDefaults
 enum UpdateUserType: UInt, Codable {
     case unknown
     case pushToken
@@ -36,5 +36,10 @@ struct LoginResponse: Codable {
         let phone: String
         let signature: String
         let universityName: String
+    }
+    
+    static func remove() {
+        Defaults.remove(.token)
+        Defaults.remove(.userID)
     }
 }

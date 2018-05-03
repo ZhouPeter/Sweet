@@ -37,4 +37,9 @@ extension UIScreen {
         let top: CGFloat = isIphoneX() ? 24 : 0
         return 64 + top
     }
+    
+    class func safeBottomMargin() -> CGFloat {
+        let bottom: CGFloat = isIphoneX() ? 34 : 0
+        return 0 + bottom
+    }
 }

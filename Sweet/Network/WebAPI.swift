@@ -12,9 +12,13 @@ import Moya
 enum WebAPI {
     case verify(phoneNumber: String, type: VerificationType)
     case login(body: LoginRequestBody)
+    case sendCode(phone: String, type: Int)
     case logout
     case update(updateParameters: [String: Any])
+    case phoneChange(phone: String, code: String)
     case uploadContacts(contacts: [[String: Any]])
+    case getUserProfile(userId: UInt64)
+    case storyList(page: Int, userId: UInt64)
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
@@ -28,12 +32,20 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/user/send/verification"
         case .login:
             return "/v2/user/login"
+        case .sendCode:
+            return "/v2/user/send/verification"
         case .logout:
             return "/v2/user/logout"
         case .update:
             return "/v2/user/update"
+        case .phoneChange:
+            return "/v2/user/phone/change"
         case .uploadContacts:
             return "/v2/user/contacts/upload"
+        case .getUserProfile:
+            return "/v2/user/profile/get"
+        case .storyList:
+            return "/v2/user/profile/story/list"
         case .searchUniversity:
             return "/v2/network/university/search"
         case .searchCollege:
@@ -50,10 +62,18 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phoneNumber, "type": "\(type.rawValue)"]
         case let .login(body):
             return .requestJSONEncodable(body)
+        case let .sendCode(phone, type):
+            parameters = ["phone": phone, "type": type]
         case let .update(updateParameters):
             parameters = updateParameters
+        case let .phoneChange(phone, code):
+            parameters = ["phone": phone, "code": code]
         case let .uploadContacts(contacts):
             parameters = ["contacts": contacts]
+        case let .getUserProfile(userId):
+            parameters = ["userId": userId]
+        case let .storyList(page, userId):
+            parameters = ["page": page, "userId": userId]
         case let .searchUniversity(name):
             parameters = ["universityName": name]
         case let .searchCollege(collegeName, universityName):

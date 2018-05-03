@@ -9,6 +9,62 @@
 /* Begin PBXBuildFile section */
 		23562495F56AEB699EAC4653 /* Pods_SweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0135478D65C69FE268B22C5F /* Pods_SweetTests.framework */; };
 		2C4A2107023F0E35905AF719 /* Pods_Sweet_Sweet_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */; };
+		5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */; };
+		5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */; };
+		5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */; };
+		5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */; };
+		5803C1272099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		5803C1282099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
+		58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
+		58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
+		58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
+		58155E12209175AF00ADEFFB /* FeedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E11209175AF00ADEFFB /* FeedsController.swift */; };
+		58155E13209175AF00ADEFFB /* FeedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E11209175AF00ADEFFB /* FeedsController.swift */; };
+		58155E14209175AF00ADEFFB /* FeedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E11209175AF00ADEFFB /* FeedsController.swift */; };
+		58155E15209175AF00ADEFFB /* FeedsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E11209175AF00ADEFFB /* FeedsController.swift */; };
+		58155E1C2091764000ADEFFB /* EstimatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E1B2091764000ADEFFB /* EstimatesController.swift */; };
+		58155E1D2091764000ADEFFB /* EstimatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E1B2091764000ADEFFB /* EstimatesController.swift */; };
+		58155E1E2091764000ADEFFB /* EstimatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E1B2091764000ADEFFB /* EstimatesController.swift */; };
+		58155E1F2091764000ADEFFB /* EstimatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E1B2091764000ADEFFB /* EstimatesController.swift */; };
+		58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */; };
+		58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */; };
+		58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */; };
+		58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */; };
+		58155E262091B3E300ADEFFB /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E252091B3E300ADEFFB /* AboutController.swift */; };
+		58155E272091B3E300ADEFFB /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E252091B3E300ADEFFB /* AboutController.swift */; };
+		58155E282091B3E300ADEFFB /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E252091B3E300ADEFFB /* AboutController.swift */; };
+		58155E292091B3E300ADEFFB /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E252091B3E300ADEFFB /* AboutController.swift */; };
+		58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2A2091B52100ADEFFB /* RoundedRectView.swift */; };
+		58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2A2091B52100ADEFFB /* RoundedRectView.swift */; };
+		58155E2D2091B52100ADEFFB /* RoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2A2091B52100ADEFFB /* RoundedRectView.swift */; };
+		58155E2E2091B52100ADEFFB /* RoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2A2091B52100ADEFFB /* RoundedRectView.swift */; };
+		58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2F2091BE1300ADEFFB /* AboutRectView.swift */; };
+		58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2F2091BE1300ADEFFB /* AboutRectView.swift */; };
+		58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2F2091BE1300ADEFFB /* AboutRectView.swift */; };
+		58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E2F2091BE1300ADEFFB /* AboutRectView.swift */; };
+		58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
+		58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
+		58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
+		58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
+		58447B27209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */; };
+		58447B28209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */; };
+		58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */; };
+		58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */; };
+		58447B2C209B0909004C2FFE /* BlackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B2B209B0909004C2FFE /* BlackNavigationController.swift */; };
+		58447B2D209B0909004C2FFE /* BlackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B2B209B0909004C2FFE /* BlackNavigationController.swift */; };
+		58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B2B209B0909004C2FFE /* BlackNavigationController.swift */; };
+		58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B2B209B0909004C2FFE /* BlackNavigationController.swift */; };
+		58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
+		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
+		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
+		58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
@@ -127,10 +183,6 @@
 		58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
 		58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
 		58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD532B2090466600F7C3E1 /* UserResponse.swift */; };
-		58BD53312090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
-		58BD53322090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
-		58BD53332090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
-		58BD53342090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */; };
 		58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
 		58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
 		58BD533920905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */; };
@@ -143,6 +195,82 @@
 		58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
 		58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
 		58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */; };
+		58BD534E2090A19600F7C3E1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD534D2090A19500F7C3E1 /* ProfileController.swift */; };
+		58BD534F2090A19600F7C3E1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD534D2090A19500F7C3E1 /* ProfileController.swift */; };
+		58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD534D2090A19500F7C3E1 /* ProfileController.swift */; };
+		58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD534D2090A19500F7C3E1 /* ProfileController.swift */; };
+		58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */; };
+		58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */; };
+		58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */; };
+		58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */; };
+		58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
+		58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
+		58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
+		58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
+		58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C172099DF7D00DBD28C /* SweetPickerView.swift */; };
+		58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C172099DF7D00DBD28C /* SweetPickerView.swift */; };
+		58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C172099DF7D00DBD28C /* SweetPickerView.swift */; };
+		58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C172099DF7D00DBD28C /* SweetPickerView.swift */; };
+		58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
+		58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
+		58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
+		58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
+		58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
+		58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
+		58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
+		58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
+		58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */; };
+		58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */; };
+		58D578D12092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */; };
+		58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */; };
+		58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D32092FAE200AE5D38 /* StoryListResponse.swift */; };
+		58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D32092FAE200AE5D38 /* StoryListResponse.swift */; };
+		58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D32092FAE200AE5D38 /* StoryListResponse.swift */; };
+		58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D32092FAE200AE5D38 /* StoryListResponse.swift */; };
+		58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D82093012500AE5D38 /* StoryCellViewModel.swift */; };
+		58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D82093012500AE5D38 /* StoryCellViewModel.swift */; };
+		58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D82093012500AE5D38 /* StoryCellViewModel.swift */; };
+		58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578D82093012500AE5D38 /* StoryCellViewModel.swift */; };
+		58D578DE2093068F00AE5D38 /* ChildrenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578DD2093068F00AE5D38 /* ChildrenController.swift */; };
+		58D578DF2093068F00AE5D38 /* ChildrenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578DD2093068F00AE5D38 /* ChildrenController.swift */; };
+		58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578DD2093068F00AE5D38 /* ChildrenController.swift */; };
+		58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578DD2093068F00AE5D38 /* ChildrenController.swift */; };
+		58D578E32093198600AE5D38 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E22093198600AE5D38 /* UpdateController.swift */; };
+		58D578E42093198600AE5D38 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E22093198600AE5D38 /* UpdateController.swift */; };
+		58D578E52093198600AE5D38 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E22093198600AE5D38 /* UpdateController.swift */; };
+		58D578E62093198600AE5D38 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E22093198600AE5D38 /* UpdateController.swift */; };
+		58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */; };
+		58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */; };
+		58D578EA20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */; };
+		58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */; };
+		58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
+		58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
+		58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
+		58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
+		58D578F220934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
+		58D578F320934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
+		58D578F420934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
+		58D578F520934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
+		58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
+		58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
+		58D578F9209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
+		58D578FA209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
+		58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578FB20942D4A00AE5D38 /* BorderContentView.swift */; };
+		58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578FB20942D4A00AE5D38 /* BorderContentView.swift */; };
+		58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578FB20942D4A00AE5D38 /* BorderContentView.swift */; };
+		58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578FB20942D4A00AE5D38 /* BorderContentView.swift */; };
+		58D5790120944FDE00AE5D38 /* UpdateGenderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */; };
+		58D5790220944FDE00AE5D38 /* UpdateGenderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */; };
+		58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */; };
+		58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */; };
+		58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC2F978720904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
 		AC2F978820904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
@@ -357,6 +485,20 @@
 		2B725F6E27BDDE57CD16E6B2 /* Pods-SweetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetTests/Pods-SweetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39B6E2AFAF5DF0EBCDB0F439 /* Pods-SweetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetTests/Pods-SweetTests.release.xcconfig"; sourceTree = "<group>"; };
 		4FF84DB9CCEBB7F0B8F859CF /* Pods-Sweet-Sweet Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.release.xcconfig"; sourceTree = "<group>"; };
+		5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUniversityController.swift; sourceTree = "<group>"; };
+		5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCollegeController.swift; sourceTree = "<group>"; };
+		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
+		58155E11209175AF00ADEFFB /* FeedsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsController.swift; sourceTree = "<group>"; };
+		58155E1B2091764000ADEFFB /* EstimatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimatesController.swift; sourceTree = "<group>"; };
+		58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsTableViewCell.swift; sourceTree = "<group>"; };
+		58155E252091B3E300ADEFFB /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
+		58155E2A2091B52100ADEFFB /* RoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectView.swift; sourceTree = "<group>"; };
+		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
+		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		58447B21209AE2D5004C2FFE /* TimerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerHelper.swift; sourceTree = "<group>"; };
+		58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAvatarController.swift; sourceTree = "<group>"; };
+		58447B2B209B0909004C2FFE /* BlackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackNavigationController.swift; sourceTree = "<group>"; };
+		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Metrics.swift"; sourceTree = "<group>"; };
@@ -411,10 +553,28 @@
 		58BD53202090302B00F7C3E1 /* CellConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellConfigurator.swift; sourceTree = "<group>"; };
 		58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasInfoCellViewModel.swift; sourceTree = "<group>"; };
 		58BD532B2090466600F7C3E1 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
-		58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSetTableViewCell.swift; sourceTree = "<group>"; };
 		58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
 		58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedsTableViewCell.xib; sourceTree = "<group>"; };
 		58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsCellViewModel.swift; sourceTree = "<group>"; };
+		58BD534D2090A19500F7C3E1 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowFactory.swift; sourceTree = "<group>"; };
+		58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEnrollmentController.swift; sourceTree = "<group>"; };
+		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
+		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
+		58D578C92092D30500AE5D38 /* StoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesController.swift; sourceTree = "<group>"; };
+		58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		58D578D32092FAE200AE5D38 /* StoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListResponse.swift; sourceTree = "<group>"; };
+		58D578D82093012500AE5D38 /* StoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCellViewModel.swift; sourceTree = "<group>"; };
+		58D578DD2093068F00AE5D38 /* ChildrenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenController.swift; sourceTree = "<group>"; };
+		58D578E22093198600AE5D38 /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
+		58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTableViewCell.swift; sourceTree = "<group>"; };
+		58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCellViewModel.swift; sourceTree = "<group>"; };
+		58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHeaderView.swift; sourceTree = "<group>"; };
+		58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNicknameController.swift; sourceTree = "<group>"; };
+		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
+		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
+		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -518,6 +678,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58463DD920997F3A00698CF8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */,
+				58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */,
+				58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		58BD526F20876EF100F7C3E1 /* LoginFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,7 +723,9 @@
 		58BD5293208856B900F7C3E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58463DD920997F3A00698CF8 /* Profile */,
 				58BD53202090302B00F7C3E1 /* CellConfigurator.swift */,
+				58D578FB20942D4A00AE5D38 /* BorderContentView.swift */,
 				58BD533520905C7800F7C3E1 /* FeedsTableViewCell.swift */,
 				58BD533620905C7900F7C3E1 /* FeedsTableViewCell.xib */,
 				58BD52942088570C00F7C3E1 /* ShrinkButton.swift */,
@@ -561,8 +733,12 @@
 				58BD52B52088818A00F7C3E1 /* EnrollmentTableViewCell.swift */,
 				58BD52E4208DAAD800F7C3E1 /* EmptyView.swift */,
 				58BD531620902C1A00F7C3E1 /* BaseInfoTableViewCell.swift */,
+				58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */,
 				58BD531B20902C2300F7C3E1 /* BaseInfoTableViewCell.xib */,
-				58BD53302090594200F7C3E1 /* ActionSetTableViewCell.swift */,
+				58155E2A2091B52100ADEFFB /* RoundedRectView.swift */,
+				58155E2F2091BE1300ADEFFB /* AboutRectView.swift */,
+				58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */,
+				58C75C172099DF7D00DBD28C /* SweetPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -584,8 +760,43 @@
 			children = (
 				58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */,
 				58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */,
+				58D578D82093012500AE5D38 /* StoryCellViewModel.swift */,
+				58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */,
 			);
 			path = VIewModels;
+			sourceTree = "<group>";
+		};
+		58BD534720909C9900F7C3E1 /* ProfileFlow */ = {
+			isa = PBXGroup;
+			children = (
+				58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */,
+				58BD53522090A2AB00F7C3E1 /* Controllers */,
+			);
+			path = ProfileFlow;
+			sourceTree = "<group>";
+		};
+		58BD53522090A2AB00F7C3E1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				58D578C92092D30500AE5D38 /* StoriesController.swift */,
+				58BD534D2090A19500F7C3E1 /* ProfileController.swift */,
+				58155E0C20916D0E00ADEFFB /* ActionsController.swift */,
+				58155E11209175AF00ADEFFB /* FeedsController.swift */,
+				58155E1B2091764000ADEFFB /* EstimatesController.swift */,
+				58155E252091B3E300ADEFFB /* AboutController.swift */,
+				58D578DD2093068F00AE5D38 /* ChildrenController.swift */,
+				58D578E22093198600AE5D38 /* UpdateController.swift */,
+				58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */,
+				58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */,
+				58463DDA2099903000698CF8 /* UpdateSignatureController.swift */,
+				5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */,
+				5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */,
+				58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */,
+				58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */,
+				58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */,
+				58447B2B209B0909004C2FFE /* BlackNavigationController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		7F8036DAF360EED22D2BEB53 /* Frameworks */ = {
@@ -759,6 +970,7 @@
 			isa = PBXGroup;
 			children = (
 				ACA323A6208763AA00BDC92E /* BaseViewController.swift */,
+				58155E342091D53E00ADEFFB /* WebViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -817,6 +1029,7 @@
 				AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */,
 				AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */,
 				58BD5300208E004E00F7C3E1 /* PowerFlowFactory.swift */,
+				58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -833,6 +1046,7 @@
 		ACA3237520875D8C00BDC92E /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				58BD534720909C9900F7C3E1 /* ProfileFlow */,
 				58BD52FC208DFF3F00F7C3E1 /* PowerFlow */,
 				ACA3237620875D9300BDC92E /* OnboardingFLow */,
 				58BD526F20876EF100F7C3E1 /* LoginFlow */,
@@ -877,6 +1091,7 @@
 				ACA323AC208763D900BDC92E /* Logger.swift */,
 				58BD52F3208DDC3800F7C3E1 /* Upload.swift */,
 				58BD5313208F22CD00F7C3E1 /* Contacts.swift */,
+				58447B21209AE2D5004C2FFE /* TimerHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -908,6 +1123,7 @@
 				58BD52E7208DB5AD00F7C3E1 /* SearchCollegeResponse.swift */,
 				58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */,
 				58BD532B2090466600F7C3E1 /* UserResponse.swift */,
+				58D578D32092FAE200AE5D38 /* StoryListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1327,47 +1543,66 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
+				58155E1C2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
+				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
+				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
+				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58BD52E2208DA51500F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
+				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB2208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				58155E12209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
+				58D578E32093198600AE5D38 /* UpdateController.swift in Sources */,
 				58BD52BF20888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
+				58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
+				58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58BD52C82088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
+				58BD534E2090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				58D5790120944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA1208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
+				58155E262091B3E300ADEFFB /* AboutController.swift in Sources */,
+				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -1380,9 +1615,12 @@
 				AC525ABD208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58BD531720902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
+				5803C1272099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58D578F220934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -1394,17 +1632,25 @@
 				58BD52B0208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52FA208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
 				AC2F978C20904F8000D5DE4F /* Storage.swift in Sources */,
+				58447B2C209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
+				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
+				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
+				58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -1417,10 +1663,12 @@
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EE208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				58447B27209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
+				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
-				58BD53312090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
+				58D578DE2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F7208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
@@ -1439,54 +1687,86 @@
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD533920905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
+				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
+				58D578EA20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
+				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
+				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
+				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
+				58155E2D2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
+				58155E282091B3E300ADEFFB /* AboutController.swift in Sources */,
+				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
+				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
+				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
+				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
+				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
+				58D578F9209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
+				58155E14209175AF00ADEFFB /* FeedsController.swift in Sources */,
+				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				58D578D12092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58D578F420934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
+				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
+				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58155E1E2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
-				58BD53332090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
+				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
+				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
+				58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1500,54 +1780,86 @@
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD533A20905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
+				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
+				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
+				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
+				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
+				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
+				58155E2E2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978F20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
+				58155E292091B3E300ADEFFB /* AboutController.swift in Sources */,
+				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
+				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
+				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
+				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
+				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
+				58D578FA209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
+				58155E15209175AF00ADEFFB /* FeedsController.swift in Sources */,
+				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58D578F520934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
+				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
+				58D578E62093198600AE5D38 /* UpdateController.swift in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58155E1F2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
-				58BD53342090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
+				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
+				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
+				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1555,47 +1867,66 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
+				58155E1D2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
+				58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
+				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
+				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58BD52E3208DA52000F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				58155E13209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58BD52E6208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
+				58D578E42093198600AE5D38 /* UpdateController.swift in Sources */,
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58BD52F2208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
+				58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
+				58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58BD52C92088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
+				58BD534F2090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				58D5790220944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA2208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
+				58155E272091B3E300ADEFFB /* AboutController.swift in Sources */,
+				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -1608,9 +1939,12 @@
 				AC525ABE208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58BD531820902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
+				5803C1282099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				58D578F320934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -1622,17 +1956,25 @@
 				58BD52B1208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				58BD52FB208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
+				58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,
 				AC2F978D20904F8000D5DE4F /* Storage.swift in Sources */,
+				58447B2D209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
+				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
+				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
+				58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -1645,10 +1987,12 @@
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EF208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
+				58447B28209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
+				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
-				58BD53322090594200F7C3E1 /* ActionSetTableViewCell.swift in Sources */,
+				58D578DF2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F8208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,

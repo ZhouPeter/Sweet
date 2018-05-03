@@ -15,9 +15,10 @@ class User: Object {
     @objc dynamic var phone: String?
     @objc dynamic var university: String?
     @objc dynamic var college: String?
-
+    @objc dynamic var enrollment: Int64 = 0
+    @objc dynamic var gender: Int64 = 1
+    @objc dynamic var signature: String = ""
     override static func primaryKey() -> String? {
         return "userID"
     }
-    
 }

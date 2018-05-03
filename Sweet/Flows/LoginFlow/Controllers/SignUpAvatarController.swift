@@ -96,7 +96,7 @@ extension SignUpAvatarController: UINavigationControllerDelegate, UIImagePickerC
                     return
                 }
                 self.cameraButton.setImage(newImage, for: .normal)
-                self.loginRequestBody.avatar = response.token + response.key
+                self.loginRequestBody.avatar = response.host + response.key
                 self.showSignUpPhone?(self.loginRequestBody)
             }
         } catch {

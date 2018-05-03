@@ -17,7 +17,7 @@ private var onboardingWasShown: Bool = {
 }()
 /// 是否登录授权
 private var isAuthorized: Bool = {
-    return web.tokenSource.token != nil
+    return Defaults[.token] != nil
 }()
 
 final class ApplicationCoordinator: BaseCoordinator {

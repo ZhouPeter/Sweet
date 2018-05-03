@@ -32,4 +32,9 @@ class BaseCoordinator: Coordinator {
             break
         }
     }
+    
+    func removeAllDependency() {
+        guard childCoordinators.isNotEmpty else { return }
+        childCoordinators.removeAll()
+    }
 }

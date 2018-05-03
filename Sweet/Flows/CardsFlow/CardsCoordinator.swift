@@ -31,7 +31,7 @@ final class CardsCoordinator: BaseCoordinator {
     // MARK: - Private
     
     private func showCards() {
-        let cards = CardsController()
+        let cards = factory.makeCardsView()
         router.setRootFlow(cards)
     }
 }
