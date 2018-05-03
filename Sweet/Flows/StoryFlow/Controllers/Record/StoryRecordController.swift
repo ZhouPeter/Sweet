@@ -28,6 +28,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     } ()
     
     private var captureController = VideoCaptureController()
+    private lazy var textController = StoryTextController()
+    
     private lazy var renderView: UIView = {
         let view = UIView(frame: self.view.bounds)
         view.backgroundColor = .black
@@ -46,8 +48,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         setupNavigation()
         setupCaptureView()
         setupTopView()
-        setupBottomView()
         setupShootButton()
+        setupBottomView()
         selectBottomButton(at: 1, animated: false)
     }
     
@@ -65,6 +67,28 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     @objc private func didPressBottomButton(_ button: UIButton) {
         selectBottomButton(at: button.tag, animated: true)
+        if button.tag == 0 {
+            if textController.view.superview == nil {
+                addChildViewController(textController)
+                textController.didMove(toParentViewController: self)
+                view.insertSubview(textController.view, belowSubview: bottomView)
+                textController.view.fill(in: view)
+            }
+            textController.view.alpha = 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                self.textController.view.alpha = 1
+            }, completion: nil)
+            captureController.stopPreview()
+        } else {
+            if self.textController.view.alpha > 0 {
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                    self.textController.view.alpha = 0
+                }, completion: nil)
+            }
+            if button.tag == 1 {
+                captureController.startPreview()
+            }
+        }
     }
     
     // MARK: - Private
@@ -148,7 +172,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.addSubview(shootButton)
         shootButton.centerX(to: view)
         shootButton.constrain(width: 90, height: 90)
-        shootButton.pin(to: bottomView, edge: .top)
+        shootButton.align(.bottom, to: view, inset: 64)
         shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
         shootButton.trackingDidEnd = { [weak self] interval in self?.shootDidEnd(with: interval) }
     }

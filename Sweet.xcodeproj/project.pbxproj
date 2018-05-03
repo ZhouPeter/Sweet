@@ -220,6 +220,18 @@
 		AC8412232088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412242088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412252088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
+		AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
+		AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
+		AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
+		AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972516209ABD09009FB966 /* StoryTextController.swift */; };
+		AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972516209ABD09009FB966 /* StoryTextController.swift */; };
+		AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972516209ABD09009FB966 /* StoryTextController.swift */; };
+		AC97251A209ABD09009FB966 /* StoryTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972516209ABD09009FB966 /* StoryTextController.swift */; };
+		AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
+		AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
+		AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
+		AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
 		AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
@@ -469,6 +481,9 @@
 		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		AC84121C2088B0E60086891C /* SignPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPlugin.swift; sourceTree = "<group>"; };
 		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
+		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
+		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
+		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
 		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
 		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -700,16 +715,9 @@
 		AC525AA5208DD6EC001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				ACE560AF209983AF00CE2564 /* StoryRecordView.swift */,
-				AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */,
-				ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */,
-				ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */,
-				ACE560B4209984A000CE2564 /* StoryEditView.swift */,
-				ACE560AA2099834000CE2564 /* StoryEditController.swift */,
-				AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */,
-				AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */,
-				AC04E9872099C87F004401AC /* LookupFilter.h */,
-				AC04E9862099C87F004401AC /* LookupFilter.m */,
+				AC97251D209ABD42009FB966 /* Record */,
+				AC97251B209ABD14009FB966 /* Edit */,
+				AC97251C209ABD39009FB966 /* Text */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -737,6 +745,40 @@
 				AC525AC2208DF3F9001070B2 /* CardsController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC97251B209ABD14009FB966 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				ACE560B4209984A000CE2564 /* StoryEditView.swift */,
+				ACE560AA2099834000CE2564 /* StoryEditController.swift */,
+				AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */,
+				AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */,
+				AC04E9872099C87F004401AC /* LookupFilter.h */,
+				AC04E9862099C87F004401AC /* LookupFilter.m */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		AC97251C209ABD39009FB966 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
+				AC972516209ABD09009FB966 /* StoryTextController.swift */,
+				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		AC97251D209ABD42009FB966 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				ACE560AF209983AF00CE2564 /* StoryRecordView.swift */,
+				AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */,
+				ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */,
+				ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */,
+			);
+			path = Record;
 			sourceTree = "<group>";
 		};
 		ACA322E12087410000BDC92E = {
@@ -1420,6 +1462,7 @@
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
@@ -1427,6 +1470,7 @@
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58BD52BF20888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
@@ -1457,6 +1501,7 @@
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -1514,6 +1559,7 @@
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1534,6 +1580,7 @@
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
+				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -1542,6 +1589,7 @@
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
+				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
@@ -1583,6 +1631,7 @@
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1603,6 +1652,7 @@
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
+				AC97251A209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -1611,6 +1661,7 @@
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
+				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
@@ -1672,6 +1723,7 @@
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
@@ -1679,6 +1731,7 @@
 				58BD52E6208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58BD52F2208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
@@ -1709,6 +1762,7 @@
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -1904,7 +1958,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1925,7 +1982,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -1945,7 +2005,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1966,7 +2030,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -1985,7 +2053,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -2005,7 +2077,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -2030,7 +2106,10 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2056,7 +2135,10 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
