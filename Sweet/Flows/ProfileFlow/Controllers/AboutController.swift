@@ -202,7 +202,7 @@ extension AboutController {
                 }
             })
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(doneAction)
         controller.addAction(cancelAction)
        self.present(controller, animated: true, completion: nil)

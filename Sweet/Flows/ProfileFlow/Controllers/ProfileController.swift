@@ -17,11 +17,12 @@ class ProfileController: BaseViewController, ProfileView {
     var user: UserResponse? {
         willSet {
             if let newValue = newValue {
-                if newValue.userId == 12 {
+                if newValue.userId == Defaults[.userID] {
                     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
                     navigationItem.title = "我的"
                 } else {
                     navigationItem.title = newValue.nickname
+                    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuButton)
                 }
             }
         }
@@ -52,10 +53,17 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
+    private lazy var menuButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Menu_black"), for: .normal)
+        button.addTarget(self, action: #selector(menuAction(sender:)), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +84,22 @@ extension ProfileController {
         guard let userId = user?.userId, userId == Defaults[.userID] else { return }
         self.showAbout?(user!)
        
+    }
+    @objc private func menuAction(sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let shieldAction = UIAlertAction(title: "屏蔽他/她的来源", style: .default) { (_) in
+            
+        }
+        shieldAction.setTextColor(color: .black)
+        let addBlacklistAction = UIAlertAction(title: "加入黑名单", style: .default) { (_) in
+            
+        }
+        addBlacklistAction.setTextColor(color: .black)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        alertController.addAction(shieldAction)
+        alertController.addAction(addBlacklistAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
