@@ -11,20 +11,15 @@ import UIKit
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     
-    private lazy var textView: UITextView = {
-        let view = UITextView(frame: .zero)
-        view.backgroundColor = .clear
-        view.font = UIFont.systemFont(ofSize: 60)
-        return view
-    } ()
+    private lazy var editController = StoryTextEditController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
-        view.addSubview(textView)
-        textView.align(.left, to: view, inset: 20)
-        textView.align(.right, to: view, inset: 20)
-        textView.align(.bottom, to: view, inset: 20)
-        textView.align(.top, to: view, inset: 40)
+        
+        addChildViewController(editController)
+        editController.didMove(toParentViewController: self)
+        view.addSubview(editController.view)
+        editController.view.fill(in: view)
     }
 }

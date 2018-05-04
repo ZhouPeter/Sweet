@@ -232,6 +232,10 @@
 		AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
 		AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
 		AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC97251E209ABD5E009FB966 /* StoryTextView.swift */; };
+		AC972542209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
@@ -484,6 +488,7 @@
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
+		AC972541209B2728009FB966 /* KeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
 		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -975,6 +980,7 @@
 				ACA323AC208763D900BDC92E /* Logger.swift */,
 				58BD52F3208DDC3800F7C3E1 /* Upload.swift */,
 				58BD5313208F22CD00F7C3E1 /* Contacts.swift */,
+				AC972541209B2728009FB966 /* KeyboardListener.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1437,6 +1443,7 @@
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				AC972542209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACD2C42D2092C78B006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -1560,6 +1567,7 @@
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
+				AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1632,6 +1640,7 @@
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
+				AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
@@ -1698,6 +1707,7 @@
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACD2C42E2092C78C006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
