@@ -7,12 +7,13 @@
 //
 
 import UIKit
-
+protocol IMListView: BaseView {
+    
+}
 final class IMListController: BaseViewController, IMListView {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "Messages"
+        view.backgroundColor = .green
     }
     
     override func viewWillAppear(_ animated: Bool) {

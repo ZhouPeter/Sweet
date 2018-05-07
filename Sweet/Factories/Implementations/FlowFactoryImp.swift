@@ -16,7 +16,11 @@ final class FlowFactoryImp:
     StoryFlowFactory,
     CardsFlowFactory,
     PowerFlowFactory,
-    ProfileFlowFactory {
+ProfileFlowFactory {
+
+    func makeInviteOutput() -> InviteView {
+        return InviteController()
+    }
     func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
         let viewController = UpdateController()
         viewController.user = user
@@ -84,7 +88,9 @@ final class FlowFactoryImp:
     func makeAuthOutput() -> AuthView {
         return AuthViewController()
     }
-    
+    func makeIMManagerView() -> IMManagerView {
+        return IMManagerController()
+    }
     func makeIMListView() -> IMListView {
         return IMListController()
     }

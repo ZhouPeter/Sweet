@@ -10,6 +10,6 @@ import Foundation
 
 struct Response<T>: Codable where T: Codable {
     let code: Int
-    let data: T
+    let data: T?
     let msg: String
 }

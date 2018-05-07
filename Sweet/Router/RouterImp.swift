@@ -18,6 +18,17 @@ final class RouterImp: NSObject, Router {
         completions = [:]
     }
     
+    func replaceController(parentController: UIViewController,
+                           oldController: UIViewController,
+                           newController: UIViewController) {
+        parentController.addChildViewController(newController)
+        newController.didMove(toParentViewController: parentController)
+        parentController.view.addSubview(newController.view)
+        oldController.willMove(toParentViewController: nil)
+        oldController.removeFromParentViewController()
+        oldController.view.removeFromSuperview()
+    }
+    
     func toPresent() -> UIViewController? {
         return rootController
     }
@@ -92,4 +103,5 @@ final class RouterImp: NSObject, Router {
         completion()
         completions.removeValue(forKey: controller)
     }
+    
 }

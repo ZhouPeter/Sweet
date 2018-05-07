@@ -22,7 +22,8 @@ enum WebAPI {
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
-    
+    case contactAllList
+    case phoneContactList
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -52,6 +53,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/network/college/search"
         case .upload:
             return "/v2/service/upload/get"
+        case .contactAllList:
+            return "/v2/contact/all/list"
+        case .phoneContactList:
+            return "v2/contact/phone/list"
         }
     }
     

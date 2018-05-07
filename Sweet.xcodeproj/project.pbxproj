@@ -49,6 +49,26 @@
 		58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
+		5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
+		5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
+		5843DA4E209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
+		5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4F20A0261D005C8AD2 /* InviteController.swift */; };
+		5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4F20A0261D005C8AD2 /* InviteController.swift */; };
+		5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4F20A0261D005C8AD2 /* InviteController.swift */; };
+		5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4F20A0261D005C8AD2 /* InviteController.swift */; };
+		5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */; };
+		5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */; };
+		5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */; };
+		5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */; };
+		5843DA5A20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */; };
+		5843DA5B20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */; };
+		5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */; };
+		5843DA5D20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */; };
+		5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */; };
+		5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */; };
+		5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */; };
+		5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */; };
 		58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
 		58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
 		58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
@@ -65,10 +85,30 @@
 		58447B32209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
 		58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
 		58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
-		58447B37209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */; };
-		58447B38209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */; };
-		58447B39209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */; };
-		58447B3A209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */; };
+		58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
+		58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
+		58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
+		58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
+		58447B47209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
+		58447B48209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
+		58447B49209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
+		58447B4A209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
+		58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
+		58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
+		58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
+		58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
+		58447B51209C5143004C2FFE /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B50209C5143004C2FFE /* ContactTableViewCell.swift */; };
+		58447B52209C5143004C2FFE /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B50209C5143004C2FFE /* ContactTableViewCell.swift */; };
+		58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B50209C5143004C2FFE /* ContactTableViewCell.swift */; };
+		58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B50209C5143004C2FFE /* ContactTableViewCell.swift */; };
+		58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B55209C58CC004C2FFE /* ContactListResponse.swift */; };
+		58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B55209C58CC004C2FFE /* ContactListResponse.swift */; };
+		58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B55209C58CC004C2FFE /* ContactListResponse.swift */; };
+		58447B59209C58CC004C2FFE /* ContactListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B55209C58CC004C2FFE /* ContactListResponse.swift */; };
+		58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
+		58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
+		58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
+		58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
 		58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
@@ -259,10 +299,10 @@
 		58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
 		58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
 		58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */; };
-		58D578F220934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
-		58D578F320934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
-		58D578F420934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
-		58D578F520934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */; };
+		58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */; };
+		58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */; };
+		58D578F420934B6F00AE5D38 /* SweetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */; };
+		58D578F520934B6F00AE5D38 /* SweetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */; };
 		58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
 		58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
 		58D578F9209352F800AE5D38 /* UpdateNicknameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */; };
@@ -503,11 +543,21 @@
 		58155E2A2091B52100ADEFFB /* RoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectView.swift; sourceTree = "<group>"; };
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFooterView.swift; sourceTree = "<group>"; };
+		5843DA4F20A0261D005C8AD2 /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
+		5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactListResponse.swift; sourceTree = "<group>"; };
+		5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactViewModel.swift; sourceTree = "<group>"; };
+		5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Style.swift"; sourceTree = "<group>"; };
 		58447B21209AE2D5004C2FFE /* TimerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerHelper.swift; sourceTree = "<group>"; };
 		58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAvatarController.swift; sourceTree = "<group>"; };
 		58447B2B209B0909004C2FFE /* BlackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackNavigationController.swift; sourceTree = "<group>"; };
 		58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+TextColor.swift"; sourceTree = "<group>"; };
-		58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
+		58447B3C209C06A5004C2FFE /* IMManagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMManagerController.swift; sourceTree = "<group>"; };
+		58447B46209C2E07004C2FFE /* IMContactsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMContactsController.swift; sourceTree = "<group>"; };
+		58447B4B209C3998004C2FFE /* UIButton+Inset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Inset.swift"; sourceTree = "<group>"; };
+		58447B50209C5143004C2FFE /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		58447B55209C58CC004C2FFE /* ContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListResponse.swift; sourceTree = "<group>"; };
+		58447B5A209C5B16004C2FFE /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -580,7 +630,7 @@
 		58D578E22093198600AE5D38 /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTableViewCell.swift; sourceTree = "<group>"; };
 		58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCellViewModel.swift; sourceTree = "<group>"; };
-		58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHeaderView.swift; sourceTree = "<group>"; };
+		58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetHeaderView.swift; sourceTree = "<group>"; };
 		58D578F6209352F800AE5D38 /* UpdateNicknameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNicknameController.swift; sourceTree = "<group>"; };
 		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
@@ -688,27 +738,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		58447B35209C03A3004C2FFE /* ContactsFlow */ = {
-			isa = PBXGroup;
-			children = (
-				58447B36209C03FA004C2FFE /* ContactsCoordinator.swift */,
-				58447B3B209C0410004C2FFE /* Controllers */,
-			);
-			path = ContactsFlow;
-			sourceTree = "<group>";
-		};
-		58447B3B209C0410004C2FFE /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		58463DD920997F3A00698CF8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				58D578E720931CB100AE5D38 /* UpdateTableViewCell.swift */,
-				58D578F120934B6F00AE5D38 /* UpdateHeaderView.swift */,
 				58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */,
 			);
 			path = Profile;
@@ -749,6 +782,7 @@
 		58BD5293208856B900F7C3E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */,
 				58463DD920997F3A00698CF8 /* Profile */,
 				58BD53202090302B00F7C3E1 /* CellConfigurator.swift */,
 				58D578FB20942D4A00AE5D38 /* BorderContentView.swift */,
@@ -765,6 +799,8 @@
 				58155E2F2091BE1300ADEFFB /* AboutRectView.swift */,
 				58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */,
 				58C75C172099DF7D00DBD28C /* SweetPickerView.swift */,
+				58447B50209C5143004C2FFE /* ContactTableViewCell.swift */,
+				5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -788,6 +824,8 @@
 				58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */,
 				58D578D82093012500AE5D38 /* StoryCellViewModel.swift */,
 				58D578EC2093248000AE5D38 /* UpdateCellViewModel.swift */,
+				58447B5A209C5B16004C2FFE /* ContactViewModel.swift */,
+				5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -900,7 +938,10 @@
 		AC525AB0208DD708001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				58447B46209C2E07004C2FFE /* IMContactsController.swift */,
 				AC525AB1208DD714001070B2 /* IMListController.swift */,
+				58447B3C209C06A5004C2FFE /* IMManagerController.swift */,
+				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1041,6 +1082,8 @@
 				AC84120D20887C800086891C /* UIDevice+DeviceType.swift */,
 				58BD52F9208DFB6300F7C3E1 /* String+Check.swift */,
 				58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */,
+				58447B4B209C3998004C2FFE /* UIButton+Inset.swift */,
+				5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1078,7 +1121,6 @@
 				ACA3237620875D9300BDC92E /* OnboardingFLow */,
 				58BD526F20876EF100F7C3E1 /* LoginFlow */,
 				AC525A88208D87B0001070B2 /* MainFlow */,
-				58447B35209C03A3004C2FFE /* ContactsFlow */,
 				AC525A9A208DB2AC001070B2 /* IMFlow */,
 				AC525ABB208DF3C2001070B2 /* CardsFlow */,
 				AC525A99208DB2A0001070B2 /* StoryFlow */,
@@ -1152,6 +1194,8 @@
 				58BD52EA208DBC0A00F7C3E1 /* UploadTokenResponse.swift */,
 				58BD532B2090466600F7C3E1 /* UserResponse.swift */,
 				58D578D32092FAE200AE5D38 /* StoryListResponse.swift */,
+				58447B55209C58CC004C2FFE /* ContactListResponse.swift */,
+				5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1571,10 +1615,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
-				58447B37209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */,
+				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				58155E1C2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
@@ -1582,6 +1627,7 @@
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
@@ -1595,6 +1641,7 @@
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
@@ -1650,7 +1697,7 @@
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
-				58D578F220934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
+				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -1673,10 +1720,13 @@
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
+				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
+				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				58447B47209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
@@ -1688,20 +1738,24 @@
 				58BD52C52088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238220875E4400BDC92E /* BaseView.swift in Sources */,
 				58BD52D42089B74E00F7C3E1 /* SignUpAvatarView.swift in Sources */,
+				5843DA5A20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				58BD52912088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52EB208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EE208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
 				58447B27209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
+				58447B51209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				58D578DE2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F7208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
+				58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 			);
@@ -1712,6 +1766,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
@@ -1727,13 +1782,16 @@
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EA20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
+				5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
+				5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -1754,11 +1812,12 @@
 				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
+				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				58447B49209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
-				58447B39209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */,
 				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -1767,8 +1826,10 @@
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
+				58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				58D578F9209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				58155E14209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -1778,8 +1839,9 @@
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
-				58D578F420934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
+				58D578F420934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
@@ -1797,8 +1859,10 @@
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */,
+				58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,6 +1871,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
@@ -1822,13 +1887,16 @@
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
+				5843DA4E209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
+				5843DA5D20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -1849,11 +1917,12 @@
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
+				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				58447B4A209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
-				58447B3A209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */,
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -1862,8 +1931,10 @@
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
+				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				58D578FA209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
+				58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
 				58155E15209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -1873,8 +1944,9 @@
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
-				58D578F520934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
+				58D578F520934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
@@ -1892,8 +1964,10 @@
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
+				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				58447B59209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1901,10 +1975,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
-				58447B38209C03FA004C2FFE /* ContactsCoordinator.swift in Sources */,
+				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				58155E1D2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
@@ -1912,6 +1987,7 @@
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
@@ -1925,6 +2001,7 @@
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
@@ -1980,7 +2057,7 @@
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
-				58D578F320934B6F00AE5D38 /* UpdateHeaderView.swift in Sources */,
+				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -2003,10 +2080,13 @@
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
+				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
+				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				58447B48209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
@@ -2018,20 +2098,24 @@
 				58BD52C62088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238320875E4400BDC92E /* BaseView.swift in Sources */,
 				58BD52D52089B77E00F7C3E1 /* SignUpAvatarView.swift in Sources */,
+				5843DA5B20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				58BD52922088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52EC208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EF208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
 				58447B28209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
+				58447B52209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				58D578DF2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F8208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
+				58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 			);

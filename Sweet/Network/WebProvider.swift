@@ -40,7 +40,7 @@ final class WebProvider {
                 do {
                     let responseBody = try JSONDecoder().decode(responseType, from: response.data)
                     if responseBody.code == 0 {
-                        completion(.success(responseBody.data))
+                        completion(.success(responseBody.data!))
                     } else if responseBody.code == WebErrorCode.authorization.rawValue {
                        WebProvider.logout()
                     } else {

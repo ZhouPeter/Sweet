@@ -32,7 +32,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
         view.addSubview(cameraButton)
         cameraButton.center(to: view, offsetY: -50)
         cameraButton.constrain(width: 100, height: 100)
-        cameraButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpLightDarkGray())
+        cameraButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpDarkGray())
     }
 
     @objc private func didPressCameraButton(button: UIButton) {

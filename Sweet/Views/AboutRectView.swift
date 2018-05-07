@@ -22,7 +22,7 @@ class AboutRectView: UIView {
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
         return button

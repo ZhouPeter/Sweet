@@ -10,6 +10,10 @@ import Foundation
 
 protocol Router: Presentable {
     
+    func replaceController(parentController: UIViewController,
+                           oldController: UIViewController,
+                           newController: UIViewController)
+    
     func present(_ flow: Presentable?)
     func present(_ flow: Presentable?, animated: Bool)
     

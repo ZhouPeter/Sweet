@@ -9,5 +9,7 @@
 import Foundation
 
 protocol IMFlowFactory {
+    func makeIMManagerView() -> IMManagerView
     func makeIMListView() -> IMListView
+    func makeInviteOutput() -> InviteView
 }

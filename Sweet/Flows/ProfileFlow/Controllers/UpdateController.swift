@@ -26,7 +26,7 @@ class UpdateController: BaseViewController, UpdateView {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UpdateTableViewCell.self, forCellReuseIdentifier: "updateCell")
-        tableView.register(UpdateHeaderView.self, forHeaderFooterViewReuseIdentifier: "updateHeader")
+        tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "updateHeader")
         return tableView
     }()
     
@@ -210,7 +210,7 @@ extension UpdateController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard  let headerView = tableView.dequeueReusableHeaderFooterView(
-                                            withIdentifier: "updateHeader") as? UpdateHeaderView else { return nil}
+                                            withIdentifier: "updateHeader") as? SweetHeaderView else { return nil}
         headerView.update(title: titles[section])
         return headerView
         
