@@ -8,17 +8,23 @@
 
 import UIKit
 
+private struct FontSize {
+    static let max: CGFloat = 180
+    static let min: CGFloat = 40
+}
+
 final class StoryTextEditController: UIViewController {
-    
     private lazy var textView: UITextView = {
         let view = UITextView(frame: .zero)
         view.backgroundColor = .clear
         view.textColor = .white
-        view.font = UIFont.systemFont(ofSize: 30)
+        view.font = UIFont.systemFont(ofSize: FontSize.max)
         view.textAlignment = .center
         view.delegate = self
         view.keyboardDismissMode = .interactive
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panned(_:))))
+        view.backgroundColor = .brown
+        view.textContainerInset = .zero
         return view
     } ()
     
@@ -31,6 +37,8 @@ final class StoryTextEditController: UIViewController {
         return label
     } ()
     
+    private var textViewBottom: NSLayoutConstraint?
+    
     private let keyboard = KeyboardObserver()
     
     override func viewDidLoad() {
@@ -41,15 +49,10 @@ final class StoryTextEditController: UIViewController {
         view.addSubview(textView)
         textView.align(.left, to: view, inset: 20)
         textView.align(.right, to: view, inset: 20)
-        textView.align(.bottom, to: view, inset: 20)
-        textView.align(.top, to: view, inset: 40)
+        textView.align(.top, to: view, inset: 50)
+        textViewBottom = textView.align(.bottom, to: view, inset: 20)
         
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        adjustContentSize(with: textView)
     }
     
     // MARK: - Private
@@ -59,9 +62,9 @@ final class StoryTextEditController: UIViewController {
         case .willShow, .willHide, .willChangeFrame:
             let distance = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
             let bottom = distance >= bottomLayoutGuide.length ? distance : bottomLayoutGuide.length
+            textViewBottom?.constant = -(bottom + 20)
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
-                self.textView.contentInset.bottom = bottom
-                self.textView.scrollIndicatorInsets.bottom = bottom
+                self.view.layoutIfNeeded()
             }, completion: nil)
         default:
             break
@@ -100,18 +103,44 @@ extension StoryTextEditController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let layoutManager = textView.layoutManager
         let layoutRange = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
-        var typingLineString = ""
+        var fontSize = FontSize.max
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
         layoutManager.enumerateLineFragments(forGlyphRange: layoutRange) { (_, _, _, glyphRange, stop) in
+            var isTypingLine = false
+            if range.length == 0 {
+                // insert
+                if range.location == glyphRange.location + glyphRange.length {
+                    isTypingLine = true
+                } else if NSLocationInRange(range.location, glyphRange) {
+                    isTypingLine = true
+                }
+            } else {
+                // delete
+                if NSLocationInRange(range.location, glyphRange) {
+                    isTypingLine = true
+                }
+            }
+            guard isTypingLine else { return }
             let characterRange = layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
             let string = (textView.text as NSString).substring(with: characterRange)
-            if NSLocationInRange(range.location, glyphRange) {
-                typingLineString = string
-                stop.pointee = true
-            } else if range.location == layoutRange.length {
-                typingLineString = string
-            }
+            let newRange = NSRange(location: range.location - glyphRange.location, length: 0)
+            let typingLineString = (string as NSString).replacingCharacters(in: newRange, with: text)
+            stop.pointee = true
+            let textStorage = textView.textStorage
+            textStorage.beginEditing()
+            fontSize = self.calculateFontSize(with: typingLineString)
+            textStorage.setAttributes(
+                [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .foregroundColor: UIColor.white,
+                    .paragraphStyle: paragraphStyle
+                ],
+                range: characterRange
+            )
+            textStorage.endEditing()
         }
-        let fontSize = calculateFontSize(with: typingLineString)
+        
         var typingAttributes = textView.typingAttributes
         typingAttributes[NSAttributedStringKey.font.rawValue] = UIFont.systemFont(ofSize: fontSize)
         textView.typingAttributes = typingAttributes
@@ -119,16 +148,20 @@ extension StoryTextEditController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        var lineRanges = [NSRange]()
+        adjustTextStorageFontSize()
+        UIView.animate(withDuration: 0.25) {
+            self.placeholderLabel.alpha = textView.hasText ? 0 : 1
+        }
+    }
+    
+    private func adjustTextStorageFontSize() {
         let layoutManager = textView.layoutManager
         let range = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
-        layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, _, _, glyphRange, _) in
-            lineRanges.append(layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil))
-        }
         let textStorage = textView.textStorage
         textStorage.beginEditing()
-        lineRanges.forEach { (range) in
-            let string = (textView.text as NSString).substring(with: range)
+        layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, _, _, glyphRange, _) in
+            let characterRange = layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
+            let string = (self.textView.text as NSString).substring(with: characterRange)
             let fontSize = self.calculateFontSize(with: string)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
@@ -138,45 +171,24 @@ extension StoryTextEditController: UITextViewDelegate {
                     .foregroundColor: UIColor.white,
                     .paragraphStyle: paragraphStyle
                 ],
-                range: range
+                range: characterRange
             )
         }
         textStorage.endEditing()
-        
-        UIView.animate(withDuration: 0.25) {
-            self.placeholderLabel.alpha = textView.hasText ? 0 : 1
-        }
-        adjustContentSize(with: textView)
     }
-    
+
     private func calculateFontSize(with string: String) -> CGFloat {
-        let maxSize: CGFloat = 180
-        let minSize: CGFloat = 40
-        guard string.count > 1 else { return maxSize }
-        let fontSize = maxSize
+        guard string.count > 1 else { return FontSize.max }
+        let fontSize = FontSize.max
         let attributedString = NSAttributedString(
             string: string,
             attributes: [.font: UIFont.systemFont(ofSize: fontSize)]
         )
-        let textWidth = attributedString.boundingRect(
-            with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
-            options: [],
-            context: nil
-            ).width
-        let scaleFactor = 200 / textWidth
+        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        let textWidth = attributedString.boundingRect(with: maxSize, options: [], context: nil).width
+        let textContainerWidth = textView.bounds.width - FontSize.min
+        let scaleFactor = textContainerWidth / textWidth
         let preferredFontSize = fontSize * scaleFactor
-        let size = min(max(minSize, preferredFontSize), maxSize)
-        return size
-    }
-    
-    private func adjustContentSize(with textView: UITextView) {
-        let deadSpace = textView.bounds.size.height - textView.contentSize.height
-        let inset = max(0, deadSpace/2.0)
-        textView.contentInset = UIEdgeInsets(
-            top: inset,
-            left: textView.contentInset.left,
-            bottom: inset,
-            right: textView.contentInset.right
-        )
+        return min(max(FontSize.min, preferredFontSize), FontSize.max)
     }
 }

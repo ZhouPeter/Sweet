@@ -15,7 +15,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .gray
         
         addChildViewController(editController)
         editController.didMove(toParentViewController: self)
