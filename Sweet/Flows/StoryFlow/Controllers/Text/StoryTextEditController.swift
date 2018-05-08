@@ -19,10 +19,15 @@ final class StoryTextEditController: UIViewController {
     private let rightInset: CGFloat = 20
     private let bottomInset: CGFloat = 50
     
-    private let textViewContainer: UIView = {
+    private lazy var textViewContainer: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .clear
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panned(_:))))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
+        view.addGestureRecognizer(pan)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(textContainerDidTap(_:)))
+        view.addGestureRecognizer(tap)
+        tap.delegate = self
+        pan.delegate = self
         return view
     } ()
     
@@ -126,8 +131,14 @@ final class StoryTextEditController: UIViewController {
     
     private var panStart: CGPoint?
     
+    @objc private func textContainerDidTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended && textView.isFirstResponder == false {
+            textView.becomeFirstResponder()
+        }
+    }
+    
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
-        let location = gesture.location(in: view)
+        let location = gesture.location(in: gesture.view)
         switch gesture.state {
         case .began:
             panStart = location
@@ -136,7 +147,7 @@ final class StoryTextEditController: UIViewController {
             let threshold: CGFloat = 5
             let distanceX = location.x - start.x
             let distanceY = location.y - start.y
-            guard abs(distanceX) > threshold, abs(distanceY) > threshold else { return }
+            guard abs(distanceY) > threshold else { return }
             let tangent = distanceX / distanceY
             let isVertical = tangent >= -1 && tangent <= 1
             if isVertical {
@@ -147,6 +158,14 @@ final class StoryTextEditController: UIViewController {
         default:
             break
         }
+    }
+}
+
+extension StoryTextEditController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
