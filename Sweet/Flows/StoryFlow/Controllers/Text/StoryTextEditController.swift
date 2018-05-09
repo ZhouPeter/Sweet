@@ -36,7 +36,7 @@ final class StoryTextEditController: UIViewController {
         view.backgroundColor = .clear
         view.textColor = .white
         view.font = UIFont.systemFont(ofSize: FontSize.max)
-        view.textAlignment = .center
+        view.textAlignment = self.paragraphStyle.alignment
         view.delegate = self
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(panned(_:))))
         view.textContainerInset = .zero
@@ -46,11 +46,17 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = self.paragraphStyle.alignment
         label.text = "输入文字内容..."
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: FontSize.min)
         return label
+    } ()
+    
+    private let paragraphStyle: NSParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        return style
     } ()
     
     private let keyboard = KeyboardObserver()
@@ -60,10 +66,10 @@ final class StoryTextEditController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(placeholderLabel)
-        placeholderLabel.center(to: view)
         
         view.addSubview(textViewContainer)
         textViewContainer.addSubview(textView)
+        placeholderLabel.center(to: textViewContainer)
         
         layoutTextContainer()
         textView.frame.size.width = textViewContainer.frame.width
@@ -80,6 +86,12 @@ final class StoryTextEditController: UIViewController {
         case .willShow, .willHide, .willChangeFrame:
             keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
+                if self.textView.hasText {
+                    self.placeholderLabel.alpha = 0
+                } else {
+                    self.placeholderLabel.alpha = self.keyboardHeight > 0 ? 0 : 1
+                }
+                self.view.layoutIfNeeded()
                 self.layoutTextContainer()
                 self.layoutTextView()
             }, completion: nil)
@@ -104,7 +116,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     private var safeTextHeight: CGFloat {
-        let height = textView.hasText ? textView.contentSize.height : 200
+        let height = textView.hasText ? textView.contentSize.height : FontSize.min
         // fix content size error
         return ceil(textView.sizeThatFits(CGSize(width: textView.frame.width, height: height)).height)
     }
@@ -201,8 +213,6 @@ extension StoryTextEditController: UITextViewDelegate {
         let textStorage = textView.textStorage
         textStorage.beginEditing()
         let fontSize = self.calculateFontSize(with: typingLineString)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
         textStorage.setAttributes(
             [
                 .font: UIFont.systemFont(ofSize: fontSize),
@@ -221,7 +231,6 @@ extension StoryTextEditController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         adjustTextStorageFontSize()
-        placeholderLabel.alpha = textView.hasText ? 0 : 1
         layoutTextView()
     }
     
@@ -239,8 +248,6 @@ extension StoryTextEditController: UITextViewDelegate {
             let range = value.rangeValue
             let string = (self.textView.text as NSString).substring(with: range)
             let fontSize = self.calculateFontSize(with: string)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
             textStorage.setAttributes(
                 [
                     .font: UIFont.systemFont(ofSize: fontSize),
