@@ -258,8 +258,8 @@ final class StoryTextEditController: UIViewController {
                 textTransform = TextTransform()
                 textTransform?.scale = textContainerEditScale
             }
-            textTransform?.translation.x += translation.x
-            textTransform?.translation.y += translation.y
+            textTransform?.translation.x += translation.x * 0.5
+            textTransform?.translation.y += translation.y * 0.5
             gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
         default:
