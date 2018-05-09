@@ -38,7 +38,6 @@ extension URL {
 }
 
 extension URL {
-   
     static var fileManager: FileManager {
       return FileManager.default
     }
@@ -69,4 +68,17 @@ extension URL {
         return avatarCachesURL().appendingPathComponent(name)
     }
     
+    static func videoCacheURL(withName name: String) -> URL {
+        return cachesURL()
+            .appendingPathComponent("Videos", isDirectory: true)
+            .createDirectoryIfNeeded()
+            .appendingPathComponent(name)
+    }
+    
+    static func photoCacheURL(withName name: String) -> URL {
+        return cachesURL()
+            .appendingPathComponent("Photos", isDirectory: true)
+            .createDirectoryIfNeeded()
+            .appendingPathComponent(name)
+    }
 }

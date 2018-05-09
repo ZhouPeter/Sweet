@@ -58,7 +58,7 @@ extension PowerPushController {
         doneButton.constrain(height: 50)
         doneButton.align(.left, to: view, inset: 28)
         doneButton.align(.right, to: view, inset: 28)
-        doneButton.pin(to: titleLabel, edge: .bottom, spacing: -28)
+        doneButton.pin(to: titleLabel, edge: .bottom, spacing: 28)
         doneButton.setViewRounded()
     }
 }

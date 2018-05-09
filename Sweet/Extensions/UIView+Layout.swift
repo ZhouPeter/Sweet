@@ -41,9 +41,11 @@ extension UIView {
         centerY(to: view, offset: yOffset)
     }
     
-    public func centerX(to view: UIView, offset: CGFloat = 0) {
+    @discardableResult public func centerX(to view: UIView, offset: CGFloat = 0) -> NSLayoutConstraint? {
         translatesAutoresizingMaskIntoConstraints = false
-        centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: offset).isActive = true
+        let constraint = centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: offset)
+        constraint.isActive = true
+        return constraint
     }
     
     public func centerY(to view: UIView, offset: CGFloat = 0) {
@@ -120,11 +122,11 @@ extension UIView {
         case .left:
             constraint = rightAnchor.constraint(equalTo: anchorView.leftAnchor, constant: -spacing)
         case .right:
-            constraint = leftAnchor.constraint(equalTo: anchorView.rightAnchor, constant: -spacing)
+            constraint = leftAnchor.constraint(equalTo: anchorView.rightAnchor, constant: spacing)
         case .top:
-            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: -spacing)
+            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: spacing)
         case .bottom:
-            constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: -spacing)
+            constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: spacing)
         }
         constraint.isActive = true
         return constraint
