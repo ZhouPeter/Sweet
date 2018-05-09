@@ -5,12 +5,13 @@
 //  Created by Mario Z. on 2018/5/3.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
+// swiftlint:disable file_length
 
 import UIKit
 
 private struct FontSize {
     static let max: CGFloat = 180
-    static let min: CGFloat = 30
+    static let min: CGFloat = 20
 }
 
 private struct TextTransform {
@@ -35,7 +36,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textViewContainer: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
         pan.delegate = self
         view.addGestureRecognizer(pan)
@@ -58,7 +59,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textView: UITextView = {
         let view = UITextView(frame: .zero)
-        view.backgroundColor = .brown
+        view.backgroundColor = .clear
         view.textColor = .white
         view.font = UIFont.systemFont(ofSize: FontSize.max)
         view.textAlignment = self.paragraphStyle.alignment
@@ -100,6 +101,7 @@ final class StoryTextEditController: UIViewController {
         textView.frame.size.width = textViewContainer.frame.width
         textView.frame.origin.x = 0
         layoutTextView()
+        updateTextEditTransform(animated: false)
         
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
     }
@@ -125,7 +127,10 @@ final class StoryTextEditController: UIViewController {
         }
         if event.type == .willShow {
             isTextGestureEnabled = false
-            doTextEditTransform()
+            transformTextContainer(
+                CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1),
+                animated: true
+            )
         } else if event.type == .willHide {
             isTextGestureEnabled = true
             doTextDisplayTransform()
@@ -155,15 +160,8 @@ final class StoryTextEditController: UIViewController {
     
     private func layoutTextView() {
         let textHeight = safeTextHeight
-        let containerHeight = textContainerHeight
-        var transform = CATransform3DIdentity
-        if textHeight > containerHeight {
-            textContainerEditScale = containerHeight / textHeight
-            transform = CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1)
-        }
-        textViewContainer.layer.sublayerTransform = transform
         var frame = textView.frame
-        frame.origin.y = ceil((containerHeight - textHeight) * 0.5)
+        frame.origin.y = ceil((textContainerHeight - textHeight) * 0.5)
         frame.size.height = textHeight
         textView.frame = frame
         // fix content offset error
@@ -171,17 +169,35 @@ final class StoryTextEditController: UIViewController {
         textView.setContentOffset(.zero, animated: true)
     }
     
-    private func doTextEditTransform() {
-        textViewContainer.layer.sublayerTransform =
-            CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1)
+    private func updateTextEditTransform(animated: Bool) {
+        let textHeight = safeTextHeight
+        let containerHeight = textContainerHeight
+        var transform = CATransform3DIdentity
+        if textHeight > containerHeight {
+            textContainerEditScale = containerHeight / textHeight
+            transform = CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1)
+        }
+        transformTextContainer(transform, animated: animated)
     }
     
-    private func doTextDisplayTransform() {
+    private func doTextDisplayTransform(animated: Bool = false) {
         if let textTransform = textTransform {
-            textViewContainer.layer.sublayerTransform = textTransform.make3DTransform()
+            transformTextContainer(textTransform.make3DTransform(), animated: animated)
         } else {
-            textViewContainer.layer.sublayerTransform = CATransform3DIdentity
+            transformTextContainer(CATransform3DIdentity, animated: animated)
         }
+    }
+    
+    private func transformTextContainer(_ transform: CATransform3D, animated: Bool) {
+        if animated {
+            let animation = CABasicAnimation(keyPath: "sublayerTransform")
+            animation.duration = 0.25
+            animation.fromValue = textViewContainer.layer.presentation()?.sublayerTransform
+            animation.toValue = transform
+            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            textViewContainer.layer.add(animation, forKey: "sublayerTransform")
+        }
+        textViewContainer.layer.sublayerTransform = transform
     }
     
     // MARK: - Actions
@@ -242,7 +258,9 @@ final class StoryTextEditController: UIViewController {
                 textTransform = TextTransform()
                 textTransform?.scale = textContainerEditScale
             }
-            textTransform?.translation = translation
+            textTransform?.translation.x += translation.x
+            textTransform?.translation.y += translation.y
+            gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
         default:
             break
@@ -341,6 +359,7 @@ extension StoryTextEditController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         adjustTextStorageFontSize()
         layoutTextView()
+        updateTextEditTransform(animated: true)
     }
     
     private func adjustTextStorageFontSize() {
