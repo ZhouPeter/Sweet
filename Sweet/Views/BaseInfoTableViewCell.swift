@@ -10,7 +10,6 @@ import UIKit
 import Kingfisher
 
 protocol BaseInfoTableViewCellDelegate: NSObjectProtocol {
-    
 }
 
 class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
@@ -31,15 +30,21 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         senderButton.isHidden = true
         subscribeButton.isHidden = true
         avatarImageView.setViewRounded()
-        senderButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
-        subscribeButton.setViewRounded(borderWidth: 1, borderColor: .black)
+        subscribeButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
+        subscribeButton.setTitleColor(UIColor.xpBlue(), for: .normal)
+        senderButton.setViewRounded(borderWidth: 1, borderColor: .black)
+        senderButton.setTitleColor(.black, for: .normal)
         subscribeButton.addTarget(self, action: #selector(subscribeAction), for: .touchUpInside)
     }
     
     override var frame: CGRect {
         didSet {
             var newFrame = frame
-            newFrame.size.height -= 10
+            if let viewModel = viewModel {
+                newFrame.size.height = viewModel.cellHeight - 10
+            } else {
+                newFrame.size.height -= 10
+            }
             super.frame = newFrame
         }
     }
@@ -52,12 +57,14 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         abstractInfoLabel.attributedText = getTextAttributedString(text: viewModel.signatureString)
         likeCountButton.setTitle(viewModel.likeCountString, for: .normal)
         subscribeButton.setTitle(viewModel.subscribeButtonString, for: .normal)
+        subscribeButton.isHidden = viewModel.subscriptionButtonHidden
+        senderButton.isHidden = viewModel.sendMessageButtonHidden
     }
     
     private func getTextAttributedString(text: String) -> NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: text)
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 9
+        paragraphStyle.lineSpacing = 4
         attributedString.addAttribute(NSAttributedStringKey.paragraphStyle,
                                       value: paragraphStyle,
                                       range: NSRange(location: 0, length: attributedString.length))
@@ -65,7 +72,9 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
     }
     
     @objc private func subscribeAction() {
-        viewModel?.subscribeAction?()
+        if let userId = viewModel?.userId {
+            viewModel?.subscribeAction?(userId)
+        }
     }
     
 }

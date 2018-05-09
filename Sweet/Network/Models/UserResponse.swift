@@ -25,4 +25,6 @@ struct UserResponse: Codable {
     var universityName: String
     let likeCount: Int
     var subscription: Bool
+    var blacklist: Bool
+    var block: Bool
 }

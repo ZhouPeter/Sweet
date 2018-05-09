@@ -15,7 +15,7 @@ struct ContactListResponse: Codable {
 struct Contact: Codable {
     let avatar: String
     let info: String
-    let lastTime: Int
+    let lastTime: Int?
     let nickname: String
     let userId: UInt64
 }

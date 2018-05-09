@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyUserDefaults
 struct BaseInfoCellViewModel {
     let userId: UInt64
     let avatarImageURL: URL
@@ -15,9 +15,11 @@ struct BaseInfoCellViewModel {
     let networkString: String
     let signatureString: String
     let likeCountString: String
-    let subscribeButtonString: String
-    var subscribeAction: (() -> Void)?
+    var subscribeButtonString: String
+    var subscribeAction: ((UInt64) -> Void)?
     let cellHeight: CGFloat
+    let subscriptionButtonHidden: Bool
+    let sendMessageButtonHidden: Bool
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
@@ -27,8 +29,10 @@ struct BaseInfoCellViewModel {
                         user.universityName + "\n" +
                         user.collegeName
         signatureString = user.signature
-        likeCountString = "获\(user.likeCount)♥️"
+        likeCountString = "♥️\(user.likeCount)"
+        subscriptionButtonHidden = user.userId == Defaults[.userID]
+        sendMessageButtonHidden = user.userId == Defaults[.userID]
         subscribeButtonString = user.subscription ? "已订阅" : "订阅"
-        cellHeight = 140
+        cellHeight = user.userId == Defaults[.userID] ? 140 : 180
     }
 }

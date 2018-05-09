@@ -33,10 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEh-4D-yID">
-                        <rect key="frame" x="135" y="15" width="74" height="60"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="W3H-dS-1a4"/>
-                        </constraints>
+                        <rect key="frame" x="135" y="15" width="80" height="57"/>
                         <attributedString key="attributedText">
                             <fragment>
                                 <string key="content">女生·2017级
@@ -44,7 +41,7 @@
 计算机</string>
                                 <attributes>
                                     <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <font key="NSFont" size="12" name=".PingFangSC-Regular"/>
+                                    <font key="NSFont" size="13" name=".PingFangSC-Regular"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="9" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -52,17 +49,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WW5-h7-O6j">
-                        <rect key="frame" x="33.5" y="96" width="63" height="18"/>
+                        <rect key="frame" x="40" y="96" width="50" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="7sa-6v-Pqg"/>
                         </constraints>
                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                        <state key="normal" title="获9381♥️">
+                        <state key="normal" title="♥️9381">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1g-bl-ka0">
-                        <rect key="frame" x="135" y="80" width="160" height="33"/>
+                        <rect key="frame" x="135" y="80" width="160" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="160" id="YvI-fD-9Ud"/>
                         </constraints>
@@ -70,8 +67,8 @@
                             <fragment content="一个热爱篮球的爱笑女孩一个热爱篮球的爱笑女孩">
                                 <attributes>
                                     <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <font key="NSFont" size="12" name=".PingFangSC-Regular"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="9" tighteningFactorForTruncation="0.0"/>
+                                    <font key="NSFont" size="13" name=".PingFangSC-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="4" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -95,7 +92,6 @@
                 <constraints>
                     <constraint firstItem="mEh-4D-yID" firstAttribute="leading" secondItem="O4e-x7-685" secondAttribute="trailing" constant="40" id="0dU-Qw-PP8"/>
                     <constraint firstItem="2rd-hP-aZO" firstAttribute="width" secondItem="L2s-qU-mVC" secondAttribute="width" id="2rI-Dq-XSI"/>
-                    <constraint firstItem="L2s-qU-mVC" firstAttribute="top" secondItem="j1g-bl-ka0" secondAttribute="bottom" constant="19" id="8fC-xb-Sof"/>
                     <constraint firstItem="WW5-h7-O6j" firstAttribute="top" secondItem="8ZW-Hh-nHN" secondAttribute="bottom" id="BDo-q4-IQO"/>
                     <constraint firstItem="2rd-hP-aZO" firstAttribute="height" secondItem="L2s-qU-mVC" secondAttribute="height" id="GE7-JJ-S2a"/>
                     <constraint firstItem="WW5-h7-O6j" firstAttribute="centerX" secondItem="8ZW-Hh-nHN" secondAttribute="centerX" id="NJL-rp-XHV"/>
@@ -107,6 +103,7 @@
                     <constraint firstItem="2rd-hP-aZO" firstAttribute="centerY" secondItem="L2s-qU-mVC" secondAttribute="centerY" id="jCm-LS-vAE"/>
                     <constraint firstItem="2rd-hP-aZO" firstAttribute="leading" secondItem="L2s-qU-mVC" secondAttribute="trailing" constant="30" id="kRM-3e-V6D"/>
                     <constraint firstItem="8ZW-Hh-nHN" firstAttribute="top" secondItem="O4e-x7-685" secondAttribute="bottom" constant="5" id="nIg-Ox-iAp"/>
+                    <constraint firstItem="L2s-qU-mVC" firstAttribute="top" secondItem="mEh-4D-yID" secondAttribute="bottom" constant="60" id="xI3-w5-QLw"/>
                     <constraint firstItem="j1g-bl-ka0" firstAttribute="top" secondItem="8ZW-Hh-nHN" secondAttribute="top" id="zXq-oS-l9m"/>
                     <constraint firstItem="8ZW-Hh-nHN" firstAttribute="centerX" secondItem="O4e-x7-685" secondAttribute="centerX" id="zgV-SB-HEM"/>
                 </constraints>
@@ -121,7 +118,7 @@
                 <outlet property="senderButton" destination="2rd-hP-aZO" id="iXI-cb-uHK"/>
                 <outlet property="subscribeButton" destination="L2s-qU-mVC" id="3c0-2m-NeO"/>
             </connections>
-            <point key="canvasLocation" x="-693" y="73"/>
+            <point key="canvasLocation" x="-693.5" y="73"/>
         </tableViewCell>
     </objects>
 </document>

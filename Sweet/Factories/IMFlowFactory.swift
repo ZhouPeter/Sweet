@@ -12,4 +12,8 @@ protocol IMFlowFactory {
     func makeIMManagerView() -> IMManagerView
     func makeIMListView() -> IMListView
     func makeInviteOutput() -> InviteView
+    func makeBlackOutput() -> BlackView
+    func makeBlockOutput() -> BlockView
+    func makeSubscriptionOutput() -> SubscriptionView
+    func makeProfileOutput(userId: UInt64) -> ProfileView
 }

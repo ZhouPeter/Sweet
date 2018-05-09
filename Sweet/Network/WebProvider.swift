@@ -69,21 +69,19 @@ final class WebProvider {
                 }
                 do {
                     if let json = (try response.mapJSON(failsOnEmptyData: true)) as? [String: Any],
-                        let data = json["data"] as? [String: Any],
                         let code = json["code"] as? Int {
-                        if code == 0 {
+                        if code == 0, let data = json["data"] as? [String: Any] {
                             completion(.success(data))
                         } else if code == WebErrorCode.authorization.rawValue {
                             WebProvider.logout()
                         } else {
                             completion(.failure(NSError(code: code)))
                         }
-                        return
                     }
                 } catch {
                     logger.error(error)
+                    completion(.failure(NSError(code: .parse)))
                 }
-                completion(.failure(NSError(code: .parse)))
             }
         })
     }

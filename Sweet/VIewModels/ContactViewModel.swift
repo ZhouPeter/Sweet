@@ -19,6 +19,6 @@ struct ContactViewModel {
         self.infoString = model.info
         self.nameString = model.nickname
         self.userId = model.userId
-        self.lastTime = model.lastTime
+        self.lastTime = model.lastTime!
     }
 }

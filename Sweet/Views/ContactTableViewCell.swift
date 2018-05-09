@@ -10,6 +10,9 @@ import UIKit
 
 class ContactTableViewCell: UITableViewCell {
 
+    private var buttonCallBack: ((UInt64) -> Void)?
+    private var userId: UInt64?
+    private var sectionId: UInt64?
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -47,6 +50,7 @@ class ContactTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 14
         button.layer.masksToBounds = true
         button.isHidden = true
+        button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -61,6 +65,11 @@ class ContactTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc private func buttonAction(_ sender: UIButton) {
+        if let userId = userId, let buttonCallBack = buttonCallBack {
+            buttonCallBack(userId)
+        }
+    }
     private func setupUI() {
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
@@ -98,5 +107,27 @@ class ContactTableViewCell: UITableViewCell {
         statusButton.setTitle(viewModel.buttonTitle, for: .normal)
         statusButton.setButtonStyle(style: viewModel.buttonStyle)
         nameCenterYConstraints?.constant = viewModel.nameCenterYOffsetAvatar
+    }
+    
+    func updateContactWithButton(viewModel: ContactWithButtonViewModel) {
+        userId = viewModel.userId
+        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        nameLabel.text = viewModel.nameString
+        infoLabel.text = viewModel.infoString
+        statusButton.isHidden = viewModel.isHiddenButton
+        statusButton.setTitle(viewModel.buttonTitle, for: .normal)
+        statusButton.setButtonStyle(style: viewModel.buttonStyle)
+        buttonCallBack = viewModel.callBack
+    }
+    
+    func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
+        sectionId = viewModel.sectionId
+        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        nameLabel.text = viewModel.nameString
+        infoLabel.text = viewModel.infoString
+        statusButton.isHidden = viewModel.isHiddenButton
+        statusButton.setTitle(viewModel.buttonTitle, for: .normal)
+        statusButton.setButtonStyle(style: viewModel.buttonStyle)
+        buttonCallBack = viewModel.callBack
     }
 }

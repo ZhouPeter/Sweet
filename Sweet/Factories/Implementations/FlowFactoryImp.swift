@@ -12,15 +12,11 @@ import Foundation
 final class FlowFactoryImp:
     OnboardingFlowFactory,
     AuthFlowFactory,
-    IMFlowFactory,
     StoryFlowFactory,
     CardsFlowFactory,
     PowerFlowFactory,
 ProfileFlowFactory {
 
-    func makeInviteOutput() -> InviteView {
-        return InviteController()
-    }
     func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
         let viewController = UpdateController()
         viewController.user = user
@@ -88,12 +84,6 @@ ProfileFlowFactory {
     func makeAuthOutput() -> AuthView {
         return AuthViewController()
     }
-    func makeIMManagerView() -> IMManagerView {
-        return IMManagerController()
-    }
-    func makeIMListView() -> IMListView {
-        return IMListController()
-    }
     
     func makeStoryRecordView() -> StoryRecordView {
         return StoryRecordController()
@@ -106,4 +96,32 @@ ProfileFlowFactory {
     func makeProfileModule() -> ProfileView {
         return ProfileController()
     }
+}
+
+extension FlowFactoryImp: IMFlowFactory {
+    func makeIMManagerView() -> IMManagerView {
+        return IMManagerController()
+    }
+    func makeIMListView() -> IMListView {
+        return IMListController()
+    }
+    func makeInviteOutput() -> InviteView {
+        return InviteController()
+    }
+    func makeBlackOutput() -> BlackView {
+        return BlackController()
+    }
+    func makeBlockOutput() -> BlockView {
+        return BlockController()
+    }
+    func makeSubscriptionOutput() -> SubscriptionView {
+        return SubscriptionController()
+    }
+    func makeProfileOutput(userId: UInt64) -> ProfileView {
+        let controller = ProfileController()
+        controller.userId = userId
+        return controller
+    }
+    
+    
 }

@@ -15,13 +15,18 @@ let buttonSpace: CGFloat = 50
 
 protocol IMContactsView: BaseView {
     var showInvite: (() -> Void)? {  get set }
-
-    var showProfile: ((Int64) -> Void)? {  get set }
+    var showBlack: (() -> Void)? { get set }
+    var showProfile: ((UInt64) -> Void)? {  get set }
+    var showBlock: (() -> Void)? { get set }
+    var showSubscription: (() -> Void)? { get set }
 }
 
 class IMContactsController: BaseViewController, IMContactsView {
+    var showSubscription: (() -> Void)?
+    var showBlock: (() -> Void)?
     var showInvite: (() -> Void)?
-    var showProfile: ((Int64) -> Void)?
+    var showBlack: (() -> Void)?
+    var showProfile: ((UInt64) -> Void)?
     var between72hViewModels = [ContactViewModel]()
     var allViewModels = [ContactViewModel]()
     var viewModelsGroup = [[ContactViewModel]]()
@@ -37,6 +42,7 @@ class IMContactsController: BaseViewController, IMContactsView {
         button.setTitle("我的订阅", for: .normal)
         button.setTitleColor(UIColor.xpTextGray(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.addTarget(self, action: #selector(showSubscription(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -56,6 +62,7 @@ class IMContactsController: BaseViewController, IMContactsView {
         button.setTitle("屏蔽来源", for: .normal)
         button.setTitleColor(UIColor.xpTextGray(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.addTarget(self, action: #selector(showBlock(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -65,6 +72,7 @@ class IMContactsController: BaseViewController, IMContactsView {
         button.setTitle("黑名单", for: .normal)
         button.setTitleColor(UIColor.xpTextGray(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.addTarget(self, action: #selector(showBlack(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -102,6 +110,15 @@ class IMContactsController: BaseViewController, IMContactsView {
 extension IMContactsController {
     @objc private func showInvite(_ sender: UIButton) {
         self.showInvite?()
+    }
+    @objc private func showBlack(_ sender: UIButton) {
+        self.showBlack?()
+    }
+    @objc private func showBlock(_ sender: UIButton) {
+        self.showBlock?()
+    }
+    @objc private func showSubscription(_ sender: UIButton) {
+        self.showSubscription?()
     }
 }
 
@@ -147,7 +164,7 @@ extension IMContactsController {
                 models.forEach({ (model) in
                     let viewModel = ContactViewModel(model: model)
                     self.allViewModels.append(viewModel)
-                    if model.lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
+                    if let lastTime = model.lastTime, lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
                         self.between72hViewModels.append(viewModel)
                     }
                 })
@@ -184,6 +201,10 @@ extension IMContactsController: UITableViewDelegate {
  
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showProfile?(viewModelsGroup[indexPath.section][indexPath.row].userId)
     }
     
 }

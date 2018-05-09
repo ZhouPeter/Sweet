@@ -8,10 +8,12 @@
 
 import Foundation
 
-
 enum ContactButtonStyle {
+    case none
     case noBorderGray
     case borderBlue
+    case borderGray
+    case backgroudColorGray
 }
 
 extension UIButton {
@@ -27,6 +29,19 @@ extension UIButton {
             backgroundColor = .white
             layer.borderColor = UIColor.xpBlue().cgColor
             layer.borderWidth = 1
+        case .borderGray:
+            setTitleColor(UIColor(hex: 0x9B9B9B), for: .normal)
+            backgroundColor = .white
+            layer.borderColor = UIColor(hex: 0x9B9B9B).cgColor
+            layer.borderWidth = 1
+        case .backgroudColorGray:
+            setTitleColor(.white, for: .normal)
+            backgroundColor = UIColor(hex: 0x9B9B9B)
+            layer.borderColor = UIColor.clear.cgColor
+            layer.borderWidth = 0
+        default:
+            break
         }
+        
     }
 }

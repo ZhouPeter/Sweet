@@ -12,8 +12,8 @@ protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
 }
 class ProfileController: BaseViewController, ProfileView {
+    var userId: UInt64?
     var showAbout: ((UserResponse) -> Void)?
-
     var user: UserResponse? {
         willSet {
             if let newValue = newValue {
@@ -81,18 +81,35 @@ class ProfileController: BaseViewController, ProfileView {
 // MARK: - Actions
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
-        guard let userId = user?.userId, userId == Defaults[.userID] else { return }
-        self.showAbout?(user!)
+        guard let user = user else { return }
+        self.showAbout?(user)
        
     }
     @objc private func menuAction(sender: UIButton) {
+        guard let userId = user?.userId, let backlist = user?.blacklist, let block = user?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shieldAction = UIAlertAction(title: "屏蔽他/她的来源", style: .default) { (_) in
-            
+        let shieldAction = UIAlertAction(title: block ? "取消屏蔽" : "屏蔽他/她的来源", style: .default) { (_) in
+            if block {
+                web.request(.delBlock(userId: userId), completion: { (result) in
+                    logger.debug(result)
+                })
+            } else {
+                web.request(.addBlock(userId: userId), completion: { (result) in
+                    logger.debug(result)
+                })
+            }
         }
         shieldAction.setTextColor(color: .black)
-        let addBlacklistAction = UIAlertAction(title: "加入黑名单", style: .default) { (_) in
-            
+        let addBlacklistAction = UIAlertAction(title: backlist ? "移出黑名单" : "加入黑名单", style: .default) { (_) in
+            if backlist {
+                web.request(.delBlacklist(userId: userId), completion: { (result) in
+                    logger.debug(result)
+                })
+            } else {
+                web.request(.addBlacklist(userId: self.user!.userId), completion: { (result) in
+                    logger.debug(result)
+                })
+            }
         }
         addBlacklistAction.setTextColor(color: .black)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -114,7 +131,6 @@ extension ProfileController {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
         var userSuccess: Bool = false
-        let feedsSuccess: Bool = true
         if isLoadUser {
             group.enter()
             queue.async {
@@ -126,15 +142,8 @@ extension ProfileController {
         } else {
             userSuccess = true
         }
-//        group.enter()
-//        queue.async {
-//            self.loadFeedsData(completion: { (isSuccess) in
-//                group.leave()
-//                feedsSuccess = isSuccess
-//            })
-//        }
         group.notify(queue: DispatchQueue.main) {
-            if userSuccess && feedsSuccess {
+            if userSuccess {
                 self.updateViewModel()
                 self.tableView.reloadData()
             }
@@ -142,7 +151,7 @@ extension ProfileController {
     }
     
     private func loadUserData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
-        let userId = (user != nil) ? user!.userId : UInt64(Defaults[.userID])
+        let userId = (self.userId == nil ? UInt64(Defaults[.userID]) : self.userId!)
         web.request(.getUserProfile(userId: userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
             case let .success(response):
@@ -154,14 +163,26 @@ extension ProfileController {
             }
         }
     }
-    
-    private func loadFeedsData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
-        let userId = (user != nil) ? user!.userId : UInt64(Defaults[.userID])
-        
-    }
 
     private func updateViewModel() {
         self.baseInfoViewModel = BaseInfoCellViewModel(user: user!)
+        self.baseInfoViewModel?.subscribeAction = { [weak self] userId in
+            guard let `self` = self, let subscription = self.user?.subscription else { return }
+            web.request(
+                subscription ?
+                    .delUserSubscription(userId: userId) : .addUserSubscription(userId: userId),
+                completion: { (result) in
+                switch result {
+                case .success:
+                    self.user!.subscription = !self.user!.subscription
+                    self.baseInfoViewModel?.subscribeButtonString
+                        = self.user!.subscription ? "已订阅" : "订阅"
+                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                case let .failure(error):
+                    logger.error(error)
+                }
+            })
+        }
     }
     
 }

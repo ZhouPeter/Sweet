@@ -24,6 +24,17 @@ enum WebAPI {
     case upload(type: UploadType)
     case contactAllList
     case phoneContactList
+    case blackContactList
+    case addBlacklist(userId: UInt64)
+    case delBlacklist(userId: UInt64)
+    case blockContactList
+    case addBlock(userId: UInt64)
+    case delBlock(userId: UInt64)
+    case subscriptionList
+    case addUserSubscription(userId: UInt64)
+    case delUserSubscription(userId: UInt64)
+    case addSectionSubscription(sectionId: UInt64)
+    case delSectionSubscription(sectionId: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -56,7 +67,29 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case .contactAllList:
             return "/v2/contact/all/list"
         case .phoneContactList:
-            return "v2/contact/phone/list"
+            return "/v2/contact/phone/list"
+        case .blackContactList:
+            return "/v2/contact/blacklist/list"
+        case .addBlacklist:
+            return "/v2/contact/blacklist/add"
+        case .delBlacklist:
+            return "/v2/contact/blacklist/del"
+        case .blockContactList:
+            return "/v2/contact/block/list"
+        case .addBlock:
+            return "/v2/contact/block/add"
+        case .delBlock:
+            return "/v2/contact/block/del"
+        case .subscriptionList:
+            return "/v2/contact/subscription/list"
+        case .addUserSubscription:
+            return "/v2/contact/subscription/user/add"
+        case .delUserSubscription:
+            return "/v2/contact/subscription/user/del"
+        case .addSectionSubscription:
+            return "/v2/contact/subscription/section/add"
+        case .delSectionSubscription:
+            return "/v2/contact/subscription/section/del"
         }
     }
     
@@ -85,6 +118,22 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["collegeName": collegeName, "universityName": universityName]
         case let .upload(type):
             parameters = ["type": type.rawValue]
+        case let .addBlacklist(userId):
+            parameters = ["userId": userId]
+        case let .delBlacklist(userId):
+            parameters = ["userId": userId]
+        case let .addBlock(userId):
+            parameters = ["userId": userId]
+        case let .delBlock(userId):
+            parameters = ["userId": userId]
+        case let .addUserSubscription(userId):
+            parameters = ["userId": userId]
+        case let .delUserSubscription(userId):
+            parameters = ["userId": userId]
+        case let .addSectionSubscription(userId):
+            parameters = ["userId": userId]
+        case let .delSectionSubscription(userId):
+            parameters = ["userId": userId]
         default:
             parameters = [:]
         }
