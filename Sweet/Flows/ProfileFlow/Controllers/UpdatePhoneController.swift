@@ -129,7 +129,7 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         rightLineView.constrain(width: 0.5)
 
         borderTopView.addSubview(phoneTextField)
-        phoneTextField.pin(to: leftLineView, edge: .right, spacing: -20)
+        phoneTextField.pin(to: leftLineView, edge: .right, spacing: 20)
         phoneTextField.pin(to: rightLineView, edge: .left)
         phoneTextField.align(.top, to: borderTopView)
         phoneTextField.align(.bottom, to: borderTopView)
@@ -138,13 +138,13 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         view.addSubview(borderBottomView)
         borderBottomView.align(.left, to: view)
         borderBottomView.align(.right, to: view)
-        borderBottomView.pin(to: borderTopView, edge: .bottom, spacing: -10)
+        borderBottomView.pin(to: borderTopView, edge: .bottom, spacing: 10)
         borderBottomView.constrain(height: 56)
         borderBottomView.addSubview(smsCodeTextField)
         smsCodeTextField.fill(in: borderBottomView, left: 15)
         view.addSubview(messageLabel)
         messageLabel.align(.left, to: view, inset: 15)
-        messageLabel.pin(to: borderBottomView, edge: .bottom, spacing: -15)
+        messageLabel.pin(to: borderBottomView, edge: .bottom, spacing: 15)
     }
     
     @objc private func saveAction(_ sender: UIButton) {

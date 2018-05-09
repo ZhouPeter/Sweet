@@ -88,11 +88,11 @@ extension PowerContactsController {
         view.addSubview(subtitleLabel)
         subtitleLabel.align(.left, to: view, inset: 28)
         subtitleLabel.align(.right, to: view, inset: 28)
-        subtitleLabel.pin(to: titleLabel, edge: .bottom, spacing: -28)
+        subtitleLabel.pin(to: titleLabel, edge: .bottom, spacing: 28)
         view.addSubview(doneButton)
         doneButton.align(.left, to: view, inset: 28)
         doneButton.align(.right, to: view, inset: 28)
-        doneButton.pin(to: subtitleLabel, edge: .bottom, spacing: -20)
+        doneButton.pin(to: subtitleLabel, edge: .bottom, spacing: 20)
         doneButton.constrain(height: 50)
         doneButton.setViewRounded()
     }

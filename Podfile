@@ -12,6 +12,8 @@ target 'Sweet' do
   pod 'SwiftyUserDefaults'
   pod 'Kingfisher'
   pod 'Pageboy', '~> 2.0'
+  pod 'GPUImage'
+  pod 'Hero', '~> 1.2.0'
   
   target 'Sweet Dev' do
   end
