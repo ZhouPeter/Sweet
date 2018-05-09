@@ -21,12 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = rootController
+        window?.rootViewController = StoryRecordController()
+//        window?.rootViewController = rootController
         window?.makeKeyAndVisible()
-        registerUserNotificattion(launchOptions: launchOptions)
-        let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
-        let deepLink = DeepLinkOption.build(with: notification)
-        applicationCoordinator.start(with: deepLink)
+//        registerUserNotificattion(launchOptions: launchOptions)
+//        let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
+//        let deepLink = DeepLinkOption.build(with: notification)
+//        applicationCoordinator.start(with: deepLink)
         
         return true
     }

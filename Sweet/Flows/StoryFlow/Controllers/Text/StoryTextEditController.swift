@@ -13,6 +13,20 @@ private struct FontSize {
     static let min: CGFloat = 30
 }
 
+private struct TextTransform {
+    var scale: CGFloat = 1
+    var rotation: CGFloat = 0
+    var translation = CGPoint.zero
+    
+    func make3DTransform() -> CATransform3D {
+        var transform = CATransform3DIdentity
+        transform = CATransform3DTranslate(transform, translation.x, translation.y, 0)
+        transform = CATransform3DRotate(transform, rotation, 0, 0, 1)
+        transform = CATransform3DScale(transform, scale, scale, 1)
+        return transform
+    }
+}
+
 final class StoryTextEditController: UIViewController {
     private let topInset: CGFloat = 20
     private let leftInset: CGFloat = 20
@@ -21,19 +35,30 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textViewContainer: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
-        view.addGestureRecognizer(pan)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(textContainerDidTap(_:)))
-        view.addGestureRecognizer(tap)
-        tap.delegate = self
         pan.delegate = self
+        view.addGestureRecognizer(pan)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        tap.delegate = self
+        view.addGestureRecognizer(tap)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinched(_:)))
+        pinch.delegate = self
+        view.addGestureRecognizer(pinch)
+        let rotation = UIRotationGestureRecognizer(target: self, action: #selector(rotated(_:)))
+        rotation.delegate = self
+        view.addGestureRecognizer(rotation)
         return view
     } ()
     
+    private var panStart: CGPoint?
+    private var isTextGestureEnabled = false
+    private var textContainerEditScale: CGFloat = 1
+    private var textTransform: TextTransform?
+    
     private lazy var textView: UITextView = {
         let view = UITextView(frame: .zero)
-        view.backgroundColor = .clear
+        view.backgroundColor = .brown
         view.textColor = .white
         view.font = UIFont.systemFont(ofSize: FontSize.max)
         view.textAlignment = self.paragraphStyle.alignment
@@ -98,6 +123,13 @@ final class StoryTextEditController: UIViewController {
         default:
             break
         }
+        if event.type == .willShow {
+            isTextGestureEnabled = false
+            doTextEditTransform()
+        } else if event.type == .willHide {
+            isTextGestureEnabled = true
+            doTextDisplayTransform()
+        }
     }
     
     private func layoutTextContainer() {
@@ -126,8 +158,8 @@ final class StoryTextEditController: UIViewController {
         let containerHeight = textContainerHeight
         var transform = CATransform3DIdentity
         if textHeight > containerHeight {
-            let scale = containerHeight / textHeight
-            transform = CATransform3DMakeScale(scale, scale, 1)
+            textContainerEditScale = containerHeight / textHeight
+            transform = CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1)
         }
         textViewContainer.layer.sublayerTransform = transform
         var frame = textView.frame
@@ -139,17 +171,46 @@ final class StoryTextEditController: UIViewController {
         textView.setContentOffset(.zero, animated: true)
     }
     
-    // MARK: - Actionsa
+    private func doTextEditTransform() {
+        textViewContainer.layer.sublayerTransform =
+            CATransform3DMakeScale(textContainerEditScale, textContainerEditScale, 1)
+    }
     
-    private var panStart: CGPoint?
+    private func doTextDisplayTransform() {
+        if let textTransform = textTransform {
+            textViewContainer.layer.sublayerTransform = textTransform.make3DTransform()
+        } else {
+            textViewContainer.layer.sublayerTransform = CATransform3DIdentity
+        }
+    }
     
-    @objc private func textContainerDidTap(_ gesture: UITapGestureRecognizer) {
+    // MARK: - Actions
+    
+    @objc private func tapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended && textView.isFirstResponder == false {
             textView.becomeFirstResponder()
         }
     }
     
+    private var isPanForKeyboard = false
+    
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            isPanForKeyboard = textView.isFirstResponder
+        case .ended, .cancelled:
+            isPanForKeyboard = textView.isFirstResponder
+        default:
+            break
+        }
+        if isPanForKeyboard {
+            handlePanKeyboardGesture(gesture)
+        } else {
+            handlePanTextGesture(gesture)
+        }
+    }
+    
+    private func handlePanKeyboardGesture(_ gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: gesture.view)
         switch gesture.state {
         case .began:
@@ -167,6 +228,54 @@ final class StoryTextEditController: UIViewController {
                 if isDown == false { return }
                 textView.resignFirstResponder()
             }
+        default:
+            break
+        }
+    }
+
+    private func handlePanTextGesture(_ gesture: UIPanGestureRecognizer) {
+        guard isTextGestureEnabled else { return }
+        switch gesture.state {
+        case .began, .changed:
+            let translation = gesture.translation(in: view)
+            if textTransform == nil {
+                textTransform = TextTransform()
+                textTransform?.scale = textContainerEditScale
+            }
+            textTransform?.translation = translation
+            doTextDisplayTransform()
+        default:
+            break
+        }
+    }
+    
+    @objc private func pinched(_ gesture: UIPinchGestureRecognizer) {
+        guard isTextGestureEnabled else { return }
+        switch gesture.state {
+        case .began, .changed:
+            if textTransform == nil {
+                textTransform = TextTransform()
+                textTransform?.scale = textContainerEditScale
+            }
+            textTransform?.scale *= gesture.scale
+            gesture.scale = 1
+            doTextDisplayTransform()
+        default:
+            break
+        }
+    }
+    
+    @objc private func rotated(_ gesture: UIRotationGestureRecognizer) {
+        guard isTextGestureEnabled else { return }
+        switch gesture.state {
+        case .began, .changed:
+            if textTransform == nil {
+                textTransform = TextTransform()
+                textTransform?.scale = textContainerEditScale
+            }
+            textTransform?.rotation += gesture.rotation
+            gesture.rotation = 0
+            doTextDisplayTransform()
         default:
             break
         }
