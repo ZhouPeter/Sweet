@@ -137,8 +137,7 @@ class AboutController: BaseViewController, AboutView {
         }
         let questionRectView = AboutRectView(title: "常见问题")
         view.addSubview(questionRectView)
-        questionRectView.size(.width, to: updateRectView)
-        questionRectView.size(.height, to: updateRectView)
+        questionRectView.equal(.size, to: updateRectView)
         questionRectView.centerX(to: updateRectView)
         questionRectView.pin(to: updateRectView, edge: .bottom, spacing: 20)
         questionRectView.clickCallBack = { [weak self] in
@@ -148,8 +147,7 @@ class AboutController: BaseViewController, AboutView {
         }
         let feedbackRectView = AboutRectView(title: "意见反馈")
         view.addSubview(feedbackRectView)
-        feedbackRectView.size(.width, to: updateRectView)
-        feedbackRectView.size(.height, to: updateRectView)
+        feedbackRectView.equal(.size, to: updateRectView)
         feedbackRectView.centerX(to: updateRectView)
         feedbackRectView.pin(to: questionRectView, edge: .bottom, spacing: 20)
         feedbackRectView.clickCallBack = { [weak self] in
@@ -157,8 +155,7 @@ class AboutController: BaseViewController, AboutView {
         }
         let logoutRectView = AboutRectView(title: "退出登录")
         view.addSubview(logoutRectView)
-        logoutRectView.size(.width, to: updateRectView)
-        logoutRectView.size(.height, to: updateRectView)
+        logoutRectView.equal(.size, to: updateRectView)
         logoutRectView.centerX(to: updateRectView)
         logoutRectView.pin(to: feedbackRectView, edge: .bottom, spacing: 20)
         logoutRectView.clickCallBack = { [weak self] in

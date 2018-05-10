@@ -32,6 +32,4 @@ class ContactsFooterView: UITableViewHeaderFooterView {
     func update(title: String) {
         titleLabel.text = title
     }
-    
-    
 }

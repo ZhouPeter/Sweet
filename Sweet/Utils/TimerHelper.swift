@@ -9,7 +9,7 @@
 import Foundation
 
 class TimerHelper {
-    class func countDown(time: Int, countDownBlock: ((Int) -> Void)? , endBlock: (() -> Void)? ) {
+    class func countDown(time: Int, countDownBlock: ((Int) -> Void)?, endBlock: (() -> Void)? ) {
         var timeout = time
         let queue = DispatchQueue.global()
         let timer = DispatchSource.makeTimerSource(queue: queue)
