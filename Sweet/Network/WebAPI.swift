@@ -35,6 +35,8 @@ enum WebAPI {
     case delUserSubscription(userId: UInt64)
     case addSectionSubscription(sectionId: UInt64)
     case delSectionSubscription(sectionId: UInt64)
+    case inviteContact(phone: String)
+    case searchContact(name: String)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -90,6 +92,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/contact/subscription/section/add"
         case .delSectionSubscription:
             return "/v2/contact/subscription/section/del"
+        case .inviteContact:
+            return "/v2/contact/phone/invite"
+        case .searchContact:
+            return "/v2/contact/search"
         }
     }
     
@@ -108,8 +114,6 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phone, "code": code]
         case let .uploadContacts(contacts):
             parameters = ["contacts": contacts]
-        case let .getUserProfile(userId):
-            parameters = ["userId": userId]
         case let .storyList(page, userId):
             parameters = ["page": page, "userId": userId]
         case let .searchUniversity(name):
@@ -118,22 +122,21 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["collegeName": collegeName, "universityName": universityName]
         case let .upload(type):
             parameters = ["type": type.rawValue]
-        case let .addBlacklist(userId):
+        case let .getUserProfile(userId),
+             let .addBlacklist(userId),
+             let .delBlacklist(userId),
+             let .addBlock(userId),
+             let .delBlock(userId),
+             let .addUserSubscription(userId),
+             let .delUserSubscription(userId):
             parameters = ["userId": userId]
-        case let .delBlacklist(userId):
-            parameters = ["userId": userId]
-        case let .addBlock(userId):
-            parameters = ["userId": userId]
-        case let .delBlock(userId):
-            parameters = ["userId": userId]
-        case let .addUserSubscription(userId):
-            parameters = ["userId": userId]
-        case let .delUserSubscription(userId):
-            parameters = ["userId": userId]
-        case let .addSectionSubscription(userId):
-            parameters = ["userId": userId]
-        case let .delSectionSubscription(userId):
-            parameters = ["userId": userId]
+        case let .addSectionSubscription(sectionId),
+             let .delSectionSubscription(sectionId):
+            parameters = ["sectionId": sectionId]
+        case let .inviteContact(phone):
+            parameters = ["phone": phone]
+        case let .searchContact(name):
+            parameters = ["name": name]
         default:
             parameters = [:]
         }

@@ -103,6 +103,10 @@ ProfileFlowFactory {
 }
 
 extension FlowFactoryImp: IMFlowFactory {
+    func makeContactSearchOutput() -> ContactSearchView {
+        return ContactSearchController()
+    }
+    
     func makeIMManagerView() -> IMManagerView {
         return IMManagerController()
     }

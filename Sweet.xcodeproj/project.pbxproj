@@ -49,6 +49,10 @@
 		58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
@@ -287,6 +291,10 @@
 		58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
 		58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
 		58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */; };
+		58CE1EB720A4208600781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
+		58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
+		58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
+		58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
 		58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
 		58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
 		58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
@@ -611,6 +619,7 @@
 		58155E2A2091B52100ADEFFB /* RoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectView.swift; sourceTree = "<group>"; };
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
 		5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFooterView.swift; sourceTree = "<group>"; };
 		5843DA4F20A0261D005C8AD2 /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
 		5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactListResponse.swift; sourceTree = "<group>"; };
@@ -695,6 +704,7 @@
 		58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEnrollmentController.swift; sourceTree = "<group>"; };
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
 		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
+		58CE1EB620A4208600781EBF /* SearchContactResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactResponse.swift; sourceTree = "<group>"; };
 		58D578C92092D30500AE5D38 /* StoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesController.swift; sourceTree = "<group>"; };
 		58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		58D578D32092FAE200AE5D38 /* StoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListResponse.swift; sourceTree = "<group>"; };
@@ -1038,6 +1048,7 @@
 				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
 				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
 				5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */,
+				58325B8D20A2F496000E851F /* ContactSearchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1330,6 +1341,7 @@
 				58447B55209C58CC004C2FFE /* ContactListResponse.swift */,
 				5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */,
 				5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */,
+				58CE1EB620A4208600781EBF /* SearchContactResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1770,6 +1782,7 @@
 				ACD2C42D2092C78B006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58CE1EB720A4208600781EBF /* SearchContactResponse.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -1785,6 +1798,7 @@
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
+				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
@@ -1970,6 +1984,7 @@
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
+				58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E282091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
@@ -2032,6 +2047,7 @@
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
@@ -2093,6 +2109,7 @@
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
+				58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E292091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
@@ -2155,6 +2172,7 @@
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
@@ -2183,6 +2201,7 @@
 				ACD2C42E2092C78C006833C9 /* VideoCaptureController.m in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -2198,6 +2217,7 @@
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
+				58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
@@ -2667,7 +2687,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sweet Dev-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

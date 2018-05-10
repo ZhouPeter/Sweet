@@ -14,7 +14,7 @@ protocol BlackView: BaseView {
 class BlackController: BaseViewController, BlackView {
     var showProfile: ((UInt64) -> Void)?
     
-    var viewModels = [ContactWithButtonViewModel]()
+    var viewModels = [ContactViewModel]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor.xpGray()
@@ -41,7 +41,7 @@ class BlackController: BaseViewController, BlackView {
             switch result {
             case let .success(response):
                 response.list.forEach({ (model) in
-                    var viewModel = ContactWithButtonViewModel(model: model)
+                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
                         self?.delBlacklist(userId: userId)
                     }
@@ -76,7 +76,7 @@ class BlackController: BaseViewController, BlackView {
             switch result {
             case .success:
                 guard let index = self.viewModels.index(where: { $0.userId == userId }) else { return }
-                self.viewModels[index].buttonStyle = .backgroudColorGray
+                self.viewModels[index].buttonStyle = .backgroundColorGray
                 self.viewModels[index].buttonTitle = "拉黑"
                 self.viewModels[index].callBack = { [weak self] userId in
                     self?.addBlacklist(userId: userId)
@@ -99,7 +99,7 @@ extension BlackController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "blackCell",
             for: indexPath) as? ContactTableViewCell else { fatalError() }
-        cell.updateContactWithButton(viewModel: viewModels[indexPath.row])
+        cell.update(viewModel: viewModels[indexPath.row])
         return cell
     }
 }

@@ -37,7 +37,22 @@ class InviteController: BaseViewController, InviteView {
             switch result {
             case let .success(response):
                 response.list.forEach({ (model) in
-                    let viewModel = PhoneContactViewModel(model: model)
+                    var viewModel = PhoneContactViewModel(model: model)
+                    viewModel.callBack = { phone in
+                        web.request(.inviteContact(phone: String(phone)), completion: { (result) in
+                            switch result {
+                            case .success:
+                                guard let index = self.viewModels.index(
+                                                  where: { $0.phone == String(phone) }) else { return }
+                                self.viewModels[index].buttonStyle = .noBorderGray
+                                self.viewModels[index].buttonTitle = "已发送"
+                                self.viewModels[index].buttonIsEnabled = false
+                                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                            case let .failure(error):
+                                logger.error(error)
+                            }
+                        })
+                    }
                     self.viewModels.append(viewModel)
                 })
                 self.tableView.reloadData()

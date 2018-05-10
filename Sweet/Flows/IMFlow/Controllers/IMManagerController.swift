@@ -10,6 +10,7 @@ import UIKit
 protocol IMManagerView: BaseView {
     var showIMList: ((IMListView) -> Void)? { get set }
     var showIMContacts: ((IMContactsView) -> Void)? { get set }
+
 }
 class IMManagerController: BaseViewController, IMManagerView {
     var showIMList: ((IMListView) -> Void)?

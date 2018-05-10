@@ -13,6 +13,7 @@ class ContactTableViewCell: UITableViewCell {
     private var buttonCallBack: ((UInt64) -> Void)?
     private var userId: UInt64?
     private var sectionId: UInt64?
+    private var phone: UInt64?
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -68,6 +69,10 @@ class ContactTableViewCell: UITableViewCell {
     @objc private func buttonAction(_ sender: UIButton) {
         if let userId = userId, let buttonCallBack = buttonCallBack {
             buttonCallBack(userId)
+        } else if let sectionId = sectionId, let buttonCallBack = buttonCallBack {
+            buttonCallBack(sectionId)
+        } else if let phone = phone, let buttonCallBack = buttonCallBack {
+            buttonCallBack(phone)
         }
     }
     private func setupUI() {
@@ -93,36 +98,38 @@ class ContactTableViewCell: UITableViewCell {
     }
     
     func update(viewModel: ContactViewModel) {
+        userId = viewModel.userId
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
+        statusButton.isHidden = viewModel.isHiddenButton
+        if !viewModel.isHiddenButton {
+            statusButton.setTitle(viewModel.buttonTitle, for: .normal)
+            statusButton.setButtonStyle(style: viewModel.buttonStyle!)
+        }
+        nameCenterYConstraints?.constant = -10
+        buttonCallBack = viewModel.callBack
     }
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
+        phone = UInt64(viewModel.phone)
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
         avatarLabel.text = viewModel.firstNameString
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
         statusButton.isHidden = viewModel.isHiddenButton
+        statusButton.isUserInteractionEnabled = viewModel.buttonIsEnabled
         statusButton.setTitle(viewModel.buttonTitle, for: .normal)
         statusButton.setButtonStyle(style: viewModel.buttonStyle)
         nameCenterYConstraints?.constant = viewModel.nameCenterYOffsetAvatar
-    }
-    
-    func updateContactWithButton(viewModel: ContactWithButtonViewModel) {
-        userId = viewModel.userId
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
-        nameLabel.text = viewModel.nameString
-        infoLabel.text = viewModel.infoString
-        statusButton.isHidden = viewModel.isHiddenButton
-        statusButton.setTitle(viewModel.buttonTitle, for: .normal)
-        statusButton.setButtonStyle(style: viewModel.buttonStyle)
         buttonCallBack = viewModel.callBack
     }
     
     func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
         sectionId = viewModel.sectionId
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
         statusButton.isHidden = viewModel.isHiddenButton

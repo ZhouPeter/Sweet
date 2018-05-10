@@ -134,5 +134,13 @@ extension UIImage {
             return newImage
         }
     }
+    
+    func reSize(newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContext(newSize)
+        draw(in: CGRect(origin: .zero, size: newSize))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
 
 }

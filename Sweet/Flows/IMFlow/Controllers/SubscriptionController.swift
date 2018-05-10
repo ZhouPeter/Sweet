@@ -14,7 +14,7 @@ protocol SubscriptionView: BaseView {
 class SubscriptionController: BaseViewController, SubscriptionView {
     var showProfile: ((UInt64) -> Void)?
     private var sectionViewModels = [ContactSubcriptionSectionViewModel]()
-    private var userViewModels = [ContactWithButtonViewModel]()
+    private var userViewModels = [ContactViewModel]()
     private var titles = [String]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -42,11 +42,17 @@ class SubscriptionController: BaseViewController, SubscriptionView {
             switch result {
             case let .success(response):
                 response.sections.forEach({ (model) in
-                    let viewModel = ContactSubcriptionSectionViewModel(model: model)
+                    var viewModel = ContactSubcriptionSectionViewModel(model: model)
+                    viewModel.callBack = { [weak self] sectionId in
+                        self?.delSectionSubscription(sectionId: sectionId)
+                    }
                     self.sectionViewModels.append(viewModel)
                 })
                 response.users.forEach({ (model) in
-                    let viewModel = ContactWithButtonViewModel(model: model, buttonTitle: "已订阅")
+                    var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
+                    viewModel.callBack = { [weak self] userId in
+                        self?.delUserSubscription(userId: userId)
+                    }
                     self.userViewModels.append(viewModel)
                 })
                 if self.sectionViewModels.count > 0 { self.titles.append("栏目") }
@@ -58,6 +64,75 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         }
     }
     
+    private func delUserSubscription(userId: UInt64) {
+        web.request(.delUserSubscription(userId: userId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.userViewModels.index(where: { $0.userId == userId }) else { return }
+                self.userViewModels[index].buttonStyle = .backgroundColorBlue
+                self.userViewModels[index].buttonTitle = "订阅"
+                self.userViewModels[index].callBack = { [weak self] userId in
+                    self?.addUserSubscription(userId: userId)
+                }
+                let section: Int = self.titles[0] == "栏目" ? 1 : 0
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    private func addUserSubscription(userId: UInt64) {
+        web.request(.addUserSubscription(userId: userId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.userViewModels.index(where: { $0.userId == userId }) else { return }
+                self.userViewModels[index].buttonStyle = .borderBlue
+                self.userViewModels[index].buttonTitle = "已订阅"
+                self.userViewModels[index].callBack = { [weak self] userId in
+                    self?.delUserSubscription(userId: userId)
+                }
+                let section: Int = self.titles[0] == "栏目" ? 1 : 0
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    private func delSectionSubscription(sectionId: UInt64) {
+        web.request(.delSectionSubscription(sectionId: sectionId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId }) else { return }
+                self.sectionViewModels[index].buttonStyle = .backgroundColorBlue
+                self.sectionViewModels[index].buttonTitle = "订阅"
+                self.sectionViewModels[index].callBack = { [weak self] sectionId in
+                    self?.addSectionSubscription(sectionId: sectionId)
+                }
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    private func addSectionSubscription(sectionId: UInt64) {
+        web.request(.addSectionSubscription(sectionId: sectionId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId }) else { return }
+                self.sectionViewModels[index].buttonStyle = .borderBlue
+                self.sectionViewModels[index].buttonTitle = "已订阅"
+                self.sectionViewModels[index].callBack = { [weak self] sectionId in
+                    self?.delSectionSubscription(sectionId: sectionId)
+                }
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
 }
 
 extension SubscriptionController: UITableViewDataSource {
@@ -77,7 +152,7 @@ extension SubscriptionController: UITableViewDataSource {
         if titles[indexPath.section] == "栏目" {
             cell.updateSectionWithButton(viewModel: sectionViewModels[indexPath.row])
         } else {
-            cell.updateContactWithButton(viewModel: userViewModels[indexPath.row])
+            cell.update(viewModel: userViewModels[indexPath.row])
         }
         return cell
     }

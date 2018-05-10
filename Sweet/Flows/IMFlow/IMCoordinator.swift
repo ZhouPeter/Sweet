@@ -61,6 +61,9 @@ extension IMCoordinator {
         iMContactsView.showSubscription = { [weak self] in
             self?.showSubscription()
         }
+        iMContactsView.showSearch = { [weak self] in
+            self?.showSearch()
+        }
     }
     
     private func showProfile(userId: UInt64) {
@@ -94,6 +97,14 @@ extension IMCoordinator {
             self?.showProfile(userId: userId)
         }
         router.push(subscriptionView)
+    }
+    
+    private func showSearch() {
+        let searchView = factory.makeContactSearchOutput()
+        searchView.showProfile = { [weak self] userId in
+            self?.showProfile(userId: userId)
+        }
+        router.push(searchView)
     }
 
 }

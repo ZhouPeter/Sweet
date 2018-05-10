@@ -10,14 +10,20 @@ import Foundation
 
 struct PhoneContactViewModel {
     var firstNameString: String?
+    let phone: String
     let nameString: String
     var infoString: String?
     var avatarURL: URL?
     let isHiddenButton: Bool
     var buttonTitle: String = "邀请"
     var buttonStyle: ContactButtonStyle = .borderBlue
+    var buttonIsEnabled: Bool
     let nameCenterYOffsetAvatar: CGFloat
+    var callBack: ((UInt64) -> Void)?
+    var userId: UInt64?
     init(model: PhoneContact) {
+        self.phone = model.phone
+        self.buttonIsEnabled = true
         if model.registerStatus == .unRegister {
             self.isHiddenButton = false
             self.nameString = model.name
@@ -36,6 +42,7 @@ struct PhoneContactViewModel {
             self.avatarURL = URL(string: model.avatar!)
             self.infoString = model.info
             self.nameCenterYOffsetAvatar = -10
+            self.userId = model.userId
         }
     }
 }

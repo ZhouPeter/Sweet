@@ -19,14 +19,17 @@ protocol IMContactsView: BaseView {
     var showProfile: ((UInt64) -> Void)? {  get set }
     var showBlock: (() -> Void)? { get set }
     var showSubscription: (() -> Void)? { get set }
+    var showSearch: (() -> Void)? { get set }
 }
 
 class IMContactsController: BaseViewController, IMContactsView {
+    
     var showSubscription: (() -> Void)?
     var showBlock: (() -> Void)?
     var showInvite: (() -> Void)?
     var showBlack: (() -> Void)?
     var showProfile: ((UInt64) -> Void)?
+    var showSearch: (() -> Void)?
     var between72hViewModels = [ContactViewModel]()
     var allViewModels = [ContactViewModel]()
     var viewModelsGroup = [[ContactViewModel]]()
@@ -92,6 +95,14 @@ class IMContactsController: BaseViewController, IMContactsView {
         return tableView
     }()
     
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Search"), for: .normal)
+        button.addTarget(self, action: #selector(showSearch(_:)), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
@@ -102,6 +113,11 @@ class IMContactsController: BaseViewController, IMContactsView {
         tableView.align(.bottom, to: view, inset: UIScreen.safeBottomMargin())
         tableView.pin(to: topBackgroundView, edge: .bottom)
         loadContactAllList()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
+
     }
     
 }
@@ -119,6 +135,9 @@ extension IMContactsController {
     }
     @objc private func showSubscription(_ sender: UIButton) {
         self.showSubscription?()
+    }
+    @objc private func showSearch(_ sender: UIButton) {
+        self.showSearch?()
     }
 }
 
@@ -164,7 +183,7 @@ extension IMContactsController {
                 models.forEach({ (model) in
                     let viewModel = ContactViewModel(model: model)
                     self.allViewModels.append(viewModel)
-                    if let lastTime = model.lastTime, lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
+                    if model.lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
                         self.between72hViewModels.append(viewModel)
                     }
                 })

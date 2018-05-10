@@ -15,5 +15,6 @@ protocol IMFlowFactory {
     func makeBlackOutput() -> BlackView
     func makeBlockOutput() -> BlockView
     func makeSubscriptionOutput() -> SubscriptionView
+    func makeContactSearchOutput() -> ContactSearchView
     func makeProfileOutput(userId: UInt64) -> ProfileView
 }

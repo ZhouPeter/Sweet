@@ -13,7 +13,7 @@ protocol BlockView: BaseView {
 class BlockController: BaseViewController, BlockView {
     var showProfile: ((UInt64) -> Void)?
     
-    private var viewModels = [ContactWithButtonViewModel]()
+    private var viewModels = [ContactViewModel]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor.xpGray()
@@ -43,7 +43,7 @@ class BlockController: BaseViewController, BlockView {
             switch result {
             case let .success(response):
                 response.list.forEach({ (model) in
-                    var viewModel = ContactWithButtonViewModel(model: model)
+                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
                         self?.delBlocklist(userId: userId)
                     }
@@ -78,7 +78,7 @@ class BlockController: BaseViewController, BlockView {
             switch result {
             case .success:
                 guard let index = self.viewModels.index(where: { $0.userId == userId }) else { return }
-                self.viewModels[index].buttonStyle = .backgroudColorGray
+                self.viewModels[index].buttonStyle = .backgroundColorGray
                 self.viewModels[index].buttonTitle = "屏蔽"
                 self.viewModels[index].callBack = { [weak self] userId in
                     self?.addBlocklist(userId: userId)
@@ -99,7 +99,7 @@ extension BlockController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: "blockCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
-        cell.updateContactWithButton(viewModel: viewModels[indexPath.row])
+        cell.update(viewModel: viewModels[indexPath.row])
         return cell
     }
 }
