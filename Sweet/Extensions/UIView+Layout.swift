@@ -26,7 +26,10 @@ extension UIView {
     public enum Size {
         case width
         case height
+        case size
     }
+    
+    public typealias SizeConstraints = (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
     
     public func fill(in view: UIView, left: CGFloat = 0, right: CGFloat = 0, top: CGFloat = 0, bottom: CGFloat = 0) {
         align(.left, to: view, inset: left)
@@ -79,20 +82,21 @@ extension UIView {
         return constraint
     }
     
-    @discardableResult public func size(
+    @discardableResult public func equal(
         _ size: Size,
         to anchorView: UIView,
-        inset: CGFloat = 0) -> NSLayoutConstraint {
+        offset: CGFloat = 0) -> SizeConstraints {
         translatesAutoresizingMaskIntoConstraints = false
-        let constraint: NSLayoutConstraint
-        switch size {
-        case .width:
-            constraint = widthAnchor.constraint(equalTo: anchorView.widthAnchor, constant: inset)
-        case .height:
-            constraint = heightAnchor.constraint(equalTo: anchorView.heightAnchor, constant: inset)
+        var constraints: SizeConstraints = (nil, nil)
+        if size == .width || size == .size {
+            constraints.width = widthAnchor.constraint(equalTo: anchorView.widthAnchor, constant: offset)
+            constraints.width?.isActive = true
         }
-        constraint.isActive = true
-        return constraint
+        if size == .height || size == .size {
+            constraints.height = heightAnchor.constraint(equalTo: anchorView.heightAnchor, constant: offset)
+            constraints.height?.isActive = true
+        }
+        return constraints
     }
     
     @discardableResult public func align(

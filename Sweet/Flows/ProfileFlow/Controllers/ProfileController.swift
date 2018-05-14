@@ -63,7 +63,11 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        actionsController = ActionsController()
+        addChildViewController(actionsController)
+        actionsController.didMove(toParentViewController: self)
         setTableView()
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -144,6 +148,7 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
+                self.actionsController.userId = self.user?.userId
                 self.updateViewModel()
                 self.tableView.reloadData()
             }
@@ -218,8 +223,6 @@ extension ProfileController: UITableViewDataSource {
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
            cell.delegate = self
-           actionsController = ActionsController()
-           actionsController.userId = user?.userId
            cell.setPlaceholderContentView(view: actionsController.view)
            return cell
         }

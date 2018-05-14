@@ -19,4 +19,3 @@ struct SubcriptionSection: Codable {
     let name: String
     let sectionId: UInt64
 }
-

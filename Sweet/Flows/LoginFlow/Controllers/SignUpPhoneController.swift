@@ -105,7 +105,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         view.addSubview(phoneTextField)
         phoneTextField.pin(to: codeLabel, edge: .right)
         phoneTextField.pin(to: smsCodeButton, edge: .left)
-        phoneTextField.size(.height, to: codeLabel)
+        phoneTextField.equal(.height, to: codeLabel)
         phoneTextField.centerY(to: codeLabel)
         
         view.addSubview(topLineView)

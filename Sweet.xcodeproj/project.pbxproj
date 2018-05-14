@@ -295,6 +295,42 @@
 		58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
 		58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
 		58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
+		58CE1EBD20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */; };
+		58CE1EBE20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */; };
+		58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */; };
+		58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */; };
+		58CE1EC120A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */; };
+		58CE1EC220A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */; };
+		58CE1EC320A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */; };
+		58CE1EC420A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */; };
+		58CE1EC620A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */; };
+		58CE1EC720A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */; };
+		58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */; };
+		58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */; };
+		58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */; };
+		58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */; };
+		58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */; };
+		58CE1ECE20A5414E00781EBF /* StoriesCubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */; };
+		58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */; };
+		58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */; };
+		58CE1ED220A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */; };
+		58CE1ED320A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */; };
+		58CE1ED520A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */; };
+		58CE1ED620A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */; };
+		58CE1ED720A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */; };
+		58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */; };
+		58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */; };
+		58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */; };
+		58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */; };
+		58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */; };
+		58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EDE20A5652700781EBF /* StoryUVController.swift */; };
+		58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EDE20A5652700781EBF /* StoryUVController.swift */; };
+		58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EDE20A5652700781EBF /* StoryUVController.swift */; };
+		58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EDE20A5652700781EBF /* StoryUVController.swift */; };
+		58CE1EE420A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
+		58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
+		58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
+		58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
 		58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
 		58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
 		58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D578C92092D30500AE5D38 /* StoriesController.swift */; };
@@ -705,6 +741,15 @@
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
 		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
 		58CE1EB620A4208600781EBF /* SearchContactResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactResponse.swift; sourceTree = "<group>"; };
+		58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesPlayerViewController.swift; sourceTree = "<group>"; };
+		58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesPlayerGroupViewController.swift; sourceTree = "<group>"; };
+		58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesCubeView.swift; sourceTree = "<group>"; };
+		58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayProgressView.swift; sourceTree = "<group>"; };
+		58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
+		58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesPlayerScrollView.swift; sourceTree = "<group>"; };
+		58CE1EDE20A5652700781EBF /* StoryUVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVController.swift; sourceTree = "<group>"; };
+		58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVTableViewCell.swift; sourceTree = "<group>"; };
 		58D578C92092D30500AE5D38 /* StoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesController.swift; sourceTree = "<group>"; };
 		58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		58D578D32092FAE200AE5D38 /* StoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListResponse.swift; sourceTree = "<group>"; };
@@ -881,6 +926,8 @@
 		58BD5293208856B900F7C3E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58CE1ECA20A5414D00781EBF /* StoriesCubeView.swift */,
+				58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */,
 				58D578F120934B6F00AE5D38 /* SweetHeaderView.swift */,
 				58463DD920997F3A00698CF8 /* Profile */,
 				58BD53202090302B00F7C3E1 /* CellConfigurator.swift */,
@@ -901,6 +948,9 @@
 				58447B50209C5143004C2FFE /* ContactTableViewCell.swift */,
 				5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */,
 				ACF1A70B20919FDF0046BF21 /* ShootButton.swift */,
+				58CE1ECF20A54A3F00781EBF /* StoryPlayProgressView.swift */,
+				58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */,
+				58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -920,6 +970,7 @@
 		58BD53252090306E00F7C3E1 /* VIewModels */ = {
 			isa = PBXGroup;
 			children = (
+				58CE1EC520A5409900781EBF /* StoryCollectionViewCellModel.swift */,
 				58BD53262090308400F7C3E1 /* BasInfoCellViewModel.swift */,
 				58BD533F20905CE400F7C3E1 /* FeedsCellViewModel.swift */,
 				58D578D82093012500AE5D38 /* StoryCellViewModel.swift */,
@@ -1177,8 +1228,11 @@
 		ACA32330208747D400BDC92E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */,
+				58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */,
 				ACA323A6208763AA00BDC92E /* BaseViewController.swift */,
 				58155E342091D53E00ADEFFB /* WebViewController.swift */,
+				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1807,6 +1861,7 @@
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
 				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */,
+				58CE1ED520A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				58BD52E2208DA51500F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
@@ -1815,6 +1870,7 @@
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58155E12209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -1822,19 +1878,23 @@
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */,
+				58CE1EE420A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58D578E32093198600AE5D38 /* UpdateController.swift in Sources */,
 				58BD52BF20888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
+				58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
+				58CE1EBD20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
+				58CE1EC120A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				58BD52C82088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534E2090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -1868,6 +1928,7 @@
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
+				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
@@ -1921,6 +1982,7 @@
 				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				58CE1EC620A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B51209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -1931,6 +1993,7 @@
 				58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
+				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1971,6 +2034,7 @@
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
+				58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -1981,6 +2045,7 @@
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
@@ -2007,11 +2072,13 @@
 				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
+				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
+				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
 				58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -2020,6 +2087,7 @@
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
+				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				58155E14209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				5843DA7020A1A515005C8AD2 /* BlockController.swift in Sources */,
@@ -2029,6 +2097,7 @@
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58CE1EC320A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				58D578F420934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
@@ -2047,13 +2116,16 @@
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
+				58CE1ED720A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				58CE1ED220A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 			);
@@ -2096,6 +2168,7 @@
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */,
+				58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -2106,6 +2179,7 @@
 				AC2F978F20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
@@ -2132,11 +2206,13 @@
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
+				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
+				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
 				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -2145,6 +2221,7 @@
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
 				58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
+				58CE1ECE20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				58155E15209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
@@ -2154,6 +2231,7 @@
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
+				58CE1EC420A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				58D578F520934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
@@ -2172,13 +2250,16 @@
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
+				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
+				58CE1ED320A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B59209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 			);
@@ -2226,6 +2307,7 @@
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
 				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */,
+				58CE1ED620A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				58BD52E3208DA52000F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
@@ -2234,6 +2316,7 @@
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58155E13209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
@@ -2241,19 +2324,23 @@
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */,
+				58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E6208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58D578E42093198600AE5D38 /* UpdateController.swift in Sources */,
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
+				58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F2208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
+				58CE1EBE20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
+				58CE1EC220A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				58BD52C92088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534F2090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -2287,6 +2374,7 @@
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
+				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,
@@ -2340,6 +2428,7 @@
 				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				58CE1EC720A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B52209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -2350,6 +2439,7 @@
 				58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
+				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

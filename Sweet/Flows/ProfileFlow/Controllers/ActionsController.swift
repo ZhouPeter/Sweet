@@ -13,7 +13,13 @@ protocol PageChildrenProtocol {
     func loadRequest()
 }
 class ActionsController: PageboyViewController {
-    var userId: UInt64?
+    var userId: UInt64? {
+        didSet {
+            for index in 0..<pageControllers.count {
+                pageControllers[index].userId = userId
+            }
+        }
+    }
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = FeedsController()

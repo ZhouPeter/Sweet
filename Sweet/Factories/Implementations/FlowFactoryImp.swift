@@ -110,26 +110,30 @@ extension FlowFactoryImp: IMFlowFactory {
     func makeIMManagerView() -> IMManagerView {
         return IMManagerController()
     }
+    
     func makeIMListView() -> IMListView {
         return IMListController()
     }
+    
     func makeInviteOutput() -> InviteView {
         return InviteController()
     }
+    
     func makeBlackOutput() -> BlackView {
         return BlackController()
     }
+    
     func makeBlockOutput() -> BlockView {
         return BlockController()
     }
+    
     func makeSubscriptionOutput() -> SubscriptionView {
         return SubscriptionController()
     }
+    
     func makeProfileOutput(userId: UInt64) -> ProfileView {
         let controller = ProfileController()
         controller.userId = userId
         return controller
     }
-    
-    
 }

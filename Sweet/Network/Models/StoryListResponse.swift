@@ -21,14 +21,17 @@ struct StoryListResponse: Codable {
 
 struct StoryResponse: Codable {
     let avatar: String
+    let college: String
     let content: String
     let created: Int
+    let enrollment: String
     let like: Bool
+    let nickname: String
     let read: Bool
     let storyId: UInt64
-    let subtitle: String
     let tag: String
     let title: String
     let type: StoryType
+    let university: String
     let userId: UInt64
 }
