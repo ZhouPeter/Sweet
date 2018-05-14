@@ -128,7 +128,7 @@ extension UIView {
         case .right:
             constraint = leftAnchor.constraint(equalTo: anchorView.rightAnchor, constant: spacing)
         case .top:
-            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: spacing)
+            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: -spacing)
         case .bottom:
             constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: spacing)
         }
