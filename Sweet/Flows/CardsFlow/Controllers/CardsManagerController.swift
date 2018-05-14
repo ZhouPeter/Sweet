@@ -1,27 +1,27 @@
 //
-//  IMManagerController.swift
+//  CardsManagerController.swift
 //  Sweet
 //
-//  Created by 周鹏杰 on 2018/5/4.
+//  Created by 周鹏杰 on 2018/5/14.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
 import UIKit
-protocol IMManagerView: BaseView {
-    var showIMList: ((IMListView) -> Void)? { get set }
-    var showIMContacts: ((IMContactsView) -> Void)? { get set }
-
+protocol CardsManagerView: BaseView {
+    var showAll: ((CardsAllView) -> Void)? { get set }
+    var showSubscription: ((CardsSubscriptionView) -> Void)? { get set }
+    
 }
-class IMManagerController: BaseViewController, IMManagerView {
-    var showIMList: ((IMListView) -> Void)?
+class CardsManagerController: BaseViewController, CardsManagerView {
+    var showAll: ((CardsAllView) -> Void)?
     
-    var showIMContacts: ((IMContactsView) -> Void)?
+    var showSubscription: ((CardsSubscriptionView) -> Void)?
     
-    var iMListController = IMListController()
-    var contactsController = IMContactsController()
+    var allController = CardsAllController()
+    var subscriptionController = CardsSubscriptionController()
     private var currentController = UIViewController()
     private lazy var titleView: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["消息", "联系人"])
+        let control = UISegmentedControl(items: ["全部", "订阅"])
         control.tintColor = .clear
         let normalTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
                                     NSAttributedStringKey.foregroundColor: UIColor.white.withAlphaComponent(0.5)]
@@ -33,24 +33,28 @@ class IMManagerController: BaseViewController, IMManagerView {
         control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
         return control
     }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
-        navigationController?.navigationBar.barStyle = .black
+//        navigationController?.navigationBar.barStyle = .black
+        setNeedsStatusBarAppearanceUpdate()
         navigationItem.titleView = titleView
-        addChildViewController(iMListController)
-        iMListController.didMove(toParentViewController: self)
-        view.addSubview(iMListController.view)
-        currentController = iMListController
-        showIMList?(iMListController)
+        addChildViewController(allController)
+        allController.didMove(toParentViewController: self)
+        view.addSubview(allController.view)
+        currentController = allController
+        showAll?(allController)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            self.replaceController(oldController: currentController, newController: iMListController)
+            self.replaceController(oldController: currentController, newController: allController)
         } else {
-            self.replaceController(oldController: currentController, newController: contactsController)
+            self.replaceController(oldController: currentController, newController: subscriptionController)
         }
     }
     
@@ -63,11 +67,11 @@ class IMManagerController: BaseViewController, IMManagerView {
         oldController.removeFromParentViewController()
         oldController.view.removeFromSuperview()
         self.currentController = newController
-        if newController is IMListController {
-            showIMList?(iMListController)
+        if newController is CardsAllController {
+            showAll?(allController)
         } else {
-            showIMContacts?(contactsController)
+            showSubscription?(subscriptionController)
         }
     }
-    
+
 }

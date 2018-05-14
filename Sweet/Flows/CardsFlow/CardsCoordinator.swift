@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol CardsView: BaseView {
-    
-}
 
 final class CardsCoordinator: BaseCoordinator {
     private let factory: CardsFlowFactory
@@ -31,7 +28,7 @@ final class CardsCoordinator: BaseCoordinator {
     // MARK: - Private
     
     private func showCards() {
-        let cards = factory.makeCardsView()
+        let cards = factory.makeCardsManagerView()
         router.setRootFlow(cards)
     }
 }

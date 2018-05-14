@@ -7,14 +7,16 @@
 //
 
 import UIKit
+protocol CardsAllView: BaseView {
+    
+}
 
-final class CardsController: BaseViewController, CardsView {
+class CardsAllController: BaseViewController, CardsAllView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
-        title = "Cards"
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         logger.debug()
