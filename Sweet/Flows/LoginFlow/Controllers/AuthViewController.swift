@@ -112,7 +112,7 @@ class AuthViewController: BaseViewController, AuthView {
         registerButton.align(.left, to: view, inset: 28)
         registerButton.align(.right, to: view, inset: 28)
         registerButton.constrain(height: 50)
-        registerButton.pin(to: bottomLabel, edge: .top, spacing: 20)
+        registerButton.pin(.top, to: bottomLabel, spacing: 20)
         registerButton.setViewRounded()
     }
 }

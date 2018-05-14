@@ -111,7 +111,7 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         borderTopView.addSubview(leftLineView)
         leftLineView.align(.top, to: borderTopView)
         leftLineView.align(.bottom, to: borderTopView)
-        leftLineView.pin(to: countryNumLabel, edge: .right)
+        leftLineView.pin(.right, to: countryNumLabel)
         leftLineView.constrain(width: 0.5)
         
         borderTopView.addSubview(smsCodeButton)
@@ -125,12 +125,12 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         borderTopView.addSubview(rightLineView)
         rightLineView.align(.top, to: borderTopView)
         rightLineView.align(.bottom, to: borderTopView)
-        rightLineView.pin(to: smsCodeButton, edge: .left, spacing: 1)
+        rightLineView.pin(.left, to: smsCodeButton, spacing: 1)
         rightLineView.constrain(width: 0.5)
 
         borderTopView.addSubview(phoneTextField)
-        phoneTextField.pin(to: leftLineView, edge: .right, spacing: 20)
-        phoneTextField.pin(to: rightLineView, edge: .left)
+        phoneTextField.pin(.right, to: leftLineView, spacing: 20)
+        phoneTextField.pin(.left, to: rightLineView)
         phoneTextField.align(.top, to: borderTopView)
         phoneTextField.align(.bottom, to: borderTopView)
         
@@ -138,13 +138,13 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         view.addSubview(borderBottomView)
         borderBottomView.align(.left, to: view)
         borderBottomView.align(.right, to: view)
-        borderBottomView.pin(to: borderTopView, edge: .bottom, spacing: 10)
+        borderBottomView.pin(.bottom, to: borderTopView, spacing: 10)
         borderBottomView.constrain(height: 56)
         borderBottomView.addSubview(smsCodeTextField)
         smsCodeTextField.fill(in: borderBottomView, left: 15)
         view.addSubview(messageLabel)
         messageLabel.align(.left, to: view, inset: 15)
-        messageLabel.pin(to: borderBottomView, edge: .bottom, spacing: 15)
+        messageLabel.pin(.bottom, to: borderBottomView, spacing: 15)
     }
     
     @objc private func saveAction(_ sender: UIButton) {

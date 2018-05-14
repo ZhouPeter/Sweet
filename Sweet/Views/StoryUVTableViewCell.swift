@@ -75,7 +75,7 @@ class StoryUVTableViewCell: UITableViewCell {
         avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.setViewRounded()
         contentView.addSubview(nicknameLabel)
-        nicknameLabel.pin(to: avatarImageView, edge: .right, spacing: 10)
+        nicknameLabel.pin(.right, to: avatarImageView, spacing: 10)
         nicknameLabel.align(.top, to: avatarImageView)
         contentView.addSubview(infoLabel)
         infoLabel.align(.left, to: nicknameLabel)

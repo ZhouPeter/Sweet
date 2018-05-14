@@ -58,10 +58,10 @@ class UpdateTableViewCell: UITableViewCell {
         enterImageView.align(.right, to: contentView)
         contentView.addSubview(contentLabel)
         contentLabel.centerY(to: contentView)
-        contentLabel.pin(to: enterImageView, edge: .left, spacing: 10)
+        contentLabel.pin(.left, to: enterImageView, spacing: 10)
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
-        avatarImageView.pin(to: enterImageView, edge: .left, spacing: 10)
+        avatarImageView.pin(.left, to: enterImageView, spacing: 10)
         avatarImageView.centerY(to: contentView)
         avatarImageView.setViewRounded()
         

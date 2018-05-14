@@ -139,7 +139,7 @@ class AboutController: BaseViewController, AboutView {
         view.addSubview(questionRectView)
         questionRectView.equal(.size, to: updateRectView)
         questionRectView.centerX(to: updateRectView)
-        questionRectView.pin(to: updateRectView, edge: .bottom, spacing: 20)
+        questionRectView.pin(.bottom, to: updateRectView, spacing: 20)
         questionRectView.clickCallBack = { [weak self] in
             let title = "常见问题"
             let urlString = "http://mx.miaobo.me/faq.html"
@@ -149,7 +149,7 @@ class AboutController: BaseViewController, AboutView {
         view.addSubview(feedbackRectView)
         feedbackRectView.equal(.size, to: updateRectView)
         feedbackRectView.centerX(to: updateRectView)
-        feedbackRectView.pin(to: questionRectView, edge: .bottom, spacing: 20)
+        feedbackRectView.pin(.bottom, to: questionRectView, spacing: 20)
         feedbackRectView.clickCallBack = { [weak self] in
             self?.showFeedback?()
         }
@@ -157,7 +157,7 @@ class AboutController: BaseViewController, AboutView {
         view.addSubview(logoutRectView)
         logoutRectView.equal(.size, to: updateRectView)
         logoutRectView.centerX(to: updateRectView)
-        logoutRectView.pin(to: feedbackRectView, edge: .bottom, spacing: 20)
+        logoutRectView.pin(.bottom, to: feedbackRectView, spacing: 20)
         logoutRectView.clickCallBack = { [weak self] in
             self?.showLogoutAlert()
         }

@@ -154,9 +154,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         shootButton.constrain(width: buttonWidth, height: height)
         albumButton.constrain(width: buttonWidth, height: height)
         shootButton.center(to: bottomView)
-        textButton.pin(to: shootButton, edge: .left, spacing: buttonSpacing)
+        textButton.pin(.left, to: shootButton, spacing: buttonSpacing)
         textButton.centerY(to: shootButton)
-        albumButton.pin(to: shootButton, edge: .right, spacing: buttonSpacing)
+        albumButton.pin(.right, to: shootButton, spacing: buttonSpacing)
         albumButton.centerY(to: shootButton)
         buttons.append(textButton)
         buttons.append(shootButton)
@@ -164,7 +164,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         
         bottomView.addSubview(indicator)
         indicator.constrain(width: 30, height: 30)
-        indicator.pin(to: shootButton, edge: .bottom, spacing: -10)
+        indicator.pin(.bottom, to: shootButton, spacing: -10)
         indicatorCenterX = indicator.centerX(to: shootButton)
     }
     

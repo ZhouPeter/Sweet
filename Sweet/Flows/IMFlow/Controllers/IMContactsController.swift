@@ -111,7 +111,7 @@ class IMContactsController: BaseViewController, IMContactsView {
         tableView.align(.left, to: view)
         tableView.align(.right, to: view)
         tableView.align(.bottom, to: view, inset: UIScreen.safeBottomMargin())
-        tableView.pin(to: topBackgroundView, edge: .bottom)
+        tableView.pin(.bottom, to: topBackgroundView)
         loadContactAllList()
     }
     override func viewWillAppear(_ animated: Bool) {

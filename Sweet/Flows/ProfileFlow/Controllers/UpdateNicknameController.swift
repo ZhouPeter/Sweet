@@ -71,7 +71,7 @@ class UpdateNicknameController: BaseViewController, UpdateProtocol {
         nicknameTextField.fill(in: topContentView, left: 10)
         view.addSubview(infoLabel)
         infoLabel.align(.left, to: view, inset: 10)
-        infoLabel.pin(to: topContentView, edge: .bottom, spacing: 10)
+        infoLabel.pin(.bottom, to: topContentView, spacing: 10)
 
     }
     

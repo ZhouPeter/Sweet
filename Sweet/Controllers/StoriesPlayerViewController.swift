@@ -155,11 +155,11 @@ class StoriesPlayerViewController: BaseViewController {
         progressView.align(.top, to: view, inset: UIScreen.isIphoneX() ? 48 : 4)
         progressView.constrain(height: 5)
         view.addSubview(storyInfoLabel)
-        storyInfoLabel.pin(to: avatarImageView, edge: .right, spacing: 5)
+        storyInfoLabel.pin(.right, to: avatarImageView, spacing: 5)
         storyInfoLabel.centerY(to: avatarImageView)
         view.addSubview(menuOrShareButton)
         menuOrShareButton.constrain(width: 30, height: 30)
-        menuOrShareButton.pin(to: dismissButton, edge: .left, spacing: 15)
+        menuOrShareButton.pin(.left, to: dismissButton, spacing: 15)
         menuOrShareButton.centerY(to: avatarImageView)
     
     }
