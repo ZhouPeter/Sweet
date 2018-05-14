@@ -360,6 +360,10 @@
 		AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
+		AC3280CF20A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D020A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -716,6 +720,7 @@
 		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
@@ -1078,6 +1083,7 @@
 				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
+				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1890,6 +1896,7 @@
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
+				AC3280CF20A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
@@ -2024,6 +2031,7 @@
 				ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58155E1E2091764000ADEFFB /* EstimatesController.swift in Sources */,
+				AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -2147,6 +2155,7 @@
 				ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58155E1F2091764000ADEFFB /* EstimatesController.swift in Sources */,
+				AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -2303,6 +2312,7 @@
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
+				AC3280D020A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */,

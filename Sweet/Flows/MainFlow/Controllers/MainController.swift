@@ -9,6 +9,11 @@
 import UIKit
 import Pageboy
 
+extension Notification.Name {
+    static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
+    static let EnablePageScroll = Notification.Name(rawValue: "EnablePageScroll")
+}
+
 final class MainController: PageboyViewController, MainView {
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
@@ -19,6 +24,7 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
@@ -32,6 +38,29 @@ final class MainController: PageboyViewController, MainView {
         delegate = self
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceivePageScrollDiableNote),
+            name: .DisablePageScroll,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceivePageScrollEnableNote),
+            name: .EnablePageScroll,
+            object: nil
+        )
+    }
+    
+    // MARK: - Private
+    
+    @objc func didReceivePageScrollDiableNote() {
+        isScrollEnabled = false
+    }
+    
+    @objc func didReceivePageScrollEnableNote() {
+        isScrollEnabled = true
     }
 }
 
