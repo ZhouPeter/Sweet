@@ -20,6 +20,25 @@ final class StoryTextEditController: UIViewController {
     private var isTextGestureEnabled = false
     private var textContainerEditScale: CGFloat = 1
     private var textTransform: TextTransform?
+    private var topicButtonLeft: NSLayoutConstraint?
+    private var topicButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitleColor(UIColor(hex: 0xF8E71C), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        button.setTitle("#你好", for: .normal)
+        let image = #imageLiteral(resourceName: "TopicLabelBackground")
+            .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 22), resizingMode: .stretch)
+        button.setBackgroundImage(image, for: .normal)
+        button.isUserInteractionEnabled = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        return button
+    } ()
+    
+    private var firstLineUsedRect = CGRect.zero {
+        didSet {
+            topicButtonLeft?.constant = firstLineUsedRect.origin.x
+        }
+    }
     
     private lazy var textBoundingView: UIView = {
         let view = UIView()
@@ -91,6 +110,10 @@ final class StoryTextEditController: UIViewController {
         view.addSubview(textViewContainer)
         textViewContainer.addSubview(textView)
         placeholderLabel.center(to: textViewContainer)
+        textViewContainer.addSubview(topicButton)
+        
+        topicButtonLeft = topicButton.align(.left, to: textView)
+        topicButton.pin(.top, to: textView, spacing: 10)
         
         layoutTextContainer()
         textView.frame.size.width = textViewContainer.frame.width
@@ -373,7 +396,13 @@ extension StoryTextEditController: UITextViewDelegate {
         let layoutManager = textView.layoutManager
         let range = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
         var ranges = [NSValue]()
-        layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, _, _, glyphRange, _) in
+        var isFirstLine = true
+        layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, usedRect, _, glyphRange, _) in
+            if isFirstLine {
+                isFirstLine = false
+                logger.debug(usedRect)
+                self.firstLineUsedRect = usedRect
+            }
             let characterRange = layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
             ranges.append(NSValue(range: characterRange))
         }
