@@ -8,8 +8,19 @@
 
 import UIKit
 
+protocol StoryTextControllerDelegate: class {
+    func storyTextControllerNeedsHideBottomView(_ isHidden: Bool)
+}
+
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
+    weak var delegate: StoryTextControllerDelegate?
+    
+    private lazy var editContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    } ()
     
     private lazy var editController = StoryTextEditController()
     
@@ -92,6 +103,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .gray
+        view.addSubview(editContainer)
+        editContainer.fill(in: view)
         setupEditController()
         setupTopicButton()
         setupNextButton()
@@ -105,29 +118,29 @@ final class StoryTextController: BaseViewController, StoryTextView {
     private func setupEditController() {
         addChildViewController(editController)
         editController.didMove(toParentViewController: self)
-        view.addSubview(editController.view)
-        editController.view.fill(in: view)
+        editContainer.addSubview(editController.view)
+        editController.view.fill(in: editContainer)
     }
     
     private func setupTopicButton() {
-        view.addSubview(topicButton)
+        editContainer.addSubview(topicButton)
         topicButton.constrain(height: 30)
         topicButton.align(.left, to: view, inset: 20)
         topicBottom = topicButton.align(.bottom, to: view, inset: topicBottomInset)
     }
     
     private func setupNextButton() {
-        view.addSubview(nextButton)
+        editContainer.addSubview(nextButton)
         nextButton.constrain(height: 30)
         nextButton.align(.right, to: view, inset: 20)
         nextButton.align(.bottom, to: topicButton)
     }
     
     private func setupEditControls() {
-        view.addSubview(backButton)
-        view.addSubview(editButton)
-        view.addSubview(confirmButton)
-        view.addSubview(deleteButton)
+        editContainer.addSubview(backButton)
+        editContainer.addSubview(editButton)
+        editContainer.addSubview(confirmButton)
+        editContainer.addSubview(deleteButton)
         backButton.constrain(width: 40, height: 40)
         backButton.align(.left, to: view, inset: 10)
         backButton.align(.bottom, to: view, inset: 10)
@@ -137,7 +150,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         confirmButton.equal(.size, to: backButton)
         confirmButton.align(.bottom, to: backButton)
         confirmButton.align(.right, to: view, inset: 10)
-        view.addSubview(closeButton)
+        editContainer.addSubview(closeButton)
         closeButton.constrain(width: 40, height: 40)
         closeButton.align(.right, to: view, inset: 10)
         closeButton.align(.top, to: view, inset: 10)
@@ -180,7 +193,31 @@ final class StoryTextController: BaseViewController, StoryTextView {
     // MARK: - Actions
     
     @objc private func didPressTopicButton() {
-        logger.debug()
+        editController.endEditing()
+        let topic = TopicListController()
+        addChildViewController(topic)
+        topic.didMove(toParentViewController: self)
+        view.addSubview(topic.view)
+        topic.view.frame = view.bounds
+        topic.view.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            topic.view.alpha = 1
+            self.editContainer.alpha = 0
+            self.delegate?.storyTextControllerNeedsHideBottomView(true)
+        }, completion: nil)
+        topic.didFinish = { [weak self] _ in
+            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.view.addSubview(view)
+            self.editController.beginEditing()
+            view.frame = self.view.bounds
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                view.alpha = 0
+                self.editContainer.alpha = 1
+                self.delegate?.storyTextControllerNeedsHideBottomView(false)
+            }, completion: { (_) in
+                view.removeFromSuperview()
+            })
+        }
     }
     
     @objc private func didPressNextButton() {

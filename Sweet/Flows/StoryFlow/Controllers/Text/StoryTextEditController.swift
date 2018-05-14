@@ -131,6 +131,10 @@ final class StoryTextEditController: UIViewController {
         textView.resignFirstResponder()
     }
     
+    func beginEditing() {
+        textView.becomeFirstResponder()
+    }
+    
     func endEditing() {
         textView.resignFirstResponder()
     }

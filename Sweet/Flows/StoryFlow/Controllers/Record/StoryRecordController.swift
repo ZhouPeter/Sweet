@@ -28,7 +28,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     } ()
     
     private var captureController = VideoCaptureController()
-    private lazy var textController = StoryTextController()
+    
+    private lazy var textController: StoryTextController = {
+        let controller = StoryTextController()
+        controller.delegate = self
+        return controller
+    } ()
     
     private lazy var renderView: UIView = {
         let view = UIView(frame: self.view.bounds)
@@ -208,3 +213,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return button
     }
 }
+
+extension StoryRecordController: StoryTextControllerDelegate {
+    func storyTextControllerNeedsHideBottomView(_ isHidden: Bool) {
+        bottomView.alpha = isHidden ? 0 : 1
+    }
+}
+
