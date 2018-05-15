@@ -23,6 +23,22 @@ final class StoryTextEditController: UIViewController {
         }
     }
     
+    var hidesTopicWithoutText = false
+    
+    var showsPlaceholder = true {
+        didSet {
+            if showsPlaceholder {
+                if textView.hasText {
+                    placeholderLabel.alpha = 0
+                } else {
+                    placeholderLabel.alpha = 1
+                }
+            } else {
+                placeholderLabel.alpha = 0
+            }
+        }
+    }
+    
     private let insets = UIEdgeInsets(top: 20, left: 20, bottom: 80, right: 20)
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
@@ -151,6 +167,14 @@ final class StoryTextEditController: UIViewController {
         textView.resignFirstResponder()
     }
     
+    var isTextViewEditing: Bool {
+        return textView.isFirstResponder
+    }
+    
+    var hasText: Bool {
+        return textView.hasText
+    }
+    
     // MARK: - Private
     
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
@@ -161,7 +185,12 @@ final class StoryTextEditController: UIViewController {
                 if self.textView.hasText {
                     self.placeholderLabel.alpha = 0
                 } else {
-                    self.placeholderLabel.alpha = self.keyboardHeight > 0 ? 0 : 1
+                    if self.hidesTopicWithoutText {
+                        self.topicButton.alpha = 0
+                    }
+                    if self.showsPlaceholder {
+                        self.placeholderLabel.alpha = self.keyboardHeight > 0 ? 0 : 1
+                    }
                 }
                 self.view.layoutIfNeeded()
                 self.layoutTextContainer()

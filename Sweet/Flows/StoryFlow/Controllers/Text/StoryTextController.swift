@@ -17,6 +17,12 @@ final class StoryTextController: BaseViewController, StoryTextView {
     weak var delegate: StoryTextControllerDelegate?
     var topic: Topic?
     
+    private var isPublishing = false {
+        didSet {
+            enablePageScroll = !isPublishing
+        }
+    }
+    
     private lazy var editContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -94,6 +100,9 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     var enablePageScroll: Bool = true {
         didSet {
+            if isPublishing && enablePageScroll {
+                return
+            }
             NotificationCenter.default.post(
                 name: enablePageScroll ? .EnablePageScroll : .DisablePageScroll,
                 object: nil
@@ -168,6 +177,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
             self.nextButton.alpha = self.topicButton.alpha
             self.closeButton.alpha = self.topicButton.alpha
         }, completion: nil)
+        
+        if isPublishing { return }
         if event.type == .willShow {
             enablePageScroll = false
         } else if event.type == .willHide {
@@ -227,11 +238,21 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressNextButton() {
+        guard editController.hasText else { return }
+        isPublishing = true
         editController.endEditing()
+        editController.hidesTopicWithoutText = true
+        hideEditControls(false, animated: true)
+        delegate?.storyTextControllerNeedsHideBottomView(true)
+        editController.showsPlaceholder = false
     }
     
     @objc private func didPressBackButton() {
-        
+        isPublishing = false
+        editController.showsPlaceholder = true
+        editController.hidesTopicWithoutText = false
+        hideEditControls(true, animated: true)
+        delegate?.storyTextControllerNeedsHideBottomView(false)
     }
     
     @objc private func didPressDeleteButton() {
@@ -239,7 +260,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressEditButton() {
-        
+        editController.beginEditing()
     }
     
     @objc private func didPressConfirmButton() {
@@ -247,6 +268,16 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
 
     @objc private func didPressCloseButton() {
-        editController.clear()
+        if isPublishing {
+            if editController.isTextViewEditing {
+                editController.endEditing()
+            } else {
+                
+            }
+        } else {
+            editController.clear()
+            editController.topic = nil
+            topic = nil
+        }
     }
 }
