@@ -10,17 +10,20 @@ import UIKit
 
 protocol StoryTextControllerDelegate: class {
     func storyTextControllerNeedsHideBottomView(_ isHidden: Bool)
+    func storyTextControllerDidFinish()
 }
 
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     weak var delegate: StoryTextControllerDelegate?
     var topic: Topic?
+    private lazy var editController = StoryTextEditController()
+    private let topicBottomInset: CGFloat = 50
+    private var topicBottom: NSLayoutConstraint?
+    private let keyboardObserver = KeyboardObserver()
     
     private var isPublishing = false {
-        didSet {
-            enablePageScroll = !isPublishing
-        }
+        didSet { enablePageScroll = !isPublishing }
     }
     
     private lazy var editContainer: UIView = {
@@ -28,8 +31,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         view.backgroundColor = .clear
         return view
     } ()
-    
-    private lazy var editController = StoryTextEditController()
     
     private lazy var topicButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -94,15 +95,9 @@ final class StoryTextController: BaseViewController, StoryTextView {
         return button
     } ()
     
-    private let topicBottomInset: CGFloat = 50
-    private var topicBottom: NSLayoutConstraint?
-    private let keyboardObserver = KeyboardObserver()
-    
-    var enablePageScroll: Bool = true {
+    private var enablePageScroll: Bool = true {
         didSet {
-            if isPublishing && enablePageScroll {
-                return
-            }
+            if isPublishing && enablePageScroll { return }
             NotificationCenter.default.post(
                 name: enablePageScroll ? .EnablePageScroll : .DisablePageScroll,
                 object: nil
@@ -264,9 +259,11 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressConfirmButton() {
-        
+        isPublishing = false
+        enablePageScroll = true
+        delegate?.storyTextControllerDidFinish()
     }
-
+    
     @objc private func didPressCloseButton() {
         if isPublishing {
             if editController.isTextViewEditing {

@@ -218,5 +218,17 @@ extension StoryRecordController: StoryTextControllerDelegate {
     func storyTextControllerNeedsHideBottomView(_ isHidden: Bool) {
         bottomView.alpha = isHidden ? 0 : 1
     }
+    
+    func storyTextControllerDidFinish() {
+        textController.willMove(toParentViewController: nil)
+        textController.removeFromParentViewController()
+        textController.didMove(toParentViewController: nil)
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.textController.view.alpha = 0
+            self.bottomView.alpha = 1
+        }, completion: { (_) in
+            self.textController.view.removeFromSuperview()
+        })
+        captureController.startPreview()
+    }
 }
-
