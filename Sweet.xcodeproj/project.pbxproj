@@ -576,6 +576,10 @@
 		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
+		ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACD2C42D2092C78B006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
 		ACD2C42E2092C78C006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
 		ACD2C42F2092C78C006833C9 /* VideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */; };
@@ -837,6 +841,7 @@
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
 		ACD2C42B2092C78B006833C9 /* VideoCaptureController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCaptureController.h; sourceTree = "<group>"; };
 		ACD2C42C2092C78B006833C9 /* VideoCaptureController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCaptureController.m; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
@@ -1414,6 +1419,7 @@
 				5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */,
 				5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */,
 				58CE1EB620A4208600781EBF /* SearchContactResponse.swift */,
+				ACC6620920AA88830070641C /* TopicListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1845,6 +1851,7 @@
 				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
+				ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
@@ -2101,6 +2108,7 @@
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
+				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
 				58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -2238,6 +2246,7 @@
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
+				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
 				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
@@ -2300,6 +2309,7 @@
 				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
+				ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
