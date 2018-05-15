@@ -39,8 +39,6 @@ class StoryUVTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    
-
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -85,9 +83,5 @@ class StoryUVTableViewCell: UITableViewCell {
         likeImageView.centerY(to: contentView)
         likeImageView.align(.right, to: contentView, inset: 20)
     }
-    
-    
-    
-    
 
 }

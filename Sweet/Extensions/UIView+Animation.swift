@@ -10,20 +10,28 @@ import UIKit
 
 extension UIView {
     func shrinkAnimation() {
-        UIView.animate(withDuration: 0.7,
-                       delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0,
-                       options: .allowUserInteraction,
-                       animations: {
-                        self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }, completion: nil)
+        shrinkAnimation(scale: 0.9, duration: 0.8, damping: 0.5)
     }
     
     func recoverAnimation() {
-        UIView.animate(withDuration: 0.8,
+        recoverAnimation(duration: 0.8, damping: 0.5)
+    }
+    
+    func shrinkAnimation(scale: CGFloat, duration: Double, damping: CGFloat) {
+        UIView.animate(withDuration: duration,
                        delay: 0,
-                       usingSpringWithDamping: 0.5,
+                       usingSpringWithDamping: damping,
+                       initialSpringVelocity: 0,
+                       options: .allowUserInteraction,
+                       animations: {
+                        self.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }, completion: nil)
+    }
+    
+    func recoverAnimation(duration: Double, damping: CGFloat) {
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: damping,
                        initialSpringVelocity: 0,
                        options: .allowUserInteraction,
                        animations: {

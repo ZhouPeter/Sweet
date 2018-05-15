@@ -36,8 +36,8 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
-//        navigationController?.navigationBar.barStyle = .black
-        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.barStyle = .black
+//        NotificationCenter.default.post(name: .BarStyleBlack, object: nil)
         navigationItem.titleView = titleView
         addChildViewController(allController)
         allController.didMove(toParentViewController: self)
@@ -47,7 +47,10 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {

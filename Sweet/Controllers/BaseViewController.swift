@@ -18,4 +18,23 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
 
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        autoDisablePageScroll()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        autoDisablePageScroll()
+    }
+    
+    private func autoDisablePageScroll() {
+        guard let count = navigationController?.viewControllers.count else { return }
+        if count == 1 {
+            NotificationCenter.default.post(name: .EnablePageScroll, object: nil)
+        } else {
+            NotificationCenter.default.post(name: .DisablePageScroll, object: nil)
+        }
+    }
 }

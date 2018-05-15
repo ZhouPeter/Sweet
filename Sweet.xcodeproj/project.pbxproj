@@ -137,18 +137,6 @@
 		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
-		589E6BA320A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */; };
-		589E6BA420A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */; };
-		589E6BA520A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */; };
-		589E6BA620A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */; };
-		589E6BA920A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */; };
-		589E6BAA20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */; };
-		589E6BAB20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */; };
-		589E6BAC20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */; };
-		589E6BAF20A95BFB0038FAED /* NewsCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */; };
-		589E6BB020A95BFB0038FAED /* NewsCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */; };
-		589E6BB120A95BFB0038FAED /* NewsCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */; };
-		589E6BB220A95BFB0038FAED /* NewsCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */; };
 		589E6BB420A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
 		589E6BB520A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
 		589E6BB620A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
@@ -157,6 +145,26 @@
 		589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */; };
 		589E6BBB20A95E900038FAED /* CardsSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */; };
 		589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */; };
+		589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BC220A97BDD0038FAED /* CardListResponse.swift */; };
+		589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BC220A97BDD0038FAED /* CardListResponse.swift */; };
+		589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BC220A97BDD0038FAED /* CardListResponse.swift */; };
+		589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BC220A97BDD0038FAED /* CardListResponse.swift */; };
+		589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BCB20A983840038FAED /* CardsAllController.swift */; };
+		589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BCB20A983840038FAED /* CardsAllController.swift */; };
+		589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BCB20A983840038FAED /* CardsAllController.swift */; };
+		589E6BCF20A983850038FAED /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BCB20A983840038FAED /* CardsAllController.swift */; };
+		589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */; };
+		589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */; };
+		589E6BD320A98B6C0038FAED /* ContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */; };
+		589E6BD420A98B6C0038FAED /* ContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */; };
+		589E6BD620A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */; };
+		589E6BD720A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */; };
+		589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */; };
+		589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */; };
+		589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
+		589E6BDC20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
+		589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
+		589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
 		58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
@@ -424,6 +432,10 @@
 		AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
+		AC3280CF20A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D020A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -456,10 +468,6 @@
 		AC525ABE208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
 		AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
 		AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */; };
-		AC525AC3208DF3F9001070B2 /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsAllController.swift */; };
-		AC525AC4208DF3F9001070B2 /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsAllController.swift */; };
-		AC525AC5208DF3F9001070B2 /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsAllController.swift */; };
-		AC525AC6208DF3F9001070B2 /* CardsAllController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsAllController.swift */; };
 		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
@@ -697,11 +705,13 @@
 		58447B55209C58CC004C2FFE /* ContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListResponse.swift; sourceTree = "<group>"; };
 		58447B5A209C5B16004C2FFE /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
-		589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCardCollectionViewCell.swift; sourceTree = "<group>"; };
-		589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCardCollectionViewCell.swift; sourceTree = "<group>"; };
-		589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCardViewModel.swift; sourceTree = "<group>"; };
 		589E6BB320A95D990038FAED /* CardsManagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsManagerController.swift; sourceTree = "<group>"; };
 		589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSubscriptionController.swift; sourceTree = "<group>"; };
+		589E6BC220A97BDD0038FAED /* CardListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListResponse.swift; sourceTree = "<group>"; };
+		589E6BCB20A983840038FAED /* CardsAllController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAllController.swift; sourceTree = "<group>"; };
+		589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardViewModel.swift; sourceTree = "<group>"; };
+		589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Metrics.swift"; sourceTree = "<group>"; };
@@ -796,6 +806,7 @@
 		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
@@ -804,7 +815,6 @@
 		AC525AB1208DD714001070B2 /* IMListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMListController.swift; sourceTree = "<group>"; };
 		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
 		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
-		AC525AC2208DF3F9001070B2 /* CardsAllController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsAllController.swift; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
 		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
@@ -919,8 +929,8 @@
 		589E6BA720A959580038FAED /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				589E6BA220A955F50038FAED /* BaseCardCollectionViewCell.swift */,
-				589E6BA820A959AF0038FAED /* NewsCardCollectionViewCell.swift */,
+				589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */,
+				589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -928,7 +938,7 @@
 		589E6BAD20A95BD20038FAED /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				589E6BAE20A95BFB0038FAED /* NewsCardViewModel.swift */,
+				589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1160,7 +1170,7 @@
 		AC525AC1208DF3EC001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AC525AC2208DF3F9001070B2 /* CardsAllController.swift */,
+				589E6BCB20A983840038FAED /* CardsAllController.swift */,
 				589E6BB320A95D990038FAED /* CardsManagerController.swift */,
 				589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */,
 			);
@@ -1186,6 +1196,7 @@
 				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
+				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1442,6 +1453,7 @@
 				5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */,
 				5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */,
 				58CE1EB620A4208600781EBF /* SearchContactResponse.swift */,
+				589E6BC220A97BDD0038FAED /* CardListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1872,9 +1884,9 @@
 				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
-				589E6BAF20A95BFB0038FAED /* NewsCardViewModel.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				58155E1C2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
@@ -1899,6 +1911,7 @@
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
+				589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
@@ -1924,6 +1937,7 @@
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				58CE1EE420A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
@@ -1940,6 +1954,7 @@
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
+				589E6BD620A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				58CE1EBD20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC120A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -1973,7 +1988,6 @@
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
-				589E6BA320A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -1993,7 +2007,6 @@
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				5843DA6420A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9882099C87F004401AC /* LookupFilter.m in Sources */,
-				AC525AC3208DF3F9001070B2 /* CardsAllController.swift in Sources */,
 				AC2F978C20904F8000D5DE4F /* Storage.swift in Sources */,
 				58447B2C209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
@@ -2009,16 +2022,17 @@
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B47209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
+				AC3280CF20A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
-				589E6BA920A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */,
 				58BD52C52088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238220875E4400BDC92E /* BaseView.swift in Sources */,
 				5843DA6920A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
@@ -2054,6 +2068,7 @@
 			files = (
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				589E6BBB20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
@@ -2083,6 +2098,7 @@
 				ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
+				589E6BD320A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -2096,11 +2112,9 @@
 				58155E2D2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */,
-				589E6BB120A95BFB0038FAED /* NewsCardViewModel.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
-				589E6BA520A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				589E6BB620A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
@@ -2120,7 +2134,6 @@
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				AC525AC5208DF3F9001070B2 /* CardsAllController.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B49209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -2160,10 +2173,11 @@
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
-				589E6BAB20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */,
+				589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */,
 				ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58155E1E2091764000ADEFFB /* EstimatesController.swift in Sources */,
+				AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -2171,6 +2185,8 @@
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
@@ -2193,6 +2209,7 @@
 			files = (
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
@@ -2222,6 +2239,7 @@
 				ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5D20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
+				589E6BD420A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
 				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -2235,11 +2253,9 @@
 				58155E2E2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978F20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
-				589E6BB220A95BFB0038FAED /* NewsCardViewModel.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
-				589E6BA620A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
 				589E6BB720A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
@@ -2259,7 +2275,6 @@
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				AC525AC6208DF3F9001070B2 /* CardsAllController.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B4A209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -2299,10 +2314,11 @@
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E62093198600AE5D38 /* UpdateController.swift in Sources */,
-				589E6BAC20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */,
+				589E6BCF20A983850038FAED /* CardsAllController.swift in Sources */,
 				ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58155E1F2091764000ADEFFB /* EstimatesController.swift in Sources */,
+				AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -2310,6 +2326,8 @@
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
@@ -2333,9 +2351,9 @@
 				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
-				589E6BB020A95BFB0038FAED /* NewsCardViewModel.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				58155E1D2091764000ADEFFB /* EstimatesController.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
@@ -2360,6 +2378,7 @@
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
+				589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */,
 				58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
@@ -2385,6 +2404,7 @@
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				589E6BDC20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E6208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
@@ -2401,6 +2421,7 @@
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
+				589E6BD720A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				58CE1EBE20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC220A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -2434,7 +2455,6 @@
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
-				589E6BA420A955F50038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
@@ -2454,7 +2474,6 @@
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				5843DA6520A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9892099C87F004401AC /* LookupFilter.m in Sources */,
-				AC525AC4208DF3F9001070B2 /* CardsAllController.swift in Sources */,
 				AC2F978D20904F8000D5DE4F /* Storage.swift in Sources */,
 				58447B2D209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
@@ -2470,16 +2489,17 @@
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
+				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B48209C2E07004C2FFE /* IMContactsController.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
+				AC3280D020A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
-				589E6BAA20A959AF0038FAED /* NewsCardCollectionViewCell.swift in Sources */,
 				58BD52C62088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238320875E4400BDC92E /* BaseView.swift in Sources */,
 				5843DA6A20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,

@@ -9,13 +9,13 @@
 import UIKit
 
 class BaseCardCollectionViewCell: UICollectionViewCell {
-    private lazy var rounderRectView: RoundedRectView = {
+    lazy var customContent: RoundedRectView = {
         let view = RoundedRectView()
         view.isShadowEnabled = true
-        view.shadowInsetX = 10
-        view.shadowInsetY = 10
+        view.shadowInsetX = 0
+        view.shadowInsetY = 0
         view.cornerRadius = 10
-        view.shadowOpacity = 0.3
+        view.shadowOpacity = 0.2
         return view
     }()
     
@@ -33,10 +33,24 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         button.tintColor = UIColor(hex: 0x9b9b9b)
         return button
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupBaseUI()
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.customContent.shrinkAnimation(scale: 0.95, duration: 0.5, damping: 0)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 0)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,16 +58,15 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupBaseUI() {
-//        contentView.addSubview(rounderRectView)
-//        rounderRectView.frame = contentView.frame
-        layer.shadowOpacity = 0.3
-        layer.shadowRadius = 10
-        contentView.addSubview(titleLabel)
-        titleLabel.align(.left, to: contentView, inset: 20)
-        titleLabel.align(.top, to: contentView, inset: 25)
-        contentView.addSubview(menuButton)
+        contentView.backgroundColor = UIColor.xpGray()
+        contentView.addSubview(customContent)
+        customContent.fill(in: contentView, left: 10, right: 10, top: 10, bottom: 10)
+        customContent.addSubview(titleLabel)
+        titleLabel.align(.left, to: customContent, inset: 10)
+        titleLabel.align(.top, to: customContent, inset: 15)
+        customContent.addSubview(menuButton)
         menuButton.centerY(to: titleLabel)
-        menuButton.align(.right, to: contentView, inset: 20)
+        menuButton.align(.right, to: customContent, inset: 10)
         menuButton.constrain(width: 30, height: 30)
     }
 }

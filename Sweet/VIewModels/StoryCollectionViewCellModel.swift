@@ -20,7 +20,7 @@ struct StoryCollectionViewCellModel {
     let storyId: UInt64
     
     init(model: StoryResponse) {
-        name = model.title
+        name = model.nickname
         avatarImageURL = URL(string: model.avatar)
         if model.type == .image {
             imageURL = URL(string: model.content)

@@ -45,6 +45,7 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
             } else {
                 newFrame.size.height -= 10
             }
+            
             super.frame = newFrame
         }
     }

@@ -37,6 +37,7 @@ enum WebAPI {
     case delSectionSubscription(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
+    case allCards
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -96,6 +97,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/contact/phone/invite"
         case .searchContact:
             return "/v2/contact/search"
+        case .allCards:
+            return "/v2/card/all/get"
         }
     }
     

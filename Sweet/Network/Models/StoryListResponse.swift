@@ -30,7 +30,6 @@ struct StoryResponse: Codable {
     let read: Bool
     let storyId: UInt64
     let tag: String
-    let title: String
     let type: StoryType
     let university: String
     let userId: UInt64
