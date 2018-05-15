@@ -37,65 +37,68 @@ enum WebAPI {
     case delSectionSubscription(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
+    case getStoryTopics
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
     var path: String {
         switch self {
         case .verify:
-            return "/v2/user/send/verification"
+            return "/user/send/verification"
         case .login:
-            return "/v2/user/login"
+            return "/user/login"
         case .sendCode:
-            return "/v2/user/send/verification"
+            return "/user/send/verification"
         case .logout:
-            return "/v2/user/logout"
+            return "/user/logout"
         case .update:
-            return "/v2/user/update"
+            return "/user/update"
         case .phoneChange:
-            return "/v2/user/phone/change"
+            return "/user/phone/change"
         case .uploadContacts:
-            return "/v2/user/contacts/upload"
+            return "/user/contacts/upload"
         case .getUserProfile:
-            return "/v2/user/profile/get"
+            return "/user/profile/get"
         case .storyList:
-            return "/v2/user/profile/story/list"
+            return "/user/profile/story/list"
         case .searchUniversity:
-            return "/v2/network/university/search"
+            return "/network/university/search"
         case .searchCollege:
-            return "/v2/network/college/search"
+            return "/network/college/search"
         case .upload:
-            return "/v2/service/upload/get"
+            return "/service/upload/get"
         case .contactAllList:
-            return "/v2/contact/all/list"
+            return "/contact/all/list"
         case .phoneContactList:
-            return "/v2/contact/phone/list"
+            return "/contact/phone/list"
         case .blackContactList:
-            return "/v2/contact/blacklist/list"
+            return "/contact/blacklist/list"
         case .addBlacklist:
-            return "/v2/contact/blacklist/add"
+            return "/contact/blacklist/add"
         case .delBlacklist:
-            return "/v2/contact/blacklist/del"
+            return "/contact/blacklist/del"
         case .blockContactList:
-            return "/v2/contact/block/list"
+            return "/contact/block/list"
         case .addBlock:
-            return "/v2/contact/block/add"
+            return "/contact/block/add"
         case .delBlock:
-            return "/v2/contact/block/del"
+            return "/contact/block/del"
         case .subscriptionList:
-            return "/v2/contact/subscription/list"
+            return "/contact/subscription/list"
         case .addUserSubscription:
-            return "/v2/contact/subscription/user/add"
+            return "/contact/subscription/user/add"
         case .delUserSubscription:
-            return "/v2/contact/subscription/user/del"
+            return "/contact/subscription/user/del"
         case .addSectionSubscription:
-            return "/v2/contact/subscription/section/add"
+            return "/contact/subscription/section/add"
         case .delSectionSubscription:
-            return "/v2/contact/subscription/section/del"
+            return "/contact/subscription/section/del"
         case .inviteContact:
-            return "/v2/contact/phone/invite"
+            return "/contact/phone/invite"
         case .searchContact:
-            return "/v2/contact/search"
+            return "/contact/search"
+        case .getStoryTopics:
+            return "/story/tag/list"
         }
     }
     
@@ -157,9 +160,9 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
     
     var baseURL: URL {
         #if DEV
-        return URL(string: "https://sweet-api-t.miaobo.me")!
+        return URL(string: "https://sweet-api-t.miaobo.me/v2")!
         #else
-        return URL(string: "https://sweet-api.miaobo.me")!
+        return URL(string: "https://sweet-api.miaobo.me/v2")!
         #endif
     }
     
