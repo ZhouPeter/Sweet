@@ -119,7 +119,10 @@ extension UIView {
         return constraint
     }
     
-    @discardableResult public func pin(_ edge: Edge, to anchorView: UIView, spacing: CGFloat = 0) -> NSLayoutConstraint {
+    @discardableResult public func pin(
+        _ edge: Edge,
+        to anchorView: UIView,
+        spacing: CGFloat = 0) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
         switch edge {

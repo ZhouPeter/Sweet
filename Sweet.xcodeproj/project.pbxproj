@@ -444,6 +444,14 @@
 		AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
 		AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
 		AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
+		AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
+		AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
+		AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
+		AC6C1D8C20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
+		AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8D20A993F500F45F82 /* TopicCell.swift */; };
+		AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8D20A993F500F45F82 /* TopicCell.swift */; };
+		AC6C1D9020A993F500F45F82 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8D20A993F500F45F82 /* TopicCell.swift */; };
+		AC6C1D9120A993F500F45F82 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8D20A993F500F45F82 /* TopicCell.swift */; };
 		AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
 		AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84120D20887C800086891C /* UIDevice+DeviceType.swift */; };
@@ -785,6 +793,8 @@
 		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
 		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
 		AC525AC2208DF3F9001070B2 /* CardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsController.swift; sourceTree = "<group>"; };
+		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
+		AC6C1D8D20A993F500F45F82 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
 		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
@@ -1146,6 +1156,8 @@
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
 				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
+				AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */,
+				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1830,6 +1842,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
@@ -1948,6 +1961,7 @@
 				58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				5843DA6420A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9882099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
@@ -2051,6 +2065,7 @@
 				58155E2D2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */,
+				AC6C1D9020A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
@@ -2102,6 +2117,7 @@
 				58D578D12092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58CE1EC320A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -2186,6 +2202,7 @@
 				58155E2E2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978F20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
+				AC6C1D9120A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
@@ -2237,6 +2254,7 @@
 				58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC6C1D8C20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58CE1EC420A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -2279,6 +2297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
@@ -2397,6 +2416,7 @@
 				58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
+				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				5843DA6520A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9892099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,
