@@ -121,7 +121,15 @@ final class TopicListController: UIViewController {
     // MARK: - Actions
     
     @objc private func didPressCloseButton() {
-        didFinish?(nil)
+        var topic: Topic?
+        if isAll {
+            if let indexPath = allSelectedIndexPath {
+                topic = allTopics[indexPath.row]
+            }
+        } else if let indexPath = recentSelectedIndexPath {
+            topic = recentTopics[indexPath.row]
+        }
+        didFinish?(topic)
         willMove(toParentViewController: nil)
         view.removeFromSuperview()
         removeFromParentViewController()

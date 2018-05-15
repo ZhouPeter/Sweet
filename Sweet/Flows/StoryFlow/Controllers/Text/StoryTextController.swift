@@ -15,6 +15,7 @@ protocol StoryTextControllerDelegate: class {
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     weak var delegate: StoryTextControllerDelegate?
+    var topic: Topic?
     
     private lazy var editContainer: UIView = {
         let view = UIView()
@@ -204,10 +205,15 @@ final class StoryTextController: BaseViewController, StoryTextView {
             topic.view.alpha = 1
             self.editContainer.alpha = 0
             self.delegate?.storyTextControllerNeedsHideBottomView(true)
-        }, completion: nil)
-        topic.didFinish = { [weak self] _ in
+        }, completion: { _ in
+            self.enablePageScroll = false
+        })
+        topic.didFinish = { [weak self] topic in
+            self?.enablePageScroll = true
             guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.topic = topic
             self.view.addSubview(view)
+            self.editController.topic = topic
             self.editController.beginEditing()
             view.frame = self.view.bounds
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {

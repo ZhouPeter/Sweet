@@ -12,6 +12,17 @@
 import UIKit
 
 final class StoryTextEditController: UIViewController {
+    var topic: Topic? {
+        didSet {
+            if let topic = topic {
+                topicButton.setTitle("#" + topic.content, for: .normal)
+                topicButton.alpha = 1
+            } else {
+                topicButton.alpha = 0
+            }
+        }
+    }
+    
     private let insets = UIEdgeInsets(top: 20, left: 20, bottom: 80, right: 20)
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
@@ -31,6 +42,7 @@ final class StoryTextEditController: UIViewController {
         button.setBackgroundImage(image, for: .normal)
         button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        button.alpha = 0
         return button
     } ()
     
