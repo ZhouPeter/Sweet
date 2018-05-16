@@ -472,6 +472,14 @@
 		AC8412232088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412242088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
 		AC8412252088B1DE0086891C /* Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8412212088B1DE0086891C /* Signer.swift */; };
+		AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
+		AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
+		AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
+		AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
+		AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
+		AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
+		AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
+		AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
 		AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
@@ -804,6 +812,8 @@
 		AC8412172088828E0086891C /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		AC84121C2088B0E60086891C /* SignPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPlugin.swift; sourceTree = "<group>"; };
 		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
+		AC8EA9E120ABF43D0033615D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSwitchView.swift; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
@@ -1163,6 +1173,8 @@
 				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
 				AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */,
 				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
+				AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */,
+				AC8EA9E120ABF43D0033615D /* GradientView.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1948,6 +1960,7 @@
 				5843DA7320A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				AC04E98E2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
+				AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -1981,6 +1994,7 @@
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
+				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -2031,6 +2045,7 @@
 			files = (
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
@@ -2144,6 +2159,7 @@
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACD2C42F2092C78C006833C9 /* VideoCaptureController.m in Sources */,
+				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -2169,6 +2185,7 @@
 			files = (
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
@@ -2282,6 +2299,7 @@
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACD2C4302092C78C006833C9 /* VideoCaptureController.m in Sources */,
+				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -2406,6 +2424,7 @@
 				5843DA7420A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
+				AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -2439,6 +2458,7 @@
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
+				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,

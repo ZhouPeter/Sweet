@@ -17,6 +17,9 @@ final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     weak var delegate: StoryTextControllerDelegate?
     var topic: Topic?
+    
+    private lazy var gradientView = GradientSwitchView()
+    
     private lazy var editController = StoryTextEditController()
     private let topicBottomInset: CGFloat = 50
     private var topicBottom: NSLayoutConstraint?
@@ -107,7 +110,14 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        view.addSubview(gradientView)
+        gradientView.fill(in: view)
+        gradientView.changeColors([UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)])
+        gradientView.changeMode(.linearWithPoints(
+            start: CGPoint(x: 0, y: 0),
+            end: CGPoint(x: view.bounds.width, y: view.bounds.height)
+            )
+        )
         view.addSubview(editContainer)
         editContainer.fill(in: view)
         setupEditController()
