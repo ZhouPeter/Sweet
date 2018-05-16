@@ -480,6 +480,14 @@
 		AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
 		AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
 		AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */; };
+		AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9EB20AC03500033615D /* TextGradientController.swift */; };
+		AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9EB20AC03500033615D /* TextGradientController.swift */; };
+		AC8EA9EE20AC03500033615D /* TextGradientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9EB20AC03500033615D /* TextGradientController.swift */; };
+		AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9EB20AC03500033615D /* TextGradientController.swift */; };
+		AC8EA9F120AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
+		AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
+		AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
+		AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
 		AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
@@ -814,6 +822,8 @@
 		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
 		AC8EA9E120ABF43D0033615D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSwitchView.swift; sourceTree = "<group>"; };
+		AC8EA9EB20AC03500033615D /* TextGradientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGradientController.swift; sourceTree = "<group>"; };
+		AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
@@ -1167,6 +1177,7 @@
 		AC97251C209ABD39009FB966 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				AC8EA9EB20AC03500033615D /* TextGradientController.swift */,
 				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
@@ -1316,6 +1327,7 @@
 				5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */,
 				ACE560A420997AA900CE2564 /* NSURL+Path.h */,
 				ACE560A520997AA900CE2564 /* NSURL+Path.m */,
+				AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1945,6 +1957,7 @@
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC8EA9F120AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FE208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
@@ -1982,6 +1995,7 @@
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
+				AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */,
 				5843DA6420A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9882099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC3208DF3F9001070B2 /* CardsController.swift in Sources */,
@@ -2102,6 +2116,7 @@
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC8EA9EE20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
@@ -2122,6 +2137,7 @@
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
+				AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
@@ -2242,6 +2258,7 @@
 				5843DA6720A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC97251A209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
@@ -2262,6 +2279,7 @@
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
+				AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
@@ -2409,6 +2427,7 @@
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FF208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
@@ -2446,6 +2465,7 @@
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
+				AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */,
 				5843DA6520A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9892099C87F004401AC /* LookupFilter.m in Sources */,
 				AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */,

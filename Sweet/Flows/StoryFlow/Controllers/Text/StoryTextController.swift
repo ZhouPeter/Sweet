@@ -9,8 +9,7 @@
 import UIKit
 
 protocol StoryTextControllerDelegate: class {
-    func storyTextControllerNeedsHideBottomView(_ isHidden: Bool)
-    func storyTextControllerDidFinish()
+    func storyTextControllerDidFinish(_ controller: StoryTextController)
 }
 
 final class StoryTextController: BaseViewController, StoryTextView {
@@ -63,24 +62,10 @@ final class StoryTextController: BaseViewController, StoryTextView {
         return button
     } ()
     
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "StoryBack"), for: .normal)
-        button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
-        return button
-    } ()
-    
     private lazy var deleteButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "StoryDeleteLarge"), for: .normal)
         button.addTarget(self, action: #selector(didPressDeleteButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var editButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "StoryEdit"), for: .normal)
-        button.addTarget(self, action: #selector(didPressEditButton), for: .touchUpInside)
         return button
     } ()
     
@@ -128,6 +113,11 @@ final class StoryTextController: BaseViewController, StoryTextView {
         hideEditControls(true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        editController.beginEditing()
+    }
+    
     // MARK: - Private
     
     private func setupEditController() {
@@ -152,24 +142,14 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     private func setupEditControls() {
-        editContainer.addSubview(backButton)
-        editContainer.addSubview(editButton)
         editContainer.addSubview(confirmButton)
         editContainer.addSubview(deleteButton)
-        backButton.constrain(width: 40, height: 40)
-        backButton.align(.left, to: view, inset: 10)
-        backButton.align(.bottom, to: view, inset: 10)
-        editButton.equal(.size, to: backButton)
-        editButton.centerX(to: view)
-        editButton.align(.bottom, to: backButton)
-        confirmButton.equal(.size, to: backButton)
-        confirmButton.align(.bottom, to: backButton)
-        confirmButton.align(.right, to: view, inset: 10)
+        confirmButton.centerX(to: view)
+        confirmButton.align(.bottom, to: view, inset: 10)
         editContainer.addSubview(closeButton)
         closeButton.constrain(width: 40, height: 40)
         closeButton.align(.right, to: view, inset: 10)
         closeButton.align(.top, to: view, inset: 10)
-        closeButton.alpha = 0
     }
     
     private func handleKeyboard(with event: KeyboardEvent) {
@@ -180,7 +160,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
             self.view.layoutIfNeeded()
             self.topicButton.alpha = event.type == .willHide ? 0 : 1
             self.nextButton.alpha = self.topicButton.alpha
-            self.closeButton.alpha = self.topicButton.alpha
         }, completion: nil)
         
         if isPublishing { return }
@@ -199,8 +178,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
             UIView.setAnimationCurve(.easeOut)
         }
         let alpha: CGFloat = isHidden ? 0 : 1
-        backButton.alpha = alpha
-        editButton.alpha = alpha
         confirmButton.alpha = alpha
         if animated {
             UIView.commitAnimations()
@@ -220,7 +197,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             topic.view.alpha = 1
             self.editContainer.alpha = 0
-            self.delegate?.storyTextControllerNeedsHideBottomView(true)
         }, completion: { _ in
             self.enablePageScroll = false
         })
@@ -235,7 +211,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 view.alpha = 0
                 self.editContainer.alpha = 1
-                self.delegate?.storyTextControllerNeedsHideBottomView(false)
             }, completion: { (_) in
                 view.removeFromSuperview()
             })
@@ -248,43 +223,21 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editController.endEditing()
         editController.hidesTopicWithoutText = true
         hideEditControls(false, animated: true)
-        delegate?.storyTextControllerNeedsHideBottomView(true)
-        editController.showsPlaceholder = false
-    }
-    
-    @objc private func didPressBackButton() {
-        isPublishing = false
-        editController.showsPlaceholder = true
-        editController.hidesTopicWithoutText = false
-        hideEditControls(true, animated: true)
-        delegate?.storyTextControllerNeedsHideBottomView(false)
     }
     
     @objc private func didPressDeleteButton() {
         
     }
     
-    @objc private func didPressEditButton() {
-        editController.beginEditing()
-    }
-    
     @objc private func didPressConfirmButton() {
         isPublishing = false
         enablePageScroll = true
-        delegate?.storyTextControllerDidFinish()
+        delegate?.storyTextControllerDidFinish(self)
     }
     
     @objc private func didPressCloseButton() {
-        if isPublishing {
-            if editController.isTextViewEditing {
-                editController.endEditing()
-            } else {
-                
-            }
-        } else {
-            editController.clear()
-            editController.topic = nil
-            topic = nil
-        }
+        editController.endEditing()
+        dismiss(animated: true, completion: nil)
+        delegate?.storyTextControllerDidFinish(self)
     }
 }

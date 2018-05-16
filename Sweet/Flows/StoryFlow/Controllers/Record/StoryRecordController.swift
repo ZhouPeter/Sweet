@@ -27,19 +27,30 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return view
     } ()
     
-    private var captureController = VideoCaptureController()
-    
-    private lazy var textController: StoryTextController = {
-        let controller = StoryTextController()
-        controller.delegate = self
+    private lazy var textGradientController: TextGradientController = {
+        let controller = TextGradientController()
+        controller.view.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapTextGradientView))
+        )
         return controller
     } ()
+    
+    private var captureController = VideoCaptureController()
     
     private lazy var renderView: UIView = {
         let view = UIView(frame: self.view.bounds)
         view.backgroundColor = .black
         return view
     } ()
+    
+    private var enablePageScroll: Bool = true {
+        didSet {
+            NotificationCenter.default.post(
+                name: enablePageScroll ? .EnablePageScroll : .DisablePageScroll,
+                object: nil
+            )
+        }
+    }
     
     private var buttons = [UIButton]()
     private let indicator = UIImageView(image: #imageLiteral(resourceName: "ArrowIndicator"))
@@ -73,21 +84,21 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     @objc private func didPressBottomButton(_ button: UIButton) {
         selectBottomButton(at: button.tag, animated: true)
         if button.tag == 0 {
-            if textController.view.superview == nil {
-                addChildViewController(textController)
-                textController.didMove(toParentViewController: self)
-                view.insertSubview(textController.view, belowSubview: bottomView)
-                textController.view.fill(in: view)
+            if textGradientController.view.superview == nil {
+                addChildViewController(textGradientController)
+                textGradientController.didMove(toParentViewController: self)
+                view.insertSubview(textGradientController.view, belowSubview: bottomView)
+                textGradientController.view.fill(in: view)
             }
-            textController.view.alpha = 0
+            textGradientController.view.alpha = 0
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                self.textController.view.alpha = 1
+                self.textGradientController.view.alpha = 1
             }, completion: nil)
             captureController.stopPreview()
         } else {
-            if self.textController.view.alpha > 0 {
+            if self.textGradientController.view.alpha > 0 {
                 UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                    self.textController.view.alpha = 0
+                    self.textGradientController.view.alpha = 0
                 }, completion: nil)
             }
             if button.tag == 1 {
@@ -97,6 +108,13 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     // MARK: - Private
+    
+    @objc private func didTapTextGradientView() {
+        enablePageScroll = false
+        let controller = StoryTextController()
+        controller.delegate = self
+        add(childViewController: controller)
+    }
     
     private func shootDidBegin() {
         captureController.startRecord()
@@ -215,20 +233,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
 }
 
 extension StoryRecordController: StoryTextControllerDelegate {
-    func storyTextControllerNeedsHideBottomView(_ isHidden: Bool) {
-        bottomView.alpha = isHidden ? 0 : 1
-    }
-    
-    func storyTextControllerDidFinish() {
-        textController.willMove(toParentViewController: nil)
-        textController.removeFromParentViewController()
-        textController.didMove(toParentViewController: nil)
-        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-            self.textController.view.alpha = 0
-            self.bottomView.alpha = 1
-        }, completion: { (_) in
-            self.textController.view.removeFromSuperview()
-        })
-        captureController.startPreview()
+    func storyTextControllerDidFinish(_ controller: StoryTextController) {
+        remove(childViewController: controller)
+        enablePageScroll = true
     }
 }

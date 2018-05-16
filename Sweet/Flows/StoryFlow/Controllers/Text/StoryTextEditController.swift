@@ -25,21 +25,6 @@ final class StoryTextEditController: UIViewController {
     
     var hidesTopicWithoutText = false
     
-    var showsPlaceholder = true {
-        didSet {
-            if showsPlaceholder {
-                if textView.hasText {
-                    placeholderLabel.alpha = 0
-                } else {
-                    placeholderLabel.alpha = 1
-                }
-            } else {
-                placeholderLabel.alpha = 0
-            }
-        }
-    }
-    
-    private let insets = UIEdgeInsets(top: 20, left: 20, bottom: 80, right: 20)
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
     private lazy var pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinched(_:)))
@@ -70,7 +55,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textBoundingView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 0.5)
+        view.backgroundColor = UIColor(red: 0, green: 115.0/255.0, blue: 225.0/255.0, alpha: 0.27)
         view.alpha = 0
         return view
     } ()
@@ -100,15 +85,6 @@ final class StoryTextEditController: UIViewController {
         return view
     } ()
     
-    private lazy var placeholderLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = self.paragraphStyle.alignment
-        label.text = "输入文字内容..."
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: FontSize.min)
-        return label
-    } ()
-    
     private let paragraphStyle: NSParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -116,7 +92,7 @@ final class StoryTextEditController: UIViewController {
     } ()
     
     private var textContainerHeight: CGFloat {
-        return view.bounds.height - keyboardHeight - insets.top - insets.bottom
+        return view.bounds.height - keyboardHeight
     }
     
     private var safeTextHeight: CGFloat {
@@ -134,10 +110,9 @@ final class StoryTextEditController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(textBoundingView)
-        view.addSubview(placeholderLabel)
+        
         view.addSubview(textViewContainer)
         textViewContainer.addSubview(textView)
-        placeholderLabel.center(to: textViewContainer)
         textViewContainer.addSubview(topicButton)
         
         topicButtonLeft = topicButton.align(.left, to: textView)
@@ -182,14 +157,9 @@ final class StoryTextEditController: UIViewController {
         case .willShow, .willHide, .willChangeFrame:
             keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
-                if self.textView.hasText {
-                    self.placeholderLabel.alpha = 0
-                } else {
+                if !self.textView.hasText {
                     if self.hidesTopicWithoutText {
                         self.topicButton.alpha = 0
-                    }
-                    if self.showsPlaceholder {
-                        self.placeholderLabel.alpha = self.keyboardHeight > 0 ? 0 : 1
                     }
                 }
                 self.view.layoutIfNeeded()
@@ -212,12 +182,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     private func layoutTextContainer() {
-        textViewContainer.frame = CGRect(
-            x: insets.left,
-            y: insets.top,
-            width: view.bounds.width - insets.left - insets.right,
-            height: textContainerHeight
-        )
+        textViewContainer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: textContainerHeight)
     }
     
     private func layoutTextView() {
