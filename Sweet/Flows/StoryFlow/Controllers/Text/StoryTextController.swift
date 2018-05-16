@@ -144,10 +144,11 @@ final class StoryTextController: BaseViewController, StoryTextView {
     private func setupEditControls() {
         editContainer.addSubview(confirmButton)
         editContainer.addSubview(deleteButton)
+        confirmButton.constrain(width: 50, height: 50)
         confirmButton.centerX(to: view)
         confirmButton.align(.bottom, to: view, inset: 10)
         editContainer.addSubview(closeButton)
-        closeButton.constrain(width: 40, height: 40)
+        closeButton.constrain(width: 50, height: 50)
         closeButton.align(.right, to: view, inset: 10)
         closeButton.align(.top, to: view, inset: 10)
     }
