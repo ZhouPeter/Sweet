@@ -9,6 +9,7 @@
 #import <GPUImage/GPUImage.h>
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
+#import "XGPUImageMovie.h"
 
 @interface StoryFilterPreviewController ()
 
@@ -34,7 +35,7 @@
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
         } else {
-            GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:url];
+            XGPUImageMovie *movie = [[XGPUImageMovie alloc] initWithURL:url];
             movie.playAtActualSpeed = YES;
             movie.shouldRepeat = YES;
             self.output = movie;

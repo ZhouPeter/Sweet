@@ -78,25 +78,18 @@
     [self.movieWriter startRecording];
 }
 
-- (void)finishRecordForPhotoCapture:(BOOL)isPhotoCapture completion:(void (^)(NSURL * _Nullable))completion {
+- (void)finishRecordWithCompletion:(void (^)(NSURL * _Nullable))completion {
     if (!self.isRecording) {
         if (completion) { completion(nil); }
         return;
     }
     self.isRecording = NO;
-    if (isPhotoCapture) {
-        [self cancelRecord];
-        [self takeAPhotoWithCallback:completion];
-    } else {
-        [self.movieWriter finishRecording];
-        [self.camera removeTarget:self.movieWriter];
-        NSURL *url = self.movieWriter.assetWriter.outputURL;
-        self.movieWriter = nil;
-        [self turnOnFlash:NO];
-        if (completion) {
-            completion(url);
-        }
-    }
+    [self.movieWriter finishRecording];
+    [self.camera removeTarget:self.movieWriter];
+    NSURL *url = self.movieWriter.assetWriter.outputURL;
+    self.movieWriter = nil;
+    [self turnOnFlash:NO];
+    if (completion) { completion(url); }
 }
 
 - (void)cancelRecord {
@@ -113,17 +106,7 @@
     [self turnOnFlash:NO];
 }
 
-#pragma mark - Setters & Getters
-
-- (void)setIsFrontCamera:(BOOL)isFrontCamera {
-    if (_isFrontCamera == isFrontCamera) { return; }
-    _isFrontCamera = isFrontCamera;
-    [self.camera rotateCamera];
-}
-
-#pragma mark - Private
-
-- (void)takeAPhotoWithCallback:(void (^)(NSURL *fileURL))callback {
+- (void)takeAPhotoWithCompletion:(void (^)(NSURL * _Nullable))completion {
     [self turnOnFlash:self.isFlashOn];
     GPUImageOpacityFilter *filter = [GPUImageOpacityFilter new];
     [self.camera addTarget:filter];
@@ -138,12 +121,22 @@
             url = [weakSelf makePhotoURL];
             [UIImageJPEGRepresentation(image, 0.8) writeToURL:url atomically:YES];
         }
-        if (callback) { callback(url); }
+        if (completion) { completion(url); }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf turnOnFlash:NO];
         });
     });
 }
+
+#pragma mark - Setters & Getters
+
+- (void)setIsFrontCamera:(BOOL)isFrontCamera {
+    if (_isFrontCamera == isFrontCamera) { return; }
+    _isFrontCamera = isFrontCamera;
+    [self.camera rotateCamera];
+}
+
+#pragma mark - Private
 
 - (NSURL *)makeVideoURL {
     return [NSURL videoCacheURLWithName:[NSString stringWithFormat:@"%@.mp4", [NSUUID UUID].UUIDString]];

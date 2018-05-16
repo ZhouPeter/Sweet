@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)startPreview;
 - (void)stopPreview;
 - (void)startRecord;
-- (void)finishRecordForPhotoCapture:(BOOL)isPhotoCapture completion:(void (^)(NSURL  * _Nullable fileURL))completion;
+- (void)finishRecordWithCompletion:(void (^)(NSURL  * _Nullable fileURL))completion;
+- (void)takeAPhotoWithCompletion:(void (^)(NSURL * _Nullable fileURL))completion;
 - (void)cancelRecord;
 
 @end

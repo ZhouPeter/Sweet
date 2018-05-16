@@ -12,10 +12,17 @@ protocol StoryTextControllerDelegate: class {
     func storyTextControllerDidFinish(_ controller: StoryTextController)
 }
 
+enum StorySource {
+    case text
+    case image(fileURL: URL)
+    case video(fileURL: URL)
+}
+
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     weak var delegate: StoryTextControllerDelegate?
     var topic: Topic?
+    let source: StorySource
     
     private lazy var gradientView = GradientSwitchView()
     
@@ -91,6 +98,15 @@ final class StoryTextController: BaseViewController, StoryTextView {
                 object: nil
             )
         }
+    }
+    
+    init(source: StorySource) {
+        self.source = source
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

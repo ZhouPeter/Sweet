@@ -488,6 +488,10 @@
 		AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
 		AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
 		AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */; };
+		AC8EAA0320AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC8EAA0420AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
@@ -824,6 +828,8 @@
 		AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSwitchView.swift; sourceTree = "<group>"; };
 		AC8EA9EB20AC03500033615D /* TextGradientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGradientController.swift; sourceTree = "<group>"; };
 		AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
+		AC8EAA0120AC39900033615D /* XGPUImageMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPUImageMovie.h; sourceTree = "<group>"; };
+		AC8EAA0220AC39900033615D /* XGPUImageMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGPUImageMovie.m; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
@@ -1123,8 +1129,8 @@
 			isa = PBXGroup;
 			children = (
 				AC97251D209ABD42009FB966 /* Record */,
-				AC97251B209ABD14009FB966 /* Edit */,
 				AC97251C209ABD39009FB966 /* Text */,
+				AC97251B209ABD14009FB966 /* Edit */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1170,6 +1176,8 @@
 				AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */,
 				AC04E9872099C87F004401AC /* LookupFilter.h */,
 				AC04E9862099C87F004401AC /* LookupFilter.m */,
+				AC8EAA0120AC39900033615D /* XGPUImageMovie.h */,
+				AC8EAA0220AC39900033615D /* XGPUImageMovie.m */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -1961,6 +1969,7 @@
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FE208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
+				AC8EAA0320AC39910033615D /* XGPUImageMovie.m in Sources */,
 				58447B31209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				AC525AA7208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -2123,6 +2132,7 @@
 				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
+				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
@@ -2265,6 +2275,7 @@
 				5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
+				AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
@@ -2431,6 +2442,7 @@
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FF208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
+				AC8EAA0420AC39910033615D /* XGPUImageMovie.m in Sources */,
 				58447B32209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				AC525AA8208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */,

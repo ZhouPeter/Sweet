@@ -111,7 +111,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
-        let controller = StoryTextController()
+        let controller = StoryTextController(source: .text)
         controller.delegate = self
         add(childViewController: controller)
     }
@@ -121,13 +121,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
-        let isPhoto = interval < 1
-        logger.debug(interval)
-        captureController.finishRecord(forPhotoCapture: isPhoto) { [weak self] (url) in
-            if let url = url {
-                self?.onRecorded?(url, isPhoto)
-            } else {
-                logger.error("record failed")
+        if interval < 1 {
+            captureController.cancelRecord()
+            captureController.takeAPhoto { (url) in
+                logger.debug(url)
+            }
+        } else {
+            captureController.finishRecord { (url) in
+                logger.debug(url)
             }
         }
     }
