@@ -19,7 +19,6 @@
 @property (strong, nonatomic) NSArray *lookupImages;
 @property (assign, nonatomic) BOOL isPanLeft;
 @property (assign, nonatomic) BOOL isPanDirectionFixed;
-@property (assign, nonatomic) BOOL isNextFilterAvailable;
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (assign, nonatomic) NSUInteger filterIndex;
 @property (assign, nonatomic) BOOL isPhoto;
@@ -76,9 +75,6 @@
     } else {
         [(XGPUImageMovie *)self.output startProcessing];
     }
-    
-//    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
-//    [self.view addGestureRecognizer:self.panGestureRecognizer];
 }
 
 - (void)dealloc {
@@ -115,7 +111,6 @@
                 self.isPanLeft = NO;
             }
             self.isPanDirectionFixed = YES;
-            self.isNextFilterAvailable = NO;
             if (self.isPanLeft) {
                 if (self.filterIndex < self.lookupImages.count - 1) {
                     LookupFilter *current = [self makeFilterWithIndex:self.filterIndex];
@@ -132,8 +127,8 @@
                     if (self.isPhoto) {
                         [(GPUImagePicture *)self.output processImage];
                     }
-                    
-                    self.isNextFilterAvailable = YES;
+                } else {
+                    self.filterIndex = 0;
                 }
             } else {
                 if (self.filterIndex > 0) {
@@ -151,17 +146,15 @@
                     if (self.isPhoto) {
                         [(GPUImagePicture *)self.output processImage];
                     }
-                    
-                    self.isNextFilterAvailable = YES;
+                } else {
+                    self.filterIndex = self.lookupImages.count - 1;
                 }
             }
         } else {
-            if (!self.isNextFilterAvailable) { return; }
             if (self.isPanLeft) { ratio = 1 - ratio; }
             self.foregroundPreview.layer.contentsRect = CGRectMake(0, 0, ratio, 1);
         }
     } else {
-        if (!self.isNextFilterAvailable) { return; }
         if (ratio > 0.1) {
             if (self.isPanLeft) {
                 [self animateContentsRect:CGRectMake(0, 0, 0, 1) forLayer:self.foregroundPreview.layer];
