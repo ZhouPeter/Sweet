@@ -1,5 +1,5 @@
 //
-//  FeedsCellViewModel.swift
+//  ActivitiesCellViewModel.swift
 //  XPro
 //
 //  Created by Mario Z. on 2018/3/30.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct FeedsCellViewModel {
+struct ActivitiesCellViewModel {
     let cellHeight: CGFloat = 100
     let avatarURL: URL?
     let title: String

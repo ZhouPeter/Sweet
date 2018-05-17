@@ -103,33 +103,33 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         smsCodeButton.centerY(to: codeLabel)
         
         view.addSubview(phoneTextField)
-        phoneTextField.pin(to: codeLabel, edge: .right)
-        phoneTextField.pin(to: smsCodeButton, edge: .left)
+        phoneTextField.pin(.right, to: codeLabel)
+        phoneTextField.pin(.left, to: smsCodeButton)
         phoneTextField.equal(.height, to: codeLabel)
         phoneTextField.centerY(to: codeLabel)
         
         view.addSubview(topLineView)
         topLineView.align(.left, to: view, inset: 16)
         topLineView.align(.right, to: view, inset: 16)
-        topLineView.pin(to: codeLabel, edge: .bottom, spacing: 14)
+        topLineView.pin(.bottom, to: codeLabel, spacing: 14)
         topLineView.constrain(height: 0.5)
         
         view.addSubview(smsCodeTextField)
         smsCodeTextField.centerX(to: view)
-        smsCodeTextField.pin(to: codeLabel, edge: .bottom, spacing: 48)
+        smsCodeTextField.pin(.bottom, to: codeLabel, spacing: 48)
         smsCodeButton.constrain(height: 40)
         
         view.addSubview(bottomLineView)
         bottomLineView.align(.left, to: view, inset: 16)
         bottomLineView.align(.right, to: view, inset: 16)
-        bottomLineView.pin(to: smsCodeTextField, edge: .bottom, spacing: 14)
+        bottomLineView.pin(.bottom, to: smsCodeTextField, spacing: 14)
         bottomLineView.constrain(height: 0.5)
         
         view.addSubview(enterButton)
         enterButton.constrain(height: 50)
         enterButton.align(.left, to: view, inset: 28)
         enterButton.align(.right, to: view, inset: 28)
-        enterButton.pin(to: smsCodeTextField, edge: .bottom, spacing: 120)
+        enterButton.pin(.bottom, to: smsCodeTextField, spacing: 120)
         enterButton.setViewRounded()
     }
     

@@ -38,6 +38,7 @@ enum WebAPI {
     case inviteContact(phone: String)
     case searchContact(name: String)
     case allCards
+    case storyDetailsUvlist(storyId: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -99,6 +100,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/v2/contact/search"
         case .allCards:
             return "/v2/card/all/get"
+        case .storyDetailsUvlist:
+            return "/v2/story/details/uvlist"
         }
     }
     
@@ -140,6 +143,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phone]
         case let .searchContact(name):
             parameters = ["name": name]
+        case let .storyDetailsUvlist(storyId):
+            parameters = ["storyId": storyId]
         default:
             parameters = [:]
         }

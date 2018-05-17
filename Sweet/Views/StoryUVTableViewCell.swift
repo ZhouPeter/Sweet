@@ -12,6 +12,12 @@ class StoryUVTableViewCell: UITableViewCell {
     static let marginX: CGFloat = 10
     static let marginY: CGFloat = 1
     
+    private lazy var blackMaskView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
+    
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -50,38 +56,37 @@ class StoryUVTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         selectionStyle = .none
-        layer.cornerRadius = 5
-        layer.masksToBounds = true
-    }
+        contentView.backgroundColor = .clear
+        blackMaskView.layer.cornerRadius = 5
     
-    override var frame: CGRect {
-        didSet {
-            var newFrame = frame
-            newFrame.origin.x = StoryUVTableViewCell.marginX
-            newFrame.origin.y += StoryUVTableViewCell.marginY
-            newFrame.size.width -= newFrame.origin.x * 2
-            newFrame.size.height -= StoryUVTableViewCell.marginY * 2
-            super.frame = newFrame
-        }
     }
     
     private func setupUI() {
-        contentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        contentView.addSubview(avatarImageView)
-        avatarImageView.centerY(to: contentView)
-        avatarImageView.align(.left, to: contentView, inset: 10)
+        contentView.addSubview(blackMaskView)
+        blackMaskView.fill(in: contentView,left: 10, right: 10, top: 1, bottom: 1)
+        blackMaskView.addSubview(avatarImageView)
+        avatarImageView.centerY(to: blackMaskView)
+        avatarImageView.align(.left, to: blackMaskView, inset: 10)
         avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.setViewRounded()
-        contentView.addSubview(nicknameLabel)
-        nicknameLabel.pin(to: avatarImageView, edge: .right, spacing: 10)
+        blackMaskView.addSubview(nicknameLabel)
+        nicknameLabel.pin(.right, to: avatarImageView, spacing: 10)
         nicknameLabel.align(.top, to: avatarImageView)
-        contentView.addSubview(infoLabel)
+        blackMaskView.addSubview(infoLabel)
         infoLabel.align(.left, to: nicknameLabel)
         infoLabel.align(.bottom, to: avatarImageView)
-        contentView.addSubview(likeImageView)
+        blackMaskView.addSubview(likeImageView)
         likeImageView.constrain(width: 20, height: 20)
-        likeImageView.centerY(to: contentView)
-        likeImageView.align(.right, to: contentView, inset: 20)
+        likeImageView.centerY(to: blackMaskView)
+        likeImageView.align(.right, to: blackMaskView, inset: 20)
     }
+    
+    func update(_ model: StoryUvInfo) {
+        avatarImageView.kf.setImage(with:URL(string: model.avatar)!)
+        nicknameLabel.text = model.nickname
+        infoLabel.text = model.info
+        likeImageView.isHidden = !model.like
+    }
+
 
 }

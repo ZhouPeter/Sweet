@@ -22,7 +22,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         let imageView = UIImageView()
         return imageView
     }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -32,11 +31,12 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
-        contentLabel.pin(to: titleLabel, edge: .bottom, spacing: 15)
+        contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
         customContent.addSubview(contentImageView)
         contentImageView.align(.left, to: customContent)
         contentImageView.align(.right, to: customContent)
         contentImageView.align(.bottom, to: customContent)
+        contentImageView.pin(.bottom, to: contentLabel, spacing: 5)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +45,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     func updateWith(_ viewModel: ContentCardViewModel) {
         contentLabel.text = viewModel.contentString
-        
+        contentImageView.kf.setImage(with: viewModel.imageURL)
+        contentImageView.setViewRounded(cornerRadius: 10, corners: [.bottomLeft, .bottomRight])
     }
 }

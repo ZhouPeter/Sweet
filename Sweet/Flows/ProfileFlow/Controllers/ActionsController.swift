@@ -49,6 +49,7 @@ extension ActionsController: PageboyViewControllerDataSource {
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
         return pageControllers[index]
+        
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

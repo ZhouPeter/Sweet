@@ -7,11 +7,18 @@
 //
 
 import UIKit
+
 protocol CardsAllView: BaseView {
     
 }
+
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
+
 class CardsAllController: BaseViewController, CardsAllView {
+    private var index = 0
+    private var panPoint: CGPoint?
+    private var panOffset: CGPoint?
+    private let offset: CGFloat = UIScreen.navBarHeight() + 10
     private var cellConfigurators = [CellConfiguratorType]()
     private var cards = [CardResponse]()
     private lazy var collectionView: UICollectionView = {
@@ -28,7 +35,21 @@ class CardsAllController: BaseViewController, CardsAllView {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(cellType: ContentCardCollectionViewCell.self)
+        collectionView.register(cellType: ChoiceCardCollectionViewCell.self)
+        collectionView.register(cellType: EvaluationCardCollectionViewCell.self)
+        collectionView.register(cellType: ActivitiesCardCollectionViewCell.self)
+        collectionView.register(cellType: StoriesCardCollectionViewCell.self)
+        collectionView.addGestureRecognizer(
+            PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+        )
         return collectionView
+    }()
+    
+    private lazy var inputTextView: InputTextView = {
+        let view = InputTextView()
+        view.placehoder = "说点有意思的"
+        view.delegate = self
+        return view
     }()
     
     override func viewDidLoad() {
@@ -42,10 +63,65 @@ class CardsAllController: BaseViewController, CardsAllView {
         super.viewWillAppear(animated)
         self.startLoadCards()
     }
+}
+
+// MARK: - Action Methods
+
+extension CardsAllController {
+    @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
+        let point = gesture.location(in: nil)
+        if gesture.state == .began {
+            panPoint = point
+            panOffset = collectionView.contentOffset
+        } else if gesture.state == .changed {
+            guard index > 0 else { return }
+            guard let start = panPoint, var offset = panOffset else { return }
+            let translation = point.y - start.y
+            offset.y -= translation
+            collectionView.contentOffset = offset
+        } else {
+            scrollCard(withPoint: point)
+        }
+    }
+}
+
+// MARK: - Private Methods
+extension CardsAllController {
+    private func scrollCard(withPoint point: CGPoint) {
+        guard let start = panPoint else { return }
+        if point.y < start.y {
+            guard index < collectionView.numberOfItems(inSection: 0) - 1 else {
+                self.scrollTo(row: index)
+                return
+            }
+            index += 1
+        } else {
+            guard index > 0  else { return }
+            index -= 1
+        }
+        self.scrollTo(row: index)
+    }
+    
+    private func scrollTo(row: Int) {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            let offset: CGFloat =  CGFloat(row) * cardCellHeight - self.offset
+            UIView.animate(
+                withDuration: 0.25,
+                delay: 0,
+                options: .curveEaseOut,
+                animations: {
+                    self.collectionView.contentOffset.y = offset
+            }, completion: nil)
+        }
+    }
+    
     private func startLoadCards() {
         web.request(.allCards, responseType: Response<CardListResponse>.self) { (result) in
             switch result {
             case let .success(response):
+                self.cards.removeAll()
+                self.cellConfigurators.removeAll()
                 response.list.forEach({ (card) in
                     self.cards.append(card)
                     self.appendConfigurator(card: card)
@@ -63,10 +139,55 @@ class CardsAllController: BaseViewController, CardsAllView {
             let viewModel = ContentCardViewModel(model: card)
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+        case .choice:
+            let viewModel = ChoiceCardViewModel(model: card)
+            let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+        case .evaluation:
+            let viewModel = EvaluationCardViewModel(model: card)
+            let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+        case .activity:
+            var viewModel = ActivitiesCardViewModel(model: card)
+            for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
+                activityViewModel.callBack = { activityItemId in
+                    self.showInputView(activityItemId: activityItemId)
+                }
+                viewModel.activityViewModels[offset] = activityViewModel
+            }
+            let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+        case .story:
+            let viewModel = StoriesCardViewModel(model: card)
+            let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
         default: break
         }
         
     }
+    
+    private func showInputView(activityItemId: String) {
+        let window = UIApplication.shared.windows.last!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.startEditing(isStarted: true)
+    }
+    
+}
+
+extension CardsAllController: InputTextViewDelegate {
+    func inputTextViewDidPressSendMessage(text: String) {
+        
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
+    }
+    
+    func removeInputTextView() {
+        
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
+    }
+    
 }
 
 extension CardsAllController: UICollectionViewDataSource {
@@ -84,5 +205,10 @@ extension CardsAllController: UICollectionViewDataSource {
 }
 
 extension CardsAllController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let newIndex = indexPath.row
+        guard newIndex != index else { return }
+        index = newIndex
+        scrollTo(row: index)
+    }
 }

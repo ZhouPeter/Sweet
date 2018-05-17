@@ -57,7 +57,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         recoveryImageView.constrain(width: 20, height: 20)
         contentView.addSubview(recoveryLabel)
         recoveryLabel.centerY(to: recoveryImageView)
-        recoveryLabel.pin(to: recoveryImageView, edge: .right)
+        recoveryLabel.pin(.right, to: recoveryImageView)
     
     }
 

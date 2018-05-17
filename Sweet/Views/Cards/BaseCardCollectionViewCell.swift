@@ -40,17 +40,17 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        self.customContent.shrinkAnimation(scale: 0.95, duration: 0.5, damping: 0)
+        self.customContent.shrinkAnimation(scale: 0.95, duration: 0.5, damping: 1)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        self.customContent.recoverAnimation(duration: 0.3, damping: 0)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 1)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        self.customContent.recoverAnimation(duration: 0.3, damping: 0)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 1)
     }
     
     required init?(coder aDecoder: NSCoder) {

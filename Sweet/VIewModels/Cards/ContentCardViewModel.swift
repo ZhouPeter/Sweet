@@ -14,7 +14,7 @@ struct ContentCardViewModel {
     var imageURL: URL?
     let cardId: String
     init(model: CardResponse) {
-        self.titleString = "大家都在看"
+        self.titleString = model.name!
         self.contentString = model.content!
         if let image = model.imageList {
             self.imageURL = URL(string: image[0])!

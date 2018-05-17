@@ -115,11 +115,11 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                     let viewModel = StoryCellViewModel(model: story)
                     self.storyViewModels.append(viewModel)
                 })
-                for index in 1...10 {
-                    let url = URL(string: "http://cdn02.miaobo.me/2sfemale-001-\(index).mp4")!
-                    let viewModel = StoryCellViewModel(videoURL: url)
-                    self.storyViewModels.append(viewModel)
-                }
+//                for index in 1...10 {
+//                    let url = URL(string: "http://cdn02.miaobo.me/2sfemale-001-\(index).mp4")!
+//                    let viewModel = StoryCellViewModel(videoURL: url)
+//                    self.storyViewModels.append(viewModel)
+//                }
                 self.collectionView.reloadData()
             case let .failure(error):
                 logger.error(error)

@@ -39,7 +39,7 @@ class EmptyView: UIView {
         imageView.centerX(to: self)
         imageView.align(.top, to: self, inset: 140)
         addSubview(titleLabel)
-        titleLabel.pin(to: imageView, edge: .bottom, spacing: 20)
+        titleLabel.pin(.bottom, to: imageView, spacing: 20)
         titleLabel.align(.left, to: self, inset: 10)
         titleLabel.align(.right, to: self, inset: 10)
         titleLabel.constrain(height: 40)

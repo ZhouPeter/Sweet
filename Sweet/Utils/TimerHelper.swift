@@ -80,23 +80,7 @@ class TimerHelper {
                 return "昨天" + hourTo12h(hour: hour) + "\(minute)"
             }
         } else if timeInterval + 7 * 3600 * 24 >= nowTimeInterval {
-            var string = ""
-            if (weak == 1) {
-                string = "星期日"
-            }else if weak == 2{
-                string = "星期一"
-            }else if weak == 3 {
-                string = "星期二"
-            }else if weak == 4 {
-                string = "星期三"
-            }else if weak == 5 {
-                string = "星期四"
-            }else if (weak == 6) {
-                string = "星期五"
-            } else if weak == 7 {
-                string = "星期六"
-            }
-            return string + hourTo12h(hour: hour) + "\(minute)"
+            return getWeakString(weak: weak) + hourTo12h(hour: hour) + "\(minute)"
         } else {
             return "\(month)月\(day)日" + hourTo12h(hour: hour) + "\(minute)"
         }
@@ -110,5 +94,25 @@ class TimerHelper {
         } else {
             return "上午: \(hour)"
         }
+    }
+    
+    class func getWeakString(weak: Int) -> String {
+        var string = ""
+        if (weak == 1) {
+            string = "星期日"
+        } else if weak == 2 {
+            string = "星期一"
+        } else if weak == 3 {
+            string = "星期二"
+        } else if weak == 4 {
+            string = "星期三"
+        } else if weak == 5 {
+            string = "星期四"
+        } else if (weak == 6) {
+            string = "星期五"
+        } else if weak == 7 {
+            string = "星期六"
+        }
+        return string
     }
 }

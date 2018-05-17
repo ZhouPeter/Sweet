@@ -51,7 +51,7 @@ class SignUpCollegeController: BaseViewController, SignUpCollegeView {
         view.addSubview(tableView)
         tableView.align(.left, to: view)
         tableView.align(.right, to: view)
-        tableView.pin(to: searchBar, edge: .bottom)
+        tableView.pin(.bottom, to: searchBar)
         tableView.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 34 : 0)
     }
     

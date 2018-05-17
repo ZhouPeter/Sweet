@@ -14,27 +14,28 @@ struct CardListResponse: Codable {
 
 struct CardResponse: Codable {
     let cardId: String
-    let choiceFeedList: [ChoiceFeedResponse]?
+    let activityList: [ActivityResponse]?
     let content: String?
     let imageList: [String]?
     let storyList: [[StoryResponse]]?
     let type: CardType
-    
+    let name: String?
     enum CardType: UInt, Codable {
         case unknown
         case content
         case choice
-        case feed
+        case activity
         case story
         case evaluation
     }
 }
-struct ChoiceFeedResponse: Codable {
+struct ActivityResponse: Codable {
+    let avatar: String
     let content: String
-    let feedItemId: String
+    let activityItemId: String
     let like: Bool
     let same: Bool
-    let sourceUserId: UInt64
+    let actor: UInt64
     let subtitle: String
     let title: String
 }

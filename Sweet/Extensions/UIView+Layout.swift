@@ -85,15 +85,20 @@ extension UIView {
     @discardableResult public func equal(
         _ size: Size,
         to anchorView: UIView,
+        multiplier: CGFloat = 1,
         offset: CGFloat = 0) -> SizeConstraints {
         translatesAutoresizingMaskIntoConstraints = false
         var constraints: SizeConstraints = (nil, nil)
         if size == .width || size == .size {
-            constraints.width = widthAnchor.constraint(equalTo: anchorView.widthAnchor, constant: offset)
+            constraints.width = widthAnchor.constraint(equalTo: anchorView.widthAnchor,
+                                                       multiplier: multiplier,
+                                                       constant: offset)
             constraints.width?.isActive = true
         }
         if size == .height || size == .size {
-            constraints.height = heightAnchor.constraint(equalTo: anchorView.heightAnchor, constant: offset)
+            constraints.height = heightAnchor.constraint(equalTo: anchorView.heightAnchor,
+                                                         multiplier: multiplier,
+                                                         constant: offset)
             constraints.height?.isActive = true
         }
         return constraints
@@ -119,7 +124,10 @@ extension UIView {
         return constraint
     }
     
-    @discardableResult public func pin(to anchorView: UIView, edge: Edge, spacing: CGFloat = 0) -> NSLayoutConstraint {
+    @discardableResult public func pin(
+        _ edge: Edge,
+        to anchorView: UIView,
+        spacing: CGFloat = 0) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
         switch edge {
@@ -128,7 +136,7 @@ extension UIView {
         case .right:
             constraint = leftAnchor.constraint(equalTo: anchorView.rightAnchor, constant: spacing)
         case .top:
-            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: spacing)
+            constraint = bottomAnchor.constraint(equalTo: anchorView.topAnchor, constant: -spacing)
         case .bottom:
             constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: spacing)
         }
