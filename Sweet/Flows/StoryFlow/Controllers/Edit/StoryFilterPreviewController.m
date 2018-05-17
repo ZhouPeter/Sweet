@@ -67,16 +67,22 @@
     if (self.isPhoto) {
         [(GPUImagePicture *)self.output processImage];
     } else {
-        [(GPUImageMovie *)self.output startProcessing];
+        [(XGPUImageMovie *)self.output startProcessing];
     }
     
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
 }
 
+- (void)dealloc {
+    [self stopPreview];
+    [self.output removeAllTargets];
+    [self.output removeOutputFramebuffer];
+}
+
 - (void)stopPreview {
     if (!self.isPhoto) {
-        [(GPUImageMovie *)self.output endProcessing];
+        [(XGPUImageMovie *)self.output endProcessing];
     }
 }
 

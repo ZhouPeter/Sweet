@@ -78,6 +78,84 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     // MARK: - Private
+
+    @objc private func didPressBottomButton(_ button: UIButton) {
+        selectBottomButton(at: button.tag, animated: true)
+        if button.tag == 0 {
+            if textGradientController.view.superview == nil {
+                addChildViewController(textGradientController)
+                textGradientController.didMove(toParentViewController: self)
+                view.insertSubview(textGradientController.view, belowSubview: bottomView)
+                textGradientController.view.fill(in: view)
+            }
+            textGradientController.view.alpha = 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                self.textGradientController.view.alpha = 1
+            }, completion: nil)
+            captureView.pauseCamera()
+        } else {
+            if self.textGradientController.view.alpha > 0 {
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                    self.textGradientController.view.alpha = 0
+                }, completion: nil)
+            }
+            if button.tag == 1 {
+                captureView.resumeCamera()
+            }
+        }
+    }
+    
+    @objc private func didTapTextGradientView() {
+        enablePageScroll = false
+        let controller = StoryTextController(source: .text)
+        controller.delegate = self
+        add(childViewController: controller)
+    }
+
+    private func edit(with source: StorySource) {
+        enablePageScroll = false
+        let controller = StoryTextController(source: source)
+        controller.delegate = self
+        add(childViewController: controller)
+    }
+    
+    private func selectBottomButton(at index: Int, animated: Bool) {
+        indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
+        if animated {
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(0.2)
+            UIView.setAnimationCurve(.easeOut)
+        }
+        buttons.enumerated().forEach { (offset, button) in
+            button.alpha = offset == index ? 1 : 0.5
+        }
+        view.layoutIfNeeded()
+        if animated {
+            UIView.commitAnimations()
+        }
+    }
+    
+    // MARK: - Camera
+    
+    private func shootDidBegin() {
+        captureView.startRecording()
+    }
+    
+    private func shootDidEnd(with interval: TimeInterval) {
+        if interval < 1 {
+            captureView.capturePhoto { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: .image(fileURL: url))
+                }
+            }
+        } else {
+            captureView.finishRecording { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: .video(fileURL: url))
+                }
+            }
+        }
+    }
     
     private func checkAuthorized() {
         let cameraAuthorization = TLAuthorizedManager.checkAuthorization(with: .camera)
@@ -116,82 +194,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         } else {
             blurCoverView.alpha = 1
             blurCoverView.isHidden = false
-        }
-    }
-    
-    @objc private func didPressBottomButton(_ button: UIButton) {
-        selectBottomButton(at: button.tag, animated: true)
-        if button.tag == 0 {
-            if textGradientController.view.superview == nil {
-                addChildViewController(textGradientController)
-                textGradientController.didMove(toParentViewController: self)
-                view.insertSubview(textGradientController.view, belowSubview: bottomView)
-                textGradientController.view.fill(in: view)
-            }
-            textGradientController.view.alpha = 0
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                self.textGradientController.view.alpha = 1
-            }, completion: nil)
-            captureView.pauseCamera()
-        } else {
-            if self.textGradientController.view.alpha > 0 {
-                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                    self.textGradientController.view.alpha = 0
-                }, completion: nil)
-            }
-            if button.tag == 1 {
-                captureView.resumeCamera()
-            }
-        }
-    }
-    
-    @objc private func didTapTextGradientView() {
-        enablePageScroll = false
-        let controller = StoryTextController(source: .text)
-        controller.delegate = self
-        add(childViewController: controller)
-    }
-    
-    private func shootDidBegin() {
-        captureView.startRecording()
-    }
-    
-    private func shootDidEnd(with interval: TimeInterval) {
-        if interval < 1 {
-            captureView.capturePhoto { [weak self] (url) in
-                if let url = url {
-                    self?.edit(with: .image(fileURL: url))
-                }
-            }
-        } else {
-            captureView.finishRecording { [weak self] (url) in
-                if let url = url {
-                    self?.edit(with: .video(fileURL: url))
-                }
-            }
-        }
-    }
-    
-    private func edit(with source: StorySource) {
-        enablePageScroll = false
-        let controller = StoryTextController(source: source)
-        controller.delegate = self
-        add(childViewController: controller)
-    }
-    
-    private func selectBottomButton(at index: Int, animated: Bool) {
-        indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
-        if animated {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.2)
-            UIView.setAnimationCurve(.easeOut)
-        }
-        buttons.enumerated().forEach { (offset, button) in
-            button.alpha = offset == index ? 1 : 0.5
-        }
-        view.layoutIfNeeded()
-        if animated {
-            UIView.commitAnimations()
         }
     }
     
