@@ -9,11 +9,13 @@
 import UIKit
 
 extension UIViewController {
-    func add(childViewController: UIViewController) {
+    func add(childViewController: UIViewController, addView: Bool = true) {
         addChildViewController(childViewController)
         childViewController.didMove(toParentViewController: self)
         childViewController.view.frame = view.bounds
-        view.addSubview(childViewController.view)
+        if addView {        
+            view.addSubview(childViewController.view)
+        }
     }
     
     func remove(childViewController: UIViewController) {

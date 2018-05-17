@@ -111,6 +111,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        automaticallyDisablePageScroll = false
         switch source {
         case .text:
             setupGradientView()
@@ -126,6 +127,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         
         view.addSubview(editContainer)
         editContainer.fill(in: view)
+        
         setupEditController()
         setupTopicButton()
         setupNextButton()
@@ -157,6 +159,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editController.didMove(toParentViewController: self)
         editContainer.addSubview(editController.view)
         editController.view.fill(in: editContainer)
+        editController.delegate = self
     }
     
     private func setupTopicButton() {
@@ -272,5 +275,11 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editController.endEditing()
         dismiss(animated: true, completion: nil)
         delegate?.storyTextControllerDidFinish(self)
+    }
+}
+
+extension StoryTextController: StoryTextEditControllerDelegate {
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {
+        filterPreviewController?.didPan(pan)
     }
 }

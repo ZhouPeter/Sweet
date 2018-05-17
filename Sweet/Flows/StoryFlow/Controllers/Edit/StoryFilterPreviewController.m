@@ -77,8 +77,8 @@
         [(XGPUImageMovie *)self.output startProcessing];
     }
     
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
-    [self.view addGestureRecognizer:self.panGestureRecognizer];
+//    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+//    [self.view addGestureRecognizer:self.panGestureRecognizer];
 }
 
 - (void)dealloc {

@@ -9,6 +9,8 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    var automaticallyDisablePageScroll = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -29,7 +31,7 @@ class BaseViewController: UIViewController {
     }
     
     private func autoDisablePageScroll() {
-        guard let count = navigationController?.viewControllers.count else { return }
+        guard automaticallyDisablePageScroll, let count = navigationController?.viewControllers.count else { return }
         if count == 1 {
             NotificationCenter.default.post(name: .EnablePageScroll, object: nil)
         } else {

@@ -11,6 +11,10 @@
 
 import UIKit
 
+protocol StoryTextEditControllerDelegate: class {
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
+}
+
 final class StoryTextEditController: UIViewController {
     var topic: Topic? {
         didSet {
@@ -22,7 +26,7 @@ final class StoryTextEditController: UIViewController {
             }
         }
     }
-    
+    weak var delegate: StoryTextEditControllerDelegate?
     var hidesTopicWithoutText = false
     
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
@@ -270,13 +274,27 @@ final class StoryTextEditController: UIViewController {
         }
     }
     
+    private var isPanTextView = false
+    
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
         guard isTextGestureEnabled else { return }
-        switch gesture.state {
-        case .began:
-            gestureDidBegin()
-            fallthrough
-        case .changed:
+        if gesture.state == .began {
+            isPanTextView = isPanLocatedInTextView() || pan.numberOfTouches > 1
+            if isPanTextView {
+                gestureDidBegin()
+            } else {
+                delegate?.storyTextEditControllerDidPan(pan)
+                return
+            }
+        }
+        if gesture.state == .ended {
+            gestureDidEnd()
+            if !isPanTextView {
+                delegate?.storyTextEditControllerDidPan(pan)
+            }
+            return
+        }
+        if isPanTextView {
             let translation = gesture.translation(in: view)
             if textTransform == nil {
                 textTransform = TextTransform()
@@ -286,8 +304,8 @@ final class StoryTextEditController: UIViewController {
             textTransform?.translation.y += translation.y
             gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
-        default:
-            gestureDidEnd()
+        } else {
+            delegate?.storyTextEditControllerDidPan(pan)
         }
     }
     
@@ -328,22 +346,17 @@ final class StoryTextEditController: UIViewController {
             gestureDidEnd()
         }
     }
+
+    private func isPanLocatedInTextView() -> Bool {
+        return textBoundingView.frame.insetBy(dx: -20, dy: -20).contains(pan.location(ofTouch: 0, in: view))
+    }
 }
 
 extension StoryTextEditController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == pan {
-            return textBoundingView.frame.insetBy(dx: -20, dy: -20).contains(pan.location(ofTouch: 0, in: view))
-        }
-        return true
-    }
-    
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if otherGestureRecognizer.delegate !== self {
-            return false
-        }
+        
         return true
     }
 }

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto;
 - (void)stopPreview;
+- (void)didPan:(UIPanGestureRecognizer *)recognizer;
 
 @end
 
