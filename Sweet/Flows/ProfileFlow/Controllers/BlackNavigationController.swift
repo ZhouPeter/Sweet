@@ -14,7 +14,6 @@ class BlackNavigationController: UINavigationController {
         super.viewDidLoad()
         navigationBar.tintColor = .white
         navigationBar.barTintColor = UIColor(hex: 0x4a4a4a)
-        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         navigationBar.barStyle = .black
     }
 }

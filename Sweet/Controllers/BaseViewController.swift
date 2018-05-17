@@ -16,6 +16,7 @@ class BaseViewController: UIViewController {
         backBarButtonItem.title = ""
         navigationItem.backBarButtonItem = backBarButtonItem
         navigationController?.navigationBar.tintColor = .black
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

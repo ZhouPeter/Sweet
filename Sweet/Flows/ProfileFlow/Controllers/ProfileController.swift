@@ -194,10 +194,11 @@ extension ProfileController {
 // MARK: - UITableViewDelegate
 extension ProfileController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0, let viewModel = baseInfoViewModel {
+        guard  let viewModel = baseInfoViewModel else { return 0 }
+        if indexPath.row == 0 {
             return viewModel.cellHeight
         } else {
-            return 450
+            return UIScreen.mainHeight() - viewModel.cellHeight - UIScreen.navBarHeight()
         }
     }
     

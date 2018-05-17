@@ -75,6 +75,17 @@ extension UIView {
         }
     }
     
+    func setViewRounded(cornerRadius: CGFloat, corners: UIRectCorner) {
+        layoutIfNeeded()
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                    byRoundingCorners: corners,
+                                    cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = bounds
+        maskLayer.path = maskPath.cgPath
+        layer.mask = maskLayer
+    }
+    
     func setViewRounded(borderWidth: CGFloat, borderColor: UIColor) {
         layoutIfNeeded()
         let cornerRadius = bounds.height / 2

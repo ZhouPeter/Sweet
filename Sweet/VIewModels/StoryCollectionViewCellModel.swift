@@ -1,5 +1,5 @@
 //
-//  FeedsStoryCollectionViewCellModel.swift
+//  StoryCollectionViewCellModel.swift
 //  XPro
 //
 //  Created by Mario Z. on 2018/3/30.
@@ -10,6 +10,7 @@ import Foundation
 
 struct StoryCollectionViewCellModel {
     let name: String
+    let info: String
     let avatarImageURL: URL?
     var imageURL: URL?
     var videoURL: URL?
@@ -20,7 +21,8 @@ struct StoryCollectionViewCellModel {
     let storyId: UInt64
     
     init(model: StoryResponse) {
-        name = model.title
+        name = model.nickname
+        info  = "\(model.university)\n\(model.college)\n\(model.enrollment)"
         avatarImageURL = URL(string: model.avatar)
         if model.type == .image {
             imageURL = URL(string: model.content)

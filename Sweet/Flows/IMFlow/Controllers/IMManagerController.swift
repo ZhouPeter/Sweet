@@ -24,10 +24,10 @@ class IMManagerController: BaseViewController, IMManagerView {
         let control = UISegmentedControl(items: ["消息", "联系人"])
         control.tintColor = .clear
         let normalTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                    NSAttributedStringKey.foregroundColor: UIColor.black.withAlphaComponent(0.5)]
+                                    NSAttributedStringKey.foregroundColor: UIColor.white.withAlphaComponent(0.5)]
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         let selectedTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                      NSAttributedStringKey.foregroundColor: UIColor.black]
+                                      NSAttributedStringKey.foregroundColor: UIColor.white]
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
@@ -36,6 +36,8 @@ class IMManagerController: BaseViewController, IMManagerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
+        navigationController?.navigationBar.barStyle = .black
         navigationItem.titleView = titleView
         addChildViewController(iMListController)
         iMListController.didMove(toParentViewController: self)

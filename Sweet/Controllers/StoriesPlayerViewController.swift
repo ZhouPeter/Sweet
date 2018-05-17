@@ -418,44 +418,44 @@ extension StoriesPlayerViewController {
     
     @objc private func presentMenuAlertController(sender: UIButton) {
         pause()
-        let alertController = UIAlertController(title: "测试", message: "测试", preferredStyle: .actionSheet)
-//        let delAction = UIAlertAction(title: "删除本条", style: .default) { [weak self] (_) in
-//            guard let `self` = self else { return }
-//            let alertController = UIAlertController(title: "删除本条小故事",
-//                                                    message: "删除的小故事将无法恢复",
-//                                                    preferredStyle: .alert)
-//            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: { [weak self](_) in
-//                self?.play()
-//            })
-//            let delAction = UIAlertAction.init(title: "删除", style: .destructive, handler: { [weak self] (_) in
-////                guard let `self` = self else { return }
-////                XPClient.delStory(
-////                    storyId: self.stories[self.currentIndex].storyId,
-////                    callback: {[weak self] (_, error) in
-////                        self?.play()
-////                        guard let `self` = self, error == nil else { return }
-////                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-////                        hud.mode = .text
-////                        hud.label.text = "删除成功"
-////                        hud.hide(animated: true)
-////                        self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
-////                        self.stories.remove(at: self.currentIndex)
-////                        self.reloadPlayer()
-////                })
-//            })
-//            alertController.addAction(cancelAction)
-//            alertController.addAction(delAction)
-//            self.present(alertController, animated: true, completion: nil)
-//        }
-//        alertController.addAction(delAction)
-//        let downloadAction = UIAlertAction(title: "下载保存到本地", style: .default) { [weak self] (_) in
-//            guard let `self` = self else { return }
-//            self.play()
-//            self.downloadStory(downloadBack: { (isSuccess) in
-//                self.toast(message: isSuccess ? "保存成功" : "保存失败", duration: 2)
-//            })
-//        }
-//        alertController.addAction(downloadAction)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let delAction = UIAlertAction(title: "删除本条", style: .default) { [weak self] (_) in
+            guard let `self` = self else { return }
+            let alertController = UIAlertController(title: "删除本条小故事",
+                                                    message: "删除的小故事将无法恢复",
+                                                    preferredStyle: .alert)
+            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: { [weak self](_) in
+                self?.play()
+            })
+            let delAction = UIAlertAction.init(title: "删除", style: .destructive, handler: { [weak self] (_) in
+//                guard let `self` = self else { return }
+//                XPClient.delStory(
+//                    storyId: self.stories[self.currentIndex].storyId,
+//                    callback: {[weak self] (_, error) in
+//                        self?.play()
+//                        guard let `self` = self, error == nil else { return }
+//                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//                        hud.mode = .text
+//                        hud.label.text = "删除成功"
+//                        hud.hide(animated: true)
+//                        self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
+//                        self.stories.remove(at: self.currentIndex)
+//                        self.reloadPlayer()
+//                })
+            })
+            alertController.addAction(cancelAction)
+            alertController.addAction(delAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        alertController.addAction(delAction)
+        let downloadAction = UIAlertAction(title: "下载保存到本地", style: .default) { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.play()
+            self.downloadStory(downloadBack: { (isSuccess) in
+                self.toast(message: isSuccess ? "保存成功" : "保存失败", duration: 2)
+            })
+        }
+        alertController.addAction(downloadAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { [weak self] (_) in
             self?.play()
 

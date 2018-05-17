@@ -8,10 +8,16 @@
 
 import UIKit
 import Pageboy
-
+extension UINavigationController {
+    open override var childViewControllerForStatusBarStyle: UIViewController? {
+        return self.visibleViewController
+    }
+}
 extension Notification.Name {
     static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
     static let EnablePageScroll = Notification.Name(rawValue: "EnablePageScroll")
+    static let BarStyleBlack = Notification.Name(rawValue: "BarStyleBlack")
+    static let BarStyleDefault = Notification.Name(rawValue: "BarStyleDefalut")
 }
 
 final class MainController: PageboyViewController, MainView {
@@ -51,6 +57,18 @@ final class MainController: PageboyViewController, MainView {
             name: .EnablePageScroll,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveBarStyleBlackNote),
+            name: .BarStyleBlack,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveBarStyleDefaultNote),
+            name: .BarStyleDefault,
+            object: nil
+        )
     }
     
     // MARK: - Private
@@ -61,6 +79,14 @@ final class MainController: PageboyViewController, MainView {
     
     @objc func didReceivePageScrollEnableNote() {
         isScrollEnabled = true
+    }
+    
+    @objc func didReceiveBarStyleBlackNote() {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    @objc func didReceiveBarStyleDefaultNote() {
+        navigationController?.navigationBar.barStyle = .default
     }
 }
 

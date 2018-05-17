@@ -13,6 +13,7 @@ protocol StoryUVControllerDelegate: NSObjectProtocol {
 class StoryUVController: BaseViewController {
     weak var delegate: StoryUVControllerDelegate?
     private let storyId: UInt64
+    private var storyUvList: StoryUvList?
     private lazy var emptyView: EmptyView = {
         let view = EmptyView(frame: .zero)
         view.titleLabel.text = "还没有人看过你的小故事"
@@ -39,6 +40,7 @@ class StoryUVController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+        tableView.register(StoryUVTableViewCell.self, forCellReuseIdentifier: "storyUVCell")
         return tableView
     }()
     
@@ -54,6 +56,19 @@ class StoryUVController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        loadStoryUvlist()
+    }   
+    
+    private func loadStoryUvlist() {
+        web.request(.storyDetailsUvlist(storyId: storyId), responseType: Response<StoryUvList>.self) { (result) in
+            switch result {
+            case let .success(response):
+                self.storyUvList = response
+                self.tableView.reloadData()
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
     }
     
     private func setupUI() {
@@ -72,11 +87,16 @@ class StoryUVController: BaseViewController {
 
 extension StoryUVController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return storyUvList?.list.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(
+                            withIdentifier: "storyUVCell",
+                            for: indexPath) as? StoryUVTableViewCell else { fatalError() }
+        if let model = storyUvList?.list[indexPath.row] {
+            cell.update(model)
+        }
         return cell
     }
 }

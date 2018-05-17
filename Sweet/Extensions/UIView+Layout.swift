@@ -85,15 +85,20 @@ extension UIView {
     @discardableResult public func equal(
         _ size: Size,
         to anchorView: UIView,
+        multiplier: CGFloat = 1,
         offset: CGFloat = 0) -> SizeConstraints {
         translatesAutoresizingMaskIntoConstraints = false
         var constraints: SizeConstraints = (nil, nil)
         if size == .width || size == .size {
-            constraints.width = widthAnchor.constraint(equalTo: anchorView.widthAnchor, constant: offset)
+            constraints.width = widthAnchor.constraint(equalTo: anchorView.widthAnchor,
+                                                       multiplier: multiplier,
+                                                       constant: offset)
             constraints.width?.isActive = true
         }
         if size == .height || size == .size {
-            constraints.height = heightAnchor.constraint(equalTo: anchorView.heightAnchor, constant: offset)
+            constraints.height = heightAnchor.constraint(equalTo: anchorView.heightAnchor,
+                                                         multiplier: multiplier,
+                                                         constant: offset)
             constraints.height?.isActive = true
         }
         return constraints
