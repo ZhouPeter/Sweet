@@ -29,6 +29,7 @@
 @property (readonly, nonatomic) BOOL videoEncodingIsFinished;
 
 @property(readwrite, nonatomic) BOOL playSound;
+@property (copy, nonatomic) void (^startProcessingCallback)(void);
 
 - (id)initWithAsset:(AVAsset *)asset;
 - (id)initWithPlayerItem:(AVPlayerItem *)playerItem;

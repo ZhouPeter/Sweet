@@ -280,7 +280,7 @@ static BOOL allowWriteAudio = NO;
     });
     isRecording = YES;
 	//    [assetWriter startSessionAtSourceTime:kCMTimeZero];
-    allowWriteAudio = NO;
+    allowWriteAudio = self.shouldPassthroughAudio;
 }
 
 - (void)startRecordingInOrientation:(CGAffineTransform)orientationTransform;

@@ -23,6 +23,7 @@
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (assign, nonatomic) NSUInteger filterIndex;
 @property (assign, nonatomic) BOOL isPhoto;
+@property (strong, nonatomic) AVPlayer *audioPlayer;
 
 @end
 
@@ -39,6 +40,12 @@
             movie.playAtActualSpeed = YES;
             movie.shouldRepeat = YES;
             self.output = movie;
+            self.audioPlayer = [[AVPlayer alloc] initWithURL:url];
+            __weak typeof(self) weakSelf = self;
+            movie.startProcessingCallback = ^{
+                [weakSelf.audioPlayer seekToTime:kCMTimeZero];
+                [weakSelf.audioPlayer play];
+            };
         }
     }
     return self;
@@ -83,6 +90,7 @@
 - (void)stopPreview {
     if (!self.isPhoto) {
         [(XGPUImageMovie *)self.output endProcessing];
+        [self.audioPlayer pause];
     }
 }
 

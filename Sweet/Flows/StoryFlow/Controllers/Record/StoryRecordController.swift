@@ -168,7 +168,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             if micAuthorization {
                 captureView.enableAudio()
             }
-        }else {
+        } else {
             let authorizedVC = TLStoryAuthorizationController()
             authorizedVC.delegate = self
             add(childViewController: authorizedVC)
@@ -176,6 +176,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func startCamera() {
+        captureView.setupCamera()
         captureView.startCaputre()
     }
     
@@ -252,7 +253,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     private func setupCaptureView() {
         view.addSubview(captureView)
         captureView.fill(in: view)
-        captureView.setupCamera()
     }
     
     private func setupCoverView() {

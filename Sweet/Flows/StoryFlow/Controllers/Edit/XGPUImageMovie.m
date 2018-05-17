@@ -203,6 +203,9 @@
             blockSelf = nil;
         });
     }];
+    if (self.startProcessingCallback) {
+        self.startProcessingCallback();
+    }
 }
 
 - (AVAssetReader*)createAssetReader
