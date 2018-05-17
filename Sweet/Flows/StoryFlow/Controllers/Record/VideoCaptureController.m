@@ -7,7 +7,7 @@
 //
 
 #import "VideoCaptureController.h"
-#import <GPUImage/GPUImage.h>
+#import <GPUImage/GPUImageFramework.h>
 #import "NSURL+Path.h"
 
 @interface VideoCaptureController ()

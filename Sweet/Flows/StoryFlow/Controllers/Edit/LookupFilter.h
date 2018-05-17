@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GPUImage/GPUImage.h>
+#import <GPUImage/GPUImageFramework.h>
 
 @interface LookupFilter : GPUImageFilterGroup
 

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol MainView: BaseView {
+    var preloadStory: ((UINavigationController) -> Void)? { get set }
     var onStoryFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
     var onCardsFlowSelect: ((UINavigationController) -> Void)? { get set }
@@ -31,6 +32,7 @@ final class MainCoordinator: BaseCoordinator {
         mainView.onCardsFlowSelect = runCardsFlow()
         mainView.onStoryFlowSelect = runStoryFlow()
         mainView.onProfileFlowSelect = runProfileFlow()
+        mainView.preloadStory = runStoryFlow()
     }
     
     // MARK: - Private

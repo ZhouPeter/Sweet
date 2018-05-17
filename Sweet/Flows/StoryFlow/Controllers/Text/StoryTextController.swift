@@ -25,7 +25,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     let source: StorySource
     
     private lazy var gradientView = GradientSwitchView()
-    
+    private var filterPreviewController: StoryFilterPreviewController?
     private lazy var editController = StoryTextEditController()
     private let topicBottomInset: CGFloat = 50
     private var topicBottom: NSLayoutConstraint?
@@ -111,14 +111,19 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(gradientView)
-        gradientView.fill(in: view)
-        gradientView.changeColors([UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)])
-        gradientView.changeMode(.linearWithPoints(
-            start: CGPoint(x: 0, y: 0),
-            end: CGPoint(x: view.bounds.width, y: view.bounds.height)
-            )
-        )
+        switch source {
+        case .text:
+            setupGradientView()
+        case let .image(url):
+            let controller = StoryFilterPreviewController(fileURL: url, isPhoto: true)
+            add(childViewController: controller)
+            filterPreviewController = controller
+        case let .video(url):
+            let controller = StoryFilterPreviewController(fileURL: url, isPhoto: false)
+            add(childViewController: controller)
+            filterPreviewController = controller
+        }
+        
         view.addSubview(editContainer)
         editContainer.fill(in: view)
         setupEditController()
@@ -135,6 +140,17 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     // MARK: - Private
+    
+    private func setupGradientView() {
+        view.addSubview(gradientView)
+        gradientView.fill(in: view)
+        gradientView.changeColors([UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)])
+        gradientView.changeMode(.linearWithPoints(
+            start: CGPoint(x: 0, y: 0),
+            end: CGPoint(x: view.bounds.width, y: view.bounds.height)
+            )
+        )
+    }
     
     private func setupEditController() {
         addChildViewController(editController)
@@ -235,7 +251,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressNextButton() {
-        guard editController.hasText else { return }
+        if case .text = source, !editController.hasText { return }
         isPublishing = true
         editController.endEditing()
         editController.hidesTopicWithoutText = true

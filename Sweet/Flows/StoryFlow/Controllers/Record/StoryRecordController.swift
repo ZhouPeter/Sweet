@@ -67,16 +67,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         setupShootButton()
         setupBottomView()
         selectBottomButton(at: 1, animated: false)
+        captureController.startPreview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        captureController.startPreview()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        captureController.stopPreview()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     // MARK: - Actions
@@ -123,14 +119,25 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     private func shootDidEnd(with interval: TimeInterval) {
         if interval < 1 {
             captureController.cancelRecord()
-            captureController.takeAPhoto { (url) in
-                logger.debug(url)
+            captureController.takeAPhoto { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: .image(fileURL: url))
+                }
             }
         } else {
-            captureController.finishRecord { (url) in
-                logger.debug(url)
+            captureController.finishRecord { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: .video(fileURL: url))
+                }
             }
         }
+    }
+    
+    private func edit(with source: StorySource) {
+        enablePageScroll = false
+        let controller = StoryTextController(source: source)
+        controller.delegate = self
+        add(childViewController: controller)
     }
     
     private func selectBottomButton(at index: Int, animated: Bool) {

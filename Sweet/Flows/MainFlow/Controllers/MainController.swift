@@ -15,6 +15,7 @@ extension Notification.Name {
 }
 
 final class MainController: PageboyViewController, MainView {
+    var preloadStory: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
@@ -51,6 +52,7 @@ final class MainController: PageboyViewController, MainView {
             name: .EnablePageScroll,
             object: nil
         )
+        preloadStory?(story)
     }
     
     // MARK: - Private

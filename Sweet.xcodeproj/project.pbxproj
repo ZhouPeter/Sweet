@@ -408,6 +408,10 @@
 		AC3280D020A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
 		AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */; };
+		AC45CD0B20AD27B0005C4AA0 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; };
+		AC45CD0C20AD27B0005C4AA0 /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC45CD1A20AD27CD005C4AA0 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; };
+		AC45CD1B20AD27CD005C4AA0 /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -656,6 +660,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AC45CCF620AD265E005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		AC45CCF820AD265E005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCE209E51943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		AC45CD0820AD279D005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCE209E41943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		AC45CD0D20AD27B0005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCE209E41943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		AC45CD1720AD27C8005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCE209E41943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		AC45CD1C20AD27CD005C4AA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCE209E41943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
 		ACA322FF2087410200BDC92E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ACA322E22087410000BDC92E /* Project object */;
@@ -671,6 +717,31 @@
 			remoteInfo = Sweet;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AC45CD0F20AD27B1005C4AA0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AC45CD0C20AD27B0005C4AA0 /* GPUImage.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC45CD1E20AD27CD005C4AA0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AC45CD1B20AD27CD005C4AA0 /* GPUImage.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0135478D65C69FE268B22C5F /* Pods_SweetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SweetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -808,6 +879,7 @@
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
+		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
@@ -898,6 +970,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */,
+				AC45CD0B20AD27B0005C4AA0 /* GPUImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C4A2107023F0E35905AF719 /* Pods_Sweet_Sweet_Dev.framework in Frameworks */,
+				AC45CD1A20AD27CD005C4AA0 /* GPUImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1090,6 +1164,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		AC45CCF120AD265E005C4AA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC45CCF720AD265E005C4AA0 /* libGPUImage.a */,
+				AC45CCF920AD265E005C4AA0 /* GPUImage.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AC525A88208D87B0001070B2 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -1253,6 +1336,7 @@
 				ACA32330208747D400BDC92E /* Controllers */,
 				ACA3235E20875AD500BDC92E /* Extensions */,
 				ACA323AB208763CD00BDC92E /* Utils */,
+				AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */,
 				ACA322F42087410200BDC92E /* Assets.xcassets */,
 				ACA322F62087410200BDC92E /* LaunchScreen.storyboard */,
 				ACA322F92087410200BDC92E /* Info.plist */,
@@ -1485,10 +1569,13 @@
 				5A3544958C2A3E28C7ED2EE6 /* [CP] Embed Pods Frameworks */,
 				ACA3232A208745A700BDC92E /* SwiftLint */,
 				ACA3232E2087460500BDC92E /* Build Number */,
+				AC45CD0F20AD27B1005C4AA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AC45CD0920AD279D005C4AA0 /* PBXTargetDependency */,
+				AC45CD0E20AD27B0005C4AA0 /* PBXTargetDependency */,
 			);
 			name = Sweet;
 			productName = Sweet;
@@ -1544,10 +1631,13 @@
 				FA1AF2480345B1EFE0189AB7 /* [CP] Embed Pods Frameworks */,
 				ACA3232B208745B800BDC92E /* SwiftLint */,
 				ACA3232C208745C700BDC92E /* Build Number */,
+				AC45CD1E20AD27CD005C4AA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AC45CD1820AD27C8005C4AA0 /* PBXTargetDependency */,
+				AC45CD1D20AD27CD005C4AA0 /* PBXTargetDependency */,
 			);
 			name = "Sweet Dev";
 			productName = Sweet;
@@ -1610,6 +1700,12 @@
 			mainGroup = ACA322E12087410000BDC92E;
 			productRefGroup = ACA322EB2087410000BDC92E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AC45CCF120AD265E005C4AA0 /* Products */;
+					ProjectRef = AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				ACA322E92087410000BDC92E /* Sweet */,
@@ -1619,6 +1715,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AC45CCF720AD265E005C4AA0 /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = AC45CCF620AD265E005C4AA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC45CCF920AD265E005C4AA0 /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = AC45CCF820AD265E005C4AA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		ACA322E82087410000BDC92E /* Resources */ = {
@@ -1709,7 +1822,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
@@ -1724,7 +1836,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
@@ -1841,7 +1952,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
@@ -1856,7 +1966,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
@@ -2538,6 +2647,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AC45CD0920AD279D005C4AA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImageFramework;
+			targetProxy = AC45CD0820AD279D005C4AA0 /* PBXContainerItemProxy */;
+		};
+		AC45CD0E20AD27B0005C4AA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImageFramework;
+			targetProxy = AC45CD0D20AD27B0005C4AA0 /* PBXContainerItemProxy */;
+		};
+		AC45CD1820AD27C8005C4AA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImageFramework;
+			targetProxy = AC45CD1720AD27C8005C4AA0 /* PBXContainerItemProxy */;
+		};
+		AC45CD1D20AD27CD005C4AA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImageFramework;
+			targetProxy = AC45CD1C20AD27CD005C4AA0 /* PBXContainerItemProxy */;
+		};
 		ACA323002087410200BDC92E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ACA322E92087410000BDC92E /* Sweet */;

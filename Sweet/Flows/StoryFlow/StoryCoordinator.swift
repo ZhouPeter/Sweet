@@ -31,6 +31,8 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onRecorded = { [weak self] url, isPhoto in
             self?.showStoryEditView(with: url, isPhoto: isPhoto)
         }
+        // Preload
+        _ = controller.toPresent()?.view
         router.setRootFlow(controller)
     }
     

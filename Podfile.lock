@@ -1,7 +1,6 @@
 PODS:
   - Alamofire (4.7.1)
   - APESuperHUD (1.1.3)
-  - GPUImage (0.1.7)
   - Hero (1.2.0)
   - Kingfisher (4.7.0)
   - Moya (11.0.2):
@@ -24,7 +23,6 @@ PODS:
 
 DEPENDENCIES:
   - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
-  - GPUImage
   - Hero (~> 1.2.0)
   - Kingfisher
   - Moya (~> 11.0)
@@ -37,7 +35,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - GPUImage
     - Hero
     - Kingfisher
     - Moya
@@ -62,7 +59,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   APESuperHUD: d18e9cc943c1e9229830d8381bbc3efc39ec279d
-  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   Moya: a725035953bc1c0eb1be505ab903984501d82440
@@ -75,6 +71,6 @@ SPEC CHECKSUMS:
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
 
-PODFILE CHECKSUM: 42608acafc021b6d7d49cd4599ab3134b91b4784
+PODFILE CHECKSUM: b279e6a26c1e28422a2417f43fd361765dac6bab
 
 COCOAPODS: 1.5.0

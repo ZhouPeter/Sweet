@@ -6,7 +6,7 @@
 //  Copyright © 2017 Miaozan. All rights reserved.
 //
 
-#import <GPUImage/GPUImage.h>
+#import <GPUImage/GPUImageFramework.h>
 
 @protocol XGPUImageMovieDelegate <NSObject>
 

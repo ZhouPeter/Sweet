@@ -6,7 +6,7 @@
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
-#import <GPUImage/GPUImage.h>
+#import <GPUImage/GPUImageFramework.h>
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
 #import "XGPUImageMovie.h"
