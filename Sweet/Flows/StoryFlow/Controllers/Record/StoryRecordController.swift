@@ -35,13 +35,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return controller
     } ()
     
-    private var captureController = VideoCaptureController()
-    
-    private lazy var renderView: UIView = {
-        let view = UIView(frame: self.view.bounds)
-        view.backgroundColor = .black
-        return view
-    } ()
+    private var captureView = StoryCaptureView()
+    private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     private var enablePageScroll: Bool = true {
         didSet {
@@ -66,16 +61,63 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         setupTopView()
         setupShootButton()
         setupBottomView()
+        setupCoverView()
         selectBottomButton(at: 1, animated: false)
-        captureController.startPreview()
+        checkAuthorized()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        resumeCamera(true)
     }
     
-    // MARK: - Actions
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        resumeCamera(false)
+    }
+    
+    // MARK: - Private
+    
+    private func checkAuthorized() {
+        let cameraAuthorization = TLAuthorizedManager.checkAuthorization(with: .camera)
+        let micAuthorization = TLAuthorizedManager.checkAuthorization(with: .mic)
+        
+        if cameraAuthorization && micAuthorization {
+            if cameraAuthorization {
+                startCamera()
+            }
+            if micAuthorization {
+                captureView.enableAudio()
+            }
+        }else {
+            let authorizedVC = TLStoryAuthorizationController()
+            authorizedVC.delegate = self
+            add(childViewController: authorizedVC)
+        }
+    }
+    
+    private func startCamera() {
+        captureView.startCaputre()
+    }
+    
+    private func resumeCamera(_ isOpen: Bool) {
+        if isOpen {
+            captureView.startCaputre()
+        } else {
+            captureView.stopCapture()
+        }
+        if isOpen {
+            UIView.animate(withDuration: 0.25, delay: 0.25, options: [.curveEaseOut], animations: {
+                self.blurCoverView.alpha = 0
+            }, completion: { _ in
+                self.blurCoverView.isHidden = true
+            })
+        } else {
+            blurCoverView.alpha = 1
+            blurCoverView.isHidden = false
+        }
+    }
     
     @objc private func didPressBottomButton(_ button: UIButton) {
         selectBottomButton(at: button.tag, animated: true)
@@ -90,7 +132,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 self.textGradientController.view.alpha = 1
             }, completion: nil)
-            captureController.stopPreview()
+            captureView.pauseCamera()
         } else {
             if self.textGradientController.view.alpha > 0 {
                 UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
@@ -98,12 +140,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
                 }, completion: nil)
             }
             if button.tag == 1 {
-                captureController.startPreview()
+                captureView.resumeCamera()
             }
         }
     }
-    
-    // MARK: - Private
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
@@ -113,19 +153,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func shootDidBegin() {
-        captureController.startRecord()
+        captureView.startRecording()
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
         if interval < 1 {
-            captureController.cancelRecord()
-            captureController.takeAPhoto { [weak self] (url) in
+            captureView.capturePhoto { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: .image(fileURL: url))
                 }
             }
         } else {
-            captureController.finishRecord { [weak self] (url) in
+            captureView.finishRecording { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: .video(fileURL: url))
                 }
@@ -209,9 +248,15 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func setupCaptureView() {
-        view.addSubview(renderView)
-        renderView.fill(in: view)
-        captureController.render(in: view)
+        view.addSubview(captureView)
+        captureView.fill(in: view)
+        captureView.setupCamera()
+    }
+    
+    private func setupCoverView() {
+        view.addSubview(blurCoverView)
+        blurCoverView.isUserInteractionEnabled = true
+        blurCoverView.fill(in: view)
     }
     
     private func setupTopView() {
@@ -246,3 +291,18 @@ extension StoryRecordController: StoryTextControllerDelegate {
         enablePageScroll = true
     }
 }
+
+extension StoryRecordController: TLStoryAuthorizedDelegate {
+    func requestMicAuthorizeSuccess() {
+        captureView.enableAudio()
+    }
+    
+    func requestCameraAuthorizeSuccess() {
+        startCamera()
+    }
+    
+    func requestAllAuthorizeSuccess() {
+        
+    }
+}
+
