@@ -13,7 +13,7 @@ extension UIImage {
         guard let newImage = scaled(size.width / self.size.width) else {
             return nil
         }
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1)
         if let backgroundColor = backgroundColor {
             backgroundColor.set()
             UIRectFill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
@@ -48,4 +48,3 @@ extension UIImage {
         return image
     }
 }
-

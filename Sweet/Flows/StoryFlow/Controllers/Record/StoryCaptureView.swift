@@ -114,7 +114,7 @@ final class StoryCaptureView: GPUImageView {
 struct StoryConfg {
     static let captureSessionPreset: String = AVCaptureSession.Preset.hd1280x720.rawValue
     static let videoSize = CGSize(width: 720, height: 1280)
-    static let photoSize = CGSize(width: 1080, height: 1920)
+    static let photoSize = CGSize(width: 720, height: 1280)
     static let audioSetting = [
         AVFormatIDKey: kAudioFormatMPEG4AAC,
         AVNumberOfChannelsKey: 2,
