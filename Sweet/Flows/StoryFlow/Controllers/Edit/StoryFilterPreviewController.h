@@ -10,11 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LookupFilter;
 @interface StoryFilterPreviewController : UIViewController
 
 - (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto;
 - (void)stopPreview;
 - (void)didPan:(UIPanGestureRecognizer *)recognizer;
+- (LookupFilter *)currentFilter;
 
 @end
 

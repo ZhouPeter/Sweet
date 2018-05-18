@@ -76,6 +76,10 @@
     }
 }
 
+- (LookupFilter *)currentFilter {
+    return [self makeFilterWithIndex:self.filterIndex];
+}
+
 #pragma mark - Private
 
 - (void)setupPreviews {

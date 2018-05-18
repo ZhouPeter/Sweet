@@ -668,6 +668,18 @@
 		ACF2DEC42089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		ACF2DEC52089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		ACF2DEC62089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
+		ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
+		ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
+		ACFC207B20AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
+		ACFC207F20AEA11200D696B9 /* UIImage+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */; };
+		ACFC208020AEA11200D696B9 /* UIImage+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */; };
+		ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */; };
+		ACFC208220AEA11200D696B9 /* UIImage+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */; };
+		ACFC208420AEA73700D696B9 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */; };
+		ACFC208520AEA73700D696B9 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */; };
+		ACFC208620AEA73700D696B9 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */; };
+		ACFC208720AEA73700D696B9 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */; };
 		DF80169A86358114B4727C33 /* Pods_SweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228283EB6F84BFB0951930EC /* Pods_SweetUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -974,6 +986,9 @@
 		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		ACFC207720AE993D00D696B9 /* StoryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryGenerator.swift; sourceTree = "<group>"; };
+		ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Merge.swift"; sourceTree = "<group>"; };
+		ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
 		B0AACD15BE8117636303EBAF /* Pods-SweetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AE4C7FC4FD9137B3A1E789 /* Pods-SweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetUITests/Pods-SweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF7FABAE404A84982E3AD848 /* Pods_Sweet_Sweet_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sweet_Sweet_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1306,6 +1321,7 @@
 				AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */,
 				AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */,
 				AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */,
+				ACFC207720AE993D00D696B9 /* StoryGenerator.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -1438,6 +1454,8 @@
 				ACE560A420997AA900CE2564 /* NSURL+Path.h */,
 				ACE560A520997AA900CE2564 /* NSURL+Path.m */,
 				AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */,
+				ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */,
+				ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2141,6 +2159,7 @@
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
@@ -2181,11 +2200,13 @@
 				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B51209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
+				ACFC208420AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58D578DE2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F7208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
 				58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
+				ACFC207F20AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
@@ -2230,11 +2251,13 @@
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
+				ACFC208620AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -2293,6 +2316,7 @@
 				58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58155E14209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				5843DA7020A1A515005C8AD2 /* BlockController.swift in Sources */,
@@ -2376,11 +2400,13 @@
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5D20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
+				ACFC208720AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				ACFC207B20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -2439,6 +2465,7 @@
 				58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECE20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				ACFC208220AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58155E15209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
@@ -2623,6 +2650,7 @@
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
+				ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
@@ -2663,11 +2691,13 @@
 				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B52209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
+				ACFC208520AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58D578DF2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
 				58BD52F8208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
 				58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
+				ACFC208020AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,

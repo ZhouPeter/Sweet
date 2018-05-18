@@ -6,3 +6,4 @@
 #import <UMPush/UMessage.h>
 #import <UMCommon/UMCommon.h>
 #import "StoryFilterPreviewController.h"
+#import "LookupFilter.h"

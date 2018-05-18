@@ -111,7 +111,7 @@ final class StoryCaptureView: GPUImageView {
     }
 }
 
-private struct StoryConfg {
+struct StoryConfg {
     static let captureSessionPreset: String = AVCaptureSession.Preset.hd1280x720.rawValue
     static let videoSize = CGSize(width: 720, height: 1280)
     static let photoSize = CGSize(width: 1080, height: 1920)

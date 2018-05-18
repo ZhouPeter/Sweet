@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <GPUImage/GPUImageFramework.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LookupFilter : GPUImageFilterGroup
 
 - (instancetype)initWithLookupImage:(UIImage *)image;
 + (instancetype)defaultFilter;
 
 @end
+
+NS_ASSUME_NONNULL_END
