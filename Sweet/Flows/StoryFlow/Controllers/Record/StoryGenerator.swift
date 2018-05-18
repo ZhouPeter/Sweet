@@ -50,7 +50,40 @@ final class StoryGenerator {
         }
     }
     
-    func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage, callback: @escaping (URL?) -> Void) {
-        
+    func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
+        movie = GPUImageMovie(url: fileURL)
+        let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
+        writer = GPUImageMovieWriter(movieURL: url, size: StoryConfg.videoSize)
+        writer?.shouldPassthroughAudio = true
+        movie?.audioEncodingTarget = writer
+        movie?.enableSynchronizedEncoding(using: writer)
+        movie?.addTarget(filter)
+        let imageView = UIImageView(image: overlay)
+        let uiElement = GPUImageUIElement(view: imageView)
+        filter.frameProcessingCompletionBlock = { _, time in uiElement?.update(withTimestamp: time) }
+        let blendFilter = GPUImageAlphaBlendFilter()
+        blendFilter.mix = 1
+        filter.addTarget(blendFilter)
+        uiElement?.addTarget(blendFilter)
+        blendFilter.addTarget(writer)
+        writer?.startRecording()
+        movie?.startProcessing()
+        let clean: () -> Void = { [weak self] in
+            blendFilter.removeAllTargets()
+            filter.removeAllTargets()
+            uiElement?.removeAllTargets()
+            self?.movie?.removeAllTargets()
+            self?.movie?.audioEncodingTarget = nil
+        }
+        writer?.completionBlock = { [weak self] in
+            self?.writer?.finishRecording()
+            clean()
+            DispatchQueue.main.async { callback(url) }
+        }
+        writer?.failureBlock = { error in
+            logger.error(error ?? "")
+            clean()
+            DispatchQueue.main.async { callback(nil) }
+        }
     }
 }
