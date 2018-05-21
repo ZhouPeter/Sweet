@@ -86,6 +86,11 @@ final class StoryTextEditController: UIViewController {
         view.textContainerInset = .zero
         self.tap.delegate = self
         view.addGestureRecognizer(tap)
+        view.layer.shadowRadius = 4
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.4
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.clipsToBounds = true
         return view
     } ()
     
