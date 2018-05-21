@@ -5,7 +5,6 @@ target 'Sweet' do
   use_frameworks!
 
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
   pod 'Moya', '~> 11.0'
   pod 'UMCPush'
   pod 'RealmSwift'
@@ -14,7 +13,9 @@ target 'Sweet' do
   pod 'Pageboy', '~> 2.0'
   pod 'GPUImage'
   pod 'Hero', '~> 1.2.0'
-  
+  pod 'PKHUD', '~> 5.0'
+  pod 'NVActivityIndicatorView'
+  pod 'VIMediaCache'
   target 'Sweet Dev' do
   end
   

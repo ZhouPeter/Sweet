@@ -75,14 +75,14 @@ class TimerHelper {
         let beforZeroData = calendar.date(byAdding: .day, value: -1, to: zeroDate)!
         if timeInterval >= Int(beforZeroData.timeIntervalSince1970) {
             if timeInterval >= Int(zeroDate.timeIntervalSince1970) {
-                return ("今天", hourTo12h(hour: hour) + "\(minute)")
+                return ("今天", hourTo12h(hour: hour) + ":" + "\(minute)")
             } else {
-                return ("昨天", hourTo12h(hour: hour) + "\(minute)")
+                return ("昨天", hourTo12h(hour: hour) + ":" + "\(minute)")
             }
         } else if timeInterval + 7 * 3600 * 24 >= nowTimeInterval {
-            return (getWeakString(weak: weak), hourTo12h(hour: hour) + "\(minute)")
+            return (getWeakString(weak: weak), hourTo12h(hour: hour) + ":" + "\(minute)")
         } else {
-            return ("\(month)月\(day)日", hourTo12h(hour: hour) + "\(minute)")
+            return ("\(month)月\(day)日", hourTo12h(hour: hour) + ":" + "\(minute)")
         }
     }
     

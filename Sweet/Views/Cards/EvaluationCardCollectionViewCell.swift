@@ -27,6 +27,15 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         return button
     }()
     
+    private lazy var selectedButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "SelectedChoice"), for: .normal)
+        button.isHidden = true
+        return button
+    }()
+    private var selectedButtonCenterXLeftConstraint: NSLayoutConstraint?
+    private var selectedButtonCenterXRightConstraint: NSLayoutConstraint?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -53,6 +62,14 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         
         leftButton.setViewRounded(cornerRadius: 10, corners: .bottomLeft)
         rightButton.setViewRounded(cornerRadius: 10, corners: .bottomRight)
+        
+        customContent.addSubview(selectedButton)
+        selectedButton.constrain(width: 40, height: 40)
+        selectedButton.centerY(to: leftButton)
+        selectedButtonCenterXLeftConstraint = selectedButton.centerX(to: leftButton)
+        selectedButtonCenterXRightConstraint = selectedButton.centerX(to: rightButton)
+        selectedButtonCenterXLeftConstraint?.isActive = true
+        selectedButtonCenterXRightConstraint?.isActive = false
     }
     
     func updateWith(_ viewModel: EvaluationCardViewModel) {
@@ -60,6 +77,14 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         contentLabel.text = viewModel.contentString
         leftButton.kf.setBackgroundImage(with: viewModel.imageURL[0], for: .normal)
         rightButton.kf.setBackgroundImage(with: viewModel.imageURL[1], for: .normal)
-
+        if viewModel.selectedIndex == 0 {
+            selectedButtonCenterXLeftConstraint?.isActive = true
+            selectedButtonCenterXRightConstraint?.isActive = false
+            selectedButton.isHidden = false
+        } else {
+            selectedButtonCenterXLeftConstraint?.isActive = false
+            selectedButtonCenterXRightConstraint?.isActive = true
+            selectedButton.isHidden = false
+        }
     }
 }

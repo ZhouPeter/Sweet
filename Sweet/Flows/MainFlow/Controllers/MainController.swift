@@ -8,9 +8,13 @@
 
 import UIKit
 import Pageboy
+
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
         return self.visibleViewController
+    }
+    open override var shouldAutorotate: Bool {
+        return false
     }
 }
 extension Notification.Name {
@@ -28,7 +32,7 @@ final class MainController: PageboyViewController, MainView {
     var onProfileFlowSelect: ((UINavigationController) -> Void)?
     
     private var controllers = [UINavigationController]()
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()

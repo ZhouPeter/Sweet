@@ -8,7 +8,12 @@
 
 import UIKit
 
+protocol BaseCardCollectionViewCellDelegate: NSObjectProtocol {
+    func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell)
+}
 class BaseCardCollectionViewCell: UICollectionViewCell {
+    weak var delegate: BaseCardCollectionViewCellDelegate?
+    var cardId: String?
     lazy var customContent: RoundedRectView = {
         let view = RoundedRectView()
         view.isShadowEnabled = true
@@ -31,6 +36,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Menu_black").withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = UIColor(hex: 0x9b9b9b)
+        button.addTarget(self, action: #selector(menuAction(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -38,6 +44,13 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupBaseUI()
     }
+    
+    @objc private func menuAction(_ sender: UIButton) {
+        if let cardId = cardId {
+            delegate?.showAlertController(cardId: cardId, fromCell: self)
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.customContent.shrinkAnimation(scale: 0.95, duration: 0.5, damping: 1)

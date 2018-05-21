@@ -34,6 +34,10 @@ final class WebProvider {
                 completion(.failure(NSError(code: .http)))
             case let .success(response):
                 guard response.statusCode == 200 else {
+                    if response.statusCode == 401 {
+                        WebProvider.logout()
+                        return
+                    }
                     completion(.failure(NSError(code: .http)))
                     return
                 }
@@ -64,6 +68,10 @@ final class WebProvider {
                 completion(.failure(NSError(code: .http)))
             case let .success(response):
                 guard response.statusCode == 200 else {
+                    if response.statusCode == 401 {
+                        WebProvider.logout()
+                        return
+                    }
                     completion(.failure(NSError(code: .http)))
                     return
                 }

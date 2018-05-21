@@ -39,6 +39,7 @@ enum WebAPI {
     case searchContact(name: String)
     case getStoryTopics
     case allCards
+    case subscriptionCards
     case storyDetailsUvlist(storyId: UInt64)
 }
 
@@ -103,6 +104,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/tag/list"
         case .allCards:
             return "/card/all/get"
+        case .subscriptionCards:
+            return "/card/subscription/get"
         case .storyDetailsUvlist:
             return "/story/details/uvlist"
         }
