@@ -51,9 +51,11 @@ extension UIView {
         return constraint
     }
     
-    public func centerY(to view: UIView, offset: CGFloat = 0) {
+    @discardableResult public func centerY(to view: UIView, offset: CGFloat = 0) -> NSLayoutConstraint? {
         translatesAutoresizingMaskIntoConstraints = false
-        centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: offset).isActive = true
+        let constraint = centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: offset)
+        constraint.isActive = true
+        return constraint
     }
     
     public func center(to view: UIView, offsetX: CGFloat = 0, offsetY: CGFloat = 0) {

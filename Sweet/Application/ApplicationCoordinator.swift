@@ -41,7 +41,8 @@ final class ApplicationCoordinator: BaseCoordinator {
             case .signUp:
                 runAuthFlow()
             case .power:
-                runPowerFlow()
+//                runPowerFlow()
+                runMainFlow()
             default:
                 childCoordinators.forEach { $0.start(with: option) }
             }

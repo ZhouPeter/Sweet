@@ -12,6 +12,8 @@
 import UIKit
 
 protocol StoryTextEditControllerDelegate: class {
+    func storyTextEditControllerDidBeginEditing()
+    func storyTextEidtControllerDidEndEditing()
     func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
 }
 
@@ -28,12 +30,13 @@ final class StoryTextEditController: UIViewController {
     }
     weak var delegate: StoryTextEditControllerDelegate?
     var hidesTopicWithoutText = false
+    let keyboardControl = StoryKeyboardControlView()
     
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
     private lazy var pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinched(_:)))
     private lazy var rotation = UIRotationGestureRecognizer(target: self, action: #selector(rotated(_:)))
-    private var isTextGestureEnabled = false
+    private var isTextGestureEnabled = true
     private var textContainerEditScale: CGFloat = 1
     private var textTransform: TextTransform?
     private var topicButtonLeft: NSLayoutConstraint?
@@ -112,6 +115,7 @@ final class StoryTextEditController: UIViewController {
     
     private let keyboard = KeyboardObserver()
     private var keyboardHeight: CGFloat = 0
+    private var keyboardControlBottom: NSLayoutConstraint?
     
     // MARK: - Life cycle
     
@@ -135,6 +139,13 @@ final class StoryTextEditController: UIViewController {
         layoutTextBoundingView()
         
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
+        
+        view.addSubview(keyboardControl)
+        keyboardControl.constrain(height: 40)
+        keyboardControl.align(.left, to: view)
+        keyboardControl.align(.right, to: view)
+        keyboardControl.alpha = 0
+        keyboardControlBottom = keyboardControl.align(.bottom, to: view)
     }
     
     func clear() {
@@ -165,11 +176,17 @@ final class StoryTextEditController: UIViewController {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
             keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
+            keyboardControlBottom?.constant = -keyboardHeight
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
                 if !self.textView.hasText {
                     if self.hidesTopicWithoutText {
                         self.topicButton.alpha = 0
                     }
+                }
+                if event.type == .willShow {
+                    self.keyboardControl.alpha = 1
+                } else if event.type == .willHide {
+                    self.keyboardControl.alpha = 0
                 }
                 self.view.layoutIfNeeded()
                 self.layoutTextContainer()
@@ -284,7 +301,7 @@ final class StoryTextEditController: UIViewController {
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
         guard isTextGestureEnabled else { return }
         if gesture.state == .began {
-            isPanTextView = isPanLocatedInTextView() || pan.numberOfTouches > 1
+            isPanTextView = textView.hasText && (isPanLocatedInTextView() || pan.numberOfTouches > 1)
             if isPanTextView {
                 gestureDidBegin()
             } else {
@@ -315,7 +332,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     @objc private func pinched(_ gesture: UIPinchGestureRecognizer) {
-        guard isTextGestureEnabled else { return }
+        guard isTextGestureEnabled, textView.hasText else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
@@ -334,7 +351,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     @objc private func rotated(_ gesture: UIRotationGestureRecognizer) {
-        guard isTextGestureEnabled else { return }
+        guard isTextGestureEnabled, textView.hasText else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
@@ -361,12 +378,19 @@ extension StoryTextEditController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        
         return true
     }
 }
 
 extension StoryTextEditController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        delegate?.storyTextEditControllerDidBeginEditing()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        delegate?.storyTextEidtControllerDidEndEditing()
+    }
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let layoutManager = textView.layoutManager
         let layoutRange = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
@@ -451,7 +475,7 @@ extension StoryTextEditController: UITextViewDelegate {
         }
         textStorage.endEditing()
     }
-
+    
     private func calculateFontSize(with string: String) -> CGFloat {
         guard string.count > 1 else { return FontSize.max }
         let fontSize = FontSize.max

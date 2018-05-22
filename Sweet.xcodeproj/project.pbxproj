@@ -676,6 +676,14 @@
 		ACF7A8BE20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
 		ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
 		ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
+		ACF7A8C420B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */; };
+		ACF7A8C520B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */; };
+		ACF7A8C620B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */; };
+		ACF7A8C720B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */; };
+		ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */; };
+		ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */; };
+		ACF7A8CB20B431FB00592BC9 /* StoryPokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */; };
+		ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */; };
 		ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
 		ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
 		ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
@@ -996,6 +1004,8 @@
 		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordBottomView.swift; sourceTree = "<group>"; };
+		ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryKeyboardControlView.swift; sourceTree = "<group>"; };
+		ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPokeView.swift; sourceTree = "<group>"; };
 		ACFC207720AE993D00D696B9 /* StoryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryGenerator.swift; sourceTree = "<group>"; };
 		ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Merge.swift"; sourceTree = "<group>"; };
 		ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
@@ -1303,6 +1313,7 @@
 				AC8EAA0220AC39900033615D /* XGPUImageMovie.m */,
 				AC45CD7320AD4EDC005C4AA0 /* GPUImageBeautifyFilter.h */,
 				AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */,
+				ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -1310,8 +1321,6 @@
 		AC97251C209ABD39009FB966 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				AC8EA9EB20AC03500033615D /* TextGradientController.swift */,
-				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
 				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
@@ -1319,6 +1328,9 @@
 				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
 				AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */,
 				AC8EA9E120ABF43D0033615D /* GradientView.swift */,
+				ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */,
+				AC8EA9EB20AC03500033615D /* TextGradientController.swift */,
+				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -2037,6 +2049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
@@ -2152,6 +2165,7 @@
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
+				ACF7A8C420B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -2296,6 +2310,7 @@
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				ACF7A8C620B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EE20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534220905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -2357,6 +2372,7 @@
 				AC3280D120A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
+				ACF7A8CB20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
@@ -2447,6 +2463,7 @@
 				5843DA6720A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC97251A209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
+				ACF7A8C720B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58BD534320905CE400F7C3E1 /* FeedsCellViewModel.swift in Sources */,
@@ -2508,6 +2525,7 @@
 				AC3280D220A9389A00B3B2D2 /* TextTransform.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
+				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
@@ -2534,6 +2552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
@@ -2649,6 +2668,7 @@
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,
+				ACF7A8C520B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,

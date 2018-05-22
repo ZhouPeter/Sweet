@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StoryTextControllerDelegate: class {
-    func storyTextControllerDidFinish(_ controller: StoryTextController)
+    func storyTextControllerDidFinish(_ controller: StoryTextController, overlay: UIImage?)
 }
 
 enum StorySource {
@@ -39,34 +39,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         let view = UIView()
         view.backgroundColor = .clear
         return view
-    } ()
-    
-    private lazy var topicButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("#添加话题", for: .normal)
-        button.setTitleColor(UIColor(hex: 0xF8E71C), for: .normal)
-        let image = #imageLiteral(resourceName: "TopicButton")
-            .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 17), resizingMode: .stretch)
-        button.setBackgroundImage(image, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        button.addTarget(self, action: #selector(didPressTopicButton), for: .touchUpInside)
-        button.alpha = 0
-        return button
-    } ()
-    
-    private lazy var nextButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("下一步", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        let image = #imageLiteral(resourceName: "NextButton")
-            .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 17), resizingMode: .stretch)
-        button.setBackgroundImage(image, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        button.addTarget(self, action: #selector(didPressNextButton), for: .touchUpInside)
-        button.alpha = 0
-        return button
     } ()
     
     private lazy var deleteButton: UIButton = {
@@ -127,10 +99,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         
         view.addSubview(editContainer)
         editContainer.fill(in: view)
-        
         setupEditController()
-        setupTopicButton()
-        setupNextButton()
         setupEditControls()
         keyboardObserver.observe { [weak self] in self?.handleKeyboard(with: $0) }
         hideEditControls(true)
@@ -162,20 +131,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editController.delegate = self
     }
     
-    private func setupTopicButton() {
-        editContainer.addSubview(topicButton)
-        topicButton.constrain(height: 30)
-        topicButton.align(.left, to: view, inset: 20)
-        topicBottom = topicButton.align(.bottom, to: view, inset: topicBottomInset)
-    }
-    
-    private func setupNextButton() {
-        editContainer.addSubview(nextButton)
-        nextButton.constrain(height: 30)
-        nextButton.align(.right, to: view, inset: 20)
-        nextButton.align(.bottom, to: topicButton)
-    }
-    
     private func setupEditControls() {
         editContainer.addSubview(confirmButton)
         editContainer.addSubview(deleteButton)
@@ -194,8 +149,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         topicBottom?.constant = -(height > 0 ? height + 10 : topicBottomInset)
         UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
             self.view.layoutIfNeeded()
-            self.topicButton.alpha = event.type == .willHide ? 0 : 1
-            self.nextButton.alpha = self.topicButton.alpha
         }, completion: nil)
         
         if isPublishing { return }
@@ -268,17 +221,24 @@ final class StoryTextController: BaseViewController, StoryTextView {
     @objc private func didPressConfirmButton() {
         isPublishing = false
         enablePageScroll = true
-        delegate?.storyTextControllerDidFinish(self)
     }
     
     @objc private func didPressCloseButton() {
         editController.endEditing()
-        dismiss(animated: true, completion: nil)
-        delegate?.storyTextControllerDidFinish(self)
+//        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }
 
 extension StoryTextController: StoryTextEditControllerDelegate {
+    func storyTextEditControllerDidBeginEditing() {
+        
+    }
+    
+    func storyTextEidtControllerDidEndEditing() {
+        
+    }
+    
     func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {
         filterPreviewController?.didPan(pan)
     }

@@ -38,7 +38,6 @@ final class StoryRecordBottomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Private
     
     private func setup() {

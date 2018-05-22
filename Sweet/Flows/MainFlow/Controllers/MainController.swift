@@ -12,6 +12,7 @@ import Pageboy
 extension Notification.Name {
     static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
     static let EnablePageScroll = Notification.Name(rawValue: "EnablePageScroll")
+    static let ScrollPage = Notification.Name(rawValue: "ScrollPage")
 }
 
 final class MainController: PageboyViewController, MainView {
@@ -52,6 +53,12 @@ final class MainController: PageboyViewController, MainView {
             name: .EnablePageScroll,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveScrollPage(_:)),
+            name: .ScrollPage,
+            object: nil
+        )
         preloadStory?(story)
     }
     
@@ -63,6 +70,11 @@ final class MainController: PageboyViewController, MainView {
     
     @objc func didReceivePageScrollEnableNote() {
         isScrollEnabled = true
+    }
+    
+    @objc func didReceiveScrollPage(_ note: Notification) {
+        guard let index = note.object as? Int else { return }
+        scrollToPage(.at(index: index), animated: true)
     }
 }
 

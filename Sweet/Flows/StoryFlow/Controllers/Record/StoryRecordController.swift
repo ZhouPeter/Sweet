@@ -38,7 +38,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        setupNavigation()
         
         view.addSubview(recordContainer)
         recordContainer.backgroundColor = .clear
@@ -53,13 +52,25 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        resumeCamera(true)
+        setupNavigation()
+        if blurCoverView.isHidden == false {
+            resumeCamera(true)
+        } else if captureView.isPaused {
+            captureView.resumeCamera()
+        }
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.topView.alpha = 1
+            self.bottomView.alpha = 1
+        }, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        resumeCamera(false)
+        if navigationController?.viewControllers.count == 1 {
+            resumeCamera(false)
+        } else {
+            captureView.pauseCamera()
+        }
     }
     
     // MARK: - Private
@@ -71,11 +82,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         add(childViewController: controller)
     }
 
-    private func edit(with source: StorySource) {
+    private func edit(with url: URL, isPhoto: Bool) {
         enablePageScroll = false
-        let controller = StoryTextController(source: source)
-        controller.delegate = self
-        add(childViewController: controller)
+        onRecorded?(url, isPhoto)
     }
     
     // MARK: - Camera
@@ -89,20 +98,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
-        UIView.animate(withDuration: 0.25, delay: 0.5, options: [.curveEaseOut], animations: {
-            self.topView.alpha = 1
-            self.bottomView.alpha = 1
-        }, completion: nil)
         if interval < 1 {
             captureView.capturePhoto { [weak self] (url) in
                 if let url = url {
-                    self?.edit(with: .image(fileURL: url))
+                    self?.edit(with: url, isPhoto: true)
                 }
             }
         } else {
             captureView.finishRecording { [weak self] (url) in
                 if let url = url {
-                    self?.edit(with: .video(fileURL: url))
+                    self?.edit(with: url, isPhoto: false)
                 }
             }
         }
@@ -153,8 +158,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupNavigation() {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.hero.navigationAnimationType = .fade
         navigationController?.hero.isEnabled = true
+        navigationController?.hero.navigationAnimationType = .fade
     }
     
     private func setupBottomView() {

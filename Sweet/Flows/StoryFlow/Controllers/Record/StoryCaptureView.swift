@@ -10,6 +10,8 @@ import UIKit
 import GPUImage
 
 final class StoryCaptureView: GPUImageView {
+    private(set) var isPaused = false
+    private(set) var isStarted = false
     private var filter = GPUImageFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
@@ -52,18 +54,22 @@ final class StoryCaptureView: GPUImageView {
     
     func startCaputre() {
         camera?.startCapture()
+        isStarted = true
     }
     
     func pauseCamera() {
         camera?.pauseCapture()
+        isPaused = true
     }
     
     func resumeCamera() {
         camera?.resumeCameraCapture()
+        isPaused = false
     }
     
     func stopCapture() {
         camera?.stopCapture()
+        isStarted = false
     }
     
     func startRecording() {
