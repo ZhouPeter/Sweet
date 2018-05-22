@@ -672,6 +672,10 @@
 		ACF2DEC42089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		ACF2DEC52089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
 		ACF2DEC62089E58D00660425 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEC22089E58D00660425 /* Errors.swift */; };
+		ACF7A8BD20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
+		ACF7A8BE20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
+		ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
+		ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */; };
 		ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
 		ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
 		ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC207720AE993D00D696B9 /* StoryGenerator.swift */; };
@@ -991,6 +995,7 @@
 		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordBottomView.swift; sourceTree = "<group>"; };
 		ACFC207720AE993D00D696B9 /* StoryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryGenerator.swift; sourceTree = "<group>"; };
 		ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Merge.swift"; sourceTree = "<group>"; };
 		ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
@@ -1328,6 +1333,7 @@
 				AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */,
 				ACFC207720AE993D00D696B9 /* StoryGenerator.swift */,
 				AC85299420B3BA41002358FE /* StoryRecordTopView.swift */,
+				ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -2188,6 +2194,7 @@
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				ACF7A8BD20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				58BD52C52088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238220875E4400BDC92E /* BaseView.swift in Sources */,
 				5843DA6920A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
@@ -2310,6 +2317,7 @@
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
@@ -2460,6 +2468,7 @@
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
@@ -2682,6 +2691,7 @@
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				ACF7A8BE20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				58BD52C62088AB8300F7C3E1 /* SignUpNameView.swift in Sources */,
 				ACA3238320875E4400BDC92E /* BaseView.swift in Sources */,
 				5843DA6A20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,

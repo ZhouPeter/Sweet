@@ -9,20 +9,13 @@
 import UIKit
 import Hero
 
-private let buttonWidth: CGFloat = 70
-private let buttonSpacing: CGFloat = 10
-
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool) -> Void)?
     
     private let topView = StoryRecordTopView()
-    
-    private let bottomView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
-        return view
-    } ()
-    
+    private let bottomView = StoryRecordBottomView()
+    private var captureView = StoryCaptureView()
+    private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private lazy var textGradientController: TextGradientController = {
         let controller = TextGradientController()
         controller.view.addGestureRecognizer(
@@ -30,9 +23,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         )
         return controller
     } ()
-    
-    private var captureView = StoryCaptureView()
-    private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     private var enablePageScroll: Bool = true {
         didSet {
@@ -43,9 +33,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         }
     }
     
-    private var buttons = [UIButton]()
-    private let indicator = UIImageView(image: #imageLiteral(resourceName: "ArrowIndicator"))
-    private var indicatorCenterX: NSLayoutConstraint?
+
     
     private var shootButton = ShootButton()
     
@@ -58,7 +46,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         setupShootButton()
         setupBottomView()
         setupCoverView()
-        selectBottomButton(at: 1, animated: false)
         checkAuthorized()
     }
     
@@ -74,32 +61,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     // MARK: - Private
-
-    @objc private func didPressBottomButton(_ button: UIButton) {
-        selectBottomButton(at: button.tag, animated: true)
-        if button.tag == 0 {
-            if textGradientController.view.superview == nil {
-                addChildViewController(textGradientController)
-                textGradientController.didMove(toParentViewController: self)
-                view.insertSubview(textGradientController.view, belowSubview: bottomView)
-                textGradientController.view.fill(in: view)
-            }
-            textGradientController.view.alpha = 0
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                self.textGradientController.view.alpha = 1
-            }, completion: nil)
-            captureView.pauseCamera()
-        } else {
-            if self.textGradientController.view.alpha > 0 {
-                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                    self.textGradientController.view.alpha = 0
-                }, completion: nil)
-            }
-            if button.tag == 1 {
-                captureView.resumeCamera()
-            }
-        }
-    }
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
@@ -115,21 +76,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         add(childViewController: controller)
     }
     
-    private func selectBottomButton(at index: Int, animated: Bool) {
-        indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
-        if animated {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.2)
-            UIView.setAnimationCurve(.easeOut)
-        }
-        buttons.enumerated().forEach { (offset, button) in
-            button.alpha = offset == index ? 1 : 0.5
-        }
-        view.layoutIfNeeded()
-        if animated {
-            UIView.commitAnimations()
-        }
-    }
+    
     
     // MARK: - Camera
     
@@ -208,33 +155,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         bottomView.align(.left, to: view)
         bottomView.align(.right, to: view)
         bottomView.constrain(height: 64)
-        setupBottomButtons()
-    }
-    
-    private func setupBottomButtons() {
-        let textButton = makeButton(withTitle: "文字", tag: 0, action: #selector(didPressBottomButton(_:)))
-        let shootButton = makeButton(withTitle: "拍摄", tag: 1, action: #selector(didPressBottomButton(_:)))
-        let albumButton = makeButton(withTitle: "相册", tag: 2, action: #selector(didPressBottomButton(_:)))
-        bottomView.addSubview(textButton)
-        bottomView.addSubview(shootButton)
-        bottomView.addSubview(albumButton)
-        let height: CGFloat = 40
-        textButton.constrain(width: buttonWidth, height: height)
-        shootButton.constrain(width: buttonWidth, height: height)
-        albumButton.constrain(width: buttonWidth, height: height)
-        shootButton.center(to: bottomView)
-        textButton.pin(.left, to: shootButton, spacing: buttonSpacing)
-        textButton.centerY(to: shootButton)
-        albumButton.pin(.right, to: shootButton, spacing: buttonSpacing)
-        albumButton.centerY(to: shootButton)
-        buttons.append(textButton)
-        buttons.append(shootButton)
-        buttons.append(albumButton)
-        
-        bottomView.addSubview(indicator)
-        indicator.constrain(width: 30, height: 30)
-        indicator.pin(.bottom, to: shootButton, spacing: -10)
-        indicatorCenterX = indicator.centerX(to: shootButton)
+        bottomView.delegate = self
     }
     
     private func setupShootButton() {
@@ -265,16 +186,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         topView.align(.left, to: view)
         topView.align(.right, to: view)
     }
-    
-    private func makeButton(withTitle title: String, tag: Int, action: Selector) -> UIButton {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.tag = tag
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
-    }
 }
 
 extension StoryRecordController: StoryTextControllerDelegate {
@@ -296,6 +207,33 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     
     func requestAllAuthorizeSuccess() {
         
+    }
+}
+
+extension StoryRecordController: StoryRecordBottomViewDelegate {
+    func bottomViewDidPressTypeButton(_ type: StoryRecordType) {
+        if type == .text {
+            if textGradientController.view.superview == nil {
+                addChildViewController(textGradientController)
+                textGradientController.didMove(toParentViewController: self)
+                view.insertSubview(textGradientController.view, belowSubview: bottomView)
+                textGradientController.view.fill(in: view)
+            }
+            textGradientController.view.alpha = 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                self.textGradientController.view.alpha = 1
+            }, completion: nil)
+            captureView.pauseCamera()
+        } else {
+            if self.textGradientController.view.alpha > 0 {
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                    self.textGradientController.view.alpha = 0
+                }, completion: nil)
+            }
+            if type == .record {
+                captureView.resumeCamera()
+            }
+        }
     }
 }
 
