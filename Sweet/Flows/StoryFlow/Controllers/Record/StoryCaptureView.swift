@@ -12,7 +12,7 @@ import GPUImage
 final class StoryCaptureView: GPUImageView {
     private(set) var isPaused = false
     private(set) var isStarted = false
-    private var filter = GPUImageFilter()
+    private var filter = GPUImageBeautifyFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
     

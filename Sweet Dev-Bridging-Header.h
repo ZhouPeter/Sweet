@@ -7,3 +7,4 @@
 #import <UMCommon/UMCommon.h>
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
+#import "GPUImageBeautifyFilter.h"

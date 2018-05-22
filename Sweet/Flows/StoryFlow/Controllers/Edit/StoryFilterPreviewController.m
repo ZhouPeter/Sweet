@@ -10,6 +10,7 @@
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
 #import "XGPUImageMovie.h"
+#import "GPUImageBeautifyFilter.h"
 
 @interface StoryFilterPreviewController ()
 
@@ -26,6 +27,7 @@
 
 @property (strong, nonatomic) CAShapeLayer *maskLayer;
 @property (assign, nonatomic) CGFloat maskRatio;
+@property (strong, nonatomic) GPUImageBeautifyFilter *beautyFilter;
 @property (strong, nonatomic) LookupFilter *backFilter;
 @property (strong, nonatomic) LookupFilter *foreFilter;
 @property (assign, nonatomic) BOOL isFilterSwitching;
@@ -37,6 +39,7 @@
 - (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto {
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.isPhoto = isPhoto;
+        self.beautyFilter = [[GPUImageBeautifyFilter alloc] init];
         if (isPhoto) {
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
@@ -119,10 +122,12 @@
     self.backFilter = [self makeFilterWithIndex:1];
     self.foreFilter = [self makeFilterWithIndex:0];
     
-    [self.output addTarget:self.backFilter];
+    [self.output addTarget:self.beautyFilter];
+    
+    [self.beautyFilter addTarget:self.backFilter];
     [self.backFilter addTarget:self.backPreview];
     
-    [self.output addTarget:self.foreFilter];
+    [self.beautyFilter addTarget:self.foreFilter];
     [self.foreFilter addTarget:self.forePreview];
     
     if (self.isPhoto) {
@@ -155,10 +160,12 @@
 - (void)setupNewFilter:(LookupFilter *)filter {
     [self.foreFilter removeAllTargets];
     [self.backFilter removeAllTargets];
+    [self.beautyFilter removeAllTargets];
     [self.output removeAllTargets];
     self.backFilter = filter;
-    [self.output addTarget:self.foreFilter];
-    [self.output addTarget:self.backFilter];
+    [self.output addTarget:self.beautyFilter];
+    [self.beautyFilter addTarget:self.foreFilter];
+    [self.beautyFilter addTarget:self.backFilter];
     [self.foreFilter addTarget:self.forePreview];
     [self.backFilter addTarget:self.backPreview];
     if (self.isPhoto) {

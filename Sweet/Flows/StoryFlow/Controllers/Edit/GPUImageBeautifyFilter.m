@@ -92,8 +92,8 @@ NSString *const kGPUImageBeautifyFragmentShaderString = SHADER_STRING
     
     // Adjust HSB
     hsbFilter = [[GPUImageHSBFilter alloc] init];
-    [hsbFilter adjustBrightness:1.1];
-    [hsbFilter adjustSaturation:1.1];
+    [hsbFilter adjustBrightness:1];
+    [hsbFilter adjustSaturation:1];
     
     [bilateralFilter addTarget:combinationFilter];
     [cannyEdgeFilter addTarget:combinationFilter];
