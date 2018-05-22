@@ -11,7 +11,7 @@ import Hero
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool) -> Void)?
-    
+    private let recordContainer = UIView()
     private let topView = StoryRecordTopView()
     private let bottomView = StoryRecordBottomView()
     private var captureView = StoryCaptureView()
@@ -33,14 +33,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         }
     }
     
-
-    
     private var shootButton = ShootButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupNavigation()
+        
+        view.addSubview(recordContainer)
+        recordContainer.backgroundColor = .clear
+        recordContainer.fill(in: view)
         setupCaptureView()
         setupTopView()
         setupShootButton()
@@ -76,15 +78,21 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         add(childViewController: controller)
     }
     
-    
-    
     // MARK: - Camera
     
     private func shootDidBegin() {
+        UIView.animate(withDuration: 0.25) {
+            self.topView.alpha = 0
+            self.bottomView.alpha = 0
+        }
         captureView.startRecording()
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
+        UIView.animate(withDuration: 0.25, delay: 0.5, options: [.curveEaseOut], animations: {
+            self.topView.alpha = 1
+            self.bottomView.alpha = 1
+        }, completion: nil)
         if interval < 1 {
             captureView.capturePhoto { [weak self] (url) in
                 if let url = url {
@@ -159,8 +167,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func setupShootButton() {
-        view.addSubview(shootButton)
-        shootButton.centerX(to: view)
+        recordContainer.addSubview(shootButton)
+        shootButton.centerX(to: recordContainer)
         shootButton.constrain(width: 90, height: 90)
         shootButton.align(.bottom, to: view, inset: 64)
         shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
@@ -168,8 +176,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func setupCaptureView() {
-        view.addSubview(captureView)
-        captureView.fill(in: view)
+        recordContainer.addSubview(captureView)
+        captureView.fill(in: recordContainer)
     }
     
     private func setupCoverView() {
@@ -179,12 +187,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func setupTopView() {
-        view.addSubview(topView)
+        recordContainer.addSubview(topView)
         topView.delegate = self
         topView.constrain(height: 64)
-        topView.align(.top, to: view)
-        topView.align(.left, to: view)
-        topView.align(.right, to: view)
+        topView.align(.top, to: recordContainer)
+        topView.align(.left, to: recordContainer)
+        topView.align(.right, to: recordContainer)
     }
 }
 
@@ -192,7 +200,6 @@ extension StoryRecordController: StoryTextControllerDelegate {
     func storyTextControllerDidFinish(_ controller: StoryTextController, overlay: UIImage?) {
         remove(childViewController: controller)
         enablePageScroll = true
-        
     }
 }
 
@@ -205,9 +212,7 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
         startCamera()
     }
     
-    func requestAllAuthorizeSuccess() {
-        
-    }
+    func requestAllAuthorizeSuccess() {}
 }
 
 extension StoryRecordController: StoryRecordBottomViewDelegate {
@@ -239,7 +244,7 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
 
 extension StoryRecordController: StoryRecordTopViewDelegate {
     func topViewDidPressBackButton() {
-        
+        NotificationCenter.default.post(name: .ScrollPage, object: 1)
     }
     
     func topViewDidPressFlashButton(isOn: Bool) {

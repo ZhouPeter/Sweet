@@ -32,7 +32,7 @@ final class ShootButton: UIButton {
     private let progressLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.fillColor = nil
-        layer.strokeColor = UIColor(hex: 0xf2f2f2).cgColor
+        layer.strokeColor = UIColor(hex: 0x56BFFE).cgColor
         layer.strokeEnd = 0
         layer.opacity = 0.8
         layer.transform = CATransform3DMakeRotation(-CGFloat.pi * 0.5, 0, 0, 1)
