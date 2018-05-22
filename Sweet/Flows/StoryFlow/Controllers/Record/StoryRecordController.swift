@@ -15,11 +15,7 @@ private let buttonSpacing: CGFloat = 10
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool) -> Void)?
     
-    private let topView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
-        return view
-    } ()
+    private let topView = StoryRecordTopView()
     
     private let bottomView: UIView = {
         let view = UIView(frame: .zero)
@@ -263,17 +259,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupTopView() {
         view.addSubview(topView)
+        topView.delegate = self
         topView.constrain(height: 64)
         topView.align(.top, to: view)
         topView.align(.left, to: view)
         topView.align(.right, to: view)
-        
-        let backButton = UIButton()
-        backButton.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
-        topView.addSubview(backButton)
-        backButton.constrain(width: 30, height: 30)
-        backButton.align(.top, to: topView, inset: 15)
-        backButton.align(.right, to: topView, inset: 5)
     }
     
     private func makeButton(withTitle title: String, tag: Int, action: Selector) -> UIButton {
@@ -288,9 +278,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
 }
 
 extension StoryRecordController: StoryTextControllerDelegate {
-    func storyTextControllerDidFinish(_ controller: StoryTextController) {
+    func storyTextControllerDidFinish(_ controller: StoryTextController, overlay: UIImage?) {
         remove(childViewController: controller)
         enablePageScroll = true
+        
     }
 }
 
@@ -304,6 +295,24 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     }
     
     func requestAllAuthorizeSuccess() {
+        
+    }
+}
+
+extension StoryRecordController: StoryRecordTopViewDelegate {
+    func topViewDidPressBackButton() {
+        
+    }
+    
+    func topViewDidPressFlashButton(isOn: Bool) {
+        captureView.switchFlash()
+    }
+    
+    func topViewDidPressCameraSwitchButton(isFront: Bool) {
+        captureView.rotateCamera()
+    }
+    
+    func topViewDidPressAvatarButton() {
         
     }
 }

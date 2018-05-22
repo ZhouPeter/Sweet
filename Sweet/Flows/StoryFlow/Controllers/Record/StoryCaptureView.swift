@@ -31,6 +31,25 @@ final class StoryCaptureView: GPUImageView {
         camera?.rotateCamera()
     }
     
+    func switchFlash() {
+        if camera?.inputCamera.hasFlash == false || camera?.inputCamera.hasTorch == false {
+            return
+        }
+        
+        guard var rawValue = camera?.inputCamera.torchMode.rawValue else {
+            return
+        }
+        rawValue += 1
+        let mode = AVCaptureDevice.TorchMode(rawValue: rawValue + 1 > 3 ? 0 : rawValue)!
+        do {
+            try camera?.inputCamera.lockForConfiguration()
+            camera?.inputCamera.torchMode = mode
+            camera?.inputCamera.unlockForConfiguration()
+        } catch {
+            logger.error(error)
+        }
+    }
+    
     func startCaputre() {
         camera?.startCapture()
     }
