@@ -63,6 +63,12 @@ final class StoryEditController: BaseViewController, StoryEditView {
     private let pokeView = StoryPokeView()
     private var pokeCenterX: NSLayoutConstraint?
     private var pokeCenterY: NSLayoutConstraint?
+    private let storyGenerator = StoryGenerator()
+    private let editContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    } ()
     
     init(fileURL: URL, isPhoto: Bool) {
         self.fileURL = fileURL
@@ -78,7 +84,12 @@ final class StoryEditController: BaseViewController, StoryEditView {
         super.viewDidLoad()
         view.backgroundColor = .clear
         add(childViewController: previewController)
-        add(childViewController: textController)
+        view.addSubview(editContainerView)
+        editContainerView.fill(in: view)
+        add(childViewController: textController, addView: false)
+        editContainerView.addSubview(textController.view)
+        previewController.view.fill(in: view)
+        textController.view.fill(in: view)
         textController.delegate = self
         textController.keyboardControl.delegate = self
         setupPokeView()
@@ -249,7 +260,17 @@ final class StoryEditController: BaseViewController, StoryEditView {
     }
     
     @objc private func didPressFinishButton() {
-        
+        let image = editContainerView.screenshot()
+        let filter = previewController.currentFilter()
+        if isPhoto {
+            storyGenerator.generateImage(with: fileURL, filter: filter, overlay: image) { (url) in
+                logger.debug(url)
+            }
+        } else {
+            storyGenerator.generateVideo(with: fileURL, filter: filter, overlay: image) { (url) in
+                logger.debug(url)
+            }
+        }
     }
 }
 
