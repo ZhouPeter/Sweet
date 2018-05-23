@@ -38,6 +38,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "StoryPoke"), for: .normal)
         button.addTarget(self, action: #selector(didPressPokeButton), for: .touchUpInside)
+        button.alpha = self.isPhoto ? 0 : 1
         return button
     } ()
     
@@ -179,7 +180,9 @@ final class StoryEditController: BaseViewController, StoryEditView {
             return true
         }
         if deleteButton.alpha != 0.5 {
-            TapticEngine.selection.feedback()
+            if deleteButton.alpha == 1 {
+                TapticEngine.selection.feedback()
+            }
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 self.deleteButton.alpha = 0.5
             }, completion: nil)
@@ -209,7 +212,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             if isFaded && view.alpha != 0.5 {
                 view.alpha = 0.5
-            } else if !isFaded && self.pokeView.alpha != 1 {
+            } else if !isFaded && view.alpha != 1 {
                 view.alpha = 1
             }
         }, completion: nil)
@@ -268,6 +271,10 @@ extension StoryEditController: StoryTextEditControllerDelegate {
         previewController.didPan(pan)
     }
     
+    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect) {
+        hideControlButtons(true)
+    }
+    
     func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {
         if checkIfShouldDelete(with: rect) {
             fade(view: textController.view, isFaded: true)
@@ -286,6 +293,7 @@ extension StoryEditController: StoryTextEditControllerDelegate {
             self.editButton.alpha = isDeleted ? 1 : 0
             self.closeButton.alpha = 1
             self.finishButton.alpha = 1
+            self.pokeButton.alpha = self.pokeView.isHidden ? 1 : 0
         }, completion: { _ in
             self.textController.view.alpha = 1
         })

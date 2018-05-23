@@ -15,11 +15,13 @@ protocol StoryTextEditControllerDelegate: class {
     func storyTextEditControllerDidBeginEditing()
     func storyTextEidtControllerDidEndEditing()
     func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
+    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect)
     func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect)
     func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect)
 }
 
 extension StoryTextEditControllerDelegate {
+    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect) {}
     func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {}
     func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect) {}
 }
@@ -256,17 +258,13 @@ final class StoryTextEditController: UIViewController {
         textBoundingView.center = view.convert(center, from: textViewContainer)
     }
     
-    private func updateTextDeleteZone(isEnded: Bool) {
+    private func makeTextDeleteZone() -> CGRect {
         var rect = textBoundingView.frame
         rect.size.width = min(rect.size.width, 100)
         rect.size.height = min(rect.size.height, 100)
         rect.origin.x = textBoundingView.center.x - rect.width * 0.5
         rect.origin.y = textBoundingView.center.y - rect.height * 0.5
-        if isEnded {
-            delegate?.storyTextEditControllerTextDeleteZoneDidEndUpdate(rect)
-        } else {
-            delegate?.storyTextEditControllerTextDeleteZoneDidUpdate(rect)
-        }
+        return rect
     }
     
     private func updateTextEditTransform(animated: Bool) {
@@ -335,6 +333,7 @@ final class StoryTextEditController: UIViewController {
             isPanTextView = textView.hasText && (isPanLocatedInTextView() || pan.numberOfTouches > 1)
             if isPanTextView {
                 gestureDidBegin()
+                delegate?.storyTextEditControllerTextDeleteZoneDidBeginUpdate(makeTextDeleteZone())
             } else {
                 delegate?.storyTextEditControllerDidPan(pan)
                 return
@@ -343,7 +342,7 @@ final class StoryTextEditController: UIViewController {
         if gesture.state == .ended {
             gestureDidEnd()
             if isPanTextView {
-                updateTextDeleteZone(isEnded: true)
+                delegate?.storyTextEditControllerTextDeleteZoneDidEndUpdate(makeTextDeleteZone())
             } else {
                 delegate?.storyTextEditControllerDidPan(pan)
             }
@@ -359,7 +358,7 @@ final class StoryTextEditController: UIViewController {
             textTransform?.translation.y += translation.y
             gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
-            updateTextDeleteZone(isEnded: false)
+            delegate?.storyTextEditControllerTextDeleteZoneDidUpdate(makeTextDeleteZone())
         } else {
             delegate?.storyTextEditControllerDidPan(pan)
         }
@@ -486,7 +485,6 @@ extension StoryTextEditController: UITextViewDelegate {
         layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, usedRect, _, glyphRange, _) in
             if isFirstLine {
                 isFirstLine = false
-                logger.debug(usedRect)
                 self.firstLineUsedRect = usedRect
             }
             let characterRange = layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
