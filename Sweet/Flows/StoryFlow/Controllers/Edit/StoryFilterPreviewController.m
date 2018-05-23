@@ -223,8 +223,8 @@
             self.isFilterSwitching = YES;
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
-                [self resetFiltersAfterPan];
                 self.filterIndex = self.isNextFilter ? [self nextIndex] : [self previousIndex];
+                [self resetFiltersAfterPan];
                 [CATransaction begin];
                 [CATransaction setDisableActions:YES];
                 [CATransaction setCompletionBlock:^{
@@ -266,13 +266,15 @@
     if (self.isNextFilter) {
         return;
     }
-    LookupFilter *newFilter = [self makeFilterWithIndex:[self previousIndex]];
+    NSUInteger index = [self previousIndex];
+    LookupFilter *newFilter = [self makeFilterWithIndex:index];
     [self setupNewFilter:newFilter];
 }
 
 - (void)resetFiltersAfterPan {
     [self exchangePreviews];
-    LookupFilter *newFilter = [self makeFilterWithIndex:[self nextIndex]];
+    NSUInteger index = [self nextIndex];
+    LookupFilter *newFilter = [self makeFilterWithIndex:index];
     [self setupNewFilter:newFilter];
 }
 
