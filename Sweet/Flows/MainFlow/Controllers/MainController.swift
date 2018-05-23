@@ -8,6 +8,7 @@
 
 import UIKit
 import Pageboy
+import TapticEngine
 
 extension Notification.Name {
     static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
@@ -28,6 +29,7 @@ final class MainController: PageboyViewController, MainView {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        TapticEngine.selection.feedback()
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
         if let nav = navigationController { onViewDidLoad?(nav) }
@@ -40,7 +42,7 @@ final class MainController: PageboyViewController, MainView {
         delegate = self
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceivePageScrollDiableNote),
@@ -67,11 +69,11 @@ final class MainController: PageboyViewController, MainView {
     @objc func didReceivePageScrollDiableNote() {
         isScrollEnabled = false
     }
-    
+
     @objc func didReceivePageScrollEnableNote() {
         isScrollEnabled = true
     }
-    
+
     @objc func didReceiveScrollPage(_ note: Notification) {
         guard let index = note.object as? Int else { return }
         scrollToPage(.at(index: index), animated: true)

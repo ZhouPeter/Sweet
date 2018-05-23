@@ -15,6 +15,13 @@ protocol StoryTextEditControllerDelegate: class {
     func storyTextEditControllerDidBeginEditing()
     func storyTextEidtControllerDidEndEditing()
     func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
+    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect)
+    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect)
+}
+
+extension StoryTextEditControllerDelegate {
+    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {}
+    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect) {}
 }
 
 final class StoryTextEditController: UIViewController {
@@ -89,10 +96,7 @@ final class StoryTextEditController: UIViewController {
         view.textContainerInset = .zero
         self.tap.delegate = self
         view.addGestureRecognizer(tap)
-        view.layer.shadowRadius = 4
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.4
-        view.layer.shadowOffset = CGSize(width: 2, height: 2)
+        view.enableShadow()
         view.clipsToBounds = true
         return view
     } ()
@@ -170,6 +174,20 @@ final class StoryTextEditController: UIViewController {
         return textView.hasText
     }
     
+    func deleteTextZone(at center: CGPoint) {
+        let originCenter = view.center
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.center = center
+            self.view.transform = CGAffineTransform.identity.scaledBy(x: 0.5, y: 0.5)
+            self.view.alpha = 0
+        }, completion: { (_) in
+            self.view.center = originCenter
+            self.view.transform = .identity
+            self.view.alpha = 1
+            self.clear()
+        })
+    }
+    
     // MARK: - Private
     
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
@@ -236,6 +254,19 @@ final class StoryTextEditController: UIViewController {
         rect.size.height = length
         textBoundingView.frame = rect
         textBoundingView.center = view.convert(center, from: textViewContainer)
+    }
+    
+    private func updateTextDeleteZone(isEnded: Bool) {
+        var rect = textBoundingView.frame
+        rect.size.width = min(rect.size.width, 100)
+        rect.size.height = min(rect.size.height, 100)
+        rect.origin.x = textBoundingView.center.x - rect.width * 0.5
+        rect.origin.y = textBoundingView.center.y - rect.height * 0.5
+        if isEnded {
+            delegate?.storyTextEditControllerTextDeleteZoneDidEndUpdate(rect)
+        } else {
+            delegate?.storyTextEditControllerTextDeleteZoneDidUpdate(rect)
+        }
     }
     
     private func updateTextEditTransform(animated: Bool) {
@@ -311,7 +342,9 @@ final class StoryTextEditController: UIViewController {
         }
         if gesture.state == .ended {
             gestureDidEnd()
-            if !isPanTextView {
+            if isPanTextView {
+                updateTextDeleteZone(isEnded: true)
+            } else {
                 delegate?.storyTextEditControllerDidPan(pan)
             }
             return
@@ -326,6 +359,7 @@ final class StoryTextEditController: UIViewController {
             textTransform?.translation.y += translation.y
             gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
+            updateTextDeleteZone(isEnded: false)
         } else {
             delegate?.storyTextEditControllerDidPan(pan)
         }

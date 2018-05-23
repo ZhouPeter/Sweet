@@ -620,6 +620,10 @@
 		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
+		ACBE052420B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
+		ACBE052520B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
+		ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
+		ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
 		ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
@@ -985,6 +989,7 @@
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
 		ACD5A52F2088731C00B78CFD /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
@@ -1480,6 +1485,7 @@
 				AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */,
 				ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */,
 				ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */,
+				ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1891,6 +1897,7 @@
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/TapticEngine/TapticEngine.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1905,6 +1912,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TapticEngine.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2021,6 +2029,7 @@
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-13/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/TapticEngine/TapticEngine.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -2035,6 +2044,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TapticEngine.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2229,6 +2239,7 @@
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B51209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				ACFC208420AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
+				ACBE052420B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58D578DE2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
@@ -2273,6 +2284,7 @@
 				AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */,
@@ -2426,6 +2438,7 @@
 				AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
@@ -2732,6 +2745,7 @@
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
 				58447B52209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				ACFC208520AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
+				ACBE052520B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58D578DF2093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,

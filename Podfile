@@ -13,6 +13,7 @@ target 'Sweet' do
   pod 'Kingfisher'
   pod 'Pageboy', '~> 2.0'
   pod 'Hero', '~> 1.2.0'
+  pod 'TapticEngine'
   
   target 'Sweet Dev' do
   end

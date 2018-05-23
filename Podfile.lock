@@ -17,6 +17,7 @@ PODS:
   - Result (3.2.4)
   - Reveal-SDK (13)
   - SwiftyUserDefaults (3.0.1)
+  - TapticEngine (1.1.0)
   - UMCCommon (1.5.0)
   - UMCPush (3.2.0):
     - UMCCommon
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - RealmSwift
   - Reveal-SDK
   - SwiftyUserDefaults
+  - TapticEngine
   - UMCPush
 
 SPEC REPOS:
@@ -44,6 +46,7 @@ SPEC REPOS:
     - Result
     - Reveal-SDK
     - SwiftyUserDefaults
+    - TapticEngine
     - UMCCommon
     - UMCPush
 
@@ -68,9 +71,10 @@ SPEC CHECKSUMS:
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
+  TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
 
-PODFILE CHECKSUM: b279e6a26c1e28422a2417f43fd361765dac6bab
+PODFILE CHECKSUM: 09e71b172df2fa9f40bf560f036eedfba60eb80a
 
 COCOAPODS: 1.5.0

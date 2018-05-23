@@ -55,8 +55,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         setupNavigation()
         if blurCoverView.isHidden == false {
             resumeCamera(true)
-        } else if captureView.isPaused {
-            captureView.resumeCamera()
+        } else if captureView.isStarted == false {
+            captureView.startCaputre()
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.topView.alpha = 1
@@ -66,11 +66,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if navigationController?.viewControllers.count == 1 {
-            resumeCamera(false)
-        } else {
-            captureView.pauseCamera()
-        }
+        resumeCamera(false)
     }
     
     // MARK: - Private
