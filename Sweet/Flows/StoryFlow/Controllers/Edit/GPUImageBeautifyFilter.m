@@ -57,7 +57,7 @@ NSString *const kGPUImageBeautifyFragmentShaderString = SHADER_STRING
     if (self = [super initWithFragmentShaderFromString:kGPUImageBeautifyFragmentShaderString]) {
         smoothDegreeUniform = [filterProgram uniformIndex:@"smoothDegree"];
     }
-    self.intensity = 0.5;
+    self.intensity = 0.2;
     return self;
 }
 
