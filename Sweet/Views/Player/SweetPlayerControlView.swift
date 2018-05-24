@@ -14,9 +14,12 @@ protocol SweetPlayerControlViewDelegate: class {
                      slider: UISlider,
                      onSliderEvent event: UIControlEvents)
 }
+
 class SweetPlayerControlView: UIView {
     weak var delegate: SweetPlayerControlViewDelegate?
     weak var player: SweetPlayerView?
+    var resource: SweetPlayerResource?
+    var selectedIndex = 0
     var isFullscreen  = false
     var isMaskShowing = true
     var tapGesture: UITapGestureRecognizer!
@@ -34,6 +37,19 @@ class SweetPlayerControlView: UIView {
         view.backgroundColor = UIColor.clear
         return view
     }()
+    private lazy var middleMaskView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        view.alpha = 0
+        return view
+    }()
+    
+    private lazy var mainMaskView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0)
+        return view
+    }()
+    
     private lazy var  startButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
@@ -100,6 +116,13 @@ class SweetPlayerControlView: UIView {
         return label
     }()
     
+    private lazy var videoTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .white
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -110,21 +133,34 @@ class SweetPlayerControlView: UIView {
     }
     
     private func setupUI() {
-        addSubview(bottomMaskView)
-        bottomMaskView.align(.left, to: self)
-        bottomMaskView.align(.right, to: self)
-        bottomMaskView.align(.bottom, to: self)
-        bottomMaskView.constrain(height: 45)
+        addSubview(mainMaskView)
+        mainMaskView.fill(in: self)
+//        mainMaskView.addSubview(middleMaskView)
+//        middleMaskView.center(to: mainMaskView)
+//        middleMaskView.equal(.width, to: mainMaskView)
+//        middleMaskView.equal(.height, to: mainMaskView, offset: 110)
+//        middleMaskView.addSubview(replayButton)
+//        replayButton.constrain(width: 30, height: 30)
+//        replayButton.center(to: middleMaskView)
+//        middleMaskView.addSubview(nextLabel)
+//        nextLabel.centerX(to: middleMaskView)
+//        nextLabel.pin(.bottom, to: replayButton, spacing: 10)
+        
+        mainMaskView.addSubview(bottomMaskView)
+        bottomMaskView.align(.left, to: mainMaskView)
+        bottomMaskView.align(.right, to: mainMaskView)
+        bottomMaskView.align(.bottom, to: mainMaskView)
+        bottomMaskView.constrain(height: 50)
         
         bottomMaskView.addSubview(startButton)
-        startButton.constrain(width: 25, height: 25)
-        startButton.align(.left, to: bottomMaskView, inset: 10)
+        startButton.constrain(width: 50, height: 50)
+        startButton.align(.left, to: bottomMaskView)
         startButton.centerY(to: bottomMaskView)
         
         bottomMaskView.addSubview(timeSlider)
         timeSlider.centerY(to: bottomMaskView)
-        timeSlider.pin(.right, to: startButton, spacing: 5)
-        timeSlider.constrain(height: 30)
+        timeSlider.pin(.right, to: startButton)
+        timeSlider.constrain(height: 50)
         
         bottomMaskView.addSubview(timeLabel)
         timeLabel.centerY(to: bottomMaskView)
@@ -132,15 +168,19 @@ class SweetPlayerControlView: UIView {
         timeLabel.pin(.right, to: timeSlider, spacing: 5)
         
         bottomMaskView.addSubview(fullButton)
-        fullButton.constrain(width: 20, height: 20)
-        fullButton.align(.right, to: bottomMaskView, inset: 10)
+        fullButton.constrain(width: 50, height: 50)
+        fullButton.align(.right, to: bottomMaskView)
         fullButton.centerY(to: bottomMaskView)
-        fullButton.pin(.right, to: timeLabel, spacing: 5).priority = .defaultHigh
+        fullButton.pin(.right, to: timeLabel).priority = .defaultHigh
+        bottomMaskView.addSubview(videoTitleLabel)
+        videoTitleLabel.pin(.bottom, to: bottomMaskView)
+        videoTitleLabel.align(.left, to: bottomMaskView, inset: 10)
+        videoTitleLabel.constrain(height: 25)
         
-        addSubview(topMaskView)
-        topMaskView.align(.left, to: self)
-        topMaskView.align(.right, to: self)
-        topMaskView.align(.top, to: self)
+        mainMaskView.addSubview(topMaskView)
+        topMaskView.align(.left, to: mainMaskView)
+        topMaskView.align(.right, to: mainMaskView)
+        topMaskView.align(.top, to: mainMaskView)
         topMaskView.constrain(height: 60)
         topMaskView.addSubview(closeButton)
         closeButton.align(.left, to: topMaskView, inset: UIScreen.isIphoneX() ? 34 : 10)
@@ -161,9 +201,10 @@ class SweetPlayerControlView: UIView {
         case .bufferFinished:
             break
         case .playedToTheEnd:
-            startButton.isSelected = false
-            showPlayToTheEndView()
-            controlViewAnimation(isShow: true)
+            break
+//            startButton.isSelected = false
+//            showPlayToTheEndView()
+//            controlViewAnimation(isShow: true)
         default:
             break
         }
@@ -190,11 +231,13 @@ class SweetPlayerControlView: UIView {
         
     }
     func showPlayToTheEndView() {
-        replayButton.isHidden = false
+//        middleMaskView.alpha = 1
+        mainMaskView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
     
     func hidePlayToTheEndView() {
-        replayButton.isHidden = true
+//        middleMaskView.alpha = 0
+        mainMaskView.backgroundColor = UIColor.black.withAlphaComponent(0)
     }
     
     func updateUI(_ isForFullScreen: Bool) {
@@ -204,7 +247,13 @@ class SweetPlayerControlView: UIView {
         } else {
             topMaskView.isHidden = true
         }
-        
+    }
+    
+    func prepareUI(for resource: SweetPlayerResource, selectedIndex index: Int = 0) {
+        self.resource = resource
+        self.selectedIndex = index
+        videoTitleLabel.text = resource.name
+        autoFadeOutControlViewWithAnimation()
     }
     
 }
@@ -228,7 +277,6 @@ extension SweetPlayerControlView {
     private func controlViewAnimation(isShow: Bool) {
         let alpha: CGFloat = isShow ? 1.0 : 0.0
         isMaskShowing = isShow
-        //        UIApplication.shared.setStatusBarHidden(!isShow, with: .fade)
         UIView .animate(withDuration: 0.3, animations: {
             self.bottomMaskView.alpha = alpha
             self.topMaskView.alpha = alpha

@@ -17,6 +17,8 @@ struct CardResponse: Codable {
     let activityList: [ActivityResponse]?
     let content: String?
     let imageList: [String]?
+    let contentImageList: [ContentImage]?
+    let video: String?
     let storyList: [[StoryResponse]]?
     let result: SelectResult?
     let type: CardType
@@ -30,6 +32,13 @@ struct CardResponse: Codable {
         case evaluation
     }
 }
+
+struct ContentImage: Codable {
+    let width: Double
+    let height: Double
+    let url: String
+}
+
 struct ActivityResponse: Codable {
     let avatar: String
     let content: String
@@ -51,4 +60,3 @@ struct SelectResult: Codable {
         let userId: UInt64
     }
 }
-

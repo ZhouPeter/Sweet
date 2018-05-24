@@ -7,15 +7,34 @@
 //
 
 import UIKit
+import AVFoundation
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
 class CardsBaseController: BaseViewController {
-    public var index = 0
+    public var index = 0 {
+        didSet {
+            let indexPath = IndexPath(item: index, section: 0)
+            let configurator = cellConfigurators[index]
+            guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+            if let cell = cell as? ContentCardCollectionViewCell,
+                let configurator = configurator as? CellConfigurator<ContentCardCollectionViewCell> {
+                if let videoURL = configurator.viewModel.videoURL {
+                    let resource = SweetPlayerResource(url: videoURL)
+                    resource.indexPath = indexPath
+                    resource.scrollView = collectionView
+                    resource.fatherViewTag = cell.contentImageView.tag
+                    playerView.setVideo(resource: resource)
+                    avPlayer = playerView.avPlayer
+                }
+            }
+        }
+    }
     public var panPoint: CGPoint?
     public var panOffset: CGPoint?
-    public let offset: CGFloat = UIScreen.navBarHeight() + 10
+    public let offset: CGFloat = 10
     public var cellConfigurators = [CellConfiguratorType]()
     public var cards = [CardResponse]()
+    private var pan: PanGestureRecognizer!
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -34,11 +53,25 @@ class CardsBaseController: BaseViewController {
         collectionView.register(cellType: EvaluationCardCollectionViewCell.self)
         collectionView.register(cellType: ActivitiesCardCollectionViewCell.self)
         collectionView.register(cellType: StoriesCardCollectionViewCell.self)
-        collectionView.addGestureRecognizer(
-            PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
-        )
+        pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+        pan.delegate = self
+        collectionView.addGestureRecognizer(pan)
         return collectionView
     }()
+    
+    private lazy var playerView: SweetPlayerView = {
+        let view = SweetPlayerView.shard
+        view.panGesture.isEnabled = false
+        view.panGesture.require(toFail: pan)
+        view.controlView.isHidden = true
+        view.isHasVolume = false
+        view.backgroundColor = .black
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController))
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    private var avPlayer: AVPlayer?
     
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
@@ -47,13 +80,40 @@ class CardsBaseController: BaseViewController {
         return view
     }()
     
+    @objc private func showVideoPlayController() {
+        let controller = PlayController()
+        controller.avPlayer = avPlayer
+        playerView.resource.scrollView = nil
+        controller.resource = playerView.resource
+        self.playerView.playerLayer?.playerToNil()
+        self.present(controller, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(collectionView)
-        collectionView.fill(in: view)
+        collectionView.fill(in: view, top: UIScreen.navBarHeight())
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let avPlayer = avPlayer {
+            logger.debug(self.playerView.resource.indexPath ?? "")
+            self.playerView.resource.scrollView = collectionView
+            self.playerView.setAVPlayer(player: avPlayer)
+        }
     }
 
+}
+extension CardsBaseController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+       return true
+    }
 }
 // MARK: - Actions
 extension CardsBaseController {
@@ -172,14 +232,17 @@ extension CardsBaseController: UICollectionViewDataSource {
         if let cell = cell as? BaseCardCollectionViewCell {
             cell.delegate = self
         }
+        if cell is ContentCardCollectionViewCell {
+            if let playerIndex = playerView.resource?.indexPath, playerIndex == indexPath {
+                playerView.updatePlayViewToCell(cell: cell)
+            }
+        }
         return cell
     }
 }
 
 extension CardsBaseController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let playVC = PlayController()
-        self.present(playVC, animated: true, completion: nil)
         let newIndex = indexPath.row
         guard newIndex != index else { return }
         index = newIndex

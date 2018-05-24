@@ -10,11 +10,13 @@ import Foundation
 import AVFoundation
 
 public class SweetPlayerResource {
-    public let name  : String
-    public let cover : URL?
+    public let name: String
+    public let cover: URL?
     public let definitions: [SweetPlayerResourceDefinition]
-    
-    
+    // * cell上播放必须指定
+    public var scrollView: UIScrollView?
+    public var indexPath: IndexPath?
+    public var fatherViewTag: Int?
     /**
      Player recource item with url, used to play single difinition video
      
@@ -43,18 +45,14 @@ public class SweetPlayerResource {
     }
 }
 
-
 public class SweetPlayerResourceDefinition {
     public let url: URL
     public let definition: String
     
     /// An instance of NSDictionary that contains keys for specifying options for the initialization of the AVURLAsset. See AVURLAssetPreferPreciseDurationAndTimingKey and AVURLAssetReferenceRestrictionsKey above.
-    public var options: [String : Any]?
-    
+    public var options: [String: Any]?
     var avURLAsset: AVURLAsset {
-        get {
-            return SweetPlayerManager.asset(for: self)
-        }
+        return SweetPlayerManager.asset(for: self)
     }
     
     /**
@@ -72,7 +70,7 @@ public class SweetPlayerResourceDefinition {
      let definiton.options = ["AVURLAssetHTTPHeaderFieldsKey":header]
      ```
      */
-    public init(url: URL, definition: String, options: [String : Any]? = nil) {
+    public init(url: URL, definition: String, options: [String: Any]? = nil) {
         self.url        = url
         self.definition = definition
         self.options    = options

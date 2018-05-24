@@ -35,7 +35,7 @@ class SweetPlayerView: UIView {
     fileprivate var isFullScreen: Bool {
         return UIApplication.shared.statusBarOrientation.isLandscape
     }
-    fileprivate var controlView: SweetPlayerControlView!
+    var controlView: SweetPlayerControlView!
     fileprivate var panDirection = PanDirection.horizontal
     fileprivate var sumTime: TimeInterval = 0
     fileprivate var totalDuration: TimeInterval = 0
@@ -48,21 +48,53 @@ class SweetPlayerView: UIView {
     fileprivate var isSlowed        = false
     fileprivate var isVolume        = false
     fileprivate var isPlayToTheEnd  = false
+    fileprivate var isURLSet        = false
+    fileprivate var isCellVideo     = false
+    fileprivate var viewDisappear   = false
+    fileprivate var scrollToken: NSKeyValueObservation?
+    fileprivate var scrollView: UIScrollView? {
+        didSet {
+            if oldValue == scrollView { return }
+            scrollToken?.invalidate()
+            scrollToken = scrollView?.observe(\.contentOffset, options: .new, changeHandler: { (_, _) in
+                if self.isFullScreen { return }
+                self.handleScrollOffset()
+            })
+
+        }
+    }
     var isHasVolume = true {
         didSet {
             self.playerLayer?.isHasVolume = isHasVolume
         }
     }
     var avPlayer: AVPlayer? {
-        return playerLayer?.player
+        get {
+            return playerLayer?.player
+        }
+        set {
+            playerLayer?.player = newValue
+        }
     }
     var playerLayer: SweetPlayerLayerView?
+    var resource: SweetPlayerResource! {
+        didSet {
+            if resource.scrollView != nil && resource.indexPath != nil && resource.definitions.count > 0 {
+                isCellVideo = true
+                scrollView = resource.scrollView
+                updatePlayViewToCell()
+            }
+        }
+    }
+    
+    var currentDefinition = 0
     var videoGravity = AVLayerVideoGravity.resizeAspect {
         didSet {
             self.playerLayer?.videoGravity = videoGravity
         }
     }
-    init(controlView: SweetPlayerControlView) {
+    static let shard = SweetPlayerView()
+    init(controlView: SweetPlayerControlView = SweetPlayerControlView()) {
         super.init(frame: .zero)
         self.controlView = controlView
         self.initUI()
@@ -75,7 +107,8 @@ class SweetPlayerView: UIView {
     }
     
     deinit {
-        playerLayer?.pause()
+        scrollToken?.invalidate()
+//        playerLayer?.pause()
         playerLayer?.prepareToDeinit()
         NotificationCenter.default.removeObserver(
             self,
@@ -105,6 +138,41 @@ class SweetPlayerView: UIView {
         delegate?.sweetPlayer(player: self, playerOrientChanged: isFullScreen)
     }
     
+    private func handleScrollOffset() {
+        if let collectionView = scrollView as? UICollectionView, let indexPath = resource.indexPath {
+            guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+            let visableCells = collectionView.visibleCells
+            if visableCells.contains(cell) {
+                self.updatePlayViewToCell()
+            } else {
+                self.pause()
+            }
+        }
+    }
+    private func updatePlayViewToCell() {
+        if let collectionView = scrollView as? UICollectionView, let indexPath = resource.indexPath {
+            guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+            let visableCells = collectionView.visibleCells
+            if visableCells.contains(cell) {
+                guard let fatherViewTag = resource.fatherViewTag else { return }
+                guard let fatherView = cell.contentView.viewWithTag(fatherViewTag) else {return}
+                addPlayerToFatherView(view: fatherView)
+            } else {
+                self.pause()
+            }
+        }
+    }
+    func updatePlayViewToCell(cell : UICollectionViewCell) {
+        guard let fatherViewTag = resource.fatherViewTag else { return }
+        guard let fatherView = cell.contentView.viewWithTag(fatherViewTag) else {return}
+        addPlayerToFatherView(view: fatherView)
+    }
+    
+    private func addPlayerToFatherView(view: UIView) {
+        self.removeFromSuperview()
+        view.addSubview(self)
+        self.frame = view.bounds
+    }
     func preparePlayer() {
         playerLayer = SweetPlayerLayerView()
         playerLayer!.videoGravity = videoGravity
@@ -114,14 +182,34 @@ class SweetPlayerView: UIView {
         self.layoutIfNeeded()
     }
     
-    func setVideo(url: URL) {
-        playerLayer?.playURL(url: url)
+    func setVideo(url: URL, name: String) {
+        let resource = SweetPlayerResource(url: url, name: name)
+        self.setVideo(resource: resource)
+    }
+    
+    func setVideo(resource: SweetPlayerResource) {
+        isURLSet = false
+        self.resource = resource
+        controlView.prepareUI(for: resource)
+        if sweetPlayerConf.shouldAutoPlay {
+            isURLSet = true
+            let asset = resource.definitions[currentDefinition]
+            playerLayer?.playAsset(asset: asset.avURLAsset)
+        }
+    }
+    
+    func setAVPlayer(player: AVPlayer) {
+        isURLSet = false
+        controlView.prepareUI(for: self.resource)
+        if sweetPlayerConf.shouldAutoPlay {
+            isURLSet = true
+            playerLayer?.playAVPlayer(player: player)
+        }
     }
 }
 // MARK: - Actions
 extension SweetPlayerView {
     
-    // swiftlint:disable
     @objc private func panDirection(_ pan: UIPanGestureRecognizer) {
         // 根据在view上Pan的位置，确定是调音量还是亮度
         let locationPoint = pan.location(in: self)
@@ -224,12 +312,22 @@ extension SweetPlayerView {
     func updateUI(_ isFullScreen: Bool) {
         controlView.updateUI(isFullScreen)
     }
+    
     func play() {
+        if resource == nil {
+            return
+        }
+        if !isURLSet {
+            let asset = resource.definitions[currentDefinition]
+            playerLayer?.playAsset(asset: asset.avURLAsset)
+            isURLSet = true
+        }
         panGesture.isEnabled = true
         playerLayer?.play()
     }
-    open func autoPlay() {
-        if !isPauseByUser && !isPlayToTheEnd {
+
+    func autoPlay() {
+        if !isPauseByUser && isURLSet && !isPlayToTheEnd {
             play()
         }
     }
@@ -245,7 +343,11 @@ extension SweetPlayerView: SweetPlayerLayerViewDelegate {
         controlView.playerStateDidChange(state: state)
         panGesture.isEnabled = state != .playedToTheEnd
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
-        
+        if state == .playedToTheEnd {
+            seek(0) {
+                self.play()
+            }
+        }
     }
     
     func sweetPlayer(player: SweetPlayerLayerView,
@@ -293,6 +395,11 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 fullScreenButtonPressed()
             case .back:
                 fullScreenButtonPressed()
+            case .replay:
+                isPlayToTheEnd = false
+                controlView.hidePlayToTheEndView()
+                seek(0)
+                play()
             default:
                 logger.error("unhandled Actions")
             }

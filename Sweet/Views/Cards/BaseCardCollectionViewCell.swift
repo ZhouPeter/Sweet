@@ -45,6 +45,16 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         setupBaseUI()
     }
     
+    override var isSelected: Bool {
+        set {}
+        get { return super.isSelected }
+    }
+    
+    override var isHighlighted: Bool {
+        set {}
+        get { return super.isHighlighted }
+    }
+    
     @objc private func menuAction(_ sender: UIButton) {
         if let cardId = cardId {
             delegate?.showAlertController(cardId: cardId, fromCell: self)

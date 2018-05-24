@@ -65,14 +65,12 @@ class SweetPlayerLayerView: UIView {
         }
     }
     /// 播放属性
-    lazy var player: AVPlayer? = {
-        if let item = self.playerItem {
-            let player = AVPlayer(playerItem: item)
-            return player
+    var player: AVPlayer? {
+        willSet {
+            self.playerLayer?.player = newValue
         }
-        return nil
-    }()
-    
+    }
+
     var videoGravity = AVLayerVideoGravity.resizeAspect {
         didSet {
             self.playerLayer?.videoGravity = videoGravity
@@ -99,6 +97,7 @@ class SweetPlayerLayerView: UIView {
     fileprivate var urlAsset: AVURLAsset?
     
     fileprivate var lastPlayerItem: AVPlayerItem?
+    
     /// playerLayer
     fileprivate var playerLayer: AVPlayerLayer?
     /// 音量滑杆
@@ -144,11 +143,19 @@ class SweetPlayerLayerView: UIView {
         play()
     }
     
+    open func playAVPlayer(player: AVPlayer) {
+        self.player = player
+        onSetVideoAvPlayer()
+        play()
+    }
+    
     open func play() {
         if let player = player {
             player.play()
             if !isHasVolume {
                 player.volume = 0
+            } else {
+                player.volume = AVAudioSession.sharedInstance().outputVolume
             }
             setupTimer()
             isPlaying = true
@@ -175,13 +182,13 @@ class SweetPlayerLayerView: UIView {
         super.layoutSubviews()
         switch self.aspectRatio {
         case .default:
-            self.playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspect
+            self.playerLayer?.videoGravity = videoGravity
             self.playerLayer?.frame  = self.bounds
         case .sixteen2NINE:
-            self.playerLayer?.videoGravity = AVLayerVideoGravity.resize
+            self.playerLayer?.videoGravity = videoGravity
             self.playerLayer?.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.width/(16/9))
         case .four2THREE:
-            self.playerLayer?.videoGravity = AVLayerVideoGravity.resize
+            self.playerLayer?.videoGravity = videoGravity
             let width = self.bounds.height * 4 / 3
             self.playerLayer?.frame = CGRect(x: (self.bounds.width - width )/2,
                                              y: 0,
@@ -190,18 +197,27 @@ class SweetPlayerLayerView: UIView {
         }
     }
     
+    func playerToNil() {
+        self.player = nil
+        self.timer?.invalidate()
+    }
+    
     open func resetPlayer() {
         // 初始化状态变量
         self.playDidEnd = false
         self.playerItem = nil
         self.seekTime   = 0
         self.timer?.invalidate()
-        self.pause()
+//        self.pause()
         // 移除原来的layer
         self.playerLayer?.removeFromSuperlayer()
         // 替换PlayerItem为nil
-        self.player?.replaceCurrentItem(with: nil)
+//        self.player?.replaceCurrentItem(with: nil)
         self.rateToken?.invalidate()
+        self.statusToken?.invalidate()
+        self.loadedToken?.invalidate()
+        self.bufferEmptyToken?.invalidate()
+        self.keepUpToken?.invalidate()
         // 把player置为nil
         self.player = nil
     }
@@ -234,6 +250,11 @@ class SweetPlayerLayerView: UIView {
         }
     }
     
+    fileprivate func onSetVideoAvPlayer() {
+        repeatToPlay = false
+        playDidEnd   = false
+        configPlayerNoAsset()
+    }
     // MARK: - 设置视频URL
     fileprivate func onSetVideoAsset() {
         repeatToPlay = false
@@ -326,6 +347,19 @@ class SweetPlayerLayerView: UIView {
         playerLayer?.removeFromSuperlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer!.videoGravity = videoGravity
+        layer.addSublayer(playerLayer!)
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
+    fileprivate func configPlayerNoAsset() {
+        rateToken?.invalidate()
+        playerItem = player?.currentItem
+        rateToken = player?.observe(\.rate, options: .new, changeHandler: { (_, _) in
+            self.updateStatus()
+        })
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.videoGravity = videoGravity
         layer.addSublayer(playerLayer!)
         setNeedsLayout()
         layoutIfNeeded()

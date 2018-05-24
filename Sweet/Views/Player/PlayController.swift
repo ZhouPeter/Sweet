@@ -7,33 +7,53 @@
 //
 
 import UIKit
-
+import AVFoundation
 class PlayController: UIViewController {
+    var avPlayer: AVPlayer?
+    var resource: SweetPlayerResource?
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Return"), for: .normal)
         button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         return button
     }()
-    var playView: SweetPlayerView!
+    
+    lazy var playView: SweetPlayerView = {
+        let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
+        playView.delegate = self
+        playView.isHasVolume = true
+        return playView
+    }()
+    
+    deinit {
+        logger.debug("释放播放器")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
+        setupUI()
+        if let player = avPlayer, let resource = resource {
+            playView.resource = resource
+            playView.setAVPlayer(player: player)
+        }
+    }
+    
+    private func setupUI() {
+        view.addSubview(playView)
         playView.frame = CGRect(x: 0, y: 0,
                                 width: UIScreen.mainWidth(),
                                 height: UIScreen.mainWidth() * 9 / 16)
         playView.center = view.center
-        view.addSubview(playView)
         view.addSubview(backButton)
         backButton.align(.left, to: view, inset: 10)
         backButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 54 : 20)
         backButton.constrain(width: 40, height: 40)
-        playView.isHasVolume = false
-        playView.setVideo(url: URL(
-            string: "https://devstreaming-cdn.apple.com/videos/wwdc/2017/703muvahj3880222/703/hls_vod_mvp.m3u8")!)
-        playView.delegate = self
+
+    }
+    
+    func updatePlayView(player: AVPlayer) {
+        playView.avPlayer = player
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
