@@ -11,6 +11,7 @@ import Hero
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
+    var onTextChoosed: (() -> Void)?
     
     private let recordContainer = UIView()
     private let topView = StoryRecordTopView()
@@ -85,9 +86,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
-        let controller = StoryTextController(source: .text)
-        controller.delegate = self
-        add(childViewController: controller)
+        onTextChoosed?()
     }
 
     private func edit(with url: URL, isPhoto: Bool) {
@@ -243,13 +242,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         topView.align(.top, to: recordContainer)
         topView.align(.left, to: recordContainer)
         topView.align(.right, to: recordContainer)
-    }
-}
-
-extension StoryRecordController: StoryTextControllerDelegate {
-    func storyTextControllerDidFinish(_ controller: StoryTextController, overlay: UIImage?) {
-        remove(childViewController: controller)
-        enablePageScroll = true
     }
 }
 

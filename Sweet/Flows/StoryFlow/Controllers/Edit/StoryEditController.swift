@@ -92,7 +92,6 @@ final class StoryEditController: BaseViewController, StoryEditView {
         previewController.view.fill(in: view)
         textController.view.fill(in: view)
         textController.delegate = self
-        textController.keyboardControl.delegate = self
         setupPokeView()
         setupControlButtons()
         textController.topic = topic
@@ -258,6 +257,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
     
     @objc private func didPressPokeButton() {
         pokeView.isHidden = false
+        pokeView.alpha = 1
         pokeButton.isHidden = true
     }
     
@@ -266,11 +266,11 @@ final class StoryEditController: BaseViewController, StoryEditView {
         let filter = previewController.currentFilter()
         if isPhoto {
             storyGenerator.generateImage(with: fileURL, filter: filter, overlay: image) { (url) in
-                logger.debug(url)
+                logger.debug(url ?? "url is nil")
             }
         } else {
             storyGenerator.generateVideo(with: fileURL, filter: filter, overlay: image) { (url) in
-                logger.debug(url)
+                logger.debug(url ?? "url is nil")
             }
         }
     }
@@ -286,7 +286,9 @@ extension StoryEditController: StoryTextEditControllerDelegate {
     func storyTextEidtControllerDidEndEditing() {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.editButton.alpha = self.textController.hasText ? 0 : 1
-            self.pokeView.alpha = 1
+            if !self.pokeView.isHidden {
+                self.pokeView.alpha = 1
+            }
         }, completion: nil)
     }
     
@@ -323,40 +325,27 @@ extension StoryEditController: StoryTextEditControllerDelegate {
             self.textController.view.alpha = 1
         })
     }
-}
 
-extension StoryEditController: StoryKeyboardControlViewDelegate {
-    func keyboardControlViewDidPressNextButton() {
-        textController.endEditing()
+    func storyTextEditControllerDidBeginChooseTopic() {
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.finishButton.alpha = 0
+            self.closeButton.alpha = 0
+            self.pokeButton.alpha = 0
+            self.pokeView.alpha = 0
+            self.editButton.alpha = 0
+        }, completion: nil)
     }
     
-    func keyboardControlViewDidPressTopicButton() {
-        textController.endEditing()
-        let topic = TopicListController()
-        addChildViewController(topic)
-        topic.didMove(toParentViewController: self)
-        view.addSubview(topic.view)
-        topic.view.frame = view.bounds
-        topic.view.alpha = 0
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-            topic.view.alpha = 1
-            self.textController.view.alpha = 0
-            self.closeButton.alpha = 0
+            self.finishButton.alpha = 1
+            self.closeButton.alpha = 1
+            if self.isPhoto == false {
+                if self.pokeView.isHidden {
+                    self.pokeButton.alpha = 1
+                }
+            }
+            self.editButton.alpha = self.textController.hasText ? 0 : 1
         }, completion: nil)
-        topic.onFinished = { [weak self] topic in
-            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
-            self.topic = topic
-            self.view.addSubview(view)
-            self.textController.topic = topic
-            self.textController.beginEditing()
-            view.frame = self.view.bounds
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                view.alpha = 0
-                self.textController.view.alpha = 1
-                self.closeButton.alpha = 1
-            }, completion: { (_) in
-                view.removeFromSuperview()
-            })
-        }
     }
 }

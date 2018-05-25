@@ -8,32 +8,11 @@
 
 import UIKit
 
-protocol StoryTextControllerDelegate: class {
-    func storyTextControllerDidFinish(_ controller: StoryTextController, overlay: UIImage?)
-}
-
-enum StorySource {
-    case text
-    case image(fileURL: URL)
-    case video(fileURL: URL)
-}
-
 final class StoryTextController: BaseViewController, StoryTextView {
-    var onFinished: ((StoryText) -> Void)?
-    weak var delegate: StoryTextControllerDelegate?
-    var topic: String?
-    let source: StorySource
-    
+    var onFinished: (() -> Void)?
+    private var topic: String?
     private lazy var gradientView = GradientSwitchView()
-    private var filterPreviewController: StoryFilterPreviewController?
     private lazy var editController = StoryTextEditController()
-    private let topicBottomInset: CGFloat = 50
-    private var topicBottom: NSLayoutConstraint?
-    private let keyboardObserver = KeyboardObserver()
-    
-    private var isPublishing = false {
-        didSet { enablePageScroll = !isPublishing }
-    }
     
     private lazy var editContainer: UIView = {
         let view = UIView()
@@ -62,46 +41,13 @@ final class StoryTextController: BaseViewController, StoryTextView {
         return button
     } ()
     
-    private var enablePageScroll: Bool = true {
-        didSet {
-            if isPublishing && enablePageScroll { return }
-            NotificationCenter.default.post(
-                name: enablePageScroll ? .EnablePageScroll : .DisablePageScroll,
-                object: nil
-            )
-        }
-    }
-    
-    init(source: StorySource) {
-        self.source = source
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        automaticallyDisablePageScroll = false
-        switch source {
-        case .text:
-            setupGradientView()
-        case let .image(url):
-            let controller = StoryFilterPreviewController(fileURL: url, isPhoto: true)
-            add(childViewController: controller)
-            filterPreviewController = controller
-        case let .video(url):
-            let controller = StoryFilterPreviewController(fileURL: url, isPhoto: false)
-            add(childViewController: controller)
-            filterPreviewController = controller
-        }
-        
+        setupGradientView()
         view.addSubview(editContainer)
         editContainer.fill(in: view)
         setupEditController()
         setupEditControls()
-        keyboardObserver.observe { [weak self] in self?.handleKeyboard(with: $0) }
         hideEditControls(true)
     }
     
@@ -115,7 +61,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     private func setupGradientView() {
         view.addSubview(gradientView)
         gradientView.fill(in: view)
-        gradientView.changeColors([UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)])
+        gradientView.changeColors([UIColor(hex: 0x8FE1FF), UIColor(hex: 0x56BFFE)])
         gradientView.changeMode(.linearWithPoints(
             start: CGPoint(x: 0, y: 0),
             end: CGPoint(x: view.bounds.width, y: view.bounds.height)
@@ -143,23 +89,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         closeButton.align(.top, to: view, inset: 10)
     }
     
-    private func handleKeyboard(with event: KeyboardEvent) {
-        guard event.type == .willShow || event.type == .willHide || event.type == .willChangeFrame else { return }
-        let height = (UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y)
-        topicBottom?.constant = -(height > 0 ? height + 10 : topicBottomInset)
-        UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-        
-        if isPublishing { return }
-        if event.type == .willShow {
-            enablePageScroll = false
-        } else if event.type == .willHide {
-            logger.debug()
-            enablePageScroll = true
-        }
-    }
-    
     private func hideEditControls(_ isHidden: Bool, animated: Bool = false) {
         if animated {
             UIView.beginAnimations(nil, context: nil)
@@ -175,42 +104,10 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     // MARK: - Actions
     
-    @objc private func didPressTopicButton() {
-        editController.endEditing()
-        let topic = TopicListController()
-        addChildViewController(topic)
-        topic.didMove(toParentViewController: self)
-        view.addSubview(topic.view)
-        topic.view.frame = view.bounds
-        topic.view.alpha = 0
-        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-            topic.view.alpha = 1
-            self.editContainer.alpha = 0
-        }, completion: { _ in
-            self.enablePageScroll = false
-        })
-        topic.onFinished = { [weak self] topic in
-            self?.enablePageScroll = true
-            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
-            self.topic = topic
-            self.view.addSubview(view)
-            self.editController.topic = topic
-            self.editController.beginEditing()
-            view.frame = self.view.bounds
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                view.alpha = 0
-                self.editContainer.alpha = 1
-            }, completion: { (_) in
-                view.removeFromSuperview()
-            })
-        }
-    }
-    
     @objc private func didPressNextButton() {
-        if case .text = source, !editController.hasText { return }
-        isPublishing = true
-        editController.endEditing()
-        hideEditControls(false, animated: true)
+        
+//        editController.endEditing()
+//        hideEditControls(false, animated: true)
     }
     
     @objc private func didPressDeleteButton() {
@@ -218,8 +115,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressConfirmButton() {
-        isPublishing = false
-        enablePageScroll = true
+//        isPublishing = false
+//        enablePageScroll = true
     }
     
     @objc private func didPressCloseButton() {
@@ -236,9 +133,5 @@ extension StoryTextController: StoryTextEditControllerDelegate {
     
     func storyTextEidtControllerDidEndEditing() {
         
-    }
-    
-    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {
-        filterPreviewController?.didPan(pan)
     }
 }

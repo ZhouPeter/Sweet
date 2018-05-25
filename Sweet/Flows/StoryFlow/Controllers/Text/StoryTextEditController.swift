@@ -18,12 +18,17 @@ protocol StoryTextEditControllerDelegate: class {
     func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect)
     func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect)
     func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect)
+    func storyTextEditControllerDidBeginChooseTopic()
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?)
 }
 
 extension StoryTextEditControllerDelegate {
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {}
     func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect) {}
     func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {}
     func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect) {}
+    func storyTextEditControllerDidBeginChooseTopic() {}
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {}
 }
 
 final class StoryTextEditController: UIViewController {
@@ -38,7 +43,11 @@ final class StoryTextEditController: UIViewController {
         }
     }
     weak var delegate: StoryTextEditControllerDelegate?
-    let keyboardControl = StoryKeyboardControlView()
+    private lazy var keyboardControl: StoryKeyboardControlView = {
+        let control = StoryKeyboardControlView()
+        control.delegate = self
+        return control
+    } ()
     
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
@@ -157,11 +166,15 @@ final class StoryTextEditController: UIViewController {
     }
     
     func beginEditing() {
+        isEditing = true
         textView.becomeFirstResponder()
+        delegate?.storyTextEditControllerDidBeginEditing()
     }
     
     func endEditing() {
+        isEditing = false
         textView.resignFirstResponder()
+        delegate?.storyTextEidtControllerDidEndEditing()
     }
     
     var isTextViewEditing: Bool {
@@ -178,6 +191,7 @@ final class StoryTextEditController: UIViewController {
             self.view.center = center
             self.view.transform = CGAffineTransform.identity.scaledBy(x: 0.5, y: 0.5)
             self.view.alpha = 0
+            self.topicButton.alpha = 0
         }, completion: { (_) in
             self.view.center = originCenter
             self.view.transform = .identity
@@ -414,11 +428,10 @@ extension StoryTextEditController: UIGestureRecognizerDelegate {
 
 extension StoryTextEditController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        delegate?.storyTextEditControllerDidBeginEditing()
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        delegate?.storyTextEidtControllerDidEndEditing()
+        if !isEditing {
+            isEditing = true
+            delegate?.storyTextEditControllerDidBeginEditing()
+        }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -518,6 +531,44 @@ extension StoryTextEditController: UITextViewDelegate {
         let scaleFactor = textRenderWidth / textWidth
         let preferredFontSize = fontSize * scaleFactor
         return min(max(FontSize.min, preferredFontSize), FontSize.max)
+    }
+}
+
+extension StoryTextEditController: StoryKeyboardControlViewDelegate {
+    func keyboardControlViewDidPressNextButton() {
+        endEditing()
+    }
+    
+    func keyboardControlViewDidPressTopicButton() {
+        delegate?.storyTextEditControllerDidBeginChooseTopic()
+        
+        textView.resignFirstResponder()
+        
+        let topic = TopicListController()
+        addChildViewController(topic)
+        topic.didMove(toParentViewController: self)
+        view.addSubview(topic.view)
+        topic.view.frame = view.bounds
+        topic.view.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            topic.view.alpha = 1
+            self.textViewContainer.alpha = 0
+        }, completion: nil)
+        topic.onFinished = { [weak self] topic in
+            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.topic = topic
+            self.view.addSubview(view)
+            self.topic = topic
+            self.textView.becomeFirstResponder()
+            view.frame = self.view.bounds
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                view.alpha = 0
+                self.textViewContainer.alpha = 1
+            }, completion: { (_) in
+                self.delegate?.storyTextEditControllerDidEndChooseTopic(topic)
+                view.removeFromSuperview()
+            })
+        }
     }
 }
 

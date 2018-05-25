@@ -104,6 +104,10 @@ ProfileFlowFactory {
     func makeTopicListView() -> TopicListView {
         return TopicListController()
     }
+    
+    func makeStoryTextView() -> StoryTextView {
+        return StoryTextController()
+    }
 }
 
 extension FlowFactoryImp: IMFlowFactory {

@@ -26,7 +26,7 @@ final class TextGradientController: UIViewController {
         view.addSubview(placeholderLabel)
         placeholderLabel.center(to: view)
         
-        gradientView.colors = [UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)]
+        gradientView.colors = [UIColor(hex: 0x8FE1FF), UIColor(hex: 0x56BFFE)]
         gradientView.mode = .linearWithPoints(
             start: CGPoint(x: 0, y: 0),
             end: CGPoint(x: view.bounds.width, y: view.bounds.height)

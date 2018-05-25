@@ -31,6 +31,9 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onRecorded = { [weak self] url, isPhoto, topic in
             self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
+        controller.onTextChoosed = { [weak self] in
+            self?.showStoryTextView()
+        }
         // Preload
         _ = controller.toPresent()?.view
         router.setRootFlow(controller)
@@ -42,6 +45,14 @@ final class StoryCoordinator: BaseCoordinator {
             self?.router.popFlow(animated: true)
         }
         controller.onFinished = { [weak self] _ in
+            self?.router.popFlow(animated: true)
+        }
+        router.push(controller)
+    }
+    
+    private func showStoryTextView() {
+        let controller = factory.makeStoryTextView()
+        controller.onFinished = { [weak self] in
             self?.router.popFlow(animated: true)
         }
         router.push(controller)
