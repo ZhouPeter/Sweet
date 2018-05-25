@@ -53,6 +53,14 @@
 		5803C1282099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
 		5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
 		5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
+		580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
+		580907BC20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
+		580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
+		580907BF20B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
+		580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
+		580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
+		580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
 		58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
 		58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
 		58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E0C20916D0E00ADEFFB /* ActionsController.swift */; };
@@ -89,6 +97,10 @@
 		58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
+		583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
+		583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
+		583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
 		5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
@@ -499,6 +511,14 @@
 		58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58EA104A20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
+		58EA104B20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
+		58EA104C20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
+		58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
+		58EA105020B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
+		58EA105120B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
+		58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
+		58EA105320B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
 		58F4074620B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
 		58F4074720B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
 		58F4074820B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
@@ -788,6 +808,8 @@
 		5803575220AAFBC200B2C94F /* StoriesCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesCardViewModel.swift; sourceTree = "<group>"; };
 		5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUniversityController.swift; sourceTree = "<group>"; };
 		5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCollegeController.swift; sourceTree = "<group>"; };
+		580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumberPageControlPlugin.swift; sourceTree = "<group>"; };
+		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
 		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
 		58155E11209175AF00ADEFFB /* FeedsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsController.swift; sourceTree = "<group>"; };
 		58155E1B2091764000ADEFFB /* EstimatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimatesController.swift; sourceTree = "<group>"; };
@@ -797,6 +819,7 @@
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
+		583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserController.swift; sourceTree = "<group>"; };
 		5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFooterView.swift; sourceTree = "<group>"; };
 		5843DA4F20A0261D005C8AD2 /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
 		5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactListResponse.swift; sourceTree = "<group>"; };
@@ -924,6 +947,11 @@
 		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
+		58EA104820B7FEDD001DD77C /* InputBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBottomView.m; sourceTree = "<group>"; };
+		58EA104920B7FEDE001DD77C /* InputBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputBottomView.h; sourceTree = "<group>"; };
+		58EA104E20B7FEFF001DD77C /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
+		58EA104F20B7FF00001DD77C /* GrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextView.m; sourceTree = "<group>"; };
+		58EA105420B7FF81001DD77C /* Sweet-Swift-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet-Swift-Header.h"; sourceTree = "<group>"; };
 		58F4074520B271C40031630C /* SweetPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerManager.swift; sourceTree = "<group>"; };
 		58F4074A20B272410031630C /* SweetPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerItem.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1059,6 +1087,7 @@
 		589E6BA720A959580038FAED /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */,
 				58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */,
 				58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */,
 				589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */,
@@ -1067,6 +1096,11 @@
 				5803572520AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift */,
 				5803574320AAE0B500B2C94F /* StoryCardCollectionViewCell.swift */,
 				5803574D20AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift */,
+				580907BE20B7BEE10013BC0A /* EmojiControlView.swift */,
+				58EA104E20B7FEFF001DD77C /* GrowingTextView.h */,
+				58EA104F20B7FF00001DD77C /* GrowingTextView.m */,
+				58EA104920B7FEDE001DD77C /* InputBottomView.h */,
+				58EA104820B7FEDD001DD77C /* InputBottomView.m */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1383,6 +1417,7 @@
 				ACA322EB2087410000BDC92E /* Products */,
 				E1F1A8AFAF64592C032DDD1C /* Pods */,
 				7F8036DAF360EED22D2BEB53 /* Frameworks */,
+				58EA105420B7FF81001DD77C /* Sweet-Swift-Header.h */,
 				ACD5A5342088737A00B78CFD /* Sweet-Bridging-Header.h */,
 				ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */,
 				ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */,
@@ -1451,6 +1486,7 @@
 				ACA323A6208763AA00BDC92E /* BaseViewController.swift */,
 				58155E342091D53E00ADEFFB /* WebViewController.swift */,
 				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
+				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1876,6 +1912,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -1893,6 +1930,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -2012,6 +2050,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -2029,6 +2068,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -2072,6 +2112,7 @@
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58CE1EB720A4208600781EBF /* SearchContactResponse.swift in Sources */,
+				580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
@@ -2124,6 +2165,7 @@
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58D578E32093198600AE5D38 /* UpdateController.swift in Sources */,
 				58BD52BF20888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
+				58EA105020B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5863A83F20ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				589E6BB420A95D990038FAED /* CardsManagerController.swift in Sources */,
@@ -2152,6 +2194,7 @@
 				58F4074B20B272410031630C /* SweetPlayerItem.swift in Sources */,
 				58155E262091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				580907BF20B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37E20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
@@ -2159,6 +2202,7 @@
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FE208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
+				58EA104A20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
 				58447B31209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				AC525AA7208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
@@ -2210,6 +2254,7 @@
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
+				583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -2276,11 +2321,13 @@
 				5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */,
+				58EA104C20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */,
@@ -2295,6 +2342,7 @@
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -2314,6 +2362,7 @@
 				58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				580907BC20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -2354,6 +2403,7 @@
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
+				58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
@@ -2443,11 +2493,13 @@
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
+				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38120AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */,
@@ -2462,6 +2514,7 @@
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
+				580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -2481,6 +2534,7 @@
 				58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -2521,6 +2575,7 @@
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
+				58EA105320B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
@@ -2617,6 +2672,7 @@
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */,
+				580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
@@ -2669,6 +2725,7 @@
 				58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E6208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
 				58D578E42093198600AE5D38 /* UpdateController.swift in Sources */,
+				58EA105120B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				5863A84020ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
@@ -2697,6 +2754,7 @@
 				58F4074C20B272410031630C /* SweetPlayerItem.swift in Sources */,
 				58155E272091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37F20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
@@ -2704,6 +2762,7 @@
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				58BD52FF208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
+				58EA104B20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
 				58447B32209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				AC525AA8208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
@@ -2755,6 +2814,7 @@
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
+				583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,

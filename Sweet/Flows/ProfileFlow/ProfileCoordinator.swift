@@ -25,7 +25,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
     
     override func start() {
-        logger.debug()
         showProfile()
     }
     
@@ -35,7 +34,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profileModule.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
-        router.setRootFlow(profileModule)
+        router.push(profileModule)
     }
     
     private func showAbout(user: UserResponse) {

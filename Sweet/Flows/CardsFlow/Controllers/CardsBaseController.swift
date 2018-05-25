@@ -8,11 +8,23 @@
 
 import UIKit
 import AVFoundation
+import JXPhotoBrowser
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
 class CardsBaseController: BaseViewController {
+    private var delayItem: DispatchWorkItem?
+    private lazy var inputBottomView: InputBottomView = {
+        let view = InputBottomView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        view.shouldSendNilText = true
+        view.placeHolder = "说点什么..."
+        return view
+    } ()
+    
     public var index = 0 {
         didSet {
+            delayItem?.cancel()
             let indexPath = IndexPath(item: index, section: 0)
             let configurator = cellConfigurators[index]
             guard let cell = collectionView.cellForItem(at: indexPath) else { return }
@@ -26,7 +38,17 @@ class CardsBaseController: BaseViewController {
                     playerView.setVideo(resource: resource)
                     avPlayer = playerView.avPlayer
                 }
+                delayItem = DispatchWorkItem {
+                    cell.emojiView.isHidden = false
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: delayItem!)
             }
+            let oldIndexPath = IndexPath(item: oldValue, section: 0)
+            guard let oldCell = collectionView.cellForItem(at: oldIndexPath) else { return }
+            if let oldCell = oldCell as? ContentCardCollectionViewCell {
+                oldCell.resetEmojiView()
+            }
+            
         }
     }
     public var panPoint: CGPoint?
@@ -42,6 +64,7 @@ class CardsBaseController: BaseViewController {
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: view.bounds.width, height: cardCellHeight)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         collectionView.contentInset.top = 10
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
@@ -88,7 +111,8 @@ class CardsBaseController: BaseViewController {
         self.playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
     }
-    
+    private let keyboard = KeyboardObserver()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
@@ -99,14 +123,54 @@ class CardsBaseController: BaseViewController {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        addInputBottomView()
+        keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let avPlayer = avPlayer {
-            logger.debug(self.playerView.resource.indexPath ?? "")
             self.playerView.resource.scrollView = collectionView
             self.playerView.setAVPlayer(player: avPlayer)
         }
+    }
+    private var keyboardHeight: CGFloat = 0
+
+    private func handleKeyboardEvent(_ event: KeyboardEvent) {
+        switch event.type {
+        case .willShow, .willHide, .willChangeFrame:
+            keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
+            if inputBottomView.isEditing() {
+                if keyboardHeight == 0 {
+                    inputBottomViewBottom?.constant = InputBottomView.defaultHeight()
+                } else {
+                    inputBottomViewBottom?.constant = -keyboardHeight
+                }
+            }
+            UIView.animate(
+                withDuration: event.duration,
+                delay: 0,
+                options: UIViewAnimationOptions(rawValue: UInt(event.curve.rawValue)),
+                animations: {
+                    self.view.layoutIfNeeded()
+            }, completion: nil)
+        default:
+            break
+        }
+        if event.type == .willShow {
+          
+        } else if event.type == .willHide {
+        }
+    }
+    private var inputBottomViewBottom: NSLayoutConstraint?
+    private var inputBottomViewHeight: NSLayoutConstraint?
+    private func addInputBottomView() {
+        view.addSubview(inputBottomView)
+        inputBottomView.align(.left, to: view)
+        inputBottomView.align(.right, to: view)
+        inputBottomViewHeight = inputBottomView.constrain(height: InputBottomView.defaultHeight())
+        inputBottomViewBottom = inputBottomView.align(.bottom, to: view, inset: -InputBottomView.defaultHeight())
+        view.layoutIfNeeded()
     }
 
 }
@@ -118,6 +182,7 @@ extension CardsBaseController: UIGestureRecognizerDelegate {
 // MARK: - Actions
 extension CardsBaseController {
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
+        view.endEditing(true)
         let point = gesture.location(in: nil)
         if gesture.state == .began {
             panPoint = point
@@ -249,7 +314,15 @@ extension CardsBaseController: UICollectionViewDelegate {
         scrollTo(row: index)
     }
 }
-
+extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    func openKeyword() {
+        inputBottomView.startEditing(true)
+    }
+    
+    func showImageBrowser(selectedIndex: Int) {
+        showBrower(index: index, originPageIndex: selectedIndex)
+    }
+}
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -273,4 +346,51 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
+}
+
+extension CardsBaseController: PhotoBrowserDelegate {
+    private func showBrower(index: Int, originPageIndex: Int) {
+        guard cellConfigurators[index] is CellConfigurator<ContentCardCollectionViewCell>
+              else { return }
+        let browser = PhotoBrowser(delegate: self, originPageIndex: originPageIndex)
+        browser.animationType = .scale
+        browser.plugins.append(CustomNumberPageControlPlugin())
+        browser.show()
+    }
+    func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
+        return nil
+    }
+    
+    func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {
+        guard let cell = collectionView.cellForItem(
+                                        at: IndexPath(item: self.index, section: 0))
+                                                as? ContentCardCollectionViewCell
+              else { return nil }
+        return cell.imageViews[index]
+    }
+    
+    func photoBrowser(_ photoBrowser: PhotoBrowser, highQualityUrlForIndex index: Int) -> URL? {
+        guard let configurator = cellConfigurators[self.index] as? CellConfigurator<ContentCardCollectionViewCell>
+            else { return nil }
+        guard let images = configurator.viewModel.contentImages else { return nil }
+        return images[index].imageURL
+    }
+
+    func numberOfPhotos(in photoBrowser: PhotoBrowser) -> Int {
+        guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell>
+              else { return 0 }
+        guard let images = configurator.viewModel.contentImages else { return 0 }
+        return images.count
+    }
+}
+
+extension CardsBaseController: InputBottomViewDelegate {
+    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
+        
+    }
+    
+    func inputBottomViewDidPressSend(withText text: String?) {
+        
+    }
+
 }

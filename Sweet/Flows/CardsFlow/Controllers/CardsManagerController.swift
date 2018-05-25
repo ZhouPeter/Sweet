@@ -49,10 +49,6 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         super.viewWillAppear(animated)
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     @objc private func changeController(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             self.replaceController(oldController: currentController, newController: allController)

@@ -13,6 +13,7 @@ protocol CoordinatorFactory {
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
     func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?)
+    func makeProfileCoordinator(router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeIMCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator

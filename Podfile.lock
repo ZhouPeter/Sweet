@@ -2,15 +2,17 @@ PODS:
   - Alamofire (4.7.1)
   - GPUImage (0.1.7)
   - Hero (1.2.0)
+  - JXPhotoBrowser (1.1.1):
+    - Kingfisher
   - Kingfisher (4.7.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NVActivityIndicatorView (4.2.0):
-    - NVActivityIndicatorView/Presenter (= 4.2.0)
-  - NVActivityIndicatorView/Presenter (4.2.0)
+  - NVActivityIndicatorView (4.2.1):
+    - NVActivityIndicatorView/Presenter (= 4.2.1)
+  - NVActivityIndicatorView/Presenter (4.2.1)
   - Pageboy (2.5.1)
   - PKHUD (5.0.0)
   - Realm (3.3.2):
@@ -29,6 +31,7 @@ PODS:
 DEPENDENCIES:
   - GPUImage
   - Hero (~> 1.2.0)
+  - JXPhotoBrowser
   - Kingfisher
   - Moya (~> 11.0)
   - NVActivityIndicatorView
@@ -45,6 +48,7 @@ SPEC REPOS:
     - Alamofire
     - GPUImage
     - Hero
+    - JXPhotoBrowser
     - Kingfisher
     - Moya
     - NVActivityIndicatorView
@@ -63,9 +67,10 @@ SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
+  JXPhotoBrowser: f1758dd7a74c2047da0a8aab52318a9314929826
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   Moya: a725035953bc1c0eb1be505ab903984501d82440
-  NVActivityIndicatorView: 75c9634073e03b31d7e2748cd2417feab1206195
+  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
   Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
@@ -77,6 +82,6 @@ SPEC CHECKSUMS:
   UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
-PODFILE CHECKSUM: e020f569f396f856f9329ae423c56dae23119bd5
+PODFILE CHECKSUM: 9831e680bb2d6b8985059d685e74e408925cf99f
 
 COCOAPODS: 1.5.0

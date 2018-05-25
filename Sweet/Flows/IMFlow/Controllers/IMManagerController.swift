@@ -36,14 +36,18 @@ class IMManagerController: BaseViewController, IMManagerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
-        navigationController?.navigationBar.barStyle = .black
+
         navigationItem.titleView = titleView
         addChildViewController(iMListController)
         iMListController.didMove(toParentViewController: self)
         view.addSubview(iMListController.view)
         currentController = iMListController
         showIMList?(iMListController)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
+        navigationController?.navigationBar.barStyle = .black
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {

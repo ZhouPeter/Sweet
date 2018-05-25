@@ -13,7 +13,6 @@ protocol MainView: BaseView {
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
     var onCardsFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onIMFlowSelect: ((UINavigationController) -> Void)? { get set }
-    var onProfileFlowSelect: ((UINavigationController) -> Void)? { get set }
 }
 
 final class MainCoordinator: BaseCoordinator {
@@ -30,7 +29,6 @@ final class MainCoordinator: BaseCoordinator {
         mainView.onViewDidLoad = runCardsFlow()
         mainView.onCardsFlowSelect = runCardsFlow()
         mainView.onStoryFlowSelect = runStoryFlow()
-        mainView.onProfileFlowSelect = runProfileFlow()
     }
     
     // MARK: - Private
@@ -62,12 +60,4 @@ final class MainCoordinator: BaseCoordinator {
         }
     }
     
-    private func runProfileFlow() -> ((UINavigationController) -> Void) {
-        return { nav in
-            guard nav.viewControllers.isEmpty else { return }
-            let coordinator = self.coordinatorFactory.makeProfileCoordinator(navigation: nav)
-            coordinator.start()
-            self.addDependency(coordinator)
-        }
-    }
 }

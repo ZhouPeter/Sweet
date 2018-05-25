@@ -14,6 +14,7 @@ struct ContentCardViewModel {
     var contentImages: [ContentImageModel]?
     var videoURL: URL?
     let cardId: String
+    let defaultImageNameList: [String]
     init(model: CardResponse) {
         self.titleString = model.name!
         self.contentString = model.content!
@@ -23,6 +24,7 @@ struct ContentCardViewModel {
             self.videoURL = URL(string: video)!
         }
         self.cardId = model.cardId
+        self.defaultImageNameList = model.defaultEmojiList!.map { return "Emoji\($0.rawValue)"}
     }
 }
 struct ContentImageModel {

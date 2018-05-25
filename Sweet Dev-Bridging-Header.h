@@ -7,3 +7,4 @@
 #import <UMCommon/UMCommon.h>
 #import "VideoCaptureController.h"
 #import "StoryFilterPreviewController.h"
+#import "InputBottomView.h"

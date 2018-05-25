@@ -36,8 +36,21 @@ final class IMCoordinator: BaseCoordinator {
         router.setRootFlow(managerView)
     }
     
+}
+// MARK: - IMList
+extension IMCoordinator {
     private func showIMList(iMListView: IMListView) {
-        
+        iMListView.showProfile = { [weak self] in
+            self?.showProfile()
+        }
+    }
+    private func showProfile() {
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }
 
@@ -108,3 +121,4 @@ extension IMCoordinator {
     }
 
 }
+

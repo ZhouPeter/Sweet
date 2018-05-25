@@ -16,6 +16,7 @@ target 'Sweet' do
   pod 'PKHUD', '~> 5.0'
   pod 'NVActivityIndicatorView'
   pod 'VIMediaCache'
+  pod 'JXPhotoBrowser'
   target 'Sweet Dev' do
   end
   
