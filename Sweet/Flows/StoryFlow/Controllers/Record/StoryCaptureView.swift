@@ -18,6 +18,7 @@ final class StoryCaptureView: GPUImageView {
     
     func setupCamera() {
         guard camera == nil else { return }
+        fillMode = .preserveAspectRatioAndFill
         camera = GPUImageStillCamera(sessionPreset: StoryConfg.captureSessionPreset, cameraPosition: .back)
         camera?.outputImageOrientation = .portrait
         camera?.horizontallyMirrorFrontFacingCamera = true

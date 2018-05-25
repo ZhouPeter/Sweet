@@ -96,6 +96,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageView.frame = rect
             orginX += sumWidth / 3
             imageView.backgroundColor = UIColor.black
+            imageView.contentMode = .scaleAspectFill
             imageViews.append(imageView)
             contentImageView.addSubview(imageView)
 

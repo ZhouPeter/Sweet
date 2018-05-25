@@ -23,12 +23,11 @@ class StoryPublisher {
         default:
             uploadType = .storyVideo
         }
-        let view = UIApplication.shared.keyWindow!
-        APESuperHUD.showOrUpdateHUD(loadingIndicator: .standard, message: "发布中", presentingView: view)
+        APESuperHUD.show(style: HUDStyle.loadingIndicator(type: .standard), message: "发布中")
         Upload.uploadFileToQiniu(localURL: url, type: uploadType) { (token, error) in
             guard let token = token else {
                 logger.debug("upload failed \(error?.localizedDescription ?? "")")
-                APESuperHUD.showOrUpdateHUD(icon: .sadFace, message: "发布失败", presentingView: view)
+                APESuperHUD.show(style: HUDStyle.textOnly, message: "发布失败")
                 completion(false)
                 return
             }
@@ -44,9 +43,10 @@ class StoryPublisher {
                     logger.debug(result)
                     if case .success = result {
                         completion(true)
-                        APESuperHUD.showOrUpdateHUD(icon: .checkMark, message: "发布成功", presentingView: view)
+                        
+                        APESuperHUD.show(style: HUDStyle.textOnly, message: "发布成功")
                     } else {
-                        APESuperHUD.showOrUpdateHUD(icon: .sadFace, message: "发布失败", presentingView: view)
+                        APESuperHUD.show(style: HUDStyle.textOnly, message: "发布失败")
                         completion(false)
                     }
             })

@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.2)
+  - APESuperHUD (2.0.0)
   - Hero (1.2.0)
   - JXPhotoBrowser (1.1.1):
     - Kingfisher
@@ -29,6 +30,7 @@ PODS:
   - VIMediaCache (0.4)
 
 DEPENDENCIES:
+  - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Hero (~> 1.2.0)
   - JXPhotoBrowser
   - Kingfisher
@@ -63,8 +65,18 @@ SPEC REPOS:
     - UMCPush
     - VIMediaCache
 
+EXTERNAL SOURCES:
+  APESuperHUD:
+    :git: https://github.com/apegroup/APESuperHUD.git
+
+CHECKOUT OPTIONS:
+  APESuperHUD:
+    :commit: 7ed75ffb8913e7474113ad0d92b7e534545e72c0
+    :git: https://github.com/apegroup/APESuperHUD.git
+
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  APESuperHUD: 8829e8feab62e193f748153ab891bab8d55979c1
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JXPhotoBrowser: f1758dd7a74c2047da0a8aab52318a9314929826
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
@@ -82,6 +94,6 @@ SPEC CHECKSUMS:
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
-PODFILE CHECKSUM: b9ff986aa373fa6f157a1f482617aedbb29c4251
+PODFILE CHECKSUM: ca8ca300adca46c48ee722fd25620d02a9a336c1
 
 COCOAPODS: 1.5.0
