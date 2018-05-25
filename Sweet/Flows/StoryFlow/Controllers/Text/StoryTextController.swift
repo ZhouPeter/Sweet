@@ -39,6 +39,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
         return button
     } ()
     
+    private lazy var publisher = StoryPublisher()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientView()
@@ -98,8 +100,15 @@ final class StoryTextController: BaseViewController, StoryTextView {
         }
         finishButton.alpha = 1
         closeButton.alpha = 1
-        logger.debug(fileURL ?? "url is nil")
-        onFinished?()
+        
+        guard let url = fileURL else {
+            logger.error("url is nil")
+            return
+        }
+        publisher.publish(with: url, storyType: .text, topic: topic) { [weak self] (result) in
+            logger.debug(result)
+            self?.onFinished?()
+        }
     }
     
     @objc private func didPressCloseButton() {

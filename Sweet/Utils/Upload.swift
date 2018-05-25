@@ -14,11 +14,12 @@ class Upload {
         localURL: URL,
         type: UploadType,
         completion: @escaping (UploadTokenResponse?, NSError?) -> Void) {
-        web.request(.upload(type: .userAvatar)) { (result) in
+        web.request(.upload(type: type)) { (result) in
             switch result {
             case let .failure(error):
                 completion(nil, error)
             case let .success(response):
+                logger.debug(response)
                 guard
                     let uploadToken = response["uploadToken"] as? [String: Any],
                     let token = uploadToken["token"] as? String,

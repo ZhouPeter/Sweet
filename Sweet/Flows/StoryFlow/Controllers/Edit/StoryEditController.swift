@@ -69,6 +69,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
         view.backgroundColor = .clear
         return view
     } ()
+    private lazy var publisher = StoryPublisher()
     
     init(fileURL: URL, isPhoto: Bool, topic: String?) {
         self.fileURL = fileURL
@@ -267,15 +268,47 @@ final class StoryEditController: BaseViewController, StoryEditView {
     }
     
     @objc private func didPressFinishButton() {
+        previewController.stopPreview()
         let image = editContainerView.screenshot()
         let filter = previewController.currentFilter()
         if isPhoto {
-            storyGenerator.generateImage(with: fileURL, filter: filter, overlay: image) { (url) in
-                logger.debug(url ?? "url is nil")
+            storyGenerator.generateImage(with: fileURL, filter: filter, overlay: image) { [weak self] (url) in
+                guard let `self` = self else { return }
+                guard let url = url else {
+                    logger.error("story generate failed")
+                    return
+                }
+                self.publisher.publish(with: url, storyType: StoryType.image, topic: self.topic, completion: { result in
+                    logger.debug(result)
+                    self.onFinished?(url)
+                })
             }
         } else {
-            storyGenerator.generateVideo(with: fileURL, filter: filter, overlay: image) { (url) in
-                logger.debug(url ?? "url is nil")
+            storyGenerator.generateVideo(with: fileURL, filter: filter, overlay: image) { [weak self] (url) in
+                guard let `self` = self else { return }
+                guard let url = url else {
+                    logger.error("story generate failed")
+                    return
+                }
+                var pokeCenter: CGPoint?
+                let type: StoryType
+                if self.pokeView.alpha > 0 {
+                    type = .poke
+                    pokeCenter = CGPoint(
+                        x: self.pokeView.center.x / self.view.bounds.width,
+                        y: self.pokeView.center.y / self.view.bounds.height)
+                } else {
+                    type = .video
+                }
+                self.publisher.publish(
+                    with: url,
+                    storyType: type,
+                    topic: self.topic,
+                    pokeCenter: pokeCenter,
+                    completion: { result in
+                    logger.debug(result)
+                    self.onFinished?(url)
+                })
             }
         }
     }
