@@ -10,11 +10,11 @@ import UIKit
 import Photos
 
 protocol AlbumView: BaseView {
-    
+    var onFinished: ((UIImage) -> Void)? { get set }
 }
 
 final class AlbumController: UIViewController, AlbumView {
-    var onCancelled: (() -> Void)?
+    var onFinished: ((UIImage) -> Void)?
     
     private var assets = [PHAsset]()
     
@@ -97,7 +97,11 @@ final class AlbumController: UIViewController, AlbumView {
     }
 
     @objc private func didPressRightBarButton() {
-        
+        guard let indexPath = selectedIndexPath else { return }
+        AssetManager.resolveAsset(assets[indexPath.row]) { [weak self] (image) in
+            guard let image = image else { return }
+            self?.onFinished?(image)
+        }
     }
 }
 

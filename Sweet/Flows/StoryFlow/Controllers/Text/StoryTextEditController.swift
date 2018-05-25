@@ -55,7 +55,7 @@ final class StoryTextEditController: UIViewController {
     private lazy var rotation = UIRotationGestureRecognizer(target: self, action: #selector(rotated(_:)))
     private var isTextGestureEnabled = true
     private var textContainerEditScale: CGFloat = 1
-    private var textTransform: TextTransform?
+    private var textTransform: Transform?
     private var topicButtonLeft: NSLayoutConstraint?
     private var topicButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -362,7 +362,7 @@ final class StoryTextEditController: UIViewController {
         if isPanTextView {
             let translation = gesture.translation(in: view)
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.translation.x += translation.x
@@ -383,7 +383,7 @@ final class StoryTextEditController: UIViewController {
             fallthrough
         case .changed:
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.scale *= gesture.scale
@@ -402,7 +402,7 @@ final class StoryTextEditController: UIViewController {
             fallthrough
         case .changed:
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.rotation += gesture.rotation

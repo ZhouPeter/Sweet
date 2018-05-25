@@ -1,5 +1,5 @@
 //
-//  TextTransform.swift
+//  Transform.swift
 //  Sweet
 //
 //  Created by Mario Z. on 2018/5/14.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextTransform {
+struct Transform {
     var scale: CGFloat = 1
     var rotation: CGFloat = 0
     var translation = CGPoint.zero

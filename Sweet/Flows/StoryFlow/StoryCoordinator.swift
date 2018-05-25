@@ -50,7 +50,7 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onFinished = { [weak self] _ in
             self?.router.popFlow(animated: true)
         }
-        router.push(controller)
+        router.setAsSecondFlow(controller)
     }
     
     private func showStoryTextView() {
@@ -66,6 +66,17 @@ final class StoryCoordinator: BaseCoordinator {
     
     private func showAlbumView() {
         let controller = factory.makeAlbumView()
+        controller.onFinished = { [weak self] image in
+            self?.showPhotoCropView(with: image)
+        }
+        router.push(controller)
+    }
+    
+    private func showPhotoCropView(with image: UIImage) {
+        let controller = factory.makePhotoCropView(with: image)
+        controller.onFinished = { [weak self] url in
+            self?.showStoryEditView(with: url, isPhoto: true, topic: nil)
+        }
         router.push(controller)
     }
 }

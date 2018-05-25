@@ -93,14 +93,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
         finishButton.alpha = 0
         closeButton.alpha = 0
         var fileURL: URL?
-        if let image = view.screenshot(afterScreenUpdates: true), let data = UIImageJPEGRepresentation(image, 0.8) {
-            do {
-                let url = URL.photoCacheURL(withName: UUID().uuidString + ".jpg")
-                try data.write(to: url)
-                fileURL = url
-            } catch {
-                logger.error(error)
-            }
+        if let image = view.screenshot(afterScreenUpdates: true) {
+            fileURL = image.writeToCache()
         }
         finishButton.alpha = 1
         closeButton.alpha = 1

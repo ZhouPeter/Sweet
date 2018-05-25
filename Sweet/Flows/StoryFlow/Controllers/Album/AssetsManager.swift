@@ -42,11 +42,9 @@ class AssetManager {
         for: asset,
         targetSize: size,
         contentMode: .aspectFill,
-        options: requestOptions) { image, info in
-            if let info = info, info["PHImageFileUTIKey"] == nil {
-                DispatchQueue.main.async(execute: {
-                    completion(image)
-                })
+        options: requestOptions) { image, _ in
+            DispatchQueue.main.async {
+                completion(image)
             }
         }
     }
