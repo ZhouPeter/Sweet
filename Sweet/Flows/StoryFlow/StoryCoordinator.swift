@@ -28,19 +28,54 @@ final class StoryCoordinator: BaseCoordinator {
     
     private func showStoryRecordView() {
         let controller = factory.makeStoryRecordView()
-        controller.onRecorded = { [weak self] url, isPhoto in
-            self?.showStoryEditView(with: url, isPhoto: isPhoto)
+        controller.onRecorded = { [weak self] url, isPhoto, topic in
+            self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
+        controller.onTextChoosed = { [weak self] in
+            self?.showStoryTextView()
+        }
+        controller.onAlbumChoosed = { [weak self] in
+            self?.showAlbumView()
+        }
+        // Preload
+        _ = controller.toPresent()?.view
         router.setRootFlow(controller)
     }
     
-    private func showStoryEditView(with fileURL: URL, isPhoto: Bool) {
-        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto)
+    private func showStoryEditView(with fileURL: URL, isPhoto: Bool, topic: String?) {
+        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
         controller.onFinished = { [weak self] _ in
             self?.router.popFlow(animated: true)
+        }
+        router.setAsSecondFlow(controller)
+    }
+    
+    private func showStoryTextView() {
+        let controller = factory.makeStoryTextView()
+        controller.onFinished = { [weak self] in
+            self?.router.popFlow(animated: true)
+        }
+        controller.onCancelled = { [weak self] in
+            self?.router.popFlow(animated: true)
+        }
+        router.push(controller)
+    }
+    
+    private func showAlbumView() {
+        let controller = factory.makeAlbumView()
+        controller.onFinished = { [weak self] image in
+            self?.showPhotoCropView(with: image)
+        }
+        router.push(controller)
+    }
+    
+    private func showPhotoCropView(with image: UIImage) {
+        let controller = factory.makePhotoCropView(with: image)
+        controller.onFinished = { [weak self] url in
+            self?.showStoryEditView(with: url, isPhoto: true, topic: nil)
         }
         router.push(controller)
     }

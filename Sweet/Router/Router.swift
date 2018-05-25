@@ -31,4 +31,5 @@ protocol Router: Presentable {
     func setRootFlow(_ flow: Presentable?, hideBar: Bool)
     
     func popToRootFlow(animated: Bool)
+    func setAsSecondFlow(_ flow: Presentable)
 }

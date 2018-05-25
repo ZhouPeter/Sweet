@@ -8,12 +8,7 @@
 
 import Foundation
 
-protocol StoryTextView {
-    var onFinished: ((StoryText) -> Void)? { get set }
-}
-
-struct StoryText {
-    let color: UIColor
-    let text: String
-    let tag: String
+protocol StoryTextView: BaseView {
+    var onFinished: (() -> Void)? { get set }
+    var onCancelled: (() -> Void)? { get set}
 }

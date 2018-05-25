@@ -11,26 +11,60 @@
 
 import UIKit
 
+protocol StoryTextEditControllerDelegate: class {
+    func storyTextEditControllerDidBeginEditing()
+    func storyTextEidtControllerDidEndEditing()
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
+    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect)
+    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect)
+    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect)
+    func storyTextEditControllerDidBeginChooseTopic()
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?)
+}
+
+extension StoryTextEditControllerDelegate {
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {}
+    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect) {}
+    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {}
+    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect) {}
+    func storyTextEditControllerDidBeginChooseTopic() {}
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {}
+}
+
 final class StoryTextEditController: UIViewController {
-    private let insets = UIEdgeInsets(top: 20, left: 20, bottom: 80, right: 20)
+    var topic: String? {
+        didSet {
+            if let topic = topic {
+                topicButton.setAttributedTitle(NSMutableAttributedString(topic: topic, fontSize: 30), for: .normal)
+                topicButton.alpha = textView.hasText ? 1 : 0
+            } else {
+                topicButton.alpha = 0
+            }
+        }
+    }
+    weak var delegate: StoryTextEditControllerDelegate?
+    private lazy var keyboardControl: StoryKeyboardControlView = {
+        let control = StoryKeyboardControlView()
+        control.delegate = self
+        return control
+    } ()
+    
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
     private lazy var pan = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
     private lazy var pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinched(_:)))
     private lazy var rotation = UIRotationGestureRecognizer(target: self, action: #selector(rotated(_:)))
-    private var isTextGestureEnabled = false
+    private var isTextGestureEnabled = true
     private var textContainerEditScale: CGFloat = 1
-    private var textTransform: TextTransform?
+    private var textTransform: Transform?
     private var topicButtonLeft: NSLayoutConstraint?
     private var topicButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitleColor(UIColor(hex: 0xF8E71C), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        button.setTitle("#你好", for: .normal)
         let image = #imageLiteral(resourceName: "TopicLabelBackground")
             .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 22), resizingMode: .stretch)
         button.setBackgroundImage(image, for: .normal)
         button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        button.alpha = 0
         return button
     } ()
     
@@ -42,7 +76,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textBoundingView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 0.5)
+        view.backgroundColor = UIColor(red: 0, green: 115.0/255.0, blue: 225.0/255.0, alpha: 0.27)
         view.alpha = 0
         return view
     } ()
@@ -69,16 +103,9 @@ final class StoryTextEditController: UIViewController {
         view.textContainerInset = .zero
         self.tap.delegate = self
         view.addGestureRecognizer(tap)
+        view.enableShadow()
+        view.clipsToBounds = true
         return view
-    } ()
-    
-    private lazy var placeholderLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = self.paragraphStyle.alignment
-        label.text = "输入文字内容..."
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: FontSize.min)
-        return label
     } ()
     
     private let paragraphStyle: NSParagraphStyle = {
@@ -88,7 +115,7 @@ final class StoryTextEditController: UIViewController {
     } ()
     
     private var textContainerHeight: CGFloat {
-        return view.bounds.height - keyboardHeight - insets.top - insets.bottom
+        return view.bounds.height - keyboardHeight
     }
     
     private var safeTextHeight: CGFloat {
@@ -99,6 +126,7 @@ final class StoryTextEditController: UIViewController {
     
     private let keyboard = KeyboardObserver()
     private var keyboardHeight: CGFloat = 0
+    private var keyboardControlBottom: NSLayoutConstraint?
     
     // MARK: - Life cycle
     
@@ -106,10 +134,9 @@ final class StoryTextEditController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(textBoundingView)
-        view.addSubview(placeholderLabel)
+        
         view.addSubview(textViewContainer)
         textViewContainer.addSubview(textView)
-        placeholderLabel.center(to: textViewContainer)
         textViewContainer.addSubview(topicButton)
         
         topicButtonLeft = topicButton.align(.left, to: textView)
@@ -123,6 +150,13 @@ final class StoryTextEditController: UIViewController {
         layoutTextBoundingView()
         
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
+        
+        view.addSubview(keyboardControl)
+        keyboardControl.constrain(height: 40)
+        keyboardControl.align(.left, to: view)
+        keyboardControl.align(.right, to: view)
+        keyboardControl.alpha = 0
+        keyboardControlBottom = keyboardControl.align(.bottom, to: view)
     }
     
     func clear() {
@@ -132,11 +166,38 @@ final class StoryTextEditController: UIViewController {
     }
     
     func beginEditing() {
+        isEditing = true
         textView.becomeFirstResponder()
+        delegate?.storyTextEditControllerDidBeginEditing()
     }
     
     func endEditing() {
+        isEditing = false
         textView.resignFirstResponder()
+        delegate?.storyTextEidtControllerDidEndEditing()
+    }
+    
+    var isTextViewEditing: Bool {
+        return textView.isFirstResponder
+    }
+    
+    var hasText: Bool {
+        return textView.hasText
+    }
+    
+    func deleteTextZone(at center: CGPoint) {
+        let originCenter = view.center
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.center = center
+            self.view.transform = CGAffineTransform.identity.scaledBy(x: 0.5, y: 0.5)
+            self.view.alpha = 0
+            self.topicButton.alpha = 0
+        }, completion: { (_) in
+            self.view.center = originCenter
+            self.view.transform = .identity
+            self.view.alpha = 1
+            self.clear()
+        })
     }
     
     // MARK: - Private
@@ -145,11 +206,18 @@ final class StoryTextEditController: UIViewController {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
             keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
+            keyboardControlBottom?.constant = -keyboardHeight
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
-                if self.textView.hasText {
-                    self.placeholderLabel.alpha = 0
-                } else {
-                    self.placeholderLabel.alpha = self.keyboardHeight > 0 ? 0 : 1
+                if event.type == .willShow {
+                    self.keyboardControl.alpha = 1
+                    self.topicButton.alpha = self.topic == nil ? 0 : 1
+                } else if event.type == .willHide {
+                    self.keyboardControl.alpha = 0
+                    if self.topic == nil {
+                        self.topicButton.alpha = 0
+                    } else {
+                        self.topicButton.alpha = self.textView.hasText ? 1 : 0
+                    }
                 }
                 self.view.layoutIfNeeded()
                 self.layoutTextContainer()
@@ -171,12 +239,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     private func layoutTextContainer() {
-        textViewContainer.frame = CGRect(
-            x: insets.left,
-            y: insets.top,
-            width: view.bounds.width - insets.left - insets.right,
-            height: textContainerHeight
-        )
+        textViewContainer.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: textContainerHeight)
     }
     
     private func layoutTextView() {
@@ -204,6 +267,15 @@ final class StoryTextEditController: UIViewController {
         rect.size.height = length
         textBoundingView.frame = rect
         textBoundingView.center = view.convert(center, from: textViewContainer)
+    }
+    
+    private func makeTextDeleteZone() -> CGRect {
+        var rect = textBoundingView.frame
+        rect.size.width = min(rect.size.width, 100)
+        rect.size.height = min(rect.size.height, 100)
+        rect.origin.x = textBoundingView.center.x - rect.width * 0.5
+        rect.origin.y = textBoundingView.center.y - rect.height * 0.5
+        return rect
     }
     
     private func updateTextEditTransform(animated: Bool) {
@@ -264,36 +336,54 @@ final class StoryTextEditController: UIViewController {
         }
     }
     
+    private var isPanTextView = false
+    
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
         guard isTextGestureEnabled else { return }
-        switch gesture.state {
-        case .began:
-            gestureDidBegin()
-            fallthrough
-        case .changed:
+        if gesture.state == .began {
+            isPanTextView = textView.hasText && (isPanLocatedInTextView() || pan.numberOfTouches > 1)
+            if isPanTextView {
+                gestureDidBegin()
+                delegate?.storyTextEditControllerTextDeleteZoneDidBeginUpdate(makeTextDeleteZone())
+            } else {
+                delegate?.storyTextEditControllerDidPan(pan)
+                return
+            }
+        }
+        if gesture.state == .ended {
+            gestureDidEnd()
+            if isPanTextView {
+                delegate?.storyTextEditControllerTextDeleteZoneDidEndUpdate(makeTextDeleteZone())
+            } else {
+                delegate?.storyTextEditControllerDidPan(pan)
+            }
+            return
+        }
+        if isPanTextView {
             let translation = gesture.translation(in: view)
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.translation.x += translation.x
             textTransform?.translation.y += translation.y
             gesture.setTranslation(.zero, in: view)
             doTextDisplayTransform()
-        default:
-            gestureDidEnd()
+            delegate?.storyTextEditControllerTextDeleteZoneDidUpdate(makeTextDeleteZone())
+        } else {
+            delegate?.storyTextEditControllerDidPan(pan)
         }
     }
     
     @objc private func pinched(_ gesture: UIPinchGestureRecognizer) {
-        guard isTextGestureEnabled else { return }
+        guard isTextGestureEnabled, textView.hasText else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
             fallthrough
         case .changed:
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.scale *= gesture.scale
@@ -305,14 +395,14 @@ final class StoryTextEditController: UIViewController {
     }
     
     @objc private func rotated(_ gesture: UIRotationGestureRecognizer) {
-        guard isTextGestureEnabled else { return }
+        guard isTextGestureEnabled, textView.hasText else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
             fallthrough
         case .changed:
             if textTransform == nil {
-                textTransform = TextTransform()
+                textTransform = Transform()
                 textTransform?.scale = textContainerEditScale
             }
             textTransform?.rotation += gesture.rotation
@@ -322,27 +412,28 @@ final class StoryTextEditController: UIViewController {
             gestureDidEnd()
         }
     }
+
+    private func isPanLocatedInTextView() -> Bool {
+        return textBoundingView.frame.insetBy(dx: -20, dy: -20).contains(pan.location(ofTouch: 0, in: view))
+    }
 }
 
 extension StoryTextEditController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == pan {
-            return textBoundingView.frame.insetBy(dx: -20, dy: -20).contains(pan.location(ofTouch: 0, in: view))
-        }
-        return true
-    }
-    
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if otherGestureRecognizer.delegate !== self {
-            return false
-        }
         return true
     }
 }
 
 extension StoryTextEditController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if !isEditing {
+            isEditing = true
+            delegate?.storyTextEditControllerDidBeginEditing()
+        }
+    }
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let layoutManager = textView.layoutManager
         let layoutRange = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
@@ -404,7 +495,6 @@ extension StoryTextEditController: UITextViewDelegate {
         layoutManager.enumerateLineFragments(forGlyphRange: range) { (_, usedRect, _, glyphRange, _) in
             if isFirstLine {
                 isFirstLine = false
-                logger.debug(usedRect)
                 self.firstLineUsedRect = usedRect
             }
             let characterRange = layoutManager.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
@@ -427,7 +517,7 @@ extension StoryTextEditController: UITextViewDelegate {
         }
         textStorage.endEditing()
     }
-
+    
     private func calculateFontSize(with string: String) -> CGFloat {
         guard string.count > 1 else { return FontSize.max }
         let fontSize = FontSize.max
@@ -441,6 +531,44 @@ extension StoryTextEditController: UITextViewDelegate {
         let scaleFactor = textRenderWidth / textWidth
         let preferredFontSize = fontSize * scaleFactor
         return min(max(FontSize.min, preferredFontSize), FontSize.max)
+    }
+}
+
+extension StoryTextEditController: StoryKeyboardControlViewDelegate {
+    func keyboardControlViewDidPressNextButton() {
+        endEditing()
+    }
+    
+    func keyboardControlViewDidPressTopicButton() {
+        delegate?.storyTextEditControllerDidBeginChooseTopic()
+        
+        textView.resignFirstResponder()
+        
+        let topic = TopicListController()
+        addChildViewController(topic)
+        topic.didMove(toParentViewController: self)
+        view.addSubview(topic.view)
+        topic.view.frame = view.bounds
+        topic.view.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            topic.view.alpha = 1
+            self.textViewContainer.alpha = 0
+        }, completion: nil)
+        topic.onFinished = { [weak self] topic in
+            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.topic = topic
+            self.view.addSubview(view)
+            self.topic = topic
+            self.textView.becomeFirstResponder()
+            view.frame = self.view.bounds
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                view.alpha = 0
+                self.textViewContainer.alpha = 1
+            }, completion: { (_) in
+                self.delegate?.storyTextEditControllerDidEndChooseTopic(topic)
+                view.removeFromSuperview()
+            })
+        }
     }
 }
 

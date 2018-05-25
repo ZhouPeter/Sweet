@@ -9,124 +9,193 @@
 import UIKit
 import Hero
 
-private let buttonWidth: CGFloat = 70
-private let buttonSpacing: CGFloat = 10
-
 final class StoryRecordController: BaseViewController, StoryRecordView {
-    var onRecorded: ((URL, Bool) -> Void)?
+    var onRecorded: ((URL, Bool, String?) -> Void)?
+    var onTextChoosed: (() -> Void)?
+    var onAlbumChoosed: (() -> Void)?
     
-    private let topView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
-        return view
-    } ()
-    
-    private let bottomView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
-        return view
-    } ()
-    
-    private var captureController = VideoCaptureController()
-    
-    private lazy var textController: StoryTextController = {
-        let controller = StoryTextController()
-        controller.delegate = self
+    private let recordContainer = UIView()
+    private let topView = StoryRecordTopView()
+    private let bottomView = StoryRecordBottomView()
+    private var captureView = StoryCaptureView()
+    private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private lazy var textGradientController: TextGradientController = {
+        let controller = TextGradientController()
+        controller.view.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapTextGradientView))
+        )
         return controller
     } ()
     
-    private lazy var renderView: UIView = {
-        let view = UIView(frame: self.view.bounds)
-        view.backgroundColor = .black
-        return view
+    private var enablePageScroll: Bool = true {
+        didSet {
+            NotificationCenter.default.post(
+                name: enablePageScroll ? .EnablePageScroll : .DisablePageScroll,
+                object: nil
+            )
+        }
+    }
+    private var topic: String? {
+        didSet {
+            topicButton.updateTopic(topic ?? "添加标签")
+        }
+    }
+    private var shootButton = ShootButton()
+    
+    private lazy var topicButton: UIButton = {
+        let button = UIButton(topic: "添加标签")
+        button.addTarget(self, action: #selector(didPressTopicButton), for: .touchUpInside)
+        return button
     } ()
     
-    private var buttons = [UIButton]()
-    private let indicator = UIImageView(image: #imageLiteral(resourceName: "ArrowIndicator"))
-    private var indicatorCenterX: NSLayoutConstraint?
-    
-    private var shootButton = ShootButton()
+    private var current = StoryRecordType.record
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        setupNavigation()
+        
+        view.addSubview(recordContainer)
+        recordContainer.backgroundColor = .clear
+        recordContainer.fill(in: view)
         setupCaptureView()
         setupTopView()
         setupShootButton()
         setupBottomView()
-        selectBottomButton(at: 1, animated: false)
+        setupCoverView()
+        checkAuthorized()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        captureController.startPreview()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        captureController.stopPreview()
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func didPressBottomButton(_ button: UIButton) {
-        selectBottomButton(at: button.tag, animated: true)
-        if button.tag == 0 {
-            if textController.view.superview == nil {
-                addChildViewController(textController)
-                textController.didMove(toParentViewController: self)
-                view.insertSubview(textController.view, belowSubview: bottomView)
-                textController.view.fill(in: view)
-            }
-            textController.view.alpha = 0
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                self.textController.view.alpha = 1
-            }, completion: nil)
-            captureController.stopPreview()
-        } else {
-            if self.textController.view.alpha > 0 {
-                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                    self.textController.view.alpha = 0
-                }, completion: nil)
-            }
-            if button.tag == 1 {
-                captureController.startPreview()
-            }
+        setupNavigation()
+        if blurCoverView.isHidden == false {
+            resumeCamera(true)
+        } else if captureView.isStarted == false {
+            captureView.startCaputre()
         }
+        if current == .record && captureView.isPaused {
+            captureView.resumeCamera()
+        }
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.topView.alpha = 1
+            self.bottomView.alpha = 1
+            self.topicButton.alpha = 1
+        }, completion: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        resumeCamera(false)
     }
     
     // MARK: - Private
     
+    @objc private func didTapTextGradientView() {
+        enablePageScroll = false
+        onTextChoosed?()
+    }
+
+    private func edit(with url: URL, isPhoto: Bool) {
+        enablePageScroll = false
+        onRecorded?(url, isPhoto, topic)
+    }
+    
+    @objc private func didPressTopicButton() {
+        let topic = TopicListController()
+        addChildViewController(topic)
+        topic.didMove(toParentViewController: self)
+        view.addSubview(topic.view)
+        topic.view.frame = view.bounds
+        topic.view.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            topic.view.alpha = 1
+            self.topView.alpha = 0
+            self.bottomView.alpha = 0
+            self.shootButton.alpha = 0
+            self.topicButton.alpha = 0
+        }, completion: nil)
+        topic.onFinished = { [weak self] topic in
+            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.topic = topic
+            self.view.addSubview(view)
+            view.frame = self.view.bounds
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                view.alpha = 0
+                self.topView.alpha = 1
+                self.bottomView.alpha = 1
+                self.shootButton.alpha = 1
+                self.topicButton.alpha = 1
+            }, completion: { (_) in
+                view.removeFromSuperview()
+            })
+        }
+    }
+    
+    // MARK: - Camera
+    
     private func shootDidBegin() {
-        captureController.startRecord()
+        UIView.animate(withDuration: 0.25) {
+            self.topView.alpha = 0
+            self.bottomView.alpha = 0
+            self.topicButton.alpha = 0
+        }
+        captureView.startRecording()
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
-        let isPhoto = interval < 1
-        logger.debug(interval)
-        captureController.finishRecord(forPhotoCapture: isPhoto) { [weak self] (url) in
-            if let url = url {
-                self?.onRecorded?(url, isPhoto)
-            } else {
-                logger.error("record failed")
+        if interval < 1 {
+            captureView.capturePhoto { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: url, isPhoto: true)
+                }
+            }
+        } else {
+            captureView.finishRecording { [weak self] (url) in
+                if let url = url {
+                    self?.edit(with: url, isPhoto: false)
+                }
             }
         }
     }
     
-    private func selectBottomButton(at index: Int, animated: Bool) {
-        indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
-        if animated {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.2)
-            UIView.setAnimationCurve(.easeOut)
+    private func checkAuthorized() {
+        let cameraAuthorization = TLAuthorizedManager.checkAuthorization(with: .camera)
+        let micAuthorization = TLAuthorizedManager.checkAuthorization(with: .mic)
+        
+        if cameraAuthorization && micAuthorization {
+            if cameraAuthorization {
+                startCamera()
+            }
+            if micAuthorization {
+                captureView.enableAudio()
+            }
+        } else {
+            let authorizedVC = TLStoryAuthorizationController()
+            authorizedVC.delegate = self
+            add(childViewController: authorizedVC)
         }
-        buttons.enumerated().forEach { (offset, button) in
-            button.alpha = offset == index ? 1 : 0.5
+    }
+    
+    private func startCamera() {
+        captureView.setupCamera()
+        captureView.startCaputre()
+    }
+    
+    private func resumeCamera(_ isOpen: Bool) {
+        if isOpen {
+            captureView.startCaputre()
+        } else {
+            captureView.stopCapture()
         }
-        view.layoutIfNeeded()
-        if animated {
-            UIView.commitAnimations()
+        if isOpen {
+            UIView.animate(withDuration: 0.25, delay: 0.25, options: [.curveEaseOut], animations: {
+                self.blurCoverView.alpha = 0
+            }, completion: { _ in
+                self.blurCoverView.isHidden = true
+            })
+        } else {
+            blurCoverView.alpha = 1
+            blurCoverView.isHidden = false
         }
     }
     
@@ -134,8 +203,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupNavigation() {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.hero.navigationAnimationType = .fade
         navigationController?.hero.isEnabled = true
+        navigationController?.hero.navigationAnimationType = .fade
     }
     
     private func setupBottomView() {
@@ -144,79 +213,115 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         bottomView.align(.left, to: view)
         bottomView.align(.right, to: view)
         bottomView.constrain(height: 64)
-        setupBottomButtons()
-    }
-    
-    private func setupBottomButtons() {
-        let textButton = makeButton(withTitle: "文字", tag: 0, action: #selector(didPressBottomButton(_:)))
-        let shootButton = makeButton(withTitle: "拍摄", tag: 1, action: #selector(didPressBottomButton(_:)))
-        let albumButton = makeButton(withTitle: "相册", tag: 2, action: #selector(didPressBottomButton(_:)))
-        bottomView.addSubview(textButton)
-        bottomView.addSubview(shootButton)
-        bottomView.addSubview(albumButton)
-        let height: CGFloat = 40
-        textButton.constrain(width: buttonWidth, height: height)
-        shootButton.constrain(width: buttonWidth, height: height)
-        albumButton.constrain(width: buttonWidth, height: height)
-        shootButton.center(to: bottomView)
-        textButton.pin(.left, to: shootButton, spacing: buttonSpacing)
-        textButton.centerY(to: shootButton)
-        albumButton.pin(.right, to: shootButton, spacing: buttonSpacing)
-        albumButton.centerY(to: shootButton)
-        buttons.append(textButton)
-        buttons.append(shootButton)
-        buttons.append(albumButton)
-        
-        bottomView.addSubview(indicator)
-        indicator.constrain(width: 30, height: 30)
-        indicator.pin(.bottom, to: shootButton, spacing: -10)
-        indicatorCenterX = indicator.centerX(to: shootButton)
+        bottomView.delegate = self
     }
     
     private func setupShootButton() {
-        view.addSubview(shootButton)
-        shootButton.centerX(to: view)
+        recordContainer.addSubview(shootButton)
+        shootButton.centerX(to: recordContainer)
         shootButton.constrain(width: 90, height: 90)
         shootButton.align(.bottom, to: view, inset: 64)
         shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
         shootButton.trackingDidEnd = { [weak self] interval in self?.shootDidEnd(with: interval) }
+        
+        recordContainer.addSubview(topicButton)
+        topicButton.constrain(height: 30)
+        topicButton.pin(.top, to: shootButton, spacing: 20)
+        topicButton.centerX(to: recordContainer)
     }
     
     private func setupCaptureView() {
-        view.addSubview(renderView)
-        renderView.fill(in: view)
-        captureController.render(in: view)
+        recordContainer.addSubview(captureView)
+        captureView.fill(in: recordContainer)
+    }
+    
+    private func setupCoverView() {
+        view.addSubview(blurCoverView)
+        blurCoverView.isUserInteractionEnabled = true
+        blurCoverView.fill(in: view)
     }
     
     private func setupTopView() {
-        view.addSubview(topView)
+        recordContainer.addSubview(topView)
+        topView.delegate = self
         topView.constrain(height: 64)
-        topView.align(.top, to: view)
-        topView.align(.left, to: view)
-        topView.align(.right, to: view)
-        
-        let backButton = UIButton()
-        backButton.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
-        topView.addSubview(backButton)
-        backButton.constrain(width: 30, height: 30)
-        backButton.align(.top, to: topView, inset: 15)
-        backButton.align(.right, to: topView, inset: 5)
+        topView.align(.top, to: recordContainer)
+        topView.align(.left, to: recordContainer)
+        topView.align(.right, to: recordContainer)
+    }
+}
+
+extension StoryRecordController: TLStoryAuthorizedDelegate {
+    func requestMicAuthorizeSuccess() {
+        captureView.enableAudio()
     }
     
-    private func makeButton(withTitle title: String, tag: Int, action: Selector) -> UIButton {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.tag = tag
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
+    func requestCameraAuthorizeSuccess() {
+        startCamera()
+    }
+    
+    func requestAllAuthorizeSuccess() {}
+}
+
+extension StoryRecordController: StoryRecordBottomViewDelegate {
+    func bottomViewDidPressTypeButton(_ type: StoryRecordType) {
+        if type == .album {
+            onAlbumChoosed?()
+            bottomView.selectBottomButton(at: current.rawValue, animated: true)
+            let last = current
+            if current == .record {
+                captureView.pauseCamera()
+            }
+            switchStoryType(type)
+            current = last
+        } else {
+            switchStoryType(type)
+        }
+    }
+    
+    private func switchStoryType(_ type: StoryRecordType) {
+        current = type
+        if type == .text {
+            if textGradientController.view.superview == nil {
+                addChildViewController(textGradientController)
+                textGradientController.didMove(toParentViewController: self)
+                view.insertSubview(textGradientController.view, belowSubview: bottomView)
+                textGradientController.view.fill(in: view)
+            }
+            textGradientController.view.alpha = 0
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                self.textGradientController.view.alpha = 1
+            }, completion: nil)
+            captureView.pauseCamera()
+            return
+        }
+        
+        if type == .record {
+            if self.textGradientController.view.alpha > 0 {
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                    self.textGradientController.view.alpha = 0
+                }, completion: nil)
+            }
+            captureView.resumeCamera()
+            return
+        }
     }
 }
 
-extension StoryRecordController: StoryTextControllerDelegate {
-    func storyTextControllerNeedsHideBottomView(_ isHidden: Bool) {
-        bottomView.alpha = isHidden ? 0 : 1
+extension StoryRecordController: StoryRecordTopViewDelegate {
+    func topViewDidPressBackButton() {
+        NotificationCenter.default.post(name: .ScrollPage, object: 1)
+    }
+    
+    func topViewDidPressFlashButton(isOn: Bool) {
+        captureView.switchFlash()
+    }
+    
+    func topViewDidPressCameraSwitchButton(isFront: Bool) {
+        captureView.rotateCamera()
+    }
+    
+    func topViewDidPressAvatarButton() {
+        
     }
 }
-

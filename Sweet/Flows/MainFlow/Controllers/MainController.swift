@@ -8,19 +8,23 @@
 
 import UIKit
 import Pageboy
+
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
         return self.visibleViewController
     }
 }
+
 extension Notification.Name {
     static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
     static let EnablePageScroll = Notification.Name(rawValue: "EnablePageScroll")
     static let BarStyleBlack = Notification.Name(rawValue: "BarStyleBlack")
     static let BarStyleDefault = Notification.Name(rawValue: "BarStyleDefalut")
+    static let ScrollPage = Notification.Name(rawValue: "ScrollPage")
 }
 
 final class MainController: PageboyViewController, MainView {
+    var preloadStory: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
@@ -30,7 +34,6 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
@@ -44,7 +47,7 @@ final class MainController: PageboyViewController, MainView {
         delegate = self
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceivePageScrollDiableNote),
@@ -69,6 +72,13 @@ final class MainController: PageboyViewController, MainView {
             name: .BarStyleDefault,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveScrollPage(_:)),
+            name: .ScrollPage,
+            object: nil
+        )
+        preloadStory?(story)
     }
     
     // MARK: - Private
@@ -76,7 +86,7 @@ final class MainController: PageboyViewController, MainView {
     @objc func didReceivePageScrollDiableNote() {
         isScrollEnabled = false
     }
-    
+
     @objc func didReceivePageScrollEnableNote() {
         isScrollEnabled = true
     }
@@ -87,6 +97,11 @@ final class MainController: PageboyViewController, MainView {
     
     @objc func didReceiveBarStyleDefaultNote() {
         navigationController?.navigationBar.barStyle = .default
+    }
+
+    @objc func didReceiveScrollPage(_ note: Notification) {
+        guard let index = note.object as? Int else { return }
+        scrollToPage(.at(index: index), animated: true)
     }
 }
 

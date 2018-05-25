@@ -37,9 +37,11 @@ enum WebAPI {
     case delSectionSubscription(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
-    case getStoryTopics
     case allCards
     case storyDetailsUvlist(storyId: UInt64)
+    case storyTopics
+    case searchTopic(topic: String)
+//    case publishStory(url: String, topic: String?, type: StoryType)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -99,12 +101,16 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/contact/phone/invite"
         case .searchContact:
             return "/contact/search"
-        case .getStoryTopics:
+        case .storyTopics:
             return "/story/tag/list"
         case .allCards:
             return "/card/all/get"
         case .storyDetailsUvlist:
             return "/story/details/uvlist"
+//        case .publishStory:
+//            return "/story/add"
+        case .searchTopic:
+            return "/story/tag/search"
         }
     }
     
@@ -148,6 +154,12 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["name": name]
         case let .storyDetailsUvlist(storyId):
             parameters = ["storyId": storyId]
+//        case let .publishStory(url, topic, type):
+//            if let topic = topic {
+//                parameters = ["content": url, "type": type.rawValue, "tag": topic]
+//            } else {
+//                parameters = ["content": url, "type": type.rawValue]
+//            }
         default:
             parameters = [:]
         }

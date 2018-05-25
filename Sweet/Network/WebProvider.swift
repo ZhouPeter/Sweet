@@ -19,7 +19,7 @@ final class WebProvider {
         plugins: [
             SignPlugin(signClosure: Signer.sign),
             AuthPlugin(tokenClosure: { self.tokenSource.token })
-            //            NetworkLoggerPlugin(verbose: true)
+//            NetworkLoggerPlugin(verbose: true)
         ]
     )
     

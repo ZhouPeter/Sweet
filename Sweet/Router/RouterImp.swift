@@ -98,10 +98,22 @@ final class RouterImp: NSObject, Router {
         }
     }
     
+    func setAsSecondFlow(_ flow: Presentable) {
+        guard
+            let controller = flow.toPresent(),
+            (controller is UINavigationController == false)
+            else { assertionFailure("Deprecated push UINavigationController."); return }
+        if let controllers = rootController?.viewControllers, controllers.count > 1 {
+            for index in 1..<controllers.count { runCompletion(for: controllers[index]) }
+            rootController?.setViewControllers([controllers[0], controller], animated: true)
+        } else {
+            push(flow, animated: true)
+        }
+    }
+    
     private func runCompletion(for controller: UIViewController) {
         guard let completion = completions[controller] else { return }
         completion()
         completions.removeValue(forKey: controller)
     }
-    
 }
