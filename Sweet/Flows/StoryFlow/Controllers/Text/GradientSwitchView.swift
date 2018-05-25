@@ -9,8 +9,8 @@
 import UIKit
 
 final class GradientSwitchView: UIView {
-    private let backgroundView = GradientView()
-    private let foregroundView = GradientView()
+    private var backgroundView = GradientView()
+    private var foregroundView = GradientView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,19 +57,19 @@ final class GradientSwitchView: UIView {
         animated: Bool = false) {
         if animated {
             changeBackground()
-            UIView.animate(withDuration: 0.45, delay: 0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 self.backgroundView.alpha = 1
                 self.foregroundView.alpha = 0
             }, completion: { _ in
                 changeForeground()
-                self.foregroundView.alpha = 1
                 self.backgroundView.alpha = 0
+                self.foregroundView.alpha = 1
             })
         } else {
             changeBackground()
             changeForeground()
-            foregroundView.alpha = 1
             backgroundView.alpha = 0
+            foregroundView.alpha = 1
         }
     }
 }

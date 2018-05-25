@@ -10,8 +10,11 @@ import UIKit
 
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: (() -> Void)?
+    var onCancelled: (() -> Void)?
+    
     private var topic: String?
     private lazy var gradientView = GradientSwitchView()
+    private var gradientIndex = 0
     private lazy var editController = StoryTextEditController()
     
     private lazy var editContainer: UIView = {
@@ -20,17 +23,11 @@ final class StoryTextController: BaseViewController, StoryTextView {
         return view
     } ()
     
-    private lazy var deleteButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "StoryDelete"), for: .normal)
-        button.addTarget(self, action: #selector(didPressDeleteButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var confirmButton: UIButton = {
+    private lazy var finishButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "StoryConfirm"), for: .normal)
-        button.addTarget(self, action: #selector(didPressConfirmButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didPressFinishButton), for: .touchUpInside)
+        button.enableShadow()
         return button
     } ()
     
@@ -38,6 +35,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "StoryClose"), for: .normal)
         button.addTarget(self, action: #selector(didPressCloseButton), for: .touchUpInside)
+        button.enableShadow()
         return button
     } ()
     
@@ -48,7 +46,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editContainer.fill(in: view)
         setupEditController()
         setupEditControls()
-        hideEditControls(true)
+        closeButton.alpha = 0
+        finishButton.alpha = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,60 +77,93 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     private func setupEditControls() {
-        editContainer.addSubview(confirmButton)
-        editContainer.addSubview(deleteButton)
-        confirmButton.constrain(width: 50, height: 50)
-        confirmButton.centerX(to: view)
-        confirmButton.align(.bottom, to: view, inset: 10)
+        editContainer.addSubview(finishButton)
+        finishButton.constrain(width: 50, height: 50)
+        finishButton.align(.bottom, to: view, inset: 25)
+        finishButton.align(.right, to: view, inset: 10)
         editContainer.addSubview(closeButton)
         closeButton.constrain(width: 50, height: 50)
         closeButton.align(.right, to: view, inset: 10)
         closeButton.align(.top, to: view, inset: 10)
     }
     
-    private func hideEditControls(_ isHidden: Bool, animated: Bool = false) {
-        if animated {
-            UIView.beginAnimations(nil, context: nil)
-            UIView.setAnimationDuration(0.25)
-            UIView.setAnimationCurve(.easeOut)
-        }
-        let alpha: CGFloat = isHidden ? 0 : 1
-        confirmButton.alpha = alpha
-        if animated {
-            UIView.commitAnimations()
-        }
-    }
-    
     // MARK: - Actions
     
-    @objc private func didPressNextButton() {
-        
-//        editController.endEditing()
-//        hideEditControls(false, animated: true)
-    }
-    
-    @objc private func didPressDeleteButton() {
-        
-    }
-    
-    @objc private func didPressConfirmButton() {
-//        isPublishing = false
-//        enablePageScroll = true
+    @objc private func didPressFinishButton() {
+        finishButton.alpha = 0
+        closeButton.alpha = 0
+        var fileURL: URL?
+        if let image = view.screenshot(afterScreenUpdates: true), let data = UIImageJPEGRepresentation(image, 0.8) {
+            do {
+                let url = URL.photoCacheURL(withName: UUID().uuidString + ".jpg")
+                try data.write(to: url)
+                fileURL = url
+            } catch {
+                logger.error(error)
+            }
+        }
+        finishButton.alpha = 1
+        closeButton.alpha = 1
+        logger.debug(fileURL ?? "url is nil")
+        onFinished?()
     }
     
     @objc private func didPressCloseButton() {
-        editController.endEditing()
-//        dismiss(animated: true, completion: nil)
-        navigationController?.popViewController(animated: true)
+        onCancelled?()
     }
 }
 
 extension StoryTextController: StoryTextEditControllerDelegate {
     func storyTextEditControllerDidBeginEditing() {
-        
+        UIView.animate(withDuration: 0.25) {
+            self.closeButton.alpha = 0
+            self.finishButton.alpha = 0
+        }
     }
     
     func storyTextEidtControllerDidEndEditing() {
-        
+        UIView.animate(withDuration: 0.25) {
+            self.closeButton.alpha = 1
+            self.finishButton.alpha = 1
+        }
+    }
+    
+    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {
+        if case .ended = pan.state {
+            let isLeft = pan.translation(in: pan.view).x < 0
+            let colors = nextGradientColors(isNext: isLeft)
+            gradientView.changeColors(colors, animated: true)
+        }
+    }
+    
+    private func nextGradientColors(isNext: Bool) -> [UIColor] {
+        var index = gradientIndex
+        if isNext {
+            if index >= gradientColors.count - 1 {
+                index = 0
+            } else {
+                index += 1
+            }
+        } else {
+            if index <= 0 {
+                index = gradientColors.count - 1
+            } else {
+                index -= 1
+            }
+        }
+        gradientIndex = index
+        return gradientColors[index]
     }
 }
+
+private let gradientColors = [
+    [UIColor(hex: 0x8FE1FF), UIColor(hex: 0x56BFFE)],
+    [UIColor(hex: 0xF5515F), UIColor(hex: 0x9F041B)],
+    [UIColor(hex: 0xFAD961), UIColor(hex: 0xF76B1C)],
+    [UIColor(hex: 0xF8E71C), UIColor(hex: 0xF8E71C)],
+    [UIColor(hex: 0xB4EC51), UIColor(hex: 0x429321)],
+    [UIColor(hex: 0x88F3E2), UIColor(hex: 0x88F3E2)],
+    [UIColor(hex: 0x50E3C2), UIColor(hex: 0x50E3C2)],
+    [UIColor(hex: 0x3023AE), UIColor(hex: 0xC86DD7)],
+    [UIColor(hex: 0xFFFFFF), UIColor(hex: 0x000000)]
+]

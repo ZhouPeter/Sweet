@@ -55,6 +55,9 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onFinished = { [weak self] in
             self?.router.popFlow(animated: true)
         }
+        controller.onCancelled = { [weak self] in
+            self?.router.popFlow(animated: true)
+        }
         router.push(controller)
     }
 }

@@ -10,4 +10,5 @@ import Foundation
 
 protocol StoryTextView: BaseView {
     var onFinished: (() -> Void)? { get set }
+    var onCancelled: (() -> Void)? { get set}
 }
