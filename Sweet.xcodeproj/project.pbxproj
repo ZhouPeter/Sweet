@@ -428,6 +428,22 @@
 		AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */; };
 		AC45CD8A20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */; };
 		AC45CD8B20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */; };
+		AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090620B7A80F007686EB /* TextColorButton.swift */; };
+		AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090620B7A80F007686EB /* TextColorButton.swift */; };
+		AC4D090920B7A80F007686EB /* TextColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090620B7A80F007686EB /* TextColorButton.swift */; };
+		AC4D090A20B7A80F007686EB /* TextColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090620B7A80F007686EB /* TextColorButton.swift */; };
+		AC4D090E20B7B1AC007686EB /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090D20B7B1AC007686EB /* TopicListView.swift */; };
+		AC4D090F20B7B1AC007686EB /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090D20B7B1AC007686EB /* TopicListView.swift */; };
+		AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090D20B7B1AC007686EB /* TopicListView.swift */; };
+		AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D090D20B7B1AC007686EB /* TopicListView.swift */; };
+		AC4D091420B7B774007686EB /* UIButton+Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091320B7B774007686EB /* UIButton+Topic.swift */; };
+		AC4D091520B7B774007686EB /* UIButton+Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091320B7B774007686EB /* UIButton+Topic.swift */; };
+		AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091320B7B774007686EB /* UIButton+Topic.swift */; };
+		AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091320B7B774007686EB /* UIButton+Topic.swift */; };
+		AC4D091920B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
+		AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
+		AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
+		AC4D091C20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -929,6 +945,10 @@
 		AC45CD7320AD4EDC005C4AA0 /* GPUImageBeautifyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautifyFilter.h; sourceTree = "<group>"; };
 		AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLStoryAuthorizationController.swift; sourceTree = "<group>"; };
 		AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLAuthorizedManager.swift; sourceTree = "<group>"; };
+		AC4D090620B7A80F007686EB /* TextColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColorButton.swift; sourceTree = "<group>"; };
+		AC4D090D20B7B1AC007686EB /* TopicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListView.swift; sourceTree = "<group>"; };
+		AC4D091320B7B774007686EB /* UIButton+Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Topic.swift"; sourceTree = "<group>"; };
+		AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHeaderView.swift; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
@@ -1228,6 +1248,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AC4D091220B7B1BB007686EB /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				AC4D090D20B7B1AC007686EB /* TopicListView.swift */,
+				AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */,
+				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
+				AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */,
+			);
+			path = Topic;
+			sourceTree = "<group>";
+		};
 		AC525A88208D87B0001070B2 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -1269,6 +1300,7 @@
 				AC97251D209ABD42009FB966 /* Record */,
 				AC97251C209ABD39009FB966 /* Text */,
 				AC97251B209ABD14009FB966 /* Edit */,
+				AC4D091220B7B1BB007686EB /* Topic */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1329,13 +1361,12 @@
 				AC972516209ABD09009FB966 /* StoryTextController.swift */,
 				AC972511209ABCD4009FB966 /* StoryTextEditController.swift */,
 				AC3280CE20A9389A00B3B2D2 /* TextTransform.swift */,
-				AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */,
-				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
 				AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */,
 				AC8EA9E120ABF43D0033615D /* GradientView.swift */,
 				ACF7A8C320B41AFD00592BC9 /* StoryKeyboardControlView.swift */,
 				AC8EA9EB20AC03500033615D /* TextGradientController.swift */,
 				AC97251E209ABD5E009FB966 /* StoryTextView.swift */,
+				AC4D090620B7A80F007686EB /* TextColorButton.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1486,6 +1517,7 @@
 				ACFC207E20AEA11200D696B9 /* UIImage+Merge.swift */,
 				ACFC208320AEA73700D696B9 /* UIView+Screenshot.swift */,
 				ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */,
+				AC4D091320B7B774007686EB /* UIButton+Topic.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2159,6 +2191,7 @@
 				58BD531720902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D1208991C100F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				5803C1272099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				AC4D091420B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				5843DA7320A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -2187,6 +2220,7 @@
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533720905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
+				AC4D091920B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */,
 				5843DA6420A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9882099C87F004401AC /* LookupFilter.m in Sources */,
@@ -2202,6 +2236,7 @@
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
+				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -2227,6 +2262,7 @@
 				5843DA5A20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				58BD52912088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52EB208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
+				AC4D090E20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EE208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DD2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,
@@ -2261,6 +2297,7 @@
 				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
+				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
@@ -2269,6 +2306,7 @@
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
+				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -2292,6 +2330,7 @@
 				AC8412242088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235720874A2900BDC92E /* Coordinator.swift in Sources */,
+				AC4D090920B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACFC208620AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -2376,6 +2415,7 @@
 				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
+				AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */,
@@ -2415,6 +2455,7 @@
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
+				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
@@ -2423,6 +2464,7 @@
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
+				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -2446,6 +2488,7 @@
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				5843DA5D20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
+				AC4D090A20B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACFC208720AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
 				58155E332091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				5843DA5320A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -2530,6 +2573,7 @@
 				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
+				AC4D091C20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E62093198600AE5D38 /* UpdateController.swift in Sources */,
 				ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */,
@@ -2665,6 +2709,7 @@
 				58BD531820902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				58BD52D22089AD0E00F7C3E1 /* UIViewController+Toast.swift in Sources */,
 				5803C1282099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				AC4D091520B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				5843DA7420A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -2693,6 +2738,7 @@
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				58BD533820905C7900F7C3E1 /* FeedsTableViewCell.swift in Sources */,
 				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
+				AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */,
 				5843DA6520A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC04E9892099C87F004401AC /* LookupFilter.m in Sources */,
@@ -2708,6 +2754,7 @@
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
+				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -2733,6 +2780,7 @@
 				5843DA5B20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				58BD52922088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58BD52EC208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
+				AC4D090F20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
 				58BD52EF208DC3F400F7C3E1 /* QiniuAPI.swift in Sources */,
 				58BD52DE2089E5D400F7C3E1 /* SignUpPhoneView.swift in Sources */,

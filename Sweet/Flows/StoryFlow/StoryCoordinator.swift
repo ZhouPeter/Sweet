@@ -28,16 +28,16 @@ final class StoryCoordinator: BaseCoordinator {
     
     private func showStoryRecordView() {
         let controller = factory.makeStoryRecordView()
-        controller.onRecorded = { [weak self] url, isPhoto in
-            self?.showStoryEditView(with: url, isPhoto: isPhoto)
+        controller.onRecorded = { [weak self] url, isPhoto, topic in
+            self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
         // Preload
         _ = controller.toPresent()?.view
         router.setRootFlow(controller)
     }
     
-    private func showStoryEditView(with fileURL: URL, isPhoto: Bool) {
-        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto)
+    private func showStoryEditView(with fileURL: URL, isPhoto: Bool, topic: String?) {
+        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }

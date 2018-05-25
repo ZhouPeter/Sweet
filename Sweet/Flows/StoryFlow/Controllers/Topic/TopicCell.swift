@@ -9,12 +9,12 @@
 import UIKit
 
 final class TopicCell: UITableViewCell {
-    let topicLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17)
-        label.textColor = .white
-        return label
-    } ()
+    var topic = "" {
+        didSet {
+            updateTopic()
+        }
+    }
+    private let topicLabel = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,6 +38,19 @@ final class TopicCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        topicLabel.textColor = selected ? UIColor(hex: 0xF8E71C) : .white
+        updateTopic()
+    }
+    
+    private func updateTopic() {
+        let fontSize: CGFloat = 16
+        if isSelected {
+            topicLabel.attributedText = NSMutableAttributedString(
+                topic: topic,
+                fontSize: fontSize,
+                textColor: UIColor(hex: 0xF8E71C)
+            )
+        } else {
+            topicLabel.attributedText = NSMutableAttributedString(topic: topic, fontSize: fontSize)
+        }
     }
 }

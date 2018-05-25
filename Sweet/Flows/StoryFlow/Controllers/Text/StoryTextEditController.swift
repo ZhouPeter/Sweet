@@ -27,18 +27,17 @@ extension StoryTextEditControllerDelegate {
 }
 
 final class StoryTextEditController: UIViewController {
-    var topic: Topic? {
+    var topic: String? {
         didSet {
             if let topic = topic {
-                topicButton.setTitle("#" + topic.content, for: .normal)
-                topicButton.alpha = 1
+                topicButton.setAttributedTitle(NSMutableAttributedString(topic: topic, fontSize: 30), for: .normal)
+                topicButton.alpha = textView.hasText ? 1 : 0
             } else {
                 topicButton.alpha = 0
             }
         }
     }
     weak var delegate: StoryTextEditControllerDelegate?
-    var hidesTopicWithoutText = false
     let keyboardControl = StoryKeyboardControlView()
     
     private lazy var tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
@@ -51,9 +50,6 @@ final class StoryTextEditController: UIViewController {
     private var topicButtonLeft: NSLayoutConstraint?
     private var topicButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitleColor(UIColor(hex: 0xF8E71C), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-        button.setTitle("#你好", for: .normal)
         let image = #imageLiteral(resourceName: "TopicLabelBackground")
             .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 22), resizingMode: .stretch)
         button.setBackgroundImage(image, for: .normal)
@@ -198,15 +194,16 @@ final class StoryTextEditController: UIViewController {
             keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
             keyboardControlBottom?.constant = -keyboardHeight
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
-                if !self.textView.hasText {
-                    if self.hidesTopicWithoutText {
-                        self.topicButton.alpha = 0
-                    }
-                }
                 if event.type == .willShow {
                     self.keyboardControl.alpha = 1
+                    self.topicButton.alpha = self.topic == nil ? 0 : 1
                 } else if event.type == .willHide {
                     self.keyboardControl.alpha = 0
+                    if self.topic == nil {
+                        self.topicButton.alpha = 0
+                    } else {
+                        self.topicButton.alpha = self.textView.hasText ? 1 : 0
+                    }
                 }
                 self.view.layoutIfNeeded()
                 self.layoutTextContainer()

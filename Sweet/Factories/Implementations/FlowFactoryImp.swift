@@ -89,8 +89,8 @@ ProfileFlowFactory {
         return StoryRecordController()
     }
     
-    func makeStoryEditView(fileURL: URL, isPhoto: Bool) -> StoryEditView {
-        return StoryEditController(fileURL: fileURL, isPhoto: isPhoto)
+    func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
+        return StoryEditController(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
     }
     
     func makeCardsView() -> CardsView {
@@ -99,6 +99,10 @@ ProfileFlowFactory {
     
     func makeProfileModule() -> ProfileView {
         return ProfileController()
+    }
+    
+    func makeTopicListView() -> TopicListView {
+        return TopicListController()
     }
 }
 

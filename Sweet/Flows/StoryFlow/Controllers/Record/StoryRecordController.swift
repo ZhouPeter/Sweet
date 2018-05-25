@@ -10,7 +10,8 @@ import UIKit
 import Hero
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
-    var onRecorded: ((URL, Bool) -> Void)?
+    var onRecorded: ((URL, Bool, String?) -> Void)?
+    
     private let recordContainer = UIView()
     private let topView = StoryRecordTopView()
     private let bottomView = StoryRecordBottomView()
@@ -32,8 +33,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             )
         }
     }
-    
+    private var topic: String? {
+        didSet {
+            topicButton.updateTopic(topic ?? "添加标签")
+        }
+    }
     private var shootButton = ShootButton()
+    
+    private lazy var topicButton: UIButton = {
+        let button = UIButton(topic: "添加标签")
+        button.addTarget(self, action: #selector(didPressTopicButton), for: .touchUpInside)
+        return button
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +72,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.topView.alpha = 1
             self.bottomView.alpha = 1
+            self.topicButton.alpha = 1
         }, completion: nil)
     }
     
@@ -80,7 +92,38 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
 
     private func edit(with url: URL, isPhoto: Bool) {
         enablePageScroll = false
-        onRecorded?(url, isPhoto)
+        onRecorded?(url, isPhoto, topic)
+    }
+    
+    @objc private func didPressTopicButton() {
+        let topic = TopicListController()
+        addChildViewController(topic)
+        topic.didMove(toParentViewController: self)
+        view.addSubview(topic.view)
+        topic.view.frame = view.bounds
+        topic.view.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            topic.view.alpha = 1
+            self.topView.alpha = 0
+            self.bottomView.alpha = 0
+            self.shootButton.alpha = 0
+            self.topicButton.alpha = 0
+        }, completion: nil)
+        topic.onFinished = { [weak self] topic in
+            guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
+            self.topic = topic
+            self.view.addSubview(view)
+            view.frame = self.view.bounds
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                view.alpha = 0
+                self.topView.alpha = 1
+                self.bottomView.alpha = 1
+                self.shootButton.alpha = 1
+                self.topicButton.alpha = 1
+            }, completion: { (_) in
+                view.removeFromSuperview()
+            })
+        }
     }
     
     // MARK: - Camera
@@ -89,6 +132,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         UIView.animate(withDuration: 0.25) {
             self.topView.alpha = 0
             self.bottomView.alpha = 0
+            self.topicButton.alpha = 0
         }
         captureView.startRecording()
     }
@@ -174,6 +218,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         shootButton.align(.bottom, to: view, inset: 64)
         shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
         shootButton.trackingDidEnd = { [weak self] interval in self?.shootDidEnd(with: interval) }
+        
+        recordContainer.addSubview(topicButton)
+        topicButton.constrain(height: 30)
+        topicButton.pin(.top, to: shootButton, spacing: 20)
+        topicButton.centerX(to: recordContainer)
     }
     
     private func setupCaptureView() {

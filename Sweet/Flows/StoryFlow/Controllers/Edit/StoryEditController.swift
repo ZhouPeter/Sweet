@@ -12,10 +12,10 @@ import TapticEngine
 final class StoryEditController: BaseViewController, StoryEditView {
     var onCancelled: (() -> Void)?
     var onFinished: ((URL) -> Void)?
-    var topic: Topic?
     
     private let fileURL: URL
     private let isPhoto: Bool
+    private var topic: String?
     private lazy var previewController = StoryFilterPreviewController(fileURL: self.fileURL, isPhoto: self.isPhoto)
     private var textController = StoryTextEditController()
     
@@ -70,9 +70,10 @@ final class StoryEditController: BaseViewController, StoryEditView {
         return view
     } ()
     
-    init(fileURL: URL, isPhoto: Bool) {
+    init(fileURL: URL, isPhoto: Bool, topic: String?) {
         self.fileURL = fileURL
         self.isPhoto = isPhoto
+        self.topic = topic
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,6 +95,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
         textController.keyboardControl.delegate = self
         setupPokeView()
         setupControlButtons()
+        textController.topic = topic
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -314,7 +316,9 @@ extension StoryEditController: StoryTextEditControllerDelegate {
             self.editButton.alpha = isDeleted ? 1 : 0
             self.closeButton.alpha = 1
             self.finishButton.alpha = 1
-            self.pokeButton.alpha = self.pokeView.isHidden ? 1 : 0
+            if !self.isPhoto {
+                self.pokeButton.alpha = self.pokeView.isHidden ? 1 : 0
+            }
         }, completion: { _ in
             self.textController.view.alpha = 1
         })
@@ -339,7 +343,7 @@ extension StoryEditController: StoryKeyboardControlViewDelegate {
             self.textController.view.alpha = 0
             self.closeButton.alpha = 0
         }, completion: nil)
-        topic.didFinish = { [weak self] topic in
+        topic.onFinished = { [weak self] topic in
             guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
             self.topic = topic
             self.view.addSubview(view)

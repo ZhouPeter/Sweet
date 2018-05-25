@@ -8,16 +8,10 @@
 
 import Foundation
 
-struct Topic: Codable {
-    let ID: UInt64
-    let content: String
+struct TopicListResponse: Codable {
+    let tags: [String]
     
     enum CodingKeys: String, CodingKey {
-        case ID = "tagId"
-        case content = "tag"
+        case tags = "list"
     }
-}
-
-struct TopicListResponse: Codable {
-    let list: [Topic]
 }

@@ -21,7 +21,7 @@ enum StorySource {
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: ((StoryText) -> Void)?
     weak var delegate: StoryTextControllerDelegate?
-    var topic: Topic?
+    var topic: String?
     let source: StorySource
     
     private lazy var gradientView = GradientSwitchView()
@@ -43,7 +43,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "StoryDeleteLarge"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "StoryDelete"), for: .normal)
         button.addTarget(self, action: #selector(didPressDeleteButton), for: .touchUpInside)
         return button
     } ()
@@ -189,7 +189,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         }, completion: { _ in
             self.enablePageScroll = false
         })
-        topic.didFinish = { [weak self] topic in
+        topic.onFinished = { [weak self] topic in
             self?.enablePageScroll = true
             guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
             self.topic = topic
@@ -210,7 +210,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         if case .text = source, !editController.hasText { return }
         isPublishing = true
         editController.endEditing()
-        editController.hidesTopicWithoutText = true
         hideEditControls(false, animated: true)
     }
     

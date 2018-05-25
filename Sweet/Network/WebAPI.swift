@@ -38,8 +38,8 @@ enum WebAPI {
     case inviteContact(phone: String)
     case searchContact(name: String)
     case storyTopics
-    case storyRecentTopics
-    case publishStory(url: String, topic: Topic?, type: StoryType)
+    case searchTopic(topic: String)
+    case publishStory(url: String, topic: String?, type: StoryType)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -101,10 +101,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/contact/search"
         case .storyTopics:
             return "/story/tag/list"
-        case .storyRecentTopics:
-            return "/story/tag/recent/list"
         case .publishStory:
             return "/story/add"
+        case .searchTopic:
+            return "/story/tag/search"
         }
     }
     
@@ -148,7 +148,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["name": name]
         case let .publishStory(url, topic, type):
             if let topic = topic {
-                parameters = ["content": url, "type": type.rawValue, "tagId": topic.ID]
+                parameters = ["content": url, "type": type.rawValue, "tag": topic]
             } else {
                 parameters = ["content": url, "type": type.rawValue]
             }

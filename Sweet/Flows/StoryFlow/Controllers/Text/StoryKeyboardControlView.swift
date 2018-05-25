@@ -17,14 +17,7 @@ final class StoryKeyboardControlView: UIView {
     weak var delegate: StoryKeyboardControlViewDelegate?
     
     private lazy var topicButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("#添加话题", for: .normal)
-        button.setTitleColor(UIColor(hex: 0xF8E71C), for: .normal)
-        let image = #imageLiteral(resourceName: "TopicButton")
-            .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 17), resizingMode: .stretch)
-        button.setBackgroundImage(image, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        let button = UIButton(topic: "添加标签")
         button.addTarget(self, action: #selector(didPressTopicButton), for: .touchUpInside)
         return button
     } ()

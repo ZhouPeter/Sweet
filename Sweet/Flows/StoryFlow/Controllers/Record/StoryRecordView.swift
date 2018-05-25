@@ -9,5 +9,5 @@
 import Foundation
 
 protocol StoryRecordView: BaseView {
-    var onRecorded: ((_ fileURL: URL, _ isPhoto: Bool) -> Void)? { get set }
+    var onRecorded: ((_ fileURL: URL, _ isPhoto: Bool, _ topic: String?) -> Void)? { get set }
 }
