@@ -12,6 +12,7 @@ import Hero
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
     var onTextChoosed: (() -> Void)?
+    var onAlbumChoosed: (() -> Void)?
     
     private let recordContainer = UIView()
     private let topView = StoryRecordTopView()
@@ -47,6 +48,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return button
     } ()
     
+    private var current = StoryRecordType.record
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -69,6 +72,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             resumeCamera(true)
         } else if captureView.isStarted == false {
             captureView.startCaputre()
+        }
+        if current == .record && captureView.isPaused {
+            captureView.resumeCamera()
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.topView.alpha = 1
@@ -259,6 +265,22 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
 
 extension StoryRecordController: StoryRecordBottomViewDelegate {
     func bottomViewDidPressTypeButton(_ type: StoryRecordType) {
+        if type == .album {
+            onAlbumChoosed?()
+            bottomView.selectBottomButton(at: current.rawValue, animated: true)
+            let last = current
+            if current == .record {
+                captureView.pauseCamera()
+            }
+            switchStoryType(type)
+            current = last
+        } else {
+            switchStoryType(type)
+        }
+    }
+    
+    private func switchStoryType(_ type: StoryRecordType) {
+        current = type
         if type == .text {
             if textGradientController.view.superview == nil {
                 addChildViewController(textGradientController)
@@ -271,15 +293,17 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
                 self.textGradientController.view.alpha = 1
             }, completion: nil)
             captureView.pauseCamera()
-        } else {
+            return
+        }
+        
+        if type == .record {
             if self.textGradientController.view.alpha > 0 {
                 UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                     self.textGradientController.view.alpha = 0
                 }, completion: nil)
             }
-            if type == .record {
-                captureView.resumeCamera()
-            }
+            captureView.resumeCamera()
+            return
         }
     }
 }

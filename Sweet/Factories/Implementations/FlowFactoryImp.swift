@@ -108,6 +108,10 @@ ProfileFlowFactory {
     func makeStoryTextView() -> StoryTextView {
         return StoryTextController()
     }
+    
+    func makeAlbumView() -> AlbumView {
+        return AlbumController()
+    }
 }
 
 extension FlowFactoryImp: IMFlowFactory {

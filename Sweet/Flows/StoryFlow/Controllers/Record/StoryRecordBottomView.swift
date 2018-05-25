@@ -82,7 +82,7 @@ final class StoryRecordBottomView: UIView {
         delegate?.bottomViewDidPressTypeButton(type)
     }
     
-    private func selectBottomButton(at index: Int, animated: Bool) {
+    func selectBottomButton(at index: Int, animated: Bool) {
         indicatorCenterX?.constant = CGFloat(index - 1) * (buttonWidth + buttonSpacing)
         if animated {
             UIView.beginAnimations(nil, context: nil)

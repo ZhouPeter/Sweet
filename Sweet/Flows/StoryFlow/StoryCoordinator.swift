@@ -34,6 +34,9 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onTextChoosed = { [weak self] in
             self?.showStoryTextView()
         }
+        controller.onAlbumChoosed = { [weak self] in
+            self?.showAlbumView()
+        }
         // Preload
         _ = controller.toPresent()?.view
         router.setRootFlow(controller)
@@ -58,6 +61,11 @@ final class StoryCoordinator: BaseCoordinator {
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
+        router.push(controller)
+    }
+    
+    private func showAlbumView() {
+        let controller = factory.makeAlbumView()
         router.push(controller)
     }
 }

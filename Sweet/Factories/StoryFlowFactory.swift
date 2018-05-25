@@ -13,4 +13,5 @@ protocol StoryFlowFactory {
     func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView
     func makeTopicListView() -> TopicListView
     func makeStoryTextView() -> StoryTextView
+    func makeAlbumView() -> AlbumView
 }

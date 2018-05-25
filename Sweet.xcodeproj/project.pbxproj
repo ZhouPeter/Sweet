@@ -480,6 +480,18 @@
 		AC525AC4208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
 		AC525AC5208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
 		AC525AC6208DF3F9001070B2 /* CardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AC2208DF3F9001070B2 /* CardsController.swift */; };
+		AC557C9920B7E5E60068F1B3 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9820B7E5E60068F1B3 /* AlbumController.swift */; };
+		AC557C9A20B7E5E60068F1B3 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9820B7E5E60068F1B3 /* AlbumController.swift */; };
+		AC557C9B20B7E5E60068F1B3 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9820B7E5E60068F1B3 /* AlbumController.swift */; };
+		AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9820B7E5E60068F1B3 /* AlbumController.swift */; };
+		AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */; };
+		AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */; };
+		AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */; };
+		AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */; };
+		AC557CA320B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
+		AC557CA420B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
+		AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
+		AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
 		AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
 		AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
 		AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
@@ -958,6 +970,9 @@
 		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
 		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
 		AC525AC2208DF3F9001070B2 /* CardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsController.swift; sourceTree = "<group>"; };
+		AC557C9820B7E5E60068F1B3 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
+		AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
 		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
 		AC6C1D8D20A993F500F45F82 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
@@ -1300,6 +1315,7 @@
 				AC97251D209ABD42009FB966 /* Record */,
 				AC97251C209ABD39009FB966 /* Text */,
 				AC97251B209ABD14009FB966 /* Edit */,
+				AC557C9520B7E5CA0068F1B3 /* Album */,
 				AC4D091220B7B1BB007686EB /* Topic */,
 			);
 			path = Controllers;
@@ -1335,6 +1351,16 @@
 				AC525AC2208DF3F9001070B2 /* CardsController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC557C9520B7E5CA0068F1B3 /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				AC557C9820B7E5E60068F1B3 /* AlbumController.swift */,
+				AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */,
+				AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */,
+			);
+			path = Album;
 			sourceTree = "<group>";
 		};
 		AC97251B209ABD14009FB966 /* Edit */ = {
@@ -2112,6 +2138,7 @@
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				AC557C9920B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
@@ -2120,6 +2147,7 @@
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
@@ -2162,6 +2190,7 @@
 				58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				AC557CA320B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
 				58CE1EBD20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
@@ -2381,6 +2410,7 @@
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
+				AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
@@ -2431,9 +2461,11 @@
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				58CE1ED720A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
+				AC557C9B20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
@@ -2539,6 +2571,7 @@
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
+				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
@@ -2589,9 +2622,11 @@
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
 				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
+				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
@@ -2630,6 +2665,7 @@
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
+				AC557C9A20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
@@ -2638,6 +2674,7 @@
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */,
@@ -2680,6 +2717,7 @@
 				58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
+				AC557CA420B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
 				58CE1EBE20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
