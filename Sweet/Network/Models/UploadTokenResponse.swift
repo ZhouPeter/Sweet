@@ -10,12 +10,15 @@ import Foundation
 
 enum UploadType: UInt, Codable {
     case userAvatar = 1
-    case storyImage
+    case storyImage = 11
+    case storyVideo = 12
     
     func mimeTypeString() -> String {
         switch self {
         case .userAvatar, .storyImage:
             return "image/jpeg"
+        case .storyVideo:
+            return "video/mp4"
         }
     }
 }
@@ -24,4 +27,8 @@ struct UploadTokenResponse: Codable {
     let host: String
     let key: String
     let token: String
+    
+    var urlString: String {
+        return host + key
+    }
 }

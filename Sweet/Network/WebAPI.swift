@@ -42,7 +42,7 @@ enum WebAPI {
     case storyDetailsUvlist(storyId: UInt64)
     case storyTopics
     case searchTopic(topic: String)
-//    case publishStory(url: String, topic: String?, type: StoryType)
+    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -110,15 +110,15 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/subscription/get"
         case .storyDetailsUvlist:
             return "/story/details/uvlist"
-//        case .publishStory:
-//            return "/story/add"
+        case .publishStory:
+            return "/story/add"
         case .searchTopic:
             return "/story/tag/search"
         }
     }
     
     var task: Task {
-        let parameters: [String: Any]
+        var parameters: [String: Any] = [:]
         switch self {
         case let .verify(phoneNumber, type):
             parameters = ["phone": phoneNumber, "type": "\(type.rawValue)"]
@@ -157,14 +157,17 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["name": name]
         case let .storyDetailsUvlist(storyId):
             parameters = ["storyId": storyId]
-//        case let .publishStory(url, topic, type):
-//            if let topic = topic {
-//                parameters = ["content": url, "type": type.rawValue, "tag": topic]
-//            } else {
-//                parameters = ["content": url, "type": type.rawValue]
-//            }
+        case let .publishStory(url, type, topic, center):
+            parameters = ["content": url, "type": type.rawValue]
+            if let topic = topic {
+                parameters["tag"] = topic
+            }
+            if let center = center {
+                parameters["x"] = center.x
+                parameters["y"] = center.y
+            }
         default:
-            parameters = [:]
+            break
         }
         return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
     }

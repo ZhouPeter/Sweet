@@ -13,6 +13,7 @@ enum StoryType: UInt, Codable {
     case image
     case video
     case text
+    case poke
 }
 
 struct StoryListResponse: Codable {

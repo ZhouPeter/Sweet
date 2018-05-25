@@ -73,6 +73,7 @@ final class TopicListController: UIViewController, TopicListView {
             case let .failure(error):
                 logger.error(error)
             case let .success(response):
+                logger.debug(response)
                 self.topics = response.tags
                 self.tableView.reloadData()
             }
