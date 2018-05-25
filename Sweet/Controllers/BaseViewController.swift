@@ -20,6 +20,9 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
 
     }
+    override var shouldAutorotate: Bool {
+        return false
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

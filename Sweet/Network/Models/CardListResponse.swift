@@ -8,6 +8,16 @@
 
 import Foundation
 
+enum EmojiType: UInt, Codable {
+    case unknown
+    case good
+    case cry
+    case grin
+    case yeah
+    case happy
+    case smile
+}
+
 struct CardListResponse: Codable {
     let list: [CardResponse]
 }
@@ -15,9 +25,13 @@ struct CardListResponse: Codable {
 struct CardResponse: Codable {
     let cardId: String
     let activityList: [ActivityResponse]?
+    let defaultEmojiList: [EmojiType]?
     let content: String?
     let imageList: [String]?
+    let contentImageList: [ContentImage]?
+    let video: String?
     let storyList: [[StoryResponse]]?
+    let result: SelectResult?
     let type: CardType
     let name: String?
     enum CardType: UInt, Codable {
@@ -29,6 +43,13 @@ struct CardResponse: Codable {
         case evaluation
     }
 }
+
+struct ContentImage: Codable {
+    let width: Double
+    let height: Double
+    let url: String
+}
+
 struct ActivityResponse: Codable {
     let avatar: String
     let content: String
@@ -38,4 +59,15 @@ struct ActivityResponse: Codable {
     let actor: UInt64
     let subtitle: String
     let title: String
+}
+
+struct SelectResult: Codable {
+    let contactUserList: [UserAvatar]
+    let index: Int
+    let percent: Double
+    
+    struct UserAvatar: Codable {
+        let avatar: String
+        let userId: UInt64
+    }
 }

@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
 }
-class ProfileController: BaseViewController, ProfileView {
+class ProfileController: BaseViewController, ProfileView {    
     var userId: UInt64?
     var showAbout: ((UserResponse) -> Void)?
     var user: UserResponse? {
@@ -44,7 +44,7 @@ class ProfileController: BaseViewController, ProfileView {
         tableView.backgroundColor = UIColor.xpGray()
         return tableView
     }()
-    
+
     private lazy var moreButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
@@ -63,6 +63,8 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
         actionsController = ActionsController()
         addChildViewController(actionsController)
         actionsController.didMove(toParentViewController: self)
@@ -84,6 +86,7 @@ class ProfileController: BaseViewController, ProfileView {
 }
 // MARK: - Actions
 extension ProfileController {
+
     @objc private func moreAction(sender: UIButton) {
         guard let user = user else { return }
         self.showAbout?(user)
@@ -207,7 +210,7 @@ extension ProfileController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return baseInfoViewModel == nil ? 0 : 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

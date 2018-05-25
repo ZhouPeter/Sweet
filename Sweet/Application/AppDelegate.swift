@@ -7,11 +7,22 @@
 //
 
 import UIKit
+var allowRotation = false
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var rootController = UINavigationController()
+
+    func application(_ application: UIApplication,
+                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if allowRotation {
+            return [.portrait, .landscapeRight, .landscapeLeft]
+        } else {
+            return UIInterfaceOrientationMask.portrait
+        }
+    }
     
     private lazy var applicationCoordinator: Coordinator = self.makeCoordinator()
 

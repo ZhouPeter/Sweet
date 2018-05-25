@@ -1,46 +1,58 @@
 PODS:
-  - Alamofire (4.7.1)
-  - APESuperHUD (1.1.3)
+  - Alamofire (4.7.2)
   - Hero (1.2.0)
-  - Kingfisher (4.7.0)
+  - JXPhotoBrowser (1.1.1):
+    - Kingfisher
+  - Kingfisher (4.8.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - NVActivityIndicatorView (4.2.1):
+    - NVActivityIndicatorView/Presenter (= 4.2.1)
+  - NVActivityIndicatorView/Presenter (4.2.1)
   - Pageboy (2.5.1)
-  - Realm (3.3.2):
-    - Realm/Headers (= 3.3.2)
-  - Realm/Headers (3.3.2)
-  - RealmSwift (3.3.2):
-    - Realm (= 3.3.2)
+  - PKHUD (5.0.0)
+  - Realm (3.5.0):
+    - Realm/Headers (= 3.5.0)
+  - Realm/Headers (3.5.0)
+  - RealmSwift (3.5.0):
+    - Realm (= 3.5.0)
   - Result (3.2.4)
-  - Reveal-SDK (13)
+  - Reveal-SDK (14)
   - SwiftyUserDefaults (3.0.1)
   - TapticEngine (1.1.0)
   - UMCCommon (1.5.0)
-  - UMCPush (3.2.0):
+  - UMCPush (3.2.1):
     - UMCCommon
+  - VIMediaCache (0.4)
 
 DEPENDENCIES:
-  - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Hero (~> 1.2.0)
+  - JXPhotoBrowser
   - Kingfisher
   - Moya (~> 11.0)
+  - NVActivityIndicatorView
   - Pageboy (~> 2.0)
+  - PKHUD (~> 5.0)
   - RealmSwift
   - Reveal-SDK
   - SwiftyUserDefaults
   - TapticEngine
   - UMCPush
+  - VIMediaCache
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Hero
+    - JXPhotoBrowser
     - Kingfisher
     - Moya
+    - NVActivityIndicatorView
     - Pageboy
+    - PKHUD
     - Realm
     - RealmSwift
     - Result
@@ -49,32 +61,27 @@ SPEC REPOS:
     - TapticEngine
     - UMCCommon
     - UMCPush
-
-EXTERNAL SOURCES:
-  APESuperHUD:
-    :git: https://github.com/apegroup/APESuperHUD.git
-
-CHECKOUT OPTIONS:
-  APESuperHUD:
-    :commit: b955f8f47f841ec3938b62245d5a7b3703e54e8d
-    :git: https://github.com/apegroup/APESuperHUD.git
+    - VIMediaCache
 
 SPEC CHECKSUMS:
-  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
-  APESuperHUD: d18e9cc943c1e9229830d8381bbc3efc39ec279d
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
-  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
+  JXPhotoBrowser: f1758dd7a74c2047da0a8aab52318a9314929826
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   Moya: a725035953bc1c0eb1be505ab903984501d82440
+  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
-  Realm: d927fbf66df5532cfafc08afb5f7e53ded37b894
-  RealmSwift: 4e903a494e05d866581d69ad6f7e7b879d446baf
+  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
+  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
+  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
+  Reveal-SDK: 55b5c5545233b680c2f8da734f202acc15d422b7
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
-  UMCPush: eabf1963436e16f0578a12d3d8e203f45170d50c
+  UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
+  VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
-PODFILE CHECKSUM: 09e71b172df2fa9f40bf560f036eedfba60eb80a
+PODFILE CHECKSUM: b9ff986aa373fa6f157a1f482617aedbb29c4251
 
 COCOAPODS: 1.5.0

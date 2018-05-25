@@ -13,6 +13,9 @@ extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
         return self.visibleViewController
     }
+    open override var shouldAutorotate: Bool {
+        return false
+    }
 }
 
 extension Notification.Name {
@@ -29,10 +32,9 @@ final class MainController: PageboyViewController, MainView {
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
     var onCardsFlowSelect: ((UINavigationController) -> Void)?
-    var onProfileFlowSelect: ((UINavigationController) -> Void)?
     
     private var controllers = [UINavigationController]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -41,8 +43,7 @@ final class MainController: PageboyViewController, MainView {
         let story = UINavigationController()
         let cards = UINavigationController()
         let imList = UINavigationController()
-        let profile = UINavigationController()
-        controllers = [story, cards, imList, profile]
+        controllers = [story, cards, imList]
         dataSource = self
         delegate = self
         onCardsFlowSelect?(cards)
@@ -128,9 +129,7 @@ extension MainController: PageboyViewControllerDataSource {
             onCardsFlowSelect?(nav)
         } else if index == 2 {
             onIMFlowSelect?(nav)
-        } else if index == 3 {
-            onProfileFlowSelect?(nav)
-        }
+        } 
         return nav
     }
 }
