@@ -19,6 +19,7 @@ class CardsBaseController: BaseViewController {
         view.delegate = self
         view.shouldSendNilText = true
         view.placeHolder = "说点什么..."
+        view.maxLength = 50
         return view
     } ()
     
@@ -386,11 +387,11 @@ extension CardsBaseController: PhotoBrowserDelegate {
 
 extension CardsBaseController: InputBottomViewDelegate {
     func inputBottomViewDidChangeHeight(_ height: CGFloat) {
-        
+        inputBottomViewHeight?.constant = height + 20
     }
     
     func inputBottomViewDidPressSend(withText text: String?) {
-        
+        inputBottomView.startEditing(false)
     }
 
 }

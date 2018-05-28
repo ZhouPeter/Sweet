@@ -93,6 +93,7 @@ class EmojiControlView: UIView {
     
     private func clearUI() {
         keywordButton.removeFromSuperview()
+        openButton.removeFromSuperview()
         emojiImageViews.forEach { $0.removeFromSuperview() }
         openButton.removeFromSuperview()
     }
