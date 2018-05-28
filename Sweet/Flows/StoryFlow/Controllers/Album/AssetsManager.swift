@@ -28,6 +28,14 @@ class AssetManager {
         }
     }
     
+    static func fetch() -> PHFetchResult<PHAsset>? {
+        guard PHPhotoLibrary.authorizationStatus() == .authorized else { return nil }
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        let result = PHAsset.fetchAssets(with: .image, options: options)
+        return result
+    }
+    
     static func resolveAsset(
         _ asset: PHAsset,
         size: CGSize = CGSize(width: 720, height: 1280),

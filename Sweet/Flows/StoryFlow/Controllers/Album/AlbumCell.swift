@@ -29,7 +29,14 @@ class AlbumCell: UICollectionViewCell {
     }
     
     func configureCell(_ image: UIImage) {
+        let animated = imageView.alpha < 1
         imageView.image = image
+        if animated {
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                self.imageView.alpha = 1
+                self.checkImageView.alpha = 1
+            }, completion: nil)
+        }
     }
     
     private func setup() {
@@ -42,5 +49,7 @@ class AlbumCell: UICollectionViewCell {
         checkImageView.constrain(width: 20, height: 20)
         checkImageView.align(.top, to: contentView, inset: 5)
         checkImageView.align(.right, to: contentView, inset: 5)
+        checkImageView.alpha = 0
+        imageView.alpha = 0
     }
 }

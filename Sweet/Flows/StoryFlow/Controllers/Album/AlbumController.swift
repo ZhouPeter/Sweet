@@ -16,7 +16,7 @@ protocol AlbumView: BaseView {
 final class AlbumController: UIViewController, AlbumView {
     var onFinished: ((UIImage) -> Void)?
     
-    private var assets = [PHAsset]()
+    private var fetchResult: PHFetchResult<PHAsset>?
     
     private lazy var itemSize: CGSize = {
         let length = self.view.bounds.width * 0.25
@@ -86,19 +86,14 @@ final class AlbumController: UIViewController, AlbumView {
         }
     }
     
-    private func fetchPhotos(_ completion: (() -> Void)? = nil) {
-        AssetManager.fetch { [weak self] assets in
-            guard let `self` = self else { return }
-            self.assets.removeAll()
-            self.assets.append(contentsOf: assets)
-            self.collectionView.reloadData()
-            completion?()
-        }
+    private func fetchPhotos() {
+        fetchResult = AssetManager.fetch()
+        collectionView.reloadData()
     }
 
     @objc private func didPressRightBarButton() {
-        guard let indexPath = selectedIndexPath else { return }
-        AssetManager.resolveAsset(assets[indexPath.row]) { [weak self] (image) in
+        guard let indexPath = selectedIndexPath, let result = fetchResult else { return }
+        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
             guard let image = image else { return }
             self?.onFinished?(image)
         }
@@ -107,18 +102,19 @@ final class AlbumController: UIViewController, AlbumView {
 
 extension AlbumController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return assets.count
+        return fetchResult?.count ?? 0
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
+            let result = fetchResult,
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? AlbumCell
         else {
             fatalError()
         }
-        let asset = assets[indexPath.row]
+        let asset = result[indexPath.row]
         AssetManager.resolveAsset(asset, size: itemSize) { image in
             if let image = image {
                 cell.configureCell(image)
