@@ -15,6 +15,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
     var showProfile: ((UInt64) -> Void)?
     private var sectionViewModels = [ContactSubcriptionSectionViewModel]()
     private var userViewModels = [ContactViewModel]()
+    private var blockViewModels = [ContactViewModel]()
     private var titles = [String]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -55,15 +56,57 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                     }
                     self.userViewModels.append(viewModel)
                 })
+                response.blocks.forEach({ (model) in
+                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    viewModel.callBack = { [weak self] userId in
+                        self?.delBlocklist(userId: userId)
+                    }
+                    self.blockViewModels.append(viewModel)
+                })
                 if self.sectionViewModels.count > 0 { self.titles.append("栏目") }
                 if self.userViewModels.count > 0 { self.titles.append("用户") }
+                if self.blockViewModels.count > 0 { self.titles.append("屏蔽") }
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
             }
         }
     }
+    private func addBlocklist(userId: UInt64) {
+        web.request(.addBlock(userId: userId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.blockViewModels.index(where: { $0.userId == userId }) else { return }
+                self.blockViewModels[index].buttonStyle = .borderGray
+                self.blockViewModels[index].buttonTitle = "恢复"
+                self.blockViewModels[index].callBack = { [weak self] userId in
+                    self?.delBlocklist(userId: userId)
+                }
+                let section: Int = self.titles.index(of: "屏蔽")!
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
     
+    private func delBlocklist(userId: UInt64) {
+        web.request(.delBlock(userId: userId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.blockViewModels.index(where: { $0.userId == userId }) else { return }
+                self.blockViewModels[index].buttonStyle = .backgroundColorGray
+                self.blockViewModels[index].buttonTitle = "屏蔽"
+                self.blockViewModels[index].callBack = { [weak self] userId in
+                    self?.addBlocklist(userId: userId)
+                }
+                let section: Int = self.titles.index(of: "屏蔽")!
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
     private func delUserSubscription(userId: UInt64) {
         web.request(.delUserSubscription(userId: userId)) { (result) in
             switch result {
@@ -74,7 +117,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.userViewModels[index].callBack = { [weak self] userId in
                     self?.addUserSubscription(userId: userId)
                 }
-                let section: Int = self.titles[0] == "栏目" ? 1 : 0
+                let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -92,7 +135,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.userViewModels[index].callBack = { [weak self] userId in
                     self?.delUserSubscription(userId: userId)
                 }
-                let section: Int = self.titles[0] == "栏目" ? 1 : 0
+                let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -142,8 +185,12 @@ extension SubscriptionController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if titles[section] == "栏目" {
             return sectionViewModels.count
-        } else {
+        } else if titles[section] == "用户" {
             return userViewModels.count
+        } else if titles[section] == "屏蔽" {
+            return blockViewModels.count
+        } else {
+            return 0
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,8 +198,10 @@ extension SubscriptionController: UITableViewDataSource {
             withIdentifier: "subscriptionCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
         if titles[indexPath.section] == "栏目" {
             cell.updateSectionWithButton(viewModel: sectionViewModels[indexPath.row])
-        } else {
+        } else if titles[indexPath.section] == "用户"{
             cell.update(viewModel: userViewModels[indexPath.row])
+        } else if titles[indexPath.section] == "屏蔽" {
+            cell.update(viewModel: blockViewModels[indexPath.row])
         }
         return cell
     }
@@ -165,8 +214,10 @@ extension SubscriptionController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if titles[indexPath.section] == "栏目" {
             
-        } else {
+        } else if titles[indexPath.section] == "用户" {
             showProfile?(userViewModels[indexPath.row].userId)
+        } else if titles[indexPath.section] == "屏蔽" {
+            showProfile?(blockViewModels[indexPath.row].userId)
         }
     }
     

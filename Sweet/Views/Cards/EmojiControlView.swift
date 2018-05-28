@@ -66,6 +66,7 @@ class EmojiControlView: UIView {
         emojiImageViews[1].image = UIImage(named: names[1])
     }
     func openEmojis() {
+        clearUI()
         var insetX: CGFloat = 10
         let insetY: CGFloat = 5
         addSubview(keywordButton)

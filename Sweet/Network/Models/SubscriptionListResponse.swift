@@ -11,6 +11,7 @@ import Foundation
 struct SubscriptionListResponse: Codable {
     let sections: [SubcriptionSection]
     let users: [Contact]
+    let blocks: [Contact]
 }
 
 struct SubcriptionSection: Codable {

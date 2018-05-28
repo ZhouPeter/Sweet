@@ -10,6 +10,7 @@ import Foundation
 
 struct ContactListResponse: Codable {
     let list: [Contact]
+    let blacklist: [Contact]
 }
 
 struct Contact: Codable {

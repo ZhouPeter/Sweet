@@ -46,7 +46,7 @@ class BlackController: BaseViewController, BlackView {
                         self?.delBlacklist(userId: userId)
                     }
                     self.viewModels.append(viewModel)
-                })
+                })                                                                                                                              
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)

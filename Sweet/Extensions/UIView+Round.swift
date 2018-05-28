@@ -9,6 +9,8 @@
 import UIKit
 
 extension UIView {
+    public typealias RounderLayer = (maskLayer: CAShapeLayer?, borderLayer: CAShapeLayer?)
+
     func drawRect(cornerRadius: CGFloat,
                   borderWidth: CGFloat,
                   backgroundColor: UIColor,
@@ -52,13 +54,17 @@ extension UIView {
         return image!
     }
     
-    func setView(cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: UIColor) {
+    func setView(cornerRadius: CGFloat,
+                 borderWidth: CGFloat,
+                 borderColor: UIColor) -> RounderLayer {
         layoutIfNeeded()
+        var groupLayer: RounderLayer = (nil, nil)
         let maskPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         let maskLayer = CAShapeLayer()
         maskLayer.frame = bounds
         maskLayer.path = maskPath.cgPath
         layer.mask = maskLayer
+        groupLayer.maskLayer = maskLayer
         if borderWidth > 0 {
             let borderLayer = CAShapeLayer()
             let halfWidth = borderWidth / 2
@@ -72,7 +78,9 @@ extension UIView {
             borderLayer.lineWidth = borderWidth
             borderLayer.frame = CGRect(origin: .zero, size: frame.size)
             layer.addSublayer(borderLayer)
+            groupLayer.borderLayer = borderLayer
         }
+        return groupLayer
     }
     
     func setViewRounded(cornerRadius: CGFloat, corners: UIRectCorner) {
@@ -86,15 +94,15 @@ extension UIView {
         layer.mask = maskLayer
     }
     
-    func setViewRounded(borderWidth: CGFloat, borderColor: UIColor) {
+    @discardableResult func setViewRounded(borderWidth: CGFloat, borderColor: UIColor) -> RounderLayer {
         layoutIfNeeded()
         let cornerRadius = bounds.height / 2
-        setView(cornerRadius: cornerRadius, borderWidth: borderWidth, borderColor: borderColor)
+        return setView(cornerRadius: cornerRadius, borderWidth: borderWidth, borderColor: borderColor)
     }
     
-    func setViewRounded() {
+    @discardableResult func setViewRounded() -> RounderLayer {
         layoutIfNeeded()
         let cornerRadius = bounds.height / 2
-        setView(cornerRadius: cornerRadius, borderWidth: 0, borderColor: .clear)
+        return setView(cornerRadius: cornerRadius, borderWidth: 0, borderColor: .clear)
     }
 }
