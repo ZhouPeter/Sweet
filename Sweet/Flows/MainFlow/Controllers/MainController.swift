@@ -46,6 +46,7 @@ final class MainController: PageboyViewController, MainView {
         controllers = [story, cards, imList]
         dataSource = self
         delegate = self
+        bounces = false
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
 
