@@ -8,3 +8,4 @@
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
 #import "GPUImageBeautifyFilter.h"
+#import "InputBottomView.h"

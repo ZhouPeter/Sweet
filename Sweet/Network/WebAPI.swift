@@ -43,6 +43,7 @@ enum WebAPI {
     case storyTopics
     case searchTopic(topic: String)
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
+    case socketAddress
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -114,6 +115,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/add"
         case .searchTopic:
             return "/story/tag/search"
+        case .socketAddress:
+            return "/setting/im/routes"
         }
     }
     

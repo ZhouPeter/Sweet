@@ -536,6 +536,46 @@
 		AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
 		AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
 		AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
+		AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
+		AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
+		AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
+		AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
+		AC2A256E20BBF16B00A82E62 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A256D20BBF16B00A82E62 /* Messenger.swift */; };
+		AC2A256F20BBF16B00A82E62 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A256D20BBF16B00A82E62 /* Messenger.swift */; };
+		AC2A257020BBF16B00A82E62 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A256D20BBF16B00A82E62 /* Messenger.swift */; };
+		AC2A257120BBF16B00A82E62 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A256D20BBF16B00A82E62 /* Messenger.swift */; };
+		AC2A257820BC23C700A82E62 /* MessengerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */; };
+		AC2A257920BC23C700A82E62 /* MessengerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */; };
+		AC2A257A20BC23C700A82E62 /* MessengerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */; };
+		AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */; };
+		AC2A257D20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */; };
+		AC2A257E20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */; };
+		AC2A257F20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */; };
+		AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */; };
+		AC2A258720BD2B9F00A82E62 /* Login.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258120BD2B9E00A82E62 /* Login.pb.swift */; };
+		AC2A258820BD2B9F00A82E62 /* Login.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258120BD2B9E00A82E62 /* Login.pb.swift */; };
+		AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258120BD2B9E00A82E62 /* Login.pb.swift */; };
+		AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258120BD2B9E00A82E62 /* Login.pb.swift */; };
+		AC2A258B20BD2B9F00A82E62 /* Message.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258220BD2B9E00A82E62 /* Message.pb.swift */; };
+		AC2A258C20BD2B9F00A82E62 /* Message.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258220BD2B9E00A82E62 /* Message.pb.swift */; };
+		AC2A258D20BD2B9F00A82E62 /* Message.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258220BD2B9E00A82E62 /* Message.pb.swift */; };
+		AC2A258E20BD2B9F00A82E62 /* Message.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258220BD2B9E00A82E62 /* Message.pb.swift */; };
+		AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258320BD2B9F00A82E62 /* Command.pb.swift */; };
+		AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258320BD2B9F00A82E62 /* Command.pb.swift */; };
+		AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258320BD2B9F00A82E62 /* Command.pb.swift */; };
+		AC2A259220BD2B9F00A82E62 /* Command.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258320BD2B9F00A82E62 /* Command.pb.swift */; };
+		AC2A259320BD2B9F00A82E62 /* Base.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258420BD2B9F00A82E62 /* Base.pb.swift */; };
+		AC2A259420BD2B9F00A82E62 /* Base.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258420BD2B9F00A82E62 /* Base.pb.swift */; };
+		AC2A259520BD2B9F00A82E62 /* Base.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258420BD2B9F00A82E62 /* Base.pb.swift */; };
+		AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258420BD2B9F00A82E62 /* Base.pb.swift */; };
+		AC2A259720BD2B9F00A82E62 /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258520BD2B9F00A82E62 /* User.pb.swift */; };
+		AC2A259820BD2B9F00A82E62 /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258520BD2B9F00A82E62 /* User.pb.swift */; };
+		AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258520BD2B9F00A82E62 /* User.pb.swift */; };
+		AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258520BD2B9F00A82E62 /* User.pb.swift */; };
+		AC2A259B20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
+		AC2A259C20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
+		AC2A259D20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
+		AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
 		AC2F978720904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
 		AC2F978820904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
 		AC2F978920904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
@@ -552,6 +592,14 @@
 		AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D220A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
+		AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
+		AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
+		AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
+		AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
+		AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41420120BD477000DC62E0 /* Date+Timestamp.swift */; };
+		AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41420120BD477000DC62E0 /* Date+Timestamp.swift */; };
+		AC41420420BD477000DC62E0 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41420120BD477000DC62E0 /* Date+Timestamp.swift */; };
+		AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41420120BD477000DC62E0 /* Date+Timestamp.swift */; };
 		AC45CD0B20AD27B0005C4AA0 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; };
 		AC45CD0C20AD27B0005C4AA0 /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC45CD1A20AD27CD005C4AA0 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC45CCF920AD265E005C4AA0 /* GPUImage.framework */; };
@@ -1138,10 +1186,22 @@
 		AC04E9872099C87F004401AC /* LookupFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupFilter.h; sourceTree = "<group>"; };
 		AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryFilterPreviewController.h; sourceTree = "<group>"; };
 		AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryFilterPreviewController.m; sourceTree = "<group>"; };
+		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
+		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
+		AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerDelegate.swift; sourceTree = "<group>"; };
+		AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		AC2A258120BD2B9E00A82E62 /* Login.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.pb.swift; sourceTree = "<group>"; };
+		AC2A258220BD2B9E00A82E62 /* Message.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.pb.swift; sourceTree = "<group>"; };
+		AC2A258320BD2B9F00A82E62 /* Command.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.pb.swift; sourceTree = "<group>"; };
+		AC2A258420BD2B9F00A82E62 /* Base.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.pb.swift; sourceTree = "<group>"; };
+		AC2A258520BD2B9F00A82E62 /* User.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.pb.swift; sourceTree = "<group>"; };
+		AC2A258620BD2B9F00A82E62 /* General.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.pb.swift; sourceTree = "<group>"; };
 		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
+		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
 		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCaptureView.swift; sourceTree = "<group>"; };
 		AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautifyFilter.m; sourceTree = "<group>"; };
@@ -1482,6 +1542,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC2A252E20BBE29400A82E62 /* Messenger */ = {
+			isa = PBXGroup;
+			children = (
+				AC2A254420BBEB1A00A82E62 /* Protos */,
+				AC2A256D20BBF16B00A82E62 /* Messenger.swift */,
+				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
+				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
+			);
+			path = Messenger;
+			sourceTree = "<group>";
+		};
+		AC2A254420BBEB1A00A82E62 /* Protos */ = {
+			isa = PBXGroup;
+			children = (
+				AC2A258420BD2B9F00A82E62 /* Base.pb.swift */,
+				AC2A258320BD2B9F00A82E62 /* Command.pb.swift */,
+				AC2A258620BD2B9F00A82E62 /* General.pb.swift */,
+				AC2A258120BD2B9E00A82E62 /* Login.pb.swift */,
+				AC2A258220BD2B9E00A82E62 /* Message.pb.swift */,
+				AC2A258520BD2B9F00A82E62 /* User.pb.swift */,
+			);
+			path = Protos;
+			sourceTree = "<group>";
+		};
 		AC2F978420904A7700D5DE4F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1697,6 +1781,7 @@
 			children = (
 				58BD530F208EF6BD00F7C3E1 /* Sweet.entitlements */,
 				ACA323482087496800BDC92E /* Application */,
+				AC2A252E20BBE29400A82E62 /* Messenger */,
 				ACD5A52420886C6600B78CFD /* Network */,
 				AC2F978420904A7700D5DE4F /* Storage */,
 				ACA3237520875D8C00BDC92E /* Flows */,
@@ -1799,6 +1884,7 @@
 				ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */,
 				AC4D091320B7B774007686EB /* UIButton+Topic.swift */,
 				AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */,
+				AC41420120BD477000DC62E0 /* Date+Timestamp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1879,6 +1965,7 @@
 				58BD5313208F22CD00F7C3E1 /* Contacts.swift */,
 				58447B21209AE2D5004C2FFE /* TimerHelper.swift */,
 				AC972541209B2728009FB966 /* KeyboardListener.swift */,
+				AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1886,6 +1973,7 @@
 		ACD5A52420886C6600B78CFD /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				ACF2DEAD2089C5C400660425 /* Models */,
 				AC8412172088828E0086891C /* WebAPI.swift */,
 				58BD52ED208DC3F400F7C3E1 /* QiniuAPI.swift */,
 				ACD5A52520886C7C00B78CFD /* WebProvider.swift */,
@@ -1893,7 +1981,6 @@
 				AC841212208881A40086891C /* AuthPlugin.swift */,
 				AC84121C2088B0E60086891C /* SignPlugin.swift */,
 				AC8412212088B1DE0086891C /* Signer.swift */,
-				ACF2DEAD2089C5C400660425 /* Models */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1918,6 +2005,7 @@
 				589E6BC220A97BDD0038FAED /* CardListResponse.swift */,
 				5863A83920ABCE6F0016B089 /* StoryUvList.swift */,
 				ACC6620920AA88830070641C /* TopicListResponse.swift */,
+				AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2204,6 +2292,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2215,14 +2304,17 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/TapticEngine/TapticEngine.framework",
 				"${BUILT_PRODUCTS_DIR}/VIMediaCache/VIMediaCache.framework",
+				"${BUILT_PRODUCTS_DIR}/libimcloud/libimcloud.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2234,9 +2326,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TapticEngine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VIMediaCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libimcloud.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2344,6 +2438,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APESuperHUD/APESuperHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2355,14 +2450,17 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/TapticEngine/TapticEngine.framework",
 				"${BUILT_PRODUCTS_DIR}/VIMediaCache/VIMediaCache.framework",
+				"${BUILT_PRODUCTS_DIR}/libimcloud/libimcloud.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APESuperHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2374,9 +2472,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TapticEngine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VIMediaCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libimcloud.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2393,6 +2493,7 @@
 				5803574420AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				AC2A259B20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				5803571B20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
@@ -2406,6 +2507,7 @@
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */,
 				5803575320AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
+				AC2A259720BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972542209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -2416,6 +2518,7 @@
 				58BD534020905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9920B7E5E60068F1B3 /* AlbumController.swift in Sources */,
@@ -2432,6 +2535,7 @@
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
+				AC2A258B20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
@@ -2445,8 +2549,10 @@
 				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				58CE1ED520A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
+				AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				58BD52E2208DA51500F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
+				AC2A259320BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB2208DD714001070B2 /* IMListController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -2457,11 +2563,13 @@
 				58155E12209175AF00ADEFFB /* FeedsController.swift in Sources */,
 				58CAB38820AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
+				AC2A257820BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
+				AC2A257D20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				58CE1EE420A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				58BD52E5208DAAD800F7C3E1 /* EmptyView.swift in Sources */,
@@ -2471,8 +2579,10 @@
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5863A83F20ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				589E6BB420A95D990038FAED /* CardsManagerController.swift in Sources */,
+				AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC45CD6C20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
+				AC2A256E20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
@@ -2541,11 +2651,13 @@
 				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF7A8C420B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B0208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				ACE560B5209984A000CE2564 /* StoryEditView.swift in Sources */,
+				AC2A258720BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58BD52FA208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */,
@@ -2636,6 +2748,7 @@
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5863A83C20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				AC2A259520BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				589E6BBB20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
@@ -2643,14 +2756,17 @@
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
+				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				5803575020AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */,
+				AC41420420BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104C20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
+				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -2673,6 +2789,8 @@
 				AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */,
+				AC2A257020BBF16B00A82E62 /* Messenger.swift in Sources */,
 				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
@@ -2712,13 +2830,16 @@
 				AC6C1D9020A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				585B68C420AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				AC2A257F20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
+				AC2A258D20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				589E6BB620A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E282091B3E300ADEFFB /* AboutController.swift in Sources */,
+				AC2A257A20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
@@ -2746,9 +2867,11 @@
 				58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
+				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
+				AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
@@ -2801,6 +2924,7 @@
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CB20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				AC2A259D20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
@@ -2835,6 +2959,7 @@
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5863A83D20ABCF3B0016B089 /* StoryUvList.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
@@ -2842,14 +2967,17 @@
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
+				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
+				AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38120AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
+				AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -2872,6 +3000,8 @@
 				AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
+				AC2A257120BBF16B00A82E62 /* Messenger.swift in Sources */,
 				ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
@@ -2911,13 +3041,16 @@
 				AC6C1D9120A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				585B68C520AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52920886C7C00B78CFD /* WebProvider.swift in Sources */,
+				AC2A258E20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				589E6BB720A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E292091B3E300ADEFFB /* AboutController.swift in Sources */,
+				AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
@@ -2945,9 +3078,11 @@
 				58EA105320B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
+				AC2A259220BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
+				AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
@@ -3000,6 +3135,7 @@
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
@@ -3034,6 +3170,7 @@
 				5803574520AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				AC2A259C20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				5803571C20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
@@ -3047,6 +3184,7 @@
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				5803575420AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
+				AC2A259820BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -3057,6 +3195,7 @@
 				58BD534120905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9A20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
@@ -3073,6 +3212,7 @@
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
+				AC2A258C20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */,
@@ -3086,8 +3226,10 @@
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
 				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */,
+				AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				58CE1ED620A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				58BD52E3208DA52000F7C3E1 /* SearchUniversityResponse.swift in Sources */,
+				AC2A259420BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* IMListController.swift in Sources */,
@@ -3098,11 +3240,13 @@
 				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,
 				58155E13209175AF00ADEFFB /* FeedsController.swift in Sources */,
+				AC2A257920BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				AC2A257E20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				589E6BDC20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
@@ -3112,8 +3256,10 @@
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				5863A84020ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				589E6BB520A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
+				AC2A256F20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				AC45CD6D20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
@@ -3182,11 +3328,13 @@
 				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF7A8C520B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				58BD52B1208871E300F7C3E1 /* SignUpCollegeView.swift in Sources */,
 				ACE560B6209984A000CE2564 /* StoryEditView.swift in Sources */,
+				AC2A258820BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58BD52FB208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */,
@@ -3441,7 +3589,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3462,7 +3613,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -3482,7 +3636,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3503,7 +3661,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3522,7 +3684,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3542,7 +3708,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3568,7 +3738,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -3595,7 +3768,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

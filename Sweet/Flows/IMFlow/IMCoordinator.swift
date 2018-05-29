@@ -21,6 +21,9 @@ final class IMCoordinator: BaseCoordinator {
     override func start() {
         logger.debug()
         showIMManager()
+        
+        Messenger.shared.login(with: 0, token: "")
+        Messenger.shared.addDelegate(self)
     }
     
     // MARK: - Private
@@ -37,6 +40,23 @@ final class IMCoordinator: BaseCoordinator {
     }
     
 }
+
+extension IMCoordinator: MessengerDelegate {
+    func messengerDidLogin(userID: UInt64, success: Bool) {
+        logger.debug(userID, success)
+        Messenger.shared.logout()
+    }
+    
+    func messengerDidUpdate(state: MessengerState) {
+        logger.debug(state)
+    }
+    
+    func messengerDidLogout(userID: UInt64) {
+        logger.debug(userID)
+    }
+}
+
+
 // MARK: - IMList
 extension IMCoordinator {
     private func showIMList(iMListView: IMListView) {

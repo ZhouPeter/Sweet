@@ -18,6 +18,8 @@ target 'Sweet' do
   pod 'VIMediaCache'
   pod 'JXPhotoBrowser'
   pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
+  pod 'libimcloud', :git=>'https://gitee.com/miaobo/iOS.LIBIMCLOUD.git', :branch => 'master'
+  pod 'SwiftProtobuf'
   
   target 'Sweet Dev' do
   end
