@@ -19,11 +19,17 @@ enum MessengerState {
     case online
 }
 
+#if DEV
+private let secret = "ktjfbkwxhmkk6z3"
+#else
+private let secret = "iulyn5yxzagkwo5"
+#endif
+
 final class Messenger {
     static let shared = Messenger()
     private(set) var state = MessengerState.offline {
         didSet {
-            multicastDelegate.invokeDelegates({ $0.messengerDidUpdate(state: state) })
+            multicastDelegate.invoke({ $0.messengerDidUpdateState(state) })
         }
     }
     private(set) var isNetworkReachable = false {
@@ -36,16 +42,15 @@ final class Messenger {
     private var multicastDelegate = MulticastDelegate<MessengerDelegate>()
     private var userID: UInt64?
     private var token: String?
-    private var serverDate: Date?
+    private var serverDate: Date? {
+        didSet {
+            multicastDelegate.invoke({ $0.messengerDidUpdateServerDate(serverDate) })
+        }
+    }
     private var service: ImCloudService {
         guard let service = ImCloudService.sharedInstance() else { fatalError() }
         return service
     }
-    #if DEV
-    private let secret = "ktjfbkwxhmkk6z3"
-    #else
-    private let secret = "iulyn5yxzagkwo5"
-    #endif
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     
     private init() {
@@ -77,7 +82,35 @@ final class Messenger {
         state = .offline
         service.stop {
             logger.debug("Service stopped")
-            self.multicastDelegate.invokeDelegates({ $0.messengerDidLogout(userID: userID) })
+            self.multicastDelegate.invoke({ $0.messengerDidLogout(userID: userID) })
+        }
+    }
+    
+    @discardableResult func sendText(_ text: String, to: UInt64) -> InstantMessage {
+        var message = InstantMessage()
+        message.content = text
+        message.type = .text
+        message.to = to
+        send(message)
+        return message
+    }
+    
+    func send(_ message: InstantMessage) {
+        guard state == .online else {
+            multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
+            return
+        }
+        let request = message.makeSendRequest()
+        send(request, resonseType: SendResp.self, module: .message, command: MsgCmdID.sendReq.rawValue) { (response) in
+            guard let response = response, response.resultCode == 0 else {
+                self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
+                return
+            }
+            var messageSent = message
+            messageSent.remoteID = response.msgID
+            messageSent.sentDate = Date()
+            self.serverDate = Date(timeIntervalSince1970: Double(response.timestamp) / 1000)
+            self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
         }
     }
     
@@ -102,26 +135,21 @@ final class Messenger {
         }
         state = .connecting
         web.request(.socketAddress, responseType: Response<SocketAddressResponse>.self) { (result) in
-            switch result {
-            case let .failure(error):
+            if case let .failure(error) = result {
                 logger.error(error)
                 self.state = .offline
-            case let .success(response):
-                logger.debug(response)
-                guard let address = response.routes.first else {
-                    self.state = .offline
-                    return
-                }
-                self.connect(with: address, completion: {
-                    self.login({ (date) in
-                        if let date = date {
-                            self.serverDate = date
-                        }
-                        self.multicastDelegate
-                            .invokeDelegates({ $0.messengerDidLogin(userID: userID, success: date != nil) })
-                    })
-                })
+                return
             }
+            guard case let .success(response) = result, let address = response.routes.first else {
+                self.state = .offline
+                return
+            }
+            self.connect(with: address, completion: {
+                self.login({ (date) in
+                    if let date = date { self.serverDate = date }
+                    self.multicastDelegate.invoke({ $0.messengerDidLogin(userID: userID, success: date != nil) })
+                })
+            })
         }
     }
     

@@ -11,12 +11,15 @@ import Foundation
 protocol MessengerDelegate: class {
     func messengerDidLogin(userID: UInt64, success: Bool)
     func messengerDidLogout(userID: UInt64)
-    func messengerDidUpdate(state: MessengerState)
-    
+    func messengerDidUpdateState(_ state: MessengerState)
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool)
+    func messengerDidUpdateServerDate(_ serverDate: Date?)
 }
 
 extension MessengerDelegate {
     func messengerDidLogin(userID: UInt64, success: Bool) {}
     func messengerDidLogout(userID: UInt64) {}
-    func messengerDidUpdate(state: MessengerState) {}
+    func messengerDidUpdateState(_ state: MessengerState) {}
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {}
+    func messengerDidUpdateServerDate(_ date: Date?) {}
 }

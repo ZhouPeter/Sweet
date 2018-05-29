@@ -56,7 +56,6 @@ extension IMCoordinator: MessengerDelegate {
     }
 }
 
-
 // MARK: - IMList
 extension IMCoordinator {
     private func showIMList(iMListView: IMListView) {
@@ -64,6 +63,7 @@ extension IMCoordinator {
             self?.showProfile()
         }
     }
+    
     private func showProfile() {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
         coordinator.finishFlow = { [weak self] in
@@ -141,4 +141,3 @@ extension IMCoordinator {
     }
 
 }
-

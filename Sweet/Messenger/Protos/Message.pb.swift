@@ -121,7 +121,7 @@ struct SendReq {
 
   var to: UInt64 = 0
 
-  var type: MsgType = .unknown
+  var type: IMType = .unknown
 
   var content: String = String()
 
@@ -195,7 +195,7 @@ struct GetResp {
 
   var resultCode: UInt32 = 0
 
-  var msgList: [IMMessage] = []
+  var msgList: [IMProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -225,7 +225,7 @@ struct RecentGetResp {
 
   var resultCode: UInt32 = 0
 
-  var msgList: [IMMessage] = []
+  var msgList: [IMProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -258,7 +258,7 @@ struct DirectionGetResp {
 
   var resultCode: UInt32 = 0
 
-  var msgList: [IMMessage] = []
+  var msgList: [IMProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -337,7 +337,7 @@ struct UnreadMsgResp {
 
   var resultCode: UInt32 = 0
 
-  var msgList: [IMMessage] = []
+  var msgList: [IMProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -366,7 +366,7 @@ struct RecentMsgResp {
 
   var resultCode: UInt32 = 0
 
-  var msgList: [IMMessage] = []
+  var msgList: [IMProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 

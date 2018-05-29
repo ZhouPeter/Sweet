@@ -19,7 +19,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum MsgType: SwiftProtobuf.Enum {
+enum IMType: SwiftProtobuf.Enum {
   typealias RawValue = Int
 
   ///未定义
@@ -77,7 +77,7 @@ enum MsgType: SwiftProtobuf.Enum {
 
 }
 
-struct IMMessage {
+struct IMProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -92,7 +92,7 @@ struct IMMessage {
   var to: UInt64 = 0
 
   /// 消息类型
-  var type: MsgType = .unknown
+  var type: IMType = .unknown
 
   /// 消息内容
   var content: String = String()
@@ -196,7 +196,7 @@ struct SimpleUserInfo {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension MsgType: SwiftProtobuf._ProtoNameProviding {
+extension IMType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNKNOWN"),
     1: .same(proto: "TEXT"),
@@ -206,8 +206,8 @@ extension MsgType: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension IMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "IMMessage"
+extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "IMProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "from"),
@@ -263,7 +263,7 @@ extension IMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: IMMessage) -> Bool {
+  func _protobuf_generated_isEqualTo(other: IMProto) -> Bool {
     if self.id != other.id {return false}
     if self.from != other.from {return false}
     if self.to != other.to {return false}

@@ -864,6 +864,10 @@
 		ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
+		ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
+		ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
+		ACDB24B120BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
 		ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
@@ -1285,6 +1289,7 @@
 		ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet Dev-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACDB24AD20BD74E00039368E /* InstantMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessage.swift; sourceTree = "<group>"; };
 		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
 		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
@@ -1549,6 +1554,7 @@
 				AC2A256D20BBF16B00A82E62 /* Messenger.swift */,
 				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
 				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
+				ACDB24AD20BD74E00039368E /* InstantMessage.swift */,
 			);
 			path = Messenger;
 			sourceTree = "<group>";
@@ -2515,6 +2521,7 @@
 				580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
+				ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
@@ -2790,6 +2797,7 @@
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */,
+				ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC2A257020BBF16B00A82E62 /* Messenger.swift in Sources */,
 				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
@@ -3001,6 +3009,7 @@
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
+				ACDB24B120BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC2A257120BBF16B00A82E62 /* Messenger.swift in Sources */,
 				ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
@@ -3192,6 +3201,7 @@
 				580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
+				ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,

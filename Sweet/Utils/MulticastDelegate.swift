@@ -78,7 +78,7 @@ open class MulticastDelegate<T> {
      *
      *  - parameter invocation: The closure to be invoked on each delegate.
      */
-    public func invokeDelegates(_ invocation: (T) -> Void) {
+    public func invoke(_ invocation: (T) -> Void) {
         for delegate in delegates.allObjects {
             // swiftlint:disable force_cast
             invocation(delegate as! T)
@@ -137,5 +137,5 @@ precedencegroup MulticastPrecedence {
 }
 infix operator |> : MulticastPrecedence
 public func |><T> (left: MulticastDelegate<T>, right: (T) -> Void) {
-    left.invokeDelegates(right)
+    left.invoke(right)
 }
