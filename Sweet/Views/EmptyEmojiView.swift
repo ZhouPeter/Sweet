@@ -16,7 +16,7 @@ class EmptyEmojiView: UIView {
         return imageView
     }()
     
-    private lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "快去首页发现有趣的同学"
         label.font = UIFont.systemFont(ofSize: 12)
@@ -38,7 +38,8 @@ class EmptyEmojiView: UIView {
         backgroundColor = UIColor(hex: 0xF2F2F2)
         addSubview(emojiImageView)
         emojiImageView.constrain(width: 150, height: 150)
-        emojiImageView.center(to: self)
+        emojiImageView.centerX(to: self)
+        emojiImageView.align(.top, to: self, inset: 120)
         addSubview(titleLabel)
         titleLabel.centerX(to: self)
         titleLabel.pin(.bottom, to: emojiImageView)

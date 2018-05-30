@@ -41,7 +41,11 @@ class IMContactsController: BaseViewController, IMContactsView {
         viewModels.append(subViewModel)
         return viewModels
     }()
-    private var viewModelsGroup = [[ContactViewModel]]()
+    private var viewModelsGroup = [[ContactViewModel]]() {
+        didSet {
+            self.showEmptyView(isShow: self.viewModelsGroup.count == 0)
+        }
+    }
     private var titles = [String]()
     
     private lazy var tableViewFooterView: ContactsFooterView = {
@@ -181,7 +185,6 @@ extension IMContactsController {
                     self.titles.append("黑名单")
                 }
                 let countTitle = "\(self.allViewModels.count + self.blacklistViewModels.count)位联系人"
-                self.showEmptyView(isShow: self.viewModelsGroup.count == 0)
                 self.tableViewFooterView.update(title: countTitle)
                 self.tableView.reloadData()
             case let .failure(error):
