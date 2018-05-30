@@ -40,7 +40,7 @@ final class IMCoordinator: BaseCoordinator {
         view.didShowContacts = { [weak self] view in
             view.delegate = self
         }
-        view.didShowConversations = { [weak self] view in
+        view.didShowInbox = { [weak self] view in
             view.showProfile = { self?.showSelfProfile() }
             guard let `self` = self, self.isAvatarLoaded == false else { return }
             var urlString: String?

@@ -1,5 +1,5 @@
 //
-//  ConversationsController.swift
+//  InboxController.swift
 //  Sweet
 //
 //  Created by Mario Z. on 2018/4/23.
@@ -9,12 +9,12 @@
 import UIKit
 import SwiftyUserDefaults
 
-protocol ConversationsView: BaseView {
+protocol InboxView: BaseView {
     var showProfile: (() -> Void)? { get set }
     func didUpdateAvatar(URLString: String)
 }
 
-final class ConversationsController: BaseViewController, ConversationsView {
+final class InboxController: BaseViewController, InboxView {
     var showProfile: (() -> Void)?
     
     private lazy var avatarImageView: UIImageView = {

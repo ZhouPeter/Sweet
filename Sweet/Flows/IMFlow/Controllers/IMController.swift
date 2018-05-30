@@ -9,15 +9,15 @@
 import UIKit
 
 protocol IMView: BaseView {
-    var didShowConversations: ((ConversationsView) -> Void)? { get set }
+    var didShowInbox: ((InboxView) -> Void)? { get set }
     var didShowContacts: ((ContactsView) -> Void)? { get set }
 }
 
 class IMController: BaseViewController, IMView {
-    var didShowConversations: ((ConversationsView) -> Void)?
+    var didShowInbox: ((InboxView) -> Void)?
     var didShowContacts: ((ContactsView) -> Void)?
     
-    private var conversationsController = ConversationsController()
+    private var inboxController = InboxController()
     private var contactsController = ContactsController()
     private var isConversationsShown = true
     
@@ -39,7 +39,7 @@ class IMController: BaseViewController, IMView {
         super.viewDidLoad()
         navigationItem.titleView = titleView
         setupControllers()
-        didShowConversations?(conversationsController)
+        didShowInbox?(inboxController)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,8 +53,8 @@ class IMController: BaseViewController, IMView {
     private func setupControllers() {
         add(childViewController: contactsController)
         contactsController.view.fill(in: view)
-        add(childViewController: conversationsController)
-        conversationsController.view.fill(in: view)
+        add(childViewController: inboxController)
+        inboxController.view.fill(in: view)
     }
     
     @objc private func switchView(_ control: UISegmentedControl) {
@@ -62,11 +62,11 @@ class IMController: BaseViewController, IMView {
     }
     
     private func showContacts(_ isContacts: Bool) {
-        conversationsController.view.alpha = isContacts ? 0 : 1
+        inboxController.view.alpha = isContacts ? 0 : 1
         if isContacts {
             didShowContacts?(contactsController)
         } else {
-            didShowConversations?(conversationsController)
+            didShowInbox?(inboxController)
         }
     }
 }

@@ -668,10 +668,10 @@
 		AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
 		AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
 		AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
-		AC525AB2208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
-		AC525AB3208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
-		AC525AB4208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
-		AC525AB5208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
+		AC525AB2208DD714001070B2 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* InboxController.swift */; };
+		AC525AB3208DD714001070B2 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* InboxController.swift */; };
+		AC525AB4208DD714001070B2 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* InboxController.swift */; };
+		AC525AB5208DD714001070B2 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* InboxController.swift */; };
 		AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
 		AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
 		AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
@@ -1240,7 +1240,7 @@
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
 		AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordController.swift; sourceTree = "<group>"; };
 		AC525AAB208DD705001070B2 /* IMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMCoordinator.swift; sourceTree = "<group>"; };
-		AC525AB1208DD714001070B2 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
+		AC525AB1208DD714001070B2 /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxController.swift; sourceTree = "<group>"; };
 		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
 		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
 		AC557C9820B7E5E60068F1B3 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
@@ -1685,7 +1685,7 @@
 			isa = PBXGroup;
 			children = (
 				58447B3C209C06A5004C2FFE /* IMController.swift */,
-				AC525AB1208DD714001070B2 /* ConversationsController.swift */,
+				AC525AB1208DD714001070B2 /* InboxController.swift */,
 				ACDB24C520BEB3100039368E /* ContactsView.swift */,
 				58447B46209C2E07004C2FFE /* ContactsController.swift */,
 				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
@@ -2590,7 +2590,7 @@
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				AC2A259320BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
-				AC525AB2208DD714001070B2 /* ConversationsController.swift in Sources */,
+				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
@@ -2923,7 +2923,7 @@
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
-				AC525AB4208DD714001070B2 /* ConversationsController.swift in Sources */,
+				AC525AB4208DD714001070B2 /* InboxController.swift in Sources */,
 				AC45CD8620AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
 				58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				5843DA6B20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
@@ -3139,7 +3139,7 @@
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
-				AC525AB5208DD714001070B2 /* ConversationsController.swift in Sources */,
+				AC525AB5208DD714001070B2 /* InboxController.swift in Sources */,
 				AC45CD8720AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
 				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				5843DA6C20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
@@ -3283,7 +3283,7 @@
 				AC2A259420BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
-				AC525AB3208DD714001070B2 /* ConversationsController.swift in Sources */,
+				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
