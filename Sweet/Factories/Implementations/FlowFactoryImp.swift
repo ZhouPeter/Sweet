@@ -123,12 +123,8 @@ extension FlowFactoryImp: IMFlowFactory {
         return ContactSearchController()
     }
     
-    func makeIMManagerView() -> IMManagerView {
-        return IMManagerController()
-    }
-    
-    func makeIMListView() -> IMListView {
-        return IMListController()
+    func makeIMView() -> IMView {
+        return IMController()
     }
     
     func makeInviteOutput() -> InviteView {

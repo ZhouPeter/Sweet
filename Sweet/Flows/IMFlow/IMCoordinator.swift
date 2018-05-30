@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Realm
 
 final class IMCoordinator: BaseCoordinator {
     private let factory: IMFlowFactory
@@ -14,6 +15,7 @@ final class IMCoordinator: BaseCoordinator {
     private let router: Router
     private let token: String
     private let storage: Storage
+    private var isAvatarLoaded = false
     
     init(token: String,
          storage: Storage,
@@ -28,32 +30,33 @@ final class IMCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        showIMManager()
+        showIMView()
     }
     
     // MARK: - Private
     
-    private func showIMManager() {
-        let managerView = factory.makeIMManagerView()
-        managerView.showIMList = { [weak self] iMListView in
-            self?.showIMList(iMListView: iMListView)
+    private func showIMView() {
+        let view = factory.makeIMView()
+        view.didShowContacts = { [weak self] view in
+            view.delegate = self
         }
-        managerView.showIMContacts = { [weak self] iMContactsView in
-            self?.showIMContacts(iMContactsView: iMContactsView)
+        view.didShowConversations = { [weak self] view in
+            view.showProfile = { self?.showSelfProfile() }
+            guard let `self` = self, self.isAvatarLoaded == false else { return }
+            var urlString: String?
+            self.storage.read({ (realm) in
+                guard let user = realm.object(ofType: User.self, forPrimaryKey: self.storage.userID) else { return }
+                urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
+            }, callback: {
+                guard let urlString = urlString else { return }
+                view.didUpdateAvatar(URLString: urlString)
+                self.isAvatarLoaded = true
+            })
         }
-        router.setRootFlow(managerView)
-    }
-}
-
-// MARK: - IMList
-extension IMCoordinator {
-    private func showIMList(iMListView: IMListView) {
-        iMListView.showProfile = { [weak self] in
-            self?.showProfile()
-        }
+        router.setRootFlow(view)
     }
     
-    private func showProfile() {
+    private func showSelfProfile() {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
         coordinator.finishFlow = { [weak self] in
             self?.removeDependency(coordinator)
@@ -63,70 +66,50 @@ extension IMCoordinator {
     }
 }
 
-// MARK: - Contacts
-extension IMCoordinator {
-    private func showIMContacts(iMContactsView: IMContactsView) {
-        iMContactsView.showProfile = { [weak self] userId in
-            self?.showProfile(userId: userId)
+extension IMCoordinator: ContactsViewDelegate {
+    func contactsShowSearch() {
+        let searchView = factory.makeContactSearchOutput()
+        searchView.showProfile = { [weak self] userId in
+            self?.showProfile(userID: userId)
         }
-        
-        iMContactsView.showInvite = { [weak self] in
-            self?.showInvite()
-        }
-        
-        iMContactsView.showBlack = { [weak self] in
-            self?.showBlack()
-        }
-        iMContactsView.showBlock = { [weak self] in
-            self?.showBlock()
-        }
-        iMContactsView.showSubscription = { [weak self] in
-            self?.showSubscription()
-        }
-        iMContactsView.showSearch = { [weak self] in
-            self?.showSearch()
-        }
+        router.push(searchView)
     }
     
-    private func showProfile(userId: UInt64) {
-        let profileView = factory.makeProfileOutput(userId: userId)
-        router.push(profileView)
-    }
-    
-    private func showInvite() {
-        let inviteView = factory.makeInviteOutput()
-        router.push(inviteView)
-    }
-    
-    private func showBlack() {
-        let blackView = factory.makeBlackOutput()
-        blackView.showProfile = { [weak self] userId in
-            self?.showProfile(userId: userId)
-        }
-        router.push(blackView)
-    }
-    
-    private func showBlock() {
-        let blockView = factory.makeBlockOutput()
-        blockView.showProfile = { [weak self] userId in
-            self?.showProfile(userId: userId)
-        }
-        router.push(blockView)
-    }
-    
-    private func showSubscription() {
+    func contactsShowSubscription() {
         let subscriptionView = factory.makeSubscriptionOutput()
         subscriptionView.showProfile = { [weak self] userId in
-            self?.showProfile(userId: userId)
+            self?.showProfile(userID: userId)
         }
         router.push(subscriptionView)
     }
     
-    private func showSearch() {
-        let searchView = factory.makeContactSearchOutput()
-        searchView.showProfile = { [weak self] userId in
-            self?.showProfile(userId: userId)
+    func contactsShowInvite() {
+        let inviteView = factory.makeInviteOutput()
+        router.push(inviteView)
+    }
+    
+    func contactsShowBlock() {
+        let blockView = factory.makeBlockOutput()
+        blockView.showProfile = { [weak self] userId in
+            self?.showProfile(userID: userId)
         }
-        router.push(searchView)
+        router.push(blockView)
+    }
+    
+    func contactsShowProfile(userID: UInt64) {
+        showProfile(userID: userID)
+    }
+    
+    func contactsShowBlack() {
+        let blackView = factory.makeBlackOutput()
+        blackView.showProfile = { [weak self] userId in
+            self?.showProfile(userID: userId)
+        }
+        router.push(blackView)
+    }
+    
+    private func showProfile(userID: UInt64) {
+        let profileView = factory.makeProfileOutput(userId: userID)
+        router.push(profileView)
     }
 }

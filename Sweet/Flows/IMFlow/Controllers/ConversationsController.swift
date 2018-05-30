@@ -1,5 +1,5 @@
 //
-//  IMController.swift
+//  ConversationsController.swift
 //  Sweet
 //
 //  Created by Mario Z. on 2018/4/23.
@@ -9,14 +9,14 @@
 import UIKit
 import SwiftyUserDefaults
 
-protocol IMListView: BaseView {
+protocol ConversationsView: BaseView {
     var showProfile: (() -> Void)? { get set }
+    func didUpdateAvatar(URLString: String)
 }
 
-final class IMListController: BaseViewController, IMListView {
+final class ConversationsController: BaseViewController, ConversationsView {
     var showProfile: (() -> Void)?
     
-//    let storage = Storage(userID: UInt64(Defaults[.userID]))
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -25,15 +25,8 @@ final class IMListController: BaseViewController, IMListView {
         imageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showProfile(_:)))
         imageView.addGestureRecognizer(tap)
-//        DispatchQueue.main.async {
-//            self.storage.read({ (realm) in
-//                if let user = realm.object(ofType: User.self, forPrimaryKey: Defaults[.userID]) {
-//                    imageView.kf.setImage(with: URL(string: user.avatarURLString + "?imageView2/1/w/30/h/30"))
-//                }
-//            })
-//        }
         return imageView
-    }()
+    } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +37,12 @@ final class IMListController: BaseViewController, IMListView {
         super.viewWillAppear(animated)
         parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
     }
+    
+    func didUpdateAvatar(URLString: String) {
+        avatarImageView.kf.setImage(with: URL(string: URLString))
+    }
+    
+    // MARK: - Private
     
     @objc private func showProfile(_ sender: UITapGestureRecognizer) {
         showProfile?()

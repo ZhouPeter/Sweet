@@ -7,32 +7,19 @@
 //
 
 import UIKit
-let contactsButtonWidth: CGFloat = 44
 
-let contactsButtonHeight: CGFloat = 60
+private let contactsButtonWidth: CGFloat = 44
+private let contactsButtonHeight: CGFloat = 60
+private let buttonSpace: CGFloat = 50
 
-let buttonSpace: CGFloat = 50
-
-protocol IMContactsView: BaseView {
-    var showInvite: (() -> Void)? {  get set }
-    var showBlack: (() -> Void)? { get set }
-    var showProfile: ((UInt64) -> Void)? {  get set }
-    var showBlock: (() -> Void)? { get set }
-    var showSubscription: (() -> Void)? { get set }
-    var showSearch: (() -> Void)? { get set }
-}
-
-class IMContactsController: BaseViewController, IMContactsView {
+class ContactsController: BaseViewController, ContactsView {
+    weak var delegate: ContactsViewDelegate?
     
-    var showSubscription: (() -> Void)?
-    var showBlock: (() -> Void)?
-    var showInvite: (() -> Void)?
-    var showBlack: (() -> Void)?
-    var showProfile: ((UInt64) -> Void)?
-    var showSearch: (() -> Void)?
     private var blacklistViewModels = [ContactViewModel]()
     private var between72hViewModels = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
+    private var titles = [String]()
+    
     private lazy var categoryViewModels: [ContactCategoryViewModel] = {
         var viewModels = [ContactCategoryViewModel]()
         let addViewModel = ContactCategoryViewModel(categoryImage: #imageLiteral(resourceName: "AddFriend"), title: "邀请好友")
@@ -40,18 +27,18 @@ class IMContactsController: BaseViewController, IMContactsView {
         let subViewModel = ContactCategoryViewModel(categoryImage: #imageLiteral(resourceName: "Subscribe"), title: "订阅")
         viewModels.append(subViewModel)
         return viewModels
-    }()
+    } ()
+    
     private var viewModelsGroup = [[ContactViewModel]]() {
         didSet {
             self.showEmptyView(isShow: self.viewModelsGroup.count == 0)
         }
     }
-    private var titles = [String]()
     
     private lazy var tableViewFooterView: ContactsFooterView = {
         let view = ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
         return view
-    }()
+    } ()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -62,7 +49,7 @@ class IMContactsController: BaseViewController, IMContactsView {
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
         return tableView
-    }()
+    } ()
     
     private lazy var searchButton: UIButton = {
         let button = UIButton()
@@ -70,74 +57,54 @@ class IMContactsController: BaseViewController, IMContactsView {
         button.addTarget(self, action: #selector(showSearch(_:)), for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         return button
-    }()
+    } ()
     
     private lazy var emptyView: EmptyEmojiView = {
         let view = EmptyEmojiView()
         return view
-    }()
+    } ()
+    
+    // MARK: - Private
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(tableView)
-        tableView.align(.left, to: view)
-        tableView.align(.right, to: view)
-        tableView.align(.bottom, to: view, inset: UIScreen.safeBottomMargin())
-        tableView.align(.top, to: view, inset: UIScreen.navBarHeight())
+        tableView.fill(in: view, left: 0, right: 0, top: UIScreen.navBarHeight(), bottom: UIScreen.safeBottomMargin())
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
         loadContactAllList()
     }
     
-}
-
-// MARK: - Actions
-extension IMContactsController {
-    @objc private func showInvite(_ sender: UIButton) {
-        self.showInvite?()
-    }
-    @objc private func showBlack(_ sender: UIButton) {
-        self.showBlack?()
-    }
-    @objc private func showBlock(_ sender: UIButton) {
-        self.showBlock?()
-    }
-    @objc private func showSubscription(_ sender: UIButton) {
-        self.showSubscription?()
-    }
-    @objc private func showSearch(_ sender: UIButton) {
-        self.showSearch?()
-    }
-}
-
-extension IMContactsController {
     private func showEmptyView(isShow: Bool) {
         if isShow {
             if emptyView.superview != nil { return }
             tableView.addSubview(emptyView)
-            emptyView.frame = CGRect(x: 0,
-                                     y: 8 + 80 * 2,
-                                     width: tableView.bounds.width,
-                                     height: tableView.bounds.height - (8 + 80 * 2) + 1)
-            
+            emptyView.frame = CGRect(
+                x: 0,
+                y: 8 + 80 * 2,
+                width: tableView.bounds.width,
+                height: tableView.bounds.height - (8 + 80 * 2) + 1
+            )
         } else {
             emptyView.removeFromSuperview()
         }
     }
+    
     private func removeData() {
-        self.allViewModels.removeAll()
-        self.between72hViewModels.removeAll()
-        self.blacklistViewModels.removeAll()
-        self.viewModelsGroup.removeAll()
-        self.titles.removeAll()
+        allViewModels.removeAll()
+        between72hViewModels.removeAll()
+        blacklistViewModels.removeAll()
+        viewModelsGroup.removeAll()
+        titles.removeAll()
     }
     
     private func loadContactAllList() {
@@ -211,6 +178,7 @@ extension IMContactsController {
             }
         }
     }
+    
     private func addBlacklist(userId: UInt64) {
         web.request(.addBlacklist(userId: userId)) { (result) in
             switch result {
@@ -229,12 +197,19 @@ extension IMContactsController {
             }
         }
     }
+
+    // MARK: - Actions
+    
+    @objc private func showSearch(_ sender: UIButton) {
+        delegate?.contactsShowSearch()
+    }
 }
 
-extension IMContactsController: UITableViewDelegate {
+extension ContactsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerView") as? SweetHeaderView
         view?.update(title: section == 0 ? "" : titles[section - 1])
@@ -251,15 +226,19 @@ extension IMContactsController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            indexPath.row == 0 ? self.showInvite?() : self.showSubscription?()
+            if indexPath.row == 0 {
+                delegate?.contactsShowInvite()
+            } else {
+                delegate?.contactsShowSubscription()
+            }
         } else {
-            showProfile?(viewModelsGroup[indexPath.section - 1][indexPath.row].userId)
+            let userID = viewModelsGroup[indexPath.section - 1][indexPath.row].userId
+            delegate?.contactsShowProfile(userID: userID)
         }
     }
-    
 }
 
-extension IMContactsController: UITableViewDataSource {
+extension ContactsController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModelsGroup.count + 1
     }

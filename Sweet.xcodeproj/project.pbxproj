@@ -157,14 +157,14 @@
 		58447B32209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
 		58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
 		58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */; };
-		58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
-		58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
-		58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
-		58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMManagerController.swift */; };
-		58447B47209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
-		58447B48209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
-		58447B49209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
-		58447B4A209C2E07004C2FFE /* IMContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* IMContactsController.swift */; };
+		58447B3D209C06A5004C2FFE /* IMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMController.swift */; };
+		58447B3E209C06A5004C2FFE /* IMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMController.swift */; };
+		58447B3F209C06A5004C2FFE /* IMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMController.swift */; };
+		58447B40209C06A5004C2FFE /* IMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B3C209C06A5004C2FFE /* IMController.swift */; };
+		58447B47209C2E07004C2FFE /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* ContactsController.swift */; };
+		58447B48209C2E07004C2FFE /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* ContactsController.swift */; };
+		58447B49209C2E07004C2FFE /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* ContactsController.swift */; };
+		58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B46209C2E07004C2FFE /* ContactsController.swift */; };
 		58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
 		58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
 		58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B4B209C3998004C2FFE /* UIButton+Inset.swift */; };
@@ -668,10 +668,10 @@
 		AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
 		AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
 		AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AAB208DD705001070B2 /* IMCoordinator.swift */; };
-		AC525AB2208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
-		AC525AB3208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
-		AC525AB4208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
-		AC525AB5208DD714001070B2 /* IMListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* IMListController.swift */; };
+		AC525AB2208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
+		AC525AB3208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
+		AC525AB4208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
+		AC525AB5208DD714001070B2 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB1208DD714001070B2 /* ConversationsController.swift */; };
 		AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
 		AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
 		AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */; };
@@ -880,6 +880,10 @@
 		ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
 		ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
 		ACDB24B120BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
+		ACDB24C620BEB3100039368E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24C520BEB3100039368E /* ContactsView.swift */; };
+		ACDB24C720BEB3100039368E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24C520BEB3100039368E /* ContactsView.swift */; };
+		ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24C520BEB3100039368E /* ContactsView.swift */; };
+		ACDB24C920BEB3100039368E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24C520BEB3100039368E /* ContactsView.swift */; };
 		ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
@@ -1077,8 +1081,8 @@
 		58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAvatarController.swift; sourceTree = "<group>"; };
 		58447B2B209B0909004C2FFE /* BlackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackNavigationController.swift; sourceTree = "<group>"; };
 		58447B30209B3467004C2FFE /* UIAlertAction+TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+TextColor.swift"; sourceTree = "<group>"; };
-		58447B3C209C06A5004C2FFE /* IMManagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMManagerController.swift; sourceTree = "<group>"; };
-		58447B46209C2E07004C2FFE /* IMContactsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMContactsController.swift; sourceTree = "<group>"; };
+		58447B3C209C06A5004C2FFE /* IMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMController.swift; sourceTree = "<group>"; };
+		58447B46209C2E07004C2FFE /* ContactsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
 		58447B4B209C3998004C2FFE /* UIButton+Inset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Inset.swift"; sourceTree = "<group>"; };
 		58447B50209C5143004C2FFE /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		58447B55209C58CC004C2FFE /* ContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListResponse.swift; sourceTree = "<group>"; };
@@ -1236,7 +1240,7 @@
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
 		AC525AA6208DD6F9001070B2 /* StoryRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordController.swift; sourceTree = "<group>"; };
 		AC525AAB208DD705001070B2 /* IMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMCoordinator.swift; sourceTree = "<group>"; };
-		AC525AB1208DD714001070B2 /* IMListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMListController.swift; sourceTree = "<group>"; };
+		AC525AB1208DD714001070B2 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		AC525AB6208DDBB1001070B2 /* StoryFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFlowFactory.swift; sourceTree = "<group>"; };
 		AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCoordinator.swift; sourceTree = "<group>"; };
 		AC557C9820B7E5E60068F1B3 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
@@ -1305,6 +1309,7 @@
 		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACDB24AD20BD74E00039368E /* InstantMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessage.swift; sourceTree = "<group>"; };
+		ACDB24C520BEB3100039368E /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
 		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
@@ -1679,9 +1684,10 @@
 		AC525AB0208DD708001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				58447B46209C2E07004C2FFE /* IMContactsController.swift */,
-				AC525AB1208DD714001070B2 /* IMListController.swift */,
-				58447B3C209C06A5004C2FFE /* IMManagerController.swift */,
+				58447B3C209C06A5004C2FFE /* IMController.swift */,
+				AC525AB1208DD714001070B2 /* ConversationsController.swift */,
+				ACDB24C520BEB3100039368E /* ContactsView.swift */,
+				58447B46209C2E07004C2FFE /* ContactsController.swift */,
 				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
 				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
 				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
@@ -2519,7 +2525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5803574420AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
-				58447B3D209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				58447B3D209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				AC2A259B20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
@@ -2584,7 +2590,7 @@
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				AC2A259320BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
-				AC525AB2208DD714001070B2 /* IMListController.swift in Sources */,
+				AC525AB2208DD714001070B2 /* ConversationsController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
@@ -2721,7 +2727,7 @@
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
-				58447B47209C2E07004C2FFE /* IMContactsController.swift in Sources */,
+				58447B47209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
@@ -2753,6 +2759,7 @@
 				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				ACDB24C620BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC620A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				58BD532C2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841213208881A40086891C /* AuthPlugin.swift in Sources */,
@@ -2894,7 +2901,7 @@
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
-				58447B49209C2E07004C2FFE /* IMContactsController.swift in Sources */,
+				58447B49209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
@@ -2916,13 +2923,13 @@
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
-				AC525AB4208DD714001070B2 /* IMListController.swift in Sources */,
+				AC525AB4208DD714001070B2 /* ConversationsController.swift in Sources */,
 				AC45CD8620AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
 				58447B53209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				5843DA6B20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
 				58D578F9209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235C20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
-				58447B3F209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				58447B3F209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				5803573220AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
@@ -2969,6 +2976,7 @@
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
+				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575520AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
@@ -3109,7 +3117,7 @@
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
-				58447B4A209C2E07004C2FFE /* IMContactsController.swift in Sources */,
+				58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
@@ -3131,13 +3139,13 @@
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
-				AC525AB5208DD714001070B2 /* IMListController.swift in Sources */,
+				AC525AB5208DD714001070B2 /* ConversationsController.swift in Sources */,
 				AC45CD8720AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
 				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
 				5843DA6C20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
 				58D578FA209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
-				58447B40209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				58447B40209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF2DEC12089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECE20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				5803573320AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
@@ -3184,6 +3192,7 @@
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
+				ACDB24C920BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575620AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
@@ -3208,7 +3217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5803574520AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
-				58447B3E209C06A5004C2FFE /* IMManagerController.swift in Sources */,
+				58447B3E209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				AC2A259C20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
@@ -3274,7 +3283,7 @@
 				AC2A259420BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
-				AC525AB3208DD714001070B2 /* IMListController.swift in Sources */,
+				AC525AB3208DD714001070B2 /* ConversationsController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
@@ -3410,7 +3419,7 @@
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
-				58447B48209C2E07004C2FFE /* IMContactsController.swift in Sources */,
+				58447B48209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
@@ -3442,6 +3451,7 @@
 				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
+				ACDB24C720BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC720A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				58BD532D2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC841214208881A40086891C /* AuthPlugin.swift in Sources */,
