@@ -17,7 +17,6 @@ class ContactTableViewCell: UITableViewCell {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor(hex: 0xf7f7f7)
         return imageView
     }()
@@ -56,6 +55,7 @@ class ContactTableViewCell: UITableViewCell {
     }()
     
     private var nameCenterYConstraints: NSLayoutConstraint?
+    private var avatarImageViewMaskLayer: CAShapeLayer?
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -80,7 +80,7 @@ class ContactTableViewCell: UITableViewCell {
         avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.centerY(to: contentView)
         avatarImageView.align(.left, to: contentView, inset: 15)
-        avatarImageView.setViewRounded()
+        avatarImageViewMaskLayer = avatarImageView.setViewRounded().maskLayer
         avatarImageView.addSubview(avatarLabel)
         avatarLabel.fill(in: avatarImageView)
         contentView.addSubview(nameLabel)
@@ -100,6 +100,7 @@ class ContactTableViewCell: UITableViewCell {
     func update(viewModel: ContactViewModel) {
         userId = viewModel.userId
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
@@ -112,9 +113,21 @@ class ContactTableViewCell: UITableViewCell {
         buttonCallBack = viewModel.callBack
     }
     
+    func updateCategroy(viewModel: ContactCategoryViewModel) {
+        avatarImageView.image = viewModel.categoryImage
+        avatarImageViewMaskLayer?.removeFromSuperlayer()
+        nameLabel.text = viewModel.title
+        infoLabel.text = ""
+        avatarLabel.text = ""
+        statusButton.isHidden = true
+        buttonCallBack = nil
+        nameCenterYConstraints?.constant = 0
+    }
+    
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
         phone = UInt64(viewModel.phone)
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = viewModel.firstNameString
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
@@ -129,6 +142,7 @@ class ContactTableViewCell: UITableViewCell {
     func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
         sectionId = viewModel.sectionId
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString

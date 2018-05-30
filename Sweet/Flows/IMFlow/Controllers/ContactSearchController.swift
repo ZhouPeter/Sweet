@@ -26,7 +26,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: 44, height: 30)
         button.setTitle("返回", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         button.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
         return button
@@ -114,7 +114,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     self.blacklistViewModels.append(viewModel)
                 })
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
-                if self.subscriptionsViewModels.count > 0 { self.titles.append("我的订阅") }
+                if self.subscriptionsViewModels.count > 0 { self.titles.append("订阅") }
                 if self.phoneContactViewModels.count > 0 { self.titles.append("通讯录") }
                 if self.blockViewModels.count > 0 { self.titles.append("屏蔽") }
                 if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }

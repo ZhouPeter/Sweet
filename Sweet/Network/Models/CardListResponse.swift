@@ -52,13 +52,19 @@ struct ContentImage: Codable {
 
 struct ActivityResponse: Codable {
     let avatar: String
-    let content: String
+    let body: ContentBody
     let activityItemId: String
     let like: Bool
     let same: Bool
     let actor: UInt64
     let subtitle: String
     let title: String
+}
+
+struct ContentBody: Codable {
+    let content: String
+    let comment: String
+    let emoji: EmojiType
 }
 
 struct SelectResult: Codable {

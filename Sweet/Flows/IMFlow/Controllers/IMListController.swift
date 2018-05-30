@@ -16,13 +16,23 @@ protocol IMListView: BaseView {
 final class IMListController: BaseViewController, IMListView {
     var showProfile: (() -> Void)?
     
-    private lazy var avatarButton: UIButton = {
-        let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        button.layer.cornerRadius = 15
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(showProfile(_:)), for: .touchUpInside)
-        return button
+//    let storage = Storage(userID: UInt64(Defaults[.userID]))
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showProfile(_:)))
+        imageView.addGestureRecognizer(tap)
+//        DispatchQueue.main.async {
+//            self.storage.read({ (realm) in
+//                if let user = realm.object(ofType: User.self, forPrimaryKey: Defaults[.userID]) {
+//                    imageView.kf.setImage(with: URL(string: user.avatarURLString + "?imageView2/1/w/30/h/30"))
+//                }
+//            })
+//        }
+        return imageView
     }()
 
     override func viewDidLoad() {
@@ -32,14 +42,10 @@ final class IMListController: BaseViewController, IMListView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarButton)
-//        storage.read({ (realm) in
-//            if let user = realm.object(ofType: User.self, forPrimaryKey: Defaults[.userID]) {
-//                self.avatarButton.kf.setBackgroundImage(with: URL(string: user.avatarURLString), for: .normal)
-//            }
-//        })
+        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
     }
-    @objc private func showProfile(_ sender: UIButton) {
+    
+    @objc private func showProfile(_ sender: UITapGestureRecognizer) {
         showProfile?()
     }
 }

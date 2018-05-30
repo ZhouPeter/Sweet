@@ -74,6 +74,7 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.tintColor = .black
         if user == nil || !isFirstLoad {
             loadAll()
         } else {
@@ -93,28 +94,52 @@ extension ProfileController {
        
     }
     @objc private func menuAction(sender: UIButton) {
-        guard let userId = user?.userId, let backlist = user?.blacklist, let block = user?.block else { return }
+        guard let userId = user?.userId, let blacklist = user?.blacklist, let block = user?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shieldAction = UIAlertAction(title: block ? "取消屏蔽" : "屏蔽他/她的来源", style: .default) { (_) in
+        let shieldAction = UIAlertAction(
+            title: block ? "取消屏蔽" : "屏蔽他/她的来源",
+            style: .default) { [weak self] (_) in
             if block {
                 web.request(.delBlock(userId: userId), completion: { (result) in
-                    logger.debug(result)
+                    switch result {
+                    case let .failure(error):
+                        logger.debug(error)
+                    case .success:
+                        self?.user?.block = !block
+                    }
                 })
             } else {
                 web.request(.addBlock(userId: userId), completion: { (result) in
-                    logger.debug(result)
+                    switch result {
+                    case let .failure(error):
+                        logger.debug(error)
+                    case .success:
+                        self?.user?.block = !block
+                    }
                 })
             }
         }
         shieldAction.setTextColor(color: .black)
-        let addBlacklistAction = UIAlertAction(title: backlist ? "移出黑名单" : "加入黑名单", style: .default) { (_) in
-            if backlist {
-                web.request(.delBlacklist(userId: userId), completion: { (result) in
-                    logger.debug(result)
+        let addBlacklistAction = UIAlertAction(
+            title: blacklist ? "移出黑名单" : "加入黑名单",
+            style: .default) { [weak self] (_) in
+            if blacklist {
+                web.request(.delBlacklist(userId: userId), completion: {  (result) in
+                    switch result {
+                    case let .failure(error):
+                        logger.debug(error)
+                    case .success:
+                        self?.user?.blacklist = !blacklist
+                    }
                 })
             } else {
-                web.request(.addBlacklist(userId: self.user!.userId), completion: { (result) in
-                    logger.debug(result)
+                web.request(.addBlacklist(userId: userId), completion: { (result) in
+                    switch result {
+                    case let .failure(error):
+                        logger.debug(error)
+                    case .success:
+                        self?.user?.blacklist = !blacklist
+                    }
                 })
             }
         }

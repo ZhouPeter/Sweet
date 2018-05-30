@@ -68,7 +68,7 @@ class SweetPlayerView: UIView {
             self.playerLayer?.isHasVolume = isHasVolume
         }
     }
-    var avPlayer: AVPlayer? {
+    weak var avPlayer: AVPlayer? {
         get {
             return playerLayer?.player
         }
@@ -108,7 +108,6 @@ class SweetPlayerView: UIView {
     
     deinit {
         scrollToken?.invalidate()
-//        playerLayer?.pause()
         playerLayer?.prepareToDeinit()
         NotificationCenter.default.removeObserver(
             self,
@@ -162,7 +161,7 @@ class SweetPlayerView: UIView {
             }
         }
     }
-    func updatePlayViewToCell(cell : UICollectionViewCell) {
+    func updatePlayViewToCell(cell: UICollectionViewCell) {
         guard let fatherViewTag = resource.fatherViewTag else { return }
         guard let fatherView = cell.contentView.viewWithTag(fatherViewTag) else {return}
         addPlayerToFatherView(view: fatherView)

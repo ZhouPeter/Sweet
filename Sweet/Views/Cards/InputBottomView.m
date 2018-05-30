@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) GrowingTextView *textView;
 @property (readwrite, strong, nonatomic) UIButton *sendButton;
-
+@property (strong, nonatomic) UIButton *emojiButton;
 @end
 
 @implementation InputBottomView
@@ -25,7 +25,8 @@
         _placeHolder = @"说点什么";
         [self setupTextView];
         [self updateSendButtonState];
-        [self setColor:[UIColor colorWithRed:242 / 255.0 green:242 / 255.0 blue:242 / 255.0 alpha:1]];
+        [self setColor:[UIColor whiteColor]];
+        [self setTextViewColor: [UIColor colorWithRed:242 / 255.0 green:242 / 255.0 blue:242 / 255.0 alpha:1]];
     }
     return self;
 }
@@ -33,7 +34,7 @@
 #pragma mark - Public
 
 + (CGFloat)defaultHeight {
-    return 44;
+    return 50;
 }
 
 + (CGFloat)verticalInset {
@@ -89,6 +90,12 @@
     [self.delegate inputBottomViewDidPressSendWithText:text];
 }
 
+- (void)didPressEmojiButton {
+    self.textView.text = nil;
+    [self updateSendButtonState];
+    [self startEditing:false];
+}
+
 #pragma mark - UIViewGestureRecognizers
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -102,12 +109,24 @@
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.sendButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
     [self.sendButton setImage:[UIImage imageNamed:@"SendDisabled"] forState:UIControlStateDisabled];
+    self.sendButton.enabled = false;
     [self.sendButton addTarget:self action:@selector(didPressSendButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.sendButton];
-    [[self.sendButton.widthAnchor constraintEqualToConstant:32] setActive:YES];
-    [[self.sendButton.heightAnchor constraintEqualToConstant:32] setActive:YES];
-    [[self.sendButton.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6] setActive:YES];
-    [[self.sendButton.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-6] setActive:YES];
+    [[self.sendButton.widthAnchor constraintEqualToConstant:30] setActive:YES];
+    [[self.sendButton.heightAnchor constraintEqualToConstant:30] setActive:YES];
+    [[self.sendButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor] setActive:YES];
+    [[self.sendButton.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-10] setActive:YES];
+    
+    self.emojiButton = [UIButton new];
+    self.emojiButton.translatesAutoresizingMaskIntoConstraints = false;
+    [self.emojiButton setImage:[UIImage imageNamed:@"Keyword"] forState:UIControlStateNormal];
+    [self.emojiButton addTarget:self action:@selector(didPressEmojiButton) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.emojiButton];
+    [[self.emojiButton.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:10] setActive:YES];
+    [[self.emojiButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor] setActive:YES];
+    [[self.emojiButton.widthAnchor constraintEqualToConstant:30] setActive:YES];
+    [[self.emojiButton.heightAnchor constraintEqualToConstant:30] setActive:YES];
+    
     self.textView = [GrowingTextView new];
     self.textView.translatesAutoresizingMaskIntoConstraints = false;
     self.textView.placeHolder = self.placeHolder;
@@ -119,14 +138,19 @@
     self.textView.maxHeight = 100;
     self.textView.delegate = self;
     [self addSubview:self.textView];
-    [[self.textView.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:10] setActive:YES];
-    [[self.textView.rightAnchor constraintEqualToAnchor:self.sendButton.leftAnchor constant:-10] setActive:YES];
-    [[self.textView.topAnchor constraintEqualToAnchor:self.topAnchor constant:4] setActive:YES];
+    [[self.textView.leftAnchor constraintEqualToAnchor:self.emojiButton.rightAnchor constant:5] setActive:YES];
+    [[self.textView.rightAnchor constraintEqualToAnchor:self.sendButton.leftAnchor constant:-5] setActive:YES];
+    [[self.textView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor] setActive:YES];
+
 }
 
 - (void)updateSendButtonState {
     if (self.shouldSendNilText) {
-        self.sendButton.enabled = self.textView.text.length <= self.maxLength;
+        if (self.textView.text.length == 0) {
+            self.sendButton.enabled = false;
+        } else {
+            self.sendButton.enabled = self.textView.text.length <= self.maxLength;
+        }
     } else {
         self.sendButton.enabled = self.textView.text.length > 0 && self.textView.text.length <= self.maxLength;
     }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyUserDefaults
 protocol CardsAllView: BaseView {
     
 }
@@ -16,28 +16,21 @@ class CardsAllController: CardsBaseController, CardsAllView {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+      
     }
-    
+    override func didReceiveMemoryWarning() {
+        logger.error("AllMemoryWarning")
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startLoadCards()
-    }
-    
-    private func startLoadCards() {
-        web.request(.allCards, responseType: Response<CardListResponse>.self) { (result) in
-            switch result {
-            case let .success(response):
-                self.cards.removeAll()
-                self.cellConfigurators.removeAll()
-                response.list.forEach({ (card) in
-                    self.cards.append(card)
-                    self.appendConfigurator(card: card)
-                })
-                self.collectionView.reloadData()
-            case let .failure(error):
-                logger.error(error)
+        if self.cards.count == 0 {
+            let allCardsLastID = Defaults[.allCardsLastID]
+            startLoadCards(
+                cardRequest: .all(cardId: allCardsLastID,
+                                  direction: Direction.recover.rawValue)) { [weak self] (success) in
+                if success {  self?.collectionView.reloadData() }
             }
         }
     }
+    
 }

@@ -81,7 +81,7 @@ enum MsgStatus: SwiftProtobuf.Enum {
 
 }
 
-enum Direction: SwiftProtobuf.Enum {
+enum MsgDirection: SwiftProtobuf.Enum {
   typealias RawValue = Int
 
   /// 向上
@@ -242,7 +242,7 @@ struct DirectionGetReq {
 
   var msgID: UInt64 = 0
 
-  var direction: Direction = .up
+  var direction: MsgDirection = .up
 
   var count: UInt32 = 0
 
@@ -388,7 +388,7 @@ extension MsgStatus: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension Direction: SwiftProtobuf._ProtoNameProviding {
+extension MsgDirection: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UP"),
     1: .same(proto: "DOWN"),

@@ -35,6 +35,11 @@ struct ContactViewModel {
     }
 }
 
+struct ContactCategoryViewModel {
+    let categoryImage: UIImage
+    let title: String
+}
+
 struct ContactSubcriptionSectionViewModel {
     let avatarURL: URL
     let infoString: String
