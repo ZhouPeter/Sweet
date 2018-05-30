@@ -25,6 +25,8 @@ struct ActivityViewModel {
     let titleString: String
     let subtitleString: String
     let contentString: String
+    let commentString: String
+    let emojiImage: UIImage?
     let like: Bool
     var callBack: ((String) -> Void)?
     init(model: ActivityResponse) {
@@ -32,7 +34,13 @@ struct ActivityViewModel {
         avatarURL = URL(string: model.avatar)!
         titleString = model.title
         subtitleString = model.subtitle
-        contentString = model.content
+        contentString = model.body.content
+        commentString = model.body.comment
+        if model.body.emoji.rawValue > 0 {
+            emojiImage = UIImage(named: "Emoji\(model.body.emoji)")
+        } else {
+            emojiImage = nil
+        }
         like = model.like
     }
 }

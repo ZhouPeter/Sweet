@@ -33,11 +33,28 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
         return control
     }()
+    private lazy var leftButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.addTarget(self, action: #selector(leftAction(sender:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var rightButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.addTarget(self, action: #selector(rightAction(sender:)), for: .touchUpInside)
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
         navigationController?.navigationBar.barStyle = .black
         navigationItem.titleView = titleView
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
         addChildViewController(allController)
         allController.didMove(toParentViewController: self)
         view.addSubview(allController.view)
@@ -73,4 +90,15 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         }
     }
 
+}
+
+// MARK: - Actions
+extension CardsManagerController {
+    @objc private func leftAction(sender: UIButton) {
+        NotificationCenter.default.post(name: Notification.Name.ScrollPage, object: 0)
+    }
+    
+    @objc private func rightAction(sender: UIButton) {
+        NotificationCenter.default.post(name: Notification.Name.ScrollPage, object: 2)
+    }
 }

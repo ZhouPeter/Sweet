@@ -212,7 +212,6 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                     rightImageViews[offset].isHidden = false
                     rightImageViews[offset].kf.setImage(with: url)
                     let offsetCenterX: CGFloat = 40.0 / 2 + CGFloat(offset) * 50  - sumButtonWidth / 2
-                    logger.debug(offsetCenterX)
                     rightImageContraints[offset].constant = offsetCenterX
                 }
                 rightMaskView.backgroundColor = UIColor(hex: 0x9b9b9b).withAlphaComponent(0.5)

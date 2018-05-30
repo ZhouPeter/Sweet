@@ -208,11 +208,8 @@ class SweetPlayerLayerView: UIView {
         self.playerItem = nil
         self.seekTime   = 0
         self.timer?.invalidate()
-//        self.pause()
         // 移除原来的layer
         self.playerLayer?.removeFromSuperlayer()
-        // 替换PlayerItem为nil
-//        self.player?.replaceCurrentItem(with: nil)
         self.rateToken?.invalidate()
         self.statusToken?.invalidate()
         self.loadedToken?.invalidate()

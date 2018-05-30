@@ -213,6 +213,18 @@
 		5863A84020ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
 		5863A84120ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
 		5863A84220ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
+		5866330220BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
+		5866330320BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
+		5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
+		5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
+		5866330920BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */; };
+		5866330A20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */; };
+		5866330B20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */; };
+		5866330C20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */; };
+		5866330E20BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		589E6BB420A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
 		589E6BB520A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
 		589E6BB620A95D990038FAED /* CardsManagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BB320A95D990038FAED /* CardsManagerController.swift */; };
@@ -1027,6 +1039,9 @@
 		585B68D020B1211E00E734BC /* PlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayController.swift; sourceTree = "<group>"; };
 		5863A83920ABCE6F0016B089 /* StoryUvList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUvList.swift; sourceTree = "<group>"; };
 		5863A83E20ABDB7C0016B089 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryHeaderView.swift; sourceTree = "<group>"; };
+		5866330D20BC154B0018680C /* EmptyEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEmojiView.swift; sourceTree = "<group>"; };
 		589E6BB320A95D990038FAED /* CardsManagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsManagerController.swift; sourceTree = "<group>"; };
 		589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSubscriptionController.swift; sourceTree = "<group>"; };
 		589E6BC220A97BDD0038FAED /* CardListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListResponse.swift; sourceTree = "<group>"; };
@@ -1388,6 +1403,9 @@
 				58CE1ED420A5542C00781EBF /* ProgressCollectionViewCell.swift */,
 				58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */,
 				5863A83E20ABDB7C0016B089 /* InputTextView.swift */,
+				5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */,
+				5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */,
+				5866330D20BC154B0018680C /* EmptyEmojiView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2412,6 +2430,7 @@
 				58CE1EB720A4208600781EBF /* SearchContactResponse.swift in Sources */,
 				580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				5866330220BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534020905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
@@ -2481,6 +2500,7 @@
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				AC557CA320B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
+				5866330920BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				5863A83A20ABCE6F0016B089 /* StoryUvList.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
 				589E6BD620A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
@@ -2538,6 +2558,7 @@
 				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				5866330E20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF7A8C420B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
@@ -2654,6 +2675,7 @@
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -2747,9 +2769,11 @@
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
+				5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
+				5866330B20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
@@ -2853,6 +2877,7 @@
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -2946,9 +2971,11 @@
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
+				5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
+				5866330C20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
@@ -3053,6 +3080,7 @@
 				58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
+				5866330320BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				58BD534120905CE400F7C3E1 /* ActivitiesCellViewModel.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
@@ -3122,6 +3150,7 @@
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				AC557CA420B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
+				5866330A20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
 				589E6BD720A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
@@ -3179,6 +3208,7 @@
 				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
+				5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF7A8C520B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
@@ -3441,7 +3471,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3462,7 +3495,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -3482,7 +3518,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3503,7 +3543,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3522,7 +3566,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3542,7 +3590,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3568,7 +3620,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -3595,7 +3650,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

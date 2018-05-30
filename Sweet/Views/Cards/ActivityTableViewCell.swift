@@ -19,7 +19,7 @@ class ActivityTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
@@ -30,9 +30,20 @@ class ActivityTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = .black
+        return label
+    }()
+    private lazy var emojiImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 0
         return label
     }()
@@ -64,16 +75,19 @@ class ActivityTableViewCell: UITableViewCell {
         titleLabel.pin(.right, to: avatarImageView, spacing: 10)
         titleLabel.align(.top, to: avatarImageView)
         contentView.addSubview(subtitleLabel)
-        subtitleLabel.pin(.right, to: titleLabel, spacing: 10)
+        subtitleLabel.pin(.right, to: titleLabel, spacing: 3)
         subtitleLabel.centerY(to: titleLabel)
+        contentView.addSubview(commentLabel)
+        commentLabel.align(.left, to: titleLabel)
+        commentLabel.pin(.bottom, to: titleLabel, spacing: 7)
         contentView.addSubview(contentLabel)
         contentLabel.align(.left, to: titleLabel)
-        contentLabel.pin(.bottom, to: titleLabel, spacing: 10)
+        contentLabel.pin(.bottom, to: commentLabel, spacing: 7)
         contentLabel.align(.right, to: contentView, inset: 50)
         contentView.addSubview(likeButton)
         likeButton.constrain(width: 30, height: 30)
         likeButton.align(.right, to: contentView, inset: 10)
-        likeButton.centerY(to: contentView)
+        likeButton.centerY(to: avatarImageView)
     }
     
     func update(_ viewModel: ActivityViewModel) {
@@ -81,6 +95,8 @@ class ActivityTableViewCell: UITableViewCell {
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
         titleLabel.text = viewModel.titleString
         subtitleLabel.text = viewModel.subtitleString
+        commentLabel.text = viewModel.commentString
+        emojiImageView.image = viewModel.emojiImage
         contentLabel.text = viewModel.contentString
         if viewModel.like {
             likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .normal)

@@ -83,6 +83,8 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         let sumHeight: CGFloat = sumWidth * 10 / 9
         for index in 0..<9 {
             let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
             imageView.tag = index
             imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(didPressImage(_:)))
@@ -158,7 +160,9 @@ extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
     }
     
     func openEmojis() {
-        emojiViewWidthConstrain?.constant = UIScreen.mainWidth() - 40
-        emojiView.openEmojis()
+        UIView.animate(withDuration: 0.3) {
+            self.emojiViewWidthConstrain?.constant = UIScreen.mainWidth() - 40
+            self.emojiView.openEmojis()
+        }
     }
 }

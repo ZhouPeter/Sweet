@@ -37,8 +37,8 @@ enum WebAPI {
     case delSectionSubscription(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
-    case allCards
-    case subscriptionCards
+    case allCards(cardId: String?, direction: Int?)
+    case subscriptionCards(cardId: String?, direction: Int?)
     case storyDetailsUvlist(storyId: UInt64)
     case storyTopics
     case searchTopic(topic: String)
@@ -105,7 +105,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case .storyTopics:
             return "/story/tag/list"
         case .allCards:
-            return "/card/all/get"
+            return "/card/mock/get"
         case .subscriptionCards:
             return "/card/subscription/get"
         case .storyDetailsUvlist:
@@ -155,6 +155,15 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phone]
         case let .searchContact(name):
             parameters = ["name": name]
+        case let .allCards(cardId, direction),
+             let .subscriptionCards(cardId, direction):
+            if let cardId = cardId, let direction = direction {
+                parameters = ["cardId": cardId, "direction": direction]
+            } else if let cardId = cardId {
+                parameters = ["cardId": cardId]
+            } else {
+                parameters = [:]
+            }
         case let .storyDetailsUvlist(storyId):
             parameters = ["storyId": storyId]
         case let .publishStory(url, type, topic, center):

@@ -36,7 +36,7 @@ class IMManagerController: BaseViewController, IMManagerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        automaticallyAdjustsScrollViewInsets = false
         navigationItem.titleView = titleView
         addChildViewController(iMListController)
         iMListController.didMove(toParentViewController: self)
