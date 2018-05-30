@@ -7,23 +7,28 @@
 //
 
 import Foundation
+
 final class IMCoordinator: BaseCoordinator {
     private let factory: IMFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let token: String
+    private let storage: Storage
     
-    init(router: Router, factory: IMFlowFactory, coordinatorFactory: CoordinatorFactory) {
+    init(token: String,
+         storage: Storage,
+         router: Router,
+         factory: IMFlowFactory,
+         coordinatorFactory: CoordinatorFactory) {
+        self.token = token
+        self.storage = storage
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
     }
     
     override func start() {
-        logger.debug()
         showIMManager()
-        
-        Messenger.shared.login(with: 0, token: "")
-        Messenger.shared.addDelegate(self)
     }
     
     // MARK: - Private
@@ -37,22 +42,6 @@ final class IMCoordinator: BaseCoordinator {
             self?.showIMContacts(iMContactsView: iMContactsView)
         }
         router.setRootFlow(managerView)
-    }
-    
-}
-
-extension IMCoordinator: MessengerDelegate {
-    func messengerDidLogin(userID: UInt64, success: Bool) {
-        logger.debug(userID, success)
-        Messenger.shared.logout()
-    }
-    
-    func messengerDidUpdate(state: MessengerState) {
-        logger.debug(state)
-    }
-    
-    func messengerDidLogout(userID: UInt64) {
-        logger.debug(userID)
     }
 }
 
@@ -116,6 +105,7 @@ extension IMCoordinator {
         }
         router.push(blackView)
     }
+    
     private func showBlock() {
         let blockView = factory.makeBlockOutput()
         blockView.showProfile = { [weak self] userId in
@@ -139,5 +129,4 @@ extension IMCoordinator {
         }
         router.push(searchView)
     }
-
 }

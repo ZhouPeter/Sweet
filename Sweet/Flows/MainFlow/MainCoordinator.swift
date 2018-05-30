@@ -9,6 +9,8 @@
 import UIKit
 
 protocol MainView: BaseView {
+    var userID: UInt64 { get set }
+    var token: String { get set }
     var preloadStory: ((UINavigationController) -> Void)? { get set }
     var onStoryFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
@@ -17,10 +19,15 @@ protocol MainView: BaseView {
 }
 
 final class MainCoordinator: BaseCoordinator {
+    private let userID: UInt64
+    private let token: String
     private let mainView: MainView
     private let coordinatorFactory: CoordinatorFactory
+    private lazy var storage = Storage(userID: self.userID)
     
-    init(mainView: MainView, coordinatorFactory: CoordinatorFactory) {
+    init(userID: UInt64, token: String, mainView: MainView, coordinatorFactory: CoordinatorFactory) {
+        self.userID = userID
+        self.token = token
         self.mainView = mainView
         self.coordinatorFactory = coordinatorFactory
     }
@@ -56,7 +63,8 @@ final class MainCoordinator: BaseCoordinator {
     private func runIMFlow() -> ((UINavigationController) -> Void) {
         return { nav in
             guard nav.viewControllers.isEmpty else { return }
-            let coordinator = self.coordinatorFactory.makeIMCoordinator(navigation: nav)
+            let coordinator = self.coordinatorFactory
+                .makeIMCoordinator(token: self.token, storage: self.storage, navigation: nav)
             coordinator.start()
             self.addDependency(coordinator)
         }

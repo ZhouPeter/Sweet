@@ -17,7 +17,7 @@ class ProfileController: BaseViewController, ProfileView {
     var user: UserResponse? {
         willSet {
             if let newValue = newValue {
-                if newValue.userId == Defaults[.userID] {
+                if newValue.userId == UInt64(Defaults[.userID] ?? "0") {
                     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
                     navigationItem.title = "我的"
                 } else {
@@ -159,7 +159,7 @@ extension ProfileController {
     }
     
     private func loadUserData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
-        let userId = (self.userId == nil ? UInt64(Defaults[.userID]) : self.userId!)
+        let userId = (self.userId == nil ? (UInt64(Defaults[.userID] ?? "0") ?? 0) : self.userId!)
         web.request(.getUserProfile(userId: userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
             case let .success(response):

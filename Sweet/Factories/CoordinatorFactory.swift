@@ -12,9 +12,9 @@ protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
-    func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?)
+    func makeMainCoordinator(userID: UInt64, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
     func makeProfileCoordinator(router: Router) -> Coordinator & ProfileCoordinatorOutput
-    func makeIMCoordinator(navigation: UINavigationController?) -> Coordinator
+    func makeIMCoordinator(token: String, storage: Storage, navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator

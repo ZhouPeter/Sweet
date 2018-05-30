@@ -27,6 +27,8 @@ extension Notification.Name {
 }
 
 final class MainController: PageboyViewController, MainView {
+    var userID: UInt64 = 0
+    var token: String = ""
     var preloadStory: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
@@ -34,6 +36,10 @@ final class MainController: PageboyViewController, MainView {
     var onCardsFlowSelect: ((UINavigationController) -> Void)?
     
     private var controllers = [UINavigationController]()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,10 +15,6 @@ private var onboardingWasShown: Bool = {
     let isOpened = def.bool(forKey: OnboardingController.wasShownKey)
     return isOpened
 }()
-/// 是否登录授权
-private var isAuthorized: Bool = {
-    return Defaults[.token] != nil
-}()
 
 final class ApplicationCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory
@@ -41,8 +37,7 @@ final class ApplicationCoordinator: BaseCoordinator {
             case .signUp:
                 runAuthFlow()
             case .power:
-//                runPowerFlow()
-                runMainFlow()
+                runPowerFlow()
             default:
                 childCoordinators.forEach { $0.start(with: option) }
             }
@@ -52,8 +47,8 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runOnboardingFlow()
             case .auth:
                 runAuthFlow()
-            case .main:
-                runMainFlow()
+            case let .main(userID, token):
+                runMainFlow(userID: userID, token: token)
             }
         }
     }
@@ -77,7 +72,6 @@ final class ApplicationCoordinator: BaseCoordinator {
         let coordinator = coordinatorFactory.makeAuthCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] isSettingPower in
             guard let `self` = self else { return }
-            isAuthorized = true
             isSettingPower ? self.start(with: .power) : self.start()
             self.removeDependency(coordinator)
         }
@@ -96,9 +90,9 @@ final class ApplicationCoordinator: BaseCoordinator {
         coordinator.start()
     }
     
-    private func runMainFlow() {
+    private func runMainFlow(userID: UInt64, token: String) {
         logger.debug()
-        let (coordinator, flow) = coordinatorFactory.makeMainCoordinator()
+        let (coordinator, flow) = coordinatorFactory.makeMainCoordinator(userID: userID, token: token)
         addDependency(coordinator)
         router.setRootFlow(flow)
         coordinator.start()
@@ -106,17 +100,18 @@ final class ApplicationCoordinator: BaseCoordinator {
 }
 
 private enum LaunchInstructor {
-    case main, auth, onboarding
+    case main(userID: UInt64, token: String)
+    case auth
+    case onboarding
     
-    static func configure(tutorialWasShown: Bool = onboardingWasShown,
-                          isAuthorized: Bool = isAuthorized) -> LaunchInstructor {
-        switch (tutorialWasShown, isAuthorized) {
-        case (false, _):
+    static func configure(tutorialWasShown: Bool = onboardingWasShown) -> LaunchInstructor {
+        if tutorialWasShown == false {
             return .onboarding
-        case (true, false):
-            return .auth
-        case (true, true):
-            return .main
         }
+        
+        guard let IDString = Defaults[.userID], let userID = UInt64(IDString), let token = Defaults[.token] else {
+            return .auth
+        }
+        return .main(userID: userID, token: token)
     }
 }

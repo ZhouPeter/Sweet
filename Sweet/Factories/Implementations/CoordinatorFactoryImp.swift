@@ -28,14 +28,24 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return AuthCoordinator(with: FlowFactoryImp(), router: router)
     }
     
-    func makeMainCoordinator() -> (coordinator: Coordinator, toPresent: Presentable?) {
+    func makeMainCoordinator(userID: UInt64, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
         let controller = MainController()
-        let coordinator = MainCoordinator(mainView: controller, coordinatorFactory: CoordinatorFactoryImp())
+        let coordinator = MainCoordinator(
+            userID: userID,
+            token: token,
+            mainView: controller,
+            coordinatorFactory: CoordinatorFactoryImp()
+        )
         return (coordinator, controller)
     }
     
-    func makeIMCoordinator(navigation: UINavigationController?) -> Coordinator {
+    func makeIMCoordinator(
+        token: String,
+        storage: Storage,
+        navigation: UINavigationController?) -> Coordinator {
         return IMCoordinator(
+            token: token,
+            storage: storage,
             router: makeRouter(with: navigation),
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()

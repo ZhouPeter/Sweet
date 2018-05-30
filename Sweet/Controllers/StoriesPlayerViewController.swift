@@ -26,7 +26,7 @@ class StoriesPlayerViewController: BaseViewController {
     var timerNumber: Float = 0
     var stories: [StoryCellViewModel]! {
         didSet {
-            self.isSelf = stories[0].userId == Defaults[.userID]
+            self.isSelf = stories[0].userId == UInt64(Defaults[.userID] ?? "0")
         }
     }
     private var isSelf = true

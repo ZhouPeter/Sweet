@@ -30,9 +30,10 @@ struct BaseInfoCellViewModel {
                         user.collegeName
         signatureString = user.signature
         likeCountString = "♥️\(user.likeCount)"
-        subscriptionButtonHidden = user.userId == Defaults[.userID]
-        sendMessageButtonHidden = user.userId == Defaults[.userID]
+        let userID = UInt64(Defaults[.userID] ?? "0")
+        subscriptionButtonHidden = user.userId == userID
+        sendMessageButtonHidden = user.userId == userID
         subscribeButtonString = user.subscription ? "已订阅" : "订阅"
-        cellHeight = user.userId == Defaults[.userID] ? 140 : 180
+        cellHeight = user.userId == userID ? 140 : 180
     }
 }

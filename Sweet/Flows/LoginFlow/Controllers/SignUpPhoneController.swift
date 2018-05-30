@@ -173,7 +173,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     logger.debug(response)
                     web.tokenSource.token = response.token
                     Defaults[.token] =  response.token
-                    Defaults[.userID] = Int(response.user.userId)
+                    Defaults[.userID] = "\(response.user.userId)"
                     self.storage = Storage(userID: response.user.userId)
                     self.storage?.write({ (realm) in
                         let user = User()
