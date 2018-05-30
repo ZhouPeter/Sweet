@@ -296,7 +296,8 @@ final class StoryEditController: BaseViewController, StoryEditView {
                     type = .poke
                     pokeCenter = CGPoint(
                         x: self.pokeView.center.x / self.view.bounds.width,
-                        y: self.pokeView.center.y / self.view.bounds.height)
+                        y: self.pokeView.center.y / self.view.bounds.height
+                    )
                 } else {
                     type = .video
                 }

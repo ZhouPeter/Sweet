@@ -76,12 +76,11 @@ class ContactsController: BaseViewController, ContactsView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        loadContacts()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func didShow() {
         parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
-        loadContactAllList()
     }
     
     private func showEmptyView(isShow: Bool) {
@@ -107,7 +106,7 @@ class ContactsController: BaseViewController, ContactsView {
         titles.removeAll()
     }
     
-    private func loadContactAllList() {
+    private func loadContacts() {
         web.request(.contactAllList, responseType: Response<ContactListResponse>.self) {[weak self] (result) in
             guard let `self` = self else { return }
             switch result {

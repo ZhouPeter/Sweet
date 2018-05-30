@@ -40,6 +40,7 @@ class IMController: BaseViewController, IMView {
         navigationItem.titleView = titleView
         setupControllers()
         didShowInbox?(inboxController)
+        inboxController.didShow()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,8 +66,10 @@ class IMController: BaseViewController, IMView {
         inboxController.view.alpha = isContacts ? 0 : 1
         if isContacts {
             didShowContacts?(contactsController)
+            contactsController.didShow()
         } else {
             didShowInbox?(inboxController)
+            inboxController.didShow()
         }
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 
 protocol ContactsView: BaseView {
     var delegate: ContactsViewDelegate? { get set }
+    func didShow()
 }
 
 protocol ContactsViewDelegate: class {

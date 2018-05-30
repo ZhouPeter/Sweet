@@ -108,8 +108,9 @@ extension UIView {
     
     @discardableResult public func align(
         _ align: Align,
-        to anchorView: UIView,
+        to view: UIView? = nil,
         inset: CGFloat = 0) -> NSLayoutConstraint {
+        let anchorView = view ?? superview!
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
         switch align {

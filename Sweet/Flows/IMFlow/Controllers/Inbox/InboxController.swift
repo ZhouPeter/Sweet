@@ -7,12 +7,7 @@
 //
 
 import UIKit
-import SwiftyUserDefaults
-
-protocol InboxView: BaseView {
-    var showProfile: (() -> Void)? { get set }
-    func didUpdateAvatar(URLString: String)
-}
+import MessageKit
 
 final class InboxController: BaseViewController, InboxView {
     var showProfile: (() -> Void)?
@@ -27,24 +22,50 @@ final class InboxController: BaseViewController, InboxView {
         imageView.addGestureRecognizer(tap)
         return imageView
     } ()
+    
+    private lazy var tableView: UITableView = {
+        let view = UITableView(frame: .zero, style: .plain)
+        view.dataSource = self
+        view.delegate = self
+        view.register(cellType: ConversationCell.self)
+        return view
+    } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
+        view.addSubview(tableView)
+        tableView.fill(in: view)
     }
     
     func didUpdateAvatar(URLString: String) {
         avatarImageView.kf.setImage(with: URL(string: URLString))
     }
     
+    func didShow() {
+        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
+    }
+    
     // MARK: - Private
     
     @objc private func showProfile(_ sender: UITapGestureRecognizer) {
         showProfile?()
+    }
+}
+
+extension InboxController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ConversationCell.self)
+        return cell
+    }
+}
+
+extension InboxController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 68
     }
 }
