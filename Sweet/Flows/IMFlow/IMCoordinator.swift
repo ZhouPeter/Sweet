@@ -16,6 +16,7 @@ final class IMCoordinator: BaseCoordinator {
     private let token: String
     private let storage: Storage
     private var isAvatarLoaded = false
+    private lazy var imView: IMView = self.factory.makeIMView()
     
     init(token: String,
          storage: Storage,
@@ -30,44 +31,24 @@ final class IMCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        showIMView()
-    }
-    
-    // MARK: - Private
-    
-    private func showIMView() {
-        let view = factory.makeIMView()
-        view.didShowContacts = { [weak self] view in
-            view.delegate = self
-        }
-        view.didShowInbox = { [weak self] view in
-            view.showProfile = { self?.showSelfProfile() }
-            guard let `self` = self, self.isAvatarLoaded == false else { return }
-            var urlString: String?
-            self.storage.read({ (realm) in
-                guard let user = realm.object(ofType: User.self, forPrimaryKey: self.storage.userID) else { return }
-                urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
-            }, callback: {
-                guard let urlString = urlString else { return }
-                view.didUpdateAvatar(URLString: urlString)
-                self.isAvatarLoaded = true
-            })
-        }
-        router.setRootFlow(view)
-    }
-    
-    private func showSelfProfile() {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
-        coordinator.finishFlow = { [weak self] in
-            self?.removeDependency(coordinator)
-        }
-        addDependency(coordinator)
-        coordinator.start()
+        imView.delegate = self
+        router.setRootFlow(imView)
     }
 }
 
-extension IMCoordinator: ContactsViewDelegate {
-    func contactsShowSearch() {
+extension IMCoordinator: IMViewDelegate {
+    func imViewDidLoad() {
+        var urlString: String?
+        self.storage.read({ (realm) in
+            guard let user = realm.object(ofType: User.self, forPrimaryKey: self.storage.userID) else { return }
+            urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
+        }, callback: { [weak self] in
+            guard let urlString = urlString else { return }
+            self?.imView.updateAvatarImage(withURLString: urlString)
+        })
+    }
+    
+    func imViewDidPressSearchButton() {
         let searchView = factory.makeContactSearchOutput()
         searchView.showProfile = { [weak self] userId in
             self?.showProfile(userID: userId)
@@ -75,6 +56,25 @@ extension IMCoordinator: ContactsViewDelegate {
         router.push(searchView)
     }
     
+    func imViewDidPressAvatarButton() {
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    func imViewDidShowInbox(_ view: InboxView) {
+        
+    }
+    
+    func imViewDidShowContacts(_ view: ContactsView) {
+        view.delegate = self
+    }
+}
+
+extension IMCoordinator: ContactsViewDelegate {
     func contactsShowSubscription() {
         let subscriptionView = factory.makeSubscriptionOutput()
         subscriptionView.showProfile = { [weak self] userId in

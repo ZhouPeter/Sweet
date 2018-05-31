@@ -8,18 +8,31 @@
 
 import UIKit
 
-protocol IMView: BaseView {
-    var didShowInbox: ((InboxView) -> Void)? { get set }
-    var didShowContacts: ((ContactsView) -> Void)? { get set }
-}
-
 class IMController: BaseViewController, IMView {
-    var didShowInbox: ((InboxView) -> Void)?
-    var didShowContacts: ((ContactsView) -> Void)?
+    weak var delegate: IMViewDelegate?
+    private let inboxView = InboxController()
+    private let contactsView = ContactsController()
     
-    private var inboxController = InboxController()
-    private var contactsController = ContactsController()
-    private var isConversationsShown = true
+    private var isInboxShown = true
+    
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressRightBarButton))
+        imageView.addGestureRecognizer(tap)
+        return imageView
+    } ()
+    
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "SearchWhite"), for: .normal)
+        button.addTarget(self, action: #selector(didPressRightBarButton), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        return button
+    } ()
     
     private lazy var titleView: UISegmentedControl = {
         let control = UISegmentedControl(items: ["消息", "联系人"])
@@ -39,8 +52,8 @@ class IMController: BaseViewController, IMView {
         super.viewDidLoad()
         navigationItem.titleView = titleView
         setupControllers()
-        didShowInbox?(inboxController)
-        inboxController.didShow()
+        delegate?.imViewDidLoad()
+        showInbox(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,27 +62,40 @@ class IMController: BaseViewController, IMView {
         navigationController?.navigationBar.barStyle = .black
     }
     
+    func updateAvatarImage(withURLString urlString: String) {
+        avatarImageView.kf.setImage(with: URL(string: urlString))
+    }
+    
     // MARK: - Private
     
     private func setupControllers() {
-        add(childViewController: contactsController)
-        contactsController.view.fill(in: view)
-        add(childViewController: inboxController)
-        inboxController.view.fill(in: view)
+        add(childViewController: contactsView)
+        contactsView.view.fill(in: view)
+        add(childViewController: inboxView)
+        inboxView.view.fill(in: view)
     }
     
     @objc private func switchView(_ control: UISegmentedControl) {
-        showContacts(control.selectedSegmentIndex == 1)
+        showInbox(control.selectedSegmentIndex == 0)
     }
     
-    private func showContacts(_ isContacts: Bool) {
-        inboxController.view.alpha = isContacts ? 0 : 1
-        if isContacts {
-            didShowContacts?(contactsController)
-            contactsController.didShow()
+    @objc private func didPressRightBarButton() {
+        if isInboxShown {
+            delegate?.imViewDidPressAvatarButton()
         } else {
-            didShowInbox?(inboxController)
-            inboxController.didShow()
+            delegate?.imViewDidPressSearchButton()
+        }
+    }
+    
+    private func showInbox(_ isInboxShown: Bool) {
+        self.isInboxShown = isInboxShown
+        inboxView.view.alpha = isInboxShown ? 1 : 0
+        if isInboxShown {
+            delegate?.imViewDidShowInbox(inboxView)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
+        } else {
+            delegate?.imViewDidShowContacts(contactsView)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
         }
     }
 }

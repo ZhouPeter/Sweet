@@ -9,7 +9,5 @@
 import Foundation
 
 protocol InboxView: BaseView {
-    var showProfile: (() -> Void)? { get set }
-    func didUpdateAvatar(URLString: String)
-    func didShow()
+    
 }

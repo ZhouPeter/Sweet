@@ -12,17 +12,6 @@ import MessageKit
 final class InboxController: BaseViewController, InboxView {
     var showProfile: (() -> Void)?
     
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        imageView.layer.cornerRadius = 15
-        imageView.layer.masksToBounds = true
-        imageView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(showProfile(_:)))
-        imageView.addGestureRecognizer(tap)
-        return imageView
-    } ()
-    
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         view.dataSource = self
@@ -36,14 +25,6 @@ final class InboxController: BaseViewController, InboxView {
         view.backgroundColor = .white
         view.addSubview(tableView)
         tableView.fill(in: view)
-    }
-    
-    func didUpdateAvatar(URLString: String) {
-        avatarImageView.kf.setImage(with: URL(string: URLString))
-    }
-    
-    func didShow() {
-        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
     }
     
     // MARK: - Private

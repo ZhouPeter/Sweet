@@ -10,7 +10,6 @@ import Foundation
 
 protocol ContactsView: BaseView {
     var delegate: ContactsViewDelegate? { get set }
-    func didShow()
 }
 
 protocol ContactsViewDelegate: class {
@@ -19,5 +18,4 @@ protocol ContactsViewDelegate: class {
     func contactsShowInvite()
     func contactsShowBlack()
     func contactsShowProfile(userID: UInt64)
-    func contactsShowSearch()
 }

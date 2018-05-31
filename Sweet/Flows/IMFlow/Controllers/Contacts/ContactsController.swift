@@ -51,14 +51,6 @@ class ContactsController: BaseViewController, ContactsView {
         return tableView
     } ()
     
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "SearchWhite"), for: .normal)
-        button.addTarget(self, action: #selector(showSearch(_:)), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        return button
-    } ()
-    
     private lazy var emptyView: EmptyEmojiView = {
         let view = EmptyEmojiView()
         return view
@@ -77,10 +69,6 @@ class ContactsController: BaseViewController, ContactsView {
             automaticallyAdjustsScrollViewInsets = false
         }
         loadContacts()
-    }
-    
-    func didShow() {
-        parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
     }
     
     private func showEmptyView(isShow: Bool) {
@@ -196,12 +184,6 @@ class ContactsController: BaseViewController, ContactsView {
             }
         }
     }
-
-    // MARK: - Actions
-    
-    @objc private func showSearch(_ sender: UIButton) {
-        delegate?.contactsShowSearch()
-    }
 }
 
 extension ContactsController: UITableViewDelegate {
@@ -255,6 +237,5 @@ extension ContactsController: UITableViewDataSource {
             cell.update(viewModel: viewModelsGroup[indexPath.section - 1][indexPath.row])
         }
         return cell
-        
     }
 }

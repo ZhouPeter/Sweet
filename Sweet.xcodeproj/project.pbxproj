@@ -548,6 +548,10 @@
 		AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
 		AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
 		AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */; };
+		AC1778BF20BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
+		AC1778C020BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
+		AC1778C120BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
+		AC1778C220BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
 		AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
@@ -1217,6 +1221,7 @@
 		AC04E9872099C87F004401AC /* LookupFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupFilter.h; sourceTree = "<group>"; };
 		AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryFilterPreviewController.h; sourceTree = "<group>"; };
 		AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryFilterPreviewController.m; sourceTree = "<group>"; };
+		AC1778BE20BF99C500D5330F /* IMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMView.swift; sourceTree = "<group>"; };
 		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
 		AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerDelegate.swift; sourceTree = "<group>"; };
@@ -1694,6 +1699,7 @@
 		AC525AB0208DD708001070B2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AC1778BE20BF99C500D5330F /* IMView.swift */,
 				58447B3C209C06A5004C2FFE /* IMController.swift */,
 				ACDB24E420BED0BA0039368E /* Inbox */,
 				ACDB24E520BED0C10039368E /* Contacts */,
@@ -2032,13 +2038,13 @@
 		ACDB24E520BED0C10039368E /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				ACDB24C520BEB3100039368E /* ContactsView.swift */,
+				58447B46209C2E07004C2FFE /* ContactsController.swift */,
 				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
 				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
 				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
 				5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */,
 				58325B8D20A2F496000E851F /* ContactSearchController.swift */,
-				ACDB24C520BEB3100039368E /* ContactsView.swift */,
-				58447B46209C2E07004C2FFE /* ContactsController.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -2704,6 +2710,7 @@
 				AC557CB420B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				AC1778BF20BF99C500D5330F /* IMView.swift in Sources */,
 				5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
@@ -2838,6 +2845,7 @@
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
+				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
@@ -3056,6 +3064,7 @@
 				AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
+				AC1778C220BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
@@ -3402,6 +3411,7 @@
 				AC557CB520B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				AC1778C020BF99C500D5330F /* IMView.swift in Sources */,
 				5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
