@@ -11,7 +11,6 @@ import UIKit
 protocol MainView: BaseView {
     var userID: UInt64 { get set }
     var token: String { get set }
-    var preloadStory: ((UINavigationController) -> Void)? { get set }
     var onStoryFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
     var onCardsFlowSelect: ((UINavigationController) -> Void)? { get set }
@@ -37,7 +36,6 @@ final class MainCoordinator: BaseCoordinator {
         mainView.onViewDidLoad = runCardsFlow()
         mainView.onCardsFlowSelect = runCardsFlow()
         mainView.onStoryFlowSelect = runStoryFlow()
-        mainView.preloadStory = runStoryFlow()
     }
     
     // MARK: - Private

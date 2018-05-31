@@ -60,6 +60,11 @@ class IMController: BaseViewController, IMView {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
         navigationController?.navigationBar.barStyle = .black
+        if isInboxShown {
+            delegate?.imViewDidShowInbox(inboxView)
+        } else {
+            delegate?.imViewDidShowContacts(contactsView)
+        }
     }
     
     func updateAvatarImage(withURLString urlString: String) {

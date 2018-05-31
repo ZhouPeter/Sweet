@@ -620,6 +620,10 @@
 		AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D220A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
+		AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
+		AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
+		AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
+		AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
 		AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
@@ -772,6 +776,10 @@
 		AC8EAA0420AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
+		AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
+		AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
+		AC956BAB20C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
 		AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
 		AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972511209ABCD4009FB966 /* StoryTextEditController.swift */; };
@@ -1251,6 +1259,7 @@
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		AC3AA50120BFF40D00C046F1 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
 		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
 		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
@@ -1291,6 +1300,7 @@
 		AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		AC8EAA0120AC39900033615D /* XGPUImageMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPUImageMovie.h; sourceTree = "<group>"; };
 		AC8EAA0220AC39900033615D /* XGPUImageMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGPUImageMovie.m; sourceTree = "<group>"; };
+		AC956BA720C0246400B40D9A /* MessageTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTicket.swift; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
@@ -1648,9 +1658,11 @@
 			children = (
 				AC2A254420BBEB1A00A82E62 /* Protos */,
 				AC2A256D20BBF16B00A82E62 /* Messenger.swift */,
+				AC956BA720C0246400B40D9A /* MessageTicket.swift */,
 				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
 				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
 				ACDB24AD20BD74E00039368E /* InstantMessage.swift */,
+				AC3AA50120BFF40D00C046F1 /* Conversation.swift */,
 			);
 			path = Messenger;
 			sourceTree = "<group>";
@@ -2752,6 +2764,7 @@
 				ACF7A8C420B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */,
+				AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -2783,6 +2796,7 @@
 				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
 				583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				AC45CD7420AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
@@ -2870,6 +2884,7 @@
 				AC41420420BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104C20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
+				AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
@@ -3042,6 +3057,7 @@
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
+				AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				5803572320AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3092,6 +3108,7 @@
 				AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
+				AC956BAB20C0246400B40D9A /* MessageTicket.swift in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38120AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */,
@@ -3264,6 +3281,7 @@
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
+				AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */,
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				5803572420AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3462,6 +3480,7 @@
 				ACF7A8C520B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */,
+				AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -3493,6 +3512,7 @@
 				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,
 				583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				AC45CD7520AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,

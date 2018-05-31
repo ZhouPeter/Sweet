@@ -148,7 +148,9 @@ struct SimpleUserInfo {
 
   var collegeName: String = String()
 
-  var enrollment: String = String()
+  var enrollment: UInt32 = 0
+
+  var city: String = String()
 
   var sign: String = String()
 
@@ -328,8 +330,9 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     5: .standard(proto: "university_name"),
     6: .standard(proto: "college_name"),
     7: .same(proto: "enrollment"),
-    8: .same(proto: "sign"),
-    9: .standard(proto: "user_type"),
+    8: .same(proto: "city"),
+    9: .same(proto: "sign"),
+    10: .standard(proto: "user_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -341,9 +344,10 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       case 4: try decoder.decodeSingularEnumField(value: &self.gender)
       case 5: try decoder.decodeSingularStringField(value: &self.universityName)
       case 6: try decoder.decodeSingularStringField(value: &self.collegeName)
-      case 7: try decoder.decodeSingularStringField(value: &self.enrollment)
-      case 8: try decoder.decodeSingularStringField(value: &self.sign)
-      case 9: try decoder.decodeSingularUInt32Field(value: &self.userType)
+      case 7: try decoder.decodeSingularUInt32Field(value: &self.enrollment)
+      case 8: try decoder.decodeSingularStringField(value: &self.city)
+      case 9: try decoder.decodeSingularStringField(value: &self.sign)
+      case 10: try decoder.decodeSingularUInt32Field(value: &self.userType)
       default: break
       }
     }
@@ -368,14 +372,17 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if !self.collegeName.isEmpty {
       try visitor.visitSingularStringField(value: self.collegeName, fieldNumber: 6)
     }
-    if !self.enrollment.isEmpty {
-      try visitor.visitSingularStringField(value: self.enrollment, fieldNumber: 7)
+    if self.enrollment != 0 {
+      try visitor.visitSingularUInt32Field(value: self.enrollment, fieldNumber: 7)
+    }
+    if !self.city.isEmpty {
+      try visitor.visitSingularStringField(value: self.city, fieldNumber: 8)
     }
     if !self.sign.isEmpty {
-      try visitor.visitSingularStringField(value: self.sign, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.sign, fieldNumber: 9)
     }
     if self.userType != 0 {
-      try visitor.visitSingularUInt32Field(value: self.userType, fieldNumber: 9)
+      try visitor.visitSingularUInt32Field(value: self.userType, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -388,6 +395,7 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if self.universityName != other.universityName {return false}
     if self.collegeName != other.collegeName {return false}
     if self.enrollment != other.enrollment {return false}
+    if self.city != other.city {return false}
     if self.sign != other.sign {return false}
     if self.userType != other.userType {return false}
     if unknownFields != other.unknownFields {return false}

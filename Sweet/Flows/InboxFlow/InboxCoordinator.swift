@@ -14,6 +14,8 @@ final class InboxCoordinator: BaseCoordinator {
     private let router: Router
     private let token: String
     private let storage: Storage
+    private var conversations = [Conversation]()
+    private var inboxView: InboxView?
     
     init(token: String,
          storage: Storage,
@@ -29,9 +31,39 @@ final class InboxCoordinator: BaseCoordinator {
     
     func start(with view: InboxView) {
         view.delegate = self
+        inboxView = view
+        Messenger.shared.addDelegate(self)
+        Messenger.shared.login(with: storage.userID, token: token)
+    }
+    
+    override func start() {
+        Messenger.shared.loadConversations()
     }
 }
 
 extension InboxCoordinator: InboxViewDelegate {
     
+}
+
+extension InboxCoordinator: MessengerDelegate {
+    func messengerDidLogin(userID: UInt64, success: Bool) {
+        logger.debug(userID, success)
+        start()
+    }
+    
+    func messengerDidLogout(userID: UInt64) {
+        logger.debug(userID)
+    }
+    
+    func messengerDidUpdateState(_ state: MessengerState) {
+        logger.debug(state)
+    }
+    
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        logger.debug(message.content, success)
+    }
+    
+    func messengerDidUpdateConversations(_ conversations: [Conversation]) {
+        inboxView?.didUpdateConversations(conversations)
+    }
 }

@@ -34,6 +34,7 @@ final class IMCoordinator: BaseCoordinator {
     
     override func start() {
         imView.delegate = self
+        _ = imView.toPresent()?.view
         router.setRootFlow(imView)
     }
 }
@@ -68,7 +69,10 @@ extension IMCoordinator: IMViewDelegate {
     }
     
     func imViewDidShowInbox(_ view: InboxView) {
-        guard inboxCoordinator == nil else { return }
+        guard inboxCoordinator == nil else {
+            inboxCoordinator?.start()
+            return
+        }
         let coordinator = coordinatorFactory
             .makeInboxCoordinator(router: router, token: token, storage: storage)
         coordinator.start(with: view)

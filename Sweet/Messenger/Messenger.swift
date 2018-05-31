@@ -57,6 +57,8 @@ final class Messenger {
         startNetworkReachabilityObserver()
     }
     
+    // MARK: - Public
+    
     func addDelegate(_ delegate: MessengerDelegate) {
         multicastDelegate.addDelegate(delegate)
     }
@@ -86,6 +88,29 @@ final class Messenger {
         }
     }
     
+    func getUserInfo(with userID: UInt64) {
+        getUserInfoList(with: [userID]) { (response) in
+            logger.debug(response)
+        }
+    }
+    
+    func getUserInfoList(with userIDs: [UInt64], callback: @escaping (UserInfoGetResp?) -> Void) {
+        var request = UserInfoGetReq()
+        request.userIDList = userIDs
+        send(request, responseType: UserInfoGetResp.self, callback: callback)
+    }
+    
+    func loadConversations() {
+        logger.debug()
+        guard let userID = userID, state == .online else { return }
+        var message = RecentGetReq()
+        message.from = userID
+        send(message, responseType: RecentGetResp.self) { (response) in
+            guard let response = response else { return }
+            logger.debug(response.msgList)
+        }
+    }
+    
     @discardableResult func sendText(_ text: String, to: UInt64) -> InstantMessage {
         var message = InstantMessage()
         message.content = text
@@ -101,7 +126,7 @@ final class Messenger {
             return
         }
         let request = message.makeSendRequest()
-        send(request, resonseType: SendResp.self, module: .message, command: MsgCmdID.sendReq.rawValue) { (response) in
+        send(request, responseType: SendResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
                 return
@@ -113,6 +138,8 @@ final class Messenger {
             self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
         }
     }
+    
+    // MARK: - Private
     
     private func startNetworkReachabilityObserver() {
         reachabilityManager?.listener = { status in
@@ -146,7 +173,12 @@ final class Messenger {
             }
             self.connect(with: address, completion: {
                 self.login({ (date) in
-                    if let date = date { self.serverDate = date }
+                    if let date = date {
+                        self.serverDate = date
+                        self.state = .online
+                    } else {
+                        self.state = .offline
+                    }
                     self.multicastDelegate.invoke({ $0.messengerDidLogin(userID: userID, success: date != nil) })
                 })
             })
@@ -167,7 +199,7 @@ final class Messenger {
         message.token = token
         message.type = .ios
         message.state = .online
-        send(message, resonseType: LoginResp.self, module: .login, command: LoginCmdID.req.rawValue) { (response) in
+        send(message, responseType: LoginResp.self) { (response) in
             if let response = response {
                 callback(Date(timeIntervalSince1970: Double(response.serverTime) / 1000))
             } else {
@@ -186,18 +218,18 @@ final class Messenger {
         })
     }
     
-    private func send<T> (
-        _ message: Message,
-        resonseType: T.Type,
-        module: ModuleID,
-        command: Int,
-        callback: @escaping (T?) -> Void) where T: Message {
+    private func send<T, R> (
+        _ message: T,
+        responseType: R.Type,
+        callback: @escaping (R?) -> Void) where T: Message & MessageTicket, R: Message {
+        let module = message.module.rawValue
+        let command = message.command
         HandlerManager.sharedInstance()
-            .addHandler(module.rawValue, commandId: command + 1, handler: MessageHandler<T>(callback: callback))
+            .addHandler(module, commandId: command + 1, handler: MessageHandler<R>(callback: callback))
         let package = ImPackageRawdata()
         package.body = try? message.serializedData()
         if package.body == nil { logger.error("package body is nil") }
-        service.send(package, moduleId: module.rawValue, commandId: command) { (code) in
+        service.send(package, moduleId: module, commandId: command) { (code) in
             if code.rawValue != 0 {
                 logger.debug("message send failed", message)
                 callback(nil)

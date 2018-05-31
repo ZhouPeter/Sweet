@@ -227,11 +227,8 @@ enum UserCmdID: SwiftProtobuf.Enum {
   case badgeSysncResp // = 2
   case activeStatusSyncReq // = 3
   case activeStatusSyncResp // = 4
-  case metaReq // = 5
-  case metaResp // = 6
-  case metaChangeNotify // = 7
-  case metaSyncReq // = 8
-  case metaSyncResp // = 9
+  case userinfoGetReq // = 5
+  case userinfoGetResp // = 6
   case UNRECOGNIZED(Int)
 
   init() {
@@ -245,11 +242,8 @@ enum UserCmdID: SwiftProtobuf.Enum {
     case 2: self = .badgeSysncResp
     case 3: self = .activeStatusSyncReq
     case 4: self = .activeStatusSyncResp
-    case 5: self = .metaReq
-    case 6: self = .metaResp
-    case 7: self = .metaChangeNotify
-    case 8: self = .metaSyncReq
-    case 9: self = .metaSyncResp
+    case 5: self = .userinfoGetReq
+    case 6: self = .userinfoGetResp
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -261,11 +255,8 @@ enum UserCmdID: SwiftProtobuf.Enum {
     case .badgeSysncResp: return 2
     case .activeStatusSyncReq: return 3
     case .activeStatusSyncResp: return 4
-    case .metaReq: return 5
-    case .metaResp: return 6
-    case .metaChangeNotify: return 7
-    case .metaSyncReq: return 8
-    case .metaSyncResp: return 9
+    case .userinfoGetReq: return 5
+    case .userinfoGetResp: return 6
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -417,11 +408,8 @@ extension UserCmdID: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "BADGE_SYSNC_RESP"),
     3: .same(proto: "ACTIVE_STATUS_SYNC_REQ"),
     4: .same(proto: "ACTIVE_STATUS_SYNC_RESP"),
-    5: .same(proto: "META_REQ"),
-    6: .same(proto: "META_RESP"),
-    7: .same(proto: "META_CHANGE_NOTIFY"),
-    8: .same(proto: "META_SYNC_REQ"),
-    9: .same(proto: "META_SYNC_RESP"),
+    5: .same(proto: "USERINFO_GET_REQ"),
+    6: .same(proto: "USERINFO_GET_RESP"),
   ]
 }
 

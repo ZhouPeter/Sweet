@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ConversationCell: UITableViewCell, CellReusable {
     private let avatarImageView: UIImageView = {
@@ -49,6 +50,15 @@ final class ConversationCell: UITableViewCell, CellReusable {
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    func updateWith(_ conversation: Conversation) {
+        if let urlString = conversation.avatarURLString {
+            avatarImageView.kf.setImage(with: URL(string: urlString))
+        }
+        nameLabel.text = conversation.username
+        timeLabel.text = conversation.timeText
+        contentLabel.text = conversation.content
+    }
     
     private func setup() {
         contentView.addSubview(avatarImageView)

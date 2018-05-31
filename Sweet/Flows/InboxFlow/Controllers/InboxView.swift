@@ -10,6 +10,8 @@ import Foundation
 
 protocol InboxView: BaseView {
     var delegate: InboxViewDelegate? { get set }
+    
+    func didUpdateConversations(_ conversations: [Conversation])
 }
 
 protocol InboxViewDelegate: class {

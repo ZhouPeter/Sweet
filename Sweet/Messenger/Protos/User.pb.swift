@@ -106,6 +106,32 @@ struct ActiveSyncResp {
   init() {}
 }
 
+struct UserInfoGetReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var userIDList: [UInt64] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct UserInfoGetResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var resultCode: UInt32 = 0
+
+  var userInfoList: [SimpleUserInfo] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension ActiveStatus: SwiftProtobuf._ProtoNameProviding {
@@ -233,6 +259,70 @@ extension ActiveSyncResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
   func _protobuf_generated_isEqualTo(other: ActiveSyncResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension UserInfoGetReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "UserInfoGetReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id_list"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedUInt64Field(value: &self.userIDList)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userIDList.isEmpty {
+      try visitor.visitPackedUInt64Field(value: self.userIDList, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: UserInfoGetReq) -> Bool {
+    if self.userIDList != other.userIDList {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension UserInfoGetResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "UserInfoGetResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "result_code"),
+    2: .standard(proto: "user_info_list"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt32Field(value: &self.resultCode)
+      case 2: try decoder.decodeRepeatedMessageField(value: &self.userInfoList)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.resultCode != 0 {
+      try visitor.visitSingularUInt32Field(value: self.resultCode, fieldNumber: 1)
+    }
+    if !self.userInfoList.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.userInfoList, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: UserInfoGetResp) -> Bool {
+    if self.resultCode != other.resultCode {return false}
+    if self.userInfoList != other.userInfoList {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

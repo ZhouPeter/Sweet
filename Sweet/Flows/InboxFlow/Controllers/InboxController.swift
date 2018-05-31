@@ -11,6 +11,7 @@ import MessageKit
 
 final class InboxController: BaseViewController, InboxView {
     weak var delegate: InboxViewDelegate?
+    private var conversations = [Conversation]()
     
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
@@ -26,15 +27,21 @@ final class InboxController: BaseViewController, InboxView {
         view.addSubview(tableView)
         tableView.fill(in: view)
     }
+    
+    func didUpdateConversations(_ conversations: [Conversation]) {
+        self.conversations = conversations
+        tableView.reloadData()
+    }
 }
 
 extension InboxController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return conversations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: ConversationCell.self)
+        cell.updateWith(conversations[indexPath.row])
         return cell
     }
 }

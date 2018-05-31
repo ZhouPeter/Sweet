@@ -29,7 +29,6 @@ extension Notification.Name {
 final class MainController: PageboyViewController, MainView {
     var userID: UInt64 = 0
     var token: String = ""
-    var preloadStory: ((UINavigationController) -> Void)?
     var onIMFlowSelect: ((UINavigationController) -> Void)?
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
@@ -86,7 +85,8 @@ final class MainController: PageboyViewController, MainView {
             name: .ScrollPage,
             object: nil
         )
-        preloadStory?(story)
+        onStoryFlowSelect?(story)
+        onIMFlowSelect?(imList)
     }
     
     // MARK: - Private
