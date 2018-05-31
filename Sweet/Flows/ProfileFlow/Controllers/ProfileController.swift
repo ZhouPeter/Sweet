@@ -8,12 +8,16 @@
 
 import UIKit
 import SwiftyUserDefaults
+
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
+    var finished: (() -> Void)? { get set }
 }
+
 class ProfileController: BaseViewController, ProfileView {    
     var userId: UInt64?
     var showAbout: ((UserResponse) -> Void)?
+    var finished: (() -> Void)?
     var user: UserResponse? {
         willSet {
             if let newValue = newValue {
@@ -27,6 +31,7 @@ class ProfileController: BaseViewController, ProfileView {
             }
         }
     }
+    
     var actionsController: ActionsController!
     
     private var baseInfoViewModel: BaseInfoCellViewModel?
@@ -69,7 +74,6 @@ class ProfileController: BaseViewController, ProfileView {
         addChildViewController(actionsController)
         actionsController.didMove(toParentViewController: self)
         setTableView()
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,15 +88,22 @@ class ProfileController: BaseViewController, ProfileView {
         }
         if isFirstLoad { isFirstLoad = false }
     }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        if parent == nil {
+            finished?()
+        }
+    }
 }
-// MARK: - Actions
-extension ProfileController {
 
+// MARK: - Actions
+
+extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
         guard let user = user else { return }
         self.showAbout?(user)
-       
     }
+    
     @objc private func menuAction(sender: UIButton) {
         guard let userId = user?.userId, let blacklist = user?.blacklist, let block = user?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -153,6 +164,7 @@ extension ProfileController {
 }
 
 // MARK: - Private Methods
+
 extension ProfileController {
     private func setTableView() {
         view.addSubview(tableView)
@@ -219,7 +231,9 @@ extension ProfileController {
     }
     
 }
+
 // MARK: - UITableViewDelegate
+
 extension ProfileController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard  let viewModel = baseInfoViewModel else { return 0 }
@@ -229,10 +243,10 @@ extension ProfileController: UITableViewDelegate {
             return UIScreen.mainHeight() - viewModel.cellHeight - UIScreen.navBarHeight()
         }
     }
-    
 }
 
 // MARK: - UITableViewDataSource
+
 extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return baseInfoViewModel == nil ? 0 : 2

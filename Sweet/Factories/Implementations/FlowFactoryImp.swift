@@ -126,6 +126,12 @@ extension FlowFactoryImp: IMFlowFactory {
     func makeIMView() -> IMView {
         return IMController()
     }
+}
+
+extension FlowFactoryImp: ContactsFlowFactory {
+    func makeContactsView() -> ContactsView {
+        return ContactsController()
+    }
     
     func makeInviteOutput() -> InviteView {
         return InviteController()

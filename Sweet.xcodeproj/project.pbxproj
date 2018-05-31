@@ -552,6 +552,18 @@
 		AC1778C020BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
 		AC1778C120BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
 		AC1778C220BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
+		AC1778CF20BFC5C200D5330F /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */; };
+		AC1778D020BFC5C200D5330F /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */; };
+		AC1778D120BFC5C200D5330F /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */; };
+		AC1778D220BFC5C200D5330F /* ContactsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */; };
+		AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */; };
+		AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */; };
+		AC1778D620BFC5D600D5330F /* InboxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */; };
+		AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */; };
+		AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
+		AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
+		AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
+		AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
@@ -1222,6 +1234,9 @@
 		AC04E98C2099C9A1004401AC /* StoryFilterPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryFilterPreviewController.h; sourceTree = "<group>"; };
 		AC04E98D2099C9A1004401AC /* StoryFilterPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryFilterPreviewController.m; sourceTree = "<group>"; };
 		AC1778BE20BF99C500D5330F /* IMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMView.swift; sourceTree = "<group>"; };
+		AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
+		AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCoordinator.swift; sourceTree = "<group>"; };
+		AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowFactory.swift; sourceTree = "<group>"; };
 		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
 		AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerDelegate.swift; sourceTree = "<group>"; };
@@ -1585,6 +1600,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC1778CA20BFC55C00D5330F /* ContactsFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */,
+				AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */,
+				AC1778CC20BFC5A200D5330F /* Controllers */,
+			);
+			path = ContactsFlow;
+			sourceTree = "<group>";
+		};
+		AC1778CB20BFC58400D5330F /* InboxFlow */ = {
+			isa = PBXGroup;
+			children = (
+				AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */,
+				AC1778CD20BFC5AB00D5330F /* Controllers */,
+			);
+			path = InboxFlow;
+			sourceTree = "<group>";
+		};
+		AC1778CC20BFC5A200D5330F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB24C520BEB3100039368E /* ContactsView.swift */,
+				58447B46209C2E07004C2FFE /* ContactsController.swift */,
+				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
+				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
+				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
+				5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */,
+				58325B8D20A2F496000E851F /* ContactSearchController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AC1778CD20BFC5AB00D5330F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB24DD20BECFD50039368E /* InboxView.swift */,
+				AC525AB1208DD714001070B2 /* InboxController.swift */,
+				ACDB24E620BED0DE0039368E /* ConversationCell.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		AC2A252E20BBE29400A82E62 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1678,7 +1736,8 @@
 			isa = PBXGroup;
 			children = (
 				AC525AAB208DD705001070B2 /* IMCoordinator.swift */,
-				AC525AB0208DD708001070B2 /* Controllers */,
+				AC1778BE20BF99C500D5330F /* IMView.swift */,
+				58447B3C209C06A5004C2FFE /* IMController.swift */,
 			);
 			path = IMFlow;
 			sourceTree = "<group>";
@@ -1692,17 +1751,6 @@
 				AC97251C209ABD39009FB966 /* Text */,
 				AC97251B209ABD14009FB966 /* Edit */,
 				AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		AC525AB0208DD708001070B2 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				AC1778BE20BF99C500D5330F /* IMView.swift */,
-				58447B3C209C06A5004C2FFE /* IMController.swift */,
-				ACDB24E420BED0BA0039368E /* Inbox */,
-				ACDB24E520BED0C10039368E /* Contacts */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1957,14 +2005,16 @@
 		ACA3237520875D8C00BDC92E /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				58BD534720909C9900F7C3E1 /* ProfileFlow */,
 				58BD52FC208DFF3F00F7C3E1 /* PowerFlow */,
 				ACA3237620875D9300BDC92E /* OnboardingFLow */,
 				58BD526F20876EF100F7C3E1 /* LoginFlow */,
 				AC525A88208D87B0001070B2 /* MainFlow */,
-				AC525A9A208DB2AC001070B2 /* IMFlow */,
-				AC525ABB208DF3C2001070B2 /* CardsFlow */,
 				AC525A99208DB2A0001070B2 /* StoryFlow */,
+				AC525ABB208DF3C2001070B2 /* CardsFlow */,
+				AC525A9A208DB2AC001070B2 /* IMFlow */,
+				AC1778CA20BFC55C00D5330F /* ContactsFlow */,
+				AC1778CB20BFC58400D5330F /* InboxFlow */,
+				58BD534720909C9900F7C3E1 /* ProfileFlow */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -2023,30 +2073,6 @@
 				AC8412212088B1DE0086891C /* Signer.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		ACDB24E420BED0BA0039368E /* Inbox */ = {
-			isa = PBXGroup;
-			children = (
-				ACDB24DD20BECFD50039368E /* InboxView.swift */,
-				AC525AB1208DD714001070B2 /* InboxController.swift */,
-				ACDB24E620BED0DE0039368E /* ConversationCell.swift */,
-			);
-			path = Inbox;
-			sourceTree = "<group>";
-		};
-		ACDB24E520BED0C10039368E /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				ACDB24C520BEB3100039368E /* ContactsView.swift */,
-				58447B46209C2E07004C2FFE /* ContactsController.swift */,
-				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
-				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
-				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
-				5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */,
-				58325B8D20A2F496000E851F /* ContactSearchController.swift */,
-			);
-			path = Contacts;
 			sourceTree = "<group>";
 		};
 		ACF2DEAD2089C5C400660425 /* Models */ = {
@@ -2627,6 +2653,7 @@
 				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
+				AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -2786,6 +2813,7 @@
 				58F4074620B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				58BD52912088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58CAB3A720AE8CFA007230AA /* VideoDetailViewController.swift in Sources */,
+				AC1778CF20BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				58BD52EB208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				AC4D090E20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
@@ -2811,6 +2839,7 @@
 				5803573020AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC207F20AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
+				AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				585B68CC20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
@@ -2834,6 +2863,7 @@
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				5803575020AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
+				AC1778D620BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA323992087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E0F20916D0F00ADEFFB /* ActionsController.swift in Sources */,
@@ -2954,6 +2984,7 @@
 				AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				5866330B20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
+				AC1778D120BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
@@ -3026,6 +3057,7 @@
 				AC557C9B20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
+				AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				58D578E02093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
@@ -3053,6 +3085,7 @@
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
+				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
@@ -3173,6 +3206,7 @@
 				AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				5866330C20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
+				AC1778D220BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
@@ -3245,6 +3279,7 @@
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
+				AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				58D578E12093068F00AE5D38 /* ChildrenController.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
@@ -3328,6 +3363,7 @@
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
@@ -3487,6 +3523,7 @@
 				58F4074720B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				58BD52922088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				58CAB3A820AE8CFA007230AA /* VideoDetailViewController.swift in Sources */,
+				AC1778D020BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				58BD52EC208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				AC4D090F20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
@@ -3512,6 +3549,7 @@
 				5803573120AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208020AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
+				AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				585B68CD20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,

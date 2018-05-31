@@ -10,10 +10,6 @@ import Foundation
 
 protocol IMFlowFactory {
     func makeIMView() -> IMView
-    func makeInviteOutput() -> InviteView
-    func makeBlackOutput() -> BlackView
-    func makeBlockOutput() -> BlockView
-    func makeSubscriptionOutput() -> SubscriptionView
     func makeContactSearchOutput() -> ContactSearchView
     func makeProfileOutput(userId: UInt64) -> ProfileView
 }

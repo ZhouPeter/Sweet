@@ -9,5 +9,9 @@
 import Foundation
 
 protocol InboxView: BaseView {
+    var delegate: InboxViewDelegate? { get set }
+}
+
+protocol InboxViewDelegate: class {
     
 }

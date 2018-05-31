@@ -34,6 +34,9 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profileModule.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
+        profileModule.finished = { [weak self] in
+            self?.finishFlow?()
+        }
         router.push(profileModule)
     }
     

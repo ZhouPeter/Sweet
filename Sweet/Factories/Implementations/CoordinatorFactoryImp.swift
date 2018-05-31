@@ -81,4 +81,24 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         guard let app = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
         return RouterImp(rootController: app.rootController)
     }
+    
+    func makeContactsCoordinator(router: Router, token: String, storage: Storage) -> ContactsCoordinator {
+        return ContactsCoordinator(
+            token: token,
+            storage: storage,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp()
+        )
+    }
+    
+    func makeInboxCoordinator(router: Router, token: String, storage: Storage) -> InboxCoordinator {
+        return InboxCoordinator(
+            token: token,
+            storage: storage,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp()
+        )
+    }
 }

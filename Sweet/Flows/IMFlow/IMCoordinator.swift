@@ -17,6 +17,8 @@ final class IMCoordinator: BaseCoordinator {
     private let storage: Storage
     private var isAvatarLoaded = false
     private lazy var imView: IMView = self.factory.makeIMView()
+    private var contactsCoordinator: ContactsCoordinator?
+    private var inboxCoordinator: InboxCoordinator?
     
     init(token: String,
          storage: Storage,
@@ -58,7 +60,7 @@ extension IMCoordinator: IMViewDelegate {
     
     func imViewDidPressAvatarButton() {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
-        coordinator.finishFlow = { [weak self] in
+        coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
@@ -66,46 +68,19 @@ extension IMCoordinator: IMViewDelegate {
     }
     
     func imViewDidShowInbox(_ view: InboxView) {
-        
+        guard inboxCoordinator == nil else { return }
+        let coordinator = coordinatorFactory
+            .makeInboxCoordinator(router: router, token: token, storage: storage)
+        coordinator.start(with: view)
+        inboxCoordinator = coordinator
     }
     
     func imViewDidShowContacts(_ view: ContactsView) {
-        view.delegate = self
-    }
-}
-
-extension IMCoordinator: ContactsViewDelegate {
-    func contactsShowSubscription() {
-        let subscriptionView = factory.makeSubscriptionOutput()
-        subscriptionView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
-        }
-        router.push(subscriptionView)
-    }
-    
-    func contactsShowInvite() {
-        let inviteView = factory.makeInviteOutput()
-        router.push(inviteView)
-    }
-    
-    func contactsShowBlock() {
-        let blockView = factory.makeBlockOutput()
-        blockView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
-        }
-        router.push(blockView)
-    }
-    
-    func contactsShowProfile(userID: UInt64) {
-        showProfile(userID: userID)
-    }
-    
-    func contactsShowBlack() {
-        let blackView = factory.makeBlackOutput()
-        blackView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
-        }
-        router.push(blackView)
+        guard contactsCoordinator == nil else { return }
+        let coordinator = coordinatorFactory
+            .makeContactsCoordinator(router: router, token: token, storage: storage)
+        coordinator.start(with: view)
+        contactsCoordinator = coordinator
     }
     
     private func showProfile(userID: UInt64) {

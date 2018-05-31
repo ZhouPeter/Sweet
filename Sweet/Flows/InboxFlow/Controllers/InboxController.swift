@@ -10,7 +10,7 @@ import UIKit
 import MessageKit
 
 final class InboxController: BaseViewController, InboxView {
-    var showProfile: (() -> Void)?
+    weak var delegate: InboxViewDelegate?
     
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
@@ -19,18 +19,12 @@ final class InboxController: BaseViewController, InboxView {
         view.register(cellType: ConversationCell.self)
         return view
     } ()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(tableView)
         tableView.fill(in: view)
-    }
-    
-    // MARK: - Private
-    
-    @objc private func showProfile(_ sender: UITapGestureRecognizer) {
-        showProfile?()
     }
 }
 

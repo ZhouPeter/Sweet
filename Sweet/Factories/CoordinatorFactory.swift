@@ -18,4 +18,6 @@ protocol CoordinatorFactory {
     func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator
+    func makeContactsCoordinator(router: Router, token: String, storage: Storage) -> ContactsCoordinator
+    func makeInboxCoordinator(router: Router, token: String, storage: Storage) -> InboxCoordinator
 }
