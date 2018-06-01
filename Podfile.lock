@@ -30,6 +30,7 @@ PODS:
   - Reveal-SDK (14)
   - SwiftProtobuf (1.0.3)
   - SwiftyUserDefaults (3.0.1)
+  - SwipeCellKit (2.3.2)
   - TapticEngine (1.1.0)
   - UMCCommon (1.5.0)
   - UMCPush (3.2.1):
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - Reveal-SDK
   - SwiftProtobuf
   - SwiftyUserDefaults
+  - SwipeCellKit
   - TapticEngine
   - UMCPush
   - VIMediaCache
@@ -72,6 +74,7 @@ SPEC REPOS:
     - Reveal-SDK
     - SwiftProtobuf
     - SwiftyUserDefaults
+    - SwipeCellKit
     - TapticEngine
     - UMCCommon
     - UMCPush
@@ -117,11 +120,12 @@ SPEC CHECKSUMS:
   Reveal-SDK: 55b5c5545233b680c2f8da734f202acc15d422b7
   SwiftProtobuf: 5ccc0e4054e37c75800e5744acb2aa80bb72b39c
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
+  SwipeCellKit: 52b160ea820245eb972b2eca270cb3a6f68e33af
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
-PODFILE CHECKSUM: 539987d518f40cfc014551b3d647187ae68f8e11
+PODFILE CHECKSUM: 8ed7f8de7a4c85f7ff9c68705607233b0fa43fee
 
 COCOAPODS: 1.5.0

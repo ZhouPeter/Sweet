@@ -30,3 +30,16 @@ extension InstantMessage {
         return request
     }
 }
+
+extension InstantMessage {
+    init(_ proto: IMProto) {
+        remoteID = proto.id
+        from = proto.from
+        to = proto.to
+        type = proto.type
+        content = proto.content
+        status = proto.status
+        createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
+        sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
+    }
+}

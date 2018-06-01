@@ -8,8 +8,9 @@
 
 import UIKit
 import Kingfisher
+import SwipeCellKit
 
-final class ConversationCell: UITableViewCell, CellReusable {
+final class ConversationCell: SwipeTableViewCell, CellReusable {
     private let avatarImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 25

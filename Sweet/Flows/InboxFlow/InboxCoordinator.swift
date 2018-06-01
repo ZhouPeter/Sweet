@@ -42,7 +42,9 @@ final class InboxCoordinator: BaseCoordinator {
 }
 
 extension InboxCoordinator: InboxViewDelegate {
-    
+    func inboxRemoveConversation(userID: UInt64) {
+        Messenger.shared.removeConversation(userID: userID)
+    }
 }
 
 extension InboxCoordinator: MessengerDelegate {

@@ -52,6 +52,7 @@ final class Messenger {
         return service
     }
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
+    private var conversations = [Conversation]()
     
     private init() {
         startNetworkReachabilityObserver()
@@ -100,16 +101,6 @@ final class Messenger {
         send(request, responseType: UserInfoGetResp.self, callback: callback)
     }
     
-    func loadConversations() {
-        logger.debug()
-        guard let userID = userID, state == .online else { return }
-        var message = RecentGetReq()
-        message.from = userID
-        send(message, responseType: RecentGetResp.self) { (response) in
-            guard let response = response else { return }
-            logger.debug(response.msgList)
-        }
-    }
     
     @discardableResult func sendText(_ text: String, to: UInt64) -> InstantMessage {
         var message = InstantMessage()
@@ -139,7 +130,40 @@ final class Messenger {
         }
     }
     
+    // MARK: - Conversations
+    
+    func loadConversations() {
+        logger.debug()
+        guard let userID = userID, state == .online else { return }
+        var request = RecentGetReq()
+        request.from = userID
+        send(request, responseType: RecentGetResp.self) { (response) in
+            guard let response = response else { return }
+            self.updateConversations(with: response.msgList.map(InstantMessage.init))
+        }
+    }
+    
+    func removeConversation(userID: UInt64) {
+        guard let index = conversations.index(where: { $0.userID == userID }) else { return }
+        conversations.remove(at: index)
+    }
+    
     // MARK: - Private
+    
+    private func updateConversations(with messages: [InstantMessage]) {
+        let date = Date()
+        for index in 1...20 {
+            var conversation = Conversation(
+                userID: UInt64(index),
+                username: "\(index + 1000)",
+                date: Date(timeInterval: TimeInterval(index * 63), since: date),
+                timeText: "下午 5:34"
+            )
+            conversation.content = "测试消息第 \(index) 条"
+            conversations.append(conversation)
+        }
+        multicastDelegate.invoke({ $0.messengerDidUpdateConversations(self.conversations) })
+    }
     
     private func startNetworkReachabilityObserver() {
         reachabilityManager?.listener = { status in
