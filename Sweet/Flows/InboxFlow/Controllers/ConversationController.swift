@@ -99,7 +99,8 @@ extension ConversationController: MessagesDataSource {
         in messagesCollectionView: MessagesCollectionView) {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
-        avatarView.set(avatar: Avatar(image: #imageLiteral(resourceName: "Logo"), initials: "M"))
+        let image: UIImage = message.sender.id == "\(userID)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
+        avatarView.set(avatar: Avatar(image: image))
     }
 }
 
@@ -136,7 +137,13 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        var message = InstantMessage(from: userID, to: conversation.userID, type: .text)
+        var from = userID
+        var to = conversation.userID
+        if arc4random() % 2 == 0 {
+            from = conversation.userID
+            to = userID
+        }
+        var message = InstantMessage(from: from, to: to, type: .text)
         message.content = text
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
