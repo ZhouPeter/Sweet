@@ -27,8 +27,13 @@ class CardsAllController: CardsBaseController, CardsAllView {
             let allCardsLastID = Defaults[.allCardsLastID]
             startLoadCards(
                 cardRequest: .all(cardId: allCardsLastID,
-                                  direction: Direction.recover.rawValue)) { [weak self] (success) in
-                if success {  self?.collectionView.reloadData() }
+                                  direction: Direction.recover)) { [weak self] (success, _) in
+                if success {
+                    self?.collectionView.reloadData()
+                    self?.collectionView.performBatchUpdates(nil, completion: { (_) in
+                        self?.changeCurrentCell()
+                    })
+                }
             }
         }
     }

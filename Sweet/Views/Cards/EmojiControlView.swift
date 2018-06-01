@@ -14,6 +14,7 @@ let emojiHeight: CGFloat = emojiWidth
 protocol EmojiControlViewDelegate: NSObjectProtocol {
     func openEmojis()
     func openKeyword()
+    func contentCardComment(emoji: Int)
 }
 class EmojiControlView: UIView {
     weak var delegate: EmojiControlViewDelegate?

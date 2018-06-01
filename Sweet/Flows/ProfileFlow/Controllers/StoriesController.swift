@@ -143,7 +143,7 @@ extension StoriesController: UICollectionViewDataSource {
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storiesPlayViewController = StoriesPlayerViewController()
-        storiesPlayViewController.currentIndex = 0
+        storiesPlayViewController.currentIndex = indexPath.item
         storiesPlayViewController.stories = storyViewModels
         self.present(storiesPlayViewController, animated: true) {
             storiesPlayViewController.initPlayer()

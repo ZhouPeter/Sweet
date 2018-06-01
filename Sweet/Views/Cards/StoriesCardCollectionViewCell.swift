@@ -7,17 +7,20 @@
 //
 
 import UIKit
-
+protocol StoriesCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
+    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int)
+}
 class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     
     private var cellConfigurators = [CellConfiguratorType]()
-    
+    private var storiesGroup = [[StoryCellViewModel]]()
     func updateWith(_ viewModel: StoriesCardViewModel) {
         cellConfigurators.removeAll()
-        viewModel.storiesCellModel.forEach { (viewModel) in
-            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: viewModel)
+        viewModel.storiesCellModels.forEach { (viewModels) in
+            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: viewModels[0])
             cellConfigurators.append(configurator)
         }
+        storiesGroup = viewModel.storiesGroup
         collectionView.reloadData()
     }
     typealias ViewModelType = StoriesCardViewModel
@@ -34,6 +37,7 @@ class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         collectionView.isScrollEnabled = false
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(cellType: StoryCardCollectionViewCell.self)
         return collectionView
     }()
@@ -66,5 +70,14 @@ extension StoriesCardCollectionViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configurator.reuseIdentifier, for: indexPath)
         configurator.configure(cell)
         return cell
+    }
+}
+
+extension StoriesCardCollectionViewCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let delegate = delegate as? StoriesCardCollectionViewCellDelegate {
+            delegate.showStoriesPlayerController(storiesGroup: storiesGroup,
+                                                 currentIndex: indexPath.item)
+        }
     }
 }

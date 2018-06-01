@@ -10,6 +10,7 @@ import UIKit
 protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func openKeyword()
+    func contentCardComment(cardId: String, comment: String?, emoji: Int?)
 }
 class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     
