@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import APESuperHUD
+import PKHUD
 
 class StoryPublisher {
     func publish(
@@ -23,11 +23,11 @@ class StoryPublisher {
         default:
             uploadType = .storyVideo
         }
-        APESuperHUD.show(style: HUDStyle.loadingIndicator(type: .standard), message: "发布中")
+        HUD.show(.systemActivity)
         Upload.uploadFileToQiniu(localURL: url, type: uploadType) { (token, error) in
             guard let token = token else {
                 logger.debug("upload failed \(error?.localizedDescription ?? "")")
-                APESuperHUD.show(style: HUDStyle.textOnly, message: "发布失败")
+                HUD.flash(.error, delay: 1)
                 completion(false)
                 return
             }
@@ -44,9 +44,9 @@ class StoryPublisher {
                     if case .success = result {
                         completion(true)
                         
-                        APESuperHUD.show(style: HUDStyle.textOnly, message: "发布成功")
+                        HUD.flash(.success, delay: 1)
                     } else {
-                        APESuperHUD.show(style: HUDStyle.textOnly, message: "发布失败")
+                        HUD.flash(.error, delay: 1)
                         completion(false)
                     }
             })

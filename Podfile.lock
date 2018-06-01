@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.2)
-  - APESuperHUD (2.0.0)
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
@@ -38,7 +37,6 @@ PODS:
   - VIMediaCache (0.4)
 
 DEPENDENCIES:
-  - APESuperHUD (from `https://github.com/apegroup/APESuperHUD.git`)
   - Hero (~> 1.2.0)
   - JXPhotoBrowser
   - Kingfisher
@@ -81,8 +79,6 @@ SPEC REPOS:
     - VIMediaCache
 
 EXTERNAL SOURCES:
-  APESuperHUD:
-    :git: https://github.com/apegroup/APESuperHUD.git
   libimcloud:
     :branch: master
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
@@ -91,9 +87,6 @@ EXTERNAL SOURCES:
     :tag: 1.0.0-beta.1
 
 CHECKOUT OPTIONS:
-  APESuperHUD:
-    :commit: 7ed75ffb8913e7474113ad0d92b7e534545e72c0
-    :git: https://github.com/apegroup/APESuperHUD.git
   libimcloud:
     :commit: ff6cddbcee9ea5b703b72686a4291d73209ee450
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
@@ -103,7 +96,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  APESuperHUD: 8829e8feab62e193f748153ab891bab8d55979c1
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JXPhotoBrowser: f1758dd7a74c2047da0a8aab52318a9314929826
@@ -126,6 +118,6 @@ SPEC CHECKSUMS:
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
 
-PODFILE CHECKSUM: 8ed7f8de7a4c85f7ff9c68705607233b0fa43fee
+PODFILE CHECKSUM: 89cb3365428e0c88f5c0146897f4d6eb52fb222f
 
 COCOAPODS: 1.5.0

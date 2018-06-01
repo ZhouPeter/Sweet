@@ -62,6 +62,7 @@ final class AlbumController: UIViewController, AlbumView {
         UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.tintColor = .black
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
