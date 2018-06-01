@@ -12,12 +12,22 @@ struct InstantMessage {
     var localID = UUID()
     var remoteID: UInt64 = 0
     var from: UInt64 = 0
+    var fromName = ""
     var to: UInt64 = 0
     var type: IMType = .unknown
     var content: String = String()
     var status: UInt32 = 0
     var createDate = Date()
-    var sentDate: Date?
+    var sentDate = Date()
+    
+    init() {}
+    
+    init(from: UInt64, to: UInt64, type: IMType) {
+        self.init()
+        self.from = from
+        self.to = to
+        self.type = type
+    }
 }
 
 extension InstantMessage {

@@ -12,15 +12,15 @@ struct Conversation {
     let userID: UInt64
     let username: String
     let date: Date
-    let timeText: String
+    let unreadCount: Int
     var lastMessageID: String?
     var avatarURLString: String?
     var content: String?
     
-    init(userID: UInt64, username: String, date: Date, timeText: String) {
+    init(userID: UInt64, username: String, date: Date, unreadCount: Int = 0) {
         self.userID = userID
         self.username = username
         self.date = date
-        self.timeText = timeText
+        self.unreadCount = unreadCount
     }
 }

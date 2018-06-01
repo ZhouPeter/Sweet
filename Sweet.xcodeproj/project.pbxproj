@@ -564,6 +564,14 @@
 		AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
+		AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
+		AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
+		AC21759120C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
+		AC21759220C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
 		AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
 		AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */; };
@@ -1245,6 +1253,8 @@
 		AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowFactory.swift; sourceTree = "<group>"; };
+		AC21758920C105240089D4D1 /* ConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationController.swift; sourceTree = "<group>"; };
+		AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstantMessage+MessageType.swift"; sourceTree = "<group>"; };
 		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
 		AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerDelegate.swift; sourceTree = "<group>"; };
@@ -1648,7 +1658,9 @@
 			children = (
 				ACDB24DD20BECFD50039368E /* InboxView.swift */,
 				AC525AB1208DD714001070B2 /* InboxController.swift */,
+				AC21758920C105240089D4D1 /* ConversationController.swift */,
 				ACDB24E620BED0DE0039368E /* ConversationCell.swift */,
+				AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2406,7 +2418,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -2556,7 +2568,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -2794,6 +2806,7 @@
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
+				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
@@ -2808,6 +2821,7 @@
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B47209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
@@ -2880,6 +2894,7 @@
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
+				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5803575020AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D620BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -2967,6 +2982,7 @@
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E282091B3E300ADEFFB /* AboutController.swift in Sources */,
+				AC21759120C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				AC2A257A20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
@@ -3104,6 +3120,7 @@
 				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
+				AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -3191,6 +3208,7 @@
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58155E292091B3E300ADEFFB /* AboutController.swift in Sources */,
+				AC21759220C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
@@ -3510,6 +3528,7 @@
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
+				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
@@ -3524,6 +3543,7 @@
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B48209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,

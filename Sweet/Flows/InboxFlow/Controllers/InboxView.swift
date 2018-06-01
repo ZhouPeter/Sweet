@@ -16,4 +16,5 @@ protocol InboxView: BaseView {
 
 protocol InboxViewDelegate: class {
     func inboxRemoveConversation(userID: UInt64)
+    func inboxStartConversation(_ conversation: Conversation)
 }

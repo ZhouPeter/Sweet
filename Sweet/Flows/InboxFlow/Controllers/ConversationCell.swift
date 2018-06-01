@@ -57,7 +57,6 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
             avatarImageView.kf.setImage(with: URL(string: urlString))
         }
         nameLabel.text = conversation.username
-        timeLabel.text = conversation.timeText
         contentLabel.text = conversation.content
     }
     

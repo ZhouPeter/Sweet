@@ -24,6 +24,8 @@ extension Notification.Name {
     static let BarStyleBlack = Notification.Name(rawValue: "BarStyleBlack")
     static let BarStyleDefault = Notification.Name(rawValue: "BarStyleDefalut")
     static let ScrollPage = Notification.Name(rawValue: "ScrollPage")
+    static let BlackStatusBar = Notification.Name(rawValue: "BlackStatusBar")
+    static let WhiteStatusBar = Notification.Name(rawValue: "WhiteStatusBar")
 }
 
 final class MainController: PageboyViewController, MainView {
@@ -33,12 +35,8 @@ final class MainController: PageboyViewController, MainView {
     var onViewDidLoad: ((UINavigationController) -> Void)?
     var onStoryFlowSelect: ((UINavigationController) -> Void)?
     var onCardsFlowSelect: ((UINavigationController) -> Void)?
-    
     private var controllers = [UINavigationController]()
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    private var statusBarStyle = UIStatusBarStyle.lightContent
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +53,22 @@ final class MainController: PageboyViewController, MainView {
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
 
+        addObservers()
+        onStoryFlowSelect?(story)
+        onIMFlowSelect?(imList)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
+    // MARK: - Private
+    
+    private func addObservers() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceivePageScrollDiableNote),
@@ -85,11 +99,19 @@ final class MainController: PageboyViewController, MainView {
             name: .ScrollPage,
             object: nil
         )
-        onStoryFlowSelect?(story)
-        onIMFlowSelect?(imList)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveBlackStatusBarNote),
+            name: .BlackStatusBar,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveWhiteStatusBarNote),
+            name: .WhiteStatusBar,
+            object: nil
+        )
     }
-    
-    // MARK: - Private
     
     @objc func didReceivePageScrollDiableNote() {
         isScrollEnabled = false
@@ -110,6 +132,18 @@ final class MainController: PageboyViewController, MainView {
     @objc func didReceiveScrollPage(_ note: Notification) {
         guard let index = note.object as? Int else { return }
         scrollToPage(.at(index: index), animated: true)
+    }
+    
+    @objc func didReceiveBlackStatusBarNote() {
+        guard statusBarStyle != .default else { return }
+        statusBarStyle = .default
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    @objc func didReceiveWhiteStatusBarNote() {
+        guard statusBarStyle != .lightContent else { return }
+        statusBarStyle = .lightContent
+        setNeedsStatusBarAppearanceUpdate()
     }
 }
 

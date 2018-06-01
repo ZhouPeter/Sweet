@@ -101,7 +101,6 @@ final class Messenger {
         send(request, responseType: UserInfoGetResp.self, callback: callback)
     }
     
-    
     @discardableResult func sendText(_ text: String, to: UInt64) -> InstantMessage {
         var message = InstantMessage()
         message.content = text
@@ -156,8 +155,7 @@ final class Messenger {
             var conversation = Conversation(
                 userID: UInt64(index),
                 username: "\(index + 1000)",
-                date: Date(timeInterval: TimeInterval(index * 63), since: date),
-                timeText: "下午 5:34"
+                date: Date(timeInterval: TimeInterval(index * 63), since: date)
             )
             conversation.content = "测试消息第 \(index) 条"
             conversations.append(conversation)

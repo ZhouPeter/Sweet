@@ -45,6 +45,11 @@ extension InboxCoordinator: InboxViewDelegate {
     func inboxRemoveConversation(userID: UInt64) {
         Messenger.shared.removeConversation(userID: userID)
     }
+    
+    func inboxStartConversation(_ conversation: Conversation) {
+        let controller = ConversationController(userID: storage.userID, conversation: conversation)
+        router.push(controller)
+    }
 }
 
 extension InboxCoordinator: MessengerDelegate {

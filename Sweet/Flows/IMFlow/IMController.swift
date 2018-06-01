@@ -60,6 +60,7 @@ class IMController: BaseViewController, IMView {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
         navigationController?.navigationBar.barStyle = .black
+        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         if isInboxShown {
             delegate?.imViewDidShowInbox(inboxView)
         } else {
