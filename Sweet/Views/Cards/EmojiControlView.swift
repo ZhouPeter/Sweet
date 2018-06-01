@@ -14,7 +14,7 @@ let emojiHeight: CGFloat = emojiWidth
 protocol EmojiControlViewDelegate: NSObjectProtocol {
     func openEmojis()
     func openKeyword()
-    func contentCardComment(emoji: Int)
+    func selectEmoji(emoji: Int)
 }
 class EmojiControlView: UIView {
     weak var delegate: EmojiControlViewDelegate?
@@ -42,6 +42,10 @@ class EmojiControlView: UIView {
         for index in 1...6 {
             let imageView = UIImageView()
             imageView.image = UIImage(named: "Emoji\(index)")
+            imageView.tag = index
+            imageView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(selectEmojiAction(tap:)))
+            imageView.addGestureRecognizer(tap)
             imageViews.append(imageView)
         }
         return imageViews
@@ -106,5 +110,11 @@ class EmojiControlView: UIView {
     
     @objc private func keywordAction(sender: UIButton) {
         delegate?.openKeyword()
+    }
+    
+    @objc private func selectEmojiAction(tap: UITapGestureRecognizer) {
+        if let view = tap.view {
+            delegate?.selectEmoji(emoji: view.tag)
+        }
     }
 }

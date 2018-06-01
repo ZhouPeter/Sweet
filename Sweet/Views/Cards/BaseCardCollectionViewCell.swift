@@ -28,7 +28,6 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.black.withAlphaComponent(0.5)
-        label.text = "大家都在看"
         return label
     }()
     
