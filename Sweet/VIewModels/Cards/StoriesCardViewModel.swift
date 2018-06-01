@@ -10,11 +10,15 @@ import Foundation
 
 struct StoriesCardViewModel {
     let cardId: String
-    let storiesCellModel: [StoryCollectionViewCellModel]
+    let storiesCellModels: [[StoryCollectionViewCellModel]]
+    let storiesGroup: [[StoryCellViewModel]]
     init(model: CardResponse) {
         cardId = model.cardId
-        storiesCellModel = model.storyList!.map {
-            return StoryCollectionViewCellModel(model: $0[0])
+        storiesCellModels = model.storyList!.map {
+           return $0.map { return StoryCollectionViewCellModel(model: $0) }
+        }
+        storiesGroup = model.storyList!.map {
+            return $0.map { return StoryCellViewModel(model: $0) }
         }
     }
 }

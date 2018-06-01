@@ -28,7 +28,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
         cubeView.fill(in: view)
         setChildViewController()
         storiesPlayerControllers[currentIndex].initPlayer()
-
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -50,6 +49,8 @@ class StoriesPlayerGroupViewController: BaseViewController {
                 storiesPlayerControllers.append(playerController)
                 cubeView.addChildView(playerController.view)
             }
+            cubeView.layoutIfNeeded()
+            cubeView.scrollToViewAtIndex(currentIndex, animated: false)
         }
     }
     

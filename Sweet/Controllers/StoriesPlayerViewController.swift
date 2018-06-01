@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import SwiftyUserDefaults
 import Alamofire
+import VIMediaCache
 @objc protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     @objc optional func playToBack()
     @objc optional func playToNext()
@@ -44,7 +45,6 @@ class StoriesPlayerViewController: BaseViewController {
     private lazy var dismissButton: UIButton = {
         let dismissButton = UIButton()
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
-//        dismissButton.imageEdgeInsets = UIEdgeInsets(top: -14, left: 14, bottom: 0, right: 0)
         dismissButton.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissAction(sender:)), for: .touchUpInside)
         return dismissButton
@@ -83,7 +83,6 @@ class StoriesPlayerViewController: BaseViewController {
     
     private lazy var progressView: StoryPlayProgressView = {
         let progressView = StoryPlayProgressView(count: stories.count, index: currentIndex)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
         return progressView
     }()
     
@@ -101,6 +100,12 @@ class StoriesPlayerViewController: BaseViewController {
         return bottomButton
     }()
     
+    private lazy var pokeView: StoryPokeView = {
+        let view = StoryPokeView()
+        view.isHidden = true
+        return view
+    }()
+    private var pokeLongPress: UILongPressGestureRecognizer!
 //    private lazy var inputTextView: InputBottomView = {
 //        let view = InputBottomView()
 //        view.translatesAutoresizingMaskIntoConstraints = false
@@ -128,9 +133,11 @@ class StoriesPlayerViewController: BaseViewController {
         view.addSubview(storiesScrollView)
         storiesScrollView.playerDelegate = self
         setTopUI()
+        view.addSubview(pokeView)
+        pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setBottmUI()
         setUserData()
-        storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
+        updateForStories(stories: stories, currentIndex: currentIndex)
 //        addInputTextView()
  
     }
@@ -141,7 +148,7 @@ class StoriesPlayerViewController: BaseViewController {
     
     private func setTopUI() {
         view.addSubview(avatarImageView)
-        avatarImageView.constrain(width: 50, height: 50)
+        avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.align(.left, to: view, inset: 10)
         avatarImageView.align(.top, to: view, inset: UIScreen.isIphoneX() ? 44 + 15 : 15)
         avatarImageView.setViewRounded()
@@ -199,9 +206,26 @@ class StoriesPlayerViewController: BaseViewController {
         storyInfoLabel.attributedText = attributeString
     }
     
+    private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
+        storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
+        if stories[currentIndex].type == .poke {
+            pokeView.isHidden = false
+            pokeView.frame = CGRect(origin: stories[currentIndex].pokeCenter, size: CGSize(width: 120, height: 120))
+            pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
+            view.addGestureRecognizer(pokeLongPress)
+        } else {
+            pokeView.isHidden = true
+            if let pokeLongPress = pokeLongPress {
+                view.removeGestureRecognizer(pokeLongPress)
+            }
+        }
+    }
+    
     func initPlayer() {
         if let videoURL = stories[currentIndex].videoURL {
-            playerItem = AVPlayerItem(url: videoURL)
+            let resource = SweetPlayerResource(url: videoURL)
+            let asset = resource.definitions[0]
+            playerItem = AVPlayerItem(asset: asset.avURLAsset)
             player = AVPlayer(playerItem: playerItem)
             if #available(iOS 10.0, *) {
                 player?.automaticallyWaitsToMinimizeStalling = false
@@ -220,7 +244,7 @@ class StoriesPlayerViewController: BaseViewController {
 
     func reloadPlayer() {
         closePlayer()
-        storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
+        updateForStories(stories: stories, currentIndex: currentIndex)
         initPlayer()
     }
     
@@ -373,7 +397,7 @@ extension StoriesPlayerViewController {
     
     func play() {
 //        XPClient.reportReadStory(withStoryId: stories[currentIndex].storyId, completion: nil)
-        if stories[currentIndex].videoURL != nil {
+        if stories[currentIndex].videoURL != nil && stories[currentIndex].type != .poke {
             player?.play()
         } else if stories[currentIndex].imageURL != nil {
             imagePlay()
@@ -391,6 +415,17 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
+    @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
+        switch longTap.state {
+        case .began:
+            self.player?.play()
+            self.pokeView.isHidden = true
+        case .ended:
+            self.pause()
+            self.pokeView.isHidden = false
+        default: break
+        }
+    }
     @objc private func dismissAction(sender: UIButton) {
         if presentingViewController != nil {
             dismiss(animated: true, completion: nil)
@@ -629,7 +664,8 @@ extension StoriesPlayerViewController {
                             self.progressView.setProgress(ratio: 0, index: self.currentIndex)
                         } else {
                             let ratio = currentSecond / totalSecond
-                            self.progressView.setProgress(ratio: CGFloat(ratio), index: self.currentIndex)
+                            self.progressView.setProgress(ratio: CGFloat(ratio) > 0 ? CGFloat(ratio) : 0,
+                                                          index: self.currentIndex)
                         }
                     }
                     
@@ -658,6 +694,7 @@ extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
     func playScrollView(scrollView: StoriesPlayerScrollView, currentPlayerIndex: Int) {
         pause()
         currentIndex = currentPlayerIndex
+        progressView.setProgress(ratio: 0, index: currentIndex)
         reloadPlayer()
     }
 }

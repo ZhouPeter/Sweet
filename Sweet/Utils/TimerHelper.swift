@@ -88,11 +88,11 @@ class TimerHelper {
     
     class func hourTo12h(hour: Int) -> String {
         if hour == 12 {
-            return "下午：\(hour)"
+            return "下午 \(hour)"
         } else if hour > 12 {
-            return "下午：\(hour - 12)"
+            return "下午 \(hour - 12)"
         } else {
-            return "上午: \(hour)"
+            return "上午 \(hour)"
         }
     }
     

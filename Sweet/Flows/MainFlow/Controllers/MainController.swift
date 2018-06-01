@@ -181,7 +181,7 @@ extension MainController: PageboyViewControllerDelegate {
         didScrollToPageAt index: Int,
         direction: PageboyViewController.NavigationDirection,
         animated: Bool) {
-        updateStatusBar(at: index)
+//        updateStatusBar(at: index)
     }
     
     private func updateStatusBar(at index: Int) {

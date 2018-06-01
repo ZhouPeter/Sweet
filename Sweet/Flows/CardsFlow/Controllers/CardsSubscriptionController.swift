@@ -27,31 +27,15 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
             let subCardsLastID = Defaults[.subCardsLastID]
             startLoadCards(
             cardRequest: .sub(cardId: subCardsLastID,
-                              direction: Direction.recover.rawValue)) { [weak self] (success) in
-                if success { self?.collectionView.reloadData() }
+                              direction: Direction.recover)) { [weak self] (success, _) in
+                if success {
+                    self?.collectionView.reloadData()
+                    self?.collectionView.performBatchUpdates(nil, completion: { (_) in
+                        self?.changeCurrentCell()
+                    })
+                }
             }
         }
     }
-    
-//    override func startLoadCards(cardId: String?, direction: Int?, callback: ((_ success: Bool) -> Void)? = nil) {
-//        if isFetchLoadCards { return }
-//        isFetchLoadCards = true
-//        web.request(
-//        .subscriptionCards(cardId: cardId, direction: direction),
-//        responseType: Response<CardListResponse>.self) { [weak self] (result) in
-//            guard let `self` = self else { return }
-//            self.isFetchLoadCards = false
-//            switch result {
-//            case let .success(response):
-//                response.list.forEach({ (card) in
-//                    self.cards.append(card)
-//                    self.appendConfigurator(card: card)
-//                })
-//                callback?(true)
-//            case let .failure(error):
-//                logger.error(error)
-//            }
-//        }
-//    }
 
 }

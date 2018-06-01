@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol EvaluationCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
+    func selectEvaluationCard(cell: EvaluationCardCollectionViewCell, cardId: String, selectedIndex: Int)
+}
 class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = EvaluationCardViewModel
     private lazy var contentLabel: UILabel = {
@@ -19,11 +21,15 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     
     private lazy var leftButton: UIButton = {
         let button = UIButton()
+        button.tag = 0
+        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var rightButton: UIButton = {
         let button = UIButton()
+        button.tag = 1
+        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -35,7 +41,6 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     }()
     private var selectedButtonCenterXLeftConstraint: NSLayoutConstraint?
     private var selectedButtonCenterXRightConstraint: NSLayoutConstraint?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -50,12 +55,12 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 18)
         customContent.addSubview(leftButton)
-        leftButton.equal(.width, to: customContent, multiplier: 0.5, offset: -0.25)
+        leftButton.equal(.width, to: customContent, multiplier: 0.5)
         leftButton.align(.left, to: customContent)
         leftButton.align(.bottom, to: customContent)
         leftButton.align(.top, to: customContent, inset: 140)
         customContent.addSubview(rightButton)
-        rightButton.equal(.width, to: customContent, multiplier: 0.5, offset: -0.25)
+        rightButton.equal(.width, to: customContent, multiplier: 0.5)
         rightButton.align(.right, to: customContent)
         rightButton.align(.bottom, to: customContent)
         rightButton.align(.top, to: leftButton)
@@ -73,18 +78,44 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     }
     
     func updateWith(_ viewModel: EvaluationCardViewModel) {
+        cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
         leftButton.kf.setBackgroundImage(with: viewModel.imageURL[0], for: .normal)
         rightButton.kf.setBackgroundImage(with: viewModel.imageURL[1], for: .normal)
-        if viewModel.selectedIndex == 0 {
-            selectedButtonCenterXLeftConstraint?.isActive = true
+        if let selectedIndex = viewModel.selectedIndex {
+            if selectedIndex == 0 {
+                selectedButtonCenterXRightConstraint?.isActive = false
+                selectedButtonCenterXLeftConstraint?.isActive = true
+                selectedButton.isHidden = false
+            } else {
+                selectedButtonCenterXLeftConstraint?.isActive = false
+                selectedButtonCenterXRightConstraint?.isActive = true
+                selectedButton.isHidden = false
+            }
+        } else {
+            selectedButton.isHidden = true
+        }
+    }
+    
+    func updateWith(_ selectedIndex: Int) {
+        if selectedIndex == 0 {
             selectedButtonCenterXRightConstraint?.isActive = false
+            selectedButtonCenterXLeftConstraint?.isActive = true
             selectedButton.isHidden = false
         } else {
             selectedButtonCenterXLeftConstraint?.isActive = false
             selectedButtonCenterXRightConstraint?.isActive = true
             selectedButton.isHidden = false
+        }
+    }
+    @objc private func selectAction(sender: UIButton) {
+        if let delegate = delegate as? EvaluationCardCollectionViewCellDelegate {
+            if let cardId = cardId {
+                if selectedButton.isHidden {
+                    delegate.selectEvaluationCard(cell: self, cardId: cardId, selectedIndex: sender.tag)
+                }
+            }
         }
     }
 }

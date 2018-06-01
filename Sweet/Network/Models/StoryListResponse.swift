@@ -30,8 +30,25 @@ struct StoryResponse: Codable {
     let nickname: String
     let read: Bool
     let storyId: UInt64
-    let tag: String
     let type: StoryType
     let university: String
     let userId: UInt64
+    let centerX: Double?
+    let centerY: Double?
+    enum CodingKeys: String, CodingKey {
+        case avatar
+        case college
+        case content
+        case created
+        case enrollment
+        case like
+        case nickname
+        case read
+        case storyId
+        case type
+        case university
+        case userId
+        case centerX = "x"
+        case centerY = "y"
+    }
 }

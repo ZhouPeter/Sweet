@@ -18,8 +18,8 @@ enum Direction: Int {
     case recover = 3
 }
 enum CardRequst {
-    case all(cardId: String?, direction: Int?)
-    case sub(cardId: String?, direction: Int?)
+    case all(cardId: String?, direction: Direction?)
+    case sub(cardId: String?, direction: Direction?)
 }
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
@@ -66,7 +66,8 @@ class CardsBaseController: BaseViewController {
         layout.itemSize = CGSize(width: view.bounds.width, height: cardCellHeight)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
-        collectionView.contentInset.top = 10
+        collectionView.contentInset.top = offset
+        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - offset - UIScreen.navBarHeight()
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
         collectionView.isScrollEnabled = false
@@ -82,28 +83,7 @@ class CardsBaseController: BaseViewController {
         collectionView.addGestureRecognizer(pan)
         cotentOffsetToken = collectionView.observe(\.contentOffset, options: .new, changeHandler: { (object, _) in
             if object.contentOffset.y + self.offset  == CGFloat(self.index) * cardCellHeight {
-                self.delayItem?.cancel()
-                if self.cellConfigurators.count == 0 { return }
-                let indexPath = IndexPath(item: self.index, section: 0)
-                let configurator = self.cellConfigurators[self.index]
-                guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-                if let cell = cell as? ContentCardCollectionViewCell,
-                    let configurator = configurator as? CellConfigurator<ContentCardCollectionViewCell> {
-                    if let videoURL = configurator.viewModel.videoURL {
-                        weak var weakSelf = self
-                        weak var weakCell = cell
-                        let resource = SweetPlayerResource(url: videoURL)
-                        resource.indexPath = indexPath
-                        resource.scrollView = weakSelf?.collectionView
-                        resource.fatherViewTag = weakCell?.contentImageView.tag
-                        self.playerView.setVideo(resource: resource)
-                        self.avPlayer = self.playerView.avPlayer
-                    }
-                    self.delayItem = DispatchWorkItem {
-                        cell.emojiView.isHidden = false
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
-                }
+                self.changeCurrentCell()
             }
         })
         return collectionView
@@ -229,9 +209,13 @@ class CardsBaseController: BaseViewController {
     
     private func saveLastId() {
         if self is CardsAllController {
-            Defaults[.allCardsLastID] = cards[index].cardId
+            if index < cards.count {
+                Defaults[.allCardsLastID] = cards[index].cardId
+            }
         } else if self is CardsSubscriptionController {
-            Defaults[.subCardsLastID] = cards[index].cardId
+            if index < cards.count {
+                Defaults[.subCardsLastID] = cards[index].cardId
+            }
         }
     }
 
@@ -250,12 +234,12 @@ extension CardsBaseController {
             panPoint = point
             panOffset = collectionView.contentOffset
         } else if gesture.state == .changed {
-//            guard index > 0 else { return }
             guard let start = panPoint, var offset = panOffset else { return }
             let translation = point.y - start.y
             offset.y -= translation
             collectionView.contentOffset = offset
         } else {
+            gesture.isEnabled = false
             scrollCard(withPoint: point)
         }
     }
@@ -263,40 +247,21 @@ extension CardsBaseController {
 
 // MARK: - Private
 extension CardsBaseController {
-    private func upLoadCards(cards: [CardResponse], callback: ((_ success: Bool) -> Void)? = nil) {
+    private func upLoadCards(cards: [CardResponse],
+                             callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         cards.reversed().forEach({ (card) in
-            self.cards.insert(card, at: 0)
             self.insertConfigurator(card: card, index: 0)
         })
         self.index += cards.count
         self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
         self.collectionView.reloadData()
-        callback?(true)
-//        if self.index  == 0 {
-//            self.collectionView.performBatchUpdates({
-//                var items = [IndexPath]()
-//                for item in 0..<cards.count {
-//                    items.append(IndexPath(item: item, section: 0))
-//                }
-//                self.collectionView.insertItems(at: items)
-//            }, completion: { (_) in
-//                self.index += cards.count
-//                self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
-//                callback?(true)
-//            })
-//        } else {
-//            self.index += cards.count
-//            self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
-//            self.collectionView.reloadData()
-//            callback?(true)
-//        }
+        callback?(true, cards)
     }
     
-    private func downLoadCards(cards: [CardResponse], callback: ((_ success: Bool) -> Void)? = nil) {
+    private func downLoadCards(cards: [CardResponse],
+                               callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         cards.forEach({ (card) in
-            self.cards.append(card)
             self.appendConfigurator(card: card)
-            
         })
         let itemNumber = self.collectionView.numberOfItems(inSection: 0)
         self.collectionView.performBatchUpdates({
@@ -306,19 +271,48 @@ extension CardsBaseController {
             }
             self.collectionView.insertItems(at: items)
         }, completion: { (_) in
-            callback?(true)
+            callback?(true, cards)
         })
     }
 }
 
 // MARK: - Publics
 extension CardsBaseController {
+    func changeCurrentCell() {
+        self.saveLastId()
+        self.delayItem?.cancel()
+        if self.cellConfigurators.count == 0 { return }
+        let indexPath = IndexPath(item: self.index, section: 0)
+        let configurator = self.cellConfigurators[self.index]
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        if let cell = cell as? ContentCardCollectionViewCell,
+            let configurator = configurator as? CellConfigurator<ContentCardCollectionViewCell> {
+            if let videoURL = configurator.viewModel.videoURL {
+                weak var weakSelf = self
+                weak var weakCell = cell
+                let resource = SweetPlayerResource(url: videoURL)
+                resource.indexPath = indexPath
+                resource.scrollView = weakSelf?.collectionView
+                resource.fatherViewTag = weakCell?.contentImageView.tag
+                self.playerView.setVideo(resource: resource)
+                self.avPlayer = self.playerView.avPlayer
+            }
+            self.delayItem = DispatchWorkItem {
+                cell.emojiView.isHidden = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
+        }
+    }
     
-    func startLoadCards(cardRequest: CardRequst, callback: ((_ success: Bool) -> Void)? = nil) {
-        if isFetchLoadCards { return }
+    func startLoadCards(cardRequest: CardRequst,
+                        callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
+        if isFetchLoadCards {
+            scrollTo(row: index)
+            return
+        }
         isFetchLoadCards = true
         let api: WebAPI
-        let direction: Int?
+        let direction: Direction?
         switch cardRequest {
         case let .all(cardId, directionApi):
             api = .allCards(cardId: cardId, direction: directionApi)
@@ -331,32 +325,31 @@ extension CardsBaseController {
             api,
             responseType: Response<CardListResponse>.self) { [weak self] (result) in
                 guard let `self` = self else { return }
-                self.isFetchLoadCards = false
                 switch result {
                 case let .success(response):
+                    self.isFetchLoadCards = false
                     if let direction = direction {
-                        if direction == Direction.down.rawValue {
+                        if direction == Direction.down {
                             self.downLoadCards(cards: response.list, callback: callback)
                             return
-                        } else if  direction == Direction.up.rawValue {
+                        } else if  direction == Direction.up {
                             self.upLoadCards(cards: response.list, callback: callback)
                             return
-                        } else if direction == Direction.recover.rawValue {
+                        } else if direction == Direction.recover {
                             response.list.forEach({ (card) in
-                                self.cards.append(card)
                                 self.appendConfigurator(card: card)
                             })
                         }
                     } else {
                         response.list.forEach({ (card) in
-                            self.cards.append(card)
                             self.appendConfigurator(card: card)
                         })
                     }
-                    callback?(true)
+                    callback?(true, response.list)
                 case let .failure(error):
                     logger.error(error)
-                    callback?(false)
+                    self.isFetchLoadCards = false
+                    callback?(false, nil)
                 }
         }
     }
@@ -368,35 +361,31 @@ extension CardsBaseController {
             direction = .down
             if index == collectionView.numberOfItems(inSection: 0) - 1 {
                 let cardId = cards[index].cardId
-                self.startLoadCards(
-                    cardRequest: self is CardsAllController ?
-                    .all(cardId: cardId, direction: direction.rawValue) :
-                    .sub(cardId: cardId, direction: direction.rawValue)) { (success) in
-                    if success { self.index += 1 }
+                let request: CardRequst = self is CardsAllController ?
+                                                .all(cardId: cardId, direction: direction) :
+                                                .sub(cardId: cardId, direction: direction)
+                self.startLoadCards(cardRequest: request) { (success, cards) in
+                    if let cards = cards, cards.count > 0, success { self.index += 1 }
                     self.scrollTo(row: self.index)
                 }
-            } else {
+            } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
                 index += 1
                 self.scrollTo(row: index)
             }
         } else {
             direction = .up
+            let cardId = cards[0].cardId
+            let request: CardRequst = self is CardsAllController ?
+                                            .all(cardId: cardId, direction: direction) :
+                                            .sub(cardId: cardId, direction: direction)
             if index == 0 {
-                let cardId = cards[0].cardId
-                self.startLoadCards(
-                    cardRequest: self is CardsAllController ?
-                    .all(cardId: cardId, direction: direction.rawValue) :
-                    .sub(cardId: cardId, direction: direction.rawValue)) { (success) in
-                    if success { self.index -= 1 }
+                self.startLoadCards(cardRequest: request) { (success, cards) in
+                    if let cards = cards, cards.count > 0, success { self.index -= 1 }
                     self.scrollTo(row: self.index)
                 }
             } else {
                 if index <= 3 {
-                    let cardId = cards[0].cardId
-                    self.startLoadCards(
-                        cardRequest: self is CardsAllController ?
-                        .all(cardId: cardId, direction: direction.rawValue) :
-                        .sub(cardId: cardId, direction: direction.rawValue)) { (_) in
+                    self.startLoadCards(cardRequest: request) { (_, _) in
                         self.index -=  1
                         self.scrollTo(row: self.index)
                     }
@@ -411,6 +400,7 @@ extension CardsBaseController {
     func scrollTo(row: Int, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
+            self.pan.isEnabled = true
             let offset: CGFloat =  CGFloat(row) * cardCellHeight - self.offset
             UIView.animate(
                 withDuration: 0.25,
@@ -430,14 +420,17 @@ extension CardsBaseController {
             let viewModel = ContentCardViewModel(model: card)
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+            cards.append(card)
         case .choice:
             let viewModel = ChoiceCardViewModel(model: card)
             let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+            cards.append(card)
         case .evaluation:
             let viewModel = EvaluationCardViewModel(model: card)
             let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+            cards.append(card)
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
@@ -448,10 +441,12 @@ extension CardsBaseController {
             }
             let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+            cards.append(card)
         case .story:
             let viewModel = StoriesCardViewModel(model: card)
             let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
+            cards.append(card)
         default: break
         }
     }
@@ -462,14 +457,17 @@ extension CardsBaseController {
             let viewModel = ContentCardViewModel(model: card)
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.insert(configurator, at: index)
+            cards.insert(card, at: index)
         case .choice:
             let viewModel = ChoiceCardViewModel(model: card)
             let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.insert(configurator, at: index)
+            cards.insert(card, at: index)
         case .evaluation:
             let viewModel = EvaluationCardViewModel(model: card)
             let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.insert(configurator, at: index)
+            cards.insert(card, at: index)
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
@@ -480,10 +478,12 @@ extension CardsBaseController {
             }
             let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.insert(configurator, at: index)
+            cards.insert(card, at: index)
         case .story:
             let viewModel = StoriesCardViewModel(model: card)
             let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.insert(configurator, at: index)
+            cards.insert(card, at: index)
         default: break
         }
     }
@@ -523,6 +523,11 @@ extension CardsBaseController: UICollectionViewDataSource {
         if let cell = cell as? BaseCardCollectionViewCell {
             cell.delegate = self
         }
+        if cell is ContentCardCollectionViewCell {
+            if let playerIndex = playerView.resource?.indexPath, playerIndex == indexPath {
+                playerView.updatePlayViewToCell(cell: cell)
+            }
+        }
         return cell
     }
 }
@@ -535,6 +540,40 @@ extension CardsBaseController: UICollectionViewDelegate {
         scrollTo(row: index)
     }
 }
+extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
+    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int) {
+        let controller = StoriesPlayerGroupViewController()
+        controller.storiesGroup = storiesGroup
+        controller.currentIndex = currentIndex
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+
+extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
+    func selectEvaluationCard(cell: EvaluationCardCollectionViewCell, cardId: String, selectedIndex: Int) {
+        web.request(.evaluateCard(cardId: cardId, index: selectedIndex)) { [weak self] (result) in
+            guard let `self` = self else { return }
+            switch result {
+            case .success:
+                guard let index = self.cards.index(where: { $0.cardId == cardId }),
+                      self.cards[index].type == .evaluation else { return }
+                let configurator = self.cellConfigurators[index]
+                guard var newConfigurator = configurator as? CellConfigurator<EvaluationCardCollectionViewCell>
+                      else { return }
+                newConfigurator.viewModel.selectedIndex = selectedIndex
+                self.cellConfigurators[index] = newConfigurator
+                self.cards[index].result = SelectResult(contactUserList: [SelectResult.UserAvatar](),
+                                                        index: selectedIndex,
+                                                        percent: 0)
+  
+                cell.updateWith(selectedIndex)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+}
+
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func openKeyword() {
         inputBottomView.startEditing(true)
@@ -544,6 +583,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
         showBrower(index: index, originPageIndex: selectedIndex)
     }
 }
+
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

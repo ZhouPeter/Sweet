@@ -21,7 +21,7 @@ final class StoryPokeView: UIView {
         
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "戳住屏幕继续播放"
+        label.text = "戳住屏幕播放"
         label.font = UIFont.systemFont(ofSize: 12)
         let vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blur))
         blurView.contentView.addSubview(vibrancyView)
@@ -30,13 +30,12 @@ final class StoryPokeView: UIView {
         vibrancyView.centerX(to: blurView)
         label.fill(in: vibrancyView)
         
-        let pokeImageView = UIImageView(image: #imageLiteral(resourceName: "Logo"))
+        let pokeImageView = UIImageView(image: #imageLiteral(resourceName: "Poke"))
         addSubview(pokeImageView)
-        pokeImageView.constrain(width: 70, height: 70)
-        pokeImageView.align(.top, to: self, inset: 15)
+        pokeImageView.constrain(width: 100, height: 100)
+        pokeImageView.align(.top, to: self)
         pokeImageView.centerX(to: self)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

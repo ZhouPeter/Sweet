@@ -37,8 +37,9 @@ enum WebAPI {
     case delSectionSubscription(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
-    case allCards(cardId: String?, direction: Int?)
-    case subscriptionCards(cardId: String?, direction: Int?)
+    case allCards(cardId: String?, direction: Direction?)
+    case subscriptionCards(cardId: String?, direction: Direction?)
+    case evaluateCard(cardId: String, index: Int)
     case storyDetailsUvlist(storyId: UInt64)
     case storyTopics
     case searchTopic(topic: String)
@@ -106,9 +107,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case .storyTopics:
             return "/story/tag/list"
         case .allCards:
-            return "/card/mock/get"
+            return "/card/all/get"
         case .subscriptionCards:
             return "/card/subscription/get"
+        case .evaluateCard:
+            return "/card/evaluate"
         case .storyDetailsUvlist:
             return "/story/details/uvlist"
         case .publishStory:
@@ -161,12 +164,14 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case let .allCards(cardId, direction),
              let .subscriptionCards(cardId, direction):
             if let cardId = cardId, let direction = direction {
-                parameters = ["cardId": cardId, "direction": direction]
+                parameters = ["cardId": cardId, "direction": direction.rawValue]
             } else if let cardId = cardId {
                 parameters = ["cardId": cardId]
             } else {
                 parameters = [:]
             }
+        case let .evaluateCard(cardId, index):
+            parameters = ["cardId": cardId, "index": index]
         case let .storyDetailsUvlist(storyId):
             parameters = ["storyId": storyId]
         case let .publishStory(url, type, topic, center):
