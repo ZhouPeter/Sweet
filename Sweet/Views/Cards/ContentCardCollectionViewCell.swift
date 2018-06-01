@@ -154,6 +154,10 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
 }
 
 extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
+    func contentCardComment(emoji: Int) {
+        
+    }
+    
     func openKeyword() {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.openKeyword()

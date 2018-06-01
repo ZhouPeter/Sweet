@@ -575,6 +575,10 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    func contentCardComment(cardId: String, comment: String?, emoji: Int?) {
+        
+    }
+    
     func openKeyword() {
         inputBottomView.startEditing(true)
     }
