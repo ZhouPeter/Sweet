@@ -19,11 +19,17 @@ struct StoryCellViewModel {
     let storyId: UInt64
     let subtitle: String
     let userId: UInt64
+    let type: StoryType
+    var pokeCenter: CGPoint = CGPoint(x: UIScreen.mainWidth() / 2 - 60, y: UIScreen.mainHeight() / 2 - 60)
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
-        if model.type == .video {
+        type = model.type
+        if model.type == .video || model.type == .poke {
             videoURL = URL(string: model.content)
+            if model.type == .poke {
+                pokeCenter = CGPoint(x: UIScreen.mainWidth() / 2 - 60, y: UIScreen.mainHeight() / 2 - 60)
+            }
         } else {
             imageURL = URL(string: model.content)
         }
@@ -45,5 +51,6 @@ struct StoryCellViewModel {
         storyId = 1
         subtitle = "昨天上午 10:34"
         userId = 12
+        type = .image
     }
 }

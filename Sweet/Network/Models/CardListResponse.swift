@@ -31,7 +31,7 @@ struct CardResponse: Codable {
     let contentImageList: [ContentImage]?
     let video: String?
     let storyList: [[StoryResponse]]?
-    let result: SelectResult?
+    var result: SelectResult?
     let type: CardType
     let name: String?
     enum CardType: UInt, Codable {
@@ -69,7 +69,7 @@ struct ContentBody: Codable {
 
 struct SelectResult: Codable {
     let contactUserList: [UserAvatar]
-    let index: Int
+    var index: Int
     let percent: Double
     
     struct UserAvatar: Codable {

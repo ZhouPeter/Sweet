@@ -18,6 +18,7 @@ protocol StoriesPlayerScrollViewDelegate: NSObjectProtocol {
 class StoriesPlayerScrollView: UIScrollView {
     var currentIndex: Int = 0
     var middleImageView: UIImageView!
+
     private var stories = [StoryCellViewModel]()
     private var middleStory: StoryCellViewModel!
     private var isEnabled = true
@@ -34,10 +35,9 @@ class StoriesPlayerScrollView: UIScrollView {
     
     private func setupScrollView(frame: CGRect) {
         contentSize.width = frame.size.width
-        contentOffset.x  =  0
+        contentOffset.x = 0
         isScrollEnabled = false
         isOpaque = true
-        backgroundColor = .yellow
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapAction(_:)))
@@ -99,7 +99,7 @@ extension StoriesPlayerScrollView {
     private func prepare(imageView: UIImageView, withStory: StoryCellViewModel?) {
         if let story = withStory {
             if let urlString = story.videoURL?.absoluteString {
-                let imageUrlString = urlString + "?vframe/jpg/offset/0.5/w/375/h/667"
+                let imageUrlString = urlString + "?vframe/jpg/offset/0.0/w/375/h/667"
                 imageView.kf.setImage(with: URL(string: imageUrlString))
             } else if let URL = story.imageURL {
                 imageView.kf.setImage(with: URL)

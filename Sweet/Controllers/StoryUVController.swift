@@ -22,8 +22,8 @@ class StoryUVController: BaseViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.imageEdgeInsets = UIEdgeInsets(top: -14, left: 14, bottom: 0, right: 0)
         button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+        button.addTarget(self, action: #selector(didPressClose(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -36,6 +36,7 @@ class StoryUVController: BaseViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -64,6 +65,7 @@ class StoryUVController: BaseViewController {
             switch result {
             case let .success(response):
                 self.storyUvList = response
+                self.likeCountLabel.text = "获赞\(response.likeCount)"
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
@@ -72,16 +74,24 @@ class StoryUVController: BaseViewController {
     }
     
     private func setupUI() {
-        view.addSubview(closeButton)
-        closeButton.align(.right, to: view, inset: 20)
-        closeButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 64 : 20)
-        closeButton.constrain(width: 40, height: 40)
+        view.backgroundColor = .clear
         view.addSubview(likeCountLabel)
         likeCountLabel.align(.left, to: view, inset: 20)
         likeCountLabel.align(.top, to: view, inset: UIScreen.isIphoneX() ? 64 : 20)
         likeCountLabel.constrain(height: 30)
+        view.addSubview(closeButton)
+        closeButton.align(.right, to: view, inset: 10)
+        closeButton.centerY(to: likeCountLabel)
+        closeButton.constrain(width: 30, height: 30)
         view.addSubview(tableView)
         tableView.fill(in: view, top: UIScreen.isIphoneX() ? 64 + 40 : 20 + 40 )
+    }
+    
+    @objc private func didPressClose(sender: UIButton) {
+        willMove(toParentViewController: nil)
+        view.removeFromSuperview()
+        removeFromParentViewController()
+        delegate?.closeStoryUV()
     }
 }
 
