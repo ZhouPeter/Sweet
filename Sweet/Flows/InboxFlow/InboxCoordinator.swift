@@ -47,7 +47,7 @@ extension InboxCoordinator: InboxViewDelegate {
     }
     
     func inboxStartConversation(_ conversation: Conversation) {
-        let controller = ConversationController(userID: storage.userID, conversation: conversation)
+        let controller = ConversationController(userID: storage.userID, buddyID: 13)
         router.push(controller)
     }
 }

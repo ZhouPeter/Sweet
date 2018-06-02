@@ -75,6 +75,10 @@ final class Messenger {
             logger.debug("Waiting network")
             return
         }
+        guard state == .offline else {
+            logger.debug("state is \(state)")
+            return
+        }
         connect()
     }
     
@@ -101,11 +105,14 @@ final class Messenger {
         send(request, responseType: UserInfoGetResp.self, callback: callback)
     }
     
-    @discardableResult func sendText(_ text: String, to: UInt64) -> InstantMessage {
+    // MARK: - Messages
+    
+    @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64) -> InstantMessage {
         var message = InstantMessage()
         message.content = text
         message.type = .text
         message.to = to
+        message.from = from
         send(message)
         return message
     }
@@ -149,11 +156,41 @@ final class Messenger {
     
     // MARK: - Private
     
+    private func getMessages(with IDs: [UInt64], callback: @escaping ([InstantMessage]) -> Void) {
+        var request = GetReq()
+        request.msgIDList = IDs
+        send(request, responseType: GetResp.self) { (response) in
+            guard let response = response else { return }
+            callback(response.msgList.map(InstantMessage.init))
+        }
+    }
+    
+    private func listenMessageNotify() {
+        let handler = MessageHandler<Notify> { (note) in
+            let package = ImPackageRawdata()
+            package.body = try? NotifyAck().serializedData()
+            self.service.send(
+                package,
+                moduleId: ModuleID.message.rawValue,
+                commandId: MsgCmdID.notifyAck.rawValue,
+                onMessageSend: nil
+            )
+            logger.debug(note ?? "")
+            guard let notify = note else { return }
+            self.getMessages(with: [notify.msgID], callback: { (messages) in
+                guard let message = messages.first else { return }
+                self.multicastDelegate.invoke({ $0.messengerDidReceiveMessage(message) })
+            })
+        }
+        HandlerManager.sharedInstance()
+            .addHandler(ModuleID.message.rawValue, commandId: MsgCmdID.notify.rawValue, handler: handler)
+    }
+    
     private func updateConversations(with messages: [InstantMessage]) {
         let date = Date()
         for index in 1...20 {
             var conversation = Conversation(
-                userID: UInt64(index),
+                userID: 13,
                 username: "\(index + 1000)",
                 date: Date(timeInterval: TimeInterval(index * 63), since: date)
             )
@@ -201,6 +238,7 @@ final class Messenger {
                     } else {
                         self.state = .offline
                     }
+                    self.listenMessageNotify()
                     self.multicastDelegate.invoke({ $0.messengerDidLogin(userID: userID, success: date != nil) })
                 })
             })
@@ -253,7 +291,7 @@ final class Messenger {
         if package.body == nil { logger.error("package body is nil") }
         service.send(package, moduleId: module, commandId: command) { (code) in
             if code.rawValue != 0 {
-                logger.debug("message send failed", message)
+                logger.error("message send failed", message)
                 callback(nil)
             }
         }

@@ -15,6 +15,7 @@ protocol MessengerDelegate: class {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool)
     func messengerDidUpdateServerDate(_ serverDate: Date?)
     func messengerDidUpdateConversations(_ conversations: [Conversation])
+    func messengerDidReceiveMessage(_ message: InstantMessage)
 }
 
 extension MessengerDelegate {
@@ -24,4 +25,5 @@ extension MessengerDelegate {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {}
     func messengerDidUpdateServerDate(_ date: Date?) {}
     func messengerDidUpdateConversations(_ conversations: [Conversation]) {}
+    func messengerDidReceiveMessage(_ message: InstantMessage) {}
 }

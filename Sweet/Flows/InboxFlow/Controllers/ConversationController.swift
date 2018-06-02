@@ -11,7 +11,7 @@ import MessageKit
 
 final class ConversationController: MessagesViewController {
     private let userID: UInt64
-    private let conversation: Conversation
+    private let buddyID: UInt64
     
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -21,9 +21,9 @@ final class ConversationController: MessagesViewController {
     
     private var messages = [InstantMessage]()
     
-    init(userID: UInt64, conversation: Conversation) {
+    init(userID: UInt64, buddyID: UInt64) {
         self.userID = userID
-        self.conversation = conversation
+        self.buddyID = buddyID
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,10 +34,11 @@ final class ConversationController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = conversation.username
+        title = "用户 \(buddyID)"
         
         setupCollectionView()
         setupInputBar()
+        Messenger.shared.addDelegate(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -137,17 +138,22 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        var from = userID
-        var to = conversation.userID
-        if arc4random() % 2 == 0 {
-            from = conversation.userID
-            to = userID
-        }
-        var message = InstantMessage(from: from, to: to, type: .text)
-        message.content = text
+        let message = Messenger.shared.sendText(text, from: userID, to: buddyID)
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
         messagesCollectionView.scrollToBottom()
+    }
+}
+
+extension ConversationController: MessengerDelegate {
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        
+    }
+    
+    func messengerDidReceiveMessage(_ message: InstantMessage) {
+        guard message.from == buddyID else { return }
+        self.messages.append(message)
+        messagesCollectionView.insertSections([self.messages.count - 1])
     }
 }
