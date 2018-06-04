@@ -17,7 +17,6 @@ target 'Sweet' do
   pod 'NVActivityIndicatorView'
   pod 'VIMediaCache'
   pod 'JXPhotoBrowser'
-  pod 'APESuperHUD', :git => 'https://github.com/apegroup/APESuperHUD.git'
   pod 'libimcloud', :git => 'https://gitee.com/miaobo/iOS.LIBIMCLOUD.git', :branch => 'master'
   pod 'SwiftProtobuf'
   pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git', :tag => '1.0.0-beta.1'
