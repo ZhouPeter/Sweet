@@ -63,3 +63,13 @@ extension GetReq: MessageTicket {
         return MsgCmdID.getReq.rawValue
     }
 }
+
+extension DirectionGetReq: MessageTicket {
+    var module: ModuleID {
+        return .message
+    }
+    
+    var command: Int {
+        return MsgCmdID.directionGetReq.rawValue
+    }
+}

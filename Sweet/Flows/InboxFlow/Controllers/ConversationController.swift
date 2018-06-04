@@ -12,13 +12,7 @@ import MessageKit
 final class ConversationController: MessagesViewController {
     private let user: User
     private let buddy: User
-    
-    private lazy var formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }()
-    
+    private let refreshControl = UIRefreshControl()
     private var messages = [InstantMessage]()
     
     init(user: User, buddy: User) {
@@ -39,7 +33,7 @@ final class ConversationController: MessagesViewController {
         setupCollectionView()
         setupInputBar()
         Messenger.shared.addDelegate(self)
-        Messenger.shared.loadMessages(with: buddy)
+        Messenger.shared.loadMessages(from: buddy)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +47,8 @@ final class ConversationController: MessagesViewController {
     // MARK: - Private
     
     private func setupCollectionView() {
+        messagesCollectionView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -78,6 +74,28 @@ final class ConversationController: MessagesViewController {
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.placeholder = "说点什么"
         messageInputBar.inputTextView.layer.borderWidth = 0
+    }
+
+    @objc private func loadMoreMessages() {
+        guard messages.isNotEmpty else {
+            logger.debug("messages is empty")
+            refreshControl.endRefreshing()
+            return
+        }
+        var lastMessage: InstantMessage?
+        for index in 0..<messages.count {
+            let message = messages[index]
+            if message.remoteID != nil {
+                lastMessage = message
+                break
+            }
+        }
+        guard let message = lastMessage else {
+            logger.debug("lastMessage is nil")
+            refreshControl.endRefreshing()
+            return
+        }
+        Messenger.shared.loadMoreMessages(from: buddy, lastMessage: message)
     }
 }
 
@@ -164,5 +182,12 @@ extension ConversationController: MessengerDelegate {
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
+    }
+
+    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User) {
+        defer { refreshControl.endRefreshing() }
+        guard messages.isNotEmpty, buddy.userId == self.buddy.userId else { return }
+        self.messages.insert(contentsOf: messages, at: 0)
+        messagesCollectionView.reloadDataAndKeepOffset()
     }
 }

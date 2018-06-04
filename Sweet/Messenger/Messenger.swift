@@ -157,7 +157,7 @@ final class Messenger {
         }
     }
     
-    func loadMessages(with buddy: User) {
+    func loadMessages(from buddy: User) {
         var messages = [InstantMessage]()
         storage?.read({ (realm) in
             let results = realm
@@ -175,6 +175,51 @@ final class Messenger {
         })
     }
     
+    func loadMoreMessages(from buddy: User, lastMessage: InstantMessage) {
+        let limit = 20
+        var messages = [InstantMessage]()
+        storage?.read({ (realm) in
+            let results = realm
+                .objects(InstantMessageData.self)
+                .filter(NSPredicate(format: "createDate < %@", lastMessage.createDate as CVarArg))
+                .sorted(byKeyPath: "createDate", ascending: false)
+            let count = min(results.count, limit)
+            guard count > 0 else { return }
+            for index in 0..<count {
+                messages.insert(InstantMessage(data: results[index]), at: 0)
+            }
+        }, callback: {
+            if messages.isEmpty {
+                if let remoteID = lastMessage.remoteID {
+                    self.fetchMoreMessages(from: buddy, remoteID: remoteID)
+                } else {
+                    self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], buddy: buddy)})
+                }
+            } else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, buddy: buddy)})
+            }
+        })
+    }
+    
+    private func fetchMoreMessages(from buddy: User, remoteID: UInt64) {
+        logger.debug()
+        var request = DirectionGetReq()
+        request.from = buddy.userId
+        request.msgID = remoteID
+        request.count = 20
+        request.direction = .up
+        send(request, responseType: DirectionGetResp.self) { (response) in
+            guard let response = response else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], buddy: buddy) })
+                return
+            }
+            let messages = response.msgList.map(InstantMessage.init(proto:))
+            self.saveMessages(messages, update: true, callback: {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, buddy: buddy)})
+            })
+        }
+    }
+    
     // MARK: - Conversations
     
     func loadConversations() {
@@ -184,14 +229,7 @@ final class Messenger {
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: true, callback: {
-                var conversations = [Conversation]()
-                self.storage?.read({ (realm) in
-                    conversations = realm.objects(ConversationData.self).compactMap(Conversation.init(data:))
-                }, callback: {
-                    self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
-                })
-            })
+            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: true)
         }
     }
     
