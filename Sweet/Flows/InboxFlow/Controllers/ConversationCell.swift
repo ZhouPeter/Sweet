@@ -60,6 +60,7 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
         contentLabel.text = conversation.lastMessage?.displayText
         if conversation.unreadCount > 0 {
             badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
+            badgeView.isHidden = false1234567890
         } else {
             badgeView.isHidden = true
         }
