@@ -40,8 +40,11 @@ enum WebAPI {
     case allCards(cardId: String?, direction: Direction?)
     case subscriptionCards(cardId: String?, direction: Direction?)
     case evaluateCard(cardId: String, index: Int)
+    case choiceCard(cardId: String, index: Int)
     case commentCard(cardId: String, comment: String, emoji: Int)
+    case activityCardLike(cardId: String, activityItemId: String, comment: String)
     case storyDetailsUvlist(storyId: UInt64)
+    case storyRead(storyId: UInt64, fromCardId: String?)
     case storyTopics
     case searchTopic(topic: String)
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
@@ -113,12 +116,18 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/subscription/get"
         case .evaluateCard:
             return "/card/evaluate"
+        case .choiceCard:
+            return "/card/choice"
+        case .activityCardLike:
+            return "/card/activity/like"
         case .storyDetailsUvlist:
             return "/story/details/uvlist"
         case .publishStory:
             return "/story/add"
         case .searchTopic:
             return "/story/tag/search"
+        case .storyRead:
+            return "/story/read"
         case .socketAddress:
             return "/setting/im/routes"
         case .commentCard:
@@ -173,8 +182,14 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             } else {
                 parameters = [:]
             }
-        case let .evaluateCard(cardId, index):
+        case let .evaluateCard(cardId, index),
+             let .choiceCard(cardId, index):
             parameters = ["cardId": cardId, "index": index]
+        case let .storyRead(storyId, fromCardId):
+            if let fromCardId = fromCardId {
+                parameters = ["fromCardId": fromCardId]
+            }
+            parameters = ["storyId": storyId]
         case let .storyDetailsUvlist(storyId):
             parameters = ["storyId": storyId]
         case let .publishStory(url, type, topic, center):
@@ -188,6 +203,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
         case let .commentCard(cardId, comment, emoji):
             parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
+        case let .activityCardLike(cardId, activityItemId, comment):
+            parameters = ["cardId": cardId, "activityItemId": activityItemId, "comment": comment]
         default:
             break
         }

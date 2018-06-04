@@ -24,13 +24,13 @@ struct CardListResponse: Codable {
 
 struct CardResponse: Codable {
     let cardId: String
-    let activityList: [ActivityResponse]?
+    var activityList: [ActivityResponse]?
     let defaultEmojiList: [EmojiType]?
     let content: String?
     let imageList: [String]?
     let contentImageList: [ContentImage]?
     let video: String?
-    let storyList: [[StoryResponse]]?
+    var storyList: [[StoryResponse]]?
     var result: SelectResult?
     let type: CardType
     let name: String?
@@ -54,7 +54,7 @@ struct ActivityResponse: Codable {
     let avatar: String
     let body: ContentBody
     let activityItemId: String
-    let like: Bool
+    var like: Bool
     let same: Bool
     let actor: UInt64
     let subtitle: String

@@ -277,9 +277,7 @@ extension InputTextView {
 
 extension InputTextView {
     @objc private func sendAction(_ sender: UIButton) {
-        if textView.text.count > 0 {
-            delegate?.inputTextViewDidPressSendMessage(text: textView.text)
-        }
+        delegate?.inputTextViewDidPressSendMessage(text: textView.text)
     }
     @objc private func cancelAction(_ sender: UIButton) {
         delegate?.removeInputTextView()

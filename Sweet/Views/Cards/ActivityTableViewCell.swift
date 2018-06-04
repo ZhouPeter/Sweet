@@ -79,7 +79,7 @@ class ActivityTableViewCell: UITableViewCell {
         subtitleLabel.centerY(to: titleLabel)
         contentView.addSubview(commentLabel)
         commentLabel.align(.left, to: titleLabel)
-        commentLabel.pin(.bottom, to: titleLabel, spacing: 7)
+        commentLabel.align(.bottom, to: avatarImageView)
         contentView.addSubview(contentLabel)
         contentLabel.align(.left, to: titleLabel)
         contentLabel.pin(.bottom, to: commentLabel, spacing: 7)
@@ -104,10 +104,20 @@ class ActivityTableViewCell: UITableViewCell {
             likeButton.setImage(#imageLiteral(resourceName: "Unlike"), for: .normal)
         }
     }
+    func update(like: Bool) {
+        if like {
+            likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        } else {
+            likeButton.setImage(#imageLiteral(resourceName: "Unlike"), for: .normal)
+        }
+        viewModel?.like = like
+    }
     
     @objc private func likeAction(_ sender: UIButton) {
         if let viewModel = viewModel {
-            viewModel.callBack?(viewModel.activityItemId)
+            if !viewModel.like {
+                viewModel.callBack?(viewModel.activityItemId)
+            }
         }
     }
     

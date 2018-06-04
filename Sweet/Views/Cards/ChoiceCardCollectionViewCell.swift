@@ -8,7 +8,8 @@
 
 import UIKit
 protocol ChoiceCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
-    
+    func selectChoiceCard(cardId: String, selectedIndex: Int)
+
 }
 class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
 
@@ -22,11 +23,15 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     private lazy var leftButton: UIButton = {
         let button = UIButton()
+        button.tag = 0
+        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var rightButton: UIButton = {
         let button = UIButton()
+        button.tag = 1
+        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -243,5 +248,13 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             imageView.isHidden = isHidden
         }
         selectedButton.isHidden = isHidden
+    }
+    
+    @objc private func selectAction(sender: UIButton) {
+        if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate {
+            if let cardId = cardId  {
+                delegate.selectChoiceCard(cardId: cardId, selectedIndex: sender.tag)
+            }
+        }
     }
 }

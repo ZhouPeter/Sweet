@@ -16,13 +16,22 @@ class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     private var storiesGroup = [[StoryCellViewModel]]()
     func updateWith(_ viewModel: StoriesCardViewModel) {
         cellConfigurators.removeAll()
-        viewModel.storiesCellModels.forEach { (viewModels) in
-            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: viewModels[0])
+//        viewModel.storiesCellModels.forEach { (viewModels) in
+//            let firstViewModel = viewModels[0]
+//            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
+//            cellConfigurators.append(configurator)
+//        }
+        for (index, viewModels) in viewModel.storiesCellModels.enumerated() {
+            var firstViewModel = viewModels[0]
+            firstViewModel.isRead = viewModel.isReads[index]
+            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
             cellConfigurators.append(configurator)
+
         }
         storiesGroup = viewModel.storiesGroup
         collectionView.reloadData()
     }
+    
     typealias ViewModelType = StoriesCardViewModel
     
     private lazy var collectionView: UICollectionView = {

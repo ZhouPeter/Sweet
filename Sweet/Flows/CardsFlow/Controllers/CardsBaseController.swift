@@ -57,7 +57,8 @@ class CardsBaseController: BaseViewController {
     public var cards = [CardResponse]()
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
-
+    private var activityCardId: String?
+    private var activityItemId: String?
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -435,7 +436,7 @@ extension CardsBaseController {
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
                 activityViewModel.callBack = { activityItemId in
-                    self.showInputView(activityItemId: activityItemId)
+                    self.showInputView(cardId: viewModel.cardId, activityItemId: activityItemId)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -472,7 +473,7 @@ extension CardsBaseController {
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
                 activityViewModel.callBack = { activityItemId in
-                    self.showInputView(activityItemId: activityItemId)
+                    self.showInputView(cardId: viewModel.cardId, activityItemId: activityItemId)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -487,27 +488,16 @@ extension CardsBaseController {
         default: break
         }
     }
-    
-    private func showInputView(activityItemId: String) {
+
+    private func showInputView(cardId: String, activityItemId: String) {
         let window = UIApplication.shared.windows.last!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.startEditing(isStarted: true)
+        self.activityItemId = activityItemId
+        self.activityCardId = cardId
+        
     }
-}
-
-extension CardsBaseController: InputTextViewDelegate {
-    func inputTextViewDidPressSendMessage(text: String) {
-        inputTextView.clear()
-        inputTextView.removeFromSuperview()
-        toast(message: "❤️ 评价成功")
-    }
-    
-    func removeInputTextView() {
-        inputTextView.clear()
-        inputTextView.removeFromSuperview()
-    }
-    
 }
 
 extension CardsBaseController: UICollectionViewDataSource {
@@ -540,12 +530,32 @@ extension CardsBaseController: UICollectionViewDelegate {
         scrollTo(row: index)
     }
 }
+
+extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
+    func selectChoiceCard(cardId: String, selectedIndex: Int) {
+        web.request(
+            .choiceCard(cardId: cardId, index: selectedIndex),
+            responseType: Response<SelectResult>.self) { (result) in
+            switch result {
+            case let .success(response):
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                self.cards[index].result = response
+                let viewModel = ChoiceCardViewModel(model: self.cards[index])
+                let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
+                self.cellConfigurators[index] = configurator
+                self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+}
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
     func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int) {
-        let controller = StoriesPlayerGroupViewController()
-        controller.storiesGroup = storiesGroup
-        controller.currentIndex = currentIndex
+        let controller = StoriesPlayerGroupViewController(storiesGroup: storiesGroup, currentIndex: currentIndex)
+        controller.delegate = self
         self.present(controller, animated: true, completion: nil)
+        self.readGroup(storyGroupIndex: currentIndex)
     }
 }
 
@@ -625,7 +635,30 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         present(alertController, animated: true, completion: nil)
     }
 }
+extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
+    func readGroup(storyGroupIndex: Int) {
+        if self.cards[index].type == .story {
+            let storyId = self.cards[index].storyList![storyGroupIndex][0].storyId
+            let fromCardId = self.cards[index].cardId
+            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
+                switch result {
+                case .success:
+                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
+                    var viewModel = StoriesCardViewModel(model: self.cards[index])
+                    viewModel.isReads[storyGroupIndex] = true
+                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
+                    self.cellConfigurators[index] = configurator
+                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                case let .failure(error):
+                    logger.error(error)
+                }
+            }
+        }
+    }
 
+}
+
+// MARK: - PhotoBrowserDelegate
 extension CardsBaseController: PhotoBrowserDelegate {
     private func showBrower(index: Int, originPageIndex: Int) {
         guard cellConfigurators[index] is CellConfigurator<ContentCardCollectionViewCell>
@@ -661,7 +694,7 @@ extension CardsBaseController: PhotoBrowserDelegate {
         return images.count
     }
 }
-
+// MARK: - InputBottomViewDelegate
 extension CardsBaseController: InputBottomViewDelegate {
     func inputBottomViewDidChangeHeight(_ height: CGFloat) {
         inputBottomViewHeight?.constant = height + 20
@@ -686,5 +719,39 @@ extension CardsBaseController: InputBottomViewDelegate {
                 }
         }
         inputBottomView.startEditing(false)
+    }
+}
+
+// MARK: - InputTextViewDelegate
+extension CardsBaseController: InputTextViewDelegate {
+    func inputTextViewDidPressSendMessage(text: String) {
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
+        guard cards[index].type == .activity else { return }
+        guard let cardId = self.activityCardId, let itemId = self.activityItemId else { return }
+        web.request(.activityCardLike(cardId: cardId, activityItemId: itemId, comment: text)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                guard let item = self.cards[index].activityList!.index(
+                            where: { $0.activityItemId == itemId }) else { return }
+                self.cards[index].activityList![item].like = true
+                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
+                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+                self.cellConfigurators[index] = configurator
+                if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
+                    let acCell = cell as? ActivitiesCardCollectionViewCell {
+                    acCell.updateItem(item: item, like: true)
+                }
+                self.toast(message: "❤️ 评价成功")
+            case let  .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    func removeInputTextView() {
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
     }
 }
