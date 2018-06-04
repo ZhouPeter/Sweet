@@ -6,6 +6,8 @@
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 // swiftlint:disable weak_delegate
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 import Foundation
 import libimcloud
@@ -138,7 +140,7 @@ final class Messenger {
             return
         }
         let request = message.makeSendRequest()
-        saveMessages([message])
+        saveMessages([message], update: true)
         send(request, responseType: SendResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
@@ -149,10 +151,28 @@ final class Messenger {
             messageSent.sentDate = Date()
             messageSent.isSent = true
             self.serverDate = Date(timeIntervalSince1970: Double(response.timestamp) / 1000)
-            self.saveMessages([message], callback: {
+            self.saveMessages([messageSent], update: true, callback: {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
             })
         }
+    }
+    
+    func loadMessages(with buddy: User) {
+        var messages = [InstantMessage]()
+        storage?.read({ (realm) in
+            let results = realm
+                .objects(InstantMessageData.self)
+                .filter("from = \(buddy.userId) || to = \(buddy.userId)")
+                .sorted(byKeyPath: "createDate", ascending: false)
+            let count = results.count
+            guard count > 0 else { return }
+            let loopCount = min(20, count)
+            for index in 0..<loopCount {
+                messages.insert(InstantMessage(data: results[index]), at: 0)
+            }
+        }, callback: {
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+        })
     }
     
     // MARK: - Conversations
@@ -164,10 +184,10 @@ final class Messenger {
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            self.saveMessages(response.msgList.map(InstantMessage.init), callback: {
+            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: true, callback: {
                 var conversations = [Conversation]()
                 self.storage?.read({ (realm) in
-                    conversations = realm.objects(ConversationData.self).compactMap(Conversation.init)
+                    conversations = realm.objects(ConversationData.self).compactMap(Conversation.init(data:))
                 }, callback: {
                     self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
                 })
@@ -226,7 +246,7 @@ final class Messenger {
             .addHandler(ModuleID.message.rawValue, commandId: MsgCmdID.notify.rawValue, handler: handler)
     }
     
-    private func saveMessages(_ messages: [InstantMessage], callback: (() -> Void)? = nil) {
+    private func saveMessages(_ messages: [InstantMessage], update: Bool = false, callback: (() -> Void)? = nil) {
         guard let userID = user?.userId else {
             logger.warning("User is nil")
             return
@@ -235,7 +255,11 @@ final class Messenger {
         storage?.write({ (realm) in
             var dataArray = [InstantMessageData]()
             messages.forEach({ (message) in
-                logger.debug(message)
+                if let remoteID = message.remoteID {
+                    if !update { return }
+                    let results = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)")
+                    realm.delete(results)
+                }
                 dataArray.append(InstantMessageData.data(with: message))
                 userIDs.insert(message.from == userID ? message.to : message.from)
             })

@@ -53,7 +53,7 @@ extension InstantMessage {
 }
 
 extension InstantMessage {
-    init(_ proto: IMProto) {
+    init(proto: IMProto) {
         remoteID = proto.id
         from = proto.from
         to = proto.to
@@ -64,7 +64,7 @@ extension InstantMessage {
         sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
     }
     
-    init(_ data: InstantMessageData) {
+    init(data: InstantMessageData) {
         localID = data.localID
         if let value = data.remoteID.value {
             remoteID = UInt64(value)

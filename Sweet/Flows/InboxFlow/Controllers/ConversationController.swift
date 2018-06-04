@@ -39,6 +39,7 @@ final class ConversationController: MessagesViewController {
         setupCollectionView()
         setupInputBar()
         Messenger.shared.addDelegate(self)
+        Messenger.shared.loadMessages(with: buddy)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +148,13 @@ extension ConversationController: MessageInputBarDelegate {
 }
 
 extension ConversationController: MessengerDelegate {
+    func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
+        guard buddy.userId == self.buddy.userId else { return }
+        self.messages = messages
+        messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom()
+    }
+    
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
         
     }
@@ -155,5 +163,6 @@ extension ConversationController: MessengerDelegate {
         guard message.from == buddy.userId else { return }
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 }

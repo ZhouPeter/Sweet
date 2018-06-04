@@ -25,7 +25,7 @@ struct Conversation {
         user = User.init(data: userData)
         unreadCount = data.unreadCount
         if let messageData = data.lastMessage {
-            lastMessage = InstantMessage(messageData)
+            lastMessage = InstantMessage(data: messageData)
         }
         date = data.date
     }
