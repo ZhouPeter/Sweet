@@ -53,3 +53,13 @@ extension UserInfoGetReq: MessageTicket {
         return UserCmdID.userinfoGetReq.rawValue
     }
 }
+
+extension GetReq: MessageTicket {
+    var module: ModuleID {
+        return .message
+    }
+    
+    var command: Int {
+        return MsgCmdID.getReq.rawValue
+    }
+}

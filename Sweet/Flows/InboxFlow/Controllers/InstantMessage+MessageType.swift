@@ -11,11 +11,11 @@ import MessageKit
 
 extension InstantMessage: MessageType {
     var messageId: String {
-        return localID.uuidString
+        return localID
     }
     
     var sender: Sender {
-        return Sender(id: "\(from)", displayName: fromName)
+        return Sender(id: "\(from)", displayName: fromName ?? "")
     }
     
     var kind: MessageKind {

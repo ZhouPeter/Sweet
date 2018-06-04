@@ -9,8 +9,11 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
-    func makeProfileCoordinator(router: Router) -> Coordinator & ProfileCoordinatorOutput {
+    
+    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
+                user: user,
+                userID: userID,
                 router: router,
                 factory: FlowFactoryImp(),
                 coordinatorFactory: CoordinatorFactoryImp())
@@ -28,10 +31,10 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return AuthCoordinator(with: FlowFactoryImp(), router: router)
     }
     
-    func makeMainCoordinator(userID: UInt64, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
+    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
         let controller = MainController()
         let coordinator = MainCoordinator(
-            userID: userID,
+            user: user,
             token: token,
             mainView: controller,
             coordinatorFactory: CoordinatorFactoryImp()
@@ -40,12 +43,12 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     }
     
     func makeIMCoordinator(
+        user: User,
         token: String,
-        storage: Storage,
         navigation: UINavigationController?) -> Coordinator {
         return IMCoordinator(
+            user: user,
             token: token,
-            storage: storage,
             router: makeRouter(with: navigation),
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()
@@ -67,12 +70,6 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
             coordinatorFactory: CoordinatorFactoryImp()
         )
     }
-    func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator {
-        return ProfileCoordinator(
-            router: makeRouter(with: navigation),
-            factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp())
-    }
     
     func makeRouter(with navigation: UINavigationController?) -> Router {
         if let nav = navigation {
@@ -82,20 +79,21 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return RouterImp(rootController: app.rootController)
     }
     
-    func makeContactsCoordinator(router: Router, token: String, storage: Storage) -> ContactsCoordinator {
+    func makeContactsCoordinator(router: Router, token: String, storage: Storage, user: User) -> ContactsCoordinator {
         return ContactsCoordinator(
             token: token,
             storage: storage,
             router: router,
             factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp()
+            coordinatorFactory: CoordinatorFactoryImp(),
+            user: user
         )
     }
     
-    func makeInboxCoordinator(router: Router, token: String, storage: Storage) -> InboxCoordinator {
+    func makeInboxCoordinator(user: User, router: Router, token: String) -> InboxCoordinator {
         return InboxCoordinator(
+            user: user,
             token: token,
-            storage: storage,
             router: router,
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()

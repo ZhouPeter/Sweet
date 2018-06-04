@@ -17,8 +17,12 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private let factory: ProfileFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let user: User
+    private let userID: UInt64
     
-    init(router: Router, factory: ProfileFlowFactory, coordinatorFactory: CoordinatorFactory) {
+    init(user: User, userID: UInt64, router: Router, factory: ProfileFlowFactory, coordinatorFactory: CoordinatorFactory) {
+        self.user = user
+        self.userID = userID
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
@@ -37,6 +41,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profileModule.finished = { [weak self] in
             self?.finishFlow?()
         }
+        profileModule.userId = userID
+        profileModule.user = user
         router.push(profileModule)
     }
     

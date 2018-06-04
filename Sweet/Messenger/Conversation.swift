@@ -9,18 +9,24 @@
 import Foundation
 
 struct Conversation {
-    let userID: UInt64
-    let username: String
+    let user: User
     let date: Date
+    var lastMessage: InstantMessage?
     let unreadCount: Int
-    var lastMessageID: String?
-    var avatarURLString: String?
-    var content: String?
     
-    init(userID: UInt64, username: String, date: Date, unreadCount: Int = 0) {
-        self.userID = userID
-        self.username = username
+    init(user: User, date: Date, unreadCount: Int = 0) {
+        self.user = user
         self.date = date
         self.unreadCount = unreadCount
+    }
+    
+    init?(_ data: ConversationData) {
+        guard let userData = data.user else { return nil }
+        user = User.init(data: userData)
+        unreadCount = data.unreadCount
+        if let messageData = data.lastMessage {
+            lastMessage = InstantMessage(messageData)
+        }
+        date = data.date
     }
 }

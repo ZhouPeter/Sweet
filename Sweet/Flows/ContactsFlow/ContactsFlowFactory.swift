@@ -14,5 +14,4 @@ protocol ContactsFlowFactory {
     func makeBlackOutput() -> BlackView
     func makeBlockOutput() -> BlockView
     func makeSubscriptionOutput() -> SubscriptionView
-    func makeProfileOutput(userId: UInt64) -> ProfileView
 }

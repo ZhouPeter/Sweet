@@ -12,28 +12,30 @@ final class InboxCoordinator: BaseCoordinator {
     private let factory: ContactsFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let user: User
     private let token: String
     private let storage: Storage
     private var conversations = [Conversation]()
     private var inboxView: InboxView?
     
-    init(token: String,
-         storage: Storage,
+    init(user: User,
+         token: String,
          router: Router,
          factory: ContactsFlowFactory,
          coordinatorFactory: CoordinatorFactory) {
+        self.user = user
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
         self.router = router
         self.token = token
-        self.storage = storage
+        self.storage = Storage(userID: user.userId)
     }
     
     func start(with view: InboxView) {
         view.delegate = self
         inboxView = view
         Messenger.shared.addDelegate(self)
-        Messenger.shared.login(with: storage.userID, token: token)
+        Messenger.shared.login(with: user, token: token)
     }
     
     override func start() {
@@ -42,24 +44,24 @@ final class InboxCoordinator: BaseCoordinator {
 }
 
 extension InboxCoordinator: InboxViewDelegate {
-    func inboxRemoveConversation(userID: UInt64) {
-        Messenger.shared.removeConversation(userID: userID)
+    func inboxRemoveConversation(_ conversation: Conversation) {
+        Messenger.shared.removeConversation(userID: conversation.user.userId)
     }
     
     func inboxStartConversation(_ conversation: Conversation) {
-        let controller = ConversationController(userID: storage.userID, conversation: conversation)
+        let controller = ConversationController(user: user, buddy: conversation.user)
         router.push(controller)
     }
 }
 
 extension InboxCoordinator: MessengerDelegate {
-    func messengerDidLogin(userID: UInt64, success: Bool) {
-        logger.debug(userID, success)
+    func messengerDidLogin(user: User, success: Bool) {
+        logger.debug(user.nickname, success)
         start()
     }
     
-    func messengerDidLogout(userID: UInt64) {
-        logger.debug(userID)
+    func messengerDidLogout(user: User) {
+        logger.debug(user.nickname)
     }
     
     func messengerDidUpdateState(_ state: MessengerState) {

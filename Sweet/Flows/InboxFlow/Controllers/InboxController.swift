@@ -61,6 +61,15 @@ extension InboxController: UITableViewDataSource {
 extension InboxController: UIGestureRecognizerDelegate {
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
+        shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if otherGestureRecognizer.view == tableView {
+            return true
+        }
+        return false
+    }
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -75,7 +84,7 @@ extension InboxController: SwipeTableViewCellDelegate {
         let deleteAction = SwipeAction(style: .destructive, title: "删除") { [weak self] (_, indexPath) in
             guard let `self` = self else { return }
             self.conversations.remove(at: indexPath.row)
-            self.delegate?.inboxRemoveConversation(userID: self.conversations[indexPath.row].userID)
+            self.delegate?.inboxRemoveConversation(self.conversations[indexPath.row])
         }
         return [deleteAction]
     }
@@ -85,7 +94,7 @@ extension InboxController: SwipeTableViewCellDelegate {
         editActionsOptionsForRowAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .destructive
+        options.expansionStyle = .selection
         return options
     }
     

@@ -12,12 +12,11 @@ protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
-    func makeMainCoordinator(userID: UInt64, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
-    func makeProfileCoordinator(router: Router) -> Coordinator & ProfileCoordinatorOutput
-    func makeIMCoordinator(token: String, storage: Storage, navigation: UINavigationController?) -> Coordinator
+    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
+    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput
+    func makeIMCoordinator(user: User, token: String, navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator
     func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
-    func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator
-    func makeContactsCoordinator(router: Router, token: String, storage: Storage) -> ContactsCoordinator
-    func makeInboxCoordinator(router: Router, token: String, storage: Storage) -> InboxCoordinator
+    func makeContactsCoordinator(router: Router, token: String, storage: Storage, user: User) -> ContactsCoordinator
+    func makeInboxCoordinator(user: User, router: Router, token: String) -> InboxCoordinator
 }

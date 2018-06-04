@@ -10,8 +10,8 @@ import UIKit
 import MessageKit
 
 final class ConversationController: MessagesViewController {
-    private let userID: UInt64
-    private let conversation: Conversation
+    private let user: User
+    private let buddy: User
     
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -21,9 +21,9 @@ final class ConversationController: MessagesViewController {
     
     private var messages = [InstantMessage]()
     
-    init(userID: UInt64, conversation: Conversation) {
-        self.userID = userID
-        self.conversation = conversation
+    init(user: User, buddy: User) {
+        self.user = user
+        self.buddy = buddy
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,10 +34,11 @@ final class ConversationController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = conversation.username
+        title = "用户 \(buddy.userId)"
         
         setupCollectionView()
         setupInputBar()
+        Messenger.shared.addDelegate(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -85,7 +86,7 @@ extension ConversationController: MessagesDataSource {
     }
     
     func currentSender() -> Sender {
-        return Sender(id: "\(userID)", displayName: "我啊")
+        return Sender(id: "\(user.userId)", displayName: "我啊")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -99,7 +100,7 @@ extension ConversationController: MessagesDataSource {
         in messagesCollectionView: MessagesCollectionView) {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
-        let image: UIImage = message.sender.id == "\(userID)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
+        let image: UIImage = message.sender.id == "\(user.userId)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
         avatarView.set(avatar: Avatar(image: image))
     }
 }
@@ -137,17 +138,22 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        var from = userID
-        var to = conversation.userID
-        if arc4random() % 2 == 0 {
-            from = conversation.userID
-            to = userID
-        }
-        var message = InstantMessage(from: from, to: to, type: .text)
-        message.content = text
+        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
         messagesCollectionView.scrollToBottom()
+    }
+}
+
+extension ConversationController: MessengerDelegate {
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        
+    }
+    
+    func messengerDidReceiveMessage(_ message: InstantMessage) {
+        guard message.from == buddy.userId else { return }
+        self.messages.append(message)
+        messagesCollectionView.insertSections([self.messages.count - 1])
     }
 }

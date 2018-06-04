@@ -8,11 +8,11 @@
 
 import Foundation
 import Realm
-
 final class IMCoordinator: BaseCoordinator {
     private let factory: IMFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let user: User
     private let token: String
     private let storage: Storage
     private var isAvatarLoaded = false
@@ -20,13 +20,14 @@ final class IMCoordinator: BaseCoordinator {
     private var contactsCoordinator: ContactsCoordinator?
     private var inboxCoordinator: InboxCoordinator?
     
-    init(token: String,
-         storage: Storage,
+    init(user: User,
+         token: String,
          router: Router,
          factory: IMFlowFactory,
          coordinatorFactory: CoordinatorFactory) {
+        self.user = user
         self.token = token
-        self.storage = storage
+        self.storage = Storage(userID: user.userId)
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
@@ -43,7 +44,7 @@ extension IMCoordinator: IMViewDelegate {
     func imViewDidLoad() {
         var urlString: String?
         self.storage.read({ (realm) in
-            guard let user = realm.object(ofType: User.self, forPrimaryKey: self.storage.userID) else { return }
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self.storage.userID) else { return }
             urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
         }, callback: { [weak self] in
             guard let urlString = urlString else { return }
@@ -60,7 +61,9 @@ extension IMCoordinator: IMViewDelegate {
     }
     
     func imViewDidPressAvatarButton() {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                         userID: user.userId,
+                                                                         router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
@@ -73,8 +76,7 @@ extension IMCoordinator: IMViewDelegate {
             inboxCoordinator?.start()
             return
         }
-        let coordinator = coordinatorFactory
-            .makeInboxCoordinator(router: router, token: token, storage: storage)
+        let coordinator = coordinatorFactory.makeInboxCoordinator(user: user, router: router, token: token)
         coordinator.start(with: view)
         inboxCoordinator = coordinator
     }
@@ -82,13 +84,20 @@ extension IMCoordinator: IMViewDelegate {
     func imViewDidShowContacts(_ view: ContactsView) {
         guard contactsCoordinator == nil else { return }
         let coordinator = coordinatorFactory
-            .makeContactsCoordinator(router: router, token: token, storage: storage)
+            .makeContactsCoordinator(router: router, token: token, storage: storage, user: user)
         coordinator.start(with: view)
         contactsCoordinator = coordinator
     }
     
     private func showProfile(userID: UInt64) {
-        let profileView = factory.makeProfileOutput(userId: userID)
-        router.push(profileView)
+
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                         userID: userID,
+                                                                         router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

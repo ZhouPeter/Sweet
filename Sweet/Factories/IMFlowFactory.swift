@@ -11,5 +11,4 @@ import Foundation
 protocol IMFlowFactory {
     func makeIMView() -> IMView
     func makeContactSearchOutput() -> ContactSearchView
-    func makeProfileOutput(userId: UInt64) -> ProfileView
 }

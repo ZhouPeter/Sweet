@@ -9,16 +9,27 @@
 import Foundation
 
 struct InstantMessage {
-    var localID = UUID()
-    var remoteID: UInt64 = 0
+    var localID = UUID().uuidString
+    var remoteID: UInt64?
     var from: UInt64 = 0
-    var fromName = ""
+    var fromName: String?
     var to: UInt64 = 0
     var type: IMType = .unknown
     var content: String = String()
     var status: UInt32 = 0
     var createDate = Date()
     var sentDate = Date()
+    var isSent = false
+    var isRead = false
+    
+    var displayText: String {
+        switch type {
+        case .text:
+            return content
+        default:
+            return "[未知消息]"
+        }
+    }
     
     init() {}
     
@@ -51,5 +62,22 @@ extension InstantMessage {
         status = proto.status
         createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
         sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
+    }
+    
+    init(_ data: InstantMessageData) {
+        localID = data.localID
+        if let value = data.remoteID.value {
+            remoteID = UInt64(value)
+        }
+        from = UInt64(data.from)
+        fromName = data.fromName
+        to = UInt64(data.to)
+        type = IMType(rawValue: data.type) ?? .unknown
+        content = data.content
+        status = UInt32(data.status)
+        createDate = data.createDate
+        sentDate = data.sentDate
+        isSent = data.isSent
+        isRead = data.isRead
     }
 }
