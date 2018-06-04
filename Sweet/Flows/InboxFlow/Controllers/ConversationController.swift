@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageKit
+import Kingfisher
 
 final class ConversationController: MessagesViewController {
     private let user: User
@@ -125,8 +126,8 @@ extension ConversationController: MessagesDataSource {
         in messagesCollectionView: MessagesCollectionView) {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
-        let image: UIImage = message.sender.id == "\(user.userId)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
-        avatarView.set(avatar: Avatar(image: image))
+        let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
+        avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
 }
 
