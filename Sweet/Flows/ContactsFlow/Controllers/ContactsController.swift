@@ -62,7 +62,7 @@ class ContactsController: BaseViewController, ContactsView {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(tableView)
-        tableView.fill(in: view, left: 0, right: 0, top: 0, bottom: UIScreen.safeBottomMargin())
+        tableView.fill(in: view, top: UIScreen.navBarHeight(), bottom: UIScreen.safeBottomMargin())
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         } else {
