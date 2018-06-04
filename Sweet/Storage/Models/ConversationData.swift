@@ -9,13 +9,19 @@
 import RealmSwift
 
 class ConversationData: Object {
+    @objc dynamic var userID: Int64 = 0
     @objc dynamic var user: UserData?
     @objc dynamic var date = Date()
     @objc dynamic var unreadCount = 0
     @objc dynamic var lastMessage: InstantMessageData?
     
+    override static func primaryKey() -> String? {
+        return "userID"
+    }
+    
     class func data(with conversation: Conversation) {
         let data = ConversationData()
+        data.userID = Int64(conversation.user.userId)
         data.user = UserData.data(with: conversation.user)
         data.unreadCount = conversation.unreadCount
         if let message = conversation.lastMessage {

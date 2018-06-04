@@ -20,7 +20,7 @@ struct Conversation {
         self.unreadCount = unreadCount
     }
     
-    init?(_ data: ConversationData) {
+    init?(data: ConversationData) {
         guard let userData = data.user else { return nil }
         user = User.init(data: userData)
         unreadCount = data.unreadCount

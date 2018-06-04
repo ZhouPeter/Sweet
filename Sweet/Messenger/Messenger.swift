@@ -52,7 +52,6 @@ final class Messenger {
         return service
     }
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
-    private var conversations = [Conversation]()
     private var storage: Storage?
     
     private init() {
@@ -97,15 +96,28 @@ final class Messenger {
     }
     
     func getUserInfo(with userID: UInt64) {
-        getUserInfoList(with: [userID]) { (response) in
-            logger.debug(response)
+        getUserInfoList(with: [userID]) { (userList) in
+            logger.debug(userList)
         }
     }
     
-    func getUserInfoList(with userIDs: [UInt64], callback: @escaping (UserInfoGetResp?) -> Void) {
+    func getUserInfoList(with userIDs: [UInt64], callback: @escaping ([User]) -> Void) {
         var request = UserInfoGetReq()
         request.userIDList = userIDs
-        send(request, responseType: UserInfoGetResp.self, callback: callback)
+        send(request, responseType: UserInfoGetResp.self, callback: { response in
+            var userList = [User]()
+            guard let response = response else {
+                callback(userList)
+                return
+            }
+            self.storage?.write({ (realm) in
+                let users = response.userInfoList.map(UserData.init)
+                userList = users.map(User.init)
+                realm.add(users, update: true)
+            }, callback: { (_) in
+                callback(userList)
+            })
+        })
     }
     
     // MARK: - Messages
@@ -161,8 +173,8 @@ final class Messenger {
     }
     
     func removeConversation(userID: UInt64) {
-        guard let index = conversations.index(where: { $0.user.userId == userID }) else { return }
-        conversations.remove(at: index)
+//        guard let index = conversations.index(where: { $0.user.userId == userID }) else { return }
+//        conversations.remove(at: index)
     }
     
     // MARK: - Private
@@ -172,7 +184,12 @@ final class Messenger {
         request.msgIDList = IDs
         send(request, responseType: GetResp.self) { (response) in
             guard let response = response else { return }
-            callback(response.msgList.map(InstantMessage.init))
+            let messages = response.msgList.map(InstantMessage.init)
+            self.storage?.write({ (realm) in
+                realm.add(messages.map(InstantMessageData.init), update: true)
+            }, callback: { (_) in
+                callback(messages)
+            })
         }
     }
     
@@ -190,6 +207,7 @@ final class Messenger {
             guard let notify = note else { return }
             self.getMessages(with: [notify.msgID], callback: { (messages) in
                 guard let message = messages.first else { return }
+                self.updateUserConversations(with: [message.from])
                 self.multicastDelegate.invoke({ $0.messengerDidReceiveMessage(message) })
             })
         }
@@ -214,13 +232,55 @@ final class Messenger {
     
     private func updateUserConversations(with userIDs: [UInt64]) {
         guard userIDs.isNotEmpty else { return }
-        
+        var conversations = [Conversation]()
+        var userIDsNotSaved = [UInt64]()
         storage?.write({ (realm) in
-            
-        }, callback: { (_) in
-            
+            userIDs.forEach({ (userID) in
+                if let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) {
+                    let results = realm.objects(InstantMessageData.self).filter("from = \(userID)")
+                        .sorted(byKeyPath: "sentDate")
+                    if let conversationData = realm
+                        .object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
+                        if let messageData = results.last {
+                            conversationData.lastMessage = messageData
+                            conversationData.date = messageData.sentDate
+                            if messageData.isRead == false {
+                                conversationData.unreadCount += 1
+                            }
+                            conversations.append(Conversation(data: conversationData)!)
+                        } else {
+                            logger.error("Message not written for user \(userID)")
+                        }
+                    } else {
+                        let conversationData = ConversationData()
+                        conversationData.userID = userData.userID
+                        conversationData.user = userData
+                        if let last = results.last {
+                            results.forEach({ (data) in
+                                if data.isRead == false {
+                                    conversationData.unreadCount += 1
+                                }
+                            })
+                            conversationData.lastMessage = last
+                            conversationData.date = last.sentDate
+                            conversations.append(Conversation(data: conversationData)!)
+                        } else {
+                            logger.error("Message not written for user \(userID)")
+                        }
+                    }
+                } else {
+                    userIDsNotSaved.append(userID)
+                }
+            })
+        }, callback: { _ in
+            logger.debug("conversations: \(conversations)", "userIdsNotSaved \(userIDsNotSaved)")
+            if userIDsNotSaved.isNotEmpty {
+                self.getUserInfoList(with: userIDsNotSaved, callback: { (users) in
+                    self.updateUserConversations(with: users.map({ $0.userId }))
+                })
+            }
+            self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
         })
-        multicastDelegate.invoke({ $0.messengerDidUpdateConversations(self.conversations) })
     }
     
     private func startNetworkReachabilityObserver() {
