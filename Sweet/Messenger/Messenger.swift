@@ -111,7 +111,7 @@ final class Messenger {
                 return
             }
             self.storage?.write({ (realm) in
-                let users = response.userInfoList.map(UserData.init)
+                let users = response.userInfoList.map(UserData.data(with:))
                 userList = users.map(User.init)
                 realm.add(users, update: true)
             }, callback: { (_) in
@@ -138,6 +138,7 @@ final class Messenger {
             return
         }
         let request = message.makeSendRequest()
+        saveMessages([message])
         send(request, responseType: SendResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
@@ -148,7 +149,9 @@ final class Messenger {
             messageSent.sentDate = Date()
             messageSent.isSent = true
             self.serverDate = Date(timeIntervalSince1970: Double(response.timestamp) / 1000)
-            self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
+            self.saveMessages([message], callback: {
+                self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
+            })
         }
     }
     
@@ -215,18 +218,23 @@ final class Messenger {
             .addHandler(ModuleID.message.rawValue, commandId: MsgCmdID.notify.rawValue, handler: handler)
     }
     
-    private func saveMessages(_ messages: [InstantMessage], callback: @escaping () -> Void) {
+    private func saveMessages(_ messages: [InstantMessage], callback: (() -> Void)? = nil) {
+        guard let userID = user?.userId else {
+            logger.warning("User is nil")
+            return
+        }
         var userIDs = Set<UInt64>()
         storage?.write({ (realm) in
             var dataArray = [InstantMessageData]()
             messages.forEach({ (message) in
+                logger.debug(message)
                 dataArray.append(InstantMessageData.data(with: message))
-                userIDs.insert(message.from)
+                userIDs.insert(message.from == userID ? message.to : message.from)
             })
-            realm.add(dataArray)
+            realm.add(dataArray, update: true)
         }, callback: { (_) in
             self.updateUserConversations(with: Array(userIDs))
-            callback()
+            callback?()
         })
     }
     
@@ -237,7 +245,7 @@ final class Messenger {
         storage?.write({ (realm) in
             userIDs.forEach({ (userID) in
                 if let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) {
-                    let results = realm.objects(InstantMessageData.self).filter("from = \(userID)")
+                    let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
                         .sorted(byKeyPath: "sentDate")
                     if let conversationData = realm
                         .object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {

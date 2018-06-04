@@ -34,7 +34,7 @@ final class ConversationController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = user.nickname
+        title = buddy.nickname
         
         setupCollectionView()
         setupInputBar()
