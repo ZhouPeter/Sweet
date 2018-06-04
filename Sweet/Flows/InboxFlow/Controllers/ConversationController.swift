@@ -34,7 +34,7 @@ final class ConversationController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = "用户 \(buddy.userId)"
+        title = user.nickname
         
         setupCollectionView()
         setupInputBar()
@@ -86,7 +86,7 @@ extension ConversationController: MessagesDataSource {
     }
     
     func currentSender() -> Sender {
-        return Sender(id: "\(user.userId)", displayName: "我啊")
+        return Sender(id: "\(user.userId)", displayName: user.nickname)
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {

@@ -186,7 +186,7 @@ final class Messenger {
             guard let response = response else { return }
             let messages = response.msgList.map(InstantMessage.init)
             self.storage?.write({ (realm) in
-                realm.add(messages.map(InstantMessageData.init), update: true)
+                realm.add(messages.map(InstantMessageData.data(with:)), update: true)
             }, callback: { (_) in
                 callback(messages)
             })
@@ -223,7 +223,7 @@ final class Messenger {
                 dataArray.append(InstantMessageData.data(with: message))
                 userIDs.insert(message.from)
             })
-            realm.add(messages.map(InstantMessageData.init))
+            realm.add(dataArray)
         }, callback: { (_) in
             self.updateUserConversations(with: Array(userIDs))
             callback()
