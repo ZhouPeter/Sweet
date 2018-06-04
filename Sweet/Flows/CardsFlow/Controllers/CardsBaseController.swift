@@ -644,8 +644,15 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
                 switch result {
                 case .success:
                     guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
+                    let storys = self.cards[index].storyList![storyGroupIndex]
+                    var newStorys = [StoryResponse]()
+                    for var story in storys {
+                        story.read = true
+                        newStorys.append(story)
+                    }
+                    self.cards[index].storyList![storyGroupIndex] = newStorys
                     var viewModel = StoriesCardViewModel(model: self.cards[index])
-                    viewModel.isReads[storyGroupIndex] = true
+                    viewModel.storyCellModels[storyGroupIndex].isRead = true
                     let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
                     self.cellConfigurators[index] = configurator
                     self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
