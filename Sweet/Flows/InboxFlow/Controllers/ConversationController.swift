@@ -32,6 +32,7 @@ final class ConversationController: MessagesViewController {
         
         setupCollectionView()
         setupInputBar()
+        Messenger.shared.startConversation(userID: buddy.userId)
         Messenger.shared.addDelegate(self)
         Messenger.shared.loadMessages(from: buddy)
     }
@@ -42,6 +43,11 @@ final class ConversationController: MessagesViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+    }
+    
+    deinit {
+        logger.debug()
+        Messenger.shared.endConversation(userID: buddy.userId)
     }
     
     // MARK: - Private

@@ -55,6 +55,7 @@ final class Messenger {
     }
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var storage: Storage?
+    private var conversationUserID: UInt64?
     
     private init() {
         startNetworkReachabilityObserver()
@@ -246,6 +247,24 @@ final class Messenger {
         }
     }
     
+    func startConversation(userID: UInt64) {
+        conversationUserID = userID
+    }
+    
+    func endConversation(userID: UInt64) {
+        conversationUserID = nil
+    }
+    
+    func markConversationAsRead(userID: UInt64) {
+        storage?.write({ (realm) in
+            realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID))?.unreadCount = 0
+            realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
+                .forEach({ $0.isRead = true })
+        }, callback: { (_) in
+            self.updateUserConversations(with: [userID])
+        })
+    }
+    
     // MARK: - Private
     
     private func getMessages(with IDs: [UInt64], callback: @escaping ([InstantMessage]) -> Void) {
@@ -253,7 +272,13 @@ final class Messenger {
         request.msgIDList = IDs
         send(request, responseType: GetResp.self) { (response) in
             guard let response = response else { return }
-            let messages = response.msgList.map(InstantMessage.init)
+            let messages: [InstantMessage] = response.msgList.map({ proto in
+                var message = InstantMessage(proto: proto)
+                if let userID = self.conversationUserID, message.from == userID {
+                    message.isRead = true
+                }
+                return message
+            })
             self.storage?.write({ (realm) in
                 realm.add(messages.map(InstantMessageData.data(with:)), update: true)
             }, callback: { (_) in
@@ -309,7 +334,7 @@ final class Messenger {
     }
     
     private func updateUserConversations(with userIDs: [UInt64]) {
-        guard userIDs.isNotEmpty else { return }
+        guard userIDs.isNotEmpty, let myID = user?.userId else { return }
         var conversations = [Conversation]()
         var userIDsNotSaved = [UInt64]()
         storage?.write({ (realm) in
@@ -322,7 +347,7 @@ final class Messenger {
                         if let messageData = results.last {
                             conversationData.lastMessage = messageData
                             conversationData.date = messageData.sentDate
-                            if messageData.isRead == false {
+                            if messageData.isRead == false && messageData.to == myID {
                                 conversationData.unreadCount += 1
                             }
                             conversations.append(Conversation(data: conversationData)!)
@@ -335,7 +360,7 @@ final class Messenger {
                         conversationData.user = userData
                         if let last = results.last {
                             results.forEach({ (data) in
-                                if data.isRead == false {
+                                if data.isRead == false && data.to == Int(myID) {
                                     conversationData.unreadCount += 1
                                 }
                             })
