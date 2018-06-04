@@ -9,10 +9,9 @@
 import Foundation
 
 struct  ProfileResponse: Codable {
-    
     let userProfile: UserResponse
-    
 }
+
 struct UserResponse: Codable {
     let userId: UInt64
     var nickname: String
@@ -27,4 +26,18 @@ struct UserResponse: Codable {
     var subscription: Bool
     var blacklist: Bool
     var block: Bool
+}
+
+extension User {
+    init(_ response: UserResponse) {
+        userId = response.userId
+        nickname = response.nickname
+        avatar = response.avatar
+        enrollment = response.enrollment
+        gender = response.gender
+        phone = response.phone
+        signature = response.signature
+        collegeName = response.collegeName
+        universityName = response.universityName
+    }
 }

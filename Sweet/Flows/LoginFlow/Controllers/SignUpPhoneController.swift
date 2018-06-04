@@ -176,7 +176,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     Defaults[.userID] = "\(response.user.userId)"
                     self.storage = Storage(userID: response.user.userId)
                     self.storage?.write({ (realm) in
-                        let user = User()
+                        let user = UserData()
                         user.userID = Int64(response.user.userId)
                         user.university = response.user.universityName
                         user.college = response.user.collegeName

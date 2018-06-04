@@ -13,6 +13,7 @@ final class IMCoordinator: BaseCoordinator {
     private let factory: IMFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let user: User
     private let token: String
     private let storage: Storage
     private var isAvatarLoaded = false
@@ -20,13 +21,14 @@ final class IMCoordinator: BaseCoordinator {
     private var contactsCoordinator: ContactsCoordinator?
     private var inboxCoordinator: InboxCoordinator?
     
-    init(token: String,
-         storage: Storage,
+    init(user: User,
+         token: String,
          router: Router,
          factory: IMFlowFactory,
          coordinatorFactory: CoordinatorFactory) {
+        self.user = user
         self.token = token
-        self.storage = storage
+        self.storage = Storage(userID: user.userId)
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
@@ -43,7 +45,7 @@ extension IMCoordinator: IMViewDelegate {
     func imViewDidLoad() {
         var urlString: String?
         self.storage.read({ (realm) in
-            guard let user = realm.object(ofType: User.self, forPrimaryKey: self.storage.userID) else { return }
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self.storage.userID) else { return }
             urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
         }, callback: { [weak self] in
             guard let urlString = urlString else { return }
@@ -73,8 +75,7 @@ extension IMCoordinator: IMViewDelegate {
             inboxCoordinator?.start()
             return
         }
-        let coordinator = coordinatorFactory
-            .makeInboxCoordinator(router: router, token: token, storage: storage)
+        let coordinator = coordinatorFactory.makeInboxCoordinator(user: user, router: router, token: token)
         coordinator.start(with: view)
         inboxCoordinator = coordinator
     }

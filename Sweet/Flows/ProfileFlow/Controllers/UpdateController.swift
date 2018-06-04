@@ -32,8 +32,8 @@ class UpdateController: BaseViewController, UpdateView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let userID = user?.userId {
-            storage = Storage(userID: userID)
+        if let user = user {
+            storage = Storage(userID: user.userId)
         }
         navigationItem.title = "修改资料"
         view.addSubview(tableView)
@@ -48,14 +48,14 @@ class UpdateController: BaseViewController, UpdateView {
     private func writeUserData() {
         guard let user = user else { return }
         storage?.write({ (realm) in
-            if let userData = realm.object(ofType: User.self, forPrimaryKey: Int64(user.userId)) {
+            if let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(user.userId)) {
                 userData.avatarURLString = user.avatar
                 userData.nickname = user.nickname
-                userData.gender = Int64(user.gender.rawValue)
+                userData.gender = user.gender.rawValue
                 userData.signature = user.signature
                 userData.university = user.universityName
                 userData.college =  user.collegeName
-                userData.enrollment = Int64(user.enrollment)
+                userData.enrollment = user.enrollment
                 userData.phone = user.phone
                 realm.add(userData, update: true)
             }

@@ -612,10 +612,10 @@
 		AC2A259C20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
 		AC2A259D20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
 		AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
-		AC2F978720904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
-		AC2F978820904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
-		AC2F978920904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
-		AC2F978A20904A9900D5DE4F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* User.swift */; };
+		AC2F978720904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
+		AC2F978820904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
+		AC2F978920904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
+		AC2F978A20904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
 		AC2F978C20904F8000D5DE4F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978B20904F8000D5DE4F /* Storage.swift */; };
 		AC2F978D20904F8000D5DE4F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978B20904F8000D5DE4F /* Storage.swift */; };
 		AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978B20904F8000D5DE4F /* Storage.swift */; };
@@ -764,6 +764,18 @@
 		AC85299620B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
 		AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
 		AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
+		AC86A93220C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
+		AC86A93320C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
+		AC86A93420C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
+		AC86A93520C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
+		AC86A93920C4051400334D4A /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93820C4051400334D4A /* ConversationData.swift */; };
+		AC86A93A20C4051400334D4A /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93820C4051400334D4A /* ConversationData.swift */; };
+		AC86A93B20C4051400334D4A /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93820C4051400334D4A /* ConversationData.swift */; };
+		AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93820C4051400334D4A /* ConversationData.swift */; };
+		AC86A93E20C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
+		AC86A93F20C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
+		AC86A94020C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
+		AC86A94120C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
 		AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
 		AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
 		AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
@@ -948,10 +960,6 @@
 		ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
 		ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
 		ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
-		ACF2DEB42089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
-		ACF2DEB52089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
-		ACF2DEB62089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
-		ACF2DEB72089C63100660425 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB32089C63100660425 /* Gender.swift */; };
 		ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
@@ -1265,7 +1273,7 @@
 		AC2A258420BD2B9F00A82E62 /* Base.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.pb.swift; sourceTree = "<group>"; };
 		AC2A258520BD2B9F00A82E62 /* User.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.pb.swift; sourceTree = "<group>"; };
 		AC2A258620BD2B9F00A82E62 /* General.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.pb.swift; sourceTree = "<group>"; };
-		AC2F978620904A9900D5DE4F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AC2F978620904A9900D5DE4F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
@@ -1304,6 +1312,9 @@
 		AC84121C2088B0E60086891C /* SignPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignPlugin.swift; sourceTree = "<group>"; };
 		AC8412212088B1DE0086891C /* Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signer.swift; sourceTree = "<group>"; };
 		AC85299420B3BA41002358FE /* StoryRecordTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordTopView.swift; sourceTree = "<group>"; };
+		AC86A93120C3F2C000334D4A /* InstantMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessageData.swift; sourceTree = "<group>"; };
+		AC86A93820C4051400334D4A /* ConversationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
+		AC86A93D20C4DC3F00334D4A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AC8EA9E120ABF43D0033615D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSwitchView.swift; sourceTree = "<group>"; };
 		AC8EA9EB20AC03500033615D /* TextGradientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGradientController.swift; sourceTree = "<group>"; };
@@ -1367,7 +1378,6 @@
 		ACE560B4209984A000CE2564 /* StoryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditView.swift; sourceTree = "<group>"; };
 		ACF1A70B20919FDF0046BF21 /* ShootButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootButton.swift; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
-		ACF2DEB32089C63100660425 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ACF2DEC22089E58D00660425 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -1705,7 +1715,9 @@
 		AC2F978520904A8B00D5DE4F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AC2F978620904A9900D5DE4F /* User.swift */,
+				AC2F978620904A9900D5DE4F /* UserData.swift */,
+				AC86A93120C3F2C000334D4A /* InstantMessageData.swift */,
+				AC86A93820C4051400334D4A /* ConversationData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2102,7 +2114,7 @@
 		ACF2DEAD2089C5C400660425 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				ACF2DEB32089C63100660425 /* Gender.swift */,
+				AC86A93D20C4DC3F00334D4A /* User.swift */,
 				ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */,
 				ACF2DEB82089E02F00660425 /* LoginResponse.swift */,
 				ACF2DEBD2089E04F00660425 /* Response.swift */,
@@ -2656,6 +2668,7 @@
 				AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				AC2A258B20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
+				AC86A93920C4051400334D4A /* ConversationData.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
@@ -2707,6 +2720,7 @@
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
+				AC86A93220C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
@@ -2738,6 +2752,7 @@
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F120AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				AC86A93E20C4DC3F00334D4A /* User.swift in Sources */,
 				58BD52FE208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				58EA104A20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
@@ -2801,7 +2816,7 @@
 				ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				AC2F978720904A9900D5DE4F /* User.swift in Sources */,
+				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -2824,7 +2839,6 @@
 				AC557CA820B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACDB24E720BED0DE0039368E /* ConversationCell.swift in Sources */,
-				ACF2DEB42089C63100660425 /* Gender.swift in Sources */,
 				AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				AC557CAD20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
@@ -2919,7 +2933,6 @@
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EA20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				5803571320AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
-				ACF2DEB62089C63100660425 /* Gender.swift in Sources */,
 				AC557CAF20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC45CD8A20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -2933,6 +2946,7 @@
 				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
+				AC86A93420C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -2998,6 +3012,7 @@
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				AC86A93B20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B49209C2E07004C2FFE /* ContactsController.swift in Sources */,
@@ -3008,8 +3023,9 @@
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC2F978920904A9900D5DE4F /* User.swift in Sources */,
+				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
 				5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				AC86A94020C4DC3F00334D4A /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
@@ -3145,7 +3161,6 @@
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				5803571420AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
-				ACF2DEB72089C63100660425 /* Gender.swift in Sources */,
 				AC557CB020B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC45CD8B20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				5843DA4E209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -3159,6 +3174,7 @@
 				ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
+				AC86A93520C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -3224,6 +3240,7 @@
 				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */,
@@ -3234,8 +3251,9 @@
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259220BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC2F978A20904A9900D5DE4F /* User.swift in Sources */,
+				AC2F978A20904A9900D5DE4F /* UserData.swift in Sources */,
 				5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				AC86A94120C4DC3F00334D4A /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
@@ -3378,6 +3396,7 @@
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC2A258C20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
+				AC86A93A20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */,
@@ -3429,6 +3448,7 @@
 				AC45CD6D20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
+				AC86A93320C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58BD52F2208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
@@ -3460,6 +3480,7 @@
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
+				AC86A93F20C4DC3F00334D4A /* User.swift in Sources */,
 				58BD52FF208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				58EA104B20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,
@@ -3523,7 +3544,7 @@
 				ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				AC2F978820904A9900D5DE4F /* User.swift in Sources */,
+				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -3546,7 +3567,6 @@
 				AC557CA920B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACDB24E820BED0DE0039368E /* ConversationCell.swift in Sources */,
-				ACF2DEB52089C63100660425 /* Gender.swift in Sources */,
 				AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
@@ -3767,7 +3787,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3788,7 +3811,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -3808,7 +3834,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3829,7 +3859,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -3848,7 +3882,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3868,7 +3906,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -3894,7 +3936,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -3921,7 +3966,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

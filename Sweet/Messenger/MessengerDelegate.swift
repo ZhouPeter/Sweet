@@ -9,8 +9,8 @@
 import Foundation
 
 protocol MessengerDelegate: class {
-    func messengerDidLogin(userID: UInt64, success: Bool)
-    func messengerDidLogout(userID: UInt64)
+    func messengerDidLogin(user: User, success: Bool)
+    func messengerDidLogout(user: User)
     func messengerDidUpdateState(_ state: MessengerState)
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool)
     func messengerDidUpdateServerDate(_ serverDate: Date?)
@@ -19,8 +19,8 @@ protocol MessengerDelegate: class {
 }
 
 extension MessengerDelegate {
-    func messengerDidLogin(userID: UInt64, success: Bool) {}
-    func messengerDidLogout(userID: UInt64) {}
+    func messengerDidLogin(user: User, success: Bool) {}
+    func messengerDidLogout(user: User) {}
     func messengerDidUpdateState(_ state: MessengerState) {}
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {}
     func messengerDidUpdateServerDate(_ date: Date?) {}

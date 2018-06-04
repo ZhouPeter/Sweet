@@ -10,8 +10,8 @@ import UIKit
 import MessageKit
 
 final class ConversationController: MessagesViewController {
-    private let userID: UInt64
-    private let buddyID: UInt64
+    private let user: User
+    private let buddy: User
     
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -21,9 +21,9 @@ final class ConversationController: MessagesViewController {
     
     private var messages = [InstantMessage]()
     
-    init(userID: UInt64, buddyID: UInt64) {
-        self.userID = userID
-        self.buddyID = buddyID
+    init(user: User, buddy: User) {
+        self.user = user
+        self.buddy = buddy
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,7 +34,7 @@ final class ConversationController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = "用户 \(buddyID)"
+        title = "用户 \(buddy.userId)"
         
         setupCollectionView()
         setupInputBar()
@@ -86,7 +86,7 @@ extension ConversationController: MessagesDataSource {
     }
     
     func currentSender() -> Sender {
-        return Sender(id: "\(userID)", displayName: "我啊")
+        return Sender(id: "\(user.userId)", displayName: "我啊")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -100,7 +100,7 @@ extension ConversationController: MessagesDataSource {
         in messagesCollectionView: MessagesCollectionView) {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
-        let image: UIImage = message.sender.id == "\(userID)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
+        let image: UIImage = message.sender.id == "\(user.userId)" ? #imageLiteral(resourceName: "Avatar") : #imageLiteral(resourceName: "Logo")
         avatarView.set(avatar: Avatar(image: image))
     }
 }
@@ -138,7 +138,7 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        let message = Messenger.shared.sendText(text, from: userID, to: buddyID)
+        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
@@ -152,7 +152,7 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
-        guard message.from == buddyID else { return }
+        guard message.from == buddy.userId else { return }
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
     }

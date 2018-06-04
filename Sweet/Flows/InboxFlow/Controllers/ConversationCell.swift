@@ -53,11 +53,9 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     func updateWith(_ conversation: Conversation) {
-        if let urlString = conversation.avatarURLString {
-            avatarImageView.kf.setImage(with: URL(string: urlString))
-        }
-        nameLabel.text = conversation.username
-        contentLabel.text = conversation.content
+        avatarImageView.kf.setImage(with: URL(string: conversation.user.avatar))
+        nameLabel.text = conversation.user.nickname
+        contentLabel.text = conversation.lastMessage?.displayText
     }
     
     private func setup() {

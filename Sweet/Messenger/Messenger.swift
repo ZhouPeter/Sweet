@@ -34,13 +34,13 @@ final class Messenger {
     }
     private(set) var isNetworkReachable = false {
         didSet {
-            if isNetworkReachable && userID != nil && token != nil {
+            if isNetworkReachable && user != nil && token != nil {
                 connect()
             }
         }
     }
     private var multicastDelegate = MulticastDelegate<MessengerDelegate>()
-    private var userID: UInt64?
+    private var user: User?
     private var token: String?
     private var serverDate: Date? {
         didSet {
@@ -53,6 +53,7 @@ final class Messenger {
     }
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var conversations = [Conversation]()
+    private var storage: Storage?
     
     private init() {
         startNetworkReachabilityObserver()
@@ -68,8 +69,9 @@ final class Messenger {
         multicastDelegate.removeDelegate(delegate)
     }
     
-    func login(with userID: UInt64, token: String) {
-        self.userID = userID
+    func login(with user: User, token: String) {
+        self.user = user
+        storage = Storage(userID: user.userId)
         self.token = token
         guard isNetworkReachable else {
             logger.debug("Waiting network")
@@ -83,13 +85,14 @@ final class Messenger {
     }
     
     func logout() {
-        guard let userID = self.userID else { return }
-        self.userID = nil
+        guard let user = self.user else { return }
+        self.user = nil
+        storage = nil
         token = nil
         state = .offline
         service.stop {
             logger.debug("Service stopped")
-            self.multicastDelegate.invoke({ $0.messengerDidLogout(userID: userID) })
+            self.multicastDelegate.invoke({ $0.messengerDidLogout(user: user) })
         }
     }
     
@@ -131,6 +134,7 @@ final class Messenger {
             var messageSent = message
             messageSent.remoteID = response.msgID
             messageSent.sentDate = Date()
+            messageSent.isSent = true
             self.serverDate = Date(timeIntervalSince1970: Double(response.timestamp) / 1000)
             self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
         }
@@ -140,17 +144,24 @@ final class Messenger {
     
     func loadConversations() {
         logger.debug()
-        guard let userID = userID, state == .online else { return }
+        guard let userID = user?.userId, state == .online else { return }
         var request = RecentGetReq()
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            self.updateConversations(with: response.msgList.map(InstantMessage.init))
+            self.saveMessages(response.msgList.map(InstantMessage.init), callback: {
+                var conversations = [Conversation]()
+                self.storage?.read({ (realm) in
+                    conversations = realm.objects(ConversationData.self).compactMap(Conversation.init)
+                }, callback: {
+                    self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
+                })
+            })
         }
     }
     
     func removeConversation(userID: UInt64) {
-        guard let index = conversations.index(where: { $0.userID == userID }) else { return }
+        guard let index = conversations.index(where: { $0.user.userId == userID }) else { return }
         conversations.remove(at: index)
     }
     
@@ -186,17 +197,29 @@ final class Messenger {
             .addHandler(ModuleID.message.rawValue, commandId: MsgCmdID.notify.rawValue, handler: handler)
     }
     
-    private func updateConversations(with messages: [InstantMessage]) {
-        let date = Date()
-        for index in 1...20 {
-            var conversation = Conversation(
-                userID: 13,
-                username: "\(index + 1000)",
-                date: Date(timeInterval: TimeInterval(index * 63), since: date)
-            )
-            conversation.content = "测试消息第 \(index) 条"
-            conversations.append(conversation)
-        }
+    private func saveMessages(_ messages: [InstantMessage], callback: @escaping () -> Void) {
+        var userIDs = Set<UInt64>()
+        storage?.write({ (realm) in
+            var dataArray = [InstantMessageData]()
+            messages.forEach({ (message) in
+                dataArray.append(InstantMessageData.data(with: message))
+                userIDs.insert(message.from)
+            })
+            realm.add(messages.map(InstantMessageData.init))
+        }, callback: { (_) in
+            self.updateUserConversations(with: Array(userIDs))
+            callback()
+        })
+    }
+    
+    private func updateUserConversations(with userIDs: [UInt64]) {
+        guard userIDs.isNotEmpty else { return }
+        
+        storage?.write({ (realm) in
+            
+        }, callback: { (_) in
+            
+        })
         multicastDelegate.invoke({ $0.messengerDidUpdateConversations(self.conversations) })
     }
     
@@ -215,8 +238,8 @@ final class Messenger {
     }
     
     private func connect() {
-        guard let userID = self.userID else {
-            logger.debug("userID is nil")
+        guard let user = self.user else {
+            logger.debug("user is nil")
             return
         }
         state = .connecting
@@ -239,23 +262,23 @@ final class Messenger {
                         self.state = .offline
                     }
                     self.listenMessageNotify()
-                    self.multicastDelegate.invoke({ $0.messengerDidLogin(userID: userID, success: date != nil) })
+                    self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
                 })
             })
         }
     }
     
     private func login(_ callback: @escaping (Date?) -> Void) {
-        guard let userID = self.userID, let token = self.token else {
-            logger.debug("User info is nil")
+        guard let user = self.user, let token = self.token else {
+            logger.debug("User is nil")
             callback(nil)
             return
         }
         var message = LoginReq()
-        message.userID = userID
+        message.userID = user.userId
         let timestamp = Date().timestamp()
         message.timestamp = timestamp
-        message.signature = "timestamp=\(timestamp)&token=\(token)&user_id=\(userID)&secret=\(secret)".md5
+        message.signature = "timestamp=\(timestamp)&token=\(token)&user_id=\(user.userId)&secret=\(secret)".md5
         message.token = token
         message.type = .ios
         message.state = .online

@@ -47,8 +47,8 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runOnboardingFlow()
             case .auth:
                 runAuthFlow()
-            case let .main(userID, token):
-                runMainFlow(userID: userID, token: token)
+            case let .main(user, token):
+                runMainFlow(user: user, token: token)
             }
         }
     }
@@ -90,9 +90,9 @@ final class ApplicationCoordinator: BaseCoordinator {
         coordinator.start()
     }
     
-    private func runMainFlow(userID: UInt64, token: String) {
+    private func runMainFlow(user: User, token: String) {
         logger.debug()
-        let (coordinator, flow) = coordinatorFactory.makeMainCoordinator(userID: userID, token: token)
+        let (coordinator, flow) = coordinatorFactory.makeMainCoordinator(user: user, token: token)
         addDependency(coordinator)
         router.setRootFlow(flow)
         coordinator.start()
@@ -100,7 +100,7 @@ final class ApplicationCoordinator: BaseCoordinator {
 }
 
 private enum LaunchInstructor {
-    case main(userID: UInt64, token: String)
+    case main(user: User, token: String)
     case auth
     case onboarding
     
@@ -112,6 +112,10 @@ private enum LaunchInstructor {
         guard let IDString = Defaults[.userID], let userID = UInt64(IDString), let token = Defaults[.token] else {
             return .auth
         }
-        return .main(userID: userID, token: token)
+        if let data = Storage(userID: userID).realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) {
+            let user = User(data: data)
+            return .main(user: user, token: token)
+        }
+        return .auth
     }
 }

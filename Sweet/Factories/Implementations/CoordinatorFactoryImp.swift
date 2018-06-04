@@ -28,10 +28,10 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return AuthCoordinator(with: FlowFactoryImp(), router: router)
     }
     
-    func makeMainCoordinator(userID: UInt64, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
+    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
         let controller = MainController()
         let coordinator = MainCoordinator(
-            userID: userID,
+            user: user,
             token: token,
             mainView: controller,
             coordinatorFactory: CoordinatorFactoryImp()
@@ -40,12 +40,12 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     }
     
     func makeIMCoordinator(
+        user: User,
         token: String,
-        storage: Storage,
         navigation: UINavigationController?) -> Coordinator {
         return IMCoordinator(
+            user: user,
             token: token,
-            storage: storage,
             router: makeRouter(with: navigation),
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()
@@ -92,10 +92,10 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         )
     }
     
-    func makeInboxCoordinator(router: Router, token: String, storage: Storage) -> InboxCoordinator {
+    func makeInboxCoordinator(user: User, router: Router, token: String) -> InboxCoordinator {
         return InboxCoordinator(
+            user: user,
             token: token,
-            storage: storage,
             router: router,
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()
