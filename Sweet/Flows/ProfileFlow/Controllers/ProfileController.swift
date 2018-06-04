@@ -108,7 +108,9 @@ extension ProfileController {
     }
     
     @objc private func menuAction(sender: UIButton) {
-        guard let userId = userResponse?.userId, let blacklist = userResponse?.blacklist, let block = userResponse?.block else { return }
+        guard let userId = userResponse?.userId,
+            let blacklist = userResponse?.blacklist,
+            let block = userResponse?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let shieldAction = UIAlertAction(
             title: block ? "取消屏蔽" : "屏蔽他/她的来源",

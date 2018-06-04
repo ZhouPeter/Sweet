@@ -68,9 +68,11 @@ class ContactsController: BaseViewController, ContactsView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadContacts()
     }
-    
     private func showEmptyView(isShow: Bool) {
         if isShow {
             if emptyView.superview != nil { return }
