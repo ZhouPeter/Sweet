@@ -7,13 +7,18 @@
 //
 
 import UIKit
-
+protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
+    func readGroup(storyGroupIndex index: Int)
+}
 class StoriesPlayerGroupViewController: BaseViewController {
-    
-    var currentIndex = 0
+    weak var delegate: StoriesPlayerGroupViewControllerDelegate?
+    var currentIndex: Int {
+        didSet {
+            delegate?.readGroup(storyGroupIndex: currentIndex)
+        }
+    }
+    var storiesGroup: [[StoryCellViewModel]]
     var subCurrentIndex = 0
-    var storiesGroup: [[StoryCellViewModel]]?
-
     private lazy var cubeView: StoriesCubeView = {
         let cubeView = StoriesCubeView()
         cubeView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,12 +27,24 @@ class StoriesPlayerGroupViewController: BaseViewController {
     }()
     
     private var storiesPlayerControllers = [StoriesPlayerViewController]()
+    
+    init(storiesGroup: [[StoryCellViewModel]], currentIndex: Int) {
+        self.storiesGroup = storiesGroup
+        self.currentIndex = currentIndex
+        super.init(nibName: nil, bundle: nil)
+//        self.setValue(currentIndex, forKey: "currentIndex")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(cubeView)
         cubeView.fill(in: view)
         setChildViewController()
         storiesPlayerControllers[currentIndex].initPlayer()
+        
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -35,23 +52,21 @@ class StoriesPlayerGroupViewController: BaseViewController {
     }
     
     private func setChildViewController() {
-        if let storiesGroup = storiesGroup {
-            for index in 0 ..< storiesGroup.count {
-                let stories = storiesGroup[index]
-                let playerController = StoriesPlayerViewController()
-                playerController.delegate = self
-                playerController.stories = stories
-                if index == currentIndex {
-                    playerController.currentIndex = subCurrentIndex
-                } else {
-                    playerController.currentIndex = 0
-                }
-                storiesPlayerControllers.append(playerController)
-                cubeView.addChildView(playerController.view)
+        for index in 0 ..< storiesGroup.count {
+            let stories = storiesGroup[index]
+            let playerController = StoriesPlayerViewController()
+            playerController.delegate = self
+            playerController.stories = stories
+            if index == currentIndex {
+                playerController.currentIndex = subCurrentIndex
+            } else {
+                playerController.currentIndex = 0
             }
-            cubeView.layoutIfNeeded()
-            cubeView.scrollToViewAtIndex(currentIndex, animated: false)
+            storiesPlayerControllers.append(playerController)
+            cubeView.addChildView(playerController.view)
         }
+        cubeView.layoutIfNeeded()
+        cubeView.scrollToViewAtIndex(currentIndex, animated: false)
     }
     
     private func setOldPlayerControllerLoction() {
@@ -75,13 +90,13 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     }
     
     func playToNext() {
-        if let storiesGroup = storiesGroup, currentIndex + 1 > storiesGroup.count - 1 { return }
+        if currentIndex + 1 > storiesGroup.count - 1 { return }
         cubeView.scrollToViewAtIndex(currentIndex + 1, animated: true)
     }
 }
 extension StoriesPlayerGroupViewController: StoriesCubeViewDelegate {
     func cubeViewDidScroll(_ cubeView: StoriesCubeView) {
-        guard  let count = storiesGroup?.count  else { return }
+        let count = storiesGroup.count
         storiesPlayerControllers[currentIndex].pause()
         let index = Int(cubeView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }

@@ -14,7 +14,7 @@ struct StoryCollectionViewCellModel {
     let avatarImageURL: URL?
     var imageURL: URL?
     var videoURL: URL?
-    let isRead: Bool
+    var isRead: Bool
     let timestampString: String
     let sourceUserId: Int
     var created: Int?

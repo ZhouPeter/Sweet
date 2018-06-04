@@ -21,8 +21,8 @@ extension UINavigationController {
 extension Notification.Name {
     static let DisablePageScroll = Notification.Name(rawValue: "DisablePageScroll")
     static let EnablePageScroll = Notification.Name(rawValue: "EnablePageScroll")
-    static let BarStyleBlack = Notification.Name(rawValue: "BarStyleBlack")
-    static let BarStyleDefault = Notification.Name(rawValue: "BarStyleDefalut")
+    static let BlackBarStyle = Notification.Name(rawValue: "BlackBarStyle")
+    static let DefaultBarStyle = Notification.Name(rawValue: "DefaultBarStyle")
     static let ScrollPage = Notification.Name(rawValue: "ScrollPage")
     static let BlackStatusBar = Notification.Name(rawValue: "BlackStatusBar")
     static let WhiteStatusBar = Notification.Name(rawValue: "WhiteStatusBar")
@@ -84,13 +84,13 @@ final class MainController: PageboyViewController, MainView {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveBarStyleBlackNote),
-            name: .BarStyleBlack,
+            name: .BlackBarStyle,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveBarStyleDefaultNote),
-            name: .BarStyleDefault,
+            name: .DefaultBarStyle,
             object: nil
         )
         NotificationCenter.default.addObserver(
@@ -123,10 +123,13 @@ final class MainController: PageboyViewController, MainView {
     
     @objc func didReceiveBarStyleBlackNote() {
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.tintColor = .white
     }
     
     @objc func didReceiveBarStyleDefaultNote() {
         navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
+        
     }
 
     @objc func didReceiveScrollPage(_ note: Notification) {

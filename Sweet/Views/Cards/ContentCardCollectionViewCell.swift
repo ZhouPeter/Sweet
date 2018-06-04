@@ -20,6 +20,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
+        label.numberOfLines = 0
         return label
     }()
     

@@ -26,9 +26,9 @@ struct StoryResponse: Codable {
     let content: String
     let created: Int
     let enrollment: String
-    let like: Bool
+    var like: Bool
     let nickname: String
-    let read: Bool
+    var read: Bool
     let storyId: UInt64
     let type: StoryType
     let university: String

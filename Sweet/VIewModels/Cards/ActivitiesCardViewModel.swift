@@ -9,9 +9,11 @@
 import Foundation
 
 struct ActivitiesCardViewModel {
+    var cardId: String
     var activityViewModels: [ActivityViewModel]
     let cellHeight: CGFloat
     init(model: CardResponse) {
+        cardId = model.cardId
         activityViewModels = model.activityList!.map({
             return ActivityViewModel(model: $0)
         })
@@ -27,7 +29,7 @@ struct ActivityViewModel {
     let contentString: String
     let commentString: String
     let emojiImage: UIImage?
-    let like: Bool
+    var like: Bool
     var callBack: ((String) -> Void)?
     init(model: ActivityResponse) {
         activityItemId = model.activityItemId

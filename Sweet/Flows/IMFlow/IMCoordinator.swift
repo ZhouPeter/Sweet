@@ -90,7 +90,6 @@ extension IMCoordinator: IMViewDelegate {
     }
     
     private func showProfile(userID: UInt64) {
-
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
                                                                          userID: userID,
                                                                          router: router)

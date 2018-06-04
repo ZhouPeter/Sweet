@@ -71,12 +71,13 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.barStyle = .default
         actionsController = ActionsController()
         addChildViewController(actionsController)
         actionsController.didMove(toParentViewController: self)
         setTableView()
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +109,9 @@ extension ProfileController {
     }
     
     @objc private func menuAction(sender: UIButton) {
-        guard let userId = userResponse?.userId, let blacklist = userResponse?.blacklist, let block = userResponse?.block else { return }
+        guard let userId = userResponse?.userId,
+            let blacklist = userResponse?.blacklist,
+            let block = userResponse?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let shieldAction = UIAlertAction(
             title: block ? "取消屏蔽" : "屏蔽他/她的来源",

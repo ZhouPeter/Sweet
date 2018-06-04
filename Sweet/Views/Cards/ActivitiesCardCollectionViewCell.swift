@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol ActivitiesCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
+    
+}
 class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     private var viewModel: ViewModelType?
     typealias ViewModelType = ActivitiesCardViewModel
@@ -41,6 +43,13 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     func updateWith(_ viewModel: ActivitiesCardViewModel) {
         self.viewModel = viewModel
         tableView.reloadData()
+    }
+    
+    func updateItem(item: Int, like: Bool) {
+        let cell = tableView.cellForRow(at: IndexPath(row: item, section: 0))
+        if let cell = cell as? ActivityTableViewCell {
+            cell.update(like: like)
+        }
     }
 }
 

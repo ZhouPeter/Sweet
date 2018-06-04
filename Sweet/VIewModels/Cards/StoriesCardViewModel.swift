@@ -12,6 +12,7 @@ struct StoriesCardViewModel {
     let cardId: String
     let storiesCellModels: [[StoryCollectionViewCellModel]]
     let storiesGroup: [[StoryCellViewModel]]
+    var isReads: [Bool]
     init(model: CardResponse) {
         cardId = model.cardId
         storiesCellModels = model.storyList!.map {
@@ -20,5 +21,10 @@ struct StoriesCardViewModel {
         storiesGroup = model.storyList!.map {
             return $0.map { return StoryCellViewModel(model: $0) }
         }
+        isReads = model.storyList!.map({ (model) -> Bool in
+            var isRead = true
+            model.forEach({ if $0.read == false {isRead = false} })
+            return isRead
+        })
     }
 }
