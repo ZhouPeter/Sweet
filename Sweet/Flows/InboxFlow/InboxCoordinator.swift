@@ -40,7 +40,7 @@ final class InboxCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        if isOffline {
+        if isOffline && Messenger.shared.state == .online {
             isOffline = false
             Messenger.shared.loadConversations()
         }

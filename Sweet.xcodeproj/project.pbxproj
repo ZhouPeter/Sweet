@@ -912,6 +912,10 @@
 		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACCD27EC20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
+		ACCD27ED20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
+		ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
+		ACCD27EF20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
 		ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
 		ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
 		ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52520886C7C00B78CFD /* WebProvider.swift */; };
@@ -1361,6 +1365,7 @@
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
+		ACCD27EB20C54155002E96AB /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
 		ACD5A52F2088731C00B78CFD /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		ACD5A5342088737A00B78CFD /* Sweet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1536,6 +1541,7 @@
 				5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */,
 				5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */,
 				5866330D20BC154B0018680C /* EmptyEmojiView.swift */,
+				ACCD27EB20C54155002E96AB /* BadgeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2824,6 +2830,7 @@
 				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
 				583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACCD27EC20C54155002E96AB /* BadgeView.swift in Sources */,
 				AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
@@ -3090,6 +3097,7 @@
 				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */,
+				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				5803572320AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3318,6 +3326,7 @@
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */,
+				ACCD27EF20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				5803572420AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3552,6 +3561,7 @@
 				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,
 				583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				ACCD27ED20C54155002E96AB /* BadgeView.swift in Sources */,
 				AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
