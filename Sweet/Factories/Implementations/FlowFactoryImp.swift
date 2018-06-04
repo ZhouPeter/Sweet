@@ -149,9 +149,5 @@ extension FlowFactoryImp: ContactsFlowFactory {
         return SubscriptionController()
     }
     
-    func makeProfileOutput(userId: UInt64) -> ProfileView {
-        let controller = ProfileController()
-        controller.userId = userId
-        return controller
-    }
+ 
 }

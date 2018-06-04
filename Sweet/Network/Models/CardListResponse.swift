@@ -69,9 +69,10 @@ struct ContentBody: Codable {
 
 struct SelectResult: Codable {
     let contactUserList: [UserAvatar]
-    var index: Int
-    let percent: Double
-    
+    var index: Int?
+    let percent: Double?
+    let comment: String?
+    let emoji: Int?
     struct UserAvatar: Codable {
         let avatar: String
         let userId: UInt64

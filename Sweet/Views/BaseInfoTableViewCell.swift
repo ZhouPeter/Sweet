@@ -35,6 +35,7 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         senderButton.setViewRounded(borderWidth: 1, borderColor: .black)
         senderButton.setTitleColor(.black, for: .normal)
         subscribeButton.addTarget(self, action: #selector(subscribeAction), for: .touchUpInside)
+        senderButton.addTarget(self, action: #selector(sendMessageAction), for: .touchUpInside)
     }
     
     override var frame: CGRect {
@@ -76,6 +77,10 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         if let userId = viewModel?.userId {
             viewModel?.subscribeAction?(userId)
         }
+    }
+    
+    @objc private func sendMessageAction() {
+        viewModel?.sendMessageAction?()
     }
     
 }

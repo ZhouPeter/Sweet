@@ -12,13 +12,16 @@ import SwiftyUserDefaults
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
     var finished: (() -> Void)? { get set }
+    var user: User? { get set }
+    var userId: UInt64? { get set }
 }
 
-class ProfileController: BaseViewController, ProfileView {    
+class ProfileController: BaseViewController, ProfileView {
+    var user: User?
     var userId: UInt64?
     var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
-    var user: UserResponse? {
+    var userResponse: UserResponse? {
         willSet {
             if let newValue = newValue {
                 if newValue.userId == UInt64(Defaults[.userID] ?? "0") {
@@ -79,7 +82,7 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintColor = .black
-        if user == nil || !isFirstLoad {
+        if userResponse == nil || !isFirstLoad {
             loadAll()
         } else {
             updateViewModel()
@@ -100,12 +103,12 @@ class ProfileController: BaseViewController, ProfileView {
 
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
-        guard let user = user else { return }
+        guard let user = userResponse else { return }
         self.showAbout?(user)
     }
     
     @objc private func menuAction(sender: UIButton) {
-        guard let userId = user?.userId, let blacklist = user?.blacklist, let block = user?.block else { return }
+        guard let userId = userResponse?.userId, let blacklist = userResponse?.blacklist, let block = userResponse?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let shieldAction = UIAlertAction(
             title: block ? "取消屏蔽" : "屏蔽他/她的来源",
@@ -116,7 +119,7 @@ extension ProfileController {
                     case let .failure(error):
                         logger.debug(error)
                     case .success:
-                        self?.user?.block = !block
+                        self?.userResponse?.block = !block
                     }
                 })
             } else {
@@ -125,7 +128,7 @@ extension ProfileController {
                     case let .failure(error):
                         logger.debug(error)
                     case .success:
-                        self?.user?.block = !block
+                        self?.userResponse?.block = !block
                     }
                 })
             }
@@ -140,7 +143,7 @@ extension ProfileController {
                     case let .failure(error):
                         logger.debug(error)
                     case .success:
-                        self?.user?.blacklist = !blacklist
+                        self?.userResponse?.blacklist = !blacklist
                     }
                 })
             } else {
@@ -149,7 +152,7 @@ extension ProfileController {
                     case let .failure(error):
                         logger.debug(error)
                     case .success:
-                        self?.user?.blacklist = !blacklist
+                        self?.userResponse?.blacklist = !blacklist
                     }
                 })
             }
@@ -188,7 +191,7 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
-                self.actionsController.userId = self.user?.userId
+                self.actionsController.userId = self.userResponse?.userId
                 self.updateViewModel()
                 self.tableView.reloadData()
             }
@@ -200,7 +203,7 @@ extension ProfileController {
         web.request(.getUserProfile(userId: userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
             case let .success(response):
-                self.user = response.userProfile
+                self.userResponse = response.userProfile
                 completion?(true)
             case let .failure(error):
                 logger.error(error)
@@ -210,23 +213,29 @@ extension ProfileController {
     }
 
     private func updateViewModel() {
-        self.baseInfoViewModel = BaseInfoCellViewModel(user: user!)
+        self.baseInfoViewModel = BaseInfoCellViewModel(user: userResponse!)
         self.baseInfoViewModel?.subscribeAction = { [weak self] userId in
-            guard let `self` = self, let subscription = self.user?.subscription else { return }
+            guard let `self` = self, let subscription = self.userResponse?.subscription else { return }
             web.request(
                 subscription ?
                     .delUserSubscription(userId: userId) : .addUserSubscription(userId: userId),
                 completion: { (result) in
                 switch result {
                 case .success:
-                    self.user!.subscription = !self.user!.subscription
+                    self.userResponse!.subscription = !self.userResponse!.subscription
                     self.baseInfoViewModel?.subscribeButtonString
-                        = self.user!.subscription ? "已订阅" : "订阅"
+                        = self.userResponse!.subscription ? "已订阅" : "订阅"
                     self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 case let .failure(error):
                     logger.error(error)
                 }
             })
+        }
+        self.baseInfoViewModel?.sendMessageAction = { [weak self] in
+            if let user = self?.user, let buddy = self?.userResponse {
+                let conversationController = ConversationController(user: user, buddy: User(buddy))
+                self?.navigationController?.pushViewController(conversationController, animated: true)
+            }
         }
     }
     

@@ -8,7 +8,6 @@
 
 import Foundation
 import Realm
-
 final class IMCoordinator: BaseCoordinator {
     private let factory: IMFlowFactory
     private let coordinatorFactory: CoordinatorFactory
@@ -62,7 +61,9 @@ extension IMCoordinator: IMViewDelegate {
     }
     
     func imViewDidPressAvatarButton() {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(router: router)
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                         userID: user.userId,
+                                                                         router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
@@ -83,13 +84,20 @@ extension IMCoordinator: IMViewDelegate {
     func imViewDidShowContacts(_ view: ContactsView) {
         guard contactsCoordinator == nil else { return }
         let coordinator = coordinatorFactory
-            .makeContactsCoordinator(router: router, token: token, storage: storage)
+            .makeContactsCoordinator(router: router, token: token, storage: storage, user: user)
         coordinator.start(with: view)
         contactsCoordinator = coordinator
     }
     
     private func showProfile(userID: UInt64) {
-        let profileView = factory.makeProfileOutput(userId: userID)
-        router.push(profileView)
+
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                         userID: userID,
+                                                                         router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

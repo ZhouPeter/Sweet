@@ -17,6 +17,7 @@ struct BaseInfoCellViewModel {
     let likeCountString: String
     var subscribeButtonString: String
     var subscribeAction: ((UInt64) -> Void)?
+    var sendMessageAction: (() -> Void)?
     let cellHeight: CGFloat
     let subscriptionButtonHidden: Bool
     let sendMessageButtonHidden: Bool

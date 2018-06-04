@@ -40,6 +40,7 @@ enum WebAPI {
     case allCards(cardId: String?, direction: Direction?)
     case subscriptionCards(cardId: String?, direction: Direction?)
     case evaluateCard(cardId: String, index: Int)
+    case commentCard(cardId: String, comment: String, emoji: Int)
     case storyDetailsUvlist(storyId: UInt64)
     case storyTopics
     case searchTopic(topic: String)
@@ -120,6 +121,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/tag/search"
         case .socketAddress:
             return "/setting/im/routes"
+        case .commentCard:
+            return "/card/comment"
         }
     }
     
@@ -183,6 +186,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
                 parameters["x"] = center.x
                 parameters["y"] = center.y
             }
+        case let .commentCard(cardId, comment, emoji):
+            parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
         default:
             break
         }

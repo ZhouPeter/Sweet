@@ -14,17 +14,20 @@ final class ContactsCoordinator: BaseCoordinator {
     private let router: Router
     private let token: String
     private let storage: Storage
+    private let user: User
     
     init(token: String,
          storage: Storage,
          router: Router,
          factory: ContactsFlowFactory,
-         coordinatorFactory: CoordinatorFactory) {
+         coordinatorFactory: CoordinatorFactory,
+         user: User) {
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
         self.router = router
         self.token = token
         self.storage = storage
+        self.user = user
     }
     
     func start(with view: ContactsView) {
@@ -67,7 +70,11 @@ extension ContactsCoordinator: ContactsViewDelegate {
     }
     
     private func showProfile(userID: UInt64) {
-        let profileView = factory.makeProfileOutput(userId: userID)
-        router.push(profileView)
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userID, router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

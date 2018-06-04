@@ -93,6 +93,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     private func setupUI() {
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
+        contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 18)
         customContent.addSubview(leftButton)
         leftButton.equal(.width, to: customContent, multiplier: 0.5)

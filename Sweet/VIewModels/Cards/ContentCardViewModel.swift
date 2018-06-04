@@ -14,6 +14,9 @@ struct ContentCardViewModel {
     var contentImages: [ContentImageModel]?
     var videoURL: URL?
     let cardId: String
+    var resultImageName: String?
+    var resultAvatarURLs: [URL]?
+    var resultComment: String?
     let defaultImageNameList: [String]
     init(model: CardResponse) {
         self.titleString = model.name!
@@ -24,6 +27,18 @@ struct ContentCardViewModel {
             self.videoURL = URL(string: video)!
         }
         self.cardId = model.cardId
+        if let comment = model.result?.comment, comment != "" {
+            self.resultComment = comment
+        } else if let emoji = model.result?.emoji, emoji != 0 {
+            self.resultImageName = "ResultEmoji\(emoji)"
+            if let users = model.result?.contactUserList {
+                var urls = [URL]()
+                users.forEach { (user) in
+                    urls.append(URL(string: user.avatar)!)
+                }
+                resultAvatarURLs = urls
+            }
+        }
         self.defaultImageNameList = model.defaultEmojiList!.map { return "Emoji\($0.rawValue)"}
     }
 }

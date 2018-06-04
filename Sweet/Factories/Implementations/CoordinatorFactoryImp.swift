@@ -9,8 +9,11 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
-    func makeProfileCoordinator(router: Router) -> Coordinator & ProfileCoordinatorOutput {
+    
+    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
+                user: user,
+                userID: userID,
                 router: router,
                 factory: FlowFactoryImp(),
                 coordinatorFactory: CoordinatorFactoryImp())
@@ -67,12 +70,6 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
             coordinatorFactory: CoordinatorFactoryImp()
         )
     }
-    func makeProfileCoordinator(navigation: UINavigationController?) -> Coordinator {
-        return ProfileCoordinator(
-            router: makeRouter(with: navigation),
-            factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp())
-    }
     
     func makeRouter(with navigation: UINavigationController?) -> Router {
         if let nav = navigation {
@@ -82,13 +79,14 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return RouterImp(rootController: app.rootController)
     }
     
-    func makeContactsCoordinator(router: Router, token: String, storage: Storage) -> ContactsCoordinator {
+    func makeContactsCoordinator(router: Router, token: String, storage: Storage, user: User) -> ContactsCoordinator {
         return ContactsCoordinator(
             token: token,
             storage: storage,
             router: router,
             factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp()
+            coordinatorFactory: CoordinatorFactoryImp(),
+            user: user
         )
     }
     

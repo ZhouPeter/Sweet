@@ -298,7 +298,7 @@ extension CardsBaseController {
                 self.avPlayer = self.playerView.avPlayer
             }
             self.delayItem = DispatchWorkItem {
-                cell.emojiView.isHidden = false
+                cell.hiddenEmojiView(isHidden: false)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         }
@@ -557,15 +557,14 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
             case .success:
                 guard let index = self.cards.index(where: { $0.cardId == cardId }),
                       self.cards[index].type == .evaluation else { return }
-                let configurator = self.cellConfigurators[index]
-                guard var newConfigurator = configurator as? CellConfigurator<EvaluationCardCollectionViewCell>
-                      else { return }
-                newConfigurator.viewModel.selectedIndex = selectedIndex
-                self.cellConfigurators[index] = newConfigurator
                 self.cards[index].result = SelectResult(contactUserList: [SelectResult.UserAvatar](),
                                                         index: selectedIndex,
-                                                        percent: 0)
-  
+                                                        percent: 0,
+                                                        comment: nil,
+                                                        emoji: nil)
+                let viewModel = EvaluationCardViewModel(model: self.cards[index])
+                let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
+                self.cellConfigurators[index] = configurator
                 cell.updateWith(selectedIndex)
             case let .failure(error):
                 logger.error(error)
@@ -575,8 +574,22 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
-    func contentCardComment(cardId: String, comment: String?, emoji: Int?) {
-        
+    func contentCardComment(cardId: String, emoji: Int) {
+        web.request(
+            .commentCard(cardId: cardId, comment: "", emoji: emoji),
+            responseType: Response<SelectResult>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                    self.cards[index].result = response
+                    let viewModel = ContentCardViewModel(model: self.cards[index])
+                    let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                    self.cellConfigurators[index] = configurator
+                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
     }
     
     func openKeyword() {
@@ -655,6 +668,23 @@ extension CardsBaseController: InputBottomViewDelegate {
     }
     
     func inputBottomViewDidPressSend(withText text: String?) {
+        guard cards[index].type == .content else { return }
+        let cardId = self.cards[index].cardId
+        web.request(
+            .commentCard(cardId: cardId, comment: text!, emoji: 0),
+            responseType: Response<SelectResult>.self) {(result) in
+                switch result {
+                case let .success(response):
+                    guard cardId == self.cards[self.index].cardId else { return }
+                    self.cards[self.index].result = response
+                    let viewModel = ContentCardViewModel(model: self.cards[self.index])
+                    let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                    self.cellConfigurators[self.index] = configurator
+                    self.collectionView.reloadItems(at: [IndexPath(item: self.index, section: 0)])
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
         inputBottomView.startEditing(false)
     }
 }
