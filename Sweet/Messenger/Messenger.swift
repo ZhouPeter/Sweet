@@ -176,8 +176,16 @@ final class Messenger {
     }
     
     func removeConversation(userID: UInt64) {
-//        guard let index = conversations.index(where: { $0.user.userId == userID }) else { return }
-//        conversations.remove(at: index)
+        storage?.write({ (realm) in
+            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
+                realm.delete(conversation)
+            }
+            let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
+            realm.delete(results)
+        })
+        web.request(.removeRecentMessage(userID: userID)) { (result) in
+            logger.debug(result)
+        }
     }
     
     // MARK: - Private

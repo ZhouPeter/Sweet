@@ -91,8 +91,8 @@ extension InboxController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
         let deleteAction = SwipeAction(style: .destructive, title: "删除") { [weak self] (_, indexPath) in
             guard let `self` = self else { return }
-            self.conversations.remove(at: indexPath.row)
-            self.delegate?.inboxRemoveConversation(self.conversations[indexPath.row])
+            let conversaion = self.conversations.remove(at: indexPath.row)
+            self.delegate?.inboxRemoveConversation(conversaion)
         }
         return [deleteAction]
     }
@@ -102,7 +102,8 @@ extension InboxController: SwipeTableViewCellDelegate {
         editActionsOptionsForRowAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .selection
+        options.expansionStyle = .destructive
+        options.transitionStyle = .border
         return options
     }
     

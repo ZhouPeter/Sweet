@@ -46,6 +46,7 @@ enum WebAPI {
     case searchTopic(topic: String)
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
     case socketAddress
+    case removeRecentMessage(userID: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -123,6 +124,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/setting/im/routes"
         case .commentCard:
             return "/card/comment"
+        case .removeRecentMessage:
+            return "/message/del"
         }
     }
     
@@ -188,6 +191,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
         case let .commentCard(cardId, comment, emoji):
             parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
+        case let .removeRecentMessage(userID):
+            parameters = ["userId": userID]
         default:
             break
         }
