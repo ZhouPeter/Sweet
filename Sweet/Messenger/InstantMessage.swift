@@ -21,11 +21,15 @@ struct InstantMessage {
     var sentDate = Date()
     var isSent = false
     var isRead = false
+    var cardType: CardType?
+    var cardID: String?
     
     var displayText: String {
         switch type {
         case .text:
             return content
+        case .story:
+            return "你有一条小故事消息"
         default:
             return "[未知消息]"
         }
@@ -38,6 +42,19 @@ struct InstantMessage {
         self.from = from
         self.to = to
         self.type = type
+    }
+    
+    mutating func set(cardType: CardType, cardID: String) {
+        self.cardType = cardType
+        self.cardID = cardID
+        content = "{\"cardType\":\(cardType.rawValue),\"identifier\":\(cardID)}"
+    }
+    
+    enum CardType: Int {
+        case content = 1
+        case preference
+        case activity
+        case evalutaion
     }
 }
 
@@ -62,6 +79,7 @@ extension InstantMessage {
         status = proto.status
         createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
         sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
+        parseCardContent()
     }
     
     init(data: InstantMessageData) {
@@ -79,5 +97,17 @@ extension InstantMessage {
         sentDate = data.sentDate
         isSent = data.isSent
         isRead = data.isRead
+        parseCardContent()
+    }
+    
+    private mutating func parseCardContent() {
+        guard
+            let data = content.data(using: .utf8),
+            let info = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+            let cardTypeValue = info?["card_type"] as? Int,
+            let identifier = info?["identifier"] as? String
+        else { return }
+        cardID = identifier
+        cardType = CardType(rawValue: cardTypeValue)
     }
 }

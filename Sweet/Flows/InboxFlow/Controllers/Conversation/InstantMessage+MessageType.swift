@@ -19,6 +19,16 @@ extension InstantMessage: MessageType {
     }
     
     var kind: MessageKind {
-        return .text(content)
+        switch type {
+        case .story:
+            return .custom(CustomMessageKind.story)
+        default:
+            return .text(content)
+        }
     }
+}
+
+enum CustomMessageKind {
+    case story
+    case optionsCard
 }

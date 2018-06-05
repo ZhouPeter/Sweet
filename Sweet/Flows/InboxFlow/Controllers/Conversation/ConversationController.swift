@@ -27,6 +27,11 @@ final class ConversationController: MessagesViewController {
     }
     
     override func viewDidLoad() {
+        let layout = SweetMessagesFlowLayout()
+        let avatarPosition = AvatarPosition(vertical: .cellTop)
+        layout.textMessageSizeCalculator.incomingAvatarPosition = avatarPosition
+        layout.textMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
+        messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: layout)
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
         title = buddy.nickname
@@ -54,6 +59,7 @@ final class ConversationController: MessagesViewController {
     // MARK: - Private
     
     private func setupCollectionView() {
+        messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -61,11 +67,6 @@ final class ConversationController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-            let avatarPosition = AvatarPosition(vertical: .cellTop)
-            layout.textMessageSizeCalculator.incomingAvatarPosition = avatarPosition
-            layout.textMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
-        }
     }
     
     private func setupInputBar() {
@@ -103,6 +104,23 @@ final class ConversationController: MessagesViewController {
             return
         }
         Messenger.shared.loadMoreMessages(from: buddy, lastMessage: message)
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let message = messages[indexPath.section]
+        if case let .custom(value) = message.kind, let kind = value as? CustomMessageKind {
+            switch kind {
+            case .story:
+                let cell = messagesCollectionView.dequeueReusableCell(StoryMessageCell.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            default:
+                break
+            }
+        }
+        return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
 
@@ -164,7 +182,9 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
+        var message = InstantMessage()
+        message.type = .story
+//        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
