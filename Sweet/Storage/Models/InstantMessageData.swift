@@ -35,7 +35,7 @@ class InstantMessageData: Object {
         data.from = Int64(message.from)
         data.to = Int64(message.to)
         data.type = message.type.rawValue
-        data.content = message.content
+        data.content = message.rawContent
         data.status = Int32(message.status)
         data.createDate = message.createDate
         data.sentDate = message.sentDate

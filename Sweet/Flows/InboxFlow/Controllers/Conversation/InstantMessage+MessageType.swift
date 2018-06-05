@@ -22,13 +22,31 @@ extension InstantMessage: MessageType {
         switch type {
         case .story:
             return .custom(CustomMessageKind.story)
+        case .card:
+            if content is ContentCardContent {
+                return .custom(CustomMessageKind.evaluationCard)
+            }
+            if let content = content as? OptionCardContent {
+                if content.cardType == .evalutaion {
+                    return .custom(CustomMessageKind.evaluationCard)
+                }
+                return .custom(CustomMessageKind.preferenceCard)
+            }
+            if content is StoryMessageContent {
+                return .custom(CustomMessageKind.story)
+            }
+            return .text("[不支持该消息类型]")
+        case .text:
+            return .text(rawContent)
         default:
-            return .text(content)
+            return .text("[不支持该消息类型]")
         }
     }
 }
 
 enum CustomMessageKind {
     case story
-    case optionsCard
+    case contentCard
+    case preferenceCard
+    case evaluationCard
 }

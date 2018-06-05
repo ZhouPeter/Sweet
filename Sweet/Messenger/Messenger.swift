@@ -127,7 +127,7 @@ final class Messenger {
     
     @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64) -> InstantMessage {
         var message = InstantMessage()
-        message.content = text
+        message.rawContent = text
         message.type = .text
         message.to = to
         message.from = from

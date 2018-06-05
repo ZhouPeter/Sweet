@@ -9,39 +9,30 @@
 import UIKit
 import MessageKit
 
-final class StoryMessageCell: MessageContentCell {
+final class StoryMessageCell: MediaMessageCell {
     private lazy var thumbnailImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         return view
     } ()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    private func setup() {
-        messageContainerView.backgroundColor = .black
-        messageContainerView.addSubview(thumbnailImageView)
-        thumbnailImageView.fill(in: contentView)
+    override func setup() {
+        super.setup()
+        
+        mediaContainerView.addSubview(thumbnailImageView)
+        thumbnailImageView.fill(in: mediaContainerView)
         
         let maskView = UIView()
         maskView.backgroundColor = .black
         maskView.alpha = 0.5
-        messageContainerView.addSubview(maskView)
-        maskView.fill(in: contentView)
+        mediaContainerView.addSubview(maskView)
+        maskView.fill(in: mediaContainerView)
         
         let playView = UIImageView()
         playView.image = #imageLiteral(resourceName: "StoryMessagePlay")
-        messageContainerView.addSubview(playView)
+        mediaContainerView.addSubview(playView)
         playView.constrain(width: 40, height: 40)
-        playView.center(to: messageContainerView)
+        playView.center(to: mediaContainerView)
     }
     
     override func prepareForReuse() {

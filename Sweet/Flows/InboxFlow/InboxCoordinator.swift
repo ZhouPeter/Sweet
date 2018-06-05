@@ -75,7 +75,7 @@ extension InboxCoordinator: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        logger.debug(message.content, success)
+        logger.debug(message.rawContent, success)
     }
     
     func messengerDidUpdateConversations(_ conversations: [Conversation]) {

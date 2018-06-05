@@ -10,17 +10,12 @@ import Foundation
 import MessageKit
 
 final class SweetMessagesFlowLayout: MessagesCollectionViewFlowLayout {
-    private lazy var storySizeCalculator = StoryMessageSizeCalculator(layout: self)
+    private lazy var sizeCalculator = SweetMessageSizeCalculator(layout: self)
     
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        if case let .custom(value) = message.kind, let kind = value as? CustomMessageKind {
-            switch kind {
-            case .story:
-                return storySizeCalculator
-            default:
-                break
-            }
+        if case let .custom(value) = message.kind, value is CustomMessageKind {
+            return sizeCalculator
         }
         return super.cellSizeCalculatorForItem(at: indexPath)
     }
