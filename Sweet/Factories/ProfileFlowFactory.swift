@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ProfileFlowFactory {
-    func makeProfileModule() -> ProfileView
+    func makeProfileView(user: User, userId: UInt64) -> ProfileView
     func makeProfileAboutOutput(user: UserResponse) -> AboutView
     func makeProfileUpdateOutput(user: UserResponse) -> UpdateView
 }

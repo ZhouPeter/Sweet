@@ -36,7 +36,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         let searchBar = UISearchBar()
         searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 75, height: 25)
         searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
-        searchBar.placeholder = "搜索关键词"
+        searchBar.placeholder = "搜索人名、手机号"
         searchBar.delegate = self
         return searchBar
     }()
@@ -205,7 +205,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
             case .success:
                 guard let index = self.phoneContactViewModels.index(where: { $0.phone == phone }),
                       let section = self.titles.index(where: { $0 == "通讯录"}) else { return }
-                self.phoneContactViewModels[index].buttonTitle = "已发送"
+                self.phoneContactViewModels[index].buttonTitle = "已邀请"
                 self.phoneContactViewModels[index].buttonStyle = .noBorderGray
                 self.phoneContactViewModels[index].buttonIsEnabled = false
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)

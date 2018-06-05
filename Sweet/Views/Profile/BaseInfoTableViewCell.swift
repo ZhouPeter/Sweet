@@ -30,8 +30,8 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         senderButton.isHidden = true
         subscribeButton.isHidden = true
         avatarImageView.setViewRounded()
-        subscribeButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
-        subscribeButton.setTitleColor(UIColor.xpBlue(), for: .normal)
+//        subscribeButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
+//        subscribeButton.setTitleColor(UIColor.xpBlue(), for: .normal)
         senderButton.setViewRounded(borderWidth: 1, borderColor: .black)
         senderButton.setTitleColor(.black, for: .normal)
         subscribeButton.addTarget(self, action: #selector(subscribeAction), for: .touchUpInside)
@@ -58,6 +58,7 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         collegeInfoLabel.attributedText = getTextAttributedString(text: viewModel.networkString)
         abstractInfoLabel.attributedText = getTextAttributedString(text: viewModel.signatureString)
         likeCountButton.setTitle(viewModel.likeCountString, for: .normal)
+        subscribeButton.setButtonStyle(style: viewModel.subscriptionButtonStyle)
         subscribeButton.setTitle(viewModel.subscribeButtonString, for: .normal)
         subscribeButton.isHidden = viewModel.subscriptionButtonHidden
         senderButton.isHidden = viewModel.sendMessageButtonHidden

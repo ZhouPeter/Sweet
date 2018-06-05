@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 var allowRotation = false
 
 @UIApplicationMain
@@ -42,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                selector: #selector(logoutAuth),
                                                name: NSNotification.Name(logoutNotiName),
                                                object: nil)
+        WXApi.registerApp("wx819697effecdb6f5")
         return true
     }
     

@@ -576,6 +576,14 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
                 self.cellConfigurators[index] = configurator
                 cell.updateWith(selectedIndex)
+                if !Defaults[.isEvaluationOthers] {
+                    let alert = UIAlertController(title: "你的好友将会收到你的评价",
+                                                  message: "下次不再提示",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "好的", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                Defaults[.isEvaluationOthers] = true
             case let .failure(error):
                 logger.error(error)
             }
