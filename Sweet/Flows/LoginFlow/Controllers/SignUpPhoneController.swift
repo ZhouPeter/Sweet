@@ -105,25 +105,25 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         view.addSubview(phoneTextField)
         phoneTextField.pin(.right, to: codeLabel)
         phoneTextField.pin(.left, to: smsCodeButton)
-        phoneTextField.equal(.height, to: codeLabel)
+        phoneTextField.constrain(height: 40)
         phoneTextField.centerY(to: codeLabel)
         
         view.addSubview(topLineView)
         topLineView.align(.left, to: view, inset: 16)
         topLineView.align(.right, to: view, inset: 16)
         topLineView.pin(.bottom, to: codeLabel, spacing: 14)
-        topLineView.constrain(height: 0.5)
+        topLineView.constrain(height: UIScreen.onePixel())
         
         view.addSubview(smsCodeTextField)
         smsCodeTextField.centerX(to: view)
-        smsCodeTextField.pin(.bottom, to: codeLabel, spacing: 48)
-        smsCodeButton.constrain(height: 40)
+        smsCodeTextField.pin(.bottom, to: topLineView, spacing: 10)
+        smsCodeTextField.constrain(width: 240, height: 50)
         
         view.addSubview(bottomLineView)
         bottomLineView.align(.left, to: view, inset: 16)
         bottomLineView.align(.right, to: view, inset: 16)
-        bottomLineView.pin(.bottom, to: smsCodeTextField, spacing: 14)
-        bottomLineView.constrain(height: 0.5)
+        bottomLineView.pin(.bottom, to: smsCodeTextField, spacing: 5)
+        bottomLineView.constrain(height: UIScreen.onePixel())
         
         view.addSubview(enterButton)
         enterButton.constrain(height: 50)
@@ -199,6 +199,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                 }
         })
     }
+    
     private func successLogin(loginResponse: LoginResponse) {
         let logined = Defaults[loginedKey]
         if !logined {
@@ -243,5 +244,4 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
             loginRequestBody.phone = textField.text
         }
     }
-
 }
