@@ -11,15 +11,19 @@ import MessageKit
 
 final class SweetMessageSizeCalculator: MessageSizeCalculator {
     override func messageContainerSize(for message: MessageType) -> CGSize {
-        if case let .custom(value) = message.kind, let kind = value as? CustomMessageKind {
-            switch kind {
-            case .story:
-                return CGSize(width: 200, height: 200)
-            case .evaluationCard, .preferenceCard:
-                logger.debug()
-            default:
-                break
-            }
+        guard case let .custom(value) = message.kind else {
+            return super.messageContainerSize(for: message)
+        }
+        let maxWidth = messageContainerMaxWidth(for: message) * 0.8
+        if value is StoryMessageContent {
+            return CGSize(width: maxWidth, height: maxWidth)
+        }
+        if let content = value as? OptionCardContent {
+            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
+            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
+            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
+            logger.debug(size)
+            return size
         }
         return super.messageContainerSize(for: message)
     }

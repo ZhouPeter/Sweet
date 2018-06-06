@@ -31,6 +31,8 @@ final class ConversationController: MessagesViewController {
         let avatarPosition = AvatarPosition(vertical: .cellTop)
         layout.textMessageSizeCalculator.incomingAvatarPosition = avatarPosition
         layout.textMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
+        layout.sizeCalculator.incomingAvatarPosition = avatarPosition
+        layout.sizeCalculator.outgoingAvatarPosition = avatarPosition
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: layout)
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
@@ -51,6 +53,41 @@ final class ConversationController: MessagesViewController {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        var text = InstantMessage()
+        text.type = .text
+        text.rawContent = "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
+        text.from = user.userId
+        text.to = buddy.userId
+        messages.append(text)
+        
+        var preference = InstantMessage()
+        preference.type = .card
+        preference.content = OptionCardContent(
+            identifier: "2345678",
+            cardType: .preference,
+            text: "偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡",
+            leftImageURLString: "http://www.quanjing.com/image/2018image/homepage/1.jpg",
+            rightImageURLString: "http://www.quanjing.com/image/2018image/homepage/3.jpg",
+            result: .left
+        )
+        messages.append(preference)
+        
+        var evaluation = InstantMessage()
+        evaluation.type = .card
+        evaluation.content = OptionCardContent(
+            identifier: "fghjfkdlsafda",
+            cardType: .evaluation,
+            text: "偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡",
+            leftImageURLString: "http://mpic2.tiankong.com/366/188/366188f5c6bc7062aa0415dd0857c782/640.jpg",
+            rightImageURLString: "http://mpic2.tiankong.com/0c2/d78/0c2d78dad104acd43be02b0e043b77d6/640.jpg",
+            result: .right
+        )
+        messages.append(evaluation)
+        messagesCollectionView.reloadData()
+    }
+    
     deinit {
         logger.debug()
         Messenger.shared.endConversation(userID: buddy.userId)
@@ -60,6 +97,7 @@ final class ConversationController: MessagesViewController {
     
     private func setupCollectionView() {
         messagesCollectionView.register(StoryMessageCell.self)
+        messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -110,15 +148,18 @@ final class ConversationController: MessagesViewController {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let message = messages[indexPath.section]
-        if case let .custom(value) = message.kind, let kind = value as? CustomMessageKind {
-            switch kind {
-            case .story:
-                let cell = messagesCollectionView.dequeueReusableCell(StoryMessageCell.self, for: indexPath)
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-                return cell
-            default:
-                break
-            }
+        guard case let .custom(value) = message.kind else {
+            return super.collectionView(collectionView, cellForItemAt: indexPath)
+        }
+        if value is StoryMessageContent {
+            let cell = messagesCollectionView.dequeueReusableCell(StoryMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+        if value is OptionCardContent {
+            let cell = messagesCollectionView.dequeueReusableCell(OptionCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
         }
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
@@ -182,9 +223,7 @@ extension ConversationController: MessageCellDelegate {
 
 extension ConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        var message = InstantMessage()
-        message.type = .story
-//        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
+        let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""

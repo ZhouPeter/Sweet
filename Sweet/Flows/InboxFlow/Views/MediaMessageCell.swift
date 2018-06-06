@@ -10,7 +10,7 @@ import Foundation
 import MessageKit
 
 class MediaMessageCell: MessageContentCell {
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
     let activityIndicatorContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
@@ -19,7 +19,7 @@ class MediaMessageCell: MessageContentCell {
     
     let mediaContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .black
         return view
     } ()
     

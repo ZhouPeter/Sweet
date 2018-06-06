@@ -20,20 +20,9 @@ extension InstantMessage: MessageType {
     
     var kind: MessageKind {
         switch type {
-        case .story:
-            return .custom(CustomMessageKind.story)
-        case .card:
-            if content is ContentCardContent {
-                return .custom(CustomMessageKind.evaluationCard)
-            }
-            if let content = content as? OptionCardContent {
-                if content.cardType == .evalutaion {
-                    return .custom(CustomMessageKind.evaluationCard)
-                }
-                return .custom(CustomMessageKind.preferenceCard)
-            }
-            if content is StoryMessageContent {
-                return .custom(CustomMessageKind.story)
+        case .story, .card:
+            if let content = content {
+                return .custom(content)
             }
             return .text("[不支持该消息类型]")
         case .text:
@@ -42,11 +31,4 @@ extension InstantMessage: MessageType {
             return .text("[不支持该消息类型]")
         }
     }
-}
-
-enum CustomMessageKind {
-    case story
-    case contentCard
-    case preferenceCard
-    case evaluationCard
 }

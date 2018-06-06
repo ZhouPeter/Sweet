@@ -15,13 +15,21 @@ struct InstantMessage {
     var fromName: String?
     var to: UInt64 = 0
     var type: IMType = .unknown
-    var rawContent: String = String()
+    var rawContent = ""
     var status: UInt32 = 0
     var createDate = Date()
     var sentDate = Date()
     var isSent = false
     var isRead = false
-    var content: MessageContent?
+    var content: MessageContent? {
+        didSet {
+            guard let content = content else {
+                rawContent = ""
+                return
+            }
+            rawContent = content.encoded()
+        }
+    }
     
     var displayText: String {
         switch type {
@@ -53,7 +61,7 @@ struct InstantMessage {
         case unknown
         case content
         case preference
-        case evalutaion
+        case evaluation
     }
 }
 
