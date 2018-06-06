@@ -111,7 +111,6 @@ extension InstantMessage {
         else {
             return
         }
-        logger.debug("type: \(type)", "contentType: \(contentType)")
         if type == .story {
             parseCardContent(StoryMessageContent.self, data: data)
         } else if type == .card, let cardType = CardType(rawValue: contentType) {

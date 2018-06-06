@@ -53,54 +53,6 @@ final class ConversationController: MessagesViewController {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
     }
     
-    func mockMessages() {
-        var text = InstantMessage()
-        text.type = .text
-        text.rawContent = "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
-        text.from = user.userId
-        text.to = buddy.userId
-        messages.append(text)
-        var preference = InstantMessage()
-        preference.type = .card
-        preference.content = OptionCardContent(
-            identifier: "2345678",
-            cardType: .preference,
-            text: "偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡",
-            leftImageURLString: "http://www.quanjing.com/image/2018image/homepage/1.jpg",
-            rightImageURLString: "http://www.quanjing.com/image/2018image/homepage/3.jpg",
-            result: .left
-        )
-        messages.append(preference)
-        var like = InstantMessage()
-        like.type = .like
-        messages.append(like)
-        var evaluation = InstantMessage()
-        evaluation.type = .card
-        evaluation.content = OptionCardContent(
-            identifier: "fghjfkdlsafda",
-            cardType: .evaluation,
-            text: "好友评价卡好友评价卡好友评价卡好友评价卡好友评价卡好友评价卡",
-            leftImageURLString: "http://mpic2.tiankong.com/366/188/366188f5c6bc7062aa0415dd0857c782/640.jpg",
-            rightImageURLString: "http://mpic2.tiankong.com/0c2/d78/0c2d78dad104acd43be02b0e043b77d6/640.jpg",
-            result: .right
-        )
-        messages.append(evaluation)
-        var videoStory = InstantMessage()
-        videoStory.type = .story
-        videoStory.content = StoryMessageContent(
-            storyType: .video,
-            url: "http://xpro-cdn01.feparty.com/000KwDd7lx07kENFN2Vq01040200k89K0k010.mp4"
-        )
-        messages.append(videoStory)
-        var imageStory = InstantMessage()
-        imageStory.type = .story
-        imageStory.content = StoryMessageContent(
-            storyType: .image,
-            url: "http://mpic1.tiankong.com/565/584/56558426f8239fa175a48e293cf2a0b5/640.jpg"
-        )
-        messages.append(imageStory)
-    }
-    
     deinit {
         logger.debug()
         Messenger.shared.endConversation(userID: buddy.userId)
@@ -248,7 +200,6 @@ extension ConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
         guard buddy.userId == self.buddy.userId else { return }
         self.messages = messages
-        mockMessages()
         messagesCollectionView.reloadData()
         let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
         let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height

@@ -22,7 +22,6 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
             let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
             let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
             let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
-            logger.debug(size)
             return size
         }
         return super.messageContainerSize(for: message)

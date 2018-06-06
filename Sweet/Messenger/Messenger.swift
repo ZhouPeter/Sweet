@@ -366,7 +366,6 @@ final class Messenger {
                 }
             })
         }, callback: { _ in
-            logger.debug("conversations: \(conversations)", "userIdsNotSaved \(userIDsNotSaved)")
             if userIDsNotSaved.isNotEmpty {
                 self.getUserInfoList(with: userIDsNotSaved, callback: { (users) in
                     self.updateUserConversations(with: users.map({ $0.userId }))
