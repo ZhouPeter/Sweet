@@ -7,11 +7,15 @@
 //
 
 import UIKit
+extension Notification.Name {
+    static let dismissShareCard = Notification.Name(rawValue: "dismissShareCard")
 
+}
 class ShareCardController: BaseViewController {
+    var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
+    private var userIds = [UInt64]()
     private lazy var topView: UIView = {
         let view = UIView()
-
         return view
     }()
     private lazy var searchBar: UISearchBar = {
@@ -61,6 +65,7 @@ class ShareCardController: BaseViewController {
         button.backgroundColor = UIColor(hex: 0xf2f2f2)
         button.setTitle("发送", for: .normal)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(sendAction(_:)), for: .touchUpInside)
         return button
     }()
     private let keyboard = KeyboardObserver()
@@ -73,15 +78,29 @@ class ShareCardController: BaseViewController {
         setupTableViewUI()
         loadContacts()
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
-
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(disMissNoti(_:)),
+                                               name: .dismissShareCard,
+                                               object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .dismissShareCard, object: nil)
+    }
+    
+    @objc private func disMissNoti(_ noti: Notification) {
+        dismiss(animated: true, completion: nil)
+
+    }
     @objc private func returnAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
+    @objc private func sendAction(_ sender: UIButton) {
+        sendCallback?(shareTextField.text!, userIds)
+    }
     @objc private func textFieldEditChanged(_ textField: UITextField) {
         sendButton.backgroundColor = textField.text == "" ? UIColor(hex: 0xf2f2f2) : UIColor.xpBlue()
+        sendButton.isEnabled = textField.text != ""
     }
     
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
@@ -207,5 +226,8 @@ extension ShareCardController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
         cell.selectButton.isSelected = !cell.selectButton.isSelected
+        if cell.selectButton.isSelected {
+            userIds.append(contactViewModels[indexPath.row].userId)
+        }
     }
 }

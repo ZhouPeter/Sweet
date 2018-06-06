@@ -34,6 +34,7 @@ struct CardResponse: Codable {
     var result: SelectResult?
     let type: CardType
     let name: String?
+    let url: String?
     enum CardType: UInt, Codable {
         case unknown
         case content
