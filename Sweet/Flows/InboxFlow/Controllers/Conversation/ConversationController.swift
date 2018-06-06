@@ -192,7 +192,7 @@ extension ConversationController: MessageInputBarDelegate {
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
-        messagesCollectionView.scrollToBottom()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 }
 
