@@ -51,12 +51,6 @@ struct InstantMessage {
         self.type = type
     }
     
-//    mutating func set(cardType: CardType, cardID: String) {
-//        self.cardType = cardType
-//        self.cardID = cardID
-//        content = "{\"cardType\":\(cardType.rawValue),\"identifier\":\(cardID)}"
-//    }
-    
     enum CardType: Int, Codable {
         case unknown
         case content
@@ -107,14 +101,36 @@ extension InstantMessage {
         parseCardContent()
     }
     
-    private mutating func parseCardContent() {
-        guard
+    mutating func parseCardContent() {
+        guard type == .story || type == .card,
             let data = rawContent.data(using: .utf8),
-            let info = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-            let cardTypeValue = info?["card_type"] as? Int,
-            let identifier = info?["identifier"] as? String
-        else { return }
-//        cardID = identifier
-//        cardType = CardType(rawValue: cardTypeValue)
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let contentType = json?["type"] as? Int
+        else {
+            return
+        }
+        logger.debug("type: \(type)", "contentType: \(contentType)")
+        if type == .story {
+            parseCardContent(StoryMessageContent.self, data: data)
+        } else if type == .card, let cardType = CardType(rawValue: contentType) {
+            switch cardType {
+            case .content:
+                parseCardContent(ContentCardContent.self, data: data)
+            case .evaluation, .preference:
+                parseCardContent(OptionCardContent.self, data: data)
+            default:
+                logger.error("unsupported card type: \(cardType)")
+            }
+        } else {
+            logger.error("Parse faild: \(rawContent)")
+        }
+    }
+    
+    mutating func parseCardContent<T>(_ contentType: T.Type, data: Data) where T: MessageContent {
+        do {
+            content = try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            logger.error(error)
+        }
     }
 }

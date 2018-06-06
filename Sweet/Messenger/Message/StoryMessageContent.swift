@@ -17,3 +17,13 @@ struct StoryMessageContent: MessageContent {
         case url = "url"
     }
 }
+
+extension StoryMessageContent {
+    func thumbnailURL() -> URL? {
+        guard storyType != .unknown else { return nil }
+        if storyType == .text || storyType == .image {
+            return URL(string: url)
+        }
+        return URL(string: url + "?vframe/jpg/offset/0.5")
+    }
+}

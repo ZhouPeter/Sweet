@@ -85,6 +85,23 @@ final class ConversationController: MessagesViewController {
             result: .right
         )
         messages.append(evaluation)
+        
+        var videoStory = InstantMessage()
+        videoStory.type = .story
+        videoStory.content = StoryMessageContent(
+            storyType: .video,
+            url: "http://xpro-cdn01.feparty.com/000KwDd7lx07kENFN2Vq01040200k89K0k010.mp4"
+        )
+        messages.append(videoStory)
+        
+        var imageStory = InstantMessage()
+        imageStory.type = .story
+        imageStory.content = StoryMessageContent(
+            storyType: .image,
+            url: "http://mpic1.tiankong.com/565/584/56558426f8239fa175a48e293cf2a0b5/640.jpg"
+        )
+        messages.append(imageStory)
+        
         messagesCollectionView.reloadData()
     }
     

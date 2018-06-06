@@ -125,15 +125,7 @@ final class Messenger {
     
     // MARK: - Messages
     
-    @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64) -> InstantMessage {
-        var message = InstantMessage()
-        message.rawContent = text
-        message.type = .text
-        message.to = to
-        message.from = from
-        send(message)
-        return message
-    }
+    
     
     func send(_ message: InstantMessage) {
         guard state == .online else {
