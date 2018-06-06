@@ -125,8 +125,6 @@ final class Messenger {
     
     // MARK: - Messages
     
-    
-    
     func send(_ message: InstantMessage) {
         guard state == .online else {
             multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })

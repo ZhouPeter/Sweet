@@ -37,6 +37,8 @@ struct InstantMessage {
             return rawContent
         case .story:
             return "你有一条小故事消息"
+        case .card:
+            return "你有一条卡片消息"
         default:
             return "[未知消息]"
         }
