@@ -13,7 +13,12 @@ extension Notification.Name {
 }
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
-    private var userIds = [UInt64]()
+    private var userIds = [UInt64]() {
+        didSet {
+            sendButton.backgroundColor = userIds.count == 0 ? UIColor(hex: 0xf2f2f2) : UIColor.xpBlue()
+            sendButton.isEnabled = userIds.count > 0
+        }
+    }
     private lazy var topView: UIView = {
         let view = UIView()
         return view
@@ -99,8 +104,7 @@ class ShareCardController: BaseViewController {
         sendCallback?(shareTextField.text!, userIds)
     }
     @objc private func textFieldEditChanged(_ textField: UITextField) {
-        sendButton.backgroundColor = textField.text == "" ? UIColor(hex: 0xf2f2f2) : UIColor.xpBlue()
-        sendButton.isEnabled = textField.text != ""
+        
     }
     
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
@@ -228,6 +232,10 @@ extension ShareCardController: UITableViewDelegate {
         cell.selectButton.isSelected = !cell.selectButton.isSelected
         if cell.selectButton.isSelected {
             userIds.append(contactViewModels[indexPath.row].userId)
+        } else {
+            if let index = userIds.index(where: {$0 == contactViewModels[indexPath.row].userId}) {
+                userIds.remove(at: index)
+            }
         }
     }
 }

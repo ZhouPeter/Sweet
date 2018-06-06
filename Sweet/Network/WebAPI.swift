@@ -54,6 +54,8 @@ enum WebAPI {
     case socketAddress
     case removeRecentMessage(userID: UInt64)
     case getSetting(version: String)
+    case shareCard(cardId: String, comment: String, userId: UInt64)
+    case shareStory(storyId: UInt64, comment: String, userId: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -147,6 +149,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/message/del"
         case .getSetting:
             return "/get/setting"
+        case .shareCard:
+            return "/card/share"
+        case .shareStory:
+            return "/story/share"
         }
     }
     
@@ -225,7 +231,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case let .activityCardLike(cardId, activityItemId, comment):
             parameters = ["cardId": cardId, "activityItemId": activityItemId, "comment": comment]
         case let .getSetting(version):
-            parameters = ["version" : version]
+            parameters = ["version": version]
+        case let .shareCard(cardId, comment, userId):
+            parameters = ["cardId": cardId, "comment": comment, "userId": userId]
+        case let .shareStory(storyId, comment, userId):
+            parameters = ["storyId": storyId, "comment": comment, "userId": userId]
         default:
             break
         }

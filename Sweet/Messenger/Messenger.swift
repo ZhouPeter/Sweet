@@ -263,6 +263,7 @@ final class Messenger {
         request.msgIDList = IDs
         send(request, responseType: GetResp.self) { (response) in
             guard let response = response else { return }
+            logger.debug(response)
             let messages: [InstantMessage] = response.msgList.map({ proto in
                 var message = InstantMessage(proto: proto)
                 if let userID = self.conversationUserID, message.from == userID {

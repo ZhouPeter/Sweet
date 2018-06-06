@@ -17,7 +17,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     }()
     
@@ -186,8 +186,8 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             selectedUIHidden(isHidden: false)
             let sumButtonWidth: CGFloat = CGFloat(urls.count * 40 + (urls.count - 1) * 10)
             if selectedIndex == 0 {
-                selectedButtonCenterXLeftConstraint?.isActive = true
                 selectedButtonCenterXRightConstraint?.isActive = false
+                selectedButtonCenterXLeftConstraint?.isActive = true
                 leftImageViews.forEach { (imageView) in
                     imageView.isHidden = true
                 }
@@ -252,7 +252,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     @objc private func selectAction(sender: UIButton) {
         if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate {
-            if let cardId = cardId  {
+            if let cardId = cardId, selectedButton.isHidden {
                 delegate.selectChoiceCard(cardId: cardId, selectedIndex: sender.tag)
             }
         }

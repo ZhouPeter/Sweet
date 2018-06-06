@@ -26,13 +26,11 @@ struct ChoiceCardViewModel {
         if let result = model.result {
             self.selectedIndex = result.index
             self.percent = result.percent
-            var urls = [URL]()
-            result.contactUserList.forEach { (user) in
-                let url = URL(string: user.avatar)!
-                urls.append(url)
+            self.avatarURLs = result.contactUserList.compactMap({ URL(string: $0.avatar)})
+            if self.avatarURLs!.count > 3 {
+                self.avatarURLs?.removeSubrange(3..<result.contactUserList.count)
             }
-            self.avatarURLs = urls
-        } 
+        }
     }
     
 }
