@@ -63,6 +63,7 @@ final class ConversationController: MessagesViewController {
     private func setupCollectionView() {
         messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.register(OptionCardMessageCell.self)
+        messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -126,6 +127,11 @@ final class ConversationController: MessagesViewController {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
+        if value is ContentCardContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ContentCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
@@ -153,6 +159,16 @@ extension ConversationController: MessagesDataSource {
         let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
         avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
+    
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(
+            string: "下午 4:59",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.lightGray
+            ]
+        )
+    }
 }
 
 extension ConversationController: MessagesDisplayDelegate {
@@ -176,6 +192,13 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return .black
     }
+
+    func cellTopLabelHeight(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 25
+    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {
@@ -192,7 +215,7 @@ extension ConversationController: MessageInputBarDelegate {
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
-        messagesCollectionView.scrollToBottom()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 }
 
@@ -213,7 +236,6 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
-        guard message.from == buddy.userId else { return }
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
