@@ -97,8 +97,8 @@ ProfileFlowFactory {
         return CardsManagerController()
     }
     
-    func makeProfileModule() -> ProfileView {
-        return ProfileController()
+    func makeProfileView(user: User, userId: UInt64) -> ProfileView {
+        return ProfileController(user: user, userId: userId)
     }
     
     func makeTopicListView() -> TopicListView {

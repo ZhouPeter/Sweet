@@ -576,6 +576,14 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
                 self.cellConfigurators[index] = configurator
                 cell.updateWith(selectedIndex)
+                if !Defaults[.isEvaluationOthers] {
+                    let alert = UIAlertController(title: "你的好友将会收到你的评价",
+                                                  message: "下次不再提示",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "好的", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                Defaults[.isEvaluationOthers] = true
             case let .failure(error):
                 logger.error(error)
             }
@@ -614,19 +622,21 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction(title: "分享给好友", style: .default) { (_) in
+        let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
+            let controller = ShareCardController()
+            self.present(controller, animated: true, completion: nil)
+        }
+        let subscriptionAction = UIAlertAction(title: "订阅该栏目/该用户", style: .default) { (_) in
             
         }
-        let subscriptionAction = UIAlertAction(title: "订阅", style: .default) { (_) in
-            
-        }
-        let unlikeAction = UIAlertAction(title: "不感兴趣", style: .default) { (_) in
+        let unlikeAction = UIAlertAction(title: "屏蔽该栏目/该用户", style: .default) { (_) in
             
         }
         let reportAction = UIAlertAction(title: "举报", style: .destructive) { (_) in
             
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
         alertController.addAction(shareAction)
         alertController.addAction(subscriptionAction)
         alertController.addAction(unlikeAction)
@@ -644,8 +654,15 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
                 switch result {
                 case .success:
                     guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
+                    let storys = self.cards[index].storyList![storyGroupIndex]
+                    var newStorys = [StoryResponse]()
+                    for var story in storys {
+                        story.read = true
+                        newStorys.append(story)
+                    }
+                    self.cards[index].storyList![storyGroupIndex] = newStorys
                     var viewModel = StoriesCardViewModel(model: self.cards[index])
-                    viewModel.isReads[storyGroupIndex] = true
+                    viewModel.storyCellModels[storyGroupIndex].isRead = true
                     let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
                     self.cellConfigurators[index] = configurator
                     self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])

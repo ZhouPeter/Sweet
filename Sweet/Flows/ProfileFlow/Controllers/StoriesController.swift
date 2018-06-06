@@ -59,7 +59,15 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
 
-    var userId: UInt64?
+    var userId: UInt64
+    init(userId: UInt64) {
+        self.userId = userId
+        super.init(nibName: nil, bundle:nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private var storyViewModels = [StoryCellViewModel]() {
         didSet {
             layout.selfIndex = storyViewModels.count
@@ -104,7 +112,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     }
     
     func loadRequest() {
-        guard let userId = userId else { return }
         web.request(.storyList(page: 0, userId: userId),
                     responseType: Response<StoryListResponse>.self) { [weak self] (result) in
             guard let `self` = self else { return }

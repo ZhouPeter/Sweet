@@ -35,6 +35,7 @@ PODS:
   - UMCPush (3.2.1):
     - UMCCommon
   - VIMediaCache (0.4)
+  - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
   - Hero (~> 1.2.0)
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - TapticEngine
   - UMCPush
   - VIMediaCache
+  - WechatOpenSDK
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -77,6 +79,7 @@ SPEC REPOS:
     - UMCCommon
     - UMCPush
     - VIMediaCache
+    - WechatOpenSDK
 
 EXTERNAL SOURCES:
   libimcloud:
@@ -117,7 +120,8 @@ SPEC CHECKSUMS:
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
+  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 89cb3365428e0c88f5c0146897f4d6eb52fb222f
+PODFILE CHECKSUM: f723e0bd70fea2fefc7b0680e51105d945f456c7
 
 COCOAPODS: 1.5.0

@@ -50,17 +50,6 @@ struct ContentImage: Codable {
     let url: String
 }
 
-struct ActivityResponse: Codable {
-    let avatar: String
-    let body: ContentBody
-    let activityItemId: String
-    var like: Bool
-    let same: Bool
-    let actor: UInt64
-    let subtitle: String
-    let title: String
-}
-
 struct ContentBody: Codable {
     let content: String
     let comment: String

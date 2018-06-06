@@ -19,9 +19,12 @@ enum WebAPI {
     case uploadContacts(contacts: [[String: Any]])
     case getUserProfile(userId: UInt64)
     case storyList(page: Int, userId: UInt64)
+    case evaluationList(page: Int, userId: UInt64)
+    case activityList(page: Int, userId: UInt64)
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
+    case inviteUrl
     case contactAllList
     case phoneContactList
     case blackContactList
@@ -50,6 +53,7 @@ enum WebAPI {
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
     case socketAddress
     case removeRecentMessage(userID: UInt64)
+    case getSetting(version: String)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -73,6 +77,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/profile/get"
         case .storyList:
             return "/user/profile/story/list"
+        case .evaluationList:
+            return "/user/profile/evaluation/list"
+        case .activityList:
+            return "/user/profile/activity/list"
         case .searchUniversity:
             return "/network/university/search"
         case .searchCollege:
@@ -107,6 +115,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/contact/subscription/section/del"
         case .inviteContact:
             return "/contact/phone/invite"
+        case .inviteUrl:
+            return "/contact/invite/url"
         case .searchContact:
             return "/contact/search"
         case .storyTopics:
@@ -135,6 +145,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/comment"
         case .removeRecentMessage:
             return "/message/del"
+        case .getSetting:
+            return "/get/setting"
         }
     }
     
@@ -153,7 +165,9 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phone, "code": code]
         case let .uploadContacts(contacts):
             parameters = ["contacts": contacts]
-        case let .storyList(page, userId):
+        case let .storyList(page, userId),
+             let .evaluationList(page, userId),
+             let .activityList(page, userId):
             parameters = ["page": page, "userId": userId]
         case let .searchUniversity(name):
             parameters = ["universityName": name]
@@ -210,6 +224,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["userId": userID]
         case let .activityCardLike(cardId, activityItemId, comment):
             parameters = ["cardId": cardId, "activityItemId": activityItemId, "comment": comment]
+        case let .getSetting(version):
+            parameters = ["version" : version]
         default:
             break
         }

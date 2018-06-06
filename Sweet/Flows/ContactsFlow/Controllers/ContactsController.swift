@@ -15,7 +15,6 @@ private let buttonSpace: CGFloat = 50
 class ContactsController: BaseViewController, ContactsView {
     weak var delegate: ContactsViewDelegate?
     
-    private var blacklistViewModels = [ContactViewModel]()
     private var between72hViewModels = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
     private var titles = [String]()
@@ -45,7 +44,7 @@ class ContactsController: BaseViewController, ContactsView {
         tableView.separatorInset.left = 0
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactsCell")
+        tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
         return tableView
@@ -62,12 +61,13 @@ class ContactsController: BaseViewController, ContactsView {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(tableView)
-        tableView.fill(in: view, left: 0, right: 0, top: 0, bottom: UIScreen.safeBottomMargin())
+        tableView.fill(in: view, top: UIScreen.navBarHeight(), bottom: UIScreen.safeBottomMargin())
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,7 +91,6 @@ class ContactsController: BaseViewController, ContactsView {
     private func removeData() {
         allViewModels.removeAll()
         between72hViewModels.removeAll()
-        blacklistViewModels.removeAll()
         viewModelsGroup.removeAll()
         titles.removeAll()
     }
@@ -123,7 +122,7 @@ class ContactsController: BaseViewController, ContactsView {
                             }
                         })
                     }
-                    self.blacklistViewModels.append(viewModel)
+                    self.allViewModels.append(viewModel)
                 })
                 self.between72hViewModels.sort {
                      return $0.lastTime > $1.lastTime
@@ -136,11 +135,7 @@ class ContactsController: BaseViewController, ContactsView {
                     self.viewModelsGroup.append(self.allViewModels)
                     self.titles.append("全部")
                 }
-                if self.blacklistViewModels.count > 0 {
-                    self.viewModelsGroup.append(self.blacklistViewModels)
-                    self.titles.append("黑名单")
-                }
-                let countTitle = "\(self.allViewModels.count + self.blacklistViewModels.count)位联系人"
+                let countTitle = "\(self.allViewModels.count)位联系人"
                 self.tableViewFooterView.update(title: countTitle)
                 self.tableView.reloadData()
             case let .failure(error):
@@ -153,14 +148,14 @@ class ContactsController: BaseViewController, ContactsView {
         web.request(.delBlacklist(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.blacklistViewModels.index(where: { $0.userId == userId }) else { return }
-                self.blacklistViewModels[index].buttonStyle = .backgroundColorGray
-                self.blacklistViewModels[index].buttonTitle = "拉黑"
-                self.blacklistViewModels[index].callBack = { [weak self] userId in
+                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
+                self.allViewModels[index].buttonStyle = .backgroundColorGray
+                self.allViewModels[index].buttonTitle = "拉黑"
+                self.allViewModels[index].callBack = { [weak self] userId in
                     self?.addBlacklist(userId: userId)
                 }
                 let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section][index] = self.blacklistViewModels[index]
+                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -172,14 +167,14 @@ class ContactsController: BaseViewController, ContactsView {
         web.request(.addBlacklist(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.blacklistViewModels.index(where: { $0.userId == userId }) else { return }
-                self.blacklistViewModels[index].buttonStyle = .borderGray
-                self.blacklistViewModels[index].buttonTitle = "恢复"
-                self.blacklistViewModels[index].callBack = { [weak self] userId in
+                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
+                self.allViewModels[index].buttonStyle = .borderGray
+                self.allViewModels[index].buttonTitle = "恢复"
+                self.allViewModels[index].callBack = { [weak self] userId in
                     self?.delBlacklist(userId: userId)
                 }
                 let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section][index] = self.blacklistViewModels[index]
+                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -232,7 +227,7 @@ extension ContactsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "contactsCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
+            withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
         if indexPath.section == 0 {
             cell.updateCategroy(viewModel: categoryViewModels[indexPath.row])
         } else {

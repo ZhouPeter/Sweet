@@ -142,5 +142,45 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
+    func reSize(newSize: CGSize, interpolationQuality quality: CGInterpolationQuality) -> UIImage {
+        var drawTransposed = false
+        switch imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            drawTransposed = true
+        default:
+            drawTransposed = false
+        }
+        let transform = transformforOrientation(newSize: newSize)
+        return reSize(newSize: newSize,
+                      transform: transform,
+                      drawTransposed: drawTransposed,
+                      interpolationQuality: quality)
+    }
+    
+    private func reSize(newSize: CGSize,
+                        transform: CGAffineTransform,
+                        drawTransposed transpose: Bool,
+                        interpolationQuality quality: CGInterpolationQuality) -> UIImage {
+        let scale: CGFloat = max(1.0, self.scale)
+        let newRect = CGRect(x: 0, y: 0, width: newSize.width * scale, height: newSize.height * scale).integral
+        let transposedRect = CGRect(origin: .zero, size: newRect.size)
+        let cgImg = cgImage
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmap = CGContext(data: nil,
+                               width: Int(newRect.size.width),
+                               height: Int(newRect.size.height),
+                               bitsPerComponent: 8,
+                               bytesPerRow: Int(newRect.size.width) * 4,
+                               space: colorSpace,
+                               bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        
+        bitmap?.concatenate(transform)
+        bitmap?.interpolationQuality = quality
+        bitmap?.draw(cgImg!, in: transpose ? transposedRect : newRect)
+        let newCgImage = bitmap?.makeImage()
+        let newImage = UIImage(cgImage: newCgImage!, scale: scale, orientation: .up)
+        return newImage
+    }
 
 }

@@ -10,21 +10,30 @@ import Foundation
 
 struct StoriesCardViewModel {
     let cardId: String
+    var storyCellModels: [StoryCollectionViewCellModel]
     let storiesCellModels: [[StoryCollectionViewCellModel]]
     let storiesGroup: [[StoryCellViewModel]]
-    var isReads: [Bool]
     init(model: CardResponse) {
         cardId = model.cardId
         storiesCellModels = model.storyList!.map {
            return $0.map { return StoryCollectionViewCellModel(model: $0) }
         }
+//        var isReads = model.storyList!.map({ (model) -> Bool in
+//            var isRead = true
+//            model.forEach({ if $0.read == false {isRead = false} })
+//            return isRead
+//        })
+        storyCellModels = storiesCellModels.map {
+            var storiesCellModel = $0
+            var isRead = true
+            storiesCellModel.forEach({ if $0.isRead == false {isRead = false} })
+            var storyCellModel = storiesCellModel[0]
+            storyCellModel.isRead = isRead
+            return storyCellModel
+        }
         storiesGroup = model.storyList!.map {
             return $0.map { return StoryCellViewModel(model: $0) }
         }
-        isReads = model.storyList!.map({ (model) -> Bool in
-            var isRead = true
-            model.forEach({ if $0.read == false {isRead = false} })
-            return isRead
-        })
+       
     }
 }

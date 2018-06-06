@@ -21,6 +21,7 @@ struct BaseInfoCellViewModel {
     let cellHeight: CGFloat
     let subscriptionButtonHidden: Bool
     let sendMessageButtonHidden: Bool
+    var subscriptionButtonStyle: ContactButtonStyle
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
@@ -35,6 +36,7 @@ struct BaseInfoCellViewModel {
         subscriptionButtonHidden = user.userId == userID
         sendMessageButtonHidden = user.userId == userID
         subscribeButtonString = user.subscription ? "已订阅" : "订阅"
+        subscriptionButtonStyle = user.subscription ? .borderBlue : .backgroundColorBlue
         cellHeight = user.userId == userID ? 140 : 180
     }
 }

@@ -17,7 +17,7 @@ class BaseViewController: UIViewController {
         let backBarButtonItem = UIBarButtonItem()
         backBarButtonItem.title = ""
         navigationItem.backBarButtonItem = backBarButtonItem
-        navigationController?.navigationBar.tintColor = .white
+//        navigationController?.navigationBar.tintColor = .white
 
     }
     override var shouldAutorotate: Bool {

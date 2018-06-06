@@ -18,6 +18,7 @@ struct ContactViewModel {
     var buttonTitle: String?
     var buttonStyle: ContactButtonStyle?
     var callBack: ((UInt64) -> Void)?
+    var isHiddeenSelectButton: Bool = true
     init(model: Contact) {
         self.avatarURL = URL(string: model.avatar)!
         self.infoString = model.info
