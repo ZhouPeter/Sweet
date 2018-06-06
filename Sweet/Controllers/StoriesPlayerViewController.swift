@@ -456,7 +456,7 @@ extension StoriesPlayerViewController {
         let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
             let controller = ShareCardController()
             controller.sendCallback = { (text, userIds) in
-                
+                self.sendMessage(text: text, userIds: userIds)
             }
             self.present(controller, animated: true, completion: nil)
         }
@@ -502,7 +502,7 @@ extension StoriesPlayerViewController {
         alertController.addAction(UIAlertAction(title: "分享给联系人", style: .default, handler: { (_) in
             let controller = ShareCardController()
             controller.sendCallback = { (text, userIds) in
-                
+                self.sendMessage(text: text, userIds: userIds)
             }
             self.present(controller, animated: true, completion: nil)
         }))
