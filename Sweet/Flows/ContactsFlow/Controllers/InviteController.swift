@@ -21,6 +21,8 @@ class InviteController: BaseViewController, InviteView {
         tableView.dataSource = self
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "inviteCell")
         tableView.register(ModuleTableViewCell.self, forCellReuseIdentifier: "moduleCell")
+        tableView.keyboardDismissMode = .onDrag
+        tableView.tableHeaderView = searchController.searchBar
         return tableView
     }()
     
@@ -33,17 +35,28 @@ class InviteController: BaseViewController, InviteView {
         searchBar.isTranslucent = true
         return searchBar
     }()
+    private lazy var searchController: UISearchController = {
+        let resultController = ContactSearchController()
+        let searchController = UISearchController(searchResultsController: resultController)
+        searchController.searchResultsUpdater = resultController
+        searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
+        searchController.searchBar.placeholder = "搜索人名、手机号"
+        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.setCancelText(text: "返回", textColor: .black)
+        searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
+        return searchController
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "邀请好友"
         view.addSubview(tableView)
-        tableView.fill(in: view, top: 50)
-        view.addSubview(searchBar)
-        searchBar.align(.left)
-        searchBar.align(.right)
-        searchBar.align(.top, inset: UIScreen.navBarHeight())
-        searchBar.constrain(height: 50)
+        tableView.fill(in: view)
         loadPhoneContactList()
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
     }
     
     private func loadPhoneContactList() {

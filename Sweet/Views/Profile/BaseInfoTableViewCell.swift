@@ -30,7 +30,7 @@ class BaseInfoTableViewCell: UITableViewCell, CellReusable, CellUpdatable {
         senderButton.isHidden = true
         subscribeButton.isHidden = true
         avatarImageView.setViewRounded()
-//        subscribeButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpBlue())
+        subscribeButton.layer.cornerRadius = 14
 //        subscribeButton.setTitleColor(UIColor.xpBlue(), for: .normal)
         senderButton.setViewRounded(borderWidth: 1, borderColor: .black)
         senderButton.setTitleColor(.black, for: .normal)

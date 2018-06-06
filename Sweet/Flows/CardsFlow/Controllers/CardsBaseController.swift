@@ -622,19 +622,21 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction(title: "分享给好友", style: .default) { (_) in
+        let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
+            let controller = ShareCardController()
+            self.present(controller, animated: true, completion: nil)
+        }
+        let subscriptionAction = UIAlertAction(title: "订阅该栏目/该用户", style: .default) { (_) in
             
         }
-        let subscriptionAction = UIAlertAction(title: "订阅", style: .default) { (_) in
-            
-        }
-        let unlikeAction = UIAlertAction(title: "不感兴趣", style: .default) { (_) in
+        let unlikeAction = UIAlertAction(title: "屏蔽该栏目/该用户", style: .default) { (_) in
             
         }
         let reportAction = UIAlertAction(title: "举报", style: .destructive) { (_) in
             
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
         alertController.addAction(shareAction)
         alertController.addAction(subscriptionAction)
         alertController.addAction(unlikeAction)

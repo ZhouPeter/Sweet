@@ -173,6 +173,10 @@
 		58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
 		58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
 		58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B5A209C5B16004C2FFE /* ContactViewModel.swift */; };
+		58461D3120C6B6AF00E3712C /* ShareCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58461D3020C6B6AF00E3712C /* ShareCardController.swift */; };
+		58461D3220C6B6AF00E3712C /* ShareCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58461D3020C6B6AF00E3712C /* ShareCardController.swift */; };
+		58461D3320C6B6AF00E3712C /* ShareCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58461D3020C6B6AF00E3712C /* ShareCardController.swift */; };
+		58461D3420C6B6AF00E3712C /* ShareCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58461D3020C6B6AF00E3712C /* ShareCardController.swift */; };
 		58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
@@ -1150,6 +1154,7 @@
 		58447B50209C5143004C2FFE /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		58447B55209C58CC004C2FFE /* ContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListResponse.swift; sourceTree = "<group>"; };
 		58447B5A209C5B16004C2FFE /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
+		58461D3020C6B6AF00E3712C /* ShareCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardController.swift; sourceTree = "<group>"; };
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
 		585B68BC20AF183E00E734BC /* SweetPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerView.swift; sourceTree = "<group>"; };
@@ -1828,6 +1833,7 @@
 				589E6BB320A95D990038FAED /* CardsManagerController.swift */,
 				589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */,
 				58CAB38720AD581A007230AA /* CardsBaseController.swift */,
+				58461D3020C6B6AF00E3712C /* ShareCardController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2829,6 +2835,7 @@
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				58461D3120C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091920B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */,
@@ -2925,6 +2932,7 @@
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259520BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */,
+				58461D3320C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				589E6BBB20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
@@ -3157,6 +3165,7 @@
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
+				58461D3420C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
@@ -3569,6 +3578,7 @@
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
+				58461D3220C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */,

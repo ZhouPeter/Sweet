@@ -50,7 +50,15 @@ class ContactTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 14
         button.layer.masksToBounds = true
         button.isHidden = true
-        button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(statusAction(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var selectButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Checked"), for: .selected)
+        button.setImage(#imageLiteral(resourceName: "UnChecked"), for: .normal)
+        button.isHidden = true
         return button
     }()
     
@@ -66,7 +74,7 @@ class ContactTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc private func buttonAction(_ sender: UIButton) {
+    @objc private func statusAction(_ sender: UIButton) {
         if let userId = userId, let buttonCallBack = buttonCallBack {
             buttonCallBack(userId)
         } else if let sectionId = sectionId, let buttonCallBack = buttonCallBack {
@@ -95,6 +103,11 @@ class ContactTableViewCell: UITableViewCell {
         statusButton.constrain(width: 62, height: 28)
         statusButton.centerY(to: contentView)
         statusButton.align(.right, to: contentView, inset: 10)
+        contentView.addSubview(selectButton)
+        selectButton.constrain(width: 22, height: 22)
+        selectButton.centerY(to: contentView)
+        selectButton.align(.right, inset: 12)
+        
     }
     
     func update(viewModel: ContactViewModel) {
@@ -105,6 +118,7 @@ class ContactTableViewCell: UITableViewCell {
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
         statusButton.isHidden = viewModel.isHiddenButton
+        selectButton.isHidden = viewModel.isHiddeenSelectButton
         if !viewModel.isHiddenButton {
             statusButton.setTitle(viewModel.buttonTitle, for: .normal)
             statusButton.setButtonStyle(style: viewModel.buttonStyle!)

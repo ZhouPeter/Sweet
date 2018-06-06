@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyUserDefaults
 var allowRotation = false
 
 @UIApplicationMain
@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                name: NSNotification.Name(logoutNotiName),
                                                object: nil)
         WXApi.registerApp("wx819697effecdb6f5")
+        getSetting()
         return true
     }
     
@@ -82,7 +83,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - Privates
 extension AppDelegate {
-    
+    private func getSetting() {
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        web.request(.getSetting(version: version!)) { (result) in
+            switch result {
+            case let .success(response):
+                if let setting = response["setting"] as? [String: Any], let review = setting["review"] as? Int {
+                    Defaults[.review] = review
+                }
+            case let .failure(error):
+                logger.error(error)
+                Defaults[.review] = 0
+                
+            }
+        }
+    }
     @objc func logoutAuth(notification: Notification) {
         if let coordinator = applicationCoordinator as? ApplicationCoordinator {
             coordinator.removeAllDependency()

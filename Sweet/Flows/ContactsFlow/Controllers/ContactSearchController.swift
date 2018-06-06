@@ -24,19 +24,21 @@ class ContactSearchController: BaseViewController, ContactSearchView {
     private var lastestSearchText: String = ""
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: 30)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 25)
+        button.setTitleColor(.black, for: .normal)
         button.setTitle("返回", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
         return button
     }()
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 75, height: 25)
+        searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 65, height: 25)
         searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
         searchBar.placeholder = "搜索人名、手机号"
+        searchBar.setCancelText(text: "返回", textColor: .black)
+        searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
         searchBar.delegate = self
         return searchBar
     }()
@@ -59,6 +61,10 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         navigationItem.titleView = searchBar
         view.addSubview(tableView)
         tableView.fill(in: view)
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
     }
     @objc private func backAction(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
@@ -85,6 +91,14 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     let viewModel = ContactViewModel(model: model)
                     self.contactViewModels.append(viewModel)
                 })
+                response.blacklists.forEach({ (model) in
+                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    viewModel.callBack = { [weak self] userId in
+                        self?.delBlacklist(userId: userId)
+                    }
+                    self.contactViewModels.append(viewModel)
+                })
+                
                 response.subscriptions.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
                     viewModel.callBack = { [weak self] userId in
@@ -92,6 +106,15 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.subscriptionsViewModels.append(viewModel)
                 })
+                
+                response.blocks.forEach({ (model) in
+                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    viewModel.callBack = { [weak self] userId in
+                        self?.delBlock(userId: userId)
+                    }
+                    self.subscriptionsViewModels.append(viewModel)
+                })
+                
                 response.phoneContacts.forEach({ (model) in
                     var viewModel = PhoneContactViewModel(model: model)
                     viewModel.callBack = { [weak self] phone in
@@ -99,25 +122,10 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.phoneContactViewModels.append(viewModel)
                 })
-                response.blocks.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
-                    viewModel.callBack = { [weak self] userId in
-                        self?.delBlock(userId: userId)
-                    }
-                    self.blockViewModels.append(viewModel)
-                })
-                response.blacklists.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
-                    viewModel.callBack = { [weak self] userId in
-                        self?.delBlacklist(userId: userId)
-                    }
-                    self.blacklistViewModels.append(viewModel)
-                })
+            
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
                 if self.subscriptionsViewModels.count > 0 { self.titles.append("订阅") }
                 if self.phoneContactViewModels.count > 0 { self.titles.append("通讯录") }
-                if self.blockViewModels.count > 0 { self.titles.append("屏蔽") }
-                if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }
 
                 self.tableView.reloadData()
             case let .failure(error):
@@ -220,7 +228,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
             switch result {
             case .success:
                 guard let index = self.subscriptionsViewModels.index(where: { $0.userId == userId }),
-                      let section = self.titles.index(where: { $0 == "我的订阅"}) else { return }
+                      let section = self.titles.index(where: { $0 == "订阅"}) else { return }
                 self.subscriptionsViewModels[index].buttonTitle = "已订阅"
                 self.subscriptionsViewModels[index].buttonStyle = .borderBlue
                 self.subscriptionsViewModels[index].callBack = { [weak self] userId in
@@ -238,7 +246,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
             switch result {
             case .success:
                 guard let index = self.subscriptionsViewModels.index(where: { $0.userId == userId }),
-                    let section = self.titles.index(where: { $0 == "我的订阅"}) else { return }
+                    let section = self.titles.index(where: { $0 == "订阅"}) else { return }
                 self.subscriptionsViewModels[index].buttonTitle = "订阅"
                 self.subscriptionsViewModels[index].buttonStyle = .backgroundColorBlue
                 self.subscriptionsViewModels[index].callBack = { [weak self] userId in
@@ -261,14 +269,10 @@ extension ContactSearchController: UITableViewDataSource {
         switch titles[section] {
         case "联系人":
             return contactViewModels.count
-        case "我的订阅":
+        case "订阅":
             return subscriptionsViewModels.count
         case "通讯录":
             return phoneContactViewModels.count
-        case "屏蔽":
-            return blockViewModels.count
-        case "黑名单":
-            return blacklistViewModels.count
         default:
             return 0
         }
@@ -280,14 +284,10 @@ extension ContactSearchController: UITableViewDataSource {
         switch titles[indexPath.section] {
         case "联系人":
             cell.update(viewModel: contactViewModels[indexPath.row])
-        case "我的订阅":
+        case "订阅":
             cell.update(viewModel: subscriptionsViewModels[indexPath.row])
         case "通讯录":
             cell.updatePhoneContact(viewModel: phoneContactViewModels[indexPath.row])
-        case "屏蔽":
-            cell.update(viewModel: blockViewModels[indexPath.row])
-        case "黑名单":
-            cell.update(viewModel: blacklistViewModels[indexPath.row])
         default: break
         }
         return cell
@@ -317,11 +317,16 @@ extension ContactSearchController: UITableViewDelegate {
             if let userId = phoneContactViewModels[indexPath.row].userId {
                 showProfile?(userId)
             }
-        case "屏蔽":
-            showProfile?(blockViewModels[indexPath.row].userId)
-        case "黑名单":
-            showProfile?(blacklistViewModels[indexPath.row].userId)
         default: break
+        }
+    }
+}
+extension ContactSearchController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        lastestSearchText = searchController.searchBar.text!
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard self.lastestSearchText == searchController.searchBar.text! else { return }
+            self.searchContact(name: searchController.searchBar.text!)
         }
     }
 }

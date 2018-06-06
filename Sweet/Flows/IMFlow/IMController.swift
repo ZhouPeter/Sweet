@@ -55,6 +55,7 @@ class IMController: BaseViewController, IMView {
         setupControllers()
         delegate?.imViewDidLoad()
         showInbox(true)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

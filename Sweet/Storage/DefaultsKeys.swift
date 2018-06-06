@@ -16,4 +16,5 @@ extension DefaultsKeys {
     static let isEvaluationOthers = DefaultsKey<Bool>("isEvaluationOthers")
     static let isInvited = DefaultsKey<Bool>("isInvited")
     static let inviteUrl = DefaultsKey<String?>("inviteUrl")
+    static let review = DefaultsKey<Int>("review")
 }
