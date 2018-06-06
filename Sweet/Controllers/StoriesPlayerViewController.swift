@@ -65,20 +65,19 @@ class StoriesPlayerViewController: BaseViewController {
         return storyInfoLabel
     }()
     
-    private lazy var menuOrShareButton: UIButton = {
-        let menuOrShareButton = UIButton()
-        menuOrShareButton.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var menuButton: UIButton = {
+        let menuButton = UIButton()
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.setImage( #imageLiteral(resourceName: "Menu_white").withRenderingMode(.alwaysTemplate), for: .normal)
+        menuButton.tintColor = .white
         if isSelf {
-            menuOrShareButton.setImage( #imageLiteral(resourceName: "Menu_white").withRenderingMode(.alwaysTemplate), for: .normal)
-            menuOrShareButton.tintColor = .white
-            menuOrShareButton.addTarget(self, action: #selector(presentMenuAlertController(sender:)),
+            menuButton.addTarget(self, action: #selector(presentSelfMenuAlertController(sender:)),
                                         for: .touchUpInside)
         } else {
-            menuOrShareButton.setImage( #imageLiteral(resourceName: "Share"), for: .normal)
-            menuOrShareButton.addTarget(self, action: #selector(presentShareAlertController(sender:)),
+            menuButton.addTarget(self, action: #selector(presentOtherMenuAlertController(sender:)),
                                         for: .touchUpInside)
         }
-        return menuOrShareButton
+        return menuButton
     }()
     
     private lazy var progressView: StoryPlayProgressView = {
@@ -164,10 +163,10 @@ class StoriesPlayerViewController: BaseViewController {
         view.addSubview(storyInfoLabel)
         storyInfoLabel.pin(.right, to: avatarImageView, spacing: 5)
         storyInfoLabel.centerY(to: avatarImageView)
-        view.addSubview(menuOrShareButton)
-        menuOrShareButton.constrain(width: 30, height: 30)
-        menuOrShareButton.pin(.left, to: dismissButton, spacing: 15)
-        menuOrShareButton.centerY(to: avatarImageView)
+        view.addSubview(menuButton)
+        menuButton.constrain(width: 30, height: 30)
+        menuButton.pin(.left, to: dismissButton, spacing: 15)
+        menuButton.centerY(to: avatarImageView)
     
     }
     
@@ -451,9 +450,25 @@ extension StoriesPlayerViewController {
 //        inputTextView.startEditing(true)
     }
     
-    @objc private func presentMenuAlertController(sender: UIButton) {
+    @objc private func presentSelfMenuAlertController(sender: UIButton) {
         pause()
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
+            let controller = ShareCardController()
+            controller.sendCallback = { (text, userIds) in
+                
+            }
+            self.present(controller, animated: true, completion: nil)
+        }
+        alertController.addAction(shareAction)
+        let downloadAction = UIAlertAction(title: "保存到手机", style: .default) { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.play()
+            self.downloadStory(downloadBack: { (isSuccess) in
+                self.toast(message: isSuccess ? "保存成功" : "保存失败", duration: 2)
+            })
+        }
+        alertController.addAction(downloadAction)
         let delAction = UIAlertAction(title: "删除本条", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             let alertController = UIAlertController(title: "删除本条小故事",
@@ -463,37 +478,16 @@ extension StoriesPlayerViewController {
                 self?.play()
             })
             let delAction = UIAlertAction.init(title: "删除", style: .destructive, handler: { [weak self] (_) in
-//                guard let `self` = self else { return }
-//                XPClient.delStory(
-//                    storyId: self.stories[self.currentIndex].storyId,
-//                    callback: {[weak self] (_, error) in
-//                        self?.play()
-//                        guard let `self` = self, error == nil else { return }
-//                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-//                        hud.mode = .text
-//                        hud.label.text = "删除成功"
-//                        hud.hide(animated: true)
-//                        self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
-//                        self.stories.remove(at: self.currentIndex)
-//                        self.reloadPlayer()
-//                })
+                
             })
             alertController.addAction(cancelAction)
             alertController.addAction(delAction)
             self.present(alertController, animated: true, completion: nil)
         }
+        delAction.setValue(UIColor.black, forKey: "_titleTextColor")
         alertController.addAction(delAction)
-        let downloadAction = UIAlertAction(title: "下载保存到本地", style: .default) { [weak self] (_) in
-            guard let `self` = self else { return }
-            self.play()
-            self.downloadStory(downloadBack: { (isSuccess) in
-                self.toast(message: isSuccess ? "保存成功" : "保存失败", duration: 2)
-            })
-        }
-        alertController.addAction(downloadAction)
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { [weak self] (_) in
             self?.play()
-
         }
         alertController.addAction(cancelAction)
         let popover = alertController.popoverPresentationController
@@ -503,16 +497,48 @@ extension StoriesPlayerViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    @objc private func presentShareAlertController(sender: UIButton) {
+    @objc private func presentOtherMenuAlertController(sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "分享到微信好友", style: .default, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "分享给联系人", style: .default, handler: { (_) in
+            let controller = ShareCardController()
+            controller.sendCallback = { (text, userIds) in
+                
+            }
+            self.present(controller, animated: true, completion: nil)
+        }))
+        alertController.addAction(UIAlertAction(title: "订阅该用户", style: .default, handler: { (_) in
             
         }))
-        alertController.addAction(UIAlertAction(title: "分享到微信朋友圈", style: .default, handler: { (_) in
+        let blockAction = UIAlertAction(title: "屏蔽", style: .default, handler: { (_) in
             
-        }))
+        })
+        blockAction.setValue(UIColor.black, forKey: "_titleTextColor")
+        alertController.addAction(blockAction)
+        let reportAction = UIAlertAction(title: "投诉", style: .default, handler: { (_) in
+            
+        })
+        reportAction.setValue(UIColor.black, forKey: "_titleTextColor")
+        alertController.addAction(reportAction)
         alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
+    }
+    
+    private func sendMessage(text: String, userIds: [UInt64]) {
+        let storyId = stories[currentIndex].storyId
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        userIds.forEach { userId in
+            queue.async {
+                group.enter()
+                web.request(.shareStory(storyId: storyId, comment: text, userId: userId), completion: { (_) in
+                    group.leave()
+                })
+            }
+        }
+        group.notify(queue: DispatchQueue.main) {
+            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        }
+    
     }
 }
 // MARK: - downloadStory

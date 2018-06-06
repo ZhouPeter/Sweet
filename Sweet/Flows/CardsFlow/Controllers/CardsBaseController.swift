@@ -635,7 +635,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         let blockAction = UIAlertAction(title: "屏蔽该栏目/该用户", style: .default) { (_) in
             
         }
-        let reportAction = UIAlertAction(title: "举报", style: .destructive) { (_) in
+        let reportAction = UIAlertAction(title: "投诉", style: .destructive) { (_) in
             
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -651,45 +651,19 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     }
     
     private func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
-        guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
-        let card  = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
-        if card.type == .content {
-            let url: String
-            if let videoUrl = card.video {
-                url = videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667"
-            } else {
-                url = card.contentImageList![0].url
-            }
-            let content = ContentCardContent(identifier: cardId,
-                                             cardType: InstantMessage.CardType.content,
-                                             text: text,
-                                             imageURLString: url,
-                                             url: card.url!)
-            userIds.forEach {
-                Messenger.shared.sendContentCard(content, from: from, to: $0)
-            }
-        } else if card.type == .choice {
-            let content = OptionCardContent(identifier: cardId,
-                                            cardType: InstantMessage.CardType.preference,
-                                            text: text, leftImageURLString: card.imageList![0],
-                                            rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
-            userIds.forEach {
-                Messenger.shared.sendPreferenceCard(content, from: from, to: $0)
-            }
-        } else if card.type == .evaluation {
-            let content = OptionCardContent(identifier: cardId,
-                                            cardType: InstantMessage.CardType.evaluation,
-                                            text: text,
-                                            leftImageURLString: card.imageList![0],
-                                            rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
-            userIds.forEach {
-                Messenger.shared.sendEvaluationCard(content, from: from, to: $0)
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        userIds.forEach { userId in
+            queue.async {
+                group.enter()
+                web.request(WebAPI.shareCard(cardId: cardId, comment: text, userId: userId), completion: { (_) in
+                    group.leave()
+                })
             }
         }
-        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        group.notify(queue: DispatchQueue.main) {
+            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        }
     }
 }
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {

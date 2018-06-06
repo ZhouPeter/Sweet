@@ -15,7 +15,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     }()
     
