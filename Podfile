@@ -22,6 +22,7 @@ target 'Sweet' do
   pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git', :tag => '1.0.0-beta.1'
   pod 'SwipeCellKit'
   pod 'WechatOpenSDK'
+  pod 'STPopupPreview'
 
   target 'Sweet Dev' do
   end
