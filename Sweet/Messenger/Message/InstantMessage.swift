@@ -31,14 +31,17 @@ struct InstantMessage {
         }
     }
     
-    var displayText: String {
+    func displayText(buddy user: User) -> String {
+        let isOutgoing = user.userId == to
         switch type {
         case .text:
             return rawContent
         case .story:
-            return "你有一条小故事消息"
+            return  isOutgoing ? "你分享了一条小故事消息" : "你有一条小故事消息"
         case .card:
-            return "你有一条卡片消息"
+            return  isOutgoing ? "你分享了一条卡片信息" : "你有一条卡片消息"
+        case .like:
+            return isOutgoing ? "你赞了对方" : "收到一个赞"
         default:
             return "[未知消息]"
         }

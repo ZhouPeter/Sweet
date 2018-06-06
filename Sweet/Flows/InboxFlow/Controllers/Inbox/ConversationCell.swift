@@ -57,7 +57,7 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
     func updateWith(_ conversation: Conversation) {
         avatarImageView.kf.setImage(with: URL(string: conversation.user.avatar))
         nameLabel.text = conversation.user.nickname
-        contentLabel.text = conversation.lastMessage?.displayText
+        contentLabel.text = conversation.lastMessage?.displayText(buddy: conversation.user)
         if conversation.unreadCount > 0 {
             badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
             badgeView.isHidden = false
