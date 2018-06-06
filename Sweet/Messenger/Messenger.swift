@@ -220,7 +220,8 @@ final class Messenger {
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: true)
+            logger.debug(response)
+            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: false)
         }
     }
     
@@ -308,13 +309,21 @@ final class Messenger {
         storage?.write({ (realm) in
             var dataArray = [InstantMessageData]()
             messages.forEach({ (message) in
-                if let remoteID = message.remoteID {
-                    if !update { return }
-                    let results = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)")
-                    realm.delete(results)
-                }
-                dataArray.append(InstantMessageData.data(with: message))
                 userIDs.insert(message.from == userID ? message.to : message.from)
+                var localMessage: InstantMessageData?
+                if let remoteID = message.remoteID, remoteID != 0 {
+                    if !update { return }
+                    localMessage = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)").first
+                }
+                let newMessage = InstantMessageData.data(with: message)
+                if let local = localMessage {
+                    newMessage.isRead = local.isRead
+                    if newMessage.isSent == false {
+                        newMessage.isSent = local.isSent
+                    }
+                    newMessage.localID = local.localID
+                }
+                dataArray.append(newMessage)
             })
             realm.add(dataArray, update: true)
         }, callback: { (_) in
