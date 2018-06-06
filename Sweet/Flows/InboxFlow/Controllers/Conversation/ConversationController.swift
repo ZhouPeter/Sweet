@@ -236,7 +236,6 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
-        guard message.from == buddy.userId else { return }
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
