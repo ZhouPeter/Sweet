@@ -9,6 +9,7 @@
 import UIKit
 import MessageKit
 import Kingfisher
+import STPopupPreview
 
 final class ConversationController: MessagesViewController {
     private let user: User
@@ -68,8 +69,8 @@ final class ConversationController: MessagesViewController {
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
         messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messageCellDelegate = self
     }
     
@@ -125,6 +126,9 @@ final class ConversationController: MessagesViewController {
         if value is OptionCardContent {
             let cell = messagesCollectionView.dequeueReusableCell(OptionCardMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            if cell.popupPreviewRecognizer == nil {
+                cell.popupPreviewRecognizer = STPopupPreviewRecognizer(delegate: self)
+            }
             return cell
         }
         if value is ContentCardContent {
@@ -201,12 +205,19 @@ extension ConversationController: MessagesDisplayDelegate {
     }
 }
 
-extension ConversationController: MessagesLayoutDelegate {
-    
-}
+extension ConversationController: MessagesLayoutDelegate {}
 
 extension ConversationController: MessageCellDelegate {
-    
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+        let message = messages[indexPath.section]
+        guard message.type == .card else { return }
+        if message.content is OptionCardContent {
+            let preview = OptionCardPreviewController()
+            let popup = PopupController(rootViewController: preview)
+            popup.present(in: self)
+        }
+    }
 }
 
 extension ConversationController: MessageInputBarDelegate {
@@ -246,5 +257,19 @@ extension ConversationController: MessengerDelegate {
         guard messages.isNotEmpty, buddy.userId == self.buddy.userId else { return }
         self.messages.insert(contentsOf: messages, at: 0)
         messagesCollectionView.reloadDataAndKeepOffset()
+    }
+}
+
+extension ConversationController: STPopupPreviewRecognizerDelegate {
+    func previewViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController? {
+        return OptionCardPreviewController()
+    }
+    
+    func presentingViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController {
+        return self
+    }
+    
+    func previewActions(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> [STPopupPreviewAction] {
+        return []
     }
 }

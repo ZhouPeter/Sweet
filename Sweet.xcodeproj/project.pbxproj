@@ -1000,6 +1000,14 @@
 		ACDD0AFC20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */; };
 		ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */; };
 		ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */; };
+		ACDD0B0720C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */; };
+		ACDD0B0820C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */; };
+		ACDD0B0920C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */; };
+		ACDD0B0A20C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */; };
+		ACDD0B0E20C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
+		ACDD0B0F20C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
+		ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
+		ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
 		ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
@@ -1451,6 +1459,8 @@
 		ACDB24DD20BECFD50039368E /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		ACDB24E620BED0DE0039368E /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardMessageCell.swift; sourceTree = "<group>"; };
+		ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardPreviewController.swift; sourceTree = "<group>"; };
+		ACDD0B0D20C802E000B7400A /* PopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupController.swift; sourceTree = "<group>"; };
 		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
 		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
@@ -2046,6 +2056,7 @@
 				58155E342091D53E00ADEFFB /* WebViewController.swift */,
 				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
+				ACDD0B0D20C802E000B7400A /* PopupController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2217,6 +2228,7 @@
 			isa = PBXGroup;
 			children = (
 				AC21758920C105240089D4D1 /* ConversationController.swift */,
+				ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */,
 				AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */,
 			);
 			path = Conversation;
@@ -2558,6 +2570,8 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework",
+				"${BUILT_PRODUCTS_DIR}/STPopupPreview/STPopupPreview.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -2581,6 +2595,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/STPopup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/STPopupPreview.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
@@ -2706,6 +2722,8 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework",
+				"${BUILT_PRODUCTS_DIR}/STPopupPreview/STPopupPreview.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -2729,6 +2747,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/STPopup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/STPopupPreview.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
@@ -2763,6 +2783,7 @@
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
+				ACDD0B0720C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */,
 				AC616F8E20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
@@ -3028,6 +3049,7 @@
 				AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				ACDD0B0E20C802E000B7400A /* PopupController.swift in Sources */,
 				585B68CC20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3185,6 +3207,7 @@
 				58816D1020C671040032D103 /* WXApi+Message.swift in Sources */,
 				AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
+				ACDD0B0920C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
 				5866330B20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				AC1778D120BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -3254,6 +3277,7 @@
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575520AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
@@ -3429,6 +3453,7 @@
 				58816D1120C671040032D103 /* WXApi+Message.swift in Sources */,
 				AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
+				ACDD0B0A20C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
 				5866330C20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				AC1778D220BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -3498,6 +3523,7 @@
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACDB24C920BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575620AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
@@ -3539,6 +3565,7 @@
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
+				ACDD0B0820C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				AC616F8F20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
@@ -3804,6 +3831,7 @@
 				AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				ACDD0B0F20C802E000B7400A /* PopupController.swift in Sources */,
 				585B68CD20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
