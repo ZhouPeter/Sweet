@@ -524,19 +524,20 @@ extension StoriesPlayerViewController {
     }
     
     private func sendMessage(text: String, userIds: [UInt64]) {
-        let storyId = stories[currentIndex].storyId
-        let group = DispatchGroup()
-        let queue = DispatchQueue.global()
-        userIds.forEach { userId in
-            queue.async {
-                group.enter()
-                web.request(.shareStory(storyId: storyId, comment: text, userId: userId), completion: { (_) in
-                    group.leave()
-                })
-            }
+        let from = UInt64(Defaults[.userID]!)!
+        let storyType = stories[currentIndex].type
+        var url: String = ""
+        if storyType == .video || storyType == .poke {
+            url = stories[currentIndex].videoURL!.absoluteString + "?vframe/jpg/offset/0.0/w/375/h/667"
+        } else if storyType == .text || storyType == .image {
+            url = stories[currentIndex].imageURL!.absoluteString
+        } else {
+            return
         }
-        group.notify(queue: DispatchQueue.main) {
-            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        let content = StoryMessageContent(storyType: storyType, url: url)
+        userIds.forEach {
+            Messenger.shared.sendStory(content, from: from, to: $0)
+            if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
         }
     
     }

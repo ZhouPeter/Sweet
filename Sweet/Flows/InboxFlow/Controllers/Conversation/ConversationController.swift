@@ -20,6 +20,9 @@ final class ConversationController: MessagesViewController {
         self.user = user
         self.buddy = buddy
         super.init(nibName: nil, bundle: nil)
+        Messenger.shared.startConversation(userID: buddy.userId)
+        Messenger.shared.addDelegate(self)
+        Messenger.shared.loadMessages(from: buddy)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,9 +43,6 @@ final class ConversationController: MessagesViewController {
         
         setupCollectionView()
         setupInputBar()
-        Messenger.shared.startConversation(userID: buddy.userId)
-        Messenger.shared.addDelegate(self)
-        Messenger.shared.loadMessages(from: buddy)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,58 +51,6 @@ final class ConversationController: MessagesViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        var text = InstantMessage()
-        text.type = .text
-        text.rawContent = "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
-        text.from = user.userId
-        text.to = buddy.userId
-        messages.append(text)
-        
-        var preference = InstantMessage()
-        preference.type = .card
-        preference.content = OptionCardContent(
-            identifier: "2345678",
-            cardType: .preference,
-            text: "偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡",
-            leftImageURLString: "http://www.quanjing.com/image/2018image/homepage/1.jpg",
-            rightImageURLString: "http://www.quanjing.com/image/2018image/homepage/3.jpg",
-            result: .left
-        )
-        messages.append(preference)
-        
-        var evaluation = InstantMessage()
-        evaluation.type = .card
-        evaluation.content = OptionCardContent(
-            identifier: "fghjfkdlsafda",
-            cardType: .evaluation,
-            text: "偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡偏好卡",
-            leftImageURLString: "http://mpic2.tiankong.com/366/188/366188f5c6bc7062aa0415dd0857c782/640.jpg",
-            rightImageURLString: "http://mpic2.tiankong.com/0c2/d78/0c2d78dad104acd43be02b0e043b77d6/640.jpg",
-            result: .right
-        )
-        messages.append(evaluation)
-        
-        var videoStory = InstantMessage()
-        videoStory.type = .story
-        videoStory.content = StoryMessageContent(
-            storyType: .video,
-            url: "http://xpro-cdn01.feparty.com/000KwDd7lx07kENFN2Vq01040200k89K0k010.mp4"
-        )
-        messages.append(videoStory)
-        
-        var imageStory = InstantMessage()
-        imageStory.type = .story
-        imageStory.content = StoryMessageContent(
-            storyType: .image,
-            url: "http://mpic1.tiankong.com/565/584/56558426f8239fa175a48e293cf2a0b5/640.jpg"
-        )
-        messages.append(imageStory)
-        
-        messagesCollectionView.reloadData()
     }
     
     deinit {
@@ -115,6 +63,7 @@ final class ConversationController: MessagesViewController {
     private func setupCollectionView() {
         messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.register(OptionCardMessageCell.self)
+        messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -178,6 +127,11 @@ final class ConversationController: MessagesViewController {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
+        if value is ContentCardContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ContentCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
@@ -205,6 +159,16 @@ extension ConversationController: MessagesDataSource {
         let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
         avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
+    
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(
+            string: "下午 4:59",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.lightGray
+            ]
+        )
+    }
 }
 
 extension ConversationController: MessagesDisplayDelegate {
@@ -228,6 +192,13 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return .black
     }
+
+    func cellTopLabelHeight(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 25
+    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {
@@ -244,7 +215,7 @@ extension ConversationController: MessageInputBarDelegate {
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         inputBar.inputTextView.text = ""
-        messagesCollectionView.scrollToBottom()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 }
 
@@ -253,7 +224,11 @@ extension ConversationController: MessengerDelegate {
         guard buddy.userId == self.buddy.userId else { return }
         self.messages = messages
         messagesCollectionView.reloadData()
-        messagesCollectionView.scrollToBottom()
+        let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+        let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height
+        if contentHeight > visibleHeight {
+            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
+        }
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
@@ -261,7 +236,6 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
-        guard message.from == buddy.userId else { return }
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)

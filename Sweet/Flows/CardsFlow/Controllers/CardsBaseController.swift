@@ -140,6 +140,7 @@ class CardsBaseController: BaseViewController {
         }
         addInputBottomView()
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
+        Messenger.shared.addDelegate(self)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -651,18 +652,48 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     }
     
     private func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
-        let group = DispatchGroup()
-        let queue = DispatchQueue.global()
-        userIds.forEach { userId in
-            queue.async {
-                group.enter()
-                web.request(WebAPI.shareCard(cardId: cardId, comment: text, userId: userId), completion: { (_) in
-                    group.leave()
-                })
+        
+        guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
+        let card  = cards[index]
+        let from = UInt64(Defaults[.userID]!)!
+        if card.type == .content {
+            let url: String
+            if let videoUrl = card.video {
+                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
+            } else {
+                url = card.contentImageList![0].url
             }
-        }
-        group.notify(queue: DispatchQueue.main) {
-            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+            let content = ContentCardContent(identifier: cardId,
+                                             cardType: InstantMessage.CardType.content,
+                                             text: card.content!,
+                                             imageURLString: url,
+                                             url: card.url!)
+            userIds.forEach {
+                Messenger.shared.sendContentCard(content, from: from, to: $0)
+                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+            }
+        } else if card.type == .choice {
+            let content = OptionCardContent(identifier: cardId,
+                                            cardType: InstantMessage.CardType.preference,
+                                            text: card.content!,
+                                            leftImageURLString: card.imageList![0],
+                                            rightImageURLString: card.imageList![1],
+                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
+            userIds.forEach {
+                Messenger.shared.sendPreferenceCard(content, from: from, to: $0)
+                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+            }
+        } else if card.type == .evaluation {
+            let content = OptionCardContent(identifier: cardId,
+                                            cardType: InstantMessage.CardType.evaluation,
+                                            text: card.content!,
+                                            leftImageURLString: card.imageList![0],
+                                            rightImageURLString: card.imageList![1],
+                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
+            userIds.forEach {
+                Messenger.shared.sendEvaluationCard(content, from: from, to: $0)
+                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+            }
         }
     }
 }
@@ -791,5 +822,15 @@ extension CardsBaseController: InputTextViewDelegate {
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
+    }
+}
+
+extension CardsBaseController: MessengerDelegate {
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        if success {
+            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        } else {
+            self.toast(message: "分享失败")
+        }
     }
 }

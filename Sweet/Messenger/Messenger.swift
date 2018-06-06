@@ -262,6 +262,7 @@ final class Messenger {
         request.msgIDList = IDs
         send(request, responseType: GetResp.self) { (response) in
             guard let response = response else { return }
+            logger.debug(response)
             let messages: [InstantMessage] = response.msgList.map({ proto in
                 var message = InstantMessage(proto: proto)
                 if let userID = self.conversationUserID, message.from == userID {
@@ -366,7 +367,6 @@ final class Messenger {
                 }
             })
         }, callback: { _ in
-            logger.debug("conversations: \(conversations)", "userIdsNotSaved \(userIDsNotSaved)")
             if userIDsNotSaved.isNotEmpty {
                 self.getUserInfoList(with: userIDsNotSaved, callback: { (users) in
                     self.updateUserConversations(with: users.map({ $0.userId }))
