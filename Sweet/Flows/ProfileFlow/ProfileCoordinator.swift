@@ -20,7 +20,11 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private let user: User
     private let userID: UInt64
     
-    init(user: User, userID: UInt64, router: Router, factory: ProfileFlowFactory, coordinatorFactory: CoordinatorFactory) {
+    init(user: User,
+         userID: UInt64,
+         router: Router,
+         factory: ProfileFlowFactory,
+         coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.userID = userID
         self.router = router
@@ -34,16 +38,14 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     
     // MARK: - Private
     private func showProfile() {
-        let profileModule = factory.makeProfileModule()
-        profileModule.showAbout = { [weak self] (user) in
+        let profile = factory.makeProfileView(user: user, userId: userID)
+        profile.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
-        profileModule.finished = { [weak self] in
+        profile.finished = { [weak self] in
             self?.finishFlow?()
         }
-        profileModule.userId = userID
-        profileModule.user = user
-        router.push(profileModule)
+        router.push(profile)
     }
     
     private func showAbout(user: UserResponse) {

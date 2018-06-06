@@ -29,9 +29,9 @@ struct PhoneContactViewModel {
             self.nameString = model.name
             if model.status == .notInvited {
                 self.buttonTitle = "邀请"
-                self.buttonStyle = .borderBlue
+                self.buttonStyle = .backgroundColorBlue
             } else {
-                self.buttonTitle = "已发送"
+                self.buttonTitle = "已邀请"
                 self.buttonStyle = .noBorderGray
             }
             self.firstNameString = String(model.name.first ?? Character(""))

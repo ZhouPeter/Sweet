@@ -34,6 +34,7 @@ struct CardResponse: Codable {
     var result: SelectResult?
     let type: CardType
     let name: String?
+    let url: String?
     enum CardType: UInt, Codable {
         case unknown
         case content
@@ -48,17 +49,6 @@ struct ContentImage: Codable {
     let width: Double
     let height: Double
     let url: String
-}
-
-struct ActivityResponse: Codable {
-    let avatar: String
-    let body: ContentBody
-    let activityItemId: String
-    var like: Bool
-    let same: Bool
-    let actor: UInt64
-    let subtitle: String
-    let title: String
 }
 
 struct ContentBody: Codable {

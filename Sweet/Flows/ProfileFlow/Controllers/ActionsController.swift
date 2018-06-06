@@ -9,25 +9,30 @@
 import UIKit
 import Pageboy
 protocol PageChildrenProtocol {
-    var userId: UInt64? { get set }
+    var userId: UInt64 { get set }
     func loadRequest()
 }
 class ActionsController: PageboyViewController {
-    var userId: UInt64? {
+    var userId: UInt64 {
         didSet {
             for index in 0..<pageControllers.count {
                 pageControllers[index].userId = userId
             }
         }
     }
+    init(userId: UInt64) {
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
-        let feedsController = FeedsController()
-        let storysController = StoriesController()
-        let estimatesController = EstimatesController()
-        feedsController.userId = userId
-        storysController.userId = userId
-        estimatesController.userId = userId
+        let feedsController = ActivitiesController(userId: userId)
+        let storysController = StoriesController(userId: userId)
+        let estimatesController = EvaluationController(userId: userId)
         viewControllers.append(feedsController)
         viewControllers.append(storysController)
         viewControllers.append(estimatesController)
@@ -36,6 +41,7 @@ class ActionsController: PageboyViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        isScrollEnabled = false
         dataSource = self
         delegate = self
     }

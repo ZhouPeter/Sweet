@@ -51,9 +51,11 @@ class IMController: BaseViewController, IMView {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.titleView = titleView
+        automaticallyAdjustsScrollViewInsets = false
         setupControllers()
         delegate?.imViewDidLoad()
         showInbox(true)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

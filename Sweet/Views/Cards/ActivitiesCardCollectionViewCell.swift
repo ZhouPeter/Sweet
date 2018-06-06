@@ -32,7 +32,7 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
 
     private func setupUI() {
         customContent.addSubview(tableView)
-        tableView.fill(in: customContent)
+        tableView.fill(in: customContent, top: 50)
         tableView.setViewRounded(cornerRadius: 10, corners: .allCorners)
     }
     
@@ -41,7 +41,9 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     }
     
     func updateWith(_ viewModel: ActivitiesCardViewModel) {
+        self.cardId = viewModel.cardId
         self.viewModel = viewModel
+        self.titleLabel.text = "用户动态"
         tableView.reloadData()
     }
     

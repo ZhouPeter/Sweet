@@ -21,12 +21,16 @@ class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
 //            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
 //            cellConfigurators.append(configurator)
 //        }
-        for (index, viewModels) in viewModel.storiesCellModels.enumerated() {
-            var firstViewModel = viewModels[0]
-            firstViewModel.isRead = viewModel.isReads[index]
-            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
+//        for (index, viewModels) in viewModel.storiesCellModels.enumerated() {
+//            var firstViewModel = viewModels[0]
+//            firstViewModel.isRead = viewModel.isReads[index]
+//            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
+//            cellConfigurators.append(configurator)
+//
+//        }
+        viewModel.storyCellModels.forEach { (cellModel) in
+            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: cellModel)
             cellConfigurators.append(configurator)
-
         }
         storiesGroup = viewModel.storiesGroup
         collectionView.reloadData()

@@ -12,13 +12,13 @@ import SwiftyUserDefaults
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
     var finished: (() -> Void)? { get set }
-    var user: User? { get set }
-    var userId: UInt64? { get set }
+    var user: User { get set }
+    var userId: UInt64 { get set }
 }
 
 class ProfileController: BaseViewController, ProfileView {
-    var user: User?
-    var userId: UInt64?
+    var user: User
+    var userId: UInt64
     var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
     var userResponse: UserResponse? {
@@ -34,12 +34,9 @@ class ProfileController: BaseViewController, ProfileView {
             }
         }
     }
-    
-    var actionsController: ActionsController!
-    
+    private var actionsController: ActionsController!
     private var baseInfoViewModel: BaseInfoCellViewModel?
     private var isFirstLoad = true
-
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,9 +66,19 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
+    init(user: User, userId: UInt64) {
+        self.user = user
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionsController = ActionsController()
+        actionsController = ActionsController(userId: userId)
         addChildViewController(actionsController)
         actionsController.didMove(toParentViewController: self)
         setTableView()
@@ -194,7 +201,6 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
-                self.actionsController.userId = self.userResponse?.userId
                 self.updateViewModel()
                 self.tableView.reloadData()
             }
@@ -202,8 +208,7 @@ extension ProfileController {
     }
     
     private func loadUserData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
-        let userId = (self.userId == nil ? (UInt64(Defaults[.userID] ?? "0") ?? 0) : self.userId!)
-        web.request(.getUserProfile(userId: userId), responseType: Response<ProfileResponse>.self) { (result) in
+        web.request(.getUserProfile(userId: self.userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
             case let .success(response):
                 self.userResponse = response.userProfile
@@ -228,6 +233,8 @@ extension ProfileController {
                     self.userResponse!.subscription = !self.userResponse!.subscription
                     self.baseInfoViewModel?.subscribeButtonString
                         = self.userResponse!.subscription ? "已订阅" : "订阅"
+                    self.baseInfoViewModel?.subscriptionButtonStyle
+                        = self.userResponse!.subscription ? .borderBlue: .backgroundColorBlue
                     self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 case let .failure(error):
                     logger.error(error)

@@ -17,4 +17,24 @@ extension UISearchBar {
 //            let signature = UISearchBar.self.instanceMethod(for: centerSelector)
         }
     }
+    
+    func setCancelText(text: String, textColor: UIColor) {
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "返回"
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+            .setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.black,
+                                     NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)],
+                                    for: .normal)
+        
+    }
+    
+    func setTextFieldBackgroudColor(color: UIColor, cornerRadius: CGFloat) {
+        let textField = self.value(forKey: "searchField")
+        if let textField = textField {
+            if let textField = textField as? UITextField {
+                textField.backgroundColor = color
+                textField.layer.cornerRadius = cornerRadius
+                textField.layer.masksToBounds = true
+            }
+        }
+    }
 }
