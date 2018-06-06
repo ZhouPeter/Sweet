@@ -63,6 +63,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
                 playerController.currentIndex = 0
             }
             storiesPlayerControllers.append(playerController)
+            add(childViewController: playerController, addView: false)
             cubeView.addChildView(playerController.view)
         }
         cubeView.layoutIfNeeded()

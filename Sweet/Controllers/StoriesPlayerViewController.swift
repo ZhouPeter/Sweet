@@ -498,6 +498,7 @@ extension StoriesPlayerViewController {
     }
 
     @objc private func presentOtherMenuAlertController(sender: UIButton) {
+        self.pause()
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "分享给联系人", style: .default, handler: { (_) in
             let controller = ShareCardController()
@@ -528,7 +529,7 @@ extension StoriesPlayerViewController {
         let storyType = stories[currentIndex].type
         var url: String = ""
         if storyType == .video || storyType == .poke {
-            url = stories[currentIndex].videoURL!.absoluteString + "?vframe/jpg/offset/0.0/w/375/h/667"
+            url = stories[currentIndex].videoURL!.absoluteString
         } else if storyType == .text || storyType == .image {
             url = stories[currentIndex].imageURL!.absoluteString
         } else {
@@ -539,6 +540,7 @@ extension StoriesPlayerViewController {
             Messenger.shared.sendStory(content, from: from, to: $0)
             if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
         }
+//        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     
     }
 }
