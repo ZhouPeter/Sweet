@@ -560,10 +560,15 @@ extension StoriesPlayerViewController {
             Messenger.shared.sendStory(content, from: from, to: $0, extra: fromCardId)
             if like { Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId)}
             if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: fromCardId) }
-            web.request(.shareStory(storyId: storyId, comment: text, userId: $0, fromCardId: fromCardId),
-                        completion: {_ in })
+            if like {
+                web.request(WebAPI.likeStory(storyId: storyId, comment: text, fromCardId: fromCardId),
+                            completion: {_ in })
+            } else {
+                web.request(.shareStory(storyId: storyId, comment: text, userId: $0, fromCardId: fromCardId),
+                            completion: {_ in })
+            }
         }
-//        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     
     }
 }

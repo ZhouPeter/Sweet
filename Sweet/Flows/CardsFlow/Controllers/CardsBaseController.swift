@@ -695,6 +695,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                 web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         }
+        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
 }
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
@@ -834,9 +835,8 @@ extension CardsBaseController: InputTextViewDelegate {
 extension CardsBaseController: MessengerDelegate {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
         if success {
-            NotificationCenter.default.post(name: .dismissShareCard, object: nil)
         } else {
-            self.toast(message: "分享失败")
+            self.toast(message: "发送失败")
         }
     }
 }

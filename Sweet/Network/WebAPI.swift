@@ -56,6 +56,7 @@ enum WebAPI {
     case getSetting(version: String)
     case shareCard(cardId: String, comment: String, userId: UInt64)
     case shareStory(storyId: UInt64, comment: String, userId: UInt64, fromCardId: String?)
+    case likeStory(storyId: UInt64, comment: String, fromCardId: String?)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -153,6 +154,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/share"
         case .shareStory:
             return "/story/share"
+        case .likeStory:
+            return "/story/like"
         }
     }
     
@@ -236,6 +239,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["cardId": cardId, "comment": comment, "userId": userId]
         case let .shareStory(storyId, comment, userId, fromCardId):
             parameters = ["storyId": storyId, "comment": comment, "userId": userId]
+            if let fromCardId = fromCardId {
+                parameters = ["fromCardId": fromCardId]
+            }
+        case let .likeStory(storyId, comment, fromCardId):
+            parameters = ["storyId": storyId, "comment": comment]
             if let fromCardId = fromCardId {
                 parameters = ["fromCardId": fromCardId]
             }
