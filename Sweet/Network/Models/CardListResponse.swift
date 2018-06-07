@@ -24,6 +24,7 @@ struct CardListResponse: Codable {
 
 struct CardResponse: Codable {
     let cardId: String
+    let sectionId: UInt64?
     var activityList: [ActivityResponse]?
     let defaultEmojiList: [EmojiType]?
     let content: String?

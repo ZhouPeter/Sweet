@@ -15,7 +15,7 @@ import VIMediaCache
     @objc optional func playToBack()
     @objc optional func playToNext()
     @objc optional func dismissController()
-    @objc optional func delStory(withStoryId storyId: Int)
+    @objc optional func delStory(withStoryId storyId: UInt64)
 }
 class StoriesPlayerViewController: BaseViewController {
     var player: AVPlayer?
@@ -27,7 +27,11 @@ class StoriesPlayerViewController: BaseViewController {
     var timerNumber: Float = 0
     var stories: [StoryCellViewModel]! {
         didSet {
-            self.isSelf = stories[0].userId == UInt64(Defaults[.userID] ?? "0")
+            if stories.count == 0 {
+                delegate?.dismissController?()
+            } else {
+                self.isSelf = stories[0].userId == UInt64(Defaults[.userID] ?? "0")
+            }
         }
     }
     private var isSelf = true
@@ -472,7 +476,7 @@ extension StoriesPlayerViewController {
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
         pause()
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
+        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
             let controller = ShareCardController()
             controller.sendCallback = { (text, userIds) in
                 self.sendMessage(text: text, userIds: userIds)
@@ -480,7 +484,7 @@ extension StoriesPlayerViewController {
             self.present(controller, animated: true, completion: nil)
         }
         alertController.addAction(shareAction)
-        let downloadAction = UIAlertAction(title: "保存到手机", style: .default) { [weak self] (_) in
+        let downloadAction = UIAlertAction.makeAlertAction(title: "保存到手机", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             self.play()
             self.downloadStory(downloadBack: { (isSuccess) in
@@ -488,59 +492,100 @@ extension StoriesPlayerViewController {
             })
         }
         alertController.addAction(downloadAction)
-        let delAction = UIAlertAction(title: "删除本条", style: .default) { [weak self] (_) in
+        let delAction = UIAlertAction.makeAlertAction(title: "删除本条", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             let alertController = UIAlertController(title: "删除本条小故事",
                                                     message: "删除的小故事将无法恢复",
                                                     preferredStyle: .alert)
-            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: { [weak self](_) in
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { [weak self](_) in
                 self?.play()
             })
-            let delAction = UIAlertAction.init(title: "删除", style: .destructive, handler: { [weak self] (_) in
-                
+            let delAction = UIAlertAction(title: "删除", style: .destructive, handler: { [weak self] (_) in
+                guard let `self` = self else { return }
+                web.request(
+                    .delStory(storyId: self.stories[self.currentIndex].storyId),
+                    completion: { [weak self] (result) in
+                        guard let `self` = self else { return }
+                        self.play()
+                        switch result {
+                        case .success:
+                            self.toast(message: "删除成功")
+                            self.delegate?.delStory!(withStoryId: self.stories[self.currentIndex].storyId)
+                            self.stories.remove(at: self.currentIndex)
+                            if self.currentIndex > self.stories.count - 1 {
+                                self.currentIndex -= 1
+                            }
+                            self.progressView.reset(count: self.stories.count, index: self.currentIndex)
+                            self.reloadPlayer()
+                        case let .failure(error):
+                            logger.error(error)
+                        }
+                })
             })
             alertController.addAction(cancelAction)
             alertController.addAction(delAction)
             self.present(alertController, animated: true, completion: nil)
         }
-        delAction.setValue(UIColor.black, forKey: "_titleTextColor")
         alertController.addAction(delAction)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { [weak self] (_) in
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel) { [weak self] (_) in
             self?.play()
         }
         alertController.addAction(cancelAction)
-        let popover = alertController.popoverPresentationController
-        popover?.sourceView = view
-        popover?.sourceRect = view.bounds
-        popover?.permittedArrowDirections = .any
         present(alertController, animated: true, completion: nil)
     }
 
     @objc private func presentOtherMenuAlertController(sender: UIButton) {
         self.pause()
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "分享给联系人", style: .default, handler: { (_) in
-            let controller = ShareCardController()
-            controller.sendCallback = { (text, userIds) in
-                self.sendMessage(text: text, userIds: userIds)
+        let userId = stories[currentIndex].userId
+        web.request(WebAPI.userStatus(userId: userId), responseType: Response<StatusResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alertController.addAction(
+                    UIAlertAction.makeAlertAction(title: "分享联系人",
+                                                  style: .default,
+                                                  handler: { (_) in
+                    let controller = ShareCardController()
+                    controller.sendCallback = { (text, userIds) in
+                        self.sendMessage(text: text, userIds: userIds)
+                    }
+                    self.present(controller, animated: true, completion: nil)
+                }))
+                alertController.addAction(UIAlertAction.makeAlertAction(
+                    title: response.subscription ? "取消订阅" : "订阅该用户",
+                    style: .default,
+                    handler: { (_) in
+                        if response.subscription {
+                            web.request(.delUserSubscription(userId: userId), completion: { (_) in
+                            })
+                        } else {
+                            web.request(.addUserSubscription(userId: userId), completion: { (_) in
+                            })
+                        }
+                }))
+                let blockAction = UIAlertAction.makeAlertAction(
+                    title: response.block ? "取消屏蔽" : "屏蔽该用户",
+                    style: .default,
+                    handler: { (_) in
+                        if response.block {
+                            web.request(.delBlock(userId: userId), completion: { (_) in
+                            })
+                        } else {
+                            web.request(.addBlock(userId: userId), completion: { (_) in
+                            })
+                        }
+                })
+                alertController.addAction(blockAction)
+                let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .default, handler: { (_) in
+                })
+                alertController.addAction(reportAction)
+                alertController.addAction(UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            case let .failure(error):
+                logger.error(error)
             }
-            self.present(controller, animated: true, completion: nil)
-        }))
-        alertController.addAction(UIAlertAction(title: "订阅该用户", style: .default, handler: { (_) in
-            
-        }))
-        let blockAction = UIAlertAction(title: "屏蔽", style: .default, handler: { (_) in
-            
-        })
-        blockAction.setValue(UIColor.black, forKey: "_titleTextColor")
-        alertController.addAction(blockAction)
-        let reportAction = UIAlertAction(title: "投诉", style: .default, handler: { (_) in
-            
-        })
-        reportAction.setValue(UIColor.black, forKey: "_titleTextColor")
-        alertController.addAction(reportAction)
-        alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
+        }
+       
     }
     
     private func sendMessage(text: String, userIds: [UInt64], like: Bool = false) {
