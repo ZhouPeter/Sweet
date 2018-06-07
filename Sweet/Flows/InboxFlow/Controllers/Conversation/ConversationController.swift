@@ -164,15 +164,15 @@ extension ConversationController: MessagesDataSource {
         avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
     
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return NSAttributedString(
-            string: "下午 4:59",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 12),
-                .foregroundColor: UIColor.lightGray
-            ]
-        )
-    }
+//    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+//        return NSAttributedString(
+//            string: "下午 4:59",
+//            attributes: [
+//                .font: UIFont.systemFont(ofSize: 12),
+//                .foregroundColor: UIColor.lightGray
+//            ]
+//        )
+//    }
 }
 
 extension ConversationController: MessagesDisplayDelegate {
@@ -197,12 +197,12 @@ extension ConversationController: MessagesDisplayDelegate {
         return .black
     }
 
-    func cellTopLabelHeight(
-        for message: MessageType,
-        at indexPath: IndexPath,
-        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 25
-    }
+//    func cellTopLabelHeight(
+//        for message: MessageType,
+//        at indexPath: IndexPath,
+//        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+//        return 25
+//    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}

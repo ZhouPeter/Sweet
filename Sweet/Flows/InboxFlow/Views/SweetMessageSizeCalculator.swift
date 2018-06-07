@@ -19,16 +19,18 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
             return CGSize(width: maxWidth, height: maxWidth)
         }
         if let content = value as? OptionCardContent {
-            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
-            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
-            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
-            return size
+            return CGSize(width: maxWidth, height: maxWidth)
+//            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
+//            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
+//            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
+//            return size
         }
         if let content = value as? ContentCardContent {
-            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
-            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
-            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
-            return size
+            return CGSize(width: maxWidth, height: maxWidth)
+//            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
+//            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
+//            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
+//            return size
         }
         return super.messageContainerSize(for: message)
     }

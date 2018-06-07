@@ -167,12 +167,23 @@ final class Messenger {
     }
     
     func loadMoreMessages(from buddy: User, lastMessage: InstantMessage) {
+        guard let user = user else {
+            logger.debug("User is nil")
+            return
+        }
         let limit = 20
         var messages = [InstantMessage]()
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
-                .filter(NSPredicate(format: "createDate < %@", lastMessage.createDate as CVarArg))
+                .filter(
+                    NSPredicate(
+                        format: "createDate < %@ &&" +
+                        " ((from = \(user.userId) && to = \(buddy.userId)) ||" +
+                        " (from = \(buddy.userId) && to = \(user.userId)))",
+                        lastMessage.createDate as CVarArg
+                    )
+                )
                 .sorted(byKeyPath: "createDate", ascending: false)
             let count = min(results.count, limit)
             guard count > 0 else { return }
