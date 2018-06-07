@@ -220,7 +220,6 @@ final class Messenger {
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            logger.debug(response)
             self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: false)
         }
     }
@@ -310,21 +309,24 @@ final class Messenger {
         storage?.write({ (realm) in
             var dataArray = [InstantMessageData]()
             messages.forEach({ (message) in
-                userIDs.insert(message.from == userID ? message.to : message.from)
+                userIDs.insert(message.from == userID ? message.to : message.from)                
                 var localMessage: InstantMessageData?
                 if let remoteID = message.remoteID, remoteID != 0 {
-                    if !update { return }
                     localMessage = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)").first
                 }
                 let newMessage = InstantMessageData.data(with: message)
                 if let local = localMessage {
-                    newMessage.isRead = local.isRead
-                    if newMessage.isSent == false {
-                        newMessage.isSent = local.isSent
+                    if update {
+                        newMessage.isRead = local.isRead
+                        if newMessage.isSent == false {
+                            newMessage.isSent = local.isSent
+                        }
+                        newMessage.localID = local.localID
+                        dataArray.append(newMessage)
                     }
-                    newMessage.localID = local.localID
+                } else {
+                    dataArray.append(newMessage)
                 }
-                dataArray.append(newMessage)
             })
             realm.add(dataArray, update: true)
         }, callback: { (_) in
@@ -339,41 +341,32 @@ final class Messenger {
         var userIDsNotSaved = [UInt64]()
         storage?.write({ (realm) in
             userIDs.forEach({ (userID) in
-                if let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) {
-                    let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
-                        .sorted(byKeyPath: "sentDate")
-                    if let conversationData = realm
-                        .object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
-                        if let messageData = results.last {
-                            conversationData.lastMessage = messageData
-                            conversationData.date = messageData.sentDate
-                            if messageData.isRead == false && messageData.to == myID {
-                                conversationData.unreadCount += 1
-                            }
-                            conversations.append(Conversation(data: conversationData)!)
-                        } else {
-                            logger.error("Message not written for user \(userID)")
-                        }
-                    } else {
-                        let conversationData = ConversationData()
-                        conversationData.userID = userData.userID
-                        conversationData.user = userData
-                        if let last = results.last {
-                            results.forEach({ (data) in
-                                if data.isRead == false && data.to == Int(myID) {
-                                    conversationData.unreadCount += 1
-                                }
-                            })
-                            conversationData.lastMessage = last
-                            conversationData.date = last.sentDate
-                            conversations.append(Conversation(data: conversationData)!)
-                        } else {
-                            logger.error("Message not written for user \(userID)")
-                        }
-                    }
-                } else {
+                guard let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) else {
                     userIDsNotSaved.append(userID)
+                    return
                 }
+                let messages = realm
+                    .objects(InstantMessageData.self)
+                    .filter("from = \(userID) || to = \(userID)")
+                    .sorted(byKeyPath: "sentDate")
+                guard let lastMessage = messages.last else {
+                    logger.debug("Messages Not Found For Buddy \(userID)")
+                    return
+                }
+                let conversationData: ConversationData
+                let unreadCount = messages.filter("isRead = false && to != \(myID)").count
+                if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
+                    conversationData = data
+                } else {
+                    conversationData = ConversationData()
+                    conversationData.userID = userData.userID
+                    conversationData.user = userData
+                }
+                conversationData.unreadCount = unreadCount
+                conversationData.lastMessage = lastMessage
+                conversationData.date = lastMessage.sentDate
+                realm.add(conversationData, update: true)
+                conversations.append(Conversation(data: conversationData)!)
             })
         }, callback: { _ in
             if userIDsNotSaved.isNotEmpty {

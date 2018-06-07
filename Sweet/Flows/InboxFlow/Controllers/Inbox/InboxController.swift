@@ -48,7 +48,15 @@ final class InboxController: BaseViewController, InboxView {
                 self.conversations.append(conversation)
             }
         }
-        self.conversations = self.conversations.sorted(by: { $0.date >= $1.date })
+        self.conversations = self.conversations.sorted(by: {
+            if $0.date != $1.date {
+                return $0.date > $1.date
+            }
+            if let remoteIDA = $0.lastMessage?.remoteID, let remoteIDB = $1.lastMessage?.remoteID {
+                return remoteIDA > remoteIDB
+            }
+            return $0.user.nickname > $1.user.nickname
+        })
         tableView.reloadData()
     }
 }
