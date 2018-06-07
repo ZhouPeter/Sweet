@@ -671,6 +671,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             userIds.forEach {
                 Messenger.shared.sendContentCard(content, from: from, to: $0)
                 if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         } else if card.type == .choice {
             let content = OptionCardContent(identifier: cardId,
@@ -682,6 +683,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             userIds.forEach {
                 Messenger.shared.sendPreferenceCard(content, from: from, to: $0)
                 if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         } else if card.type == .evaluation {
             let content = OptionCardContent(identifier: cardId,
@@ -693,6 +695,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             userIds.forEach {
                 Messenger.shared.sendEvaluationCard(content, from: from, to: $0)
                 if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         }
     }
@@ -796,8 +799,14 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        guard cards[index].type == .activity else { return }
-        guard let cardId = self.activityCardId, let itemId = self.activityItemId else { return }
+        let card = cards[index]
+        let from = UInt64(Defaults[.userID]!)!
+        guard let cardId = activityCardId, let itemId = activityItemId else { return }
+        guard card.type == .activity, card.cardId == cardId else { return }
+        guard let index = card.activityList!.index(where: { $0.activityItemId == activityItemId }) else {fatalError()}
+        let toUserId = card.activityList![index].actor
+        if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId) }
+        Messenger.shared.sendLike(from: from, to: toUserId)
         web.request(.activityCardLike(cardId: cardId, activityItemId: itemId, comment: text)) { (result) in
             switch result {
             case .success:

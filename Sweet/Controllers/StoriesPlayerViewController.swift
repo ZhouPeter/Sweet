@@ -525,6 +525,7 @@ extension StoriesPlayerViewController {
     }
     
     private func sendMessage(text: String, userIds: [UInt64]) {
+        let storyId = stories[currentIndex].storyId
         let from = UInt64(Defaults[.userID]!)!
         let storyType = stories[currentIndex].type
         var url: String = ""
@@ -539,6 +540,8 @@ extension StoriesPlayerViewController {
         userIds.forEach {
             Messenger.shared.sendStory(content, from: from, to: $0)
             if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+            web.request(.shareStory(storyId: storyId, comment: text, userId: $0), completion: {_ in })
+
         }
 //        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     

@@ -38,6 +38,10 @@ extension Messenger {
         return sendMessage(with: content, type: .card, from: from, to: to)
     }
     
+    @discardableResult func sendLike(from: UInt64, to: UInt64) -> InstantMessage {
+        return sendMessage(with: LikeMessageContent(), type: .like, from: from, to: to)
+    }
+    
     @discardableResult func sendMessage(
         with content: MessageContent,
         type: IMType,
