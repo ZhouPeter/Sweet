@@ -555,7 +555,7 @@ extension StoriesPlayerViewController {
         } else {
             return
         }
-        let content = StoryMessageContent(storyType: storyType, url: url)
+        let content = StoryMessageContent(identifier: storyId, storyType: storyType, url: url)
         userIds.forEach {
             Messenger.shared.sendStory(content, from: from, to: $0, extra: fromCardId)
             if like { Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId)}

@@ -9,10 +9,12 @@
 import Foundation
 
 struct StoryMessageContent: MessageContent {
+    let identifier: UInt64
     let storyType: StoryType
     let url: String
     
     enum CodingKeys: String, CodingKey {
+        case identifier = "id"
         case storyType =  "type"
         case url = "url"
     }
