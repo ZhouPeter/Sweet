@@ -57,13 +57,8 @@ final class OptionCardMessageCell: MediaMessageCell {
         label.text = content.text
         leftOptionImageView.kf.setImage(with: URL(string: content.leftImageURLString))
         rightOptionImageView.kf.setImage(with: URL(string: content.rightImageURLString))
-        if content.result == .left {
-            leftResultView.isHidden = true
-            rightResultView.isHidden = false
-        } else {
-            leftResultView.isHidden = false
-            rightResultView.isHidden = true
-        }
+        leftResultView.isHidden = content.result != .left
+        rightResultView.isHidden = content.result != .right
         showLoading(false)
     }
     
