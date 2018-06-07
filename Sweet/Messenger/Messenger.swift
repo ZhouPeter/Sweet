@@ -365,7 +365,7 @@ final class Messenger {
                     return
                 }
                 let conversationData: ConversationData
-                let unreadCount = messages.filter("isRead = false && to != \(myID)").count
+                let unreadCount = messages.filter("isRead = false && from != \(myID)").count
                 if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
                     conversationData = data
                 } else {
