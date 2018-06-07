@@ -26,7 +26,8 @@ struct OptionCardContent: MessageContent {
     }
     
     enum Result: Int, Codable {
-        case left
-        case right
+        case none = -1
+        case left = 0
+        case right = 1
     }
 }

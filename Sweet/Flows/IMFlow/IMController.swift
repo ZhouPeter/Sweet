@@ -12,7 +12,6 @@ class IMController: BaseViewController, IMView {
     weak var delegate: IMViewDelegate?
     private let inboxView = InboxController()
     private let contactsView = ContactsController()
-    
     private var isInboxShown = true
     
     private lazy var avatarImageView: UIImageView = {

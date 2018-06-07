@@ -21,6 +21,7 @@ struct InstantMessage {
     var sentDate = Date()
     var isSent = false
     var isRead = false
+    var extra: String?
     var content: MessageContent? {
         didSet {
             guard let content = content else {
@@ -85,6 +86,7 @@ extension InstantMessage {
         status = proto.status
         createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
         sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
+        extra = proto.extra.isEmpty ? nil : proto.extra
         parseCardContent()
     }
     
@@ -103,6 +105,7 @@ extension InstantMessage {
         sentDate = data.sentDate
         isSent = data.isSent
         isRead = data.isRead
+        extra = data.extra
         parseCardContent()
     }
     
