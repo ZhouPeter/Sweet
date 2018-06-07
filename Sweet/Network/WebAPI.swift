@@ -38,6 +38,8 @@ enum WebAPI {
     case delUserSubscription(userId: UInt64)
     case addSectionSubscription(sectionId: UInt64)
     case delSectionSubscription(sectionId: UInt64)
+    case addSectionBlock(sectionId: UInt64)
+    case delSectionBlock(sectionId: UInt64)
     case inviteContact(phone: String)
     case searchContact(name: String)
     case allCards(cardId: String?, direction: Direction?)
@@ -51,12 +53,16 @@ enum WebAPI {
     case storyTopics
     case searchTopic(topic: String)
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?)
+    case delStory(storyId: UInt64)
     case socketAddress
     case removeRecentMessage(userID: UInt64)
     case getSetting(version: String)
     case shareCard(cardId: String, comment: String, userId: UInt64)
     case shareStory(storyId: UInt64, comment: String, userId: UInt64, fromCardId: String?)
     case likeStory(storyId: UInt64, comment: String, fromCardId: String?)
+    case sectionStatus(sectionId: UInt64)
+    case userStatus(userId: UInt64)
+    case cardReport(cardId: String)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -112,6 +118,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/contact/subscription/user/add"
         case .delUserSubscription:
             return "/contact/subscription/user/del"
+        case .addSectionBlock:
+            return "/contact/block/section/add"
+        case .delSectionBlock:
+            return "/contact/block/section/del"
         case .addSectionSubscription:
             return "/contact/subscription/section/add"
         case .delSectionSubscription:
@@ -138,6 +148,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/details/uvlist"
         case .publishStory:
             return "/story/add"
+        case .delStory:
+            return "/story/del"
         case .searchTopic:
             return "/story/tag/search"
         case .storyRead:
@@ -156,6 +168,13 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/share"
         case .likeStory:
             return "/story/like"
+        case .sectionStatus:
+            return "/contact/section/status"
+        case .userStatus:
+            return "/contact/user/status"
+        case .cardReport:
+            return "/card/report"
+
         }
     }
     
@@ -190,10 +209,14 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
              let .addBlock(userId),
              let .delBlock(userId),
              let .addUserSubscription(userId),
-             let .delUserSubscription(userId):
+             let .delUserSubscription(userId),
+             let .userStatus(userId):
             parameters = ["userId": userId]
         case let .addSectionSubscription(sectionId),
-             let .delSectionSubscription(sectionId):
+             let .delSectionSubscription(sectionId),
+             let .sectionStatus(sectionId),
+             let .addSectionBlock(sectionId),
+             let .delSectionBlock(sectionId):
             parameters = ["sectionId": sectionId]
         case let .inviteContact(phone):
             parameters = ["phone": phone]
@@ -216,7 +239,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
                 parameters = ["fromCardId": fromCardId]
             }
             parameters = ["storyId": storyId]
-        case let .storyDetailsUvlist(storyId):
+        case let .storyDetailsUvlist(storyId),
+             let .delStory(storyId):
             parameters = ["storyId": storyId]
         case let .publishStory(url, type, topic, center):
             parameters = ["content": url, "type": type.rawValue]
@@ -247,6 +271,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             if let fromCardId = fromCardId {
                 parameters = ["fromCardId": fromCardId]
             }
+        case let .cardReport(cardId):
+            parameters = ["cardId": cardId]
         default:
             break
         }

@@ -21,6 +21,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     
     private lazy var leftButton: UIButton = {
         let button = UIButton()
+        button.imageView?.contentMode = .scaleAspectFill
         button.tag = 0
         button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
@@ -28,6 +29,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     
     private lazy var rightButton: UIButton = {
         let button = UIButton()
+        button.imageView?.contentMode = .scaleAspectFill
         button.tag = 1
         button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
         return button
@@ -81,8 +83,8 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
-        leftButton.kf.setBackgroundImage(with: viewModel.imageURL[0], for: .normal)
-        rightButton.kf.setBackgroundImage(with: viewModel.imageURL[1], for: .normal)
+        leftButton.kf.setImage(with: viewModel.imageURL[0], for: .normal)
+        rightButton.kf.setImage(with: viewModel.imageURL[1], for: .normal)
         if let selectedIndex = viewModel.selectedIndex {
             if selectedIndex == 0 {
                 selectedButtonCenterXRightConstraint?.isActive = false

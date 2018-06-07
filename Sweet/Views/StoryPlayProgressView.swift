@@ -21,18 +21,17 @@ class StoryPlayProgressView: UIView {
     private var ratio: CGFloat = 0
     
     private var layout: UICollectionViewFlowLayout!
+    private let itemSpace: CGFloat = 0.5
+
     private lazy var collectionView: UICollectionView = {
-        let itemSpace: CGFloat = 0.5
-        let itemWidth: CGFloat = (UIScreen.mainWidth() - CGFloat(count - 1) * itemSpace) / CGFloat(count)
-        let itemHeight: CGFloat = 2
         layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.minimumInteritemSpacing = itemSpace
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.keyboardDismissMode = .onDrag
         collectionView.isPagingEnabled = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.backgroundColor = .clear
         collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: "progressCell")
         return collectionView
@@ -44,6 +43,18 @@ class StoryPlayProgressView: UIView {
         self.index = index
         super.init(frame: .zero)
         setupUI()
+    }
+    
+    func reset(count: Int, index: Int) {
+        self.count = count
+        self.index = index
+        self.ratio = 0
+        for cell in collectionView.visibleCells {
+            if let cell  = cell as? ProgressCollectionViewCell {
+                cell.setProgressView(ratio: 0)
+            }
+        }
+        collectionView.reloadData()
     }
     
     private func setupUI() {
@@ -103,5 +114,14 @@ extension StoryPlayProgressView: UICollectionViewDataSource {
         }
         
         return cell
+    }
+}
+extension StoryPlayProgressView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth: CGFloat = (UIScreen.mainWidth() - CGFloat(count - 1) * itemSpace) / CGFloat(count)
+        let itemHeight: CGFloat = 2
+        return CGSize(width: itemWidth, height: itemHeight)
     }
 }
