@@ -50,11 +50,12 @@ struct InstantMessage {
     
     init() {}
     
-    init(from: UInt64, to: UInt64, type: IMType) {
+    init(from: UInt64, to: UInt64, type: IMType, extra: String? = nil) {
         self.init()
         self.from = from
         self.to = to
         self.type = type
+        self.extra = extra
     }
     
     enum CardType: Int, Codable {

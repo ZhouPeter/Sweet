@@ -38,6 +38,7 @@ class StoriesPlayerViewController: BaseViewController {
             }
         }
     }
+    var fromCardId: String?
     weak var delegate: StoriesPlayerViewControllerDelegate?
     private  var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
@@ -104,16 +105,14 @@ class StoriesPlayerViewController: BaseViewController {
         view.isHidden = true
         return view
     }()
+
     private var pokeLongPress: UILongPressGestureRecognizer!
-//    private lazy var inputTextView: InputBottomView = {
-//        let view = InputBottomView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.delegate = self
-//        view.sendButton.setImage(#imageLiteral(resourceName: "HeartRed"), for: .normal)
-//        view.shouldSendNilText = true
-//        view.placeHolder = "带句好听的话吧~"
-//        return view
-//    } ()
+    private lazy var inputTextView: InputTextView = {
+        let view = InputTextView()
+        view.placehoder = "说点有意思的"
+        view.delegate = self
+        return view
+    }()
     
     private lazy var maskView: UIView = {
         let view = UIView()
@@ -140,6 +139,7 @@ class StoriesPlayerViewController: BaseViewController {
 //        addInputTextView()
  
     }
+
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -268,6 +268,21 @@ class StoriesPlayerViewController: BaseViewController {
 
 }
 
+extension StoriesPlayerViewController: InputTextViewDelegate {
+    func inputTextViewDidPressSendMessage(text: String) {
+        play()
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
+        sendMessage(text: text, userIds: [stories[currentIndex].userId], like: true)
+    }
+    
+    func removeInputTextView() {
+        play()
+        inputTextView.clear()
+        inputTextView.removeFromSuperview()
+    }
+    
+}
 extension Timer {
     fileprivate class func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
        return  self.scheduledTimer(timeInterval: timeInterval,
@@ -447,7 +462,11 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func sendMessage(sender: UIButton) {
-//        inputTextView.startEditing(true)
+        pause()
+        let window = UIApplication.shared.windows.last!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.startEditing(isStarted: true)
     }
     
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
@@ -524,7 +543,8 @@ extension StoriesPlayerViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func sendMessage(text: String, userIds: [UInt64]) {
+    private func sendMessage(text: String, userIds: [UInt64], like: Bool = false) {
+        let storyId = stories[currentIndex].storyId
         let from = UInt64(Defaults[.userID]!)!
         let storyType = stories[currentIndex].type
         var url: String = ""
@@ -537,10 +557,18 @@ extension StoriesPlayerViewController {
         }
         let content = StoryMessageContent(storyType: storyType, url: url)
         userIds.forEach {
-            Messenger.shared.sendStory(content, from: from, to: $0)
-            if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+            Messenger.shared.sendStory(content, from: from, to: $0, extra: fromCardId)
+            if like { Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId)}
+            if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: fromCardId) }
+            if like {
+                web.request(WebAPI.likeStory(storyId: storyId, comment: text, fromCardId: fromCardId),
+                            completion: {_ in })
+            } else {
+                web.request(.shareStory(storyId: storyId, comment: text, userId: $0, fromCardId: fromCardId),
+                            completion: {_ in })
+            }
         }
-//        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
+        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     
     }
 }
