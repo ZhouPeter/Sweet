@@ -35,6 +35,7 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     private func creatAttrs() {
+        attrsList.removeAll()
         guard let count = collectionView?.numberOfItems(inSection: 0) else { return }
         if selfIndex < count {
             let label = UILabel()
@@ -62,7 +63,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     var userId: UInt64
     init(userId: UInt64) {
         self.userId = userId
-        super.init(nibName: nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -150,6 +151,7 @@ extension StoriesController: UICollectionViewDataSource {
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storiesPlayViewController = StoriesPlayerViewController()
+        storiesPlayViewController.delegate = self
         storiesPlayViewController.currentIndex = indexPath.item
         storiesPlayViewController.stories = storyViewModels
         self.present(storiesPlayViewController, animated: true) {
@@ -157,5 +159,12 @@ extension StoriesController: UICollectionViewDelegate {
         }
         
     }
-    
+}
+
+extension StoriesController: StoriesPlayerViewControllerDelegate {
+    func delStory(withStoryId storyId: UInt64) {
+        guard let index = storyViewModels.index(where: { $0.storyId == storyId } ) else { return }
+        storyViewModels.remove(at: index)
+        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+    }
 }

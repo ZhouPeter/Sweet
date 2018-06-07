@@ -620,34 +620,76 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
+        guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
+        let cardType = cards[index].type
+        if cardType == .activity {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .destructive) { (_) in
+                web.request(.cardReport(cardId: cardId), completion: { (_) in
+                })
+            }
+            let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
+            alert.addAction(reportAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        let sectionId = cards[index].sectionId!
+        web.request(.sectionStatus(sectionId: sectionId),
+                    responseType: Response<StatusResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                let alert = self.makeAlertController(status: response,
+                                                     cardType: cardType,
+                                                     cardId: cardId,
+                                                     sectionId: sectionId)
+                self.present(alert, animated: true, completion: nil)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+       
+    }
+    
+    private func makeAlertController(status: StatusResponse,
+                                     cardType: CardResponse.CardType,
+                                     cardId: String,
+                                     sectionId: UInt64) -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction(title: "分享给联系人", style: .default) { (_) in
+        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
             let controller = ShareCardController()
             controller.sendCallback = { (text, userIds) in
                 self.sendMessge(cardId: cardId, text: text, userIds: userIds)
             }
             self.present(controller, animated: true, completion: nil)
         }
-        let subscriptionAction = UIAlertAction(title: "订阅该栏目/该用户", style: .default) { (_) in
-            
+        let subscriptionAction = UIAlertAction.makeAlertAction(title: status.subscription ? "取消订阅" : "订阅该栏目", style: .default) { (_) in
+            if status.subscription {
+                web.request(.delSectionSubscription(sectionId: sectionId), completion: { (_) in
+                })
+            } else {
+                web.request(.addSectionSubscription(sectionId: sectionId), completion: { (_) in
+                })
+            }
         }
-        let blockAction = UIAlertAction(title: "屏蔽该栏目/该用户", style: .default) { (_) in
-            
+        let blockAction = UIAlertAction.makeAlertAction(title: status.block ? "取消屏蔽" : "屏蔽该栏目", style: .default) { (_) in
+            if status.block {
+                web.request(.delSectionBlock(sectionId: sectionId), completion: { (_) in
+                })
+            } else {
+                web.request(.addSectionBlock(sectionId: sectionId), completion: { (_) in
+                })
+            }
         }
-        let reportAction = UIAlertAction(title: "投诉", style: .destructive) { (_) in
-            
-        }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(shareAction)
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
-        alertController.addAction(reportAction)
         alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        return alertController
     }
     
     private func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
-        
         guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
         let card  = cards[index]
         let from = UInt64(Defaults[.userID]!)!

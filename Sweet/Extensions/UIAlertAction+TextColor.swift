@@ -23,4 +23,13 @@ extension UIAlertAction {
             }
         }
     }
+    
+    class func makeAlertAction(textColor: UIColor = .black,
+                               title: String?,
+                               style: UIAlertActionStyle,
+                               handler: ((UIAlertAction) -> Void)?) -> UIAlertAction {
+        let action = UIAlertAction(title: title, style: style, handler: handler)
+        action.setTextColor(color: textColor)
+        return action
+    }
 }
