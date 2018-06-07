@@ -267,11 +267,11 @@ extension LoginReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_id"),
     2: .same(proto: "signature"),
-    4: .same(proto: "timestamp"),
-    5: .same(proto: "token"),
-    6: .same(proto: "type"),
-    7: .same(proto: "state"),
-    8: .standard(proto: "app_version"),
+    3: .same(proto: "timestamp"),
+    4: .same(proto: "token"),
+    5: .same(proto: "type"),
+    6: .same(proto: "state"),
+    7: .standard(proto: "app_version"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -279,11 +279,11 @@ extension LoginReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
       switch fieldNumber {
       case 1: try decoder.decodeSingularUInt64Field(value: &self.userID)
       case 2: try decoder.decodeSingularStringField(value: &self.signature)
-      case 4: try decoder.decodeSingularUInt64Field(value: &self.timestamp)
-      case 5: try decoder.decodeSingularStringField(value: &self.token)
-      case 6: try decoder.decodeSingularEnumField(value: &self.type)
-      case 7: try decoder.decodeSingularEnumField(value: &self.state)
-      case 8: try decoder.decodeSingularStringField(value: &self.appVersion)
+      case 3: try decoder.decodeSingularUInt64Field(value: &self.timestamp)
+      case 4: try decoder.decodeSingularStringField(value: &self.token)
+      case 5: try decoder.decodeSingularEnumField(value: &self.type)
+      case 6: try decoder.decodeSingularEnumField(value: &self.state)
+      case 7: try decoder.decodeSingularStringField(value: &self.appVersion)
       default: break
       }
     }
@@ -297,19 +297,19 @@ extension LoginReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
       try visitor.visitSingularStringField(value: self.signature, fieldNumber: 2)
     }
     if self.timestamp != 0 {
-      try visitor.visitSingularUInt64Field(value: self.timestamp, fieldNumber: 4)
+      try visitor.visitSingularUInt64Field(value: self.timestamp, fieldNumber: 3)
     }
     if !self.token.isEmpty {
-      try visitor.visitSingularStringField(value: self.token, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.token, fieldNumber: 4)
     }
     if self.type != .unknown {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 6)
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 5)
     }
     if self.state != .online {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 7)
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 6)
     }
     if !self.appVersion.isEmpty {
-      try visitor.visitSingularStringField(value: self.appVersion, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.appVersion, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }

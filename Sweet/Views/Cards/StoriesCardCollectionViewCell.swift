@@ -8,26 +8,15 @@
 
 import UIKit
 protocol StoriesCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
-    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int)
+    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, cardId: String?)
 }
 class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     
     private var cellConfigurators = [CellConfiguratorType]()
     private var storiesGroup = [[StoryCellViewModel]]()
     func updateWith(_ viewModel: StoriesCardViewModel) {
+        cardId = viewModel.cardId
         cellConfigurators.removeAll()
-//        viewModel.storiesCellModels.forEach { (viewModels) in
-//            let firstViewModel = viewModels[0]
-//            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
-//            cellConfigurators.append(configurator)
-//        }
-//        for (index, viewModels) in viewModel.storiesCellModels.enumerated() {
-//            var firstViewModel = viewModels[0]
-//            firstViewModel.isRead = viewModel.isReads[index]
-//            let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: firstViewModel)
-//            cellConfigurators.append(configurator)
-//
-//        }
         viewModel.storyCellModels.forEach { (cellModel) in
             let configurator = CellConfigurator<StoryCardCollectionViewCell>(viewModel: cellModel)
             cellConfigurators.append(configurator)
@@ -90,7 +79,8 @@ extension StoriesCardCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let delegate = delegate as? StoriesCardCollectionViewCellDelegate {
             delegate.showStoriesPlayerController(storiesGroup: storiesGroup,
-                                                 currentIndex: indexPath.item)
+                                                 currentIndex: indexPath.item,
+                                                 cardId: cardId)
         }
     }
 }

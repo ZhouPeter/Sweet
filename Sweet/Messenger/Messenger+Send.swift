@@ -9,36 +9,44 @@
 import Foundation
 
 extension Messenger {
-    @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64) -> InstantMessage {
-        var message = InstantMessage(from: from, to: to, type: .text)
+    @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
+        var message = InstantMessage(from: from, to: to, type: .text, extra: extra)
         message.rawContent = text
         send(message)
         return message
     }
     
-    @discardableResult func sendStory(_ content: StoryMessageContent, from: UInt64, to: UInt64) -> InstantMessage {
+    @discardableResult func sendStory(_ content: StoryMessageContent,
+                                      from: UInt64,
+                                      to: UInt64,
+                                      extra: String? = nil) -> InstantMessage {
         return sendMessage(with: content, type: .story, from: from, to: to)
     }
     
     @discardableResult func sendEvaluationCard(
         _ content: OptionCardContent,
         from: UInt64,
-        to: UInt64) -> InstantMessage {
+        to: UInt64,
+        extra: String? = nil) -> InstantMessage {
         return sendMessage(with: content, type: .card, from: from, to: to)
     }
     
     @discardableResult func sendPreferenceCard(
         _ content: OptionCardContent,
         from: UInt64,
-        to: UInt64) -> InstantMessage {
+        to: UInt64,
+        extra: String? = nil) -> InstantMessage {
         return sendMessage(with: content, type: .card, from: from, to: to)
     }
     
-    @discardableResult func sendContentCard(_ content: ContentCardContent, from: UInt64, to: UInt64) -> InstantMessage {
+    @discardableResult func sendContentCard(_ content: ContentCardContent,
+                                            from: UInt64,
+                                            to: UInt64,
+                                            extra: String? = nil) -> InstantMessage {
         return sendMessage(with: content, type: .card, from: from, to: to)
     }
     
-    @discardableResult func sendLike(from: UInt64, to: UInt64) -> InstantMessage {
+    @discardableResult func sendLike(from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
         return sendMessage(with: LikeMessageContent(), type: .like, from: from, to: to)
     }
     
@@ -46,8 +54,9 @@ extension Messenger {
         with content: MessageContent,
         type: IMType,
         from: UInt64,
-        to: UInt64) -> InstantMessage {
-        var message = InstantMessage(from: from, to: to, type: type)
+        to: UInt64,
+        extra: String? = nil) -> InstantMessage {
+        var message = InstantMessage(from: from, to: to, type: type, extra: extra)
         message.content = content
         send(message)
         return message

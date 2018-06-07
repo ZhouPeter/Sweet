@@ -176,10 +176,6 @@ class CardsBaseController: BaseViewController {
         default:
             break
         }
-        if event.type == .willShow {
-          
-        } else if event.type == .willHide {
-        }
     }
     private var inputBottomViewBottom: NSLayoutConstraint?
     private var inputBottomViewHeight: NSLayoutConstraint?
@@ -552,8 +548,10 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     }
 }
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
-    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int) {
-        let controller = StoriesPlayerGroupViewController(storiesGroup: storiesGroup, currentIndex: currentIndex)
+    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, cardId: String?) {
+        let controller = StoriesPlayerGroupViewController(storiesGroup: storiesGroup,
+                                                          currentIndex: currentIndex,
+                                                          fromCardId: cardId)
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
         self.readGroup(storyGroupIndex: currentIndex)
@@ -640,10 +638,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
-        if self.cards[index].result != nil {
-            alertController.addAction(shareAction)
-        }
+        alertController.addAction(shareAction)
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
         alertController.addAction(reportAction)
@@ -669,32 +664,34 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                                              imageURLString: url,
                                              url: card.url!)
             userIds.forEach {
-                Messenger.shared.sendContentCard(content, from: from, to: $0)
-                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                 web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         } else if card.type == .choice {
+            let result = card.result == nil ? -1 : card.result!.index!
             let content = OptionCardContent(identifier: cardId,
                                             cardType: InstantMessage.CardType.preference,
                                             text: card.content!,
                                             leftImageURLString: card.imageList![0],
                                             rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
+                                            result: OptionCardContent.Result(rawValue: result)!)
             userIds.forEach {
-                Messenger.shared.sendPreferenceCard(content, from: from, to: $0)
+                Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
                 if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
                 web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         } else if card.type == .evaluation {
+            let result = card.result == nil ? -1 : card.result!.index!
             let content = OptionCardContent(identifier: cardId,
                                             cardType: InstantMessage.CardType.evaluation,
                                             text: card.content!,
                                             leftImageURLString: card.imageList![0],
                                             rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: card.result!.index!)!)
+                                            result: OptionCardContent.Result(rawValue: result)!)
             userIds.forEach {
-                Messenger.shared.sendEvaluationCard(content, from: from, to: $0)
-                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                 web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
             }
         }
@@ -805,8 +802,8 @@ extension CardsBaseController: InputTextViewDelegate {
         guard card.type == .activity, card.cardId == cardId else { return }
         guard let index = card.activityList!.index(where: { $0.activityItemId == activityItemId }) else {fatalError()}
         let toUserId = card.activityList![index].actor
-        if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId) }
-        Messenger.shared.sendLike(from: from, to: toUserId)
+        if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: itemId) }
+        Messenger.shared.sendLike(from: from, to: toUserId, extra: itemId)
         web.request(.activityCardLike(cardId: cardId, activityItemId: itemId, comment: text)) { (result) in
             switch result {
             case .success:

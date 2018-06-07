@@ -106,6 +106,9 @@ struct IMProto {
   /// 消息创建时间
   var created: UInt64 = 0
 
+  /// 附加内容 cardID 或 itemID
+  var extra: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -219,6 +222,7 @@ extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     6: .same(proto: "status"),
     7: .standard(proto: "send_time"),
     8: .same(proto: "created"),
+    9: .same(proto: "extra"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -232,6 +236,7 @@ extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
       case 6: try decoder.decodeSingularUInt32Field(value: &self.status)
       case 7: try decoder.decodeSingularUInt64Field(value: &self.sendTime)
       case 8: try decoder.decodeSingularUInt64Field(value: &self.created)
+      case 9: try decoder.decodeSingularStringField(value: &self.extra)
       default: break
       }
     }
@@ -262,6 +267,9 @@ extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if self.created != 0 {
       try visitor.visitSingularUInt64Field(value: self.created, fieldNumber: 8)
     }
+    if !self.extra.isEmpty {
+      try visitor.visitSingularStringField(value: self.extra, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -274,6 +282,7 @@ extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if self.status != other.status {return false}
     if self.sendTime != other.sendTime {return false}
     if self.created != other.created {return false}
+    if self.extra != other.extra {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

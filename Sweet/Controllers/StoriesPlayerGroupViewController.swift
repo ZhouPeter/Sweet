@@ -19,6 +19,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
     }
     var storiesGroup: [[StoryCellViewModel]]
     var subCurrentIndex = 0
+    var fromCardId: String?
     private lazy var cubeView: StoriesCubeView = {
         let cubeView = StoriesCubeView()
         cubeView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,9 +29,10 @@ class StoriesPlayerGroupViewController: BaseViewController {
     
     private var storiesPlayerControllers = [StoriesPlayerViewController]()
     
-    init(storiesGroup: [[StoryCellViewModel]], currentIndex: Int) {
+    init(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
         self.storiesGroup = storiesGroup
         self.currentIndex = currentIndex
+        self.fromCardId = fromCardId
         super.init(nibName: nil, bundle: nil)
 //        self.setValue(currentIndex, forKey: "currentIndex")
     }
