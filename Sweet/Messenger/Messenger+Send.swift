@@ -47,11 +47,11 @@ extension Messenger {
     }
     
     @discardableResult func sendLike(from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: LikeMessageContent(), type: .like, from: from, to: to, extra: extra)
+        return sendMessage(type: .like, from: from, to: to, extra: extra)
     }
     
     @discardableResult func sendMessage(
-        with content: MessageContent,
+        with content: MessageContent? = nil,
         type: IMType,
         from: UInt64,
         to: UInt64,
