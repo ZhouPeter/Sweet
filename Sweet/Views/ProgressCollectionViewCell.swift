@@ -34,7 +34,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
     
     func setProgressView(ratio: CGFloat) {
-        logger.debug(ratio)
         contentView.layoutIfNeeded()
         progressViewRightConstraint.constant = -((1 - ratio) * contentView.bounds.width)
         layoutIfNeeded()

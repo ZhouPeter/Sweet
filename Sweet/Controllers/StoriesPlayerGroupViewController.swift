@@ -34,7 +34,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
         self.currentIndex = currentIndex
         self.fromCardId = fromCardId
         super.init(nibName: nil, bundle: nil)
-//        self.setValue(currentIndex, forKey: "currentIndex")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +45,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
         cubeView.fill(in: view)
         setChildViewController()
         storiesPlayerControllers[currentIndex].initPlayer()
-        
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -70,7 +68,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
             cubeView.addChildView(playerController.view)
         }
         cubeView.layoutIfNeeded()
-        cubeView.scrollToViewAtIndex(currentIndex, animated: false)
+        cubeView.scrollToViewAtIndex(currentIndex, animated: true)
     }
     
     private func setOldPlayerControllerLoction() {
