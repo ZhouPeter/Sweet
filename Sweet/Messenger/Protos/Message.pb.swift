@@ -127,6 +127,8 @@ struct SendReq {
 
   var sendTime: UInt64 = 0
 
+  var extra: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -402,6 +404,7 @@ extension SendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     2: .same(proto: "type"),
     3: .same(proto: "content"),
     4: .standard(proto: "send_time"),
+    5: .same(proto: "extra"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -411,6 +414,7 @@ extension SendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
       case 2: try decoder.decodeSingularEnumField(value: &self.type)
       case 3: try decoder.decodeSingularStringField(value: &self.content)
       case 4: try decoder.decodeSingularUInt64Field(value: &self.sendTime)
+      case 5: try decoder.decodeSingularStringField(value: &self.extra)
       default: break
       }
     }
@@ -429,6 +433,9 @@ extension SendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if self.sendTime != 0 {
       try visitor.visitSingularUInt64Field(value: self.sendTime, fieldNumber: 4)
     }
+    if !self.extra.isEmpty {
+      try visitor.visitSingularStringField(value: self.extra, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -437,6 +444,7 @@ extension SendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBa
     if self.type != other.type {return false}
     if self.content != other.content {return false}
     if self.sendTime != other.sendTime {return false}
+    if self.extra != other.extra {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

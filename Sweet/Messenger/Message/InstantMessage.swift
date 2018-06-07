@@ -72,6 +72,9 @@ extension InstantMessage {
         request.content = rawContent
         request.sendTime = Date().timestamp()
         request.to = to
+        if let extra = self.extra {
+            request.extra = extra
+        }
         return request
     }
 }
