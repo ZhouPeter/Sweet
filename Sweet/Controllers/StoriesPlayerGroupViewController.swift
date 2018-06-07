@@ -57,6 +57,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
         for index in 0 ..< storiesGroup.count {
             let stories = storiesGroup[index]
             let playerController = StoriesPlayerViewController()
+            playerController.fromCardId = fromCardId
             playerController.delegate = self
             playerController.stories = stories
             if index == currentIndex {

@@ -20,7 +20,7 @@ extension Messenger {
                                       from: UInt64,
                                       to: UInt64,
                                       extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .story, from: from, to: to)
+        return sendMessage(with: content, type: .story, from: from, to: to, extra: extra)
     }
     
     @discardableResult func sendEvaluationCard(
@@ -28,7 +28,7 @@ extension Messenger {
         from: UInt64,
         to: UInt64,
         extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .card, from: from, to: to)
+        return sendMessage(with: content, type: .card, from: from, to: to, extra: extra)
     }
     
     @discardableResult func sendPreferenceCard(
@@ -43,11 +43,11 @@ extension Messenger {
                                             from: UInt64,
                                             to: UInt64,
                                             extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .card, from: from, to: to)
+        return sendMessage(with: content, type: .card, from: from, to: to, extra: extra)
     }
     
     @discardableResult func sendLike(from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: LikeMessageContent(), type: .like, from: from, to: to)
+        return sendMessage(with: LikeMessageContent(), type: .like, from: from, to: to, extra: extra)
     }
     
     @discardableResult func sendMessage(
