@@ -28,7 +28,7 @@ final class StoryMessageCell: MediaMessageCell {
         thumbnailImageView.kf.setImage(with: content.thumbnailURL()) { [weak self] (_, _, _, _) in
             self?.showLoading(false)
         }
-        if content.storyType == .video {
+        if content.storyType == .video || content.storyType == .poke {
             videoMaskView.isHidden = false
             playView.isHidden = false
         } else {
