@@ -1935,7 +1935,6 @@
 				AC616F9920C6BE6E00AD9004 /* ContentCardContent.swift */,
 				AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */,
 				AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */,
-				58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2999,7 +2998,6 @@
 				ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				58D3CCDC20C8CE7C0078B36C /* LikeMessageContent.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -3118,7 +3116,6 @@
 				AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				5863A84120ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
-				58D3CCE020C8CE7F0078B36C /* LikeMessageContent.swift in Sources */,
 				ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC84121F2088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EA20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
@@ -3368,7 +3365,6 @@
 				AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				5863A84220ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
-				58D3CCE120C8CE800078B36C /* LikeMessageContent.swift in Sources */,
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
@@ -3789,7 +3785,6 @@
 				ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
-				58D3CCDF20C8CE7F0078B36C /* LikeMessageContent.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,

@@ -11,6 +11,11 @@ import UIKit
 protocol BaseCardCollectionViewCellDelegate: NSObjectProtocol {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell)
 }
+
+extension BaseCardCollectionViewCellDelegate {
+    func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {}
+}
+
 class BaseCardCollectionViewCell: UICollectionViewCell {
     weak var delegate: BaseCardCollectionViewCellDelegate?
     var cardId: String?

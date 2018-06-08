@@ -14,9 +14,9 @@ final class OptionCardMessageCell: MediaMessageCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.text = "世界上的女明星那么多，你偏偏喜欢国内的。那么，你是喜欢杨幂还是柳岩呢？"
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     } ()
     
@@ -69,10 +69,11 @@ final class OptionCardMessageCell: MediaMessageCell {
         label.align(.left, inset: 10)
         label.align(.top, inset: 6)
         label.align(.right, inset: 10)
+        label.constrain(height: 60)
         mediaContainerView.addSubview(leftOptionImageView)
         leftOptionImageView.align(.left)
-        leftOptionImageView.constrain(height: 140)
-        leftOptionImageView.pin(.bottom, to: label, spacing: 6)
+        leftOptionImageView.align(.bottom)
+        leftOptionImageView.pin(.bottom, to: label)
         mediaContainerView.addSubview(rightOptionImageView)
         rightOptionImageView.pin(.right, to: leftOptionImageView)
         rightOptionImageView.align(.right)

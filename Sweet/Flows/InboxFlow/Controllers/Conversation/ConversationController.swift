@@ -164,15 +164,15 @@ extension ConversationController: MessagesDataSource {
         avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
     
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return NSAttributedString(
-            string: "下午 4:59",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 12),
-                .foregroundColor: UIColor.lightGray
-            ]
-        )
-    }
+//    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+//        return NSAttributedString(
+//            string: "下午 4:59",
+//            attributes: [
+//                .font: UIFont.systemFont(ofSize: 12),
+//                .foregroundColor: UIColor.lightGray
+//            ]
+//        )
+//    }
 }
 
 extension ConversationController: MessagesDisplayDelegate {
@@ -197,12 +197,12 @@ extension ConversationController: MessagesDisplayDelegate {
         return .black
     }
 
-    func cellTopLabelHeight(
-        for message: MessageType,
-        at indexPath: IndexPath,
-        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 25
-    }
+//    func cellTopLabelHeight(
+//        for message: MessageType,
+//        at indexPath: IndexPath,
+//        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+//        return 25
+//    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}
@@ -212,10 +212,14 @@ extension ConversationController: MessageCellDelegate {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
         let message = messages[indexPath.section]
         guard message.type == .card else { return }
-        if message.content is OptionCardContent {
-            let preview = OptionCardPreviewController()
+        if let content = message.content as? OptionCardContent {
+            let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
+        } else if let content = message.content as? ContentCardContent {
+            let preview = WebViewController(urlString: content.url)
+            preview.title = content.text
+            navigationController?.pushViewController(preview, animated: true)
         }
     }
 }
@@ -263,7 +267,17 @@ extension ConversationController: MessengerDelegate {
 
 extension ConversationController: STPopupPreviewRecognizerDelegate {
     func previewViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController? {
-        return OptionCardPreviewController()
+        guard
+            let cell = popupPreviewRecognizer.view as? UICollectionViewCell,
+            let indexPath = messagesCollectionView.indexPath(for: cell)
+        else {
+            return nil
+        }
+        let message = messages[indexPath.section]
+        if let content = message.content as? OptionCardContent {
+            return OptionCardPreviewController(content: content)
+        }
+        return nil
     }
     
     func presentingViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController {
