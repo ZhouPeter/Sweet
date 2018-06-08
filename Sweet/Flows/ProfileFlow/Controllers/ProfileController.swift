@@ -79,8 +79,7 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionsController = ActionsController(userId: userId)
-        addChildViewController(actionsController)
-        actionsController.didMove(toParentViewController: self)
+        add(childViewController: actionsController, addView: false)
         setTableView()
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .white

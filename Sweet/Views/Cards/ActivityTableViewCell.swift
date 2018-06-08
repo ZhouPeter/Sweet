@@ -116,7 +116,11 @@ class ActivityTableViewCell: UITableViewCell {
     @objc private func likeAction(_ sender: UIButton) {
         if let viewModel = viewModel {
             if !viewModel.like {
-                viewModel.callBack?(viewModel.activityItemId)
+                if let activityItemId = viewModel.activityItemId {
+                    viewModel.callBack?(activityItemId)
+                } else {
+                   viewModel.callBack?(viewModel.activityId)
+                }
             }
         }
     }

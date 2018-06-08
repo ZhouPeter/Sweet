@@ -15,7 +15,8 @@ struct ActivityListResponse: Codable {
 struct ActivityResponse: Codable {
     let avatar: String
     let body: ContentBody
-    let activityItemId: String
+    let activityId: String
+    let activityItemId: String?
     var like: Bool
     let same: Bool
     let actor: UInt64

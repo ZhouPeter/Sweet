@@ -13,7 +13,6 @@ import SwiftyUserDefaults
 
 enum Direction: Int {
     case unknown = 0
-    case up = 1
     case down = 2
     case recover = 3
 }
@@ -82,7 +81,11 @@ class CardsBaseController: BaseViewController {
         pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
         pan.delegate = self
         collectionView.addGestureRecognizer(pan)
-        cotentOffsetToken = collectionView.observe(\.contentOffset, options: .new, changeHandler: { (object, _) in
+        cotentOffsetToken = collectionView.observe(
+            \.contentOffset,
+            options: [.new, .old],
+            changeHandler: { (object, change) in
+            if change.newValue == change.oldValue { return }
             if object.contentOffset.y + self.offset  == CGFloat(self.index) * cardCellHeight {
                 self.changeCurrentCell()
             }
@@ -199,7 +202,6 @@ class CardsBaseController: BaseViewController {
                                      y: -10,
                                      width: collectionView.bounds.width,
                                      height: collectionView.bounds.height + 11)
-            
         } else {
             emptyView.removeFromSuperview()
         }
@@ -330,9 +332,6 @@ extension CardsBaseController {
                         if direction == Direction.down {
                             self.downLoadCards(cards: response.list, callback: callback)
                             return
-                        } else if  direction == Direction.up {
-                            self.upLoadCards(cards: response.list, callback: callback)
-                            return
                         } else if direction == Direction.recover {
                             response.list.forEach({ (card) in
                                 self.appendConfigurator(card: card)
@@ -371,27 +370,13 @@ extension CardsBaseController {
                 self.scrollTo(row: index)
             }
         } else {
-            direction = .up
-            let cardId = cards[0].cardId
-            let request: CardRequst = self is CardsAllController ?
-                                            .all(cardId: cardId, direction: direction) :
-                                            .sub(cardId: cardId, direction: direction)
             if index == 0 {
-                self.startLoadCards(cardRequest: request) { (success, cards) in
-                    if let cards = cards, cards.count > 0, success { self.index -= 1 }
-                    self.scrollTo(row: self.index)
-                }
+                self.scrollTo(row: self.index)
             } else {
-                if index <= 3 {
-                    self.startLoadCards(cardRequest: request) { (_, _) in
-                        self.index -=  1
-                        self.scrollTo(row: self.index)
-                    }
-                } else {
-                    self.index -=  1
-                    self.scrollTo(row: index)
-                }
+                self.index -=  1
+                self.scrollTo(row: index)
             }
+
         }
     }
     
@@ -663,7 +648,9 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             }
             self.present(controller, animated: true, completion: nil)
         }
-        let subscriptionAction = UIAlertAction.makeAlertAction(title: status.subscription ? "取消订阅" : "订阅该栏目", style: .default) { (_) in
+        let subscriptionAction = UIAlertAction.makeAlertAction(
+                title: status.subscription ? "取消订阅" : "订阅该栏目",
+                style: .default) { (_) in
             if status.subscription {
                 web.request(.delSectionSubscription(sectionId: sectionId), completion: { (_) in
                 })
@@ -672,7 +659,9 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                 })
             }
         }
-        let blockAction = UIAlertAction.makeAlertAction(title: status.block ? "取消屏蔽" : "屏蔽该栏目", style: .default) { (_) in
+        let blockAction = UIAlertAction.makeAlertAction(
+                title: status.block ? "取消屏蔽" : "屏蔽该栏目",
+                style: .default) { (_) in
             if status.block {
                 web.request(.delSectionBlock(sectionId: sectionId), completion: { (_) in
                 })
@@ -740,6 +729,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
 }
+
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyGroupIndex: Int) {
         if self.cards[index].type == .story {

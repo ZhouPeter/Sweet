@@ -41,16 +41,4 @@ struct StoryCellViewModel {
         let storyTime = TimerHelper.storyTime(timeInterval: TimeInterval(model.created))
         subtitle = storyTime.day + storyTime.time
     }
-    init(videoURL: URL) {
-        avatarURL = URL(string: "http://a.hiphotos.baidu.com/image/pic/item/728da9773912b31b00eab5648a18367adbb4e1fd.jpg")!
-        nickname = "王二妮"
-        self.videoURL = videoURL
-        read = false
-        like = true
-        created = 1
-        storyId = 1
-        subtitle = "昨天上午 10:34"
-        userId = 12
-        type = .image
-    }
 }
