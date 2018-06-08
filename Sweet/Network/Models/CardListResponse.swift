@@ -69,3 +69,7 @@ struct SelectResult: Codable {
         let userId: UInt64
     }
 }
+
+struct CardGetResponse: Codable {
+    let card: CardResponse
+}

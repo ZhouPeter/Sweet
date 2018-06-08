@@ -212,8 +212,8 @@ extension ConversationController: MessageCellDelegate {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
         let message = messages[indexPath.section]
         guard message.type == .card else { return }
-        if message.content is OptionCardContent {
-            let preview = OptionCardPreviewController()
+        if let content = message.content as? OptionCardContent {
+            let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         }
@@ -263,7 +263,17 @@ extension ConversationController: MessengerDelegate {
 
 extension ConversationController: STPopupPreviewRecognizerDelegate {
     func previewViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController? {
-        return OptionCardPreviewController()
+        guard
+            let cell = popupPreviewRecognizer.view as? UICollectionViewCell,
+            let indexPath = messagesCollectionView.indexPath(for: cell)
+        else {
+            return nil
+        }
+        let message = messages[indexPath.section]
+        if let content = message.content as? OptionCardContent {
+            return OptionCardPreviewController(content: content)
+        }
+        return nil
     }
     
     func presentingViewController(for popupPreviewRecognizer: STPopupPreviewRecognizer) -> UIViewController {
