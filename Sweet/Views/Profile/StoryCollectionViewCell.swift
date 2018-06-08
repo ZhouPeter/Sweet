@@ -17,7 +17,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     
     private lazy var recoveryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = nil
         return imageView
     }()
     
@@ -60,47 +59,24 @@ class StoryCollectionViewCell: UICollectionViewCell {
         recoveryLabel.pin(.right, to: recoveryImageView)
     
     }
-
-    private func setAnimationImages(url: URL) {
-        let animationDuration: TimeInterval = 0.5
-        let count = 3
-        var urls = [URL]()
-        let urlString = url.absoluteString
-        for index in 0 ..< count {
-            let time = 0.5 / Double(count) * Double(index + 1)
-            let width = Int(UIScreen.mainWidth() / 3)
-            let height = Int(UIScreen.mainHeight() / 3)
-            let urlString = urlString
-                + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
-            let url = URL(string: urlString)!
-            urls.append(url)
-        }
-        var images = [UIImage]()
-        let group = DispatchGroup()
-        urls.forEach { (url) in
-            group.enter()
-            ImageDownloader.default.downloadImage(with: url) { (image, _, _, _) in
-                group.leave()
-                if let image = image {
-                    images.append(image)
-                }
-            }
-        }
-        group.notify(queue: DispatchQueue.main) {
-            self.storyImageView.animationImages = images
-            self.storyImageView.animationDuration = animationDuration
-            self.storyImageView.startAnimating()
-        }
-    }
     
     func update(viewModel: StoryCellViewModel) {
         storyImageView.image = nil
         storyImageView.animationImages = nil
         storyImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
-            setAnimationImages(url: videoURL)
+            storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
         } else if let imageURL = viewModel.imageURL {
             storyImageView.kf.setImage(with: imageURL)
+        }
+        if viewModel.created/1000 + 72 * 3600 < Int(Date().timeIntervalSince1970) {
+            recoveryImageView.isHidden = false
+            recoveryLabel.isHidden = false
+            recoveryImageView.image = #imageLiteral(resourceName: "SelfVisual")
+            recoveryLabel.text =  "仅自己可见"
+        } else {
+            recoveryImageView.isHidden = true
+            recoveryLabel.isHidden = true
         }
     }
 }

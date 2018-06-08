@@ -546,6 +546,10 @@
 		58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58E870B620CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
+		58E870B720CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
+		58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
+		58E870B920CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
 		58EA104A20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
 		58EA104B20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
 		58EA104C20B7FEDE001DD77C /* InputBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104820B7FEDD001DD77C /* InputBottomView.m */; };
@@ -1330,6 +1334,7 @@
 		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
+		58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AnimationImages.swift"; sourceTree = "<group>"; };
 		58EA104820B7FEDD001DD77C /* InputBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBottomView.m; sourceTree = "<group>"; };
 		58EA104920B7FEDE001DD77C /* InputBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputBottomView.h; sourceTree = "<group>"; };
 		58EA104E20B7FEFF001DD77C /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
@@ -2123,6 +2128,7 @@
 				AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */,
 				AC41420120BD477000DC62E0 /* Date+Timestamp.swift */,
 				58816D0D20C671040032D103 /* WXApi+Message.swift */,
+				58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2851,6 +2857,7 @@
 				ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */,
 				AC2A259320BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
+				58E870B620CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
@@ -3185,6 +3192,7 @@
 				AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
+				58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
@@ -3327,6 +3335,7 @@
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
+				58E870B920CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531A20902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
@@ -3635,6 +3644,7 @@
 				58BD52E3208DA52000F7C3E1 /* SearchUniversityResponse.swift in Sources */,
 				AC2A259420BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
+				58E870B720CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
