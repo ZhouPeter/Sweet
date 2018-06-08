@@ -18,8 +18,8 @@ final class WebProvider {
     private lazy var provider = MoyaProvider<WebAPI>(
         plugins: [
             SignPlugin(signClosure: Signer.sign),
-            AuthPlugin(tokenClosure: { self.tokenSource.token }),
-            NetworkLoggerPlugin(verbose: true)
+            AuthPlugin(tokenClosure: { self.tokenSource.token })
+//            NetworkLoggerPlugin(verbose: true)
         ]
     )
     
