@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyUserDefaults
 struct ActivitiesCardViewModel {
     var cardId: String
     var activityViewModels: [ActivityViewModel]
@@ -31,6 +31,7 @@ struct ActivityViewModel {
     let commentString: String
     let emojiImage: UIImage?
     var like: Bool
+    var isHiddenLikeButton: Bool
     var callBack: ((String) -> Void)?
     init(model: ActivityResponse) {
         if let activityItemId = model.activityItemId {
@@ -48,5 +49,6 @@ struct ActivityViewModel {
             emojiImage = nil
         }
         like = model.like
+        isHiddenLikeButton = model.actor == UInt64(Defaults[.userID]!)!
     }
 }

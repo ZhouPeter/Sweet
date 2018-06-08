@@ -57,7 +57,7 @@ class CardsBaseController: BaseViewController {
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
     private var activityCardId: String?
-    private var activityItemId: String?
+    private var activityId: String?
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -417,8 +417,8 @@ extension CardsBaseController {
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityItemId in
-                    self.showInputView(cardId: viewModel.cardId, activityItemId: activityItemId)
+                activityViewModel.callBack = { activityId in
+                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -454,8 +454,8 @@ extension CardsBaseController {
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityItemId in
-                    self.showInputView(cardId: viewModel.cardId, activityItemId: activityItemId)
+                activityViewModel.callBack = { activityId in
+                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -471,12 +471,12 @@ extension CardsBaseController {
         }
     }
 
-    private func showInputView(cardId: String, activityItemId: String) {
-        let window = UIApplication.shared.windows.last!
+    private func showInputView(cardId: String, activityId: String) {
+        let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.startEditing(isStarted: true)
-        self.activityItemId = activityItemId
+        self.activityId = activityId
         self.activityCardId = cardId
         
     }
@@ -829,33 +829,8 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        let card = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
-        guard let cardId = activityCardId, let itemId = activityItemId else { return }
-        guard card.type == .activity, card.cardId == cardId else { return }
-        guard let index = card.activityList!.index(where: { $0.activityItemId == activityItemId }) else {fatalError()}
-        let toUserId = card.activityList![index].actor
-        if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: itemId) }
-        Messenger.shared.sendLike(from: from, to: toUserId, extra: itemId)
-        web.request(.activityCardLike(cardId: cardId, activityItemId: itemId, comment: text)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-                guard let item = self.cards[index].activityList!.index(
-                            where: { $0.activityItemId == itemId }) else { return }
-                self.cards[index].activityList![item].like = true
-                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
-                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
-                self.cellConfigurators[index] = configurator
-                if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
-                    let acCell = cell as? ActivitiesCardCollectionViewCell {
-                    acCell.updateItem(item: item, like: true)
-                }
-                self.toast(message: "❤️ 评价成功")
-            case let  .failure(error):
-                logger.error(error)
-            }
-        }
+        sendActivityMessages(text: text)
+   
     }
     
     func removeInputTextView() {
@@ -869,6 +844,89 @@ extension CardsBaseController: MessengerDelegate {
         if success {
         } else {
             self.toast(message: "发送失败")
+        }
+    }
+}
+
+// MARK: - ActivityMessage Methods
+extension CardsBaseController {
+    func sendActivityMessages(text: String) {
+        let card = cards[index]
+        let from = UInt64(Defaults[.userID]!)!
+        guard let cardId = activityCardId, let activityId = activityId else { return }
+        guard card.type == .activity, card.cardId == cardId else { return }
+        guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
+        let toUserId = card.activityList![index].actor
+        let cardID = card.activityList![index].fromCardId
+        web.request(
+            WebAPI.getCard(cardID: cardID),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let resultCard = response.card
+                    if let content = self.getContentCardContent(resultCard: resultCard) {
+                        if resultCard.type == .content, let content = content as? ContentCardContent {
+                            Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
+                        } else if resultCard.type == .choice, let content = content as? OptionCardContent {
+                            Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
+                        }
+                    } else {
+                        return
+                    }
+                    Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
+                    if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
+                    self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+    }
+    private func getContentCardContent(resultCard: CardResponse) -> MessageContent? {
+        if resultCard.type == .content {
+            let url: String
+            if let videoUrl = resultCard.video {
+                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
+            } else {
+                url = resultCard.contentImageList![0].url
+            }
+            let content = ContentCardContent(identifier: resultCard.cardId,
+                                             cardType: InstantMessage.CardType.content,
+                                             text: resultCard.content!,
+                                             imageURLString: url,
+                                             url: resultCard.url!)
+            return content
+        } else if resultCard.type == .choice {
+            let result = resultCard.result == nil ? -1 : resultCard.result!.index!
+            let content = OptionCardContent(identifier: resultCard.cardId,
+                                            cardType: InstantMessage.CardType.preference,
+                                            text: resultCard.content!,
+                                            leftImageURLString: resultCard.imageList![0],
+                                            rightImageURLString: resultCard.imageList![1],
+                                            result: OptionCardContent.Result(rawValue: result)!)
+            return content
+        }
+        return nil
+    }
+    
+    private func requestActivityCardLike(cardId: String, activityId: String, comment: String) {
+        web.request(.activityCardLike(cardId: cardId, activityId: activityId, comment: comment)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                guard let item = self.cards[index].activityList!.index(
+                    where: { $0.activityId == activityId }) else { return }
+                self.cards[index].activityList![item].like = true
+                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
+                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+                self.cellConfigurators[index] = configurator
+                if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
+                    let acCell = cell as? ActivitiesCardCollectionViewCell {
+                    acCell.updateItem(item: item, like: true)
+                }
+                self.toast(message: "❤️ 评价成功")
+            case let  .failure(error):
+                logger.error(error)
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ enum WebAPI {
     case evaluateCard(cardId: String, index: Int)
     case choiceCard(cardId: String, index: Int)
     case commentCard(cardId: String, comment: String, emoji: Int)
-    case activityCardLike(cardId: String, activityItemId: String, comment: String)
+    case activityCardLike(cardId: String?, activityId: String, comment: String)
     case storyDetailsUvlist(storyId: UInt64)
     case storyRead(storyId: UInt64, fromCardId: String?)
     case storyTopics
@@ -260,8 +260,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
         case let .removeRecentMessage(userID):
             parameters = ["userId": userID]
-        case let .activityCardLike(cardId, activityItemId, comment):
-            parameters = ["cardId": cardId, "activityItemId": activityItemId, "comment": comment]
+        case let .activityCardLike(cardId, activityId, comment):
+            parameters = ["activityId": activityId, "comment": comment]
+            if let cardId = cardId {
+                parameters["cardId"] = cardId
+            }
         case let .getSetting(version):
             parameters = ["version": version]
         case let .shareCard(cardId, comment, userId):

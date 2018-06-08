@@ -103,6 +103,7 @@ class ActivityTableViewCell: UITableViewCell {
         } else {
             likeButton.setImage(#imageLiteral(resourceName: "Unlike"), for: .normal)
         }
+        likeButton.isHidden = viewModel.isHiddenLikeButton
     }
     func update(like: Bool) {
         if like {
@@ -116,11 +117,7 @@ class ActivityTableViewCell: UITableViewCell {
     @objc private func likeAction(_ sender: UIButton) {
         if let viewModel = viewModel {
             if !viewModel.like {
-                if let activityItemId = viewModel.activityItemId {
-                    viewModel.callBack?(activityItemId)
-                } else {
-                   viewModel.callBack?(viewModel.activityId)
-                }
+                viewModel.callBack?(viewModel.activityId)
             }
         }
     }
