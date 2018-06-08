@@ -216,6 +216,10 @@ extension ConversationController: MessageCellDelegate {
             let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
+        } else if let content = message.content as? ContentCardContent {
+            let preview = WebViewController(urlString: content.url)
+            preview.title = content.text
+            navigationController?.pushViewController(preview, animated: true)
         }
     }
 }
