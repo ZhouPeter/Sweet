@@ -65,6 +65,7 @@ enum WebAPI {
     case cardReport(cardId: String)
     case reviewCard(cardID: String)
     case getCard(cardID: String)
+    case getStory(storyID: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -180,6 +181,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/review"
         case .getCard:
             return "/card/get"
+        case .getStory:
+            return "/story/get"
         }
     }
     
@@ -278,6 +281,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
         case .cardReport(let cardID), .reviewCard(let cardID), .getCard(let cardID):
             parameters = ["cardId": cardID]
+        case .getStory(let storyID):
+            parameters = ["storyId": storyID]
         default:
             break
         }

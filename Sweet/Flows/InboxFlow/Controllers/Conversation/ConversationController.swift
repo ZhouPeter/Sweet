@@ -211,7 +211,7 @@ extension ConversationController: MessageCellDelegate {
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
         let message = messages[indexPath.section]
-        guard message.type == .card else { return }
+        guard message.type == .card || message.type == .story else { return }
         if let content = message.content as? OptionCardContent {
             let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
@@ -220,6 +220,23 @@ extension ConversationController: MessageCellDelegate {
             let preview = WebViewController(urlString: content.url)
             preview.title = content.text
             navigationController?.pushViewController(preview, animated: true)
+        } else if let content = message.content as? StoryMessageContent {
+            web.request(
+                .getStory(storyID: content.identifier),
+                responseType: Response<StoryGetResponse>.self
+            ) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case .failure(let error):
+                    logger.error(error)
+                case .success(let response):
+                    let storiesPlayViewController = StoriesPlayerViewController()
+                    storiesPlayViewController.stories = [StoryCellViewModel(model: response.story)]
+                    self.present(storiesPlayViewController, animated: true) {
+                        storiesPlayViewController.initPlayer()
+                    }
+                }
+            }
         }
     }
 }

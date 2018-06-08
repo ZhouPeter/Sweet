@@ -52,3 +52,7 @@ struct StoryResponse: Codable {
         case centerY = "y"
     }
 }
+
+struct StoryGetResponse: Codable {
+    let story: StoryResponse
+}
