@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import SwiftyUserDefaults
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
@@ -340,6 +341,7 @@ extension StoryRecordController: StoryRecordTopViewDelegate {
             case .failure(let error):
                 logger.error(error)
             case .success(let response):
+                Defaults[.isPersonalStoryChecked] = true
                 let viewModels = response.list.map(StoryCellViewModel.init(model:))
                 let storiesPlayViewController = StoriesPlayerViewController()
                 storiesPlayViewController.stories = viewModels

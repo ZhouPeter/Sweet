@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 
 final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: (() -> Void)?
@@ -107,6 +108,7 @@ final class StoryTextController: BaseViewController, StoryTextView {
         }
         publisher.publish(with: url, storyType: .text, topic: topic) { [weak self] (result) in
             logger.debug(result)
+            Defaults[.isPersonalStoryChecked] = false
             self?.onFinished?()
         }
     }

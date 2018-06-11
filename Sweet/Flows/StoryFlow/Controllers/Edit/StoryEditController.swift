@@ -8,6 +8,7 @@
 
 import UIKit
 import TapticEngine
+import SwiftyUserDefaults
 
 final class StoryEditController: BaseViewController, StoryEditView {
     var onCancelled: (() -> Void)?
@@ -280,6 +281,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
                 }
                 self.publisher.publish(with: url, storyType: StoryType.image, topic: self.topic, completion: { result in
                     logger.debug(result)
+                    Defaults[.isPersonalStoryChecked] = false
                     self.onFinished?(url)
                 })
             }
@@ -307,8 +309,9 @@ final class StoryEditController: BaseViewController, StoryEditView {
                     topic: self.topic,
                     pokeCenter: pokeCenter,
                     completion: { result in
-                    logger.debug(result)
-                    self.onFinished?(url)
+                        logger.debug(result)
+                        Defaults[.isPersonalStoryChecked] = false
+                        self.onFinished?(url)
                 })
             }
         }
