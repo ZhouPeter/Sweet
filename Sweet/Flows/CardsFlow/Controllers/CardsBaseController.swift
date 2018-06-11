@@ -103,12 +103,11 @@ class CardsBaseController: BaseViewController {
         let view = SweetPlayerView.shard
         view.panGesture.isEnabled = false
         view.panGesture.require(toFail: pan)
-        view.controlView.isHidden = true
         view.isHasVolume = false
         view.backgroundColor = .black
         view.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController))
-        view.addGestureRecognizer(tap)
+        view.controlView.addGestureRecognizer(tap)
         return view
     }()
     
@@ -282,12 +281,19 @@ extension CardsBaseController {
     func changeCurrentCell() {
         self.saveLastId()
         self.delayItem?.cancel()
+        self.playerView.isHasVolume = false
+//        self.playerView.playerLayer?.resetPlayer2()
         if self.cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        if let cell = cell as? VideoCardCollectionViewCell,
-            let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
+        if let cell = cell as? ContentCardCollectionViewCell {
+            self.delayItem = DispatchWorkItem {
+                cell.hiddenEmojiView(isHidden: false)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
+        } else if let cell = cell as? VideoCardCollectionViewCell,
+                  let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             weak var weakSelf = self
             weak var weakCell = cell
             let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)

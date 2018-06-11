@@ -15,6 +15,35 @@ protocol SweetPlayerControlViewDelegate: class {
                      onSliderEvent event: UIControlEvents)
 }
 
+class SweetPlayerCellControlView: SweetPlayerControlView {
+    override var isHasVolume: Bool {
+        didSet {
+            if isHasVolume {
+                voiceButton.setImage(#imageLiteral(resourceName: "Voice"), for: .normal)
+            } else {
+                voiceButton.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
+            }
+        }
+    }
+    private lazy var voiceButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
+        button.tag = SweetPlayerControlView.ButtonType.mute.rawValue
+        button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    override func customizeUIComponents() {
+        bottomMaskView.isHidden = true
+        topMaskView.isHidden = true
+        addSubview(voiceButton)
+        voiceButton.constrain(width: 30, height: 30)
+        voiceButton.align(.right, inset: 10)
+        voiceButton.align(.top, inset: 10)
+    }
+
+}
+
 class SweetPlayerControlView: UIView {
     weak var delegate: SweetPlayerControlViewDelegate?
     weak var player: SweetPlayerView?
@@ -26,12 +55,13 @@ class SweetPlayerControlView: UIView {
     var totalDuration: TimeInterval = 0
     var delayItem: DispatchWorkItem?
     var playerLastState: SweetPlayerState = .notSetURL
-    private lazy var bottomMaskView: UIView = {
+    var isHasVolume: Bool = true
+    lazy var bottomMaskView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return view
     }()
-    private lazy var topMaskView: UIView = {
+    lazy var topMaskView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = true
         view.backgroundColor = UIColor.clear
@@ -125,27 +155,17 @@ class SweetPlayerControlView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setUIComponents()
+        customizeUIComponents()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
+    private func setUIComponents() {
         addSubview(mainMaskView)
         mainMaskView.fill(in: self)
-//        mainMaskView.addSubview(middleMaskView)
-//        middleMaskView.center(to: mainMaskView)
-//        middleMaskView.equal(.width, to: mainMaskView)
-//        middleMaskView.equal(.height, to: mainMaskView, offset: 110)
-//        middleMaskView.addSubview(replayButton)
-//        replayButton.constrain(width: 30, height: 30)
-//        replayButton.center(to: middleMaskView)
-//        middleMaskView.addSubview(nextLabel)
-//        nextLabel.centerX(to: middleMaskView)
-//        nextLabel.pin(.bottom, to: replayButton, spacing: 10)
-        
         mainMaskView.addSubview(bottomMaskView)
         bottomMaskView.align(.left, to: mainMaskView)
         bottomMaskView.align(.right, to: mainMaskView)
@@ -191,7 +211,10 @@ class SweetPlayerControlView: UIView {
                                             action: #selector(onTapGestureTapped(_:)))
         addGestureRecognizer(tapGesture)
     }
-    
+    func customizeUIComponents() {
+        
+    }
+
     func playerStateDidChange(state: SweetPlayerState) {
         switch state {
         case .readyToPlay:
@@ -231,12 +254,10 @@ class SweetPlayerControlView: UIView {
         
     }
     func showPlayToTheEndView() {
-//        middleMaskView.alpha = 1
         mainMaskView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
     
     func hidePlayToTheEndView() {
-//        middleMaskView.alpha = 0
         mainMaskView.backgroundColor = UIColor.black.withAlphaComponent(0)
     }
     
@@ -297,7 +318,7 @@ extension SweetPlayerControlView {
         controlViewAnimation(isShow: !isMaskShowing)
     }
     
-    @objc private func onButtonPressed(_ button: UIButton) {
+    @objc func onButtonPressed(_ button: UIButton) {
         autoFadeOutControlViewWithAnimation()
         if let type = ButtonType(rawValue: button.tag) {
             switch type {

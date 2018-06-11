@@ -9,19 +9,21 @@
 import UIKit
 import Pageboy
 protocol PageChildrenProtocol {
-    var userId: UInt64 { get set }
+    var user: User { get set }
     func loadRequest()
 }
 class ActionsController: PageboyViewController {
-    var userId: UInt64 {
+    var user: User {
         didSet {
             for index in 0..<pageControllers.count {
-                pageControllers[index].userId = userId
+                pageControllers[index].user = user
             }
         }
     }
-    init(userId: UInt64) {
-        self.userId = userId
+    var me: User
+    init(user: User, me: User) {
+        self.user = user
+        self.me = me
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,9 +32,9 @@ class ActionsController: PageboyViewController {
     }
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
-        let feedsController = ActivitiesController(userId: userId)
-        let storysController = StoriesController(userId: userId)
-        let estimatesController = EvaluationController(userId: userId)
+        let feedsController = ActivitiesController(user: user, avatar: me.avatar)
+        let storysController = StoriesController(user: user)
+        let estimatesController = EvaluationController(user: user)
         viewControllers.append(feedsController)
         viewControllers.append(storysController)
         viewControllers.append(estimatesController)

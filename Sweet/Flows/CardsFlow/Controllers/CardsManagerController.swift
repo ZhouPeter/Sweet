@@ -41,8 +41,8 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         return button
     }()
     
-    private lazy var rightButton: UIButton = {
-        let button = UIButton()
+    private lazy var rightButton: BadgeButton = {
+        let button = BadgeButton()
         button.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(rightAction(sender:)), for: .touchUpInside)
@@ -61,9 +61,11 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         currentController = allController
         showAll?(allController)
         automaticallyAdjustsScrollViewInsets = false
+        Messenger.shared.addDelegate(self)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {
@@ -90,6 +92,17 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         }
     }
 
+}
+extension CardsManagerController: MessengerDelegate {
+    func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int) {
+        if messageUnread > 0 {
+            rightButton.showCountBadge(text: messageUnread > 99 ? "99+" : "\(messageUnread)")
+        } else if likesUnread > 0 {
+            rightButton.showBadge()
+        } else {
+            rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
+        }
+    }
 }
 
 // MARK: - Actions

@@ -9,11 +9,9 @@
 import UIKit
 import SwiftyUserDefaults
 class EvaluationController: UIViewController, PageChildrenProtocol {
-
-    var userId: UInt64
-    
-    init(userId: UInt64) {
-        self.userId = userId
+    var user: User
+    init(user: User) {
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,14 +47,14 @@ class EvaluationController: UIViewController, PageChildrenProtocol {
     
     func loadRequest() {
         web.request(
-            .evaluationList(page: 0, userId: userId),
+            .evaluationList(page: 0, userId: user.userId),
             responseType: Response<EvaluationListResponse>.self) { (result) in
                 switch result {
                 case let .success(response):
                     self.evaluationList = response.list
                     response.list.forEach({
                         var viewModel = EvaluationViewModel(model: $0)
-                        viewModel.isHiddenLikeImage = UInt64(Defaults[.userID]!)! == self.userId
+                        viewModel.isHiddenLikeImage = UInt64(Defaults[.userID]!)! == self.user.userId
                         viewModel.callback = {
                             self.showInputView(evaluationId: viewModel.evaluationId)
                         }
@@ -99,7 +97,7 @@ extension EvaluationController {
         let from = UInt64(Defaults[.userID]!)!
         guard let evaluationId = evaluationId else { return }
         guard let index = evaluationList.index(where: { $0.evaluationId == evaluationId }) else {fatalError()}
-        let toUserId = userId
+        let toUserId = user.userId
         let cardID = evaluationList[index].fromCardId
         web.request(
             WebAPI.getCard(cardID: cardID),

@@ -9,10 +9,11 @@
 import UIKit
 import SwiftyUserDefaults
 class ActivitiesController: UIViewController, PageChildrenProtocol {
-
-    var userId: UInt64
-    init(userId: UInt64) {
-        self.userId = userId
+    var user: User
+    var avatar: String
+    init(user: User, avatar: String) {
+        self.user = user
+        self.avatar = avatar
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,13 +47,13 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     
     func loadRequest() {
         web.request(
-          .activityList(page: 0, userId: userId),
+          .activityList(page: 0, userId: user.userId),
           responseType: Response<ActivityListResponse>.self) { (result) in
             switch result {
             case let .success(response):
                 self.activityList = response.list
                 self.viewModels = response.list.map {
-                    var viewModel = ActivityViewModel(model: $0)
+                    var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
                     viewModel.callBack = { activityId in
                         self.showInputView(activityId: viewModel.activityId)
                     }

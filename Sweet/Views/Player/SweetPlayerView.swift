@@ -65,7 +65,9 @@ class SweetPlayerView: UIView {
     }
     var isHasVolume = true {
         didSet {
-            self.playerLayer?.isHasVolume = isHasVolume
+            playerLayer?.isHasVolume = isHasVolume
+            controlView.isHasVolume = isHasVolume
+            logger.debug(isHasVolume)
         }
     }
     weak var avPlayer: AVPlayer? {
@@ -93,7 +95,7 @@ class SweetPlayerView: UIView {
             self.playerLayer?.videoGravity = videoGravity
         }
     }
-    static let shard = SweetPlayerView()
+    static let shard = SweetPlayerView(controlView: SweetPlayerCellControlView())
     init(controlView: SweetPlayerControlView = SweetPlayerControlView()) {
         super.init(frame: .zero)
         self.controlView = controlView
@@ -399,6 +401,10 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 controlView.hidePlayToTheEndView()
                 seek(0)
                 play()
+            case .mute:
+                isHasVolume = !isHasVolume
+                controlView.isHasVolume = isHasVolume
+                playerLayer?.isHasVolume = isHasVolume
             default:
                 logger.error("unhandled Actions")
             }

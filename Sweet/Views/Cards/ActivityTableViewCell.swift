@@ -10,7 +10,22 @@ import UIKit
 
 class ActivityTableViewCell: UITableViewCell {
     private var viewModel: ActivityViewModel?
+
     private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var leftAvatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var rightAvatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -71,6 +86,16 @@ class ActivityTableViewCell: UITableViewCell {
         avatarImageView.align(.left, to: contentView, inset: 10)
         avatarImageView.align(.top, to: contentView, inset: 20)
         avatarImageView.setViewRounded()
+        avatarImageView.addSubview(leftAvatarImageView)
+        leftAvatarImageView.constrain(width: 25, height: 50)
+        leftAvatarImageView.align(.left)
+        leftAvatarImageView.align(.top)
+        leftAvatarImageView.setViewRounded(cornerRadius: 25, corners: [.topLeft, .bottomLeft])
+        avatarImageView.addSubview(rightAvatarImageView)
+        rightAvatarImageView.constrain(width: 25, height: 50)
+        rightAvatarImageView.align(.right)
+        rightAvatarImageView.align(.top)
+        rightAvatarImageView.setViewRounded(cornerRadius: 25, corners: [.topRight, .bottomRight])
         contentView.addSubview(titleLabel)
         titleLabel.pin(.right, to: avatarImageView, spacing: 10)
         titleLabel.align(.top, to: avatarImageView)
@@ -92,7 +117,15 @@ class ActivityTableViewCell: UITableViewCell {
     
     func update(_ viewModel: ActivityViewModel) {
         self.viewModel = viewModel
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        if let leftAvatarURL = viewModel.leftAvatarURL, let rightAvatarURL = viewModel.rightAvatarURL {
+            leftAvatarImageView.kf.setImage(with: leftAvatarURL)
+            rightAvatarImageView.kf.setImage(with: rightAvatarURL)
+            avatarImageView.image = nil
+        } else {
+            avatarImageView.kf.setImage(with: viewModel.avatarURL)
+            leftAvatarImageView.image = nil
+            rightAvatarImageView.image = nil
+        }
         titleLabel.text = viewModel.titleString
         subtitleLabel.text = viewModel.subtitleString
         commentLabel.text = viewModel.commentString
@@ -105,6 +138,7 @@ class ActivityTableViewCell: UITableViewCell {
         }
         likeButton.isHidden = viewModel.isHiddenLikeButton
     }
+    
     func update(like: Bool) {
         if like {
             likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .normal)

@@ -78,8 +78,6 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionsController = ActionsController(userId: userId)
-        add(childViewController: actionsController, addView: false)
         setTableView()
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .white
@@ -200,6 +198,8 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
+                self.actionsController = ActionsController(user: User(self.userResponse!), me: self.user)
+                self.add(childViewController: self.actionsController, addView: false)
                 self.updateViewModel()
                 self.tableView.reloadData()
             }

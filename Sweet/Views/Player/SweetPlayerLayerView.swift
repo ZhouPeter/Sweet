@@ -83,7 +83,15 @@ class SweetPlayerLayerView: UIView {
             }
         }
     }
-    var isHasVolume: Bool = true
+    var isHasVolume: Bool = true {
+        didSet {
+            if !isHasVolume {
+                self.player?.volume = 0
+            } else {
+                self.player?.volume = AVAudioSession.sharedInstance().outputVolume
+            }
+        }
+    }
     
     var aspectRatio: SweetPlayerAspectRatio = .default {
         didSet {
@@ -217,6 +225,10 @@ class SweetPlayerLayerView: UIView {
         self.keepUpToken?.invalidate()
         // 把player置为nil
         self.player = nil
+    }
+    open func resetPlayer2() {
+        resetPlayer()
+        self.playerLayer?.player?.replaceCurrentItem(with: nil)
     }
     
     open func prepareToDeinit() {

@@ -60,9 +60,9 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
 
-    var userId: UInt64
-    init(userId: UInt64) {
-        self.userId = userId
+    var user: User
+    init(user: User) {
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -115,7 +115,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     }
     
     func loadRequest() {
-        web.request(.storyList(page: 0, userId: userId),
+        web.request(.storyList(page: 0, userId: user.userId),
                     responseType: Response<StoryListResponse>.self) { [weak self] (result) in
             guard let `self` = self else { return }
             switch result {
