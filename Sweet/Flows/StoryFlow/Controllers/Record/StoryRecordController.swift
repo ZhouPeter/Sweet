@@ -92,6 +92,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.bottomView.alpha = 1
             self.topicButton.alpha = 1
         }, completion: nil)
+        topView.updateAvatarCircle(isUnread: Defaults[.isPersonalStoryChecked] == false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
