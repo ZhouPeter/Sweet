@@ -59,6 +59,18 @@ final class Messenger {
     
     private init() {
         startNetworkReachabilityObserver()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateActiveStatus),
+            name: .UIApplicationDidEnterBackground,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateActiveStatus),
+            name: .UIApplicationWillEnterForeground,
+            object: nil
+        )
     }
     
     // MARK: - Public
@@ -98,12 +110,6 @@ final class Messenger {
         }
     }
     
-    func getUserInfo(with userID: UInt64) {
-        getUserInfoList(with: [userID]) { (userList) in
-            logger.debug(userList)
-        }
-    }
-    
     func getUserInfoList(with userIDs: [UInt64], callback: @escaping ([User]) -> Void) {
         var request = UserInfoGetReq()
         request.userIDList = userIDs
@@ -121,6 +127,12 @@ final class Messenger {
                 callback(userList)
             })
         })
+    }
+    
+    @objc func updateActiveStatus() {
+        var request = ActiveSyncReq()
+        request.status = UIApplication.shared.applicationState == .background ? .background : .foreground
+        send(request, responseType: ActiveSyncResp.self, callback: nil)
     }
     
     // MARK: - Messages
@@ -430,6 +442,7 @@ final class Messenger {
                     } else {
                         self.state = .offline
                     }
+                    self.updateActiveStatus()
                     self.listenMessageNotify()
                     self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
                 })
@@ -473,7 +486,7 @@ final class Messenger {
     private func send<T, R> (
         _ message: T,
         responseType: R.Type,
-        callback: @escaping (R?) -> Void) where T: Message & MessageTicket, R: Message {
+        callback: ((R?) -> Void)?) where T: Message & MessageTicket, R: Message {
         let module = message.module.rawValue
         let command = message.command
         HandlerManager.sharedInstance()
@@ -484,7 +497,7 @@ final class Messenger {
         service.send(package, moduleId: module, commandId: command) { (code) in
             if code.rawValue != 0 {
                 logger.error("message send failed", message)
-                callback(nil)
+                callback?(nil)
             }
         }
     }
