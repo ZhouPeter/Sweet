@@ -12,8 +12,10 @@ final class StoryCoordinator: BaseCoordinator {
     private let factory: StoryFlowFactory
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
+    private let user: User
     
-    init(router: Router, factory: StoryFlowFactory, coordinatorFactory: CoordinatorFactory) {
+    init(user: User, router: Router, factory: StoryFlowFactory, coordinatorFactory: CoordinatorFactory) {
+        self.user = user
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
@@ -27,7 +29,7 @@ final class StoryCoordinator: BaseCoordinator {
     // MARK: - Private
     
     private func showStoryRecordView() {
-        let controller = factory.makeStoryRecordView()
+        let controller = factory.makeStoryRecordView(user: user)
         controller.onRecorded = { [weak self] url, isPhoto, topic in
             self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
