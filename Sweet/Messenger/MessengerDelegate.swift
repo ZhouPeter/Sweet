@@ -18,6 +18,7 @@ protocol MessengerDelegate: class {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User)
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User)
     func messengerDidReceiveMessage(_ message: InstantMessage)
+    func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int)
 }
 
 extension MessengerDelegate {
@@ -30,4 +31,5 @@ extension MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {}
     func messengerDidReceiveMessage(_ message: InstantMessage) {}
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User) {}
+    func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int) {}
 }

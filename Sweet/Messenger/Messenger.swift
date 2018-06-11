@@ -242,6 +242,8 @@ final class Messenger {
             }
             let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
             realm.delete(results)
+        }, callback: { _ in
+            self.updateUnreadCount()
         })
         web.request(.removeRecentMessage(userID: userID)) { (result) in
             logger.debug(result)
@@ -267,7 +269,7 @@ final class Messenger {
     }
     
     // MARK: - Private
-    
+
     private func getMessages(with IDs: [UInt64], callback: @escaping ([InstantMessage]) -> Void) {
         var request = GetReq()
         request.msgIDList = IDs
@@ -385,6 +387,7 @@ final class Messenger {
                     self.updateUserConversations(with: users.map({ $0.userId }))
                 })
             }
+            self.updateUnreadCount()
             self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
         })
     }
@@ -484,5 +487,22 @@ final class Messenger {
                 callback(nil)
             }
         }
+    }
+
+    private func updateUnreadCount() {
+        guard let userID = user?.userId else { return }
+        var likesUnreadCount = 0
+        var messagesUnreadCount = 0
+        storage?.read({ (realm) in
+            let unreadMessages = realm
+                .objects(InstantMessageData.self)
+                .filter("(from != \(userID) || to != \(userID)) && isRead = false")
+            likesUnreadCount = unreadMessages.filter("type == \(IMType.like.rawValue)").count
+            messagesUnreadCount = unreadMessages.count - likesUnreadCount
+        }, callback: {
+            self.multicastDelegate.invoke({
+                $0.messengerDidUpdateUnreadCount(messageUnread: messagesUnreadCount, likesUnread: likesUnreadCount)
+            })
+        })
     }
 }
