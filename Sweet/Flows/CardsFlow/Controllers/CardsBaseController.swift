@@ -74,6 +74,7 @@ class CardsBaseController: BaseViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(cellType: ContentCardCollectionViewCell.self)
+        collectionView.register(cellType: VideoCardCollectionViewCell.self)
         collectionView.register(cellType: ChoiceCardCollectionViewCell.self)
         collectionView.register(cellType: EvaluationCardCollectionViewCell.self)
         collectionView.register(cellType: ActivitiesCardCollectionViewCell.self)
@@ -285,18 +286,16 @@ extension CardsBaseController {
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        if let cell = cell as? ContentCardCollectionViewCell,
-            let configurator = configurator as? CellConfigurator<ContentCardCollectionViewCell> {
-            if let videoURL = configurator.viewModel.videoURL {
-                weak var weakSelf = self
-                weak var weakCell = cell
-                let resource = SweetPlayerResource(url: videoURL)
-                resource.indexPath = indexPath
-                resource.scrollView = weakSelf?.collectionView
-                resource.fatherViewTag = weakCell?.contentImageView.tag
-                self.playerView.setVideo(resource: resource)
-                self.avPlayer = self.playerView.avPlayer
-            }
+        if let cell = cell as? VideoCardCollectionViewCell,
+            let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
+            weak var weakSelf = self
+            weak var weakCell = cell
+            let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
+            resource.indexPath = indexPath
+            resource.scrollView = weakSelf?.collectionView
+            resource.fatherViewTag = weakCell?.contentImageView.tag
+            self.playerView.setVideo(resource: resource)
+            self.avPlayer = self.playerView.avPlayer
             self.delayItem = DispatchWorkItem {
                 cell.hiddenEmojiView(isHidden: false)
             }
@@ -400,10 +399,17 @@ extension CardsBaseController {
     func appendConfigurator(card: CardResponse) {
         switch card.type {
         case .content:
-            let viewModel = ContentCardViewModel(model: card)
-            let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.append(configurator)
-            cards.append(card)
+            if card.video != nil {
+                let viewModel = ContentVideoCardViewModel(model: card)
+                let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators.append(configurator)
+                cards.append(card)
+            } else {
+                let viewModel = ContentCardViewModel(model: card)
+                let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators.append(configurator)
+                cards.append(card)
+            }
         case .choice:
             let viewModel = ChoiceCardViewModel(model: card)
             let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
@@ -437,10 +443,17 @@ extension CardsBaseController {
     func insertConfigurator(card: CardResponse, index: Int) {
         switch card.type {
         case .content:
-            let viewModel = ContentCardViewModel(model: card)
-            let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.insert(configurator, at: index)
-            cards.insert(card, at: index)
+            if card.video != nil {
+                let viewModel = ContentVideoCardViewModel(model: card)
+                let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators.insert(configurator, at: index)
+                cards.insert(card, at: index)
+            } else {
+                let viewModel = ContentCardViewModel(model: card)
+                let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators.insert(configurator, at: index)
+                cards.insert(card, at: index)
+            }
         case .choice:
             let viewModel = ChoiceCardViewModel(model: card)
             let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
@@ -495,7 +508,7 @@ extension CardsBaseController: UICollectionViewDataSource {
         if let cell = cell as? BaseCardCollectionViewCell {
             cell.delegate = self
         }
-        if cell is ContentCardCollectionViewCell {
+        if cell is VideoCardCollectionViewCell {
             if let playerIndex = playerView.resource?.indexPath, playerIndex == indexPath {
                 playerView.updatePlayViewToCell(cell: cell)
             }
@@ -584,8 +597,8 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                 case let .success(response):
                     guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                     self.cards[index].result = response
-                    let viewModel = ContentCardViewModel(model: self.cards[index])
-                    let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                    let viewModel = ContentVideoCardViewModel(model: self.cards[index])
+                    let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
                     self.cellConfigurators[index] = configurator
                     self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                 case let .failure(error):
@@ -864,7 +877,7 @@ extension CardsBaseController {
                 switch result {
                 case let .success(response):
                     let resultCard = response.card
-                    if let content = self.getContentCardContent(resultCard: resultCard) {
+                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
                         if resultCard.type == .content, let content = content as? ContentCardContent {
                             Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
                         } else if resultCard.type == .choice, let content = content as? OptionCardContent {
@@ -881,33 +894,7 @@ extension CardsBaseController {
                 }
         }
     }
-    private func getContentCardContent(resultCard: CardResponse) -> MessageContent? {
-        if resultCard.type == .content {
-            let url: String
-            if let videoUrl = resultCard.video {
-                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
-            } else {
-                url = resultCard.contentImageList![0].url
-            }
-            let content = ContentCardContent(identifier: resultCard.cardId,
-                                             cardType: InstantMessage.CardType.content,
-                                             text: resultCard.content!,
-                                             imageURLString: url,
-                                             url: resultCard.url!)
-            return content
-        } else if resultCard.type == .choice {
-            let result = resultCard.result == nil ? -1 : resultCard.result!.index!
-            let content = OptionCardContent(identifier: resultCard.cardId,
-                                            cardType: InstantMessage.CardType.preference,
-                                            text: resultCard.content!,
-                                            leftImageURLString: resultCard.imageList![0],
-                                            rightImageURLString: resultCard.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            return content
-        }
-        return nil
-    }
-    
+
     private func requestActivityCardLike(cardId: String, activityId: String, comment: String) {
         web.request(.activityCardLike(cardId: cardId, activityId: activityId, comment: comment)) { (result) in
             switch result {

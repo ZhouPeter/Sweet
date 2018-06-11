@@ -1,20 +1,15 @@
 //
-//  NewsCardCollectionViewCell.swift
+//  VideoCardCollectionViewCell.swift
 //  Sweet
 //
-//  Created by 周鹏杰 on 2018/5/14.
+//  Created by 周鹏杰 on 2018/6/11.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
 import UIKit
-protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
-    func showImageBrowser(selectedIndex: Int)
-    func openKeyword()
-    func contentCardComment(cardId: String, emoji: Int)
-}
-class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
-    
-    typealias ViewModelType = ContentCardViewModel
+
+class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
+    typealias ViewModelType = ContentVideoCardViewModel
     private var viewModel: ViewModelType?
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
@@ -30,9 +25,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-    
-    var imageViews = [UIImageView]()
-
+        
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
         view.isHidden = true
@@ -63,7 +56,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     private var avatarImageViews: [UIImageView] = [UIImageView(), UIImageView(), UIImageView()]
     private var avatarImageContraints: [NSLayoutConstraint] =  [NSLayoutConstraint]()
     private var emojiViewWidthConstrain: NSLayoutConstraint?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -99,11 +91,9 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         contentImageView.align(.bottom, to: customContent)
         contentImageView.equal(.height, to: contentImageView)
         contentImageView.heightAnchor.constraint(
-                equalTo: contentImageView.widthAnchor,
-                multiplier: 10.0 / 9.0).isActive = true
+            equalTo: contentImageView.widthAnchor,
+            multiplier: 10.0 / 9.0).isActive = true
         contentImageView.setViewRounded(cornerRadius: 10, corners: [.bottomLeft, .bottomRight])
-        setImageViews()
-        
         customContent.addSubview(emojiView)
         emojiViewWidthConstrain = emojiView.constrain(width: emojiWidth * 2 + 10 + 10 + 25 + 5)
         emojiView.constrain(height: emojiHeight + 10)
@@ -118,34 +108,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         resultCommentLabel.centerX(to: customContent)
         resultCommentLabel.align(.top, inset: 200)
         addAvatarImageViews()
-    }
-    
-    private func setImageViews() {
-        var orginX: CGFloat = 0
-        var orginY: CGFloat = 0
-        let sumWidth: CGFloat = UIScreen.mainWidth() - 20
-        let sumHeight: CGFloat = sumWidth * 10 / 9
-        for index in 0..<9 {
-            let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.tag = index
-            imageView.isUserInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(didPressImage(_:)))
-            imageView.addGestureRecognizer(tap)
-            if orginX + sumWidth / 3 > sumWidth {
-                orginX = 0
-                orginY += sumHeight / 3
-            }
-            let rect = CGRect(origin: CGPoint(x: orginX, y: orginY),
-                              size: CGSize(width: sumWidth / 3, height: sumHeight / 3))
-            imageView.frame = rect
-            orginX += sumWidth / 3
-            imageView.backgroundColor = UIColor.black
-            imageView.contentMode = .scaleAspectFill
-            imageViews.append(imageView)
-            contentImageView.addSubview(imageView)
-        }
     }
     
     private func addAvatarImageViews() {
@@ -167,13 +129,11 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateWith(_ viewModel: ContentCardViewModel) {
+    func updateWith(_ viewModel: ContentVideoCardViewModel) {
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
-        setContentImages(images: viewModel.contentImages)
-     
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {
             resultEmojiView.isHidden = false
             resultCommentLabel.isHidden = true
@@ -205,41 +165,9 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         }
     }
     
-    private func setContentImages(images: [ContentImageModel]?) {
-        guard let images = images else {
-            imageViews.forEach { $0.isHidden = true }
-            return
-        }
-        var orginX: CGFloat = 0
-        var orginY: CGFloat = 0
-        let sumWidth: CGFloat = UIScreen.mainWidth() - 20
-        for (offset, imageView) in imageViews.enumerated() {
-            if offset < images.count {
-                imageView.isHidden = false
-                contentImageView.addSubview(imageView)
-                let imageSize = images[offset].size
-                if orginX + imageSize.width > sumWidth {
-                    orginX = 0
-                    orginY += images[offset - 1].size.height
-                }
-                let rect = CGRect(origin: CGPoint(x: orginX, y: orginY),
-                                  size: CGSize(width: imageSize.width, height: imageSize.height))
-                imageView.frame = rect
-                imageView.kf.setImage(with: images[offset].imageURL)
-                orginX += imageSize.width
-            } else {
-                imageView.isHidden = true
-                imageView.removeFromSuperview()
-            }
-        }
-    }
 }
 
-extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
-    func contentCardComment(emoji: Int) {
-        
-    }
-    
+extension VideoCardCollectionViewCell: EmojiControlViewDelegate {
     func openKeyboard() {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.openKeyword()

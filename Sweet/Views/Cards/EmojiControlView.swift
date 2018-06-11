@@ -13,7 +13,7 @@ let emojiWidth: CGFloat =  (UIScreen.mainWidth() - 20 * 2 - 20 - 6 * emojiSpace)
 let emojiHeight: CGFloat = emojiWidth
 protocol EmojiControlViewDelegate: NSObjectProtocol {
     func openEmojis()
-    func openKeyword()
+    func openKeyboard()
     func selectEmoji(emoji: Int)
 }
 class EmojiControlView: UIView {
@@ -109,7 +109,7 @@ class EmojiControlView: UIView {
     }
     
     @objc private func keywordAction(sender: UIButton) {
-        delegate?.openKeyword()
+        delegate?.openKeyboard()
     }
     
     @objc private func selectEmojiAction(tap: UITapGestureRecognizer) {

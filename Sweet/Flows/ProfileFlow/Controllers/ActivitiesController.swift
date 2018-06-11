@@ -71,7 +71,6 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         inputTextView.fill(in: window)
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
-//        self.activityCardId = cardId
     }
 }
 
@@ -88,6 +87,7 @@ extension ActivitiesController: InputTextViewDelegate {
         inputTextView.removeFromSuperview()
     }
 }
+
 extension ActivitiesController {
     func sendActivityMessages(text: String) {
         let from = UInt64(Defaults[.userID]!)!
@@ -101,7 +101,7 @@ extension ActivitiesController {
                 switch result {
                 case let .success(response):
                     let resultCard = response.card
-                    if let content = self.getContentCardContent(resultCard: resultCard) {
+                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
                         if resultCard.type == .content, let content = content as? ContentCardContent {
                             Messenger.shared.sendContentCard(content, from: from, to: toUserId)
                         } else if resultCard.type == .choice, let content = content as? OptionCardContent {
@@ -118,33 +118,6 @@ extension ActivitiesController {
                 }
         }
     }
-    private func getContentCardContent(resultCard: CardResponse) -> MessageContent? {
-        if resultCard.type == .content {
-            let url: String
-            if let videoUrl = resultCard.video {
-                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
-            } else {
-                url = resultCard.contentImageList![0].url
-            }
-            let content = ContentCardContent(identifier: resultCard.cardId,
-                                             cardType: InstantMessage.CardType.content,
-                                             text: resultCard.content!,
-                                             imageURLString: url,
-                                             url: resultCard.url!)
-            return content
-        } else if resultCard.type == .choice {
-            let result = resultCard.result == nil ? -1 : resultCard.result!.index!
-            let content = OptionCardContent(identifier: resultCard.cardId,
-                                            cardType: InstantMessage.CardType.preference,
-                                            text: resultCard.content!,
-                                            leftImageURLString: resultCard.imageList![0],
-                                            rightImageURLString: resultCard.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            return content
-        }
-        return nil
-    }
-    
     private func requestActivityLike(activityId: String, comment: String) {
         web.request(.activityCardLike(cardId: nil, activityId: activityId, comment: comment)) { (result) in
             switch result {

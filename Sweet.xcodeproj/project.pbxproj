@@ -89,6 +89,22 @@
 		58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		583BC77920CE198900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
+		583BC77C20CE1A1800C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
+		583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
+		583BC77E20CE1A1900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
+		583BC78020CE1BBC00C4494E /* EvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */; };
+		583BC78120CE1CEB00C4494E /* EvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */; };
+		583BC78220CE1CEB00C4494E /* EvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */; };
+		583BC78320CE1CEC00C4494E /* EvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */; };
+		583BC78520CE4F9100C4494E /* ContentVideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */; };
+		583BC78620CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */; };
+		583BC78720CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */; };
+		583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */; };
+		583BC78A20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */; };
+		583BC78B20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */; };
+		583BC78C20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */; };
+		583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */; };
 		583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
 		583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
 		583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
@@ -491,10 +507,6 @@
 		58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
 		58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
 		58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
-		58D3CCDC20C8CE7C0078B36C /* LikeMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */; };
-		58D3CCDF20C8CE7F0078B36C /* LikeMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */; };
-		58D3CCE020C8CE7F0078B36C /* LikeMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */; };
-		58D3CCE120C8CE800078B36C /* LikeMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */; };
 		58D3CCE520C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
 		58D3CCE620C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
 		58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
@@ -1196,6 +1208,10 @@
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
+		583BC77820CE198900C4494E /* MessageContentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentHelper.swift; sourceTree = "<group>"; };
+		583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationViewModel.swift; sourceTree = "<group>"; };
+		583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoCardViewModel.swift; sourceTree = "<group>"; };
+		583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserController.swift; sourceTree = "<group>"; };
 		5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFooterView.swift; sourceTree = "<group>"; };
 		5843DA4F20A0261D005C8AD2 /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
@@ -1320,7 +1336,6 @@
 		58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesPlayerScrollView.swift; sourceTree = "<group>"; };
 		58CE1EDE20A5652700781EBF /* StoryUVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVController.swift; sourceTree = "<group>"; };
 		58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVTableViewCell.swift; sourceTree = "<group>"; };
-		58D3CCDB20C8CE7C0078B36C /* LikeMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeMessageContent.swift; sourceTree = "<group>"; };
 		58D3CCE420C8FA320078B36C /* StatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusResponse.swift; sourceTree = "<group>"; };
 		58D578C92092D30500AE5D38 /* StoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesController.swift; sourceTree = "<group>"; };
 		58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1556,6 +1571,7 @@
 				58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */,
 				589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */,
 				589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */,
+				583BC78920CE50ED00C4494E /* VideoCardCollectionViewCell.swift */,
 				5803571A20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift */,
 				5803572520AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift */,
 				5803574320AAE0B500B2C94F /* StoryCardCollectionViewCell.swift */,
@@ -1577,6 +1593,7 @@
 				5803572020AAB9E700B2C94F /* EvaluationCardViewModel.swift */,
 				5803572F20AABEA900B2C94F /* ActivitiesCardViewModel.swift */,
 				5803575220AAFBC200B2C94F /* StoriesCardViewModel.swift */,
+				583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1670,6 +1687,7 @@
 				58447B5A209C5B16004C2FFE /* ContactViewModel.swift */,
 				5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */,
 				5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */,
+				583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -1935,6 +1953,7 @@
 				AC616F9920C6BE6E00AD9004 /* ContentCardContent.swift */,
 				AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */,
 				AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */,
+				583BC77820CE198900C4494E /* MessageContentHelper.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2792,6 +2811,7 @@
 				AC6C1D8E20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C182099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				5803571B20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
+				583BC77920CE198900C4494E /* MessageContentHelper.swift in Sources */,
 				AC525AAC208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4320C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
@@ -2907,6 +2927,7 @@
 				58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC120A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				585B68BD20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				583BC78A20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				58BD52C82088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534E2090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -2982,6 +3003,7 @@
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA9CC4820C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3120C6B6AF00E3712C /* ShareCardController.swift in Sources */,
+				583BC78020CE1BBC00C4494E /* EvaluationViewModel.swift in Sources */,
 				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091920B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */,
@@ -2992,6 +3014,7 @@
 				AC39E55420C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACA9CC4D20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				58447B2C209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
+				583BC78520CE4F9100C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
@@ -3086,6 +3109,7 @@
 				589E6BBB20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
+				583BC78720CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
@@ -3192,6 +3216,7 @@
 				AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
+				583BC78C20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
@@ -3216,6 +3241,7 @@
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
+				583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
@@ -3230,6 +3256,7 @@
 				5866330B20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				AC1778D120BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
+				583BC78220CE1CEB00C4494E /* EvaluationViewModel.swift in Sources */,
 				ACF7A8BF20B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC616F9C20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
@@ -3332,6 +3359,7 @@
 				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58461D3420C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
+				583BC77E20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
@@ -3377,6 +3405,7 @@
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
+				583BC78320CE1CEC00C4494E /* EvaluationViewModel.swift in Sources */,
 				58816CF120C62C370032D103 /* EvaluationController.swift in Sources */,
 				ACDB24B120BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC2A257120BBF16B00A82E62 /* Messenger.swift in Sources */,
@@ -3446,6 +3475,7 @@
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACF7A8C720B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
+				583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				AC616FAD20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
@@ -3532,6 +3562,7 @@
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
@@ -3579,6 +3610,7 @@
 				AC6C1D8F20A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C75C192099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				5803571C20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
+				583BC77C20CE1A1800C4494E /* MessageContentHelper.swift in Sources */,
 				AC525AAD208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4420C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
@@ -3694,6 +3726,7 @@
 				58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC220A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
 				585B68BE20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				583BC78B20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				58BD52C92088ABBB00F7C3E1 /* SignUpAvatarController.swift in Sources */,
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534F2090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -3769,6 +3802,7 @@
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA9CC4920C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3220C6B6AF00E3712C /* ShareCardController.swift in Sources */,
+				583BC78120CE1CEB00C4494E /* EvaluationViewModel.swift in Sources */,
 				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */,
@@ -3779,6 +3813,7 @@
 				AC39E55520C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACA9CC4E20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				58447B2D209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
+				583BC78620CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,

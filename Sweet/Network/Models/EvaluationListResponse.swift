@@ -14,7 +14,9 @@ struct EvaluationListResponse: Codable {
 
 struct EvaluationResponse: Codable {
     let evaluationId: UInt64
+    let fromCardId: String
     let image: String
-    let like: Bool
+    var like: Bool
     let text: String
+    let num: Int
 }
