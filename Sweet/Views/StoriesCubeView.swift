@@ -25,7 +25,6 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = UILayoutConstraintAxis.horizontal
-        
         return stackView
     }()
     
@@ -106,9 +105,14 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
         transformViewsInScrollView(scrollView)
         cubeDelegate?.cubeViewDidScroll(self)
     }
-    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        setDefaultAnchorPoint()
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setDefaultAnchorPoint()
+    }
     // MARK: Private methods
-    
+  
     fileprivate func configureScrollView() {
         
         // Configure scroll view properties
@@ -246,15 +250,30 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
         var position = view.layer.position
         position.x -= oldPoint.x
         position.x += newPoint.x
-        
         position.y -= oldPoint.y
         position.y += newPoint.y
-        
         view.layer.position = position
         view.layer.anchorPoint = anchorPoint
-        
+
     }
     
+    fileprivate func setDefaultAnchorPoint() {
+        for index in 0 ..< childViews.count {
+            let view = childViews[index]
+            let anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let newPoint = CGPoint(x: view.bounds.size.width * anchorPoint.x,
+                                   y: view.bounds.size.height * anchorPoint.y)
+            let oldPoint = CGPoint(x: view.bounds.size.width * view.layer.anchorPoint.x,
+                                   y: view.bounds.size.height * view.layer.anchorPoint.y)
+            var position = view.layer.position
+            position.x -= oldPoint.x
+            position.x += newPoint.x
+            position.y -= oldPoint.y
+            position.y += newPoint.y
+            view.layer.position = position
+            view.layer.anchorPoint = anchorPoint
+        }
+    }
     fileprivate func frameFor(origin: CGPoint, size: CGSize) -> CGRect {
         return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height)
     }

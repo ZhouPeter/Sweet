@@ -19,7 +19,8 @@ struct StoryCollectionViewCellModel {
     let sourceUserId: Int
     var created: Int?
     let storyId: UInt64
-    
+    let type: StoryType
+    var pokeCenter: CGPoint = CGPoint(x: 0.5, y: 0.5)
     init(model: StoryResponse) {
         name = model.nickname
         info  = "\(model.university)\n\(model.college)\n\(model.enrollment)"
@@ -34,5 +35,6 @@ struct StoryCollectionViewCellModel {
         created = model.created
         sourceUserId = Int(model.userId)
         storyId = model.storyId
+        type = model.type
     }
 }

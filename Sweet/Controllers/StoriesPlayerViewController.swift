@@ -133,17 +133,17 @@ class StoriesPlayerViewController: BaseViewController {
                                                                   width: UIScreen.mainWidth(),
                                                                   height: UIScreen.mainHeight()))
         view.addSubview(storiesScrollView)
+        storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
+        
         setTopUI()
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setBottmUI()
         setUserData()
         updateForStories(stories: stories, currentIndex: currentIndex)
-//        addInputTextView()
  
     }
-
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -476,7 +476,8 @@ extension StoriesPlayerViewController {
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
         pause()
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
+        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { [weak self] (_) in
+            guard let `self` = self else { return }
             let controller = ShareCardController()
             controller.sendCallback = { (text, userIds) in
                 self.sendMessage(text: text, userIds: userIds)

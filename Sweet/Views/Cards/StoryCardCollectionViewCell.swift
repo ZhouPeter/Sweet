@@ -13,38 +13,23 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
     func updateWith(_ viewModel: StoryCollectionViewCellModel) {
         coverImageView.image = nil
         coverImageView.animationImages = nil
-        let animationDuration: TimeInterval = 0.5
-        let count = 3
-        var urls = [URL]()
+        coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
-            let url = videoURL.absoluteString
-            for index in 0 ..< count {
-                let time = 0.5/Double(count) * Double(index + 1)
-                let width = Int(UIScreen.mainWidth()/3)
-                let height = Int(UIScreen.mainHeight()/3)
-                let urlParematers = url
-                    + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
-                let url = URL(string: urlParematers)!
-                urls.append(url)
-            }
-            var images = [UIImage]()
-            let group = DispatchGroup()
-            urls.forEach { (url) in
-                group.enter()
-                ImageDownloader.default.downloadImage(with: url) { (image, _, _, _) in
-                    group.leave()
-                    if let image = image {
-                        images.append(image)
-                    }
-                }
-            }
-            group.notify(queue: DispatchQueue.main) {
-                self.coverImageView.animationImages = images
-                self.coverImageView.animationDuration = animationDuration
-                self.coverImageView.startAnimating()
+            if viewModel.type == .poke {
+                let width = Int(UIScreen.mainWidth() / 3)
+                let height = Int(UIScreen.mainHeight() / 3)
+                let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0.0/w/\(width)/h/\(height)"
+                coverImageView.kf.setImage(with: URL(string: urlString))
+                pokeView.isHidden = false
+                pokeViewCenterXConstraint?.constant = contentView.bounds.width * (viewModel.pokeCenter.x - 0.5)
+                pokeViewCenterYConstraint?.constant = contentView.bounds.height * (viewModel.pokeCenter.y - 0.5)
+            } else {
+                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+                pokeView.isHidden = true
             }
         } else {
             coverImageView.kf.setImage(with: viewModel.imageURL)
+            pokeView.isHidden = true
         }
         avatarImageView.kf.setImage(with: viewModel.avatarImageURL)
         nameLabel.text = viewModel.name
@@ -74,6 +59,12 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    private lazy var pokeView: StorySmallPokeView = {
+        let pokeView = StorySmallPokeView()
+        pokeView.isHidden = true
+        return pokeView
     }()
     
     private lazy var avatarImageView: UIImageView = {
@@ -115,12 +106,18 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    private var pokeViewCenterXConstraint: NSLayoutConstraint?
+    private var pokeViewCenterYConstraint: NSLayoutConstraint?
     
     private func setupUI() {
         contentView.addSubview(coverMaskView)
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        contentView.addSubview(pokeView)
+        pokeView.constrain(width: 50, height: 50)
+        pokeViewCenterXConstraint = pokeView.centerX(to: contentView)
+        pokeViewCenterYConstraint = pokeView.centerY(to: contentView)
         contentView.addSubview(infoLabel)
         infoLabel.centerX(to: contentView)
         infoLabel.align(.bottom, to: contentView, inset: 16)

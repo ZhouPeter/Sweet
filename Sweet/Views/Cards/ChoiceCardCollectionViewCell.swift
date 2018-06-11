@@ -23,6 +23,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     private lazy var leftButton: UIButton = {
         let button = UIButton()
+        button.adjustsImageWhenHighlighted = false
         button.imageView?.contentMode = .scaleAspectFill
         button.tag = 0
         button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
@@ -31,6 +32,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     private lazy var rightButton: UIButton = {
         let button = UIButton()
+        button.adjustsImageWhenHighlighted = false
         button.imageView?.contentMode = .scaleAspectFill
         button.tag = 1
         button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)

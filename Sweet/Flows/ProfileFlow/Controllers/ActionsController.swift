@@ -44,6 +44,7 @@ class ActionsController: PageboyViewController {
         isScrollEnabled = false
         dataSource = self
         delegate = self
+        pageControllers[0].loadRequest()
     }
 }
 

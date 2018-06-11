@@ -69,22 +69,24 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private var storyViewModels = [StoryCellViewModel]() {
-        didSet {
-            layout.selfIndex = storyViewModels.count
-            for index in 0..<storyViewModels.count {
-                let maxShowTime = storyViewModels[index].created/1000 + 72 * 3600
-                if maxShowTime < Int(Date().timeIntervalSince1970) {
-                    layout.selfIndex = index
-                    break
-                }
-            }
-        }
-    }
+    private var storyViewModels = [StoryCellViewModel]()
+//    {
+//        didSet {
+//            layout.selfIndex = storyViewModels.count
+//            for index in 0..<storyViewModels.count {
+//                let maxShowTime = storyViewModels[index].created/1000 + 72 * 3600
+//                if maxShowTime < Int(Date().timeIntervalSince1970) {
+//                    layout.selfIndex = index
+//                    break
+//                }
+//            }
+//        }
+//    }
     
-    private var layout = StoriesCollectionViewFlowLayout()
+//    private var layout = StoriesCollectionViewFlowLayout()
 
     private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.mainWidth() / 3,
                                  height: UIScreen.mainHeight() / 3)
         layout.minimumInteritemSpacing = 0
@@ -163,7 +165,7 @@ extension StoriesController: UICollectionViewDelegate {
 
 extension StoriesController: StoriesPlayerViewControllerDelegate {
     func delStory(withStoryId storyId: UInt64) {
-        guard let index = storyViewModels.index(where: { $0.storyId == storyId } ) else { return }
+        guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
         storyViewModels.remove(at: index)
         collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
     }
