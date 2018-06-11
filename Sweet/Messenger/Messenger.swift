@@ -56,6 +56,13 @@ final class Messenger {
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var storage: Storage?
     private var conversationUserID: UInt64?
+    private var totoalUnreadCount: Int? {
+        didSet {
+            if let count = totoalUnreadCount {
+                UIApplication.shared.applicationIconBadgeNumber = count
+            }
+        }
+    }
     
     private init() {
         startNetworkReachabilityObserver()
@@ -71,6 +78,13 @@ final class Messenger {
             name: .UIApplicationWillEnterForeground,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(syncBadgeNumber),
+            name: .UIApplicationDidEnterBackground,
+            object: nil
+        )
+
     }
     
     // MARK: - Public
@@ -510,6 +524,7 @@ final class Messenger {
             let unreadMessages = realm
                 .objects(InstantMessageData.self)
                 .filter("(from != \(userID) || to != \(userID)) && isRead = false")
+            self.totoalUnreadCount = unreadMessages.count
             likesUnreadCount = unreadMessages.filter("type == \(IMType.like.rawValue)").count
             messagesUnreadCount = unreadMessages.count - likesUnreadCount
         }, callback: {
@@ -517,5 +532,13 @@ final class Messenger {
                 $0.messengerDidUpdateUnreadCount(messageUnread: messagesUnreadCount, likesUnread: likesUnreadCount)
             })
         })
+    }
+
+    @objc private func syncBadgeNumber() {
+        guard let count = totoalUnreadCount else { return }
+        var request = BadgeSyncReq()
+        request.count = UInt32(count)
+        send(request, responseType: BadgeSyncResp.self, callback: nil)
+        UIApplication.shared.applicationIconBadgeNumber = count
     }
 }
