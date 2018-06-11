@@ -56,9 +56,35 @@ final class Messenger {
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var storage: Storage?
     private var conversationUserID: UInt64?
+    private var totoalUnreadCount: Int? {
+        didSet {
+            if let count = totoalUnreadCount {
+                UIApplication.shared.applicationIconBadgeNumber = count
+            }
+        }
+    }
     
     private init() {
         startNetworkReachabilityObserver()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateActiveStatus),
+            name: .UIApplicationDidEnterBackground,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateActiveStatus),
+            name: .UIApplicationWillEnterForeground,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(syncBadgeNumber),
+            name: .UIApplicationDidEnterBackground,
+            object: nil
+        )
+
     }
     
     // MARK: - Public
@@ -98,12 +124,6 @@ final class Messenger {
         }
     }
     
-    func getUserInfo(with userID: UInt64) {
-        getUserInfoList(with: [userID]) { (userList) in
-            logger.debug(userList)
-        }
-    }
-    
     func getUserInfoList(with userIDs: [UInt64], callback: @escaping ([User]) -> Void) {
         var request = UserInfoGetReq()
         request.userIDList = userIDs
@@ -121,6 +141,12 @@ final class Messenger {
                 callback(userList)
             })
         })
+    }
+    
+    @objc func updateActiveStatus() {
+        var request = ActiveSyncReq()
+        request.status = UIApplication.shared.applicationState == .background ? .background : .foreground
+        send(request, responseType: ActiveSyncResp.self, callback: nil)
     }
     
     // MARK: - Messages
@@ -430,6 +456,7 @@ final class Messenger {
                     } else {
                         self.state = .offline
                     }
+                    self.updateActiveStatus()
                     self.listenMessageNotify()
                     self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
                 })
@@ -473,7 +500,7 @@ final class Messenger {
     private func send<T, R> (
         _ message: T,
         responseType: R.Type,
-        callback: @escaping (R?) -> Void) where T: Message & MessageTicket, R: Message {
+        callback: ((R?) -> Void)?) where T: Message & MessageTicket, R: Message {
         let module = message.module.rawValue
         let command = message.command
         HandlerManager.sharedInstance()
@@ -484,7 +511,7 @@ final class Messenger {
         service.send(package, moduleId: module, commandId: command) { (code) in
             if code.rawValue != 0 {
                 logger.error("message send failed", message)
-                callback(nil)
+                callback?(nil)
             }
         }
     }
@@ -497,6 +524,7 @@ final class Messenger {
             let unreadMessages = realm
                 .objects(InstantMessageData.self)
                 .filter("(from != \(userID) || to != \(userID)) && isRead = false")
+            self.totoalUnreadCount = unreadMessages.count
             likesUnreadCount = unreadMessages.filter("type == \(IMType.like.rawValue)").count
             messagesUnreadCount = unreadMessages.count - likesUnreadCount
         }, callback: {
@@ -504,5 +532,13 @@ final class Messenger {
                 $0.messengerDidUpdateUnreadCount(messageUnread: messagesUnreadCount, likesUnread: likesUnreadCount)
             })
         })
+    }
+
+    @objc private func syncBadgeNumber() {
+        guard let count = totoalUnreadCount else { return }
+        var request = BadgeSyncReq()
+        request.count = UInt32(count)
+        send(request, responseType: BadgeSyncResp.self, callback: nil)
+        UIApplication.shared.applicationIconBadgeNumber = count
     }
 }

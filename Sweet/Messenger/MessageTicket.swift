@@ -73,3 +73,23 @@ extension DirectionGetReq: MessageTicket {
         return MsgCmdID.directionGetReq.rawValue
     }
 }
+
+extension ActiveSyncReq: MessageTicket {
+    var module: ModuleID {
+        return .user
+    }
+    
+    var command: Int {
+        return UserCmdID.activeStatusSyncReq.rawValue
+    }
+}
+
+extension BadgeSyncReq: MessageTicket {
+    var module: ModuleID {
+        return .user
+    }
+    
+    var command: Int {
+        return UserCmdID.badgeSysncReq.rawValue
+    }
+}

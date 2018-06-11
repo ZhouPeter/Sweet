@@ -51,7 +51,7 @@ final class MainCoordinator: BaseCoordinator {
     private func runStoryFlow() -> ((UINavigationController) -> Void) {
         return { nav in
             guard nav.viewControllers.isEmpty else { return }
-            let coordinator = self.coordinatorFactory.makeStoryCoordinator(navigation: nav)
+            let coordinator = self.coordinatorFactory.makeStoryCoordinator(user: self.user, navigation: nav)
             coordinator.start()
             self.addDependency(coordinator)
         }

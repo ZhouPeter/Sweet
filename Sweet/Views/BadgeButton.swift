@@ -34,6 +34,11 @@ class BadgeButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func hiddenBadge() {
+        badgeLabel.isHidden = true
+        countBadgeLabel.isHidden = true
+    }
+    
     func showBadge() {
         let badgeFrame = CGRect(x: frame.width + rightSpacing,
                                 y: -badgeWidth / 2,

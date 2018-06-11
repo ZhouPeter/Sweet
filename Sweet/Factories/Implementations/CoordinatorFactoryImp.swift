@@ -63,8 +63,9 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         )
     }
     
-    func makeStoryCoordinator(navigation: UINavigationController?) -> Coordinator {
+    func makeStoryCoordinator(user: User, navigation: UINavigationController?) -> Coordinator {
         return StoryCoordinator(
+            user: user,
             router: makeRouter(with: navigation),
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()

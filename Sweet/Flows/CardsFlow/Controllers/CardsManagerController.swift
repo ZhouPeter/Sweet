@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
 protocol CardsManagerView: BaseView {
     var showAll: ((CardsAllView) -> Void)? { get set }
     var showSubscription: ((CardsSubscriptionView) -> Void)? { get set }
@@ -33,8 +34,8 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
         return control
     }()
-    private lazy var leftButton: UIButton = {
-        let button = UIButton()
+    private lazy var leftButton: BadgeButton = {
+        let button = BadgeButton()
         button.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(leftAction(sender:)), for: .touchUpInside)
@@ -65,7 +66,12 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        if Defaults[.isPersonalStoryChecked] {
+            leftButton.showBadge()
+        } else {
+            leftButton.hiddenBadge()
+        }
+        
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {

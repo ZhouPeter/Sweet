@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import SwiftyUserDefaults
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
@@ -49,6 +50,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     } ()
     
     private var current = StoryRecordType.record
+    private let user: User
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +92,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.bottomView.alpha = 1
             self.topicButton.alpha = 1
         }, completion: nil)
+        topView.updateAvatarCircle(isUnread: Defaults[.isPersonalStoryChecked] == false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -322,6 +334,22 @@ extension StoryRecordController: StoryRecordTopViewDelegate {
     }
     
     func topViewDidPressAvatarButton() {
-        
+        web.request(
+        .storyList(page: 0, userId: user.userId),
+        responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+            guard let `self` = self else { return }
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+            case .success(let response):
+                Defaults[.isPersonalStoryChecked] = true
+                let viewModels = response.list.map(StoryCellViewModel.init(model:))
+                let storiesPlayViewController = StoriesPlayerViewController()
+                storiesPlayViewController.stories = viewModels
+                self.present(storiesPlayViewController, animated: true) {
+                    storiesPlayViewController.initPlayer()
+                }
+            }
+        }
     }
 }

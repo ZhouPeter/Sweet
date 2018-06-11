@@ -85,8 +85,8 @@ ProfileFlowFactory {
         return AuthViewController()
     }
     
-    func makeStoryRecordView() -> StoryRecordView {
-        return StoryRecordController()
+    func makeStoryRecordView(user: User) -> StoryRecordView {
+        return StoryRecordController(user: user)
     }
     
     func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {

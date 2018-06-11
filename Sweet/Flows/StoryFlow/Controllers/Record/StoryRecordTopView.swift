@@ -29,6 +29,12 @@ final class StoryRecordTopView: UIView {
         return button
     } ()
     
+    private lazy var avatarCircle: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        return view
+    } ()
+    
     private lazy var cameraSwitchButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "CameraBack"), for: .normal)
@@ -59,16 +65,23 @@ final class StoryRecordTopView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateAvatarCircle(isUnread: Bool) {
+        avatarCircle.image = isUnread ? #imageLiteral(resourceName: "StoryUnread") : #imageLiteral(resourceName: "StoryRead")
+    }
+    
     // MARK: - Private
     
     private func setup() {
         addSubview(avatarButton)
+        addSubview(avatarCircle)
         addSubview(cameraSwitchButton)
         addSubview(flashButton)
         addSubview(backButton)
         avatarButton.constrain(width: 30, height: 30)
         avatarButton.align(.left, to: self, inset: 10)
         avatarButton.centerY(to: self)
+        avatarCircle.equal(.size, to: avatarButton)
+        avatarCircle.center(to: avatarButton)
         cameraSwitchButton.centerY(to: self)
         cameraSwitchButton.centerX(to: self, offset: -30)
         cameraSwitchButton.constrain(width: 30, height: 30)
@@ -78,6 +91,7 @@ final class StoryRecordTopView: UIView {
         backButton.constrain(width: 30, height: 30)
         backButton.centerY(to: self)
         backButton.align(.right, to: self, inset: 5)
+        updateAvatarCircle(isUnread: false)
     }
     
     @objc private func didPressAvatarButton() {
