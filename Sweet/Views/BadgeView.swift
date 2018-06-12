@@ -12,6 +12,7 @@ class BadgeView: UIView {
     var text: String? {
         didSet {
             label.text = text
+            invalidateIntrinsicContentSize()
         }
     }
     
@@ -39,12 +40,16 @@ class BadgeView: UIView {
         clipsToBounds = true
         backgroundColor = UIColor(hex: 0xfa001d)
         addSubview(label)
-        label.fill(in: self, left: cornerRadius, right: cornerRadius)
+        label.fill(in: self)
         layer.cornerRadius = cornerRadius
     }
     
     override var intrinsicContentSize: CGSize {
         let size = label.intrinsicContentSize
-        return CGSize(width: max(cornerRadius * 2, size.width), height: max(cornerRadius * 2, size.height))
+        var width = cornerRadius * 2
+        if let count = label.text?.count, count > 1 {
+            width = max(size.width + cornerRadius, cornerRadius * 2)
+        }
+        return CGSize(width: width, height: cornerRadius * 2)
     }
 }

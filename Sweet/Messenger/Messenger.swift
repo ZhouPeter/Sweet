@@ -56,9 +56,9 @@ final class Messenger {
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var storage: Storage?
     private var conversationUserID: UInt64?
-    private var totoalUnreadCount: Int? {
+    private var messagesUnreadCount: Int? {
         didSet {
-            if let count = totoalUnreadCount {
+            if let count = messagesUnreadCount {
                 UIApplication.shared.applicationIconBadgeNumber = count
             }
         }
@@ -393,7 +393,8 @@ final class Messenger {
                     return
                 }
                 let conversationData: ConversationData
-                let unreadCount = messages.filter("isRead = false && from != \(myID)").count
+                let unreadCount =
+                    messages.filter("isRead = false && from != \(myID) && type != \(IMType.like.rawValue)").count
                 if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
                     conversationData = data
                 } else {
@@ -405,8 +406,13 @@ final class Messenger {
                 conversationData.lastMessage = lastMessage
                 conversationData.date = lastMessage.sentDate
                 realm.add(conversationData, update: true)
-                conversations.append(Conversation(data: conversationData)!)
             })
+            let results = realm.objects(ConversationData.self)
+            for result in results {
+                if let conversation = Conversation(data: result) {
+                    conversations.append(conversation)
+                }
+            }
         }, callback: { _ in
             if userIDsNotSaved.isNotEmpty {
                 self.getUserInfoList(with: userIDsNotSaved, callback: { (users) in
@@ -519,23 +525,25 @@ final class Messenger {
     private func updateUnreadCount() {
         guard let userID = user?.userId else { return }
         var likesUnreadCount = 0
-        var messagesUnreadCount = 0
         storage?.read({ (realm) in
             let unreadMessages = realm
                 .objects(InstantMessageData.self)
                 .filter("(from != \(userID) || to != \(userID)) && isRead = false")
-            self.totoalUnreadCount = unreadMessages.count
+            self.messagesUnreadCount = unreadMessages.count
             likesUnreadCount = unreadMessages.filter("type == \(IMType.like.rawValue)").count
-            messagesUnreadCount = unreadMessages.count - likesUnreadCount
+            self.messagesUnreadCount = unreadMessages.count - likesUnreadCount
         }, callback: {
             self.multicastDelegate.invoke({
-                $0.messengerDidUpdateUnreadCount(messageUnread: messagesUnreadCount, likesUnread: likesUnreadCount)
+                $0.messengerDidUpdateUnreadCount(
+                    messageUnread: self.messagesUnreadCount ?? 0,
+                    likesUnread: likesUnreadCount
+                )
             })
         })
     }
 
     @objc private func syncBadgeNumber() {
-        guard let count = totoalUnreadCount else { return }
+        guard let count = messagesUnreadCount else { return }
         var request = BadgeSyncReq()
         request.count = UInt32(count)
         send(request, responseType: BadgeSyncResp.self, callback: nil)
