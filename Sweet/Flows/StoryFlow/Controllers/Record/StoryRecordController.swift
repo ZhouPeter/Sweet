@@ -98,6 +98,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resumeCamera(false)
+        topic = nil
     }
     
     // MARK: - Private
@@ -126,9 +127,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.shootButton.alpha = 0
             self.topicButton.alpha = 0
         }, completion: nil)
-        topic.onFinished = { [weak self] topic in
+        let dismissTopic = { [weak self] in
             guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
-            self.topic = topic
             self.view.addSubview(view)
             view.frame = self.view.bounds
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
@@ -141,6 +141,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
                 view.removeFromSuperview()
             })
         }
+        topic.onFinished = { [weak self] topic in
+            self?.topic = topic
+            dismissTopic()
+        }
+        topic.onCancelled = dismissTopic
     }
     
     // MARK: - Camera

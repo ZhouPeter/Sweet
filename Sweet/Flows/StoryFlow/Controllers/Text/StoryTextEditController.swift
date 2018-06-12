@@ -554,11 +554,9 @@ extension StoryTextEditController: StoryKeyboardControlViewDelegate {
             topic.view.alpha = 1
             self.textViewContainer.alpha = 0
         }, completion: nil)
-        topic.onFinished = { [weak self] topic in
+        let dismissTopic: (String?) -> Void = { [weak self] topic in
             guard let `self` = self, let view = self.view.snapshotView(afterScreenUpdates: false) else { return }
-            self.topic = topic
             self.view.addSubview(view)
-            self.topic = topic
             self.textView.becomeFirstResponder()
             view.frame = self.view.bounds
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
@@ -569,6 +567,11 @@ extension StoryTextEditController: StoryKeyboardControlViewDelegate {
                 view.removeFromSuperview()
             })
         }
+        topic.onFinished = { [weak self] topic in
+            self?.topic = topic
+            dismissTopic(topic)
+        }
+        topic.onCancelled = { dismissTopic(nil) }
     }
 }
 

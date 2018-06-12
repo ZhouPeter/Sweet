@@ -20,6 +20,7 @@ final class TopicListController: UIViewController, TopicListView {
         view.rowHeight = 42
         view.separatorStyle = .none
         view.register(TopicCell.self, forCellReuseIdentifier: "Cell")
+        view.register(TopicSearchCell.self, forCellReuseIdentifier: "Search")
         return view
     } ()
     
@@ -32,7 +33,6 @@ final class TopicListController: UIViewController, TopicListView {
         return allButton
     } ()
     
-    private var allSelectedIndexPath: IndexPath?
     private var topics = [String]()
     
     override func viewDidLoad() {
@@ -80,52 +80,48 @@ final class TopicListController: UIViewController, TopicListView {
         }
     }
     
-    // MARK: - Actions
-    
-    @objc private func didPressCloseButton() {
-        var topic: String?
-        if let indexPath = allSelectedIndexPath {
-            topic = topics[indexPath.row]
-        }
-        onFinished?(topic)
+    private func dismiss() {
         willMove(toParentViewController: nil)
         view.removeFromSuperview()
         removeFromParentViewController()
         didMove(toParentViewController: nil)
     }
+    
+    // MARK: - Actions
+    
+    @objc private func didPressCloseButton() {
+        onCancelled?()
+        dismiss()
+    }
 }
 
 extension TopicListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return topics.count
+        return topics.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? TopicCell else {
-            fatalError()
+        if indexPath.row == 0 {
+            guard let cell =
+                tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath) as? TopicSearchCell else {
+                fatalError()
+            }
+            return cell
         }
-        let topic = topics[indexPath.row]
-        cell.topic = topic
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? TopicCell {
+            let topic = topics[indexPath.row - 1]
+            cell.topic = topic
+            return cell
+        }
+        
+        fatalError()
     }
 }
 
 extension TopicListController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.setSelected(allSelectedIndexPath == indexPath, animated: false)
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var selectedIndexPath: IndexPath?
-        selectedIndexPath = allSelectedIndexPath
-        allSelectedIndexPath = indexPath
-        var reloadRows = [indexPath]
-        if let selected = selectedIndexPath {
-            if selected.row == indexPath.row {
-                allSelectedIndexPath = nil
-            }
-            reloadRows.append(selected)
-        }
-        tableView.reloadRows(at: reloadRows, with: .none)
+        guard indexPath.row > 0 else { return }
+        onFinished?(topics[indexPath.row - 1])
+        dismiss()
     }
 }

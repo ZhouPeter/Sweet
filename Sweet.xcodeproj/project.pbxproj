@@ -971,6 +971,10 @@
 		ACA9CC4E20C6819D00873643 /* OptionCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */; };
 		ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */; };
 		ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */; };
+		ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
+		ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
+		ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
+		ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
 		ACBE052420B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
 		ACBE052520B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
 		ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
@@ -1459,6 +1463,7 @@
 		ACA9CC4220C6764C00873643 /* SweetMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		ACA9CC4720C6769800873643 /* SweetMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardMessageCell.swift; sourceTree = "<group>"; };
+		ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSearchCell.swift; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
 		ACCD27EB20C54155002E96AB /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
@@ -1841,6 +1846,7 @@
 				AC4D090D20B7B1AC007686EB /* TopicListView.swift */,
 				AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */,
 				AC6C1D8D20A993F500F45F82 /* TopicCell.swift */,
+				ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */,
 				AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */,
 			);
 			path = Topic;
@@ -3010,6 +3016,7 @@
 				AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
+				ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				AC45CD7420AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
@@ -3088,6 +3095,7 @@
 				583BC78720CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
+				ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
@@ -3563,6 +3571,7 @@
 				ACA9CC4B20C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
+				ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58CE1ED320A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
@@ -3803,6 +3812,7 @@
 				AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */,
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
+				ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				AC45CD7520AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
