@@ -79,12 +79,14 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
 extension ActivitiesController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
+        inputTextView.startEditing(isStarted: false)
         inputTextView.removeFromSuperview()
         sendActivityMessages(text: text)
     }
     
     func removeInputTextView() {
         inputTextView.clear()
+        inputTextView.startEditing(isStarted: false)
         inputTextView.removeFromSuperview()
     }
 }

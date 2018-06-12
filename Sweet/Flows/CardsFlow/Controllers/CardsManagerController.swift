@@ -15,12 +15,22 @@ protocol CardsManagerView: BaseView {
 }
 class CardsManagerController: BaseViewController, CardsManagerView {
     var showAll: ((CardsAllView) -> Void)?
-    
     var showSubscription: ((CardsSubscriptionView) -> Void)?
-    
-    var allController = CardsAllController()
-    var subscriptionController = CardsSubscriptionController()
+    var user: User
+    var allController: CardsAllController
+    var subscriptionController: CardsSubscriptionController
     private var currentController = UIViewController()
+    
+    init(user: User) {
+        self.user = user
+        self.allController = CardsAllController(user: user)
+        self.subscriptionController = CardsSubscriptionController(user: user)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private lazy var titleView: UISegmentedControl = {
         let control = UISegmentedControl(items: ["全部", "订阅"])
         control.tintColor = .clear
@@ -67,9 +77,9 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if Defaults[.isPersonalStoryChecked] {
-            leftButton.showBadge()
-        } else {
             leftButton.hiddenBadge()
+        } else {
+            leftButton.showBadge()
         }
         
     }

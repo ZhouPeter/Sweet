@@ -66,6 +66,14 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.setImage(#imageLiteral(resourceName: "Back"), for: .normal)
+        button.addTarget(self, action: #selector(returnAction(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     init(user: User, userId: UInt64) {
         self.user = user
         self.userId = userId
@@ -82,6 +90,7 @@ class ProfileController: BaseViewController, ProfileView {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
+        setBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +106,16 @@ class ProfileController: BaseViewController, ProfileView {
         if isFirstLoad { isFirstLoad = false }
     }
     
+    private func setBackButton() {
+        if navigationController?.viewControllers.count == 1 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        }
+    }
+    
+    @objc private func returnAction(_ sender: UIButton) {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             finished?()
@@ -117,7 +136,7 @@ extension ProfileController {
             let blacklist = userResponse?.blacklist,
             let block = userResponse?.block else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shieldAction = UIAlertAction(
+        let shieldAction = UIAlertAction.makeAlertAction(
             title: block ? "取消屏蔽" : "屏蔽他/她的来源",
             style: .default) { [weak self] (_) in
             if block {
@@ -140,8 +159,7 @@ extension ProfileController {
                 })
             }
         }
-        shieldAction.setTextColor(color: .black)
-        let addBlacklistAction = UIAlertAction(
+        let addBlacklistAction = UIAlertAction.makeAlertAction(
             title: blacklist ? "移出黑名单" : "加入黑名单",
             style: .default) { [weak self] (_) in
             if blacklist {
@@ -164,8 +182,7 @@ extension ProfileController {
                 })
             }
         }
-        addBlacklistAction.setTextColor(color: .black)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(shieldAction)
         alertController.addAction(addBlacklistAction)
         alertController.addAction(cancelAction)
@@ -198,8 +215,10 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
-                self.actionsController = ActionsController(user: User(self.userResponse!), me: self.user)
-                self.add(childViewController: self.actionsController, addView: false)
+                if self.actionsController == nil {
+                    self.actionsController = ActionsController(user: User(self.userResponse!), mine: self.user)
+                    self.add(childViewController: self.actionsController, addView: false)
+                }
                 self.updateViewModel()
                 self.tableView.reloadData()
             }

@@ -294,11 +294,13 @@ final class StoryEditController: BaseViewController, StoryEditView {
                 }
                 var pokeCenter: CGPoint?
                 let type: StoryType
-                if self.pokeView.alpha > 0 {
+                if !self.pokeView.isHidden {
                     type = .poke
+                    let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / (self.view.bounds.width / 2)
+                    let centerY = (self.pokeView.center.y - self.view.bounds.width / 2) / (self.view.bounds.height / 2)
                     pokeCenter = CGPoint(
-                        x: self.pokeView.center.x / self.view.bounds.width,
-                        y: self.pokeView.center.y / self.view.bounds.height
+                        x: min(max(centerX, -0.5), 0.5),
+                        y: min(max(centerY, -0.5), 0.5)
                     )
                 } else {
                     type = .video

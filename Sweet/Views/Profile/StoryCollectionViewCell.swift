@@ -9,6 +9,11 @@
 import UIKit
 import Kingfisher
 class StoryCollectionViewCell: UICollectionViewCell {
+    private lazy var pokeView: StorySmallPokeView = {
+        let pokeView = StorySmallPokeView()
+        return pokeView
+    }()
+    
     private lazy var storyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -40,6 +45,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.backgroundColor = .clear
+        contentView.layer.masksToBounds = true
         setupUI()
     }
     
@@ -57,15 +63,27 @@ class StoryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(recoveryLabel)
         recoveryLabel.centerY(to: recoveryImageView)
         recoveryLabel.pin(.right, to: recoveryImageView)
-    
+        contentView.addSubview(pokeView)
+        pokeView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
     }
     
     func update(viewModel: StoryCellViewModel) {
         storyImageView.image = nil
         storyImageView.animationImages = nil
         storyImageView.stopAnimating()
+        pokeView.isHidden = true
         if let videoURL = viewModel.videoURL {
-            storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+            if viewModel.type == .video {
+                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+            } else if viewModel.type == .poke {
+                let width = Int(UIScreen.mainWidth() / 3)
+                let height = Int(UIScreen.mainHeight() / 3)
+                let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0/w/\(width)/h/\(height)"
+                storyImageView.kf.setImage(with: URL(string: urlString))
+                pokeView.center = CGPoint(x: frame.width / 2 + viewModel.pokeCenter.x * frame.width,
+                                          y: frame.height / 2 + viewModel.pokeCenter.y * frame.height)
+                pokeView.isHidden = false
+            }
         } else if let imageURL = viewModel.imageURL {
             storyImageView.kf.setImage(with: imageURL)
         }

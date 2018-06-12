@@ -21,8 +21,10 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
                 let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0.0/w/\(width)/h/\(height)"
                 coverImageView.kf.setImage(with: URL(string: urlString))
                 pokeView.isHidden = false
-                pokeViewCenterXConstraint?.constant = contentView.bounds.width * (viewModel.pokeCenter.x - 0.5)
-                pokeViewCenterYConstraint?.constant = contentView.bounds.height * (viewModel.pokeCenter.y - 0.5)
+                let centerX = contentView.bounds.width / 2 + viewModel.pokeCenter.x * contentView.bounds.width
+                let centerY = contentView.bounds.height / 2 + viewModel.pokeCenter.y * contentView.bounds.height
+                pokeViewCenterXConstraint?.constant = centerX
+                pokeViewCenterYConstraint?.constant = centerY
             } else {
                 coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
                 pokeView.isHidden = true

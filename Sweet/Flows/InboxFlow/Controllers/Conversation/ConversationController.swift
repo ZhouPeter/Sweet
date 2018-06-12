@@ -230,7 +230,7 @@ extension ConversationController: MessageCellDelegate {
                 case .failure(let error):
                     logger.error(error)
                 case .success(let response):
-                    let storiesPlayViewController = StoriesPlayerViewController()
+                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
                     storiesPlayViewController.stories = [StoryCellViewModel(model: response.story)]
                     self.present(storiesPlayViewController, animated: true) {
                         storiesPlayViewController.initPlayer()

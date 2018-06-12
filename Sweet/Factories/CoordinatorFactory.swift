@@ -16,7 +16,7 @@ protocol CoordinatorFactory {
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeIMCoordinator(user: User, token: String, navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(user: User, navigation: UINavigationController?) -> Coordinator
-    func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator
+    func makeCardsCoordinator(user: User, navigation: UINavigationController?) -> Coordinator
     func makeContactsCoordinator(router: Router, token: String, storage: Storage, user: User) -> ContactsCoordinator
     func makeInboxCoordinator(user: User, router: Router, token: String) -> InboxCoordinator
 }

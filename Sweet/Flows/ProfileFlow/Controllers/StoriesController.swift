@@ -7,6 +7,9 @@
 //
 
 import UIKit
+protocol StoriesView: BaseView {
+    
+}
 class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var selfIndex: Int = 0
     private let width = UIScreen.mainWidth() / 3
@@ -70,20 +73,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     private var storyViewModels = [StoryCellViewModel]()
-//    {
-//        didSet {
-//            layout.selfIndex = storyViewModels.count
-//            for index in 0..<storyViewModels.count {
-//                let maxShowTime = storyViewModels[index].created/1000 + 72 * 3600
-//                if maxShowTime < Int(Date().timeIntervalSince1970) {
-//                    layout.selfIndex = index
-//                    break
-//                }
-//            }
-//        }
-//    }
-    
-//    private var layout = StoriesCollectionViewFlowLayout()
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -120,10 +109,8 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             guard let `self` = self else { return }
             switch result {
             case let .success(response):
-                self.storyViewModels.removeAll()
-                response.list.forEach({ (story) in
-                    let viewModel = StoryCellViewModel(model: story)
-                    self.storyViewModels.append(viewModel)
+                self.storyViewModels = response.list.map({
+                    return StoryCellViewModel(model: $0)
                 })
                 self.collectionView.reloadData()
             case let .failure(error):
@@ -152,12 +139,12 @@ extension StoriesController: UICollectionViewDataSource {
 
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storiesPlayViewController = StoriesPlayerViewController()
+        let storiesPlayViewController = StoriesPlayerViewController(user: user)
         storiesPlayViewController.delegate = self
         storiesPlayViewController.currentIndex = indexPath.item
         storiesPlayViewController.stories = storyViewModels
         self.present(storiesPlayViewController, animated: true) {
-            storiesPlayViewController.initPlayer()
+            storiesPlayViewController.reloadPlayer()
         }
         
     }

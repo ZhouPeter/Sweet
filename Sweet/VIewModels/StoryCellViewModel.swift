@@ -20,7 +20,7 @@ struct StoryCellViewModel {
     let subtitle: String
     let userId: UInt64
     let type: StoryType
-    var pokeCenter: CGPoint = CGPoint(x: UIScreen.mainWidth() / 2 - 60, y: UIScreen.mainHeight() / 2 - 60)
+    var pokeCenter: CGPoint = CGPoint(x: 0, y: 0)
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
@@ -28,7 +28,7 @@ struct StoryCellViewModel {
         if model.type == .video || model.type == .poke {
             videoURL = URL(string: model.content)
             if model.type == .poke {
-                pokeCenter = CGPoint(x: UIScreen.mainWidth() / 2 - 60, y: UIScreen.mainHeight() / 2 - 60)
+                pokeCenter = CGPoint(x: min(max(model.centerX!, -0.5), 0.5), y: min(max(model.centerY!, -0.5), 0.5))
             }
         } else {
             imageURL = URL(string: model.content)

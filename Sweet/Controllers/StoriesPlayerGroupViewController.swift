@@ -12,6 +12,7 @@ protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
 }
 class StoriesPlayerGroupViewController: BaseViewController {
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
+    var user: User
     var currentIndex: Int {
         didSet {
             delegate?.readGroup(storyGroupIndex: currentIndex)
@@ -29,7 +30,8 @@ class StoriesPlayerGroupViewController: BaseViewController {
     
     private var storiesPlayerControllers = [StoriesPlayerViewController]()
     
-    init(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
+    init(user: User, storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
+        self.user = user
         self.storiesGroup = storiesGroup
         self.currentIndex = currentIndex
         self.fromCardId = fromCardId
@@ -54,7 +56,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
     private func setChildViewController() {
         for index in 0 ..< storiesGroup.count {
             let stories = storiesGroup[index]
-            let playerController = StoriesPlayerViewController()
+            let playerController = StoriesPlayerViewController(user: user)
             playerController.fromCardId = fromCardId
             playerController.delegate = self
             playerController.stories = stories
