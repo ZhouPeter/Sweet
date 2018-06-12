@@ -18,6 +18,7 @@ import VIMediaCache
     @objc optional func delStory(withStoryId storyId: UInt64)
 }
 class StoriesPlayerViewController: BaseViewController {
+    var user: User
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
     var playerLayer: AVPlayerLayer?
@@ -47,6 +48,12 @@ class StoriesPlayerViewController: BaseViewController {
     private  var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
+    
+    private lazy var topContentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private lazy var dismissButton: UIButton = {
         let dismissButton = UIButton()
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +133,16 @@ class StoriesPlayerViewController: BaseViewController {
     } ()
     
     private var storiesScrollView: StoriesPlayerScrollView!
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
@@ -135,10 +152,9 @@ class StoriesPlayerViewController: BaseViewController {
         view.addSubview(storiesScrollView)
         storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
-        
-        setTopUI()
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
+        setTopUI()
         setBottmUI()
         setUserData()
         updateForStories(stories: stories, currentIndex: currentIndex)
@@ -150,24 +166,29 @@ class StoriesPlayerViewController: BaseViewController {
     }
     
     private func setTopUI() {
-        view.addSubview(avatarImageView)
+        view.addSubview(topContentView)
+        topContentView.align(.left)
+        topContentView.align(.right)
+        topContentView.align(.top, inset: UIScreen.isIphoneX() ? 44 : 0)
+        topContentView.constrain(height: 70)
+        topContentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
-        avatarImageView.align(.left, to: view, inset: 10)
-        avatarImageView.align(.top, to: view, inset: UIScreen.isIphoneX() ? 44 + 15 : 15)
+        avatarImageView.align(.left, inset: 10)
+        avatarImageView.centerY(to: topContentView)
         avatarImageView.setViewRounded()
-        view.addSubview(dismissButton)
+        topContentView.addSubview(dismissButton)
         dismissButton.constrain(width: 30, height: 30)
-        dismissButton.align(.right, to: view, inset: 10)
+        dismissButton.align(.right, inset: 10)
         dismissButton.centerY(to: avatarImageView)
-        view.addSubview(progressView)
-        progressView.align(.left, to: view)
-        progressView.align(.right, to: view)
-        progressView.align(.top, to: view, inset: UIScreen.isIphoneX() ? 48 : 4)
+        topContentView.addSubview(progressView)
+        progressView.align(.left)
+        progressView.align(.right)
+        progressView.align(.top, inset: 4)
         progressView.constrain(height: 5)
-        view.addSubview(storyInfoLabel)
+        topContentView.addSubview(storyInfoLabel)
         storyInfoLabel.pin(.right, to: avatarImageView, spacing: 5)
         storyInfoLabel.centerY(to: avatarImageView)
-        view.addSubview(menuButton)
+        topContentView.addSubview(menuButton)
         menuButton.constrain(width: 30, height: 30)
         menuButton.pin(.left, to: dismissButton, spacing: 15)
         menuButton.centerY(to: avatarImageView)
@@ -213,7 +234,8 @@ class StoriesPlayerViewController: BaseViewController {
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
-            pokeView.frame = CGRect(origin: stories[currentIndex].pokeCenter, size: CGSize(width: 120, height: 120))
+            pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
+                                      y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
             pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
             view.addGestureRecognizer(pokeLongPress)
         } else {
@@ -237,12 +259,11 @@ class StoriesPlayerViewController: BaseViewController {
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.videoGravity = .resizeAspectFill
             playerLayer?.frame = view.bounds
-            view.layer.insertSublayer(playerLayer!, below: avatarImageView.layer)
+            view.layer.insertSublayer(playerLayer!, below: pokeView.layer)
             addVideoObservers()
             addKVOObservers()
         }
         play()
-        observeKeyboard()
     }
 
     func reloadPlayer() {
@@ -340,69 +361,6 @@ extension StoriesPlayerViewController {
 
 // MARK: - Privates
 extension StoriesPlayerViewController {
-    
-//    private func addInputTextView() {
-//        view.addSubview(maskView)
-//        maskView.fill(in: view)
-//        maskView.alpha = 0
-//        maskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMaskView)))
-//        view.addSubview(inputTextView)
-//        inputTextView.align(.left, to: view)
-//        inputTextView.align(.right, to: view)
-//        inputTextViewHeight = inputTextView.constrain(height: InputBottomView.defaultHeight())
-//        inputTextViewBottom = inputTextView.align(.bottom, to: view, inset: -InputBottomView.defaultHeight())
-//        view.layoutIfNeeded()
-//    }
-    
-    private func observeKeyboard() {
-//        NotificationCenter.default
-//            .addObserver(self, selector: #selector(keyboardWillShowWith(_:)), name: .UIKeyboardWillShow, object: nil)
-//        NotificationCenter.default
-//            .addObserver(self, selector: #selector(keyboardWillHideWith(_:)), name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    @objc private func didTapMaskView() {
-//        inputTextView.startEditing(false)
-    }
-    
-//    @objc private func keyboardWillShowWith(_ note: Notification) {
-//        guard
-//            let info = note.userInfo,
-//            let keyboardSizeValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-//            let durationValue = info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-//            let curve = info[UIKeyboardAnimationCurveUserInfoKey] as? UInt
-//            else { return }
-//        pause()
-//        inputTextViewBottom?.constant = -keyboardSizeValue.cgRectValue.height
-//        UIView.animate(
-//            withDuration: durationValue.doubleValue,
-//            delay: 0,
-//            options: UIViewAnimationOptions(rawValue: curve),
-//            animations: {
-//                self.maskView.alpha = 1
-//                self.view.layoutIfNeeded()
-//        },
-//            completion: nil)
-//    }
-//    
-//    @objc private func keyboardWillHideWith(_ note: Notification) {
-//        guard
-//            let info = note.userInfo,
-//            let durationValue = info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-//            let curve = info[UIKeyboardAnimationCurveUserInfoKey] as? UInt
-//            else { return }
-//        play()
-//        inputTextViewBottom?.constant = InputBottomView.defaultHeight()
-//        UIView.animate(
-//            withDuration: durationValue.doubleValue,
-//            delay: 0,
-//            options: UIViewAnimationOptions(rawValue: curve),
-//            animations: {
-//                self.maskView.alpha = 0
-//                self.view.layoutIfNeeded()
-//        },
-//            completion: nil)
-//    }
 
     private func currentStoryPlayEnd() {
         if currentIndex == stories.count - 1 {
@@ -414,7 +372,7 @@ extension StoriesPlayerViewController {
     }
     
     func play() {
-//        XPClient.reportReadStory(withStoryId: stories[currentIndex].storyId, completion: nil)
+        web.request(.storyRead(storyId: stories[currentIndex].storyId, fromCardId: nil)) { (_) in }
         if stories[currentIndex].videoURL != nil && stories[currentIndex].type != .poke {
             player?.play()
         } else if stories[currentIndex].imageURL != nil {
@@ -453,9 +411,10 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func openStoryHistory(sender: UIButton) {
-        let storyId = stories[currentIndex].storyId
-        let uvViewController = StoryUVController(storyId: storyId)
         pause()
+        topContentView.isHidden = true
+        let storyId = stories[currentIndex].storyId
+        let uvViewController = StoryUVController(storyId: storyId, user: user)
         uvViewController.delegate = self
         addChildViewController(uvViewController)
         uvViewController.didMove(toParentViewController: self)
@@ -467,7 +426,7 @@ extension StoriesPlayerViewController {
     
     @objc private func sendMessage(sender: UIButton) {
         pause()
-        let window = UIApplication.shared.windows.last!
+        let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.startEditing(isStarted: true)
@@ -511,7 +470,7 @@ extension StoriesPlayerViewController {
                         switch result {
                         case .success:
                             self.toast(message: "删除成功")
-                            self.delegate?.delStory!(withStoryId: self.stories[self.currentIndex].storyId)
+                            self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
                             self.stories.remove(at: self.currentIndex)
                             if self.currentIndex > self.stories.count - 1 {
                                 self.currentIndex -= 1
@@ -538,6 +497,7 @@ extension StoriesPlayerViewController {
     @objc private func presentOtherMenuAlertController(sender: UIButton) {
         self.pause()
         let userId = stories[currentIndex].userId
+        let storyId = stories[currentIndex].storyId
         web.request(WebAPI.userStatus(userId: userId), responseType: Response<StatusResponse>.self) { (result) in
             switch result {
             case let .success(response):
@@ -557,11 +517,9 @@ extension StoriesPlayerViewController {
                     style: .default,
                     handler: { (_) in
                         if response.subscription {
-                            web.request(.delUserSubscription(userId: userId), completion: { (_) in
-                            })
+                            web.request(.delUserSubscription(userId: userId), completion: { (_) in })
                         } else {
-                            web.request(.addUserSubscription(userId: userId), completion: { (_) in
-                            })
+                            web.request(.addUserSubscription(userId: userId), completion: { (_) in })
                         }
                 }))
                 let blockAction = UIAlertAction.makeAlertAction(
@@ -569,15 +527,14 @@ extension StoriesPlayerViewController {
                     style: .default,
                     handler: { (_) in
                         if response.block {
-                            web.request(.delBlock(userId: userId), completion: { (_) in
-                            })
+                            web.request(.delBlock(userId: userId), completion: { (_) in })
                         } else {
-                            web.request(.addBlock(userId: userId), completion: { (_) in
-                            })
+                            web.request(.addBlock(userId: userId), completion: { (_) in })
                         }
                 })
                 alertController.addAction(blockAction)
                 let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .default, handler: { (_) in
+                    web.request(.reportStory(storyId: storyId), completion: { (_) in })
                 })
                 alertController.addAction(reportAction)
                 alertController.addAction(UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil))
@@ -615,9 +572,9 @@ extension StoriesPlayerViewController {
             }
         }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
-    
     }
 }
+
 // MARK: - downloadStory
 extension StoriesPlayerViewController {
     private func downloadStory(downloadBack: @escaping (Bool) -> Void) {
@@ -718,6 +675,7 @@ extension StoriesPlayerViewController {
     @objc func backGroundPauseMoive(_ noti: Notification) {
         pause()
     }
+    
     private func addKVOObservers() {
         statusToken = playerItem?.observe(\.status, options: [.new], changeHandler: { [weak self] (_, _) in
             self?.playItemStatusChange()
@@ -773,7 +731,6 @@ extension StoriesPlayerViewController {
                     }
                     
                 }
-            
         })
     }
 
@@ -781,6 +738,7 @@ extension StoriesPlayerViewController {
 // MARK: - StoryUVControllerDelegate
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
+        topContentView.isHidden = false
         play()
     }
 }

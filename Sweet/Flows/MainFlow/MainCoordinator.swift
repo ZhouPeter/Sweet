@@ -40,9 +40,9 @@ final class MainCoordinator: BaseCoordinator {
     // MARK: - Private
  
     private func runCardsFlow() -> ((UINavigationController) -> Void) {
-        return { nav in
-            guard nav.viewControllers.isEmpty else { return }
-            let coordinator = self.coordinatorFactory.makeCardsCoordinator(navigation: nav)
+        return { [weak self] nav in
+            guard let `self` = self, nav.viewControllers.isEmpty else { return }
+            let coordinator = self.coordinatorFactory.makeCardsCoordinator(user: self.user, navigation: nav)
             coordinator.start()
             self.addDependency(coordinator)
         }

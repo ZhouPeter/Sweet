@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CardsFlowFactory {
-    func makeCardsManagerView() -> CardsManagerView
+    func makeCardsManagerView(user: User) -> CardsManagerView
 }

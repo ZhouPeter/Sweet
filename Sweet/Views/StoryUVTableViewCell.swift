@@ -48,8 +48,10 @@ class StoryUVTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        layer.cornerRadius = 5
-        layer.masksToBounds = true
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        blackMaskView.layer.cornerRadius = 5
+        blackMaskView.layer.masksToBounds = true
         setupUI()
     }
     
@@ -58,12 +60,12 @@ class StoryUVTableViewCell: UITableViewCell {
         selectionStyle = .none
         contentView.backgroundColor = .clear
         blackMaskView.layer.cornerRadius = 5
-    
+        blackMaskView.layer.masksToBounds = true
     }
     
     private func setupUI() {
         contentView.addSubview(blackMaskView)
-        blackMaskView.fill(in: contentView,left: 10, right: 10, top: 1, bottom: 1)
+        blackMaskView.fill(in: contentView, left: 10, right: 10, top: 1, bottom: 1)
         blackMaskView.addSubview(avatarImageView)
         avatarImageView.centerY(to: blackMaskView)
         avatarImageView.align(.left, to: blackMaskView, inset: 10)
@@ -82,11 +84,10 @@ class StoryUVTableViewCell: UITableViewCell {
     }
     
     func update(_ model: StoryUvInfo) {
-        avatarImageView.kf.setImage(with:URL(string: model.avatar)!)
+        avatarImageView.kf.setImage(with: URL(string: model.avatar)!)
         nicknameLabel.text = model.nickname
         infoLabel.text = model.info
         likeImageView.isHidden = !model.like
     }
-
 
 }

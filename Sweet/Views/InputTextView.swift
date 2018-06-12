@@ -61,10 +61,7 @@ class GrowingTextView: UITextView {
         fatalError("init(coder:) has not been implemented")
     }
     override var intrinsicContentSize: CGSize {
-        get {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 30)
-        }
-        set {}
+        return CGSize(width: UIViewNoIntrinsicMetric, height: 30)
     }
 
     func currentHeight() -> CGFloat {
@@ -255,6 +252,7 @@ class InputTextView: UIView {
         textView.pin(.top, to: senderButton, spacing: 10)
       
     }
+   
 }
 // MARK: - Open Methods
 extension InputTextView {
@@ -266,11 +264,10 @@ extension InputTextView {
     
     func startEditing(isStarted: Bool) {
         if isStarted {
-            textView.becomeFirstResponder()
+            self.textView.becomeFirstResponder()
         } else {
             textView.font = UIFont.boldSystemFont(ofSize: 30)
             textView.text = nil
-            textView.endEditing(true)
         }
     }
 }

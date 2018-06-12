@@ -33,8 +33,8 @@ struct StoryResponse: Codable {
     let type: StoryType
     let university: String
     let userId: UInt64
-    let centerX: Double?
-    let centerY: Double?
+    let centerX: CGFloat?
+    let centerY: CGFloat?
     enum CodingKeys: String, CodingKey {
         case avatar
         case college

@@ -60,6 +60,7 @@ enum WebAPI {
     case shareCard(cardId: String, comment: String, userId: UInt64)
     case shareStory(storyId: UInt64, comment: String, userId: UInt64, fromCardId: String?)
     case likeStory(storyId: UInt64, comment: String, fromCardId: String?)
+    case reportStory(storyId: UInt64)
     case sectionStatus(sectionId: UInt64)
     case userStatus(userId: UInt64)
     case cardReport(cardId: String)
@@ -172,6 +173,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/share"
         case .likeStory:
             return "/story/like"
+        case .getStory:
+            return "/story/get"
+        case .reportStory:
+            return "/story/report"
         case .sectionStatus:
             return "/contact/section/status"
         case .userStatus:
@@ -182,8 +187,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/review"
         case .getCard:
             return "/card/get"
-        case .getStory:
-            return "/story/get"
+       
         case .likeEvaluation:
             return "/user/evaluation/like"
         }
@@ -251,7 +255,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
             parameters = ["storyId": storyId]
         case let .storyDetailsUvlist(storyId),
-             let .delStory(storyId):
+             let .delStory(storyId),
+             let .reportStory(storyId):
             parameters = ["storyId": storyId]
         case let .publishStory(url, type, topic, center):
             parameters = ["content": url, "type": type.rawValue]
@@ -283,7 +288,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case let .likeStory(storyId, comment, fromCardId):
             parameters = ["storyId": storyId, "comment": comment]
             if let fromCardId = fromCardId {
-                parameters = ["fromCardId": fromCardId]
+                parameters["fromCardId"] = fromCardId
             }
         case .cardReport(let cardID), .reviewCard(let cardID), .getCard(let cardID):
             parameters = ["cardId": cardID]

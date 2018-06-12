@@ -344,7 +344,7 @@ extension StoryRecordController: StoryRecordTopViewDelegate {
             case .success(let response):
                 Defaults[.isPersonalStoryChecked] = true
                 let viewModels = response.list.map(StoryCellViewModel.init(model:))
-                let storiesPlayViewController = StoriesPlayerViewController()
+                let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
                 storiesPlayViewController.stories = viewModels
                 self.present(storiesPlayViewController, animated: true) {
                     storiesPlayViewController.initPlayer()

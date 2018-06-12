@@ -23,6 +23,7 @@ enum CardRequst {
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
 class CardsBaseController: BaseViewController {
+    var user: User
     private var delayItem: DispatchWorkItem?
     private lazy var inputBottomView: InputBottomView = {
         let view = InputBottomView()
@@ -130,7 +131,15 @@ class CardsBaseController: BaseViewController {
     }
     
     private let keyboard = KeyboardObserver()
-
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
@@ -282,7 +291,8 @@ extension CardsBaseController {
         self.saveLastId()
         self.delayItem?.cancel()
         self.playerView.isHasVolume = false
-//        self.playerView.playerLayer?.resetPlayer2()
+        self.playerView.pause()
+//        self.playerView.playerLayer?.resetPlayer()
         if self.cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
@@ -553,7 +563,8 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
 }
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
     func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, cardId: String?) {
-        let controller = StoriesPlayerGroupViewController(storiesGroup: storiesGroup,
+        let controller = StoriesPlayerGroupViewController(user: user,
+                                                          storiesGroup: storiesGroup,
                                                           currentIndex: currentIndex,
                                                           fromCardId: cardId)
         controller.delegate = self
@@ -603,10 +614,17 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                 case let .success(response):
                     guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                     self.cards[index].result = response
-                    let viewModel = ContentVideoCardViewModel(model: self.cards[index])
-                    let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
-                    self.cellConfigurators[index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    if self.cards[index].type == .content, self.cards[index].video == nil {
+                        let viewModel = ContentCardViewModel(model: self.cards[index])
+                        let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                        self.cellConfigurators[index] = configurator
+                        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    } else if self.cards[index].type == .content, self.cards[index].video != nil {
+                        let viewModel = ContentVideoCardViewModel(model: self.cards[index])
+                        let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
+                        self.cellConfigurators[index] = configurator
+                        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    }
                 case let .failure(error):
                     logger.error(error)
                 }

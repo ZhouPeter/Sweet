@@ -12,6 +12,7 @@ protocol StoryUVControllerDelegate: NSObjectProtocol {
 }
 class StoryUVController: BaseViewController {
     weak var delegate: StoryUVControllerDelegate?
+    var user: User
     private let storyId: UInt64
     private var storyUvList: StoryUvList?
     private lazy var emptyView: EmptyView = {
@@ -19,7 +20,7 @@ class StoryUVController: BaseViewController {
         view.titleLabel.text = "还没有人看过你的小故事"
         return view
     }()
-    
+
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
@@ -45,8 +46,9 @@ class StoryUVController: BaseViewController {
         return tableView
     }()
     
-    init(storyId: UInt64) {
+    init(storyId: UInt64, user: User) {
         self.storyId = storyId
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -112,5 +114,12 @@ extension StoryUVController: UITableViewDataSource {
 }
 
 extension StoryUVController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let profileController = ProfileController(user: user, userId: storyUvList!.list[indexPath.row].userId)
+        let navigationController = UINavigationController(rootViewController: profileController)
+        self.present(navigationController, animated: true, completion: nil)
+    }
 }

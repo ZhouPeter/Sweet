@@ -86,9 +86,9 @@ class SweetPlayerLayerView: UIView {
     var isHasVolume: Bool = true {
         didSet {
             if !isHasVolume {
-                self.player?.volume = 0
+                self.player?.isMuted = true
             } else {
-                self.player?.volume = AVAudioSession.sharedInstance().outputVolume
+                self.player?.isMuted = false
             }
         }
     }
@@ -161,9 +161,9 @@ class SweetPlayerLayerView: UIView {
         if let player = player {
             player.play()
             if !isHasVolume {
-                player.volume = 0
+                player.isMuted = true
             } else {
-                player.volume = AVAudioSession.sharedInstance().outputVolume
+                player.isMuted = false
             }
             setupTimer()
             isPlaying = true
@@ -216,19 +216,11 @@ class SweetPlayerLayerView: UIView {
         self.playerItem = nil
         self.seekTime   = 0
         self.timer?.invalidate()
+        self.rateToken?.invalidate()
         // 移除原来的layer
         self.playerLayer?.removeFromSuperlayer()
-        self.rateToken?.invalidate()
-        self.statusToken?.invalidate()
-        self.loadedToken?.invalidate()
-        self.bufferEmptyToken?.invalidate()
-        self.keepUpToken?.invalidate()
         // 把player置为nil
         self.player = nil
-    }
-    open func resetPlayer2() {
-        resetPlayer()
-        self.playerLayer?.player?.replaceCurrentItem(with: nil)
     }
     
     open func prepareToDeinit() {

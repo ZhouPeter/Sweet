@@ -20,10 +20,10 @@ class ActionsController: PageboyViewController {
             }
         }
     }
-    var me: User
-    init(user: User, me: User) {
+    var mine: User
+    init(user: User, mine: User) {
         self.user = user
-        self.me = me
+        self.mine = mine
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,7 +32,7 @@ class ActionsController: PageboyViewController {
     }
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
-        let feedsController = ActivitiesController(user: user, avatar: me.avatar)
+        let feedsController = ActivitiesController(user: user, avatar: mine.avatar)
         let storysController = StoriesController(user: user)
         let estimatesController = EvaluationController(user: user)
         viewControllers.append(feedsController)
