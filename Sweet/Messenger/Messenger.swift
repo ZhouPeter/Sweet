@@ -286,7 +286,9 @@ final class Messenger {
     
     func markConversationAsRead(userID: UInt64) {
         storage?.write({ (realm) in
-            realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID))?.unreadCount = 0
+            let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID))
+            data?.unreadCount = 0
+            data?.likesCount = 0
             realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
                 .forEach({ $0.isRead = true })
         }, callback: { (_) in
@@ -395,6 +397,8 @@ final class Messenger {
                 let conversationData: ConversationData
                 let unreadCount =
                     messages.filter("isRead = false && from != \(myID) && type != \(IMType.like.rawValue)").count
+                let likesCount =
+                    messages.filter("isRead = false && from != \(myID) && type == \(IMType.like.rawValue)").count
                 if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
                     conversationData = data
                 } else {
@@ -403,6 +407,7 @@ final class Messenger {
                     conversationData.user = userData
                 }
                 conversationData.unreadCount = unreadCount
+                conversationData.likesCount = likesCount
                 conversationData.lastMessage = lastMessage
                 conversationData.date = lastMessage.sentDate
                 realm.add(conversationData, update: true)
@@ -523,20 +528,20 @@ final class Messenger {
     }
 
     private func updateUnreadCount() {
-        guard let userID = user?.userId else { return }
-        var likesUnreadCount = 0
+        var unreadLikes = 0
+        var unreadMessages = 0
         storage?.read({ (realm) in
-            let unreadMessages = realm
-                .objects(InstantMessageData.self)
-                .filter("(from != \(userID) || to != \(userID)) && isRead = false")
-            self.messagesUnreadCount = unreadMessages.count
-            likesUnreadCount = unreadMessages.filter("type == \(IMType.like.rawValue)").count
-            self.messagesUnreadCount = unreadMessages.count - likesUnreadCount
+            let conversations = realm.objects(ConversationData.self)
+            for conversation in conversations {
+                unreadLikes += conversation.likesCount
+                unreadMessages += conversation.unreadCount
+            }
+            self.messagesUnreadCount = unreadMessages
         }, callback: {
             self.multicastDelegate.invoke({
                 $0.messengerDidUpdateUnreadCount(
                     messageUnread: self.messagesUnreadCount ?? 0,
-                    likesUnread: likesUnreadCount
+                    likesUnread: unreadLikes
                 )
             })
         })
