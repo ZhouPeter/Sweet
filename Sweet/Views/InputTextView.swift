@@ -268,6 +268,7 @@ extension InputTextView {
         } else {
             textView.font = UIFont.boldSystemFont(ofSize: 30)
             textView.text = nil
+            textView.endEditing(true)
         }
     }
 }
