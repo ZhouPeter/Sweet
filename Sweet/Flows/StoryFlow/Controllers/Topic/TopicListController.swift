@@ -33,6 +33,8 @@ final class TopicListController: UIViewController, TopicListView {
         return allButton
     } ()
     
+    private weak var addTopicButton: UIButton?
+    
     private var topics = [String]()
     
     override func viewDidLoad() {
@@ -80,6 +82,10 @@ final class TopicListController: UIViewController, TopicListView {
         }
     }
     
+    private func search(with text: String) {
+        
+    }
+    
     private func dismiss() {
         willMove(toParentViewController: nil)
         view.removeFromSuperview()
@@ -92,6 +98,12 @@ final class TopicListController: UIViewController, TopicListView {
     @objc private func didPressCloseButton() {
         onCancelled?()
         dismiss()
+    }
+    
+    @objc private func searchFieldDidChange(_ textField: UITextField) {
+        logger.debug(textField.text ?? "")
+        let count = textField.text?.count ?? 0
+        addTopicButton?.isEnabled = count <= 10 && count > 0
     }
 }
 
@@ -106,6 +118,9 @@ extension TopicListController: UITableViewDataSource {
                 tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath) as? TopicSearchCell else {
                 fatalError()
             }
+            addTopicButton = cell.addButton
+            cell.searchField.delegate = self
+            cell.searchField.addTarget(self, action: #selector(searchFieldDidChange(_:)), for: .editingChanged)
             return cell
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? TopicCell {
@@ -123,5 +138,12 @@ extension TopicListController: UITableViewDelegate {
         guard indexPath.row > 0 else { return }
         onFinished?(topics[indexPath.row - 1])
         dismiss()
+    }
+}
+
+extension TopicListController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
