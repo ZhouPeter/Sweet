@@ -32,6 +32,10 @@ class SubscriptionController: BaseViewController, SubscriptionView {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "订阅"
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
         view.addSubview(tableView)
         tableView.fill(in: view)
         loadSubcriptionList()

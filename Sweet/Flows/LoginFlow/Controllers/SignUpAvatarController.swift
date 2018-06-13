@@ -38,7 +38,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
     @objc private func didPressCameraButton(button: UIButton) {
         let alertController = UIAlertController()
         alertController.view.tintColor = .black
-        let cameraAction =  UIAlertAction(title: "拍摄照片", style: .default) { [weak self] (_) in
+        let cameraAction =  UIAlertAction.makeAlertAction(title: "拍摄照片", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted) in
                 if granted {
@@ -56,7 +56,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
                 }
             })
         }
-        let photoAction = UIAlertAction(
+        let photoAction = UIAlertAction.makeAlertAction(
                    title: "从手机相册选取",
                    style: .default,
                    handler: {(_ action: UIAlertAction) -> Void in
@@ -72,7 +72,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
                 }
             })
         })
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(cameraAction)
         alertController.addAction(photoAction)
         alertController.addAction(cancelAction)

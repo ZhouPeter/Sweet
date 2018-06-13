@@ -20,6 +20,8 @@ class BadgeView: UIView {
             invalidateIntrinsicContentSize()
         }
     }
+    var dotCenterX: NSLayoutConstraint?
+    var dotCenterY: NSLayoutConstraint?
     
     private let label: UILabel = {
         let label = UILabel()
@@ -54,7 +56,8 @@ class BadgeView: UIView {
         label.fill(in: self)
         layer.cornerRadius = cornerRadius
         addSubview(dotView)
-        dotView.center(to: self)
+        dotCenterY = dotView.centerY(to: self)
+        dotCenterX = dotView.centerX(to: self)
         dotView.constrain(width: 7, height: 7)
         showDot(isDot: false)
     }

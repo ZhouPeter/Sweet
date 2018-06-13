@@ -62,8 +62,8 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
     }
     
     @objc private func moreAction(_ sender: UIButton) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "拍摄", style: .default) { (_) in
+        let alertController = UIAlertController()
+        let cameraAction = UIAlertAction.makeAlertAction(title: "拍摄", style: .default) { (_) in
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted) in
                 if granted {
                     var sourceType: UIImagePickerControllerSourceType = .camera
@@ -78,7 +78,7 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
                 }
             })
         }
-        let libraryAction = UIAlertAction(title: "从手机相册中选取", style: .default) { (_) in
+        let libraryAction = UIAlertAction.makeAlertAction(title: "从手机相册中选取", style: .default) { (_) in
             PHPhotoLibrary.requestAuthorization({ (status) in
                 if status == .authorized {
                     let sourceType: UIImagePickerControllerSourceType = .photoLibrary
@@ -89,7 +89,7 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
                 }
             })
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(cameraAction)
         alertController.addAction(libraryAction)
         alertController.addAction(cancelAction)

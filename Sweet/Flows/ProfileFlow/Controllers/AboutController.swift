@@ -184,10 +184,8 @@ class AboutController: BaseViewController, AboutView {
 
 extension AboutController {
     func showLogoutAlert() {
-        let controller = UIAlertController(title: nil,
-                                           message: nil,
-                                           preferredStyle: .actionSheet)
-        let doneAction = UIAlertAction(title: "退出登录", style: .default) { (_) in
+        let controller = UIAlertController()
+        let doneAction = UIAlertAction.makeAlertAction(title: "退出登录", style: .default) { (_) in
             web.request(.logout, completion: { [weak self] (result) in
                 guard let `self` = self else { return }
                 switch result {
@@ -199,7 +197,7 @@ extension AboutController {
                 }
             })
         }
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         controller.addAction(doneAction)
         controller.addAction(cancelAction)
        self.present(controller, animated: true, completion: nil)

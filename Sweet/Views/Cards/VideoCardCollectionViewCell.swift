@@ -112,7 +112,13 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     
     private func addAvatarImageViews() {
         var centerXSpacing: CGFloat = 50
+        var index = 0
         avatarImageViews.forEach { (imageView) in
+            imageView.tag = index
+            index += 1
+            imageView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didPressResultAvatar(_:)))
+            imageView.addGestureRecognizer(tap)
             imageView.isHidden = true
             imageView.contentMode = .scaleAspectFill
             customContent.addSubview(imageView)
@@ -135,6 +141,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {
+            hiddenEmojiView(isHidden: true)
             resultEmojiView.isHidden = false
             resultCommentLabel.isHidden = true
             resultEmojiView.image = UIImage(named: "\(resultImageName)")
@@ -147,26 +154,35 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 avatarImageContraints[offset].constant = offsetCenterX
             }
         } else if let resultComment = viewModel.resultComment {
+            hiddenEmojiView(isHidden: true)
             resultEmojiView.isHidden = true
             resultCommentLabel.isHidden = false
             resultCommentLabel.text = resultComment
             avatarImageViews.forEach({ $0.isHidden = true })
         } else {
+            hiddenEmojiView(isHidden: false)
             resultCommentLabel.isHidden = true
             resultEmojiView.isHidden = true
             avatarImageViews.forEach({ $0.isHidden = true })
         }
         emojiView.updateDefault(names: viewModel.defaultImageNameList)
     }
-    
+
+}
+// MARK: - Actions
+extension VideoCardCollectionViewCell {
     @objc private func didPressImage(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
             delegate.showImageBrowser(selectedIndex: view.tag)
         }
     }
     
+    @objc private func didPressResultAvatar(_ tap: UITapGestureRecognizer) {
+        if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
+            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag])
+        }
+    }
 }
-
 extension VideoCardCollectionViewCell: EmojiControlViewDelegate {
     func openKeyboard() {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {

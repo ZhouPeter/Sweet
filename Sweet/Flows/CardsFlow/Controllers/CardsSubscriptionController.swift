@@ -8,8 +8,8 @@
 
 import UIKit
 import SwiftyUserDefaults
-protocol CardsSubscriptionView: BaseView {
-    
+protocol CardsSubscriptionView: CardsBaseView {
+
 }
 class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
 
@@ -26,7 +26,7 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
         if self.cards.count == 0 {
             let subCardsLastID = Defaults[.subCardsLastID]
             startLoadCards(
-            cardRequest: .sub(cardId: subCardsLastID,
+            cardRequest: .all(cardId: subCardsLastID,
                               direction: Direction.recover)) { [weak self] (success, _) in
                 if success {
                     self?.collectionView.reloadData()
@@ -37,5 +37,4 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
             }
         }
     }
-
 }

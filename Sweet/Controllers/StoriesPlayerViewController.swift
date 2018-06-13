@@ -434,7 +434,7 @@ extension StoriesPlayerViewController {
     
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
         pause()
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController()
         let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             let controller = ShareCardController()

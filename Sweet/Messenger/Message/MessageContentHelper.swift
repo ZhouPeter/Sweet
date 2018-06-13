@@ -14,7 +14,7 @@ class MessageContentHelper {
         if resultCard.type == .content {
             let url: String
             if let videoUrl = resultCard.video {
-                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
+                url = videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667"
             } else {
                 url = resultCard.contentImageList![0].url
             }

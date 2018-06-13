@@ -9,11 +9,15 @@
 import UIKit
 protocol ChoiceCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
     func selectChoiceCard(cardId: String, selectedIndex: Int)
-
+    func showProfile(userId: UInt64)
+}
+extension ChoiceCardCollectionViewCellDelegate {
+    func showProfile(userId: UInt64) {}
 }
 class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
 
     typealias ViewModelType = ChoiceCardViewModel
+    private var viewModel: ViewModelType?
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -146,7 +150,13 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     private func addImageViews() {
         var leftCenterXSpacing: CGFloat = 50
+        var leftIndex = 0
         leftImageViews.forEach { (imageView) in
+            imageView.tag = leftIndex
+            leftIndex += 1
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
+            imageView.isUserInteractionEnabled = true
+            imageView.addGestureRecognizer(tap)
             leftMaskView.addSubview(imageView)
             imageView.constrain(width: 40, height: 40)
             imageView.centerY(to: leftMaskView)
@@ -156,7 +166,13 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             leftCenterXSpacing -= 50
         }
         var rightCenterXSpacing: CGFloat = 50
+        var rightIndex = 0
         rightImageViews.forEach { (imageView) in
+            imageView.tag = rightIndex
+            rightIndex += 1
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
+            imageView.isUserInteractionEnabled = true
+            imageView.addGestureRecognizer(tap)
             rightMaskView.addSubview(imageView)
             imageView.constrain(width: 40, height: 40)
             imageView.centerY(to: rightMaskView)
@@ -180,6 +196,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     // swiftlint:disable function_body_length
     func updateWith(_ viewModel: ChoiceCardViewModel) {
         cardId = viewModel.cardId
+        self.viewModel = viewModel
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
         leftButton.kf.setImage(with: viewModel.imageURL[0], for: .normal)
@@ -259,6 +276,12 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             if let cardId = cardId, selectedButton.isHidden {
                 delegate.selectChoiceCard(cardId: cardId, selectedIndex: sender.tag)
             }
+        }
+    }
+    
+    @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
+        if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate, let view = tap.view {
+            delegate.showProfile(userId: viewModel!.userIDs![view.tag])
         }
     }
 }

@@ -20,6 +20,10 @@ struct StoryListResponse: Codable {
     let list: [StoryResponse]
 }
 
+struct StoriesGroupResponse: Codable {
+    let list: [[StoryResponse]]
+}
+
 struct StoryResponse: Codable {
     let avatar: String
     let college: String

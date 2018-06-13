@@ -9,22 +9,24 @@
 import UIKit
 import SwiftyUserDefaults
 protocol CardsManagerView: BaseView {
-    var showAll: ((CardsAllView) -> Void)? { get set }
-    var showSubscription: ((CardsSubscriptionView) -> Void)? { get set }
-    
+    var delegate: CardsManagerViewDelegate? { get set }
 }
+protocol CardsManagerViewDelegate: class {
+    func showAll(view: CardsAllView)
+    func showSubscription(view: CardsSubscriptionView)
+}
+
 class CardsManagerController: BaseViewController, CardsManagerView {
-    var showAll: ((CardsAllView) -> Void)?
-    var showSubscription: ((CardsSubscriptionView) -> Void)?
+
+    weak var delegate: CardsManagerViewDelegate?
     var user: User
-    var allController: CardsAllController
-    var subscriptionController: CardsSubscriptionController
-    private var currentController = UIViewController()
+    private var allView: CardsAllController
+    private var subscriptionView: CardsSubscriptionController
     
     init(user: User) {
         self.user = user
-        self.allController = CardsAllController(user: user)
-        self.subscriptionController = CardsSubscriptionController(user: user)
+        self.allView = CardsAllController(user: user)
+        self.subscriptionView = CardsSubscriptionController(user: user)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,81 +43,106 @@ class CardsManagerController: BaseViewController, CardsManagerView {
                                       NSAttributedStringKey.foregroundColor: UIColor.white]
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         control.selectedSegmentIndex = 0
-        control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
+        control.addTarget(self, action: #selector(switchView(_:)), for: .valueChanged)
         return control
     }()
-    private lazy var leftButton: BadgeButton = {
-        let button = BadgeButton()
+    private lazy var leftBadgeView: BadgeView = {
+        let view = BadgeView(cornerRadius: 15)
+        view.isHidden = true
+        view.dotCenterX?.constant = 12
+        view.dotCenterY?.constant = -12
+        view.clipsToBounds = false
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    private lazy var rightBadgeView: BadgeView = {
+        let view = BadgeView(cornerRadius: 15)
+        view.isHidden = true
+        view.dotCenterX?.constant = 12
+        view.dotCenterY?.constant = -12
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    private lazy var leftButton: UIButton = {
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(leftAction(sender:)), for: .touchUpInside)
+        button.addSubview(leftBadgeView)
+        leftBadgeView.align(.left)
+        leftBadgeView.centerY(to: button)
         return button
     }()
     
-    private lazy var rightButton: BadgeButton = {
-        let button = BadgeButton()
+    private lazy var rightButton: UIButton = {
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(rightAction(sender:)), for: .touchUpInside)
+        button.addSubview(rightBadgeView)
+        rightBadgeView.align(.left)
+        rightBadgeView.centerY(to: button)
         return button
     }()
+    private var isAllShown = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
-        navigationController?.navigationBar.barStyle = .black
         navigationItem.titleView = titleView
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
-        addChildViewController(allController)
-        allController.didMove(toParentViewController: self)
-        view.addSubview(allController.view)
-        currentController = allController
-        showAll?(allController)
+        setupControllers()
         automaticallyAdjustsScrollViewInsets = false
         Messenger.shared.addDelegate(self)
+        showAll(true)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Defaults[.isPersonalStoryChecked] {
-            leftButton.hiddenBadge()
-        } else {
-            leftButton.showBadge()
-        }
+        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
+        navigationController?.navigationBar.barStyle = .black
         
-    }
-    
-    @objc private func changeController(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            self.replaceController(oldController: currentController, newController: allController)
+        if Defaults[.isPersonalStoryChecked] {
+            leftBadgeView.isHidden = true
         } else {
-            self.replaceController(oldController: currentController, newController: subscriptionController)
+            leftBadgeView.isHidden = false
+            leftBadgeView.text = nil
+        }
+    }
+    // MARK: - Private
+    private func setupControllers() {
+        add(childViewController: subscriptionView)
+        subscriptionView.view.fill(in: view)
+        add(childViewController: allView)
+        allView.view.fill(in: view)
+    }
+    private func showAll(_ isAllShown: Bool) {
+        self.isAllShown = isAllShown
+        allView.view.alpha = isAllShown ? 1 : 0
+        if isAllShown {
+            delegate?.showAll(view: allView)
+        } else {
+            delegate?.showSubscription(view: subscriptionView)
         }
     }
     
-    private func replaceController(oldController: UIViewController, newController: UIViewController) {
-        if oldController == newController { return }
-        addChildViewController(newController)
-        newController.didMove(toParentViewController: self)
-        view.addSubview(newController.view)
-        oldController.willMove(toParentViewController: nil)
-        oldController.removeFromParentViewController()
-        oldController.view.removeFromSuperview()
-        self.currentController = newController
-        if newController is CardsAllController {
-            showAll?(allController)
-        } else {
-            showSubscription?(subscriptionController)
-        }
+    @objc private func switchView(_ sender: UISegmentedControl) {
+        showAll(sender.selectedSegmentIndex == 0)
     }
-
+    
 }
 extension CardsManagerController: MessengerDelegate {
     func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int) {
+        rightBadgeView.isHidden = false
+        rightBadgeView.clipsToBounds = true
         if messageUnread > 0 {
-            rightButton.showCountBadge(text: messageUnread > 99 ? "99+" : "\(messageUnread)")
+            rightBadgeView.text =  messageUnread > 99 ? "99+" : "\(messageUnread)"
+            rightButton.setImage(nil, for: .normal)
         } else if likesUnread > 0 {
-            rightButton.showBadge()
+            rightBadgeView.text = nil
+            rightBadgeView.clipsToBounds = false
+            rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         } else {
+            rightBadgeView.isHidden = true
             rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         }
     }

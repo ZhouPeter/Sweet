@@ -16,13 +16,14 @@ enum Direction: Int {
     case down = 2
     case recover = 3
 }
-enum CardRequst {
+enum CardRequest {
     case all(cardId: String?, direction: Direction?)
     case sub(cardId: String?, direction: Direction?)
 }
 let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
-class CardsBaseController: BaseViewController {
+class CardsBaseController: BaseViewController, CardsBaseView {
+    weak var delegate: CardsBaseViewDelegate?
     var user: User
     private var delayItem: DispatchWorkItem?
     private lazy var inputBottomView: InputBottomView = {
@@ -200,9 +201,6 @@ class CardsBaseController: BaseViewController {
         view.layoutIfNeeded()
     }
     
-    private func contentCardLoadVideo(videoURL: URL) {
-   
-    }
     private func showEmptyView(isShow: Bool) {
         if isShow {
             if emptyView.superview != nil { return }
@@ -256,16 +254,63 @@ extension CardsBaseController {
 
 // MARK: - Private
 extension CardsBaseController {
-    private func upLoadCards(cards: [CardResponse],
-                             callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
-        cards.reversed().forEach({ (card) in
-            self.insertConfigurator(card: card, index: 0)
-        })
-        self.index += cards.count
-        self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
-        self.collectionView.reloadData()
-        callback?(true, cards)
+//    private func upLoadCards(cards: [CardResponse],
+//                             callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
+//        cards.reversed().forEach({ (card) in
+//            self.insertConfigurator(card: card, index: 0)
+//        })
+//        self.index += cards.count
+//        self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
+//        self.collectionView.reloadData()
+//        callback?(true, cards)
+//    }
+    func startLoadCards(cardRequest: CardRequest,
+                        callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
+        if isFetchLoadCards {
+            scrollTo(row: index)
+            return
+        }
+        isFetchLoadCards = true
+        let api: WebAPI
+        let direction: Direction?
+        switch cardRequest {
+        case let .all(cardId, directionApi):
+            api = .allCards(cardId: cardId, direction: directionApi)
+            direction = directionApi
+        case let .sub(cardId, directionApi):
+            api = .subscriptionCards(cardId: cardId, direction: directionApi)
+            direction = directionApi
+        }
+        web.request(
+            api,
+            responseType: Response<CardListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case let .success(response):
+                    self.isFetchLoadCards = false
+                    if let direction = direction {
+                        if direction == Direction.down {
+                            self.downLoadCards(cards: response.list, callback: callback)
+                            return
+                        } else if direction == Direction.recover {
+                            response.list.forEach({ self.appendConfigurator(card: $0) })
+                        }
+                    } else {
+                        response.list.forEach({ self.appendConfigurator(card: $0) })
+                    }
+                    callback?(true, response.list)
+                case let .failure(error):
+                    logger.error(error)
+                    self.isFetchLoadCards = false
+                    callback?(false, nil)
+                }
+        }
     }
+    
+}
+
+// MARK: - Privates
+extension CardsBaseController {
     
     private func downLoadCards(cards: [CardResponse],
                                callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
@@ -283,10 +328,7 @@ extension CardsBaseController {
             callback?(true, cards)
         })
     }
-}
-
-// MARK: - Publics
-extension CardsBaseController {
+    
     func changeCurrentCell() {
         self.saveLastId()
         self.delayItem?.cancel()
@@ -318,62 +360,15 @@ extension CardsBaseController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         }
     }
-    
-    func startLoadCards(cardRequest: CardRequst,
-                        callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
-        if isFetchLoadCards {
-            scrollTo(row: index)
-            return
-        }
-        isFetchLoadCards = true
-        let api: WebAPI
-        let direction: Direction?
-        switch cardRequest {
-        case let .all(cardId, directionApi):
-            api = .allCards(cardId: cardId, direction: directionApi)
-            direction = directionApi
-        case let .sub(cardId, directionApi):
-            api = .subscriptionCards(cardId: cardId, direction: directionApi)
-            direction = directionApi
-        }
-        web.request(
-            api,
-            responseType: Response<CardListResponse>.self) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case let .success(response):
-                    self.isFetchLoadCards = false
-                    if let direction = direction {
-                        if direction == Direction.down {
-                            self.downLoadCards(cards: response.list, callback: callback)
-                            return
-                        } else if direction == Direction.recover {
-                            response.list.forEach({ (card) in
-                                self.appendConfigurator(card: card)
-                            })
-                        }
-                    } else {
-                        response.list.forEach({ (card) in
-                            self.appendConfigurator(card: card)
-                        })
-                    }
-                    callback?(true, response.list)
-                case let .failure(error):
-                    logger.error(error)
-                    self.isFetchLoadCards = false
-                    callback?(false, nil)
-                }
-        }
-    }
-    
-    func scrollCard(withPoint point: CGPoint) {
+
+    private func scrollCard(withPoint point: CGPoint) {
         guard let start = panPoint else { return }
         var direction = Direction.unknown
         if point.y < start.y {
             direction = .down
             if index == collectionView.numberOfItems(inSection: 0) - 1 {
                 let cardId = cards[index].cardId
-                let request: CardRequst = self is CardsAllController ?
+                let request: CardRequest = self is CardsAllController ?
                                                 .all(cardId: cardId, direction: direction) :
                                                 .sub(cardId: cardId, direction: direction)
                 self.startLoadCards(cardRequest: request) { (success, cards) in
@@ -395,7 +390,7 @@ extension CardsBaseController {
         }
     }
     
-    func scrollTo(row: Int, completion: (() -> Void)? = nil) {
+    private func scrollTo(row: Int, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             self.pan.isEnabled = true
@@ -412,7 +407,7 @@ extension CardsBaseController {
         }
     }
     
-    func appendConfigurator(card: CardResponse) {
+    private func appendConfigurator(card: CardResponse) {
         switch card.type {
         case .content:
             if card.video != nil {
@@ -456,50 +451,6 @@ extension CardsBaseController {
         }
     }
     
-    func insertConfigurator(card: CardResponse, index: Int) {
-        switch card.type {
-        case .content:
-            if card.video != nil {
-                let viewModel = ContentVideoCardViewModel(model: card)
-                let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
-                cellConfigurators.insert(configurator, at: index)
-                cards.insert(card, at: index)
-            } else {
-                let viewModel = ContentCardViewModel(model: card)
-                let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-                cellConfigurators.insert(configurator, at: index)
-                cards.insert(card, at: index)
-            }
-        case .choice:
-            let viewModel = ChoiceCardViewModel(model: card)
-            let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.insert(configurator, at: index)
-            cards.insert(card, at: index)
-        case .evaluation:
-            let viewModel = EvaluationCardViewModel(model: card)
-            let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.insert(configurator, at: index)
-            cards.insert(card, at: index)
-        case .activity:
-            var viewModel = ActivitiesCardViewModel(model: card)
-            for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityId in
-                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
-                }
-                viewModel.activityViewModels[offset] = activityViewModel
-            }
-            let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.insert(configurator, at: index)
-            cards.insert(card, at: index)
-        case .story:
-            let viewModel = StoriesCardViewModel(model: card)
-            let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.insert(configurator, at: index)
-            cards.insert(card, at: index)
-        default: break
-        }
-    }
-
     private func showInputView(cardId: String, activityId: String) {
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
@@ -507,7 +458,6 @@ extension CardsBaseController {
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
         self.activityCardId = cardId
-        
     }
 }
 
@@ -543,6 +493,9 @@ extension CardsBaseController: UICollectionViewDelegate {
 }
 
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
+    func showProfile(userId: UInt64) {
+        delegate?.showProfile(userId: userId)
+    }
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
         web.request(
             .choiceCard(cardId: cardId, index: selectedIndex),
@@ -569,7 +522,9 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
                                                           fromCardId: cardId)
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
-        self.readGroup(storyGroupIndex: currentIndex)
+        self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
+                       fromCardId: cardId,
+                       storyGroupIndex: currentIndex)
     }
 }
 
@@ -606,6 +561,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
             .commentCard(cardId: cardId, comment: "", emoji: emoji),
@@ -689,22 +645,18 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                 title: status.subscription ? "取消订阅" : "订阅该栏目",
                 style: .default) { (_) in
             if status.subscription {
-                web.request(.delSectionSubscription(sectionId: sectionId), completion: { (_) in
-                })
+                web.request(.delSectionSubscription(sectionId: sectionId), completion: { (_) in })
             } else {
-                web.request(.addSectionSubscription(sectionId: sectionId), completion: { (_) in
-                })
+                web.request(.addSectionSubscription(sectionId: sectionId), completion: { (_) in })
             }
         }
         let blockAction = UIAlertAction.makeAlertAction(
                 title: status.block ? "取消屏蔽" : "屏蔽该栏目",
                 style: .default) { (_) in
             if status.block {
-                web.request(.delSectionBlock(sectionId: sectionId), completion: { (_) in
-                })
+                web.request(.delSectionBlock(sectionId: sectionId), completion: { (_) in })
             } else {
-                web.request(.addSectionBlock(sectionId: sectionId), completion: { (_) in
-                })
+                web.request(.addSectionBlock(sectionId: sectionId), completion: { (_) in })
             }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -719,48 +671,25 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
         let card  = cards[index]
         let from = UInt64(Defaults[.userID]!)!
-        if card.type == .content {
-            let url: String
-            if let videoUrl = card.video {
-                url = videoUrl + "?vsample/jpg/offset/0.0/w/375/h/667"
-            } else {
-                url = card.contentImageList![0].url
-            }
-            let content = ContentCardContent(identifier: cardId,
-                                             cardType: InstantMessage.CardType.content,
-                                             text: card.content!,
-                                             imageURLString: url,
-                                             url: card.url!)
-            userIds.forEach {
-                Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
-                if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
-                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
-            }
-        } else if card.type == .choice {
-            let result = card.result == nil ? -1 : card.result!.index!
-            let content = OptionCardContent(identifier: cardId,
-                                            cardType: InstantMessage.CardType.preference,
-                                            text: card.content!,
-                                            leftImageURLString: card.imageList![0],
-                                            rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            userIds.forEach {
-                Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
-                if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
-                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
-            }
-        } else if card.type == .evaluation {
-            let result = card.result == nil ? -1 : card.result!.index!
-            let content = OptionCardContent(identifier: cardId,
-                                            cardType: InstantMessage.CardType.evaluation,
-                                            text: card.content!,
-                                            leftImageURLString: card.imageList![0],
-                                            rightImageURLString: card.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            userIds.forEach {
-                Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
-                if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
-                web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+        if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
+            if card.type == .content, let content = content as? ContentCardContent {
+                userIds.forEach {
+                    Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
+                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+                }
+            } else if card.type == .choice, let content = content as? OptionCardContent {
+                userIds.forEach {
+                    Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
+                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
+                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+                }
+            } else if card.type == .evaluation, let content = content as? OptionCardContent {
+                userIds.forEach {
+                    Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
+                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+                }
             }
         }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
@@ -768,13 +697,12 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
-    func readGroup(storyGroupIndex: Int) {
+    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
         if self.cards[index].type == .story {
-            let storyId = self.cards[index].storyList![storyGroupIndex][0].storyId
-            let fromCardId = self.cards[index].cardId
             web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
                 switch result {
                 case .success:
+                    if storyGroupIndex > 3 { return }
                     guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
                     let storys = self.cards[index].storyList![storyGroupIndex]
                     var newStorys = [StoryResponse]()

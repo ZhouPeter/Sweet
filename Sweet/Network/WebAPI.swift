@@ -68,6 +68,7 @@ enum WebAPI {
     case getCard(cardID: String)
     case getStory(storyID: UInt64)
     case likeEvaluation(evaluationId: UInt64, comment: String)
+    case storySortList
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -187,9 +188,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/review"
         case .getCard:
             return "/card/get"
-       
         case .likeEvaluation:
             return "/user/evaluation/like"
+        case .storySortList:
+            return "/story/sort/list"
         }
     }
     

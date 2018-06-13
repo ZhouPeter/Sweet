@@ -52,6 +52,7 @@ class AuthViewController: BaseViewController, AuthView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .black
         setupUI()
     }
     

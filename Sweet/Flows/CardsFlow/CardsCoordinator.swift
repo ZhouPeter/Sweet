@@ -14,7 +14,8 @@ final class CardsCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
     private let user: User
-    
+    private var allCoordinator: AllCardsCoordinator?
+    private var subCoordinator: SubCardsCoordinator?
     init(user: User, router: Router, factory: CardsFlowFactory, coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.router = router
@@ -23,7 +24,6 @@ final class CardsCoordinator: BaseCoordinator {
     }
     
     override func start() {
-        logger.debug()
         showCards()
     }
     
@@ -31,6 +31,25 @@ final class CardsCoordinator: BaseCoordinator {
     
     private func showCards() {
         let cards = factory.makeCardsManagerView(user: user)
+        cards.delegate = self
         router.setRootFlow(cards)
     }
+
+}
+
+extension CardsCoordinator: CardsManagerViewDelegate {
+    func showAll(view: CardsAllView) {
+        guard allCoordinator == nil else { return }
+        let coordinator = coordinatorFactory.makeAllCardsCoordinator(user: user, router: router)
+        coordinator.start(with: view)
+        allCoordinator = coordinator
+    }
+    
+    func showSubscription(view: CardsSubscriptionView) {
+        guard subCoordinator == nil else { return }
+        let coordinator = coordinatorFactory.makeSubCardsCoordinator(user: user, router: router)
+        coordinator.start(with: view)
+        subCoordinator = coordinator
+    }
+
 }

@@ -201,6 +201,22 @@
 		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
+		584CDECE20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDECF20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED120D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED520D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED620D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68BA20AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
@@ -1232,6 +1248,10 @@
 		58447B5A209C5B16004C2FFE /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		58461D3020C6B6AF00E3712C /* ShareCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardController.swift; sourceTree = "<group>"; };
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
+		584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCardsCoordinator.swift; sourceTree = "<group>"; };
+		584CDED420D0F8A400523406 /* CardsBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseView.swift; sourceTree = "<group>"; };
+		584CDED920D1032F00523406 /* SubCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCardsCoordinator.swift; sourceTree = "<group>"; };
+		584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayCollectionViewCell.swift; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
 		585B68BC20AF183E00E734BC /* SweetPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerView.swift; sourceTree = "<group>"; };
 		585B68C120AF1D8E00E734BC /* SweetPlayerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerExtensions.swift; sourceTree = "<group>"; };
@@ -1910,6 +1930,8 @@
 			isa = PBXGroup;
 			children = (
 				AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */,
+				584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */,
+				584CDED920D1032F00523406 /* SubCardsCoordinator.swift */,
 				AC525AC1208DF3EC001070B2 /* Controllers */,
 			);
 			path = CardsFlow;
@@ -1923,6 +1945,7 @@
 				589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */,
 				58CAB38720AD581A007230AA /* CardsBaseController.swift */,
 				58461D3020C6B6AF00E3712C /* ShareCardController.swift */,
+				584CDED420D0F8A400523406 /* CardsBaseView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2083,6 +2106,7 @@
 				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
 				ACDD0B0D20C802E000B7400A /* PopupController.swift */,
+				584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2583,6 +2607,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2608,6 +2633,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2735,6 +2761,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2760,6 +2787,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2824,6 +2852,7 @@
 				580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				5866330220BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				584CDECE20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAA20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
@@ -2872,8 +2901,10 @@
 				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
+				584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				58816CF320C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
+				584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -2928,6 +2959,7 @@
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074B20B272410031630C /* SweetPlayerItem.swift in Sources */,
+				584CDED520D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58155E262091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58816D0120C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
@@ -3118,6 +3150,7 @@
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
+				584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
@@ -3205,6 +3238,7 @@
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
@@ -3266,6 +3300,7 @@
 				58447B3F209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				5803573220AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -3314,6 +3349,7 @@
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
@@ -3362,6 +3398,7 @@
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
+				584CDED120D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
@@ -3440,6 +3477,7 @@
 				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
 				AC6C1D9120A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC616FA320C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				585B68C520AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
@@ -3457,6 +3495,7 @@
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				AC45CD7720AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0420C656860032D103 /* ActivityListResponse.swift in Sources */,
@@ -3550,6 +3589,7 @@
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -3623,6 +3663,7 @@
 				580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				5866330320BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				584CDECF20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
@@ -3671,8 +3712,10 @@
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				58816CF420C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
+				584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
@@ -3727,6 +3770,7 @@
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074C20B272410031630C /* SweetPlayerItem.swift in Sources */,
+				584CDED620D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58155E272091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58816D0220C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
@@ -4055,10 +4099,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -4079,10 +4120,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -4102,11 +4140,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4127,11 +4161,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4150,11 +4180,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4174,11 +4200,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4204,10 +4226,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -4234,10 +4253,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

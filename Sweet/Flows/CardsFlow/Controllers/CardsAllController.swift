@@ -8,12 +8,12 @@
 
 import UIKit
 import SwiftyUserDefaults
-protocol CardsAllView: BaseView {
+protocol CardsAllView: CardsBaseView {
     
 }
 
 class CardsAllController: CardsBaseController, CardsAllView {
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       

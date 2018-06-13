@@ -15,6 +15,7 @@ struct ChoiceCardViewModel {
     var selectedIndex: Int?
     var percent: Double?
     var avatarURLs: [URL]?
+    var userIDs: [UInt64]?
     let cardId: String
     init(model: CardResponse) {
         self.cardId = model.cardId
@@ -27,8 +28,10 @@ struct ChoiceCardViewModel {
             self.selectedIndex = result.index
             self.percent = result.percent
             self.avatarURLs = result.contactUserList.compactMap({ URL(string: $0.avatar)})
+            self.userIDs = result.contactUserList.compactMap({ $0.userId })
             if self.avatarURLs!.count > 3 {
                 self.avatarURLs?.removeSubrange(3..<result.contactUserList.count)
+                self.userIDs?.removeSubrange(3..<result.contactUserList.count)
             }
         }
     }
