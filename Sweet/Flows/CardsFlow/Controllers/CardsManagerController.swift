@@ -44,21 +44,45 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         control.addTarget(self, action: #selector(changeController(_:)), for: .valueChanged)
         return control
     }()
-    private lazy var leftButton: BadgeButton = {
-        let button = BadgeButton()
+    private lazy var leftBadgeView: BadgeView = {
+        let view = BadgeView(cornerRadius: 15)
+        view.isHidden = true
+        view.dotCenterX?.constant = 12
+        view.dotCenterY?.constant = -12
+        view.clipsToBounds = false
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    private lazy var rightBadgeView: BadgeView = {
+        let view = BadgeView(cornerRadius: 15)
+        view.isHidden = true
+        view.dotCenterX?.constant = 12
+        view.dotCenterY?.constant = -12
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    private lazy var leftButton: UIButton = {
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(leftAction(sender:)), for: .touchUpInside)
+        button.addSubview(leftBadgeView)
+        leftBadgeView.align(.left)
+        leftBadgeView.centerY(to: button)
         return button
     }()
     
-    private lazy var rightButton: BadgeButton = {
-        let button = BadgeButton()
+    private lazy var rightButton: UIButton = {
+        let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(rightAction(sender:)), for: .touchUpInside)
+        button.addSubview(rightBadgeView)
+        rightBadgeView.align(.left)
+        rightBadgeView.centerY(to: button)
         return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
@@ -77,11 +101,12 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if Defaults[.isPersonalStoryChecked] {
-            leftButton.hiddenBadge()
+            leftBadgeView.isHidden = true
         } else {
-            leftButton.showBadge()
+            leftBadgeView.isHidden = false
+            leftBadgeView.text = nil
         }
-        
+
     }
     
     @objc private func changeController(_ sender: UISegmentedControl) {
@@ -111,11 +136,17 @@ class CardsManagerController: BaseViewController, CardsManagerView {
 }
 extension CardsManagerController: MessengerDelegate {
     func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int) {
+        rightBadgeView.isHidden = false
+        rightBadgeView.clipsToBounds = true
         if messageUnread > 0 {
-            rightButton.showCountBadge(text: messageUnread > 99 ? "99+" : "\(messageUnread)")
+            rightBadgeView.text =  messageUnread > 99 ? "99+" : "\(messageUnread)"
+            rightButton.setImage(nil, for: .normal)
         } else if likesUnread > 0 {
-            rightButton.showBadge()
+            rightBadgeView.text = nil
+            rightBadgeView.clipsToBounds = false
+            rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         } else {
+            rightBadgeView.isHidden = true
             rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         }
     }
