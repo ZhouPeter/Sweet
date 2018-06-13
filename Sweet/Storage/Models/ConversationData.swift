@@ -13,6 +13,7 @@ class ConversationData: Object {
     @objc dynamic var user: UserData?
     @objc dynamic var date = Date()
     @objc dynamic var unreadCount = 0
+    @objc dynamic var likesCount = 0
     @objc dynamic var lastMessage: InstantMessageData?
     
     override static func primaryKey() -> String? {
@@ -24,6 +25,7 @@ class ConversationData: Object {
         data.userID = Int64(conversation.user.userId)
         data.user = UserData.data(with: conversation.user)
         data.unreadCount = conversation.unreadCount
+        data.likesCount = conversation.likesCount
         if let message = conversation.lastMessage {
             data.lastMessage = InstantMessageData.data(with: message)
         }

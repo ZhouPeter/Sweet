@@ -55,8 +55,9 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         )
     }
     
-    func makeCardsCoordinator(navigation: UINavigationController?) -> Coordinator {
+    func makeCardsCoordinator(user: User, navigation: UINavigationController?) -> Coordinator {
         return CardsCoordinator(
+            user: user,
             router: makeRouter(with: navigation),
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp()

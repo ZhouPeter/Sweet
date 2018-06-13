@@ -52,13 +52,13 @@ class EvaluationController: UIViewController, PageChildrenProtocol {
                 switch result {
                 case let .success(response):
                     self.evaluationList = response.list
-                    response.list.forEach({
+                    self.viewModels = response.list.map({
                         var viewModel = EvaluationViewModel(model: $0)
                         viewModel.isHiddenLikeImage = UInt64(Defaults[.userID]!)! == self.user.userId
                         viewModel.callback = {
                             self.showInputView(evaluationId: viewModel.evaluationId)
                         }
-                        self.viewModels.append(viewModel)
+                        return viewModel
                     })
                     self.tableView.reloadData()
                 case let .failure(error):

@@ -17,7 +17,7 @@ struct ActivitiesCardViewModel {
         activityViewModels = model.activityList!.map({
             return ActivityViewModel(model: $0)
         })
-        cellHeight = (cardCellHeight - 50) / CGFloat(activityViewModels.count)
+        cellHeight = (cardCellHeight - 70) / CGFloat(activityViewModels.count)
     }
 }
 
