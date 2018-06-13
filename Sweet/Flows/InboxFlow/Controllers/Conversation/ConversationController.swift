@@ -16,6 +16,15 @@ final class ConversationController: MessagesViewController {
     private let buddy: User
     private let refreshControl = UIRefreshControl()
     private var messages = [InstantMessage]()
+    private var inComingBubbleMaskImage: UIImage = {
+        guard let image = UIImage.bubbleImage(named: "MessageBubble", orientation: .upMirrored) else { fatalError() }
+        return image
+    } ()
+    private var outgoingBubbleMaskImage: UIImage = {
+        guard let image = UIImage.bubbleImage(named: "MessageBubble", orientation: .up) else { fatalError() }
+        return image
+    } ()
+    private var bubbleMaskCache = [UIView: UIImageView]()
     
     init(user: User, buddy: User) {
         self.user = user
@@ -35,6 +44,8 @@ final class ConversationController: MessagesViewController {
         let avatarPosition = AvatarPosition(vertical: .cellTop)
         layout.textMessageSizeCalculator.incomingAvatarPosition = avatarPosition
         layout.textMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
+        layout.emojiMessageSizeCalculator.incomingAvatarPosition = avatarPosition
+        layout.emojiMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
         layout.sizeCalculator.incomingAvatarPosition = avatarPosition
         layout.sizeCalculator.outgoingAvatarPosition = avatarPosition
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -138,6 +149,13 @@ final class ConversationController: MessagesViewController {
         }
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
+    
+    private func makeBubbleMask(isIncomming: Bool) -> UIImageView {
+        if isIncomming {
+            return UIImageView(image: inComingBubbleMaskImage)
+        }
+        return UIImageView(image: outgoingBubbleMaskImage)
+    }
 }
 
 extension ConversationController: MessagesDataSource {
@@ -163,16 +181,6 @@ extension ConversationController: MessagesDataSource {
         let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
         avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
     }
-    
-//    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-//        return NSAttributedString(
-//            string: "下午 4:59",
-//            attributes: [
-//                .font: UIFont.systemFont(ofSize: 12),
-//                .foregroundColor: UIColor.lightGray
-//            ]
-//        )
-//    }
 }
 
 extension ConversationController: MessagesDisplayDelegate {
@@ -180,7 +188,18 @@ extension ConversationController: MessagesDisplayDelegate {
         for message: MessageType,
         at indexPath: IndexPath,
         in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        return .bubble
+        return .custom({ [weak self] (container) in
+            guard let `self` = self else { return }
+            if let mask = self.bubbleMaskCache[container] {
+                mask.frame = container.bounds
+                container.mask = mask
+                return
+            }
+            let mask = self.makeBubbleMask(isIncomming: message.sender.id == "\(self.buddy.userId)")
+            self.bubbleMaskCache[container] = mask
+            mask.frame = container.bounds
+            container.mask = mask
+        })
     }
     
     func backgroundColor(
@@ -196,13 +215,6 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return .black
     }
-
-//    func cellTopLabelHeight(
-//        for message: MessageType,
-//        at indexPath: IndexPath,
-//        in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-//        return 25
-//    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}

@@ -867,6 +867,10 @@
 		AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
+		AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
+		AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
+		AC9DF12B20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
 		AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
 		AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */; };
@@ -1426,6 +1430,7 @@
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
 		AC972541209B2728009FB966 /* KeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
+		AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MessageBubble.swift"; sourceTree = "<group>"; };
 		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
 		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
 		ACA322EA2087410000BDC92E /* Sweet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sweet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2136,6 +2141,7 @@
 				AC41420120BD477000DC62E0 /* Date+Timestamp.swift */,
 				58816D0D20C671040032D103 /* WXApi+Message.swift */,
 				58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */,
+				AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2788,6 +2794,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5803574420AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
+				AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC616F9520C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3D209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -3113,6 +3120,7 @@
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
+				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -3572,6 +3580,7 @@
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */,
+				AC9DF12B20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58CE1ED320A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
@@ -3584,6 +3593,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5803574520AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
+				AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC616F9620C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3E209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
