@@ -201,6 +201,18 @@
 		58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
 		58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58463DDA2099903000698CF8 /* UpdateSignatureController.swift */; };
+		584CDECE20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDECF20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED120D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */; };
+		584CDED520D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED620D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
+		584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
 		585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68BA20AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
@@ -1224,6 +1236,9 @@
 		58447B5A209C5B16004C2FFE /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		58461D3020C6B6AF00E3712C /* ShareCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardController.swift; sourceTree = "<group>"; };
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
+		584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCardsCoordinator.swift; sourceTree = "<group>"; };
+		584CDED420D0F8A400523406 /* CardsBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseView.swift; sourceTree = "<group>"; };
+		584CDED920D1032F00523406 /* SubCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCardsCoordinator.swift; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
 		585B68BC20AF183E00E734BC /* SweetPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerView.swift; sourceTree = "<group>"; };
 		585B68C120AF1D8E00E734BC /* SweetPlayerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerExtensions.swift; sourceTree = "<group>"; };
@@ -1899,6 +1914,8 @@
 			isa = PBXGroup;
 			children = (
 				AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */,
+				584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */,
+				584CDED920D1032F00523406 /* SubCardsCoordinator.swift */,
 				AC525AC1208DF3EC001070B2 /* Controllers */,
 			);
 			path = CardsFlow;
@@ -1912,6 +1929,7 @@
 				589E6BB820A95E900038FAED /* CardsSubscriptionController.swift */,
 				58CAB38720AD581A007230AA /* CardsBaseController.swift */,
 				58461D3020C6B6AF00E3712C /* ShareCardController.swift */,
+				584CDED420D0F8A400523406 /* CardsBaseView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2811,6 +2829,7 @@
 				580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDB2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				5866330220BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				584CDECE20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAA20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
@@ -2861,6 +2880,7 @@
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58816CF320C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
+				584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -2915,6 +2935,7 @@
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074B20B272410031630C /* SweetPlayerItem.swift in Sources */,
+				584CDED520D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58155E262091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58816D0120C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
@@ -3103,6 +3124,7 @@
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
+				584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
@@ -3189,6 +3211,7 @@
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
@@ -3298,6 +3321,7 @@
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
@@ -3346,6 +3370,7 @@
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				ACA3239A2087608500BDC92E /* RouterImp.swift in Sources */,
+				584CDED120D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
@@ -3441,6 +3466,7 @@
 				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				AC45CD7720AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0420C656860032D103 /* ActivityListResponse.swift in Sources */,
@@ -3534,6 +3560,7 @@
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
+				584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -3604,6 +3631,7 @@
 				580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				58463DDC2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				5866330320BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				584CDECF20D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
@@ -3654,6 +3682,7 @@
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58816CF420C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
+				584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
@@ -3708,6 +3737,7 @@
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074C20B272410031630C /* SweetPlayerItem.swift in Sources */,
+				584CDED620D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				58155E272091B3E300ADEFFB /* AboutController.swift in Sources */,
 				58816D0220C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,

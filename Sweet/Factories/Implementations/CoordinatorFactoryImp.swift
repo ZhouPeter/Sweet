@@ -9,7 +9,7 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
-    
+
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
                 user: user,
@@ -101,4 +101,21 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
             coordinatorFactory: CoordinatorFactoryImp()
         )
     }
+    
+    func makeAllCardsCoordinator(user: User, router: Router) -> AllCardsCoordinator {
+        return AllCardsCoordinator(
+            user: user,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp())
+    }
+    
+    func makeSubCardsCoordinator(user: User, router: Router) -> SubCardsCoordinator {
+        return SubCardsCoordinator(
+            user: user,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp())
+    }
+    
 }

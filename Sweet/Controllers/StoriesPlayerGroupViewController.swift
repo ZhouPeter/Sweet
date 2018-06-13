@@ -15,7 +15,9 @@ class StoriesPlayerGroupViewController: BaseViewController {
     var user: User
     var currentIndex: Int {
         didSet {
-            delegate?.readGroup(storyGroupIndex: currentIndex)
+            if currentIndex < 4 {
+                delegate?.readGroup(storyGroupIndex: currentIndex)
+            }
         }
     }
     var storiesGroup: [[StoryCellViewModel]]
@@ -23,7 +25,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
     var fromCardId: String?
     private lazy var cubeView: StoriesCubeView = {
         let cubeView = StoriesCubeView()
-        cubeView.translatesAutoresizingMaskIntoConstraints = false
         cubeView.cubeDelegate = self
         return cubeView
     }()
@@ -48,7 +49,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
         setChildViewController()
         storiesPlayerControllers[currentIndex].initPlayer()
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -73,12 +74,39 @@ class StoriesPlayerGroupViewController: BaseViewController {
         cubeView.scrollToViewAtIndex(currentIndex, animated: true)
     }
     
+    private func appendGroup(storyCellViewModels: [StoryCellViewModel]) {
+        storiesGroup.append(storyCellViewModels)
+        let playerController = StoriesPlayerViewController(user: user)
+        playerController.fromCardId = fromCardId
+        playerController.delegate = self
+        playerController.stories = storyCellViewModels
+        storiesPlayerControllers.append(playerController)
+        add(childViewController: playerController, addView: false)
+        cubeView.addChildView(playerController.view)
+        cubeView.setDefaultAnchorPoint()
+        cubeView.layoutIfNeeded()
+    }
+    
     private func setOldPlayerControllerLoction() {
         let viewController = storiesPlayerControllers[currentIndex]
         if viewController.currentIndex == viewController.stories.count - 1 {
             viewController.currentIndex = 0
         } else {
             viewController.currentIndex += 1
+        }
+    }
+    
+    private func loadMoreStoriesGroup() {
+        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                response.list.forEach({
+                    let storyCellViewModels = $0.map { StoryCellViewModel(model: $0) }
+                    self.appendGroup(storyCellViewModels: storyCellViewModels)
+                })
+            case let .failure(error):
+                logger.error(error)
+            }
         }
     }
 }
@@ -99,6 +127,12 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     }
 }
 extension StoriesPlayerGroupViewController: StoriesCubeViewDelegate {
+    func cubeViewEndScroll(_ cubeView: StoriesCubeView) {
+        if currentIndex >= storiesGroup.count - 2 {
+            loadMoreStoriesGroup()
+        }
+    }
+    
     func cubeViewDidScroll(_ cubeView: StoriesCubeView) {
         let count = storiesGroup.count
         storiesPlayerControllers[currentIndex].pause()
@@ -115,5 +149,4 @@ extension StoriesPlayerGroupViewController: StoriesCubeViewDelegate {
             storiesPlayerControllers[currentIndex].reloadPlayer()
         }
     }
-
 }

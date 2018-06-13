@@ -10,6 +10,7 @@ import UIKit
 
 protocol StoriesCubeViewDelegate: class {
     func cubeViewDidScroll(_ cubeView: StoriesCubeView)
+    func cubeViewEndScroll(_ cubeView: StoriesCubeView)
 }
 
 class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
@@ -107,9 +108,11 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
     }
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         setDefaultAnchorPoint()
+        cubeDelegate?.cubeViewEndScroll(self)
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         setDefaultAnchorPoint()
+        cubeDelegate?.cubeViewEndScroll(self)
     }
     // MARK: Private methods
   
@@ -257,7 +260,7 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
 
     }
     
-    fileprivate func setDefaultAnchorPoint() {
+    func setDefaultAnchorPoint() {
         for index in 0 ..< childViews.count {
             let view = childViews[index]
             let anchorPoint = CGPoint(x: 0.5, y: 0.5)
