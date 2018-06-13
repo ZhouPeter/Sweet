@@ -296,6 +296,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["storyId": storyID]
         case let .likeEvaluation(cardId, comment):
             parameters = ["cardId": cardId, "comment": comment]
+        case .searchTopic(let topic):
+            parameters = ["tag": topic]
         default:
             break
         }

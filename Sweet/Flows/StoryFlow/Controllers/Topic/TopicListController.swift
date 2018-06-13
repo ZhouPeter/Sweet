@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Moya
 
 final class TopicListController: UIViewController, TopicListView {
     var onFinished: ((String?) -> Void)?
@@ -34,7 +35,8 @@ final class TopicListController: UIViewController, TopicListView {
     } ()
     
     private weak var addTopicButton: UIButton?
-    
+    private weak var searchField: UITextField?
+    private var searchRequest: Cancellable?
     private var topics = [String]()
     
     override func viewDidLoad() {
@@ -65,10 +67,6 @@ final class TopicListController: UIViewController, TopicListView {
     // MARK: - Private
     
     private func loadAllTopics() {
-        guard topics.isEmpty else {
-            tableView.reloadData()
-            return
-        }
         web.request(.storyTopics, responseType: Response<TopicListResponse>.self) { [weak self] (result) in
             guard let `self` = self else { return }
             switch result {
@@ -77,13 +75,21 @@ final class TopicListController: UIViewController, TopicListView {
             case let .success(response):
                 logger.debug(response)
                 self.topics = response.tags
-                self.tableView.reloadData()
+                self.tableView.reloadSections([1], with: .fade)
             }
         }
     }
     
     private func search(with text: String) {
-        
+        searchRequest?.cancel()
+        searchRequest = web.request(
+            .searchTopic(topic: text),
+            responseType: Response<TopicListResponse>.self
+        ) { [weak self] (result) in
+            guard case .success(let response) = result, let `self` = self else { return }
+            self.topics = response.tags
+            self.tableView.reloadSections([1], with: .fade)
+        }
     }
     
     private func dismiss() {
@@ -102,41 +108,63 @@ final class TopicListController: UIViewController, TopicListView {
     
     @objc private func searchFieldDidChange(_ textField: UITextField) {
         logger.debug(textField.text ?? "")
-        let count = textField.text?.count ?? 0
-        addTopicButton?.isEnabled = count <= 10 && count > 0
+        if let text = textField.text {
+            let count = text.count
+            if count > 0 && count <= 10 {
+                addTopicButton?.isEnabled = true
+                search(with: text)
+                return
+            } else if count == 0 {
+                loadAllTopics()
+            }
+        }
+        addTopicButton?.isEnabled = false
+    }
+    
+    @objc private func didPressAddButton() {
+        onFinished?(searchField?.text)
+        dismiss()
     }
 }
 
 extension TopicListController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return topics.count + 1
+        if section == 0 {
+            return 1
+        }
+        return topics.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             guard let cell =
                 tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath) as? TopicSearchCell else {
                 fatalError()
             }
             addTopicButton = cell.addButton
+            cell.addButton.addTarget(self, action: #selector(didPressAddButton), for: .touchUpInside)
+            searchField = cell.searchField
             cell.searchField.delegate = self
             cell.searchField.addTarget(self, action: #selector(searchFieldDidChange(_:)), for: .editingChanged)
             return cell
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? TopicCell {
-            let topic = topics[indexPath.row - 1]
+            let topic = topics[indexPath.row]
             cell.topic = topic
             return cell
         }
-        
         fatalError()
     }
 }
 
 extension TopicListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row > 0 else { return }
-        onFinished?(topics[indexPath.row - 1])
+        guard indexPath.section > 0 else { return }
+        onFinished?(topics[indexPath.row])
         dismiss()
     }
 }
