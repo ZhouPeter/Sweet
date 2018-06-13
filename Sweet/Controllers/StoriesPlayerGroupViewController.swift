@@ -7,26 +7,38 @@
 //
 
 import UIKit
+import Gemini
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
-    func readGroup(storyGroupIndex index: Int)
+    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
 }
 class StoriesPlayerGroupViewController: BaseViewController {
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     var user: User
     var currentIndex: Int {
         didSet {
-            if currentIndex < 4 {
-                delegate?.readGroup(storyGroupIndex: currentIndex)
-            }
+            delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
+                                fromCardId: fromCardId,
+                                storyGroupIndex: currentIndex)
         }
     }
     var storiesGroup: [[StoryCellViewModel]]
     var subCurrentIndex = 0
     var fromCardId: String?
-    private lazy var cubeView: StoriesCubeView = {
-        let cubeView = StoriesCubeView()
-        cubeView.cubeDelegate = self
-        return cubeView
+    
+    private lazy var collectionView: GeminiCollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainHeight())
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = .zero
+        layout.scrollDirection = .horizontal
+        let collectionView = GeminiCollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(StoryPlayCollectionViewCell.self, forCellWithReuseIdentifier: "placeholderCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isPagingEnabled = true
+        collectionView.gemini.cubeAnimation().cubeDegree(90)
+        return collectionView
     }()
     
     private var storiesPlayerControllers = [StoriesPlayerViewController]()
@@ -44,8 +56,13 @@ class StoriesPlayerGroupViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(cubeView)
-        cubeView.fill(in: view)
+        view.addSubview(collectionView)
+        collectionView.fill(in: view)
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
         setChildViewController()
         storiesPlayerControllers[currentIndex].initPlayer()
     }
@@ -68,10 +85,9 @@ class StoriesPlayerGroupViewController: BaseViewController {
             }
             storiesPlayerControllers.append(playerController)
             add(childViewController: playerController, addView: false)
-            cubeView.addChildView(playerController.view)
         }
-        cubeView.layoutIfNeeded()
-        cubeView.scrollToViewAtIndex(currentIndex, animated: true)
+
+        collectionView.scrollToItem(at: IndexPath(row: currentIndex, section: 0), at: .right, animated: false)
     }
     
     private func appendGroup(storyCellViewModels: [StoryCellViewModel]) {
@@ -82,9 +98,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
         playerController.stories = storyCellViewModels
         storiesPlayerControllers.append(playerController)
         add(childViewController: playerController, addView: false)
-        cubeView.addChildView(playerController.view)
-        cubeView.setDefaultAnchorPoint()
-        cubeView.layoutIfNeeded()
     }
     
     private func setOldPlayerControllerLoction() {
@@ -118,27 +131,39 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     
     func playToBack() {
         if currentIndex - 1 < 0 { return }
-        cubeView.scrollToViewAtIndex(currentIndex - 1, animated: true)
+        collectionView.scrollToItem(at: IndexPath(item: currentIndex - 1, section: 0), at: .left, animated: true)
     }
     
     func playToNext() {
         if currentIndex + 1 > storiesGroup.count - 1 { return }
-        cubeView.scrollToViewAtIndex(currentIndex + 1, animated: true)
+        collectionView.scrollToItem(at: IndexPath(item: currentIndex + 1, section: 0), at: .left, animated: true)
+
     }
 }
-extension StoriesPlayerGroupViewController: StoriesCubeViewDelegate {
-    func cubeViewEndScroll(_ cubeView: StoriesCubeView) {
-        if currentIndex >= storiesGroup.count - 2 {
-            loadMoreStoriesGroup()
-        }
+
+extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return storiesGroup.count
     }
     
-    func cubeViewDidScroll(_ cubeView: StoriesCubeView) {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "placeholderCell",
+            for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}
+        cell.setPlaceholderContentView(view: storiesPlayerControllers[indexPath.row].view)
+        return cell
+    }
+}
+
+extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        collectionView.animateVisibleCells()
         let count = storiesGroup.count
         storiesPlayerControllers[currentIndex].pause()
-        let index = Int(cubeView.contentOffset.x / UIScreen.mainWidth())
+        let index = Int(scrollView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }
-        if CGFloat(index) * UIScreen.mainWidth() == cubeView.contentOffset.x {
+        if CGFloat(index) * UIScreen.mainWidth() == scrollView.contentOffset.x {
             if index == currentIndex {
                 storiesPlayerControllers[currentIndex].play()
                 return
@@ -147,6 +172,17 @@ extension StoriesPlayerGroupViewController: StoriesCubeViewDelegate {
             setOldPlayerControllerLoction()
             currentIndex = index
             storiesPlayerControllers[currentIndex].reloadPlayer()
+        }
+    }
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if currentIndex >= storiesGroup.count - 2 {
+            loadMoreStoriesGroup()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if currentIndex >= storiesGroup.count - 2 {
+            loadMoreStoriesGroup()
         }
     }
 }

@@ -213,6 +213,10 @@
 		584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
 		584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
 		584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
+		584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68BA20AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
@@ -1239,6 +1243,7 @@
 		584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCardsCoordinator.swift; sourceTree = "<group>"; };
 		584CDED420D0F8A400523406 /* CardsBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseView.swift; sourceTree = "<group>"; };
 		584CDED920D1032F00523406 /* SubCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCardsCoordinator.swift; sourceTree = "<group>"; };
+		584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayCollectionViewCell.swift; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
 		585B68BC20AF183E00E734BC /* SweetPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerView.swift; sourceTree = "<group>"; };
 		585B68C120AF1D8E00E734BC /* SweetPlayerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerExtensions.swift; sourceTree = "<group>"; };
@@ -2090,6 +2095,7 @@
 				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
 				ACDD0B0D20C802E000B7400A /* PopupController.swift */,
+				584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2589,6 +2595,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2614,6 +2621,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2741,6 +2749,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -2766,6 +2775,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
@@ -2878,6 +2888,7 @@
 				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
+				584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				58816CF320C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
@@ -3273,6 +3284,7 @@
 				58447B3F209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF2DEC02089E04F00660425 /* Response.swift in Sources */,
 				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
+				584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				5803573220AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
@@ -3449,6 +3461,7 @@
 				ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */,
 				AC6C1D9120A993F500F45F82 /* TopicCell.swift in Sources */,
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC616FA320C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				585B68C520AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
@@ -3680,6 +3693,7 @@
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				58816CF420C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
@@ -4065,10 +4079,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -4089,10 +4100,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -4112,11 +4120,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4137,11 +4141,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4160,11 +4160,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4184,11 +4180,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4214,10 +4206,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -4244,10 +4233,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

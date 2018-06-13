@@ -522,7 +522,9 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
                                                           fromCardId: cardId)
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
-        self.readGroup(storyGroupIndex: currentIndex)
+        self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
+                       fromCardId: cardId,
+                       storyGroupIndex: currentIndex)
     }
 }
 
@@ -695,13 +697,12 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
-    func readGroup(storyGroupIndex: Int) {
+    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
         if self.cards[index].type == .story {
-            let storyId = self.cards[index].storyList![storyGroupIndex][0].storyId
-            let fromCardId = self.cards[index].cardId
             web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
                 switch result {
                 case .success:
+                    if storyGroupIndex > 3 { return }
                     guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
                     let storys = self.cards[index].storyList![storyGroupIndex]
                     var newStorys = [StoryResponse]()

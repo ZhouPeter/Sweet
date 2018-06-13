@@ -89,6 +89,10 @@ class StoriesCubeView: UIScrollView, UIScrollViewDelegate {
         addChildViews([view])
     }
     
+    func removeChildView(_ view: UIView) {
+        stackView.removeArrangedSubview(view)
+    }
+    
     func scrollToViewAtIndex(_ index: Int, animated: Bool) {
         if index > -1 && index < childViews.count {
             

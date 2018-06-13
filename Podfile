@@ -23,7 +23,7 @@ target 'Sweet' do
   pod 'SwipeCellKit'
   pod 'WechatOpenSDK'
   pod 'STPopupPreview'
-
+  pod 'Gemini'
   target 'Sweet Dev' do
   end
   
