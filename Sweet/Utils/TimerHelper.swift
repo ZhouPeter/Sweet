@@ -86,6 +86,37 @@ class TimerHelper {
         }
     }
     
+    class func coversationTimeText(with date: Date) -> String {
+        var timeInterval = Int(date.timeIntervalSince1970)
+        if String(timeInterval).count == 13 {
+            timeInterval /= 1000
+        }
+        let nowTimeInterval = Int(Date().timeIntervalSince1970)
+        let nowDate = Date(timeIntervalSince1970: TimeInterval(nowTimeInterval))
+        let date = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+        let gregorian = Calendar(identifier: .gregorian)
+        let month = gregorian.component(.month, from: date)
+        let day = gregorian.component(.day, from: date)
+        let weak = gregorian.component(.weekday, from: date)
+        let hour = gregorian.component(.hour, from: date)
+        let minute = gregorian.component(.minute, from: date)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: nowDate)
+        let zeroDate = calendar.date(from: components)!
+        let beforZeroData = calendar.date(byAdding: .day, value: -1, to: zeroDate)!
+        if timeInterval >= Int(beforZeroData.timeIntervalSince1970) {
+            if timeInterval >= Int(zeroDate.timeIntervalSince1970) {
+                return hourTo12h(hour: hour) + ":" + "\(minute)"
+            } else {
+                return "昨天"
+            }
+        } else if timeInterval + 7 * 3600 * 24 >= nowTimeInterval {
+            return getWeakString(weak: weak)
+        } else {
+            return "\(month)月\(day)日"
+        }
+    }
+    
     class func hourTo12h(hour: Int) -> String {
         if hour == 12 {
             return "下午 \(hour)"

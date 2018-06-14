@@ -58,6 +58,7 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
         avatarImageView.kf.setImage(with: URL(string: conversation.user.avatar))
         nameLabel.text = conversation.user.nickname
         contentLabel.text = conversation.lastMessage?.displayText(buddy: conversation.user)
+        timeLabel.text = TimerHelper.coversationTimeText(with: conversation.date)
         badgeView.isHidden = false
         if conversation.unreadCount > 0 {
             badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
