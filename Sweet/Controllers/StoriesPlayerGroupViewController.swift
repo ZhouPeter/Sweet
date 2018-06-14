@@ -42,7 +42,6 @@ class StoriesPlayerGroupViewController: BaseViewController {
     }()
     
     private var storiesPlayerControllers = [StoriesPlayerViewController]()
-    
     init(user: User, storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
         self.user = user
         self.storiesGroup = storiesGroup
@@ -63,31 +62,34 @@ class StoriesPlayerGroupViewController: BaseViewController {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
-        setChildViewController()
-        storiesPlayerControllers[currentIndex].initPlayer()
+//        storiesPlayerControllers[0].initPlayer()
+        collectionView.scrollToItem(at: IndexPath(row: currentIndex, section: 0), at: .right, animated: false)
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
-    private func setChildViewController() {
-        for index in 0 ..< storiesGroup.count {
-            let stories = storiesGroup[index]
-            let playerController = StoriesPlayerViewController(user: user)
-            playerController.fromCardId = fromCardId
-            playerController.delegate = self
-            playerController.stories = stories
-            if index == currentIndex {
-                playerController.currentIndex = subCurrentIndex
-            } else {
-                playerController.currentIndex = 0
-            }
-            storiesPlayerControllers.append(playerController)
-            add(childViewController: playerController, addView: false)
-        }
-
-        collectionView.scrollToItem(at: IndexPath(row: currentIndex, section: 0), at: .right, animated: false)
+    private func setChildViewController(index: Int) {
+        let playerController = StoriesPlayerViewController(user: user)
+        playerController.delegate = self
+        playerController.fromCardId = fromCardId
+        playerController.stories = storiesGroup[currentIndex]
+        playerController.view.tag = currentIndex
+        storiesPlayerControllers.append(playerController)
+        add(childViewController: playerController, addView: false)
+    }
+    
+    private func getChildViewController() -> StoriesPlayerViewController {
+//        for playerÇontroller in storiesPlayerControllers where playerÇontroller.fromCardId == nil {
+//            return playerÇontroller
+//        }
+        let playerController = StoriesPlayerViewController(user: user)
+        playerController.delegate = self
+        playerController.fromCardId = fromCardId
+        storiesPlayerControllers.append(playerController)
+        add(childViewController: playerController, addView: false)
+        return playerController
     }
     
     private func appendGroup(storyCellViewModels: [StoryCellViewModel]) {
@@ -98,6 +100,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
         playerController.stories = storyCellViewModels
         storiesPlayerControllers.append(playerController)
         add(childViewController: playerController, addView: false)
+        collectionView.insertItems(at: [IndexPath(row: storiesGroup.count - 1, section: 0)])
     }
     
     private func setOldPlayerControllerLoction() {
@@ -151,38 +154,45 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "placeholderCell",
             for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}
-        cell.setPlaceholderContentView(view: storiesPlayerControllers[indexPath.row].view)
+        let playerController = getChildViewController()
+        playerController.stories = storiesGroup[indexPath.row]
+        playerController.currentIndex = 0
+        playerController.view.tag = indexPath.row
+        cell.setPlaceholderContentView(view: playerController.view)
         return cell
     }
+
 }
 
 extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         collectionView.animateVisibleCells()
         let count = storiesGroup.count
-        storiesPlayerControllers[currentIndex].pause()
+        if let index = storiesPlayerControllers.index(where: { $0.view.tag == currentIndex }) {
+            storiesPlayerControllers[index].pause()
+        }
         let index = Int(scrollView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }
         if CGFloat(index) * UIScreen.mainWidth() == scrollView.contentOffset.x {
             if index == currentIndex {
-                storiesPlayerControllers[currentIndex].play()
+                if let index = storiesPlayerControllers.index(where: { $0.view.tag == currentIndex }) {
+                    storiesPlayerControllers[index].play()
+                }
+                loadMoreStoriesGroup()
                 return
             }
-            storiesPlayerControllers[currentIndex].closePlayer()
-            setOldPlayerControllerLoction()
+            if currentIndex >= storiesGroup.count - 2 {
+                loadMoreStoriesGroup()
+            }
+            if let oldControllerIndex = storiesPlayerControllers.index(where: { $0.view.tag == currentIndex }) {
+                storiesPlayerControllers[oldControllerIndex].closePlayer()
+            }
+//            setOldPlayerControllerLoction()
             currentIndex = index
-            storiesPlayerControllers[currentIndex].reloadPlayer()
+            if let newControllerIndex = storiesPlayerControllers.index(where: { $0.view.tag == currentIndex }) {
+                storiesPlayerControllers[newControllerIndex].reloadPlayer()
+            }
         }
     }
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if currentIndex >= storiesGroup.count - 2 {
-            loadMoreStoriesGroup()
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if currentIndex >= storiesGroup.count - 2 {
-            loadMoreStoriesGroup()
-        }
-    }
+
 }

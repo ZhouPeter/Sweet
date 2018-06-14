@@ -48,7 +48,6 @@ class StoriesPlayerViewController: BaseViewController {
     private  var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
-    
     private lazy var topContentView: UIView = {
         let view = UIView()
         return view
@@ -277,8 +276,13 @@ class StoriesPlayerViewController: BaseViewController {
             removeVideoObservers()
             removeKVOObservers()
             removePlayTimeObserver()
-            playerItem = nil
+            player?.currentItem?.cancelPendingSeeks()
+            player?.currentItem?.asset.cancelLoading()
+            player?.replaceCurrentItem(with: nil)
             playerLayer?.removeFromSuperlayer()
+            playerItem = nil
+            playerLayer = nil
+            player = nil
         } else {
             imageReset()
         }
@@ -462,25 +466,7 @@ extension StoriesPlayerViewController {
             })
             let delAction = UIAlertAction(title: "删除", style: .destructive, handler: { [weak self] (_) in
                 guard let `self` = self else { return }
-                web.request(
-                    .delStory(storyId: self.stories[self.currentIndex].storyId),
-                    completion: { [weak self] (result) in
-                        guard let `self` = self else { return }
-                        self.play()
-                        switch result {
-                        case .success:
-                            self.toast(message: "删除成功")
-                            self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
-                            self.stories.remove(at: self.currentIndex)
-                            if self.currentIndex > self.stories.count - 1 {
-                                self.currentIndex -= 1
-                            }
-                            self.progressView.reset(count: self.stories.count, index: self.currentIndex)
-                            self.reloadPlayer()
-                        case let .failure(error):
-                            logger.error(error)
-                        }
-                })
+                self.deleteStory(storyId: self.stories[self.currentIndex].storyId)
             })
             alertController.addAction(cancelAction)
             alertController.addAction(delAction)
@@ -544,6 +530,28 @@ extension StoriesPlayerViewController {
             }
         }
        
+    }
+    
+    private func deleteStory(storyId: UInt64) {
+        web.request(
+            .delStory(storyId: storyId),
+            completion: { [weak self] (result) in
+                guard let `self` = self else { return }
+                self.play()
+                switch result {
+                case .success:
+                    self.toast(message: "删除成功")
+                    self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
+                    self.stories.remove(at: self.currentIndex)
+                    if self.currentIndex > self.stories.count - 1 {
+                        self.currentIndex -= 1
+                    }
+                    self.progressView.reset(count: self.stories.count, index: self.currentIndex)
+                    self.reloadPlayer()
+                case let .failure(error):
+                    logger.error(error)
+                }
+        })
     }
     
     private func sendMessage(text: String, userIds: [UInt64], like: Bool = false) {
@@ -629,22 +637,14 @@ extension StoriesPlayerViewController {
                              didFinishSavingWithError error: Error?,
                              contextInfo: UnsafeMutableRawPointer?) {
         guard let downloadBack = downloadBack else { return }
-        if error != nil {
-            downloadBack(false)
-        } else {
-            downloadBack(true)
-        }
+        downloadBack(error == nil)
     }
     
     @objc private func video(_ videoPath: String?,
                              didFinishSavingWithError error: Error?,
                              contextInfo: UnsafeMutableRawPointer?) {
         guard let downloadBack = downloadBack else { return }
-        if error != nil {
-            downloadBack(false)
-        } else {
-            downloadBack(true)
-        }
+        downloadBack(error == nil)
     }
 }
 // MARK: - addObservers && removeObservers
@@ -717,7 +717,8 @@ extension StoriesPlayerViewController {
             queue: DispatchQueue(label: "player.time.queue"),
             using: { [weak self] _ in
                 guard let `self` = self else { return }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else { return }
                     if let value = self.playerItem?.currentTime().value,
                         let scale = self.playerItem?.currentTime().timescale {
                         let currentSecond = Double(value) / Double(scale)
@@ -729,7 +730,6 @@ extension StoriesPlayerViewController {
                                                           index: self.currentIndex)
                         }
                     }
-                    
                 }
         })
     }
@@ -759,26 +759,3 @@ extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
         reloadPlayer()
     }
 }
-//extension StoriesPlayerViewController: InputBottomViewDelegate {
-//    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
-//        inputTextViewHeight?.constant = height + InputBottomView.verticalInset() * 2
-//        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
-//            self.view.layoutIfNeeded()
-//        }, completion: nil)
-//    }
-//
-//    func inputBottomViewDidPressSend(withText text: String?) {
-//        guard let text = text else { return }
-//        XPClient.likeStory(storyId: stories[currentIndex].storyId, fromText: text) { [weak self] (_, error) in
-//            guard  error == nil else {
-//                let hud = MBProgressHUD.showAdded(to: self!.view, animated: true)
-//                hud.mode = .text
-//                hud.label.text = "点赞失败"
-//                hud.hide(animated: true)
-//                return
-//            }
-//            guard let `self` = self else { return }
-//            self.inputTextView.startEditing(false)
-//        }
-//    }
-//}

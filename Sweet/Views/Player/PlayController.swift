@@ -11,6 +11,7 @@ import AVFoundation
 class PlayController: UIViewController {
     var avPlayer: AVPlayer?
     var resource: SweetPlayerResource?
+    private var videoSize: CGSize = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainWidth() * 9 / 16)
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Return"), for: .normal)
@@ -36,14 +37,46 @@ class PlayController: UIViewController {
         if let player = avPlayer, let resource = resource {
             playView.resource = resource
             playView.setAVPlayer(player: player)
+            loadItemValues()
+        }
+    }
+    
+    private func loadItemValues() {
+        if let resource = resource {
+            let asset = resource.definitions[0].avURLAsset
+            asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
+                DispatchQueue.main.async {
+                    if asset.isPlayable {
+                        self.loadedResourceForPlay(asset: asset)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func loadedResourceForPlay(asset: AVAsset) {
+        let tracks = asset.tracks
+        for track in tracks where track.mediaType  == .video {
+            let naturalSize = track.naturalSize
+            let scaleX = naturalSize.width / UIScreen.mainWidth()
+            let scaleY = naturalSize.height / UIScreen.mainHeight()
+            if scaleX > scaleY {
+                videoSize = CGSize(width: UIScreen.mainWidth(),
+                                   height: UIScreen.mainWidth() * naturalSize.height / naturalSize.width)
+                playView.frame = CGRect(origin: .zero, size: videoSize)
+                playView.center = view.center
+            } else {
+                videoSize = CGSize(width: UIScreen.mainHeight() * naturalSize.width / naturalSize.height,
+                                   height: UIScreen.mainHeight())
+                playView.frame = CGRect(origin: .zero, size: videoSize)
+                playView.center = view.center
+            }
         }
     }
     
     private func setupUI() {
         view.addSubview(playView)
-        playView.frame = CGRect(x: 0, y: 0,
-                                width: UIScreen.mainWidth(),
-                                height: UIScreen.mainWidth() * 9 / 16)
+        playView.frame = CGRect(origin: .zero, size: videoSize)
         playView.center = view.center
         view.addSubview(backButton)
         backButton.align(.left, to: view, inset: 10)
@@ -74,32 +107,13 @@ class PlayController: UIViewController {
 }
 
 extension PlayController: SweetPlayerViewDelegate {
-    func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
-    
-    }
-    
-    func sweetPlayer(player: SweetPlayerView,
-                     loadedTimeDidChange loadedDuration: TimeInterval,
-                     totalDuration: TimeInterval) {
-        
-    }
-    
-    func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {
-        
-    }
-    
-    func sweetPlayer(player: SweetPlayerView, playerIsPlaying playing: Bool) {
-        
-    }
     
     func sweetPlayer(player: SweetPlayerView, playerOrientChanged isFullscreen: Bool) {
         if isFullscreen {
             playView.frame = self.view.bounds
             backButton.isHidden = true
         } else {
-            playView.frame = CGRect(x: 0, y: 0,
-                                    width: UIScreen.mainWidth(),
-                                    height: UIScreen.mainWidth() * 9 / 16)
+            playView.frame = CGRect(origin: .zero, size: videoSize)
             playView.center = view.center
             backButton.isHidden = false
         }

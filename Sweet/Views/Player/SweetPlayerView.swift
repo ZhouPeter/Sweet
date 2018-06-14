@@ -23,6 +23,21 @@ protocol SweetPlayerViewDelegate: class {
                      playerOrientChanged isFullscreen: Bool)
 }
 
+extension SweetPlayerViewDelegate {
+    func sweetPlayer(player: SweetPlayerView,
+                     playerStateDidChange state: SweetPlayerState) {}
+    func sweetPlayer(player: SweetPlayerView,
+                     loadedTimeDidChange loadedDuration: TimeInterval,
+                     totalDuration: TimeInterval) {}
+    func sweetPlayer(player: SweetPlayerView,
+                     playTimeDidChange currentTime: TimeInterval,
+                     totalTime: TimeInterval) {}
+    func sweetPlayer(player: SweetPlayerView,
+                     playerIsPlaying playing: Bool) {}
+    func sweetPlayer(player: SweetPlayerView,
+                     playerOrientChanged isFullscreen: Bool) {}
+}
+
 enum PanDirection: Int {
     case horizontal = 0
     case vertical   = 1

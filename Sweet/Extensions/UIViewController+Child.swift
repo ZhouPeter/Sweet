@@ -12,8 +12,8 @@ extension UIViewController {
     func add(childViewController: UIViewController, addView: Bool = true) {
         addChildViewController(childViewController)
         childViewController.didMove(toParentViewController: self)
-        childViewController.view.frame = view.bounds
-        if addView {        
+        if addView {
+            childViewController.view.frame = view.bounds
             view.addSubview(childViewController.view)
         }
     }
