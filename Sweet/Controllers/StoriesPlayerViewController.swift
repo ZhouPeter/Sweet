@@ -18,6 +18,7 @@ import VIMediaCache
     @objc optional func delStory(withStoryId storyId: UInt64)
 }
 class StoriesPlayerViewController: BaseViewController {
+    var isVisual = true
     var user: User
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
@@ -144,6 +145,7 @@ class StoriesPlayerViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
                                                                   width: UIScreen.mainWidth(),
@@ -155,9 +157,13 @@ class StoriesPlayerViewController: BaseViewController {
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setTopUI()
         setBottmUI()
+        update()
+        
+    }
+    func update() {
         setUserData()
         updateForStories(stories: stories, currentIndex: currentIndex)
- 
+        progressView.reset(count: stories.count, index: currentIndex)
     }
     
     override var prefersStatusBarHidden: Bool {

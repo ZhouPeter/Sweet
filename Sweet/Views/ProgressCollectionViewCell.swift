@@ -14,7 +14,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         view.backgroundColor = .white
         return view
     }()
-    private var progressViewRightConstraint: NSLayoutConstraint!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -27,15 +27,14 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         self.contentView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         contentView.addSubview(progressView)
-        progressView.align(.left, to: contentView)
-        progressView.align(.bottom, to: contentView)
-        progressView.align(.top, to: contentView)
-        progressViewRightConstraint = progressView.align(.right, to: contentView)
+        let frame = contentView.bounds
+        progressView.frame = frame
     }
     
     func setProgressView(ratio: CGFloat) {
-        contentView.layoutIfNeeded()
-        progressViewRightConstraint.constant = -((1 - ratio) * contentView.bounds.width)
-        layoutIfNeeded()
+        var frame = contentView.bounds
+        frame.size.width = frame.width * ratio
+        progressView.frame = frame
+
     }
 }

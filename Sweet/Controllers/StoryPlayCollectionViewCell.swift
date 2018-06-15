@@ -15,6 +15,8 @@ class StoryPlayCollectionViewCell: GeminiCell {
     }()
     private lazy var blackShadowView: UIView = {
         let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
         return view
     }()
     
@@ -45,5 +47,6 @@ class StoryPlayCollectionViewCell: GeminiCell {
         placeholderView = view
         contentView.addSubview(placeholderView)
         placeholderView.fill(in: contentView)
+        contentView.bringSubview(toFront: blackShadowView)
     }
 }
