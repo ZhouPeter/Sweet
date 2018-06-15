@@ -381,7 +381,7 @@ extension CardsBaseController {
             }
         } else {
             if index == 0 {
-                self.scrollTo(row: self.index)
+                self.scrollTo(row: index)
             } else {
                 self.index -=  1
                 self.scrollTo(row: index)
@@ -393,6 +393,14 @@ extension CardsBaseController {
     private func scrollTo(row: Int, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
+            if row == self.cards.count - 1 {
+                let cardId = self.cards[row].cardId
+                let direction = Direction.down
+                let request: CardRequest = self is CardsAllController ?
+                    .all(cardId: cardId, direction: direction) :
+                    .sub(cardId: cardId, direction: direction)
+                self.startLoadCards(cardRequest: request)
+            }
             self.pan.isEnabled = true
             let offset: CGFloat =  CGFloat(row) * cardCellHeight - self.offset
             UIView.animate(
@@ -402,6 +410,7 @@ extension CardsBaseController {
                 animations: {
                     self.collectionView.contentOffset.y = offset
             }, completion: { _ in
+               
                 completion?()
             })
         }
