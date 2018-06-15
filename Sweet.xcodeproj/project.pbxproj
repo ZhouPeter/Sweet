@@ -257,6 +257,14 @@
 		5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
+		5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
+		5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
+		5872A84B20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
+		5872A84F20D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */; };
+		5872A85020D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */; };
+		5872A85120D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */; };
+		5872A85220D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */; };
 		58816CEE20C62BF20032D103 /* EvaluationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CED20C62BF10032D103 /* EvaluationController.swift */; };
 		58816CEF20C62BF20032D103 /* EvaluationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CED20C62BF10032D103 /* EvaluationController.swift */; };
 		58816CF020C62BF20032D103 /* EvaluationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CED20C62BF10032D103 /* EvaluationController.swift */; };
@@ -1262,6 +1270,8 @@
 		5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryHeaderView.swift; sourceTree = "<group>"; };
 		5866330D20BC154B0018680C /* EmptyEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEmojiView.swift; sourceTree = "<group>"; };
+		5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionView.swift; sourceTree = "<group>"; };
+		5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserImp.swift; sourceTree = "<group>"; };
 		58816CED20C62BF10032D103 /* EvaluationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluationController.swift; sourceTree = "<group>"; };
 		58816CF220C62EF30032D103 /* EvaluationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationTableViewCell.swift; sourceTree = "<group>"; };
 		58816CF720C634C70032D103 /* EvaluationListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationListResponse.swift; sourceTree = "<group>"; };
@@ -1946,6 +1956,8 @@
 				58CAB38720AD581A007230AA /* CardsBaseController.swift */,
 				58461D3020C6B6AF00E3712C /* ShareCardController.swift */,
 				584CDED420D0F8A400523406 /* CardsBaseView.swift */,
+				5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */,
+				5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2835,6 +2847,7 @@
 				ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4320C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
+				5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
@@ -2990,6 +3003,7 @@
 				5843DA7320A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				AC04E98E2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
+				5872A84F20D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
@@ -3302,6 +3316,7 @@
 				58CE1ECD20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				5803573220AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
+				5872A85120D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				58816CF520C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
@@ -3355,6 +3370,7 @@
 				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575520AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
@@ -3430,6 +3446,7 @@
 				5843DA4E209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
+				5872A84B20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
@@ -3616,6 +3633,7 @@
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
+				5872A85220D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				ACA9CC4B20C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
@@ -3646,6 +3664,7 @@
 				ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4420C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
+				5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
@@ -3801,6 +3820,7 @@
 				5843DA7420A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
 				AC04E98F2099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
+				5872A85020D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
@@ -4099,7 +4119,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -4120,7 +4143,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -4140,7 +4166,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4161,7 +4191,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4180,7 +4214,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4200,7 +4238,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4226,7 +4268,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -4253,7 +4298,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

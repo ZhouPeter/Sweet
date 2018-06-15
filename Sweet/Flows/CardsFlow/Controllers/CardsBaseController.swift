@@ -20,7 +20,6 @@ enum CardRequest {
     case all(cardId: String?, direction: Direction?)
     case sub(cardId: String?, direction: Direction?)
 }
-let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
 
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
@@ -47,7 +46,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }
     public var panPoint: CGPoint?
     public var panOffset: CGPoint?
-    public let offset: CGFloat = 10
     public var cellConfigurators = [CellConfiguratorType]() {
         didSet {
             if self is CardsSubscriptionController {
@@ -60,36 +58,18 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var cotentOffsetToken: NSKeyValueObservation?
     private var activityCardId: String?
     private var activityId: String?
-    public lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.itemSize = CGSize(width: view.bounds.width, height: cardCellHeight)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
-        collectionView.contentInset.top = offset
-        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - offset - UIScreen.navBarHeight()
-        collectionView.backgroundColor = .clear
-        collectionView.scrollsToTop = false
-        collectionView.isScrollEnabled = false
+    public lazy var collectionView: CardsCollectionView = {
+        let collectionView = CardsCollectionView()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(cellType: ContentCardCollectionViewCell.self)
-        collectionView.register(cellType: VideoCardCollectionViewCell.self)
-        collectionView.register(cellType: ChoiceCardCollectionViewCell.self)
-        collectionView.register(cellType: EvaluationCardCollectionViewCell.self)
-        collectionView.register(cellType: ActivitiesCardCollectionViewCell.self)
-        collectionView.register(cellType: StoriesCardCollectionViewCell.self)
         pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
-        pan.delegate = self
         collectionView.addGestureRecognizer(pan)
         cotentOffsetToken = collectionView.observe(
             \.contentOffset,
             options: [.new, .old],
             changeHandler: { (object, change) in
             if change.newValue == change.oldValue { return }
-            if object.contentOffset.y + self.offset  == CGFloat(self.index) * cardCellHeight {
+            if object.contentOffset.y + cardOffset  == CGFloat(self.index) * cardCellHeight {
                 self.changeCurrentCell()
             }
         })
@@ -112,9 +92,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         view.controlView.addGestureRecognizer(tap)
         return view
     }()
-    
+    private var isFetchLoadCards = false
     private var avPlayer: AVPlayer?
-    
+    private let keyboard = KeyboardObserver()
+    private var keyboardHeight: CGFloat = 0
+    private var inputBottomViewBottom: NSLayoutConstraint?
+    private var inputBottomViewHeight: NSLayoutConstraint?
+    private var photoBrowserImp: PhotoBrowserImp!
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -131,7 +115,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         self.present(controller, animated: true, completion: nil)
     }
     
-    private let keyboard = KeyboardObserver()
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -156,6 +139,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         Messenger.shared.addDelegate(self)
 
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let avPlayer = avPlayer {
@@ -163,10 +147,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             self.playerView.setAVPlayer(player: avPlayer)
         }
     }
-    
-    var isFetchLoadCards = false
-    
-    private var keyboardHeight: CGFloat = 0
 
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
@@ -190,8 +170,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             break
         }
     }
-    private var inputBottomViewBottom: NSLayoutConstraint?
-    private var inputBottomViewHeight: NSLayoutConstraint?
+
     private func addInputBottomView() {
         view.addSubview(inputBottomView)
         inputBottomView.align(.left, to: view)
@@ -225,13 +204,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             }
         }
     }
+}
 
-}
-extension CardsBaseController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-       return true
-    }
-}
 // MARK: - Actions
 extension CardsBaseController {
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
@@ -254,16 +228,6 @@ extension CardsBaseController {
 
 // MARK: - Private
 extension CardsBaseController {
-//    private func upLoadCards(cards: [CardResponse],
-//                             callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
-//        cards.reversed().forEach({ (card) in
-//            self.insertConfigurator(card: card, index: 0)
-//        })
-//        self.index += cards.count
-//        self.collectionView.contentOffset.y += cardCellHeight * CGFloat(cards.count)
-//        self.collectionView.reloadData()
-//        callback?(true, cards)
-//    }
     func startLoadCards(cardRequest: CardRequest,
                         callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         if isFetchLoadCards {
@@ -274,12 +238,12 @@ extension CardsBaseController {
         let api: WebAPI
         let direction: Direction?
         switch cardRequest {
-        case let .all(cardId, directionApi):
-            api = .allCards(cardId: cardId, direction: directionApi)
-            direction = directionApi
-        case let .sub(cardId, directionApi):
-            api = .subscriptionCards(cardId: cardId, direction: directionApi)
-            direction = directionApi
+        case let .all(cardId, requestDirection):
+            api = .allCards(cardId: cardId, direction: requestDirection)
+            direction = requestDirection
+        case let .sub(cardId, requestDirection):
+            api = .subscriptionCards(cardId: cardId, direction: requestDirection)
+            direction = requestDirection
         }
         web.request(
             api,
@@ -306,12 +270,10 @@ extension CardsBaseController {
                 }
         }
     }
-    
 }
 
 // MARK: - Privates
 extension CardsBaseController {
-    
     private func downLoadCards(cards: [CardResponse],
                                callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         cards.forEach({ (card) in
@@ -386,7 +348,6 @@ extension CardsBaseController {
                 self.index -=  1
                 self.scrollTo(row: index)
             }
-
         }
     }
     
@@ -402,7 +363,7 @@ extension CardsBaseController {
                 self.startLoadCards(cardRequest: request)
             }
             self.pan.isEnabled = true
-            let offset: CGFloat =  CGFloat(row) * cardCellHeight - self.offset
+            let offset: CGFloat =  CGFloat(row) * cardCellHeight - cardOffset
             UIView.animate(
                 withDuration: 0.25,
                 delay: 0,
@@ -410,7 +371,6 @@ extension CardsBaseController {
                 animations: {
                     self.collectionView.contentOffset.y = offset
             }, completion: { _ in
-               
                 completion?()
             })
         }
@@ -570,7 +530,6 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
-    
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
             .commentCard(cardId: cardId, comment: "", emoji: emoji),
@@ -612,8 +571,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         if cardType == .activity {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .destructive) { (_) in
-                web.request(.cardReport(cardId: cardId), completion: { (_) in
-                })
+                web.request(.cardReport(cardId: cardId), completion: { (_) in })
             }
             let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
             alert.addAction(reportAction)
@@ -734,40 +692,18 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
 
 }
 
-// MARK: - PhotoBrowserDelegate
-extension CardsBaseController: PhotoBrowserDelegate {
+extension CardsBaseController {
     private func showBrower(index: Int, originPageIndex: Int) {
-        guard cellConfigurators[index] is CellConfigurator<ContentCardCollectionViewCell>
+        guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell>
               else { return }
-        let browser = PhotoBrowser(delegate: self, originPageIndex: originPageIndex)
+        guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
+                                            as? ContentCardCollectionViewCell else { return  }
+        let imagURLs = configurator.viewModel.contentImages!.map({ $0.imageURL })
+        self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imagURLs)
+        let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
         browser.show()
-    }
-    func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
-        return nil
-    }
-    
-    func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {
-        guard let cell = collectionView.cellForItem(
-                                        at: IndexPath(item: self.index, section: 0))
-                                                as? ContentCardCollectionViewCell
-              else { return nil }
-        return cell.imageViews[index]
-    }
-    
-    func photoBrowser(_ photoBrowser: PhotoBrowser, highQualityUrlForIndex index: Int) -> URL? {
-        guard let configurator = cellConfigurators[self.index] as? CellConfigurator<ContentCardCollectionViewCell>
-              else { return nil }
-        guard let images = configurator.viewModel.contentImages else { return nil }
-        return images[index].imageURL
-    }
-
-    func numberOfPhotos(in photoBrowser: PhotoBrowser) -> Int {
-        guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell>
-              else { return 0 }
-        guard let images = configurator.viewModel.contentImages else { return 0 }
-        return images.count
     }
 }
 // MARK: - InputBottomViewDelegate

@@ -21,6 +21,7 @@ protocol SweetPlayerViewDelegate: class {
                      playerIsPlaying playing: Bool)
     func sweetPlayer(player: SweetPlayerView,
                      playerOrientChanged isFullscreen: Bool)
+    func sweetPlayerSwipeDown()
 }
 
 extension SweetPlayerViewDelegate {
@@ -36,6 +37,7 @@ extension SweetPlayerViewDelegate {
                      playerIsPlaying playing: Bool) {}
     func sweetPlayer(player: SweetPlayerView,
                      playerOrientChanged isFullscreen: Bool) {}
+    func sweetPlayerSwipeDown() {}
 }
 
 enum PanDirection: Int {
@@ -282,6 +284,11 @@ extension SweetPlayerView {
                 self.sumTime = 0.0
             case .vertical:
                 self.isVolume = false
+                if isFullScreen {
+                    fullScreenButtonPressed()
+                } else {
+                    delegate?.sweetPlayerSwipeDown()
+                }
             }
         default:
             break
@@ -317,8 +324,6 @@ extension SweetPlayerView {
         } else {
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
             UIApplication.shared.statusBarOrientation = .landscapeRight
-            logger.debug(UIDevice.current.orientation.rawValue)
-            logger.debug(UIApplication.shared.statusBarOrientation.rawValue)
         }
     }
     

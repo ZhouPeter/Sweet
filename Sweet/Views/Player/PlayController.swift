@@ -39,6 +39,11 @@ class PlayController: UIViewController {
             playView.setAVPlayer(player: player)
             loadItemValues()
         }
+        let recognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown))
+        recognizer.require(toFail: playView.panGesture)
+        recognizer.direction = .down
+        view.addGestureRecognizer(recognizer)
+        
     }
     
     private func loadItemValues() {
@@ -104,10 +109,17 @@ class PlayController: UIViewController {
         allowRotation = false
         self.dismiss(animated: true, completion: nil)
     }
+    @objc private func handleSwipeDown() {
+        allowRotation = false
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension PlayController: SweetPlayerViewDelegate {
-    
+    func sweetPlayerSwipeDown() {
+        allowRotation = false
+        self.dismiss(animated: true, completion: nil)
+    }
     func sweetPlayer(player: SweetPlayerView, playerOrientChanged isFullscreen: Bool) {
         if isFullscreen {
             playView.frame = self.view.bounds
