@@ -56,6 +56,13 @@ final class StoryRecordTopView: UIView {
         return button
     } ()
     
+    private lazy var menuButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "MenuClosed"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "MenuExpanded"), for: .normal)
+        return button
+    } ()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
