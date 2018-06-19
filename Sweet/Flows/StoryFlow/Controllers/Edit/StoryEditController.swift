@@ -302,6 +302,10 @@ final class StoryEditController: BaseViewController, StoryEditView {
                 }
                 var pokeCenter: CGPoint?
                 let type: StoryType
+                var contentRect: CGRect?
+                if self.textController.hasText {
+                    contentRect = self.textController.boundingRect
+                }
                 if !self.pokeView.isHidden {
                     type = .poke
                     let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / (self.view.bounds.width / 2)
@@ -318,6 +322,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
                     storyType: type,
                     topic: self.topic,
                     pokeCenter: pokeCenter,
+                    contentRect: contentRect,
                     completion: { result in
                         logger.debug(result)
                         Defaults[.isPersonalStoryChecked] = false

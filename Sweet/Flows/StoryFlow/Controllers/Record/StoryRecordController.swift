@@ -384,6 +384,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         avatarButton.alpha = alpha
         avatarCircle.alpha = alpha
         backButton.alpha = alpha
+        menuButton.alpha = alpha
     }
     
     private func toggleOffMenu() {

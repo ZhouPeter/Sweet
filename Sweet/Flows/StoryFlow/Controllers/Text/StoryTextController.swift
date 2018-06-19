@@ -13,6 +13,10 @@ final class StoryTextController: BaseViewController, StoryTextView {
     var onFinished: (() -> Void)?
     var onCancelled: (() -> Void)?
     
+    var boundingRect: CGRect {
+        return editController.boundingRect
+    }
+    
     private var topic: String?
     private lazy var gradientView = GradientSwitchView()
     private var gradientIndex = 0
