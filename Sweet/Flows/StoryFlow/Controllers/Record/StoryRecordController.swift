@@ -93,12 +93,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.topicButton.alpha = 1
         }, completion: nil)
         topView.updateAvatarCircle(isUnread: Defaults[.isPersonalStoryChecked] == false)
+        shootButton.resetProgress()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resumeCamera(false)
         topic = nil
+        isShooting = false
+        isStoryEditing = false
+        shootButton.alpha = 1
     }
     
     // MARK: - Private
@@ -150,7 +154,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     // MARK: - Camera
     
+    private var isShooting = false
+    private var isStoryEditing = false
+    
     private func shootDidBegin() {
+        guard isShooting == false else { return }
+        isShooting = true
         UIView.animate(withDuration: 0.25) {
             self.topView.alpha = 0
             self.bottomView.alpha = 0
@@ -160,16 +169,22 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
+        guard isStoryEditing == false else { return }
+        isStoryEditing = true
         if interval < 1 {
             captureView.capturePhoto { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: url, isPhoto: true)
+                } else {
+                    self?.isShooting = false
                 }
             }
         } else {
             captureView.finishRecording { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: url, isPhoto: false)
+                } else {
+                    self?.isShooting = false
                 }
             }
         }
