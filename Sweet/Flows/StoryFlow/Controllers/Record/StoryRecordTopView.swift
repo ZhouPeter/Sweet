@@ -22,7 +22,7 @@ final class StoryRecordTopView: UIView {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
         button.clipsToBounds = true
-        button.layer.cornerRadius = 15
+        button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
@@ -77,7 +77,7 @@ final class StoryRecordTopView: UIView {
         addSubview(cameraSwitchButton)
         addSubview(flashButton)
         addSubview(backButton)
-        avatarButton.constrain(width: 30, height: 30)
+        avatarButton.constrain(width: 40, height: 40)
         avatarButton.align(.left, to: self, inset: 10)
         avatarButton.centerY(to: self)
         avatarCircle.equal(.size, to: avatarButton)
