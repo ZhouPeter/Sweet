@@ -127,6 +127,10 @@ extension AlbumController: UICollectionViewDataSource {
 
 extension AlbumController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndexPath = indexPath
+        guard let result = fetchResult else { return }
+        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
+            guard let image = image else { return }
+            self?.onFinished?(image)
+        }
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 final class ShootButton: UIButton {
     var trackingDidStart: (() -> Void)?
     var trackingDidEnd: ((TimeInterval) -> Void)?
-    var touchInterval: TimeInterval = 6
+    var touchInterval: TimeInterval = 10
     
     private var displayLink: CADisplayLink?
     
@@ -77,6 +77,11 @@ final class ShootButton: UIButton {
         progressLayer.lineWidth = lineWidth
     }
     
+    func resetProgress() {
+        outerCircle.transform = CATransform3DIdentity
+        progressLayer.strokeEnd = 0
+    }
+    
     // MARK: - Private
     
     @objc private func updateProgress() {
@@ -119,8 +124,6 @@ final class ShootButton: UIButton {
             let interval = Date().timeIntervalSince(start)
             trackingDidEnd?(interval)
         }
-        outerCircle.transform = CATransform3DIdentity
-        progressLayer.strokeEnd = 0
         stopTimer()
     }
 }

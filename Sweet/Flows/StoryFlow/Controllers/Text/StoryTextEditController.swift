@@ -43,6 +43,18 @@ final class StoryTextEditController: UIViewController {
         }
     }
     weak var delegate: StoryTextEditControllerDelegate?
+    
+    var boundingRect: CGRect {
+        var frame = textBoundingView.frame
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
+        return CGRect(
+            x: frame.minX / width,
+            y: frame.minY / height,
+            width: frame.width / width,
+            height: frame.height / height)
+    }
+    
     private lazy var keyboardControl: StoryKeyboardControlView = {
         let control = StoryKeyboardControlView()
         control.delegate = self
