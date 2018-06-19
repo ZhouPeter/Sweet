@@ -40,5 +40,9 @@ extension UIColor {
     final class func xpNavBlue() -> UIColor {
         return UIColor(hex: 0x36C6FD)
     }
+    
+    final class func xpNavPurple() -> UIColor {
+        return UIColor(hex: 0xB662F8)
+    }
 
 }
