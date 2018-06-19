@@ -113,6 +113,8 @@ class ActivityTableViewCell: UITableViewCell {
         likeButton.constrain(width: 30, height: 30)
         likeButton.align(.right, to: contentView, inset: 10)
         likeButton.centerY(to: avatarImageView)
+        likeButton.pin(.right, to: commentLabel, spacing: 10)
+
     }
     
     func update(_ viewModel: ActivityViewModel) {

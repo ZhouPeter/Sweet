@@ -18,9 +18,7 @@ struct EvaluationCardViewModel {
         self.cardId = model.cardId
         self.titleString = model.name!
         self.contentString = model.content!
-        self.imageURL = model.imageList!.map({ (url) -> URL in
-            return URL(string: url)!
-        })
+        self.imageURL = model.imageList!.map({ return URL(string: $0)!})
         if let result = model.result {
             self.selectedIndex = result.index
         }

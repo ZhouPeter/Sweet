@@ -89,16 +89,16 @@ class UpdateController: BaseViewController, UpdateView {
         }
         userViewModels.append(nameViewModel)
         let  genderString = user.gender == .male ? "男生" : "女生"
-        let genderViewModel = UpdateCellViewModel(title: "性别", content: genderString) { [weak self] in
-            guard let `self` = self, let user = self.user else { return }
-            let controller = UpdateGenderController(gender: user.gender)
-            controller.saveCompletion = { [weak self] genderString in
-                let gender: Gender = genderString == "男" ? .male : .female
-                self?.user?.gender = gender
-                self?.viewModels[0][2].content =  genderString + "生"
-                self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
+        let genderViewModel = UpdateCellViewModel(title: "性别", content: genderString) {
+//            guard let `self` = self, let user = self.user else { return }
+//            let controller = UpdateGenderController(gender: user.gender)
+//            controller.saveCompletion = { [weak self] genderString in
+//                let gender: Gender = genderString == "男" ? .male : .female
+//                self?.user?.gender = gender
+//                self?.viewModels[0][2].content =  genderString + "生"
+//                self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+//            }
+//            self.navigationController?.pushViewController(controller, animated: true)
             
         }
         userViewModels.append(genderViewModel)

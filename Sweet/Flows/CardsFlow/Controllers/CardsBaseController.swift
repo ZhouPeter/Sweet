@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import JXPhotoBrowser
 import SwiftyUserDefaults
-
+import Kingfisher
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -137,7 +137,14 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         addInputBottomView()
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
         Messenger.shared.addDelegate(self)
-
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+//        logger.debug("内存过高")
+//        let cache = KingfisherManager.shared.cache
+//        cache.maxMemoryCost = 40 * 1024 * 1024
+//        KingfisherManager.shared.cache.clearMemoryCache()
     }
     
     override func viewWillAppear(_ animated: Bool) {

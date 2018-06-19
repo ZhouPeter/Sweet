@@ -16,10 +16,10 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .poke {
-                let width = Int(UIScreen.mainWidth() / 3)
-                let height = Int(UIScreen.mainHeight() / 3)
-                let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0.0/w/\(width)/h/\(height)"
-                coverImageView.kf.setImage(with: URL(string: urlString))
+//                let width = Int(UIScreen.mainWidth() / 3)
+//                let height = Int(UIScreen.mainHeight() / 3)
+//                let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0.0/w/\(width)/h/\(height)"
+                coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
                 let centerX = contentView.bounds.width / 2 + viewModel.pokeCenter.x * contentView.bounds.width
                 let centerY = contentView.bounds.height / 2 + viewModel.pokeCenter.y * contentView.bounds.height
