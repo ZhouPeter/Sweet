@@ -34,7 +34,6 @@ class AlbumCell: UICollectionViewCell {
         if animated {
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 self.imageView.alpha = 1
-                self.checkImageView.alpha = 1
             }, completion: nil)
         }
     }
