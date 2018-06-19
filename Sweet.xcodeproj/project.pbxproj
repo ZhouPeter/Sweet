@@ -85,6 +85,10 @@
 		58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E372091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
 		58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58155E342091D53E00ADEFFB /* WebViewController.swift */; };
+		581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
+		581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
+		581D7BEB20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
+		581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
 		58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
@@ -1227,6 +1231,7 @@
 		58155E2A2091B52100ADEFFB /* RoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectView.swift; sourceTree = "<group>"; };
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
 		583BC77820CE198900C4494E /* MessageContentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentHelper.swift; sourceTree = "<group>"; };
 		583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationViewModel.swift; sourceTree = "<group>"; };
@@ -2178,6 +2183,7 @@
 				58816D0D20C671040032D103 /* WXApi+Message.swift */,
 				58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */,
 				AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */,
+				581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2921,6 +2927,7 @@
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
+				581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				58816CEE20C62BF20032D103 /* EvaluationController.swift in Sources */,
 				58CAB38820AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
@@ -3331,6 +3338,7 @@
 				AC616F9020C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */,
+				581D7BEB20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58F4074D20B272410031630C /* SweetPlayerItem.swift in Sources */,
@@ -3396,6 +3404,7 @@
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4620C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				5863A83D20ABCF3B0016B089 /* StoryUvList.swift in Sources */,
+				581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
@@ -3738,6 +3747,7 @@
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
+				581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				58816CEF20C62BF20032D103 /* EvaluationController.swift in Sources */,
 				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,

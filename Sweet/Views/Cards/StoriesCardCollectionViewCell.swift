@@ -8,7 +8,10 @@
 
 import UIKit
 protocol StoriesCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
-    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, cardId: String?)
+    func showStoriesPlayerController(cell: UICollectionViewCell,
+                                     storiesGroup: [[StoryCellViewModel]],
+                                     currentIndex: Int,
+                                     cardId: String?)
 }
 class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     
@@ -27,7 +30,7 @@ class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     typealias ViewModelType = StoriesCardViewModel
     
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let itemWidth = (UIScreen.mainWidth() - 20 * 2 - 5) / 2
         let itemHeight = (cardCellHeight - 20 * 2 - 10) / 2
         let layout = UICollectionViewFlowLayout()
@@ -78,7 +81,8 @@ extension StoriesCardCollectionViewCell: UICollectionViewDataSource {
 extension StoriesCardCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let delegate = delegate as? StoriesCardCollectionViewCellDelegate {
-            delegate.showStoriesPlayerController(storiesGroup: storiesGroup,
+            delegate.showStoriesPlayerController(cell: collectionView.cellForItem(at: indexPath)!,
+                                                 storiesGroup: storiesGroup,
                                                  currentIndex: indexPath.item,
                                                  cardId: cardId)
         }

@@ -11,6 +11,7 @@ import AVFoundation
 import SwiftyUserDefaults
 import Alamofire
 import VIMediaCache
+import Hero
 @objc protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     @objc optional func playToBack()
     @objc optional func playToNext()
@@ -116,6 +117,14 @@ class StoriesPlayerViewController: BaseViewController {
         view.isHidden = true
         return view
     }()
+    
+    private lazy var tagButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.isHidden = true
+        button.addTarget(self, action: #selector(didPressTag(_:)), for: .touchUpInside)
+        return button
+    }()
 
     private var pokeLongPress: UILongPressGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
@@ -155,11 +164,14 @@ class StoriesPlayerViewController: BaseViewController {
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
+        view.addSubview(tagButton)
         setTopUI()
         setBottmUI()
         update()
+        setGestureRecognizer()
         
     }
+    
     func update() {
         setUserData()
         updateForStories(stories: stories, currentIndex: currentIndex)
@@ -168,6 +180,12 @@ class StoriesPlayerViewController: BaseViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    private func setGestureRecognizer() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(didPanAction(_:)))
+        swipe.direction = .down
+        view.addGestureRecognizer(swipe)
     }
     
     private func setTopUI() {
@@ -248,6 +266,12 @@ class StoriesPlayerViewController: BaseViewController {
             if let pokeLongPress = pokeLongPress {
                 view.removeGestureRecognizer(pokeLongPress)
             }
+        }
+        if let touchArea = stories[currentIndex].touchArea {
+            tagButton.isHidden = false
+            tagButton.frame = touchArea
+        } else {
+            tagButton.isHidden = true
         }
     }
     
@@ -401,6 +425,33 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
+    @objc private func didPressTag(_ sender: UIButton) {
+        let tag = stories[currentIndex].tag
+        logger.debug(tag)
+        logger.debug("点击tag")
+    }
+    
+    @objc private func didPanAction(_ pan: UISwipeGestureRecognizer) {
+        dismiss()
+//        if pan.direction == .horizontal { return }
+//        let translation = pan.translation(in: view)
+//        guard translation.y > 0 else { return }
+//        switch pan.state {
+//        case .began:
+//            dismiss()
+//        case .changed:
+//            logger.debug("拖动界面")
+//            Hero.shared.update(translation.y / view.bounds.height)
+//        default:
+//            let velocity = pan.velocity(in: view)
+//            if ((translation.y + velocity.y) / view.bounds.height) > 0.05 {
+//                Hero.shared.finish()
+//            } else {
+//                Hero.shared.cancel()
+//            }
+//        }
+    }
+    
     @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
         switch longTap.state {
         case .began:
@@ -412,12 +463,9 @@ extension StoriesPlayerViewController {
         default: break
         }
     }
+    
     @objc private func dismissAction(sender: UIButton) {
-        if presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-        } else {
-            delegate?.dismissController?()
-        }
+        dismiss()
     }
     
     @objc private func openStoryHistory(sender: UIButton) {
@@ -536,6 +584,14 @@ extension StoriesPlayerViewController {
             }
         }
        
+    }
+    
+    private func dismiss() {
+        if presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+        } else {
+            delegate?.dismissController?()
+        }
     }
     
     private func deleteStory(storyId: UInt64) {

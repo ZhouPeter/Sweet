@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import JXPhotoBrowser
 import SwiftyUserDefaults
-
+import Kingfisher
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -137,7 +137,14 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         addInputBottomView()
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
         Messenger.shared.addDelegate(self)
-
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+//        logger.debug("内存过高")
+//        let cache = KingfisherManager.shared.cache
+//        cache.maxMemoryCost = 40 * 1024 * 1024
+//        KingfisherManager.shared.cache.clearMemoryCache()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -484,16 +491,28 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     }
 }
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
-    func showStoriesPlayerController(storiesGroup: [[StoryCellViewModel]], currentIndex: Int, cardId: String?) {
+    func showStoriesPlayerController(cell: UICollectionViewCell,
+                                     storiesGroup: [[StoryCellViewModel]],
+                                     currentIndex: Int,
+                                     cardId: String?) {
         let controller = StoriesPlayerGroupViewController(user: user,
                                                           storiesGroup: storiesGroup,
                                                           currentIndex: currentIndex,
                                                           fromCardId: cardId)
         controller.delegate = self
-        self.present(controller, animated: true, completion: nil)
-        self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                       fromCardId: cardId,
-                       storyGroupIndex: currentIndex)
+//        let cardHeroId = "card\(currentIndex)"
+//        cell.contentView.hero.id = cardHeroId
+//        cell.contentView.hero.modifiers = [.useNoSnapshot, .spring(stiffness: 250, damping: 25)]
+//        controller.hero.isEnabled = true
+//        controller.hero.modalAnimationType = .none
+//        controller.view.hero.id = cardHeroId
+//        controller.view.hero.modifiers = [.useNoSnapshot, .spring(stiffness: 250, damping: 25)]
+        self.present(controller, animated: true, completion: {
+            self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
+                           fromCardId: cardId,
+                           storyGroupIndex: currentIndex)
+        })
+       
     }
 }
 

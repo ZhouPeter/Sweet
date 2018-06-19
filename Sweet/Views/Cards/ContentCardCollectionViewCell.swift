@@ -226,10 +226,11 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                     orginX = 0
                     orginY += images[offset - 1].size.height
                 }
+                let size = CGSize(width: imageSize.width, height: imageSize.height)
                 let rect = CGRect(origin: CGPoint(x: orginX, y: orginY),
-                                  size: CGSize(width: imageSize.width, height: imageSize.height))
+                                  size: size)
                 imageView.frame = rect
-                imageView.kf.setImage(with: images[offset].imageURL)
+                imageView.kf.setImage(with: images[offset].imageURL.middleCutting(size: size))
                 orginX += imageSize.width
             } else {
                 imageView.isHidden = true

@@ -32,6 +32,7 @@ struct StoryResponse: Codable {
     let enrollment: String
     var like: Bool
     let nickname: String
+    let tag: String
     var read: Bool
     let storyId: UInt64
     let type: StoryType
@@ -39,6 +40,7 @@ struct StoryResponse: Codable {
     let userId: UInt64
     let centerX: CGFloat?
     let centerY: CGFloat?
+    var touchArea: TouchArea?
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -47,6 +49,7 @@ struct StoryResponse: Codable {
         case enrollment
         case like
         case nickname
+        case tag
         case read
         case storyId
         case type
@@ -54,9 +57,21 @@ struct StoryResponse: Codable {
         case userId
         case centerX = "x"
         case centerY = "y"
+        case touchArea
     }
 }
-
+struct TouchArea: Codable {
+    let height: CGFloat
+    let width: CGFloat
+    let originX: CGFloat
+    let originY: CGFloat
+    enum CodingKeys: String, CodingKey {
+        case height
+        case width
+        case originX = "x"
+        case originY = "y"
+    }
+}
 struct StoryGetResponse: Codable {
     let story: StoryResponse
 }

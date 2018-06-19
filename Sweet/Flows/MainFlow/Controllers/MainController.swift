@@ -26,6 +26,7 @@ extension Notification.Name {
     static let ScrollPage = Notification.Name(rawValue: "ScrollPage")
     static let BlackStatusBar = Notification.Name(rawValue: "BlackStatusBar")
     static let WhiteStatusBar = Notification.Name(rawValue: "WhiteStatusBar")
+    static let ScrollToPage = Notification.Name(rawValue: "ScrollToPage")
 }
 
 final class MainController: PageboyViewController, MainView {
@@ -185,6 +186,14 @@ extension MainController: PageboyViewControllerDelegate {
         direction: PageboyViewController.NavigationDirection,
         animated: Bool) {
         updateStatusBar(at: index)
+    }
+    
+    func pageboyViewController(
+        _ pageboyViewController: PageboyViewController,
+        willScrollToPageAt index: Int,
+        direction: PageboyViewController.NavigationDirection,
+        animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name.ScrollToPage, object: ["index": index])
     }
     
     private func updateStatusBar(at index: Int) {

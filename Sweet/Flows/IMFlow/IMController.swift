@@ -54,12 +54,15 @@ class IMController: BaseViewController, IMView {
         setupControllers()
         delegate?.imViewDidLoad()
         showInbox(true)
-
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollToPage(_:)),
+                                               name: Notification.Name.ScrollToPage,
+                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
+        navigationController?.navigationBar.barTintColor = UIColor.xpNavPurple()
         navigationController?.navigationBar.barStyle = .black
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         if isInboxShown {
@@ -103,6 +106,15 @@ class IMController: BaseViewController, IMView {
         } else {
             delegate?.imViewDidShowContacts(contactsView)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
+        }
+    }
+    
+    @objc private func scrollToPage(_ noti: Notification) {
+        if let object = noti.object as? [String: Any], let index = object["index"] as? Int {
+            if  index == 2 {
+                titleView.selectedSegmentIndex = 0
+                showInbox(true)
+            }
         }
     }
 }

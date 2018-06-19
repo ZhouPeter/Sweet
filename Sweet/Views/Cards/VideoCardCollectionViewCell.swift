@@ -21,6 +21,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     
     var contentImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .black
         imageView.tag = 10086
         imageView.isUserInteractionEnabled = true
         return imageView
@@ -140,6 +142,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
+        contentImageView.kf.setImage(with:  viewModel.videoURL.videoThumbnail(size: contentImageView.frame.size))
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {
             hiddenEmojiView(isHidden: true)
             resultEmojiView.isHidden = false

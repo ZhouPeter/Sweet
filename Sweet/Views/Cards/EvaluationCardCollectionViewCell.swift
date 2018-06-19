@@ -14,7 +14,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     typealias ViewModelType = EvaluationCardViewModel
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 3
         return label
     }()
@@ -57,6 +57,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     private func setupUI() {
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
+        contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 18)
         customContent.addSubview(leftButton)
         leftButton.equal(.width, to: customContent, multiplier: 0.5)
@@ -85,8 +86,8 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
-        leftButton.kf.setImage(with: viewModel.imageURL[0], for: .normal)
-        rightButton.kf.setImage(with: viewModel.imageURL[1], for: .normal)
+        leftButton.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftButton.frame.size), for: .normal)
+        rightButton.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: leftButton.frame.size), for: .normal)
         if let selectedIndex = viewModel.selectedIndex {
             if selectedIndex == 0 {
                 selectedButtonCenterXRightConstraint?.isActive = false

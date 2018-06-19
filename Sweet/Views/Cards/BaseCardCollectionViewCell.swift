@@ -50,6 +50,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupBaseUI()
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressCard(_:)))
+        tap.delegate = self
         contentView.addGestureRecognizer(tap)
     }
     
@@ -65,6 +66,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     
     @objc private func didPressCard(_ sender: UIButton) {
         delegate?.showWebView(cell: self)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 1)
     }
     
     @objc private func menuAction(_ sender: UIButton) {
@@ -103,5 +105,14 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         menuButton.centerY(to: titleLabel)
         menuButton.align(.right, to: customContent, inset: 10)
         menuButton.constrain(width: 30, height: 30)
+    }
+}
+extension BaseCardCollectionViewCell: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view?.superview?.superview, view is StoryCardCollectionViewCell {
+            return false
+        } else {
+            return true
+        }
     }
 }
