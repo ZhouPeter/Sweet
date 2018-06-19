@@ -37,19 +37,19 @@ final class PhotoCropController: UIViewController, PhotoCropView {
         title = "选中照片"
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(title: "继续", style: .plain, target: self, action: #selector(didPressRightBarButton))
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.addSubview(photoView)
         photoView.fill(in: view)
         
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(_:)))
-        pinch.delegate = self
-        view.addGestureRecognizer(pinch)
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
-        pan.delegate = self
-        view.addGestureRecognizer(pan)
-        let rotate = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(_:)))
-        rotate.delegate = self
-        view.addGestureRecognizer(rotate)
+//        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(_:)))
+//        pinch.delegate = self
+//        view.addGestureRecognizer(pinch)
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
+//        pan.delegate = self
+//        view.addGestureRecognizer(pan)
+//        let rotate = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(_:)))
+//        rotate.delegate = self
+//        view.addGestureRecognizer(rotate)
     }
     
     override func viewWillAppear(_ animated: Bool) {

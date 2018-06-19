@@ -16,7 +16,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     var onAlbumChoosed: (() -> Void)?
     
     private let recordContainer = UIView()
-    private let topView = StoryRecordTopView()
     private let bottomView = StoryRecordBottomView()
     private var captureView = StoryCaptureView()
     private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
@@ -88,17 +87,22 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             captureView.resumeCamera()
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-            self.topView.alpha = 1
+            self.hideTopControls(false)
             self.bottomView.alpha = 1
             self.topicButton.alpha = 1
+            self.avatarCircle.alpha = Defaults[.isPersonalStoryChecked] == false ? 1 : 0
         }, completion: nil)
-        topView.updateAvatarCircle(isUnread: Defaults[.isPersonalStoryChecked] == false)
+        shootButton.resetProgress()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resumeCamera(false)
         topic = nil
+        isShooting = false
+        isStoryEditing = false
+        shootButton.alpha = 1
+        toggleOffMenu()
     }
     
     // MARK: - Private
@@ -122,7 +126,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         topic.view.alpha = 0
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             topic.view.alpha = 1
-            self.topView.alpha = 0
+            self.hideTopControls(true)
             self.bottomView.alpha = 0
             self.shootButton.alpha = 0
             self.topicButton.alpha = 0
@@ -133,7 +137,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             view.frame = self.view.bounds
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 view.alpha = 0
-                self.topView.alpha = 1
+                self.hideTopControls(false)
                 self.bottomView.alpha = 1
                 self.shootButton.alpha = 1
                 self.topicButton.alpha = 1
@@ -150,9 +154,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     // MARK: - Camera
     
+    private var isShooting = false
+    private var isStoryEditing = false
+    
     private func shootDidBegin() {
+        guard isShooting == false else { return }
+        isShooting = true
         UIView.animate(withDuration: 0.25) {
-            self.topView.alpha = 0
+            self.hideTopControls(true)
             self.bottomView.alpha = 0
             self.topicButton.alpha = 0
         }
@@ -160,16 +169,22 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func shootDidEnd(with interval: TimeInterval) {
+        guard isStoryEditing == false else { return }
+        isStoryEditing = true
         if interval < 1 {
             captureView.capturePhoto { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: url, isPhoto: true)
+                } else {
+                    self?.isShooting = false
                 }
             }
         } else {
             captureView.finishRecording { [weak self] (url) in
                 if let url = url {
                     self?.edit(with: url, isPhoto: false)
+                } else {
+                    self?.isShooting = false
                 }
             }
         }
@@ -258,13 +273,159 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         blurCoverView.fill(in: view)
     }
     
+    private lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var avatarCircle: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        return view
+    } ()
+    
+    private lazy var menuButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "MenuClosed"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "MenuExpanded"), for: .selected)
+        button.addTarget(self, action: #selector(didPressMenuButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var flashButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "FlashOff"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "FlashOn"), for: .selected)
+        button.addTarget(self, action: #selector(didPressFlashButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var cameraSwitchButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "CameraBack"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "CameraFront"), for: .selected)
+        button.addTarget(self, action: #selector(didPressCameraSwitchButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
+        button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private var flashButtonCenterY: NSLayoutConstraint?
+    private var cameraSwitchCenterY: NSLayoutConstraint?
+    
     private func setupTopView() {
-        recordContainer.addSubview(topView)
-        topView.delegate = self
-        topView.constrain(height: 64)
-        topView.align(.top, to: recordContainer)
-        topView.align(.left, to: recordContainer)
-        topView.align(.right, to: recordContainer)
+        recordContainer.addSubview(avatarButton)
+        recordContainer.addSubview(avatarCircle)
+        recordContainer.addSubview(cameraSwitchButton)
+        recordContainer.addSubview(flashButton)
+        flashButton.alpha = 0
+        cameraSwitchButton.alpha = 0
+        recordContainer.addSubview(menuButton)
+        recordContainer.addSubview(backButton)
+        avatarButton.constrain(width: 40, height: 40)
+        avatarButton.align(.left, to: recordContainer, inset: 10)
+        avatarButton.align(.top, to: recordContainer, inset: 10)
+        avatarCircle.equal(.size, to: avatarButton)
+        avatarCircle.center(to: avatarButton)
+        menuButton.constrain(width: 40, height: 40)
+        menuButton.centerY(to: avatarButton)
+        menuButton.pin(.right, to: avatarButton, spacing: 10)
+        flashButton.constrain(width: 40, height: 40)
+        flashButton.centerX(to: menuButton)
+        flashButtonCenterY = flashButton.centerY(to: menuButton)
+        cameraSwitchButton.equal(.size, to: flashButton)
+        cameraSwitchButton.centerX(to: flashButton)
+        cameraSwitchCenterY = cameraSwitchButton.centerY(to: menuButton)
+        backButton.constrain(width: 30, height: 30)
+        backButton.align(.right, to: recordContainer, inset: 10)
+        backButton.centerY(to: menuButton)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func didPressAvatarButton() {
+        web.request(
+            .storyList(page: 0, userId: user.userId),
+            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case .failure(let error):
+                    logger.error(error)
+                case .success(let response):
+                    Defaults[.isPersonalStoryChecked] = true
+                    let viewModels = response.list.map(StoryCellViewModel.init(model:))
+                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
+                    storiesPlayViewController.stories = viewModels
+                    self.present(storiesPlayViewController, animated: true) {
+                        storiesPlayViewController.initPlayer()
+                    }
+                }
+        }
+    }
+    
+    @objc private func didPressMenuButton() {
+        toggleMenu()
+    }
+    
+    private func hideTopControls(_ isHidden: Bool) {
+        toggleOffMenu()
+        let alpha: CGFloat = isHidden ? 0 : 1
+        avatarButton.alpha = alpha
+        avatarCircle.alpha = alpha
+        backButton.alpha = alpha
+        menuButton.alpha = alpha
+    }
+    
+    private func toggleOffMenu() {
+        guard menuButton.isSelected else { return }
+        toggleMenu()
+    }
+    
+    private func toggleMenu() {
+        menuButton.isSelected = !menuButton.isSelected
+        var alpha: CGFloat = 0
+        if menuButton.isSelected {
+            alpha = 1
+            let offset: CGFloat = 40
+            flashButtonCenterY?.constant = offset
+            cameraSwitchCenterY?.constant = offset * 2
+        } else {
+            flashButtonCenterY?.constant = 0
+            cameraSwitchCenterY?.constant = 0
+        }
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.view.layoutIfNeeded()
+            self.flashButton.alpha = alpha
+            self.cameraSwitchButton.alpha = alpha
+        }, completion: nil)
+    }
+    
+    @objc private func didPressFlashButton() {
+        toggleOffMenu()
+        captureView.switchFlash()
+        flashButton.isSelected = !flashButton.isSelected
+    }
+    
+    @objc private func didPressCameraSwitchButton() {
+        toggleOffMenu()
+        captureView.rotateCamera()
+        cameraSwitchButton.isSelected = !cameraSwitchButton.isSelected
+    }
+    
+    @objc private func didPressBackButton() {
+        toggleOffMenu()
+        NotificationCenter.default.post(name: .ScrollPage, object: 1)
     }
 }
 
@@ -321,40 +482,6 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
             }
             captureView.resumeCamera()
             return
-        }
-    }
-}
-
-extension StoryRecordController: StoryRecordTopViewDelegate {
-    func topViewDidPressBackButton() {
-        NotificationCenter.default.post(name: .ScrollPage, object: 1)
-    }
-    
-    func topViewDidPressFlashButton(isOn: Bool) {
-        captureView.switchFlash()
-    }
-    
-    func topViewDidPressCameraSwitchButton(isFront: Bool) {
-        captureView.rotateCamera()
-    }
-    
-    func topViewDidPressAvatarButton() {
-        web.request(
-        .storyList(page: 0, userId: user.userId),
-        responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-            guard let `self` = self else { return }
-            switch result {
-            case .failure(let error):
-                logger.error(error)
-            case .success(let response):
-                Defaults[.isPersonalStoryChecked] = true
-                let viewModels = response.list.map(StoryCellViewModel.init(model:))
-                let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-                storiesPlayViewController.stories = viewModels
-                self.present(storiesPlayViewController, animated: true) {
-                    storiesPlayViewController.initPlayer()
-                }
-            }
         }
     }
 }

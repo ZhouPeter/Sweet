@@ -15,6 +15,7 @@ class StoryPublisher {
         storyType: StoryType,
         topic: String? = nil,
         pokeCenter: CGPoint? = nil,
+        contentRect: CGRect? = nil,
         completion: @escaping (Bool) -> Void) {
         let uploadType: UploadType
         switch storyType {
@@ -37,7 +38,8 @@ class StoryPublisher {
                     url: token.urlString,
                     type: storyType,
                     topic: topic,
-                    pokeCenter: pokeCenter
+                    pokeCenter: pokeCenter,
+                    contentRect: contentRect
                 ),
                 completion: { (result) in
                     logger.debug(result)
