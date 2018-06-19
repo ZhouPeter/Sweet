@@ -94,13 +94,17 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         automaticallyAdjustsScrollViewInsets = false
         Messenger.shared.addDelegate(self)
         showAll(true)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollToPage(_:)),
+                                               name: Notification.Name.ScrollToPage,
+                                               object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = UIColor.xpNavBlue()
         navigationController?.navigationBar.barStyle = .black
-        
+       
         if Defaults[.isPersonalStoryChecked] {
             leftBadgeView.isHidden = true
         } else {
@@ -156,5 +160,14 @@ extension CardsManagerController {
     
     @objc private func rightAction(sender: UIButton) {
         NotificationCenter.default.post(name: Notification.Name.ScrollPage, object: 2)
+    }
+    
+    @objc private func scrollToPage(_ noti: Notification) {
+        if let object = noti.object as? [String: Any], let index = object["index"] as? Int {
+            if  index == 1 {
+                titleView.selectedSegmentIndex = 0
+                showAll(true)
+            }
+        }
     }
 }

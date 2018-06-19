@@ -29,7 +29,7 @@ struct StoryCollectionViewCellModel {
             imageURL = URL(string: model.content)
         } else if model.type  == .video || model.type == .poke {
             if model.type == .poke {
-                pokeCenter = CGPoint(x: model.centerX!, y: model.centerY!)
+                pokeCenter = CGPoint(x: model.centerX ?? 0, y: model.centerY ?? 0)
             }
             videoURL = URL(string: model.content)
         }

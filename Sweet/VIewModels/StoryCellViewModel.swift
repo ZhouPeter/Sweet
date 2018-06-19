@@ -28,7 +28,8 @@ struct StoryCellViewModel {
         if model.type == .video || model.type == .poke {
             videoURL = URL(string: model.content)
             if model.type == .poke {
-                pokeCenter = CGPoint(x: min(max(model.centerX!, -0.5), 0.5), y: min(max(model.centerY!, -0.5), 0.5))
+                pokeCenter = CGPoint(x: min(max(model.centerX ?? 0, -0.5), 0.5),
+                                     y: min(max(model.centerY ?? 0, -0.5), 0.5))
             }
         } else {
             imageURL = URL(string: model.content)
