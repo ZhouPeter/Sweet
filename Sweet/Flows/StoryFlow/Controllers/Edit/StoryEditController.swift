@@ -31,6 +31,10 @@ final class StoryEditController: BaseViewController, StoryEditView {
     private lazy var editButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "StoryEdit"), for: .normal)
+        button.setTitle("编辑", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.imageEdgeInsets = UIEdgeInsets(top: -37, left: 8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: -23, right: 0)
         button.addTarget(self, action: #selector(didPressEditButton), for: .touchUpInside)
         return button
     } ()
@@ -38,6 +42,10 @@ final class StoryEditController: BaseViewController, StoryEditView {
     private lazy var pokeButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "StoryPoke"), for: .normal)
+        button.setTitle("戳住", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.imageEdgeInsets = UIEdgeInsets(top: -36, left: 8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: -23, right: 0)
         button.addTarget(self, action: #selector(didPressPokeButton), for: .touchUpInside)
         button.alpha = self.isPhoto ? 0 : 1
         return button
@@ -384,11 +392,7 @@ extension StoryEditController: StoryTextEditControllerDelegate {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.finishButton.alpha = 1
             self.closeButton.alpha = 1
-            if self.isPhoto == false {
-                if self.pokeView.isHidden {
-                    self.pokeButton.alpha = 1
-                }
-            }
+            if self.isPhoto == false && self.pokeView.isHidden { self.pokeButton.alpha = 1 }
             self.editButton.alpha = self.textController.hasText ? 0 : 1
         }, completion: nil)
     }
