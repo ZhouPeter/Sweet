@@ -30,6 +30,10 @@ class WebViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
         view.addSubview(webView)
         webView.fill(in: view)
         let request = URLRequest(url: URL(string: urlString)!)

@@ -565,6 +565,14 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
+    func showWebView(cell: BaseCardCollectionViewCell) {
+        guard  let indexPath = collectionView.indexPath(for: cell) else { return }
+        let card = cards[indexPath.row]
+        guard let url = card.url else { return }
+        let preview = WebViewController(urlString: url)
+        preview.title = card.content
+        navigationController?.pushViewController(preview, animated: true)
+    }
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
         let cardType = cards[index].type
