@@ -303,7 +303,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
                 var pokeCenter: CGPoint?
                 let type: StoryType
                 var contentRect: CGRect?
-                if self.textController.hasText {
+                if self.textController.hasText && self.textController.topic != nil {
                     contentRect = self.textController.boundingRect
                 }
                 if !self.pokeView.isHidden {
