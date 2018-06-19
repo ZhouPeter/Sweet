@@ -117,6 +117,14 @@ class StoriesPlayerViewController: BaseViewController {
         view.isHidden = true
         return view
     }()
+    
+    private lazy var tagButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.isHidden = true
+        button.addTarget(self, action: #selector(didPressTag(_:)), for: .touchUpInside)
+        return button
+    }()
 
     private var pokeLongPress: UILongPressGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
@@ -156,6 +164,7 @@ class StoriesPlayerViewController: BaseViewController {
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
+        view.addSubview(tagButton)
         setTopUI()
         setBottmUI()
         update()
@@ -257,6 +266,12 @@ class StoriesPlayerViewController: BaseViewController {
             if let pokeLongPress = pokeLongPress {
                 view.removeGestureRecognizer(pokeLongPress)
             }
+        }
+        if let touchArea = stories[currentIndex].touchArea {
+            tagButton.isHidden = false
+            tagButton.frame = touchArea
+        } else {
+            tagButton.isHidden = true
         }
     }
     
@@ -410,6 +425,12 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
+    @objc private func didPressTag(_ sender: UIButton) {
+        let tag = stories[currentIndex].tag
+        logger.debug(tag)
+        logger.debug("点击tag")
+    }
+    
     @objc private func didPanAction(_ pan: UISwipeGestureRecognizer) {
         dismiss()
 //        if pan.direction == .horizontal { return }

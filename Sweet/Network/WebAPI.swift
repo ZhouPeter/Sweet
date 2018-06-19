@@ -270,7 +270,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
                 parameters["y"] = center.y
             }
             if let rect = rect {
-                parameters["touch-area"] = ["x": rect.minX, "y": rect.minY, "width": rect.width, "height": rect.height]
+                parameters["touchArea"] = ["x": rect.minX, "y": rect.minY, "width": rect.width, "height": rect.height]
             }
         case let .commentCard(cardId, comment, emoji):
             parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
