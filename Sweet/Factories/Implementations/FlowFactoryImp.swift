@@ -16,6 +16,20 @@ final class FlowFactoryImp:
     CardsFlowFactory,
     PowerFlowFactory,
 ProfileFlowFactory {
+    func makeStoiesGroupView(user: User,
+                             storiesGroup: [[StoryCellViewModel]],
+                             currentIndex: Int,
+                             fromCardId: String?,
+                             delegate: StoriesPlayerGroupViewControllerDelegate) -> StoriesGroupView {
+        let controller = StoriesPlayerGroupViewController(
+                                                        user: user,
+                                                        storiesGroup: storiesGroup,
+                                                        currentIndex: currentIndex,
+                                                        fromCardId: fromCardId)
+        controller.delegate = delegate
+        return controller
+    }
+    
 
     func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
         let viewController = UpdateController()

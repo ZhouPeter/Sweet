@@ -62,7 +62,15 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
-
+    var showStoriesPlayerView: (
+    (
+    User,
+    [StoryCellViewModel],
+    Int,
+    StoriesPlayerViewControllerDelegate,
+    (() -> Void)?) -> Void
+    )?
+    
     var user: User
     init(user: User) {
         self.user = user
@@ -139,6 +147,10 @@ extension StoriesController: UICollectionViewDataSource {
 
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showStoriesPlayerView?(user, storyViewModels, indexPath.item, self, {
+            
+        })
+
         let storiesPlayViewController = StoriesPlayerViewController(user: user)
         storiesPlayViewController.delegate = self
         storiesPlayViewController.currentIndex = indexPath.item

@@ -16,6 +16,7 @@ protocol Router: Presentable {
     
     func present(_ flow: Presentable?)
     func present(_ flow: Presentable?, animated: Bool)
+    func present(_ flow: Presentable?, animated: Bool, completion: (() -> Void)?)
     
     func push(_ flow: Presentable?)
     func push(_ flow: Presentable?, animated: Bool)

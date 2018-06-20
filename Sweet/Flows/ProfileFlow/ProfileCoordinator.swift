@@ -42,10 +42,24 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profile.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
+        
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
+        
         router.push(profile)
+    }
+    private func runStoryFlow(topic: String) {
+        let navigation = UINavigationController()
+        let coordinator = coordinatorFactory
+            .makeDismissableStoryCoordinator(user: user, topic: topic, navigation: navigation)
+        coordinator.finishFlow = { [weak self, coordinator] in
+            self?.removeDependency(coordinator)
+            logger.debug()
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start()
     }
     
     private func showAbout(user: UserResponse) {

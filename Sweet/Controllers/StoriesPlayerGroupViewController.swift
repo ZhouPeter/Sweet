@@ -9,12 +9,13 @@
 import UIKit
 import Gemini
 protocol StoriesGroupView: BaseView {
-    
+    var runStoryFlow: ((String) -> Void)? { get set }
 }
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
 }
-class StoriesPlayerGroupViewController: BaseViewController {
+class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
+    var runStoryFlow: ((String) -> Void)?
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     var user: User
     var currentIndex: Int {
@@ -86,6 +87,7 @@ class StoriesPlayerGroupViewController: BaseViewController {
         let playerController = StoriesPlayerViewController(user: user)
         playerController.delegate = self
         playerController.fromCardId = fromCardId
+        playerController.runStoryFlow = runStoryFlow
         add(childViewController: playerController, addView: false)
         storiesPlayerControllerMap[cell] = playerController
         return playerController

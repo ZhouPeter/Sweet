@@ -38,8 +38,12 @@ final class RouterImp: NSObject, Router {
     }
     
     func present(_ flow: Presentable?, animated: Bool) {
+        present(flow, animated: animated, completion: nil)
+    }
+    
+    func present(_ flow: Presentable?, animated: Bool, completion: (() -> Void)?) {
         guard let controller = flow?.toPresent() else { return }
-        rootController?.present(controller, animated: animated, completion: nil)
+        rootController?.present(controller, animated: animated, completion: completion)
     }
     
     func dismissFlow() {

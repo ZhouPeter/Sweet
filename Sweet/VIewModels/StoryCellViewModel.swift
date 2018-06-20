@@ -39,9 +39,9 @@ struct StoryCellViewModel {
         }
         if let touchArea = model.touchArea {
             let touchArea = CGRect(origin: CGPoint(x: UIScreen.mainWidth() * touchArea.originX,
-                                                   y: UIScreen.mainHeight() * touchArea.originX),
+                                                   y: UIScreen.mainHeight() * touchArea.originY),
                                    size: CGSize(width: UIScreen.mainWidth() * touchArea.width,
-                                                height: UIScreen.mainWidth() * touchArea.height))
+                                                height: UIScreen.mainHeight() * touchArea.height))
             self.touchArea = touchArea
         }
         read = model.read

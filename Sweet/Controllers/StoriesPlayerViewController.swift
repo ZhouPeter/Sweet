@@ -18,7 +18,10 @@ import Hero
     @objc optional func dismissController()
     @objc optional func delStory(withStoryId storyId: UInt64)
 }
-class StoriesPlayerViewController: BaseViewController {
+protocol StoriesPlayerView: BaseView {
+    var runStoryFlow: ((String) -> Void)? { get set }
+}
+class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var isVisual = true
     var user: User
     var player: AVPlayer?
@@ -28,6 +31,7 @@ class StoriesPlayerViewController: BaseViewController {
     var statusToken: NSKeyValueObservation?
     var imageTimer: Timer?
     var timerNumber: Float = 0
+    var runStoryFlow: ((String) -> Void)?
     var stories: [StoryCellViewModel]! {
         didSet {
             if stories.count == 0 {
@@ -120,7 +124,7 @@ class StoriesPlayerViewController: BaseViewController {
     
     private lazy var tagButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
+        button.backgroundColor = .red
         button.isHidden = true
         button.addTarget(self, action: #selector(didPressTag(_:)), for: .touchUpInside)
         return button
@@ -426,9 +430,8 @@ extension StoriesPlayerViewController {
 // MARK: - Actions
 extension StoriesPlayerViewController {
     @objc private func didPressTag(_ sender: UIButton) {
-        let tag = stories[currentIndex].tag
-        logger.debug(tag)
-        logger.debug("点击tag")
+        let topic = stories[currentIndex].tag
+        runStoryFlow?(topic)
     }
     
     @objc private func didPanAction(_ pan: UISwipeGestureRecognizer) {
