@@ -16,7 +16,7 @@ protocol StoryKeyboardControlViewDelegate: class {
 final class StoryKeyboardControlView: UIView {
     weak var delegate: StoryKeyboardControlViewDelegate?
     
-    private lazy var topicButton: UIButton = {
+    lazy var topicButton: UIButton = {
         let button = UIButton(topic: "添加标签")
         button.addTarget(self, action: #selector(didPressTopicButton), for: .touchUpInside)
         return button

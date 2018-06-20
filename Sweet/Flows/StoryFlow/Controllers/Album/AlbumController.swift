@@ -10,11 +10,13 @@ import UIKit
 import Photos
 
 protocol AlbumView: BaseView {
+    var onCancelled: (() -> Void)? { get set }
     var onFinished: ((UIImage) -> Void)? { get set }
 }
 
 final class AlbumController: UIViewController, AlbumView {
     var onFinished: ((UIImage) -> Void)?
+    var onCancelled: (() -> Void)?
     
     private var fetchResult: PHFetchResult<PHAsset>?
     
@@ -63,6 +65,12 @@ final class AlbumController: UIViewController, AlbumView {
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.tintColor = .black
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        if parent == nil {
+            onCancelled?()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -73,6 +73,17 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         )
     }
     
+    func makeDismissableStoryCoordinator(user: User, topic: String?, navigation: UINavigationController?) -> Coordinator & StoryCoodinatorOutput {
+        return StoryCoordinator(
+            user: user,
+            router: makeRouter(with: navigation),
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp(),
+            isDismissable: true,
+            topic: topic
+        )
+    }
+    
     func makeRouter(with navigation: UINavigationController?) -> Router {
         if let nav = navigation {
             return RouterImp(rootController: nav)

@@ -9,14 +9,17 @@
 import UIKit
 import SwiftyUserDefaults
 
-final class StoryTextController: BaseViewController, StoryTextView {
+final class StoryTextController: BaseViewController, StoryTextView, StoryEditCancellable {
+    var presentable: UIViewController { return self }
+    
     var onFinished: (() -> Void)?
     var onCancelled: (() -> Void)?
     
     var boundingRect: CGRect {
         return editController.boundingRect
     }
-    
+    override var prefersStatusBarHidden: Bool { return true }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     private var topic: String?
     private lazy var gradientView = GradientSwitchView()
     private var gradientIndex = 0
@@ -46,6 +49,15 @@ final class StoryTextController: BaseViewController, StoryTextView {
     
     private lazy var publisher = StoryPublisher()
     
+    init(topic: String?) {
+        self.topic = topic
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientView()
@@ -53,8 +65,8 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editContainer.fill(in: view)
         setupEditController()
         setupEditControls()
-        closeButton.alpha = 0
         finishButton.alpha = 0
+        editController.topic = topic
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -118,21 +130,25 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressCloseButton() {
-        onCancelled?()
+        guard editController.hasText || editController.topic != nil else {
+            onCancelled?()
+            return
+        }
+        cancelEditing {
+            self.onCancelled?()
+        }
     }
 }
 
 extension StoryTextController: StoryTextEditControllerDelegate {
     func storyTextEditControllerDidBeginEditing() {
         UIView.animate(withDuration: 0.25) {
-            self.closeButton.alpha = 0
             self.finishButton.alpha = 0
         }
     }
     
     func storyTextEidtControllerDidEndEditing() {
         UIView.animate(withDuration: 0.25) {
-            self.closeButton.alpha = 1
             self.finishButton.alpha = 1
         }
     }
