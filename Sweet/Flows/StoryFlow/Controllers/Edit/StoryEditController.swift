@@ -33,8 +33,8 @@ final class StoryEditController: BaseViewController, StoryEditView {
         button.setImage(#imageLiteral(resourceName: "StoryEdit"), for: .normal)
         button.setTitle("编辑", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        button.imageEdgeInsets = UIEdgeInsets(top: -37, left: 8, bottom: 0, right: 0)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: -23, right: 0)
+        button.imageEdgeInsets = UIEdgeInsets(top: -15, left: 8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 13, left: -33, bottom: -23, right: 0)
         button.addTarget(self, action: #selector(didPressEditButton), for: .touchUpInside)
         return button
     } ()
@@ -44,8 +44,8 @@ final class StoryEditController: BaseViewController, StoryEditView {
         button.setImage(#imageLiteral(resourceName: "StoryPoke"), for: .normal)
         button.setTitle("戳住", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        button.imageEdgeInsets = UIEdgeInsets(top: -36, left: 8, bottom: 0, right: 0)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: -23, right: 0)
+        button.imageEdgeInsets = UIEdgeInsets(top: -14, left: 8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 13, left: -33, bottom: -23, right: 0)
         button.addTarget(self, action: #selector(didPressPokeButton), for: .touchUpInside)
         button.alpha = self.isPhoto ? 0 : 1
         return button
