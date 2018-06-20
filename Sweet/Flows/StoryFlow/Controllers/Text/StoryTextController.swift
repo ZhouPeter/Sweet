@@ -53,7 +53,6 @@ final class StoryTextController: BaseViewController, StoryTextView {
         editContainer.fill(in: view)
         setupEditController()
         setupEditControls()
-        closeButton.alpha = 0
         finishButton.alpha = 0
     }
     
@@ -125,14 +124,12 @@ final class StoryTextController: BaseViewController, StoryTextView {
 extension StoryTextController: StoryTextEditControllerDelegate {
     func storyTextEditControllerDidBeginEditing() {
         UIView.animate(withDuration: 0.25) {
-            self.closeButton.alpha = 0
             self.finishButton.alpha = 0
         }
     }
     
     func storyTextEidtControllerDidEndEditing() {
         UIView.animate(withDuration: 0.25) {
-            self.closeButton.alpha = 1
             self.finishButton.alpha = 1
         }
     }
