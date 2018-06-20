@@ -46,8 +46,13 @@ open class PKHUDCustomTextView: PKHUDWideBaseView {
 }
 
 extension UIViewController {
-    
     func toast(message: String, duration: Double = 2, completion: (() -> Void)? = nil) {
+        PKHUD.toast(message: message, duration: duration, completion: completion)
+    }
+}
+
+extension PKHUD {
+    class func toast(message: String, duration: Double = 2, completion: (() -> Void)? = nil) {
         PKHUD.sharedHUD.contentView = PKHUDCustomTextView(text: message)
         PKHUD.sharedHUD.show()
         PKHUD.sharedHUD.hide(afterDelay: duration) { (_) in

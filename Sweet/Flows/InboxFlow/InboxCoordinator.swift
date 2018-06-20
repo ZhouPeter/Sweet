@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PKHUD
 
 final class InboxCoordinator: BaseCoordinator {
     private let factory: ContactsFlowFactory
@@ -55,7 +56,46 @@ extension InboxCoordinator: InboxViewDelegate {
     func inboxStartConversation(_ conversation: Conversation) {
         Messenger.shared.markConversationAsRead(userID: conversation.user.userId)
         let controller = ConversationController(user: user, buddy: conversation.user)
+        controller.delegate = self
         router.push(controller)
+    }
+}
+
+extension InboxCoordinator: ConversationControllerDelegate {
+    func conversationControllerShowsProfile(buddy: User) {
+        let coordinator = self.coordinatorFactory
+            .makeProfileCoordinator(user: user, userID: buddy.userId, router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    func conversationControllerReports(buddy: User) {
+        web.request(.reportUser(userID: buddy.userId)) { (result) in
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+                PKHUD.toast(message: "举报失败")
+            case .success:
+                logger.debug()
+                PKHUD.toast(message: "举报成功")
+            }
+        }
+    }
+    
+    func conversationController(_ controller: ConversationController, blocksBuddy buddy: User) {
+        web.request(.addBlacklist(userId: buddy.userId)) { (result) in
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+                PKHUD.toast(message: "操作失败")
+            case .success:
+                logger.debug()
+                PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: {
+                    controller.didBlock()
+                })
+            }
+        }
     }
 }
 
