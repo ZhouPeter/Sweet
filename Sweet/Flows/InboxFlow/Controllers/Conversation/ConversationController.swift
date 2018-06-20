@@ -11,7 +11,15 @@ import MessageKit
 import Kingfisher
 import STPopupPreview
 
+protocol ConversationControllerDelegate: class {
+    func conversationControllerShowsProfile(buddy: User)
+    func conversationControllerReports(buddy: User)
+    func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
+}
+
 final class ConversationController: MessagesViewController {
+    weak var delegate: ConversationControllerDelegate?
+    
     private let user: User
     private let buddy: User
     private let refreshControl = UIRefreshControl()
@@ -55,6 +63,8 @@ final class ConversationController: MessagesViewController {
         
         setupCollectionView()
         setupInputBar()
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +78,16 @@ final class ConversationController: MessagesViewController {
     deinit {
         logger.debug()
         Messenger.shared.endConversation(userID: buddy.userId)
+    }
+    
+    func didBlock() {
+        let controller = UIAlertController(title: "是否举报该用户", message: nil, preferredStyle: .alert)
+        controller.view.tintColor = .black
+        controller.addAction(UIAlertAction(title: "举报", style: .destructive, handler: { (_) in
+            self.delegate?.conversationControllerReports(buddy: self.buddy)
+        }))
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        present(controller, animated: true, completion: nil)
     }
     
     // MARK: - Private
@@ -155,6 +175,22 @@ final class ConversationController: MessagesViewController {
             return UIImageView(image: inComingBubbleMaskImage)
         }
         return UIImageView(image: outgoingBubbleMaskImage)
+    }
+
+    @objc private func didPressRightBarButton() {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        controller.view.tintColor = .black
+        controller.addAction(UIAlertAction(title: "查看主页", style: .default, handler: { (_) in
+            self.delegate?.conversationControllerShowsProfile(buddy: self.buddy)
+        }))
+        controller.addAction(UIAlertAction(title: "举报", style: .default, handler: { (_) in
+            self.delegate?.conversationControllerReports(buddy: self.buddy)
+        }))
+        controller.addAction(UIAlertAction(title: "加入黑名单", style: .destructive, handler: { (_) in
+            self.delegate?.conversationController(self, blocksBuddy: self.buddy)
+        }))
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        present(controller, animated: true, completion: nil)
     }
 }
 
