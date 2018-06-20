@@ -33,15 +33,8 @@ class IMController: BaseViewController, IMView {
         return button
     } ()
     
-    private lazy var titleView: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["消息", "联系人"])
-        control.tintColor = .clear
-        let normalTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                    NSAttributedStringKey.foregroundColor: UIColor.white.withAlphaComponent(0.5)]
-        control.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        let selectedTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                      NSAttributedStringKey.foregroundColor: UIColor.white]
-        control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+    private lazy var titleView: CustomSegmentedControl = {
+        let control = CustomSegmentedControl(items: ["消息", "联系人"])
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(switchView(_:)), for: .valueChanged)
         return control
@@ -85,7 +78,7 @@ class IMController: BaseViewController, IMView {
         inboxView.view.fill(in: view)
     }
     
-    @objc private func switchView(_ control: UISegmentedControl) {
+    @objc private func switchView(_ control: CustomSegmentedControl) {
         showInbox(control.selectedSegmentIndex == 0)
     }
     

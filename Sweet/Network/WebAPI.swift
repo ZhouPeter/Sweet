@@ -69,6 +69,7 @@ enum WebAPI {
     case getStory(storyID: UInt64)
     case likeEvaluation(evaluationId: UInt64, comment: String)
     case storySortList
+    case getVersion
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -192,6 +193,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/evaluation/like"
         case .storySortList:
             return "/story/sort/list"
+        case .getVersion:
+            return "/service/version/get"
         }
     }
     
@@ -303,6 +306,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["cardId": cardId, "comment": comment]
         case .searchTopic(let topic):
             parameters = ["tag": topic]
+        case .getVersion:
+            parameters = ["type": 1]
         default:
             break
         }

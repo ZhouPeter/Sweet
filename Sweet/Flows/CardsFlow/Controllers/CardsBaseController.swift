@@ -11,6 +11,7 @@ import AVFoundation
 import JXPhotoBrowser
 import SwiftyUserDefaults
 import Kingfisher
+import AudioToolbox
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -35,12 +36,25 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         return view
     } ()
     
+    private lazy var downButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
+        button.addTarget(self, action: #selector(didPressDownButton(_:)), for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
     public var index = 0 {
         didSet {
             let oldIndexPath = IndexPath(item: oldValue, section: 0)
             guard let oldCell = collectionView.cellForItem(at: oldIndexPath) else { return }
             if let oldCell = oldCell as? ContentCardCollectionViewCell {
                 oldCell.resetEmojiView()
+            }
+            if index < cellConfigurators.count - 3 {
+                downButton.isHidden = false
+            } else {
+                downButton.isHidden = true
             }
         }
     }
@@ -81,6 +95,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         view.titleLabel.text = "快去首页订阅有趣的内容"
         return view
     }()
+    
     private lazy var playerView: SweetPlayerView = {
         let view = SweetPlayerView.shard
         view.panGesture.isEnabled = false
@@ -92,6 +107,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         view.controlView.addGestureRecognizer(tap)
         return view
     }()
+    
     private var isFetchLoadCards = false
     private var avPlayer: AVPlayer?
     private let keyboard = KeyboardObserver()
@@ -134,17 +150,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        view.addSubview(downButton)
+        downButton.constrain(width: 60, height: 60)
+        downButton.align(.right, inset: 10)
+        downButton.align(.bottom, inset: 10)
         addInputBottomView()
         keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
         Messenger.shared.addDelegate(self)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-//        logger.debug("内存过高")
-//        let cache = KingfisherManager.shared.cache
-//        cache.maxMemoryCost = 40 * 1024 * 1024
-//        KingfisherManager.shared.cache.clearMemoryCache()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -230,6 +242,10 @@ extension CardsBaseController {
             gesture.isEnabled = false
             scrollCard(withPoint: point)
         }
+    }
+    @objc private func didPressDownButton(_ sender: UIButton) {
+        index = cellConfigurators.count - 1
+        scrollTo(row: index)
     }
 }
 
@@ -472,6 +488,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     func showProfile(userId: UInt64) {
         delegate?.showProfile(userId: userId)
     }
+    
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
         web.request(
             .choiceCard(cardId: cardId, index: selectedIndex),
@@ -484,12 +501,14 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                 let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
                 self.cellConfigurators[index] = configurator
                 self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             case let .failure(error):
                 logger.error(error)
             }
         }
     }
 }
+
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
     func showStoriesPlayerController(cell: UICollectionViewCell,
                                      storiesGroup: [[StoryCellViewModel]],
@@ -500,19 +519,11 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
                                                           currentIndex: currentIndex,
                                                           fromCardId: cardId)
         controller.delegate = self
-//        let cardHeroId = "card\(currentIndex)"
-//        cell.contentView.hero.id = cardHeroId
-//        cell.contentView.hero.modifiers = [.useNoSnapshot, .spring(stiffness: 250, damping: 25)]
-//        controller.hero.isEnabled = true
-//        controller.hero.modalAnimationType = .none
-//        controller.view.hero.id = cardHeroId
-//        controller.view.hero.modifiers = [.useNoSnapshot, .spring(stiffness: 250, damping: 25)]
         self.present(controller, animated: true, completion: {
             self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
                            fromCardId: cardId,
                            storyGroupIndex: currentIndex)
         })
-       
     }
 }
 
@@ -541,6 +552,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
                 Defaults[.isEvaluationOthers] = true
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             case let .failure(error):
                 logger.error(error)
             }
@@ -568,6 +580,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         self.cellConfigurators[index] = configurator
                         self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     }
+                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -592,6 +605,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         preview.title = card.content
         navigationController?.pushViewController(preview, animated: true)
     }
+    
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
         let cardType = cards[index].type
@@ -835,6 +849,7 @@ extension CardsBaseController {
                     acCell.updateItem(item: item, like: true)
                 }
                 self.toast(message: "❤️ 评价成功")
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             case let  .failure(error):
                 logger.error(error)
             }

@@ -54,8 +54,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
             self?.showWebView(title: title, urlString: urlString)
         }
         
-        aboutOutput.showFeedback = {
-            
+        aboutOutput.showFeedback = { [weak self] in
+            self?.showFeedback()
         }
         
         aboutOutput.showUpdate = { [weak self] (user) in
@@ -73,5 +73,10 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         let webViewController = WebViewController(urlString: urlString)
         webViewController.navigationItem.title = title
         router.push(webViewController)
+    }
+    
+    private func showFeedback() {
+        let feedback = FeedbackController()
+        router.push(feedback)
     }
 }

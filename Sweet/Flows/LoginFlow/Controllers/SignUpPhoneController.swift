@@ -88,7 +88,13 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         navigationItem.title = "手机验证"
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barTintColor = UIColor.xpYellow()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressView(_:)))
+        view.addGestureRecognizer(tap)
         setupUI()
+    }
+    
+    @objc private func didPressView(_ tap: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
     private func setupUI() {

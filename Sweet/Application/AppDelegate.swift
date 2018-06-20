@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                object: nil)
         WXApi.registerApp("wx819697effecdb6f5")
         getSetting()
+//        VersionUpdateHelper.versionCheck(viewController: rootController)
         return true
     }
     

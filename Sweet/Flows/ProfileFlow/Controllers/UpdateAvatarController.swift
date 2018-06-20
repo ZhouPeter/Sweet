@@ -83,6 +83,7 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
                 if status == .authorized {
                     let sourceType: UIImagePickerControllerSourceType = .photoLibrary
                     let imagePickerController = UIImagePickerController()
+                    imagePickerController.delegate = self
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = sourceType
                     self.present(imagePickerController, animated: true, completion: nil)

@@ -8,6 +8,9 @@
 
 import UIKit
 import Gemini
+protocol StoriesGroupView: BaseView {
+    
+}
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
 }

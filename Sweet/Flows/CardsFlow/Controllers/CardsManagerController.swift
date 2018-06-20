@@ -33,15 +33,8 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private lazy var titleView: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["全部", "订阅"])
-        control.tintColor = .clear
-        let normalTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                    NSAttributedStringKey.foregroundColor: UIColor.white.withAlphaComponent(0.5)]
-        control.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        let selectedTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18),
-                                      NSAttributedStringKey.foregroundColor: UIColor.white]
-        control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+    private lazy var titleView: CustomSegmentedControl = {
+        let control = CustomSegmentedControl(items: ["全部", "订阅"])
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(switchView(_:)), for: .valueChanged)
         return control
@@ -129,7 +122,7 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         }
     }
     
-    @objc private func switchView(_ sender: UISegmentedControl) {
+    @objc private func switchView(_ sender: CustomSegmentedControl) {
         showAll(sender.selectedSegmentIndex == 0)
     }
     
