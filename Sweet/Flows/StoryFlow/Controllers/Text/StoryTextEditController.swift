@@ -36,23 +36,25 @@ final class StoryTextEditController: UIViewController {
         didSet {
             if let topic = topic {
                 topicButton.setAttributedTitle(NSMutableAttributedString(topic: topic, fontSize: 30), for: .normal)
-                topicButton.alpha = textView.hasText ? 1 : 0
+                DispatchQueue.main.async { self.layoutTopicButton() }
             } else {
                 topicButton.alpha = 0
             }
+            keyboardControl.topicButton.updateTopic(topic ?? "添加标签")
         }
     }
     weak var delegate: StoryTextEditControllerDelegate?
     
     var boundingRect: CGRect {
-        var frame = textBoundingView.frame
+        let frame = textBoundingView.frame
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         return CGRect(
             x: frame.minX / width,
             y: frame.minY / height,
             width: frame.width / width,
-            height: frame.height / height)
+            height: frame.height / height
+        )
     }
     
     private lazy var keyboardControl: StoryKeyboardControlView = {
@@ -68,7 +70,7 @@ final class StoryTextEditController: UIViewController {
     private var isTextGestureEnabled = true
     private var textContainerEditScale: CGFloat = 1
     private var textTransform: Transform?
-    private var topicButtonLeft: NSLayoutConstraint?
+    private var topicButtonCenterX: NSLayoutConstraint?
     private var topicButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = #imageLiteral(resourceName: "TopicLabelBackground")
@@ -76,13 +78,12 @@ final class StoryTextEditController: UIViewController {
         button.setBackgroundImage(image, for: .normal)
         button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        button.alpha = 0
         return button
     } ()
     
     private var firstLineUsedRect = CGRect.zero {
         didSet {
-            topicButtonLeft?.constant = firstLineUsedRect.origin.x
+            layoutTopicButton()
         }
     }
     
@@ -151,7 +152,7 @@ final class StoryTextEditController: UIViewController {
         textViewContainer.addSubview(textView)
         textViewContainer.addSubview(topicButton)
         
-        topicButtonLeft = topicButton.align(.left, to: textView)
+        topicButtonCenterX = topicButton.centerX(to: textView)
         topicButton.pin(.top, to: textView, spacing: 10)
         
         layoutTextContainer()
@@ -169,6 +170,9 @@ final class StoryTextEditController: UIViewController {
         keyboardControl.align(.right, to: view)
         keyboardControl.alpha = 0
         keyboardControlBottom = keyboardControl.align(.bottom, to: view)
+        if topic == nil {
+            topicButton.alpha = 0
+        }
     }
     
     func clear() {
@@ -214,6 +218,14 @@ final class StoryTextEditController: UIViewController {
     
     // MARK: - Private
     
+    private func layoutTopicButton() {
+        if textView.hasText {
+            topicButtonCenterX?.constant = -(firstLineUsedRect.size.width - topicButton.bounds.width) * 0.5
+        } else {
+            topicButtonCenterX?.constant = 0
+        }
+    }
+    
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
@@ -222,14 +234,10 @@ final class StoryTextEditController: UIViewController {
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
                 if event.type == .willShow {
                     self.keyboardControl.alpha = 1
-                    self.topicButton.alpha = self.topic == nil ? 0 : 1
+                    self.topicButton.alpha = 0
                 } else if event.type == .willHide {
                     self.keyboardControl.alpha = 0
-                    if self.topic == nil {
-                        self.topicButton.alpha = 0
-                    } else {
-                        self.topicButton.alpha = self.textView.hasText ? 1 : 0
-                    }
+                    self.topicButton.alpha = self.topic == nil ? 0 : 1
                 }
                 self.view.layoutIfNeeded()
                 self.layoutTextContainer()

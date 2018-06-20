@@ -84,6 +84,7 @@ final class StoryEditController: BaseViewController, StoryEditView {
         self.fileURL = fileURL
         self.isPhoto = isPhoto
         self.topic = topic
+        textController.topic = topic
         super.init(nibName: nil, bundle: nil)
     }
     
