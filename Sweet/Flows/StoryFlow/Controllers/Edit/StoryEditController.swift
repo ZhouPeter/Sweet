@@ -5,15 +5,17 @@
 //  Created by Mario Z. on 2018/5/2.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 import UIKit
 import TapticEngine
 import SwiftyUserDefaults
 
-final class StoryEditController: BaseViewController, StoryEditView {
+final class StoryEditController: BaseViewController, StoryEditView, StoryEditCancellable {
     var onCancelled: (() -> Void)?
     var onFinished: ((URL) -> Void)?
-    
+    var presentable: UIViewController { return self }
     private let fileURL: URL
     private let isPhoto: Bool
     private var topic: String?
@@ -90,6 +92,10 @@ final class StoryEditController: BaseViewController, StoryEditView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        logger.debug()
     }
     
     override func viewDidLoad() {
@@ -264,7 +270,11 @@ final class StoryEditController: BaseViewController, StoryEditView {
     // MARK: - Actions
     
     @objc private func didPressCloseButton() {
-        onCancelled?()
+        if isPhoto && textController.hasText == false && textController.topic == nil {
+            onCancelled?()
+            return
+        }
+        cancelEditing { self.onCancelled?() }
     }
     
     @objc private func didPressEditButton() {

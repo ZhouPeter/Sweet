@@ -1015,6 +1015,10 @@
 		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
+		ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
+		ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
+		ACC96E7520DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
 		ACCD27EC20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
 		ACCD27ED20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
 		ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCD27EB20C54155002E96AB /* BadgeView.swift */; };
@@ -1506,6 +1510,7 @@
 		ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSearchCell.swift; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
+		ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditCancellable.swift; sourceTree = "<group>"; };
 		ACCD27EB20C54155002E96AB /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
 		ACD5A52F2088731C00B78CFD /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
@@ -1913,6 +1918,7 @@
 			isa = PBXGroup;
 			children = (
 				AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */,
+				ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */,
 				AC525AA5208DD6EC001070B2 /* Controllers */,
 			);
 			path = StoryFlow;
@@ -2877,6 +2883,7 @@
 				AC616FAA20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
@@ -3180,6 +3187,7 @@
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583BC79120CE5F4C00C4494E /* BadgeButton.swift in Sources */,
+				ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -3403,6 +3411,7 @@
 			files = (
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4620C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
+				ACC96E7520DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				5863A83D20ABCF3B0016B089 /* StoryUvList.swift in Sources */,
 				581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
@@ -3697,6 +3706,7 @@
 				AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,

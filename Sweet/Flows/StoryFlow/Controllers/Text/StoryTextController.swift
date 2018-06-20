@@ -9,7 +9,9 @@
 import UIKit
 import SwiftyUserDefaults
 
-final class StoryTextController: BaseViewController, StoryTextView {
+final class StoryTextController: BaseViewController, StoryTextView, StoryEditCancellable {
+    var presentable: UIViewController { return self }
+    
     var onFinished: (() -> Void)?
     var onCancelled: (() -> Void)?
     
@@ -117,7 +119,13 @@ final class StoryTextController: BaseViewController, StoryTextView {
     }
     
     @objc private func didPressCloseButton() {
-        onCancelled?()
+        guard editController.hasText || editController.topic != nil else {
+            onCancelled?()
+            return
+        }
+        cancelEditing {
+            self.onCancelled?()
+        }
     }
 }
 
