@@ -81,6 +81,7 @@ ProfileFlowFactory {
     func makeOnboardingModule() -> OnboardingView {
         return OnboardingController()
     }
+    
     func makeAuthOutput() -> AuthView {
         return AuthViewController()
     }
@@ -91,6 +92,10 @@ ProfileFlowFactory {
     
     func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
         return StoryEditController(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+    }
+    
+    func makeDismissableStoryRecordView(user: User, topic: String?) -> StoryRecordView {
+        return StoryRecordController(user: user, topic: topic, isDismissable: true)
     }
     
     func makeCardsManagerView(user: User) -> CardsManagerView {
@@ -105,8 +110,8 @@ ProfileFlowFactory {
         return TopicListController()
     }
     
-    func makeStoryTextView() -> StoryTextView {
-        return StoryTextController()
+    func makeStoryTextView(with topic: String?) -> StoryTextView {
+        return StoryTextController(topic: topic)
     }
     
     func makeAlbumView() -> AlbumView {
@@ -149,5 +154,4 @@ extension FlowFactoryImp: ContactsFlowFactory {
         return SubscriptionController()
     }
     
- 
 }

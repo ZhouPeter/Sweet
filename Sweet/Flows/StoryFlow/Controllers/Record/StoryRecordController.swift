@@ -5,6 +5,7 @@
 //  Created by Mario Z. on 2018/4/23.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
+// swiftlint:disable type_body_length
 
 import UIKit
 import Hero
@@ -12,9 +13,11 @@ import SwiftyUserDefaults
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
-    var onTextChoosed: (() -> Void)?
-    var onAlbumChoosed: (() -> Void)?
-    
+    var onTextChoosed: ((String?) -> Void)?
+    var onAlbumChoosed: ((String?) -> Void)?
+    var onDismissed: (() -> Void)?
+    override var prefersStatusBarHidden: Bool { return true }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     private let recordContainer = UIView()
     private let bottomView = StoryRecordBottomView()
     private var captureView = StoryCaptureView()
@@ -50,14 +53,21 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private var current = StoryRecordType.record
     private let user: User
+    private let isDismissable: Bool
     
-    init(user: User) {
+    init(user: User, topic: String? = nil, isDismissable: Bool = false) {
         self.user = user
+        self.topic = topic
+        self.isDismissable = isDismissable
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        logger.debug()
     }
     
     override func viewDidLoad() {
@@ -67,6 +77,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.addSubview(recordContainer)
         recordContainer.backgroundColor = .clear
         recordContainer.fill(in: view)
+        topicButton.updateTopic(topic ?? "添加标签")
         setupCaptureView()
         setupTopView()
         setupShootButton()
@@ -98,7 +109,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resumeCamera(false)
-        topic = nil
+        if isDismissable == false {
+            topic = nil
+        }
         isShooting = false
         isStoryEditing = false
         shootButton.alpha = 1
@@ -109,7 +122,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
-        onTextChoosed?()
+        onTextChoosed?(topic)
     }
 
     private func edit(with url: URL, isPhoto: Bool) {
@@ -316,8 +329,13 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
-        button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
+        if self.isDismissable {
+            button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+            button.addTarget(self, action: #selector(didPressDismissButton), for: .touchUpInside)
+        } else {
+            button.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
+            button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
+        }
         return button
     } ()
     
@@ -427,6 +445,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         toggleOffMenu()
         NotificationCenter.default.post(name: .ScrollPage, object: 1)
     }
+    
+    @objc private func didPressDismissButton() {
+        toggleOffMenu()
+        captureView.stopCapture()
+        onDismissed?()
+    }
 }
 
 extension StoryRecordController: TLStoryAuthorizedDelegate {
@@ -444,7 +468,7 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
 extension StoryRecordController: StoryRecordBottomViewDelegate {
     func bottomViewDidPressTypeButton(_ type: StoryRecordType) {
         if type == .album {
-            onAlbumChoosed?()
+            onAlbumChoosed?(topic)
             bottomView.selectBottomButton(at: current.rawValue, animated: true)
             let last = current
             if current == .record {
