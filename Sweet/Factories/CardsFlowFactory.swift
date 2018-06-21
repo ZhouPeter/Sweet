@@ -10,9 +10,5 @@ import Foundation
 
 protocol CardsFlowFactory {
     func makeCardsManagerView(user: User) -> CardsManagerView
-    func makeStoiesGroupView(user: User,
-                             storiesGroup: [[StoryCellViewModel]],
-                             currentIndex: Int,
-                             fromCardId: String?,
-                             delegate: StoriesPlayerGroupViewControllerDelegate) -> StoriesGroupView
+
 }

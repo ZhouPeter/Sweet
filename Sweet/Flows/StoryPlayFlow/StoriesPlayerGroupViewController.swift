@@ -8,14 +8,29 @@
 
 import UIKit
 import Gemini
-protocol StoriesGroupView: BaseView {
-    var runStoryFlow: ((String) -> Void)? { get set }
-}
+
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
 }
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
+    var runProfileFlow: ((User, UInt64) -> Void)?
+    
     var runStoryFlow: ((String) -> Void)?
+
+    var onFinish: (() -> Void)?
+    
+    func pause() {
+        for cell in collectionView.visibleCells {
+            storiesPlayerControllerMap[cell]?.pause()
+        }
+    }
+    
+    func play() {
+        for cell in collectionView.visibleCells {
+            storiesPlayerControllerMap[cell]?.play()
+        }
+    }
+    
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     var user: User
     var currentIndex: Int {
@@ -74,6 +89,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.setContentOffset(CGPoint(x: UIScreen.mainWidth() * CGFloat(currentIndex),
                                                 y: 0),
                                         animated: true)
+        delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
+                            fromCardId: fromCardId,
+                            storyGroupIndex: currentIndex)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -129,7 +147,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
     func dismissController() {
-        dismiss(animated: false, completion: nil)
+        onFinish?()
     }
     
     func playToBack() {
@@ -140,7 +158,6 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     func playToNext() {
         if currentIndex + 1 > storiesGroup.count - 1 { return }
         collectionView.scrollToItem(at: IndexPath(item: currentIndex + 1, section: 0), at: .left, animated: true)
-
     }
 }
 

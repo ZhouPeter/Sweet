@@ -33,6 +33,10 @@ final class RouterImp: NSObject, Router {
         return rootController
     }
     
+    func presentedView() -> UIViewController? {
+        return rootController?.presentedViewController
+    }
+    
     func present(_ flow: Presentable?) {
         present(flow, animated: true)
     }

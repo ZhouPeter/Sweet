@@ -514,29 +514,14 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
                                      storiesGroup: [[StoryCellViewModel]],
                                      currentIndex: Int,
                                      cardId: String?) {
-//        let controller = StoriesPlayerGroupViewController(user: user,
-//                                                          storiesGroup: storiesGroup,
-//                                                          currentIndex: currentIndex,
-//                                                          fromCardId: cardId)
-//
-//        controller.delegate = self
         delegate?.showStoriesGroup(
             user: user,
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
             fromCardId: cardId,
             delegate: self,
-            completion: {
-                    self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                                   fromCardId: cardId,
-                                   storyGroupIndex: currentIndex)
-    })
-
-//        self.present(controller, animated: true, completion: {
-//            self.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-//                           fromCardId: cardId,
-//                           storyGroupIndex: currentIndex)
-//        })
+            completion: {}
+        )
     }
 }
 

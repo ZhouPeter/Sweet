@@ -14,7 +14,6 @@ protocol CardsBaseView: BaseView {
 
 protocol CardsBaseViewDelegate: class {
     func showProfile(userId: UInt64)
-    func runStoryFlow(topic: String)
     func showStoriesGroup(user: User,
                           storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int,

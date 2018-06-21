@@ -14,6 +14,8 @@ protocol Router: Presentable {
                            oldController: UIViewController,
                            newController: UIViewController)
     
+    func presentedView() -> UIViewController?
+    
     func present(_ flow: Presentable?)
     func present(_ flow: Presentable?, animated: Bool)
     func present(_ flow: Presentable?, animated: Bool, completion: (() -> Void)?)

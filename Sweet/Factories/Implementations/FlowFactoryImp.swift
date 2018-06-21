@@ -16,21 +16,7 @@ final class FlowFactoryImp:
     CardsFlowFactory,
     PowerFlowFactory,
 ProfileFlowFactory {
-    func makeStoiesGroupView(user: User,
-                             storiesGroup: [[StoryCellViewModel]],
-                             currentIndex: Int,
-                             fromCardId: String?,
-                             delegate: StoriesPlayerGroupViewControllerDelegate) -> StoriesGroupView {
-        let controller = StoriesPlayerGroupViewController(
-                                                        user: user,
-                                                        storiesGroup: storiesGroup,
-                                                        currentIndex: currentIndex,
-                                                        fromCardId: fromCardId)
-        controller.delegate = delegate
-        return controller
-    }
     
-
     func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
         let viewController = UpdateController()
         viewController.user = user
@@ -134,6 +120,32 @@ ProfileFlowFactory {
     
     func makePhotoCropView(with photo: UIImage) -> PhotoCropView {
         return PhotoCropController(with: photo)
+    }
+}
+extension FlowFactoryImp: StoryPlayerFlowFactory {
+    func makeStoriesPlayerView(user: User,
+                               stories: [StoryCellViewModel],
+                               current: Int,
+                               delegate: StoriesPlayerViewControllerDelegate?) -> StoriesPlayerView {
+        let controller = StoriesPlayerViewController(user: user)
+        controller.currentIndex = current
+        controller.stories = stories
+        controller.delegate = delegate
+        return controller
+    }
+    
+    func makeStoiesGroupView(user: User,
+                             storiesGroup: [[StoryCellViewModel]],
+                             currentIndex: Int,
+                             fromCardId: String?,
+                             delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView {
+        let controller = StoriesPlayerGroupViewController(
+            user: user,
+            storiesGroup: storiesGroup,
+            currentIndex: currentIndex,
+            fromCardId: fromCardId)
+        controller.delegate = delegate
+        return controller
     }
 }
 

@@ -64,11 +64,11 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 class StoriesController: UIViewController, PageChildrenProtocol {
     var showStoriesPlayerView: (
     (
-    User,
-    [StoryCellViewModel],
-    Int,
-    StoriesPlayerViewControllerDelegate,
-    (() -> Void)?) -> Void
+        User,
+        [StoryCellViewModel],
+        Int,
+        StoriesPlayerViewControllerDelegate,
+        (() -> Void)?) -> Void
     )?
     
     var user: User
@@ -151,13 +151,13 @@ extension StoriesController: UICollectionViewDelegate {
             
         })
 
-        let storiesPlayViewController = StoriesPlayerViewController(user: user)
-        storiesPlayViewController.delegate = self
-        storiesPlayViewController.currentIndex = indexPath.item
-        storiesPlayViewController.stories = storyViewModels
-        self.present(storiesPlayViewController, animated: true) {
-            storiesPlayViewController.reloadPlayer()
-        }
+//        let storiesPlayViewController = StoriesPlayerViewController(user: user)
+//        storiesPlayViewController.delegate = self
+//        storiesPlayViewController.currentIndex = indexPath.item
+//        storiesPlayViewController.stories = storyViewModels
+//        self.present(storiesPlayViewController, animated: true) {
+//            storiesPlayViewController.reloadPlayer()
+//        }
         
     }
 }

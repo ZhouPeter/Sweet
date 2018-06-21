@@ -15,11 +15,11 @@ protocol PageChildrenProtocol {
 class ActionsController: PageboyViewController {
     var showStoriesPlayerView: (
     (
-    User,
-    [StoryCellViewModel],
-    Int,
-    StoriesPlayerViewControllerDelegate,
-    (() -> Void)?) -> Void
+     User,
+     [StoryCellViewModel],
+     Int,
+     StoriesPlayerViewControllerDelegate,
+     (() -> Void)?) -> Void
     )?
     var user: User {
         didSet {

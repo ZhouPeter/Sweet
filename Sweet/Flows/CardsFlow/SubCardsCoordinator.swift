@@ -47,15 +47,15 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate,
                           completion: (() -> Void)?) {
-        let storiesGroupView = factory.makeStoiesGroupView(user: user,
-                                                           storiesGroup: storiesGroup,
-                                                           currentIndex: currentIndex,
-                                                           fromCardId: fromCardId,
-                                                           delegate: delegate)
-        storiesGroupView.runStoryFlow = { [weak self] topic in
-            self?.runStoryFlow(topic: topic)
-        }
-        router.present(storiesGroupView, animated: true, completion: completion)
+//        let storiesGroupView = factory.makeStoiesGroupView(user: user,
+//                                                           storiesGroup: storiesGroup,
+//                                                           currentIndex: currentIndex,
+//                                                           fromCardId: fromCardId,
+//                                                           delegate: delegate)
+//        storiesGroupView.runStoryFlow = { [weak self] topic in
+//            self?.runStoryFlow(topic: topic)
+//        }
+//        router.present(storiesGroupView, animated: true, completion: completion)
         
     }
     

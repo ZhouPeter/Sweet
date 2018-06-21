@@ -27,40 +27,29 @@ class AllCardsCoordinator: BaseCoordinator {
     }
 }
 
-extension AllCardsCoordinator {
-    func runStoryFlow(topic: String) {
-        let navigation = UINavigationController()
-        let coordinator = coordinatorFactory
-            .makeDismissableStoryCoordinator(user: user, topic: topic, navigation: navigation)
-        coordinator.finishFlow = { [weak self, coordinator] in
-            self?.removeDependency(coordinator)
-            logger.debug()
-        }
-        addDependency(coordinator)
-        router.present(navigation, animated: true)
-        coordinator.start()
-    }
-}
-
 extension AllCardsCoordinator: CardsBaseViewDelegate {
     func showStoriesGroup(user: User, storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate,
                           completion: (() -> Void)?) {
-        let storiesGroupView = factory.makeStoiesGroupView(user: user,
-                                                           storiesGroup: storiesGroup,
-                                                           currentIndex: currentIndex,
-                                                           fromCardId: fromCardId,
-                                                           delegate: delegate)
-        storiesGroupView.runStoryFlow = { [weak self] topic in
-            self?.runStoryFlow(topic: topic)
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
+                                                                        router: router,
+                                                                        current: currentIndex,
+                                                                        isGroup: true,
+                                                                        fromCardId: fromCardId,
+                                                                        storiesGroup: storiesGroup,
+                                                                        delegate: nil,
+                                                                        groupDelegate: delegate)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
         }
-        router.present(storiesGroupView, animated: true, completion: completion)
+        addDependency(coordinator)
+        coordinator.start()
         
     }
     
     func showProfile(userId: UInt64) {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
+        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
