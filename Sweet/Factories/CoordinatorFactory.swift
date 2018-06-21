@@ -14,6 +14,18 @@ protocol CoordinatorFactory {
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
     func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput
+    func makeProfileCoordinator(user: User,
+                                buddyID: UInt64,
+                                navigation: UINavigationController) -> Coordinator & ProfileCoordinatorOutput
+    func makeStoryPlayerCoordinator(
+        user: User,
+        router: Router,
+        current: Int,
+        isGroup: Bool,
+        fromCardId: String?,
+        storiesGroup: [[StoryCellViewModel]],
+        delegate: StoriesPlayerViewControllerDelegate?,
+        groupDelegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput
     func makeIMCoordinator(user: User, token: String, navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(user: User, navigation: UINavigationController?) -> Coordinator
     func makeDismissableStoryCoordinator(

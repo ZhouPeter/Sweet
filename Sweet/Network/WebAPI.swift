@@ -261,7 +261,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             if let fromCardId = fromCardId {
                 parameters = ["fromCardId": fromCardId]
             }
-            parameters = ["storyId": storyId]
+            parameters["storyId"] = storyId
         case let .storyDetailsUvlist(storyId),
              let .delStory(storyId),
              let .reportStory(storyId):

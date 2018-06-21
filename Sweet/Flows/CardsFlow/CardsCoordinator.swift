@@ -34,7 +34,6 @@ final class CardsCoordinator: BaseCoordinator {
         cards.delegate = self
         router.setRootFlow(cards)
     }
-
 }
 
 extension CardsCoordinator: CardsManagerViewDelegate {
@@ -51,5 +50,5 @@ extension CardsCoordinator: CardsManagerViewDelegate {
         coordinator.start(with: view)
         subCoordinator = coordinator
     }
-
+    
 }

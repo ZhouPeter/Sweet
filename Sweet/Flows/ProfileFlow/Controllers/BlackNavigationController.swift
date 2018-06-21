@@ -17,3 +17,4 @@ class BlackNavigationController: UINavigationController {
         navigationBar.barStyle = .black
     }
 }
+

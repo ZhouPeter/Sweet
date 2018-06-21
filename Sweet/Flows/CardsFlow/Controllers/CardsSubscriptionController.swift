@@ -26,7 +26,7 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
         if self.cards.count == 0 {
             let subCardsLastID = Defaults[.subCardsLastID]
             startLoadCards(
-            cardRequest: .all(cardId: subCardsLastID,
+            cardRequest: .sub(cardId: subCardsLastID,
                               direction: Direction.recover)) { [weak self] (success, _) in
                 if success {
                     self?.collectionView.reloadData()

@@ -104,7 +104,6 @@ extension WebViewController: WKNavigationDelegate {
         handleError(error: error)
     }
     
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         progressView.setProgress(1, animated: true)
         UIView.animate(withDuration: 0.25, delay: 0.5, options: [], animations: {

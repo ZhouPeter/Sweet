@@ -16,6 +16,9 @@ extension UINavigationController {
     open override var shouldAutorotate: Bool {
         return false
     }
+    open override var childViewControllerForStatusBarHidden: UIViewController? {
+        return self.topViewController
+    }
 }
 
 extension Notification.Name {
@@ -27,6 +30,8 @@ extension Notification.Name {
     static let BlackStatusBar = Notification.Name(rawValue: "BlackStatusBar")
     static let WhiteStatusBar = Notification.Name(rawValue: "WhiteStatusBar")
     static let ScrollToPage = Notification.Name(rawValue: "ScrollToPage")
+    static let StatusBarHidden = Notification.Name(rawValue: "StatusBarHidden")
+    static let StatusBarNoHidden = Notification.Name(rawValue: "StatusBarNoHidden")
 }
 
 final class MainController: PageboyViewController, MainView {
@@ -38,7 +43,7 @@ final class MainController: PageboyViewController, MainView {
     var onCardsFlowSelect: ((UINavigationController) -> Void)?
     private var controllers = [UINavigationController]()
     private var statusBarStyle = UIStatusBarStyle.lightContent
-
+    private var statusBarHidden: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -65,6 +70,10 @@ final class MainController: PageboyViewController, MainView {
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarHidden
     }
     
     // MARK: - Private
@@ -112,6 +121,18 @@ final class MainController: PageboyViewController, MainView {
             name: .WhiteStatusBar,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveStatusBarHidden),
+            name: .StatusBarHidden,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveStatusBarNoHidden),
+            name: .StatusBarNoHidden,
+            object: nil
+        )
     }
     
     @objc func didReceivePageScrollDiableNote() {
@@ -149,6 +170,19 @@ final class MainController: PageboyViewController, MainView {
         statusBarStyle = .lightContent
         setNeedsStatusBarAppearanceUpdate()
     }
+    
+    @objc func didReceiveStatusBarHidden() {
+        guard statusBarHidden != true else { return }
+        statusBarHidden = true
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    @objc func didReceiveStatusBarNoHidden() {
+        guard statusBarHidden != false else { return }
+        statusBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
 }
 
 extension MainController: PageboyViewControllerDataSource {

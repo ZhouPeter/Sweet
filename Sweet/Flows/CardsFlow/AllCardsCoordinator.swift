@@ -28,8 +28,28 @@ class AllCardsCoordinator: BaseCoordinator {
 }
 
 extension AllCardsCoordinator: CardsBaseViewDelegate {
+    func showStoriesGroup(user: User, storiesGroup: [[StoryCellViewModel]],
+                          currentIndex: Int, fromCardId: String?,
+                          delegate: StoriesPlayerGroupViewControllerDelegate,
+                          completion: (() -> Void)?) {
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
+                                                                        router: router,
+                                                                        current: currentIndex,
+                                                                        isGroup: true,
+                                                                        fromCardId: fromCardId,
+                                                                        storiesGroup: storiesGroup,
+                                                                        delegate: nil,
+                                                                        groupDelegate: delegate)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+        
+    }
+    
     func showProfile(userId: UInt64) {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
+        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
