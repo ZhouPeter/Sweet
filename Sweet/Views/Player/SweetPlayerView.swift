@@ -343,7 +343,6 @@ extension SweetPlayerView {
             playerLayer?.playAsset(asset: asset.avURLAsset)
             isURLSet = true
         }
-        panGesture.isEnabled = true
         playerLayer?.play()
     }
 
@@ -362,7 +361,7 @@ extension SweetPlayerView {
 extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     func sweetPlayer(player: SweetPlayerLayerView, playerStateDidChange state: SweetPlayerState) {
         controlView.playerStateDidChange(state: state)
-        panGesture.isEnabled = state != .playedToTheEnd
+//        panGesture.isEnabled = state != .playedToTheEnd
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
         if state == .playedToTheEnd {
             seek(0) {

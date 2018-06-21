@@ -8,7 +8,7 @@
 // swiftlint:disable colon
 
 import Foundation
-
+import Hero
 final class FlowFactoryImp:
     OnboardingFlowFactory,
     AuthFlowFactory,
@@ -131,6 +131,7 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
         controller.currentIndex = current
         controller.stories = stories
         controller.delegate = delegate
+        
         return controller
     }
     
