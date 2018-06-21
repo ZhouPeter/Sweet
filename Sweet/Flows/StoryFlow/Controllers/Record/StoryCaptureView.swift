@@ -15,125 +15,227 @@ final class StoryCaptureView: GPUImageView {
     private var filter = GPUImageBeautifyFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
+    private var queue = DispatchQueue.global()
     
-    func setupCamera() {
-        guard camera == nil else { return }
-        fillMode = .preserveAspectRatioAndFill
-        camera = GPUImageStillCamera(sessionPreset: StoryConfg.captureSessionPreset, cameraPosition: .back)
-        camera?.outputImageOrientation = .portrait
-        camera?.horizontallyMirrorFrontFacingCamera = true
-        camera?.addTarget(filter)
-        filter.addTarget(self)
-    }
+    private var isCameraSetuping = false
     
-    func enableAudio() {
-        camera?.addAudioInputsAndOutputs()
-    }
-    
-    func rotateCamera() {
-        camera?.rotateCamera()
-    }
-    
-    func switchFlash() {
-        if camera?.inputCamera.hasFlash == false || camera?.inputCamera.hasTorch == false {
+    func setupCamera(callbacK: (() -> Void)? = nil) {
+        guard camera == nil else {
+            callbacK?()
             return
         }
-        
+        guard isCameraSetuping == false else { return }
+        isCameraSetuping = false
+        queue.async {
+            self.fillMode = .preserveAspectRatioAndFill
+            self.camera = GPUImageStillCamera(sessionPreset: StoryConfg.captureSessionPreset, cameraPosition: .back)
+            self.camera?.outputImageOrientation = .portrait
+            self.camera?.horizontallyMirrorFrontFacingCamera = true
+            self.camera?.addTarget(self.filter)
+            self.filter.addTarget(self)
+            self.isCameraSetuping = false
+            DispatchQueue.main.async { callbacK?() }
+        }
+    }
+    
+    func enableAudio(callback: (() -> Void)? = nil) {
+        queue.async {
+            self.camera?.addAudioInputsAndOutputs()
+            DispatchQueue.main.async { callback?() }
+        }
+    }
+    
+    func rotateCamera(callback: (() -> Void)? = nil) {
+        queue.async {
+            self.camera?.rotateCamera()
+            DispatchQueue.main.async { callback?() }
+        }
+    }
+    
+    func switchFlash(callback: (() -> Void)? = nil) {
+        guard camera?.inputCamera.hasFlash == true && camera?.inputCamera.hasTorch == true else {
+            callback?()
+            return
+        }
         guard var rawValue = camera?.inputCamera.torchMode.rawValue else {
+            callback?()
             return
         }
-        rawValue += 1
-        let mode = AVCaptureDevice.TorchMode(rawValue: rawValue + 1 > 3 ? 0 : rawValue)!
-        do {
-            try camera?.inputCamera.lockForConfiguration()
-            camera?.inputCamera.torchMode = mode
-            camera?.inputCamera.unlockForConfiguration()
-        } catch {
-            logger.error(error)
+        queue.async {
+            rawValue += 1
+            let mode = AVCaptureDevice.TorchMode(rawValue: rawValue + 1 > 3 ? 0 : rawValue)!
+            do {
+                try self.camera?.inputCamera.lockForConfiguration()
+                self.camera?.inputCamera.torchMode = mode
+                self.camera?.inputCamera.unlockForConfiguration()
+            } catch {
+                logger.error(error)
+            }
+            callback?()
         }
     }
     
-    func startCaputre() {
-        camera?.startCapture()
-        isStarted = true
+    private var isStarting = false
+    
+    func startCaputre(callback: (() -> Void)? = nil) {
+        logger.debug()
+        guard isStarting == false, isStarted == false else { return }
+        logger.debug("success")
+        isStarting = true
+        queue.async {
+            self.camera?.startCapture()
+            self.isStarted = true
+            self.isStarting = false
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
-    func pauseCamera() {
-        camera?.pauseCapture()
-        isPaused = true
+    private var isPausing = false
+    
+    func pauseCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
+        guard isPausing == false, isPaused == false else { return }
+        logger.debug("success")
+        isPausing = true
+        queue.async {
+            self.camera?.pauseCapture()
+            self.isPaused = true
+            self.isPausing = false
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
-    func resumeCamera() {
-        camera?.resumeCameraCapture()
-        isPaused = false
+    private var isResuming = false
+    
+    func resumeCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
+        guard isResuming == false, isPaused else { return }
+        logger.debug("success")
+        isResuming = true
+        queue.async {
+            self.camera?.resumeCameraCapture()
+            self.isPaused = false
+            self.isResuming = false
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
-    func stopCapture() {
-        camera?.stopCapture()
-        isStarted = false
+    private var isStopping = false
+    
+    func stopCapture(callback: (() -> Void)? = nil) {
+        logger.debug()
+        guard isStopping == false, isStarted == false else { return }
+        logger.debug("success")
+        isStopping = true
+        queue.async {
+            self.camera?.stopCapture()
+            self.isStarted = false
+            self.isStopping = false
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
-    func startRecording() {
-        setupRecording()
-        DispatchQueue.main.async { self.writer?.startRecording() }
+    private var isStartingRecording = false
+    
+    func startRecording(callback: (() -> Void)? = nil) {
+        guard isStartingRecording == false else { return }
+        isStartingRecording = true
+        setupRecording {
+            self.queue.async {
+                self.writer?.startRecording()
+                self.isStartingRecording = false
+                DispatchQueue.main.async { callback?() }
+            }
+        }
     }
+    
+    private var isFinishingRecording = false
     
     func finishRecording(_ callback: @escaping ((URL?) -> Void)) {
-        writer?.finishRecording(completionHandler: { [weak self] in
-            DispatchQueue.main.async {
-                guard let `self` = self else { return }
-                let url = self.writer?.assetWriter.outputURL
-                self.cleanRecording()
-                callback(url)
-            }
-        })
+        guard isFinishingRecording == false else { return }
+        isFinishingRecording = true
+        queue.async {
+            self.writer?.finishRecording(completionHandler: { [weak self] in
+                DispatchQueue.main.async {
+                    guard let `self` = self else { return }
+                    let url = self.writer?.assetWriter.outputURL
+                    self.cleanRecording()
+                    self.isFinishingRecording = false
+                    callback(url)
+                }
+            })
+        }
     }
     
+    private var isPhotoCapturing = false
+    
     func capturePhoto(_ callback: @escaping ((URL?) -> Void)) {
-        camera?.capturePhotoAsJPEGProcessedUp(toFilter: filter, withCompletionHandler: { [weak self] (data, error) in
-            DispatchQueue.main.async {
-                guard let `self` = self else { return }
-                self.cleanRecording()
-                if let data = data {
-                    let url = URL.photoCacheURL(withName: UUID().uuidString + ".jpg")
-                    do {
-                        try data.write(to: url)
-                        callback(url)
-                    } catch {
-                        logger.error(error)
-                        callback(nil)
+        guard isPhotoCapturing == false else { return }
+        isPhotoCapturing = true
+        queue.async {
+            self.camera?.capturePhotoAsJPEGProcessedUp(
+                toFilter: self.filter,
+                withCompletionHandler: { [weak self] (data, error) in
+                DispatchQueue.main.async {
+                    guard let `self` = self else { return }
+                    self.cleanRecording()
+                    self.isPhotoCapturing = false
+                    if let data = data {
+                        let url = URL.photoCacheURL(withName: UUID().uuidString + ".jpg")
+                        do {
+                            try data.write(to: url)
+                            callback(url)
+                        } catch {
+                            logger.error(error)
+                            callback(nil)
+                        }
+                        return
                     }
-                    return
+                    logger.error(error ?? "unkown error")
+                    callback(nil)
                 }
-                logger.error(error ?? "unkown error")
-                callback(nil)
-            }
-        })
+            })
+        }
     }
     
     // MARK: - Private
     
-    private func setupRecording() {
-        let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
-        writer = GPUImageMovieWriter(
-            movieURL: url,
-            size: StoryConfg.videoSize,
-            fileType: AVFileType.mov.rawValue,
-            outputSettings: StoryConfg.videoSetting
-        )
-        writer?.encodingLiveVideo = true
-        writer?.shouldPassthroughAudio = true
-        writer?.setHasAudioTrack(true, audioSettings: StoryConfg.audioSetting)
-        camera?.audioEncodingTarget = writer
-        filter.addTarget(writer)
+    private var isRecordingSetuping = false
+    
+    private func setupRecording(callback: (() -> Void)? = nil) {
+        guard isRecordingSetuping == false else { return }
+        isRecordingSetuping = true
+        queue.async {
+            let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
+            self.writer = GPUImageMovieWriter(
+                movieURL: url,
+                size: StoryConfg.videoSize,
+                fileType: AVFileType.mov.rawValue,
+                outputSettings: StoryConfg.videoSetting
+            )
+            self.writer?.encodingLiveVideo = true
+            self.writer?.shouldPassthroughAudio = true
+            self.writer?.setHasAudioTrack(true, audioSettings: StoryConfg.audioSetting)
+            self.camera?.audioEncodingTarget = self.writer
+            self.filter.addTarget(self.writer)
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
-    private func cleanRecording() {
-        filter.removeTarget(writer)
-        writer = nil
-        camera?.audioEncodingTarget = nil
-        GPUImageContext.sharedImageProcessing().framebufferCache.purgeAllUnassignedFramebuffers()
-        GPUImageContext.sharedFramebufferCache().purgeAllUnassignedFramebuffers()
+    private var isCleaning = false
+    
+    private func cleanRecording(callback: (() -> Void)? = nil) {
+        guard isCleaning == false else { return }
+        isCleaning = true
+        queue.async {
+            self.filter.removeTarget(self.writer)
+            self.writer = nil
+            self.camera?.audioEncodingTarget = nil
+            GPUImageContext.sharedImageProcessing().framebufferCache.purgeAllUnassignedFramebuffers()
+            GPUImageContext.sharedFramebufferCache().purgeAllUnassignedFramebuffers()
+            self.isCleaning = false
+            DispatchQueue.main.async { callback?() }
+        }
     }
 }
 

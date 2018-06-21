@@ -87,14 +87,13 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        logger.debug()
         super.viewWillAppear(animated)
         setupNavigation()
         if blurCoverView.isHidden == false {
             resumeCamera(true)
         } else if captureView.isStarted == false {
             captureView.startCaputre()
-        }
-        if current == .record && captureView.isPaused {
             captureView.resumeCamera()
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
@@ -107,6 +106,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        logger.debug()
         super.viewDidDisappear(animated)
         resumeCamera(false)
         if isDismissable == false {
@@ -209,9 +209,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         
         if cameraAuthorization && micAuthorization {
             if cameraAuthorization {
-                startCamera()
-            }
-            if micAuthorization {
+                startCamera { if micAuthorization { self.captureView.enableAudio() } }
+            } else if micAuthorization {
                 captureView.enableAudio()
             }
         } else {
@@ -221,14 +220,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         }
     }
     
-    private func startCamera() {
-        captureView.setupCamera()
-        captureView.startCaputre()
+    private func startCamera(callback: (() -> Void)? = nil) {
+        captureView.setupCamera {
+            self.captureView.startCaputre()
+            DispatchQueue.main.async { callback?() }
+        }
     }
     
     private func resumeCamera(_ isOpen: Bool) {
+        logger.debug(isOpen)
         if isOpen {
             captureView.startCaputre()
+            captureView.resumeCamera()
         } else {
             captureView.stopCapture()
         }
@@ -504,6 +507,7 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
                     self.textGradientController.view.alpha = 0
                 }, completion: nil)
             }
+            captureView.startCaputre()
             captureView.resumeCamera()
             return
         }
