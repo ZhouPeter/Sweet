@@ -9,4 +9,5 @@
 #import "LookupFilter.h"
 #import "GPUImageBeautifyFilter.h"
 #import "InputBottomView.h"
-
+#import "WXApi.h"
+#import "WXApiObject.h"

@@ -41,6 +41,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         let button = UIButton()
         button.setTitle("获取验证码", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .disabled)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.addTarget(self, action: #selector(sendCode(_:)), for: .touchUpInside)
         return button
