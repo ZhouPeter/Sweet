@@ -343,7 +343,7 @@ extension StoriesPlayerViewController: InputTextViewDelegate {
     
 }
 extension Timer {
-    fileprivate class func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
+    fileprivate class func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
        return  self.scheduledTimer(timeInterval: timeInterval,
                             target: self,
                             selector: #selector(blcokInvoke(timer:)),

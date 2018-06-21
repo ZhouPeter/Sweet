@@ -21,11 +21,11 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.2.1)
   - Pageboy (2.5.1)
   - PKHUD (5.0.0)
-  - Realm (3.5.0):
-    - Realm/Headers (= 3.5.0)
-  - Realm/Headers (3.5.0)
-  - RealmSwift (3.5.0):
-    - Realm (= 3.5.0)
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
   - Result (3.2.4)
   - Reveal-SDK (15)
   - STPopup (1.8.3)
@@ -64,7 +64,7 @@ DEPENDENCIES:
   - WechatOpenSDK
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - CocoaAsyncSocket
     - Gemini
@@ -119,8 +119,8 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
-  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
-  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reveal-SDK: 25e21896c478b60b948f876043f91570d368d23d
   STPopup: da1167250a01584af7bcccb898653185f223ec46
@@ -136,4 +136,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4b7554365aefb2fe33a4a1f185758c32639cbaa9
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
