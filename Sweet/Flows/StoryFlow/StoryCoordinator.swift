@@ -64,8 +64,6 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                 self?.dismiss()
             }
         }
-        // Preload
-        _ = controller.toPresent()?.view
         router.setRootFlow(controller)
     }
     

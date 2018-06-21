@@ -22,6 +22,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     private let bottomView = StoryRecordBottomView()
     private var captureView = StoryCaptureView()
     private var blurCoverView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    
     private lazy var textGradientController: TextGradientController = {
         let controller = TextGradientController()
         controller.view.addGestureRecognizer(
@@ -38,11 +39,13 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             )
         }
     }
+    
     private var topic: String? {
         didSet {
             topicButton.updateTopic(topic ?? "添加标签")
         }
     }
+    
     private var shootButton = ShootButton()
     
     private lazy var topicButton: UIButton = {
@@ -51,6 +54,61 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return button
     } ()
     
+    private lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var avatarCircle: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        return view
+    } ()
+    
+    private lazy var menuButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "MenuClosed"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "MenuExpanded"), for: .selected)
+        button.addTarget(self, action: #selector(didPressMenuButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var flashButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "FlashOff"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "FlashOn"), for: .selected)
+        button.addTarget(self, action: #selector(didPressFlashButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var cameraSwitchButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "CameraBack"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "CameraFront"), for: .selected)
+        button.addTarget(self, action: #selector(didPressCameraSwitchButton), for: .touchUpInside)
+        return button
+    } ()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        if self.isDismissable {
+            button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+            button.addTarget(self, action: #selector(didPressDismissButton), for: .touchUpInside)
+        } else {
+            button.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
+            button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
+        }
+        return button
+    } ()
+    
+    private var flashButtonCenterY: NSLayoutConstraint?
+    private var cameraSwitchCenterY: NSLayoutConstraint?
     private var current = StoryRecordType.record
     private let user: User
     private let isDismissable: Bool
@@ -221,8 +279,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func startCamera(callback: (() -> Void)? = nil) {
         captureView.setupCamera {
-            self.captureView.startCaputre()
-            DispatchQueue.main.async { callback?() }
+            self.captureView.startCaputre(callback: {
+                self.captureView.resumeCamera(callback: {
+                    callback?()
+                })
+            })
         }
     }
     
@@ -286,62 +347,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         blurCoverView.isUserInteractionEnabled = true
         blurCoverView.fill(in: view)
     }
-    
-    private lazy var avatarButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 20
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1
-        button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var avatarCircle: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        return view
-    } ()
-    
-    private lazy var menuButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "MenuClosed"), for: .normal)
-        button.setImage(#imageLiteral(resourceName: "MenuExpanded"), for: .selected)
-        button.addTarget(self, action: #selector(didPressMenuButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var flashButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "FlashOff"), for: .normal)
-        button.setImage(#imageLiteral(resourceName: "FlashOn"), for: .selected)
-        button.addTarget(self, action: #selector(didPressFlashButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var cameraSwitchButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "CameraBack"), for: .normal)
-        button.setImage(#imageLiteral(resourceName: "CameraFront"), for: .selected)
-        button.addTarget(self, action: #selector(didPressCameraSwitchButton), for: .touchUpInside)
-        return button
-    } ()
-    
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .custom)
-        if self.isDismissable {
-            button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
-            button.addTarget(self, action: #selector(didPressDismissButton), for: .touchUpInside)
-        } else {
-            button.setImage(#imageLiteral(resourceName: "RightArrow"), for: .normal)
-            button.addTarget(self, action: #selector(didPressBackButton), for: .touchUpInside)
-        }
-        return button
-    } ()
-    
-    private var flashButtonCenterY: NSLayoutConstraint?
-    private var cameraSwitchCenterY: NSLayoutConstraint?
     
     private func setupTopView() {
         recordContainer.addSubview(avatarButton)
