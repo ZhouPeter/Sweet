@@ -19,6 +19,7 @@ class UserData: Object {
     @objc dynamic var gender: Int = 1
     @objc dynamic var signature: String = ""
     @objc dynamic var city: String?
+    @objc dynamic var isBlacklisted = false
     let userType = RealmOptional<Int32>()
     
     override static func primaryKey() -> String? {
@@ -36,6 +37,7 @@ class UserData: Object {
         data.city = info.city
         data.gender = info.gender.rawValue
         data.userType.value = Int32(info.userType)
+        data.isBlacklisted = info.isBlacklisted
         return data
     }
     
@@ -51,6 +53,7 @@ class UserData: Object {
         data.signature = user.signature
         data.city = user.city
         data.userType.value = user.userType
+        data.isBlacklisted = user.isBlacklisted ?? false
         return data
     }
 }
@@ -68,5 +71,6 @@ extension User {
         universityName = data.university
         city = data.city
         userType = data.userType.value
+        isBlacklisted = data.isBlacklisted
     }
 }

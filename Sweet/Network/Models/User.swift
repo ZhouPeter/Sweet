@@ -21,6 +21,7 @@ struct User: Codable {
     var universityName: String? = nil
     var city: String? = nil
     var userType: Int32? = nil
+    var isBlacklisted: Bool?
 }
 
 enum Gender: Int, Codable {

@@ -15,13 +15,14 @@ protocol ConversationControllerDelegate: class {
     func conversationControllerShowsProfile(buddy: User)
     func conversationControllerReports(buddy: User)
     func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
+    func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User)
 }
 
 final class ConversationController: MessagesViewController {
     weak var delegate: ConversationControllerDelegate?
     
     private let user: User
-    private let buddy: User
+    private var buddy: User
     private let refreshControl = UIRefreshControl()
     private var messages = [InstantMessage]()
     private var inComingBubbleMaskImage: UIImage = {
@@ -81,6 +82,7 @@ final class ConversationController: MessagesViewController {
     }
     
     func didBlock() {
+        buddy.isBlacklisted = true
         let controller = UIAlertController(title: "是否举报该用户", message: nil, preferredStyle: .alert)
         controller.view.tintColor = .black
         controller.addAction(UIAlertAction(title: "举报", style: .destructive, handler: { (_) in
@@ -186,9 +188,15 @@ final class ConversationController: MessagesViewController {
         controller.addAction(UIAlertAction(title: "举报", style: .default, handler: { (_) in
             self.delegate?.conversationControllerReports(buddy: self.buddy)
         }))
-        controller.addAction(UIAlertAction(title: "加入黑名单", style: .destructive, handler: { (_) in
-            self.delegate?.conversationController(self, blocksBuddy: self.buddy)
-        }))
+        if buddy.isBlacklisted == true {
+            controller.addAction(UIAlertAction(title: "解除黑名单", style: .destructive, handler: { (_) in
+                self.delegate?.conversationController(self, unblocksBuddy: self.buddy)
+            }))
+        } else {
+            controller.addAction(UIAlertAction(title: "加入黑名单", style: .destructive, handler: { (_) in
+                self.delegate?.conversationController(self, blocksBuddy: self.buddy)
+            }))
+        }
         controller.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         present(controller, animated: true, completion: nil)
     }

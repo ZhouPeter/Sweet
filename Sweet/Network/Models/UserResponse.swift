@@ -39,5 +39,6 @@ extension User {
         signature = response.signature
         collegeName = response.collegeName
         universityName = response.universityName
+        isBlacklisted = response.blacklist
     }
 }

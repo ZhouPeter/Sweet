@@ -91,9 +91,36 @@ extension InboxCoordinator: ConversationControllerDelegate {
                 PKHUD.toast(message: "操作失败")
             case .success:
                 logger.debug()
+                self.storage.write({ (realm) in
+                    if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
+                        user.isBlacklisted = true
+                    }
+                }, callback: { (_) in
+                    Messenger.shared.loadConversations()
+                })
                 PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: {
                     controller.didBlock()
                 })
+            }
+        }
+    }
+    
+    func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User) {
+        web.request(.delBlacklist(userId: buddy.userId)) { (result) in
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+                PKHUD.toast(message: "操作失败")
+            case .success:
+                logger.debug()
+                self.storage.write({ (realm) in
+                    if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
+                        user.isBlacklisted = false
+                    }
+                }, callback: { (_) in
+                    Messenger.shared.loadConversations()
+                })
+                PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: nil)
             }
         }
     }
