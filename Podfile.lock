@@ -64,7 +64,7 @@ DEPENDENCIES:
   - WechatOpenSDK
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - CocoaAsyncSocket
     - Gemini
@@ -136,4 +136,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4b7554365aefb2fe33a4a1f185758c32639cbaa9
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3

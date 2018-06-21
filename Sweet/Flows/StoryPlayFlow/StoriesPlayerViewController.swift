@@ -152,7 +152,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         return view
     } ()
     
-    private var storiesScrollView: StoriesPlayerScrollView!
+    var storiesScrollView: StoriesPlayerScrollView!
     
     init(user: User) {
         self.user = user
@@ -165,7 +165,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hero.isEnabled = true
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
@@ -180,14 +179,13 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         setTopUI()
         setBottmUI()
         update()
-        setGestureRecognizer()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
+        pause()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -205,13 +203,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    private func setGestureRecognizer() {
-        pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPanAction(_:)))
-        pan?.delegate = self
-        view.addGestureRecognizer(pan!)
-        
     }
     
     private func setTopUI() {
@@ -306,11 +297,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         }
 
     }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        playerView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-        playerView?.center = view.center
-    }
     
     func initPlayer() {
         if let videoURL = stories[currentIndex].videoURL {
@@ -323,12 +309,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             }
             player?.actionAtItemEnd = .none
             playerView = AVPlayerView(frame: view.bounds)
-            playerView.hero.isEnabled = true
-            playerView.hero.id = "\(stories[0].userId)"
-            playerView.hero.modifiers = [.useNoSnapshot]
-            playerView.backgroundColor = .black
+            view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
-            playerView.hero.modifiers = [.useNoSnapshot]
+            playerView.isUserInteractionEnabled = false
             view.insertSubview(playerView, belowSubview: pokeView)
             
             addVideoObservers()
@@ -471,26 +454,6 @@ extension StoriesPlayerViewController {
         if stories[currentIndex].userId != user.userId {
             let topic = stories[currentIndex].tag
             runStoryFlow?(topic)
-        }
-    }
-    
-    @objc private func didPanAction(_ pan: UIPanGestureRecognizer) {
-        if playerView == nil { return }
-        let translation = pan.translation(in: nil)
-        let progress = translation.y / view.bounds.height
-        switch pan.state {
-        case .began:
-            dismiss()
-        case .changed:
-            Hero.shared.update(progress)
-            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
-            Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
-        default:
-            if progress + pan.velocity(in: nil).y / view.bounds.height > 0.3 {
-                Hero.shared.finish()
-            } else {
-                Hero.shared.cancel()
-            }
         }
     }
     

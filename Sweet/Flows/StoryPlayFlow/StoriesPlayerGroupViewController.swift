@@ -8,6 +8,7 @@
 
 import UIKit
 import Gemini
+import Hero
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
@@ -57,12 +58,12 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
-//        collectionView.panGestureRecognizer.delegate = self
         collectionView.gemini.cubeAnimation().cubeDegree(90).shadowEffect(.fadeIn)
         return collectionView
     }()
     
     private var storiesPlayerControllerMap = [UICollectionViewCell: StoriesPlayerViewController]()
+    
     init(user: User, storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
         self.user = user
         self.storiesGroup = storiesGroup
@@ -70,15 +71,22 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         self.fromCardId = fromCardId
         super.init(nibName: nil, bundle: nil)
     }
-    deinit {
-        print("释放")
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private lazy var pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .clear
+        
+        hero.isEnabled = true
+        collectionView.addGestureRecognizer(pan)
+        collectionView.hero.isEnabled = true
+        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)"
+
         view.addSubview(collectionView)
         collectionView.fill(in: view)
         if #available(iOS 11.0, *) {
@@ -93,6 +101,26 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
                             fromCardId: fromCardId,
                             storyGroupIndex: currentIndex)
+    }
+    
+    @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: nil)
+        let progress = translation.y / view.bounds.height
+        switch gesture.state {
+        case .began:
+            logger.debug()
+            dismiss(animated: true, completion: nil)
+        case .changed:
+            Hero.shared.update(progress)
+            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: collectionView)
+        default:
+            if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -146,12 +174,6 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     }
 }
 
-extension StoriesPlayerGroupViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        return false
-//    }
-}
-
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
     func dismissController() {
         onFinish?()
@@ -187,13 +209,12 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
             playerController.currentIndex = subCurrentIndex
             playerController.initPlayer()
         }
+        pan.require(toFail: playerController.storiesScrollView.scrollViewTap)
         return cell
     }
-
 }
 
 extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         collectionView.animateVisibleCells()
         for cell in collectionView.visibleCells {
@@ -228,5 +249,4 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
             }
         }
     }
-    
 }
