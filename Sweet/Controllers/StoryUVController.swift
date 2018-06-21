@@ -11,6 +11,7 @@ protocol StoryUVControllerDelegate: NSObjectProtocol {
     func closeStoryUV()
 }
 class StoryUVController: BaseViewController {
+    var runProfileFlow: ((User, UInt64) -> Void)?
     weak var delegate: StoryUVControllerDelegate?
     var user: User
     private let storyId: UInt64
@@ -118,8 +119,9 @@ extension StoryUVController: UITableViewDelegate {
         return 70
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileController = ProfileController(user: user, userId: storyUvList!.list[indexPath.row].userId)
-        let navigationController = UINavigationController(rootViewController: profileController)
-        self.present(navigationController, animated: true, completion: nil)
+//        let profileController = ProfileController(user: user, userId: storyUvList!.list[indexPath.row].userId)
+//        let navigationController = UINavigationController(rootViewController: profileController)
+//        self.present(navigationController, animated: true, completion: nil)
+        runProfileFlow?(user, storyUvList!.list[indexPath.row].userId)
     }
 }

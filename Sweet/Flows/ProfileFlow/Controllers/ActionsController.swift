@@ -13,6 +13,14 @@ protocol PageChildrenProtocol {
     func loadRequest()
 }
 class ActionsController: PageboyViewController {
+    var showStoriesPlayerView: (
+    (
+     User,
+     [StoryCellViewModel],
+     Int,
+     StoriesPlayerViewControllerDelegate,
+     (() -> Void)?) -> Void
+    )?
     var user: User {
         didSet {
             for index in 0..<pageControllers.count {
@@ -34,6 +42,7 @@ class ActionsController: PageboyViewController {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar)
         let storysController = StoriesController(user: user)
+        storysController.showStoriesPlayerView = showStoriesPlayerView
         let estimatesController = EvaluationController(user: user)
         viewControllers.append(feedsController)
         viewControllers.append(storysController)

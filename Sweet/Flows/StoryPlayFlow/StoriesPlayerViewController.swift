@@ -18,7 +18,12 @@ import Hero
     @objc optional func dismissController()
     @objc optional func delStory(withStoryId storyId: UInt64)
 }
-class StoriesPlayerViewController: BaseViewController {
+
+class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
+    var onFinish: (() -> Void)?
+    var runStoryFlow: ((String) -> Void)?
+    var runProfileFlow: ((User, UInt64) -> Void)?
+
     var isVisual = true
     var user: User
     var player: AVPlayer?
@@ -28,6 +33,7 @@ class StoriesPlayerViewController: BaseViewController {
     var statusToken: NSKeyValueObservation?
     var imageTimer: Timer?
     var timerNumber: Float = 0
+  
     var stories: [StoryCellViewModel]! {
         didSet {
             if stories.count == 0 {
@@ -165,11 +171,25 @@ class StoriesPlayerViewController: BaseViewController {
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         view.addSubview(tagButton)
+
         setTopUI()
         setBottmUI()
         update()
         setGestureRecognizer()
-        
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+        NotificationCenter.default.post(name: Notification.Name.StatusBarNoHidden, object: nil)
+
     }
     
     func update() {
@@ -270,9 +290,13 @@ class StoriesPlayerViewController: BaseViewController {
         if let touchArea = stories[currentIndex].touchArea {
             tagButton.isHidden = false
             tagButton.frame = touchArea
+            if stories[currentIndex].userId == user.userId {
+                tagButton.isHidden = true
+            }
         } else {
             tagButton.isHidden = true
         }
+
     }
     
     func initPlayer() {
@@ -426,30 +450,14 @@ extension StoriesPlayerViewController {
 // MARK: - Actions
 extension StoriesPlayerViewController {
     @objc private func didPressTag(_ sender: UIButton) {
-        let tag = stories[currentIndex].tag
-        logger.debug(tag)
-        logger.debug("点击tag")
+        if stories[currentIndex].userId != user.userId {
+            let topic = stories[currentIndex].tag
+            runStoryFlow?(topic)
+        }
     }
     
     @objc private func didPanAction(_ pan: UISwipeGestureRecognizer) {
         dismiss()
-//        if pan.direction == .horizontal { return }
-//        let translation = pan.translation(in: view)
-//        guard translation.y > 0 else { return }
-//        switch pan.state {
-//        case .began:
-//            dismiss()
-//        case .changed:
-//            logger.debug("拖动界面")
-//            Hero.shared.update(translation.y / view.bounds.height)
-//        default:
-//            let velocity = pan.velocity(in: view)
-//            if ((translation.y + velocity.y) / view.bounds.height) > 0.05 {
-//                Hero.shared.finish()
-//            } else {
-//                Hero.shared.cancel()
-//            }
-//        }
     }
     
     @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
@@ -473,6 +481,7 @@ extension StoriesPlayerViewController {
         topContentView.isHidden = true
         let storyId = stories[currentIndex].storyId
         let uvViewController = StoryUVController(storyId: storyId, user: user)
+        uvViewController.runProfileFlow = runProfileFlow
         uvViewController.delegate = self
         addChildViewController(uvViewController)
         uvViewController.didMove(toParentViewController: self)
@@ -587,8 +596,11 @@ extension StoriesPlayerViewController {
     }
     
     private func dismiss() {
-        if presentingViewController != nil {
+        if self.presentingViewController != nil {
             dismiss(animated: true, completion: nil)
+        }
+        if self.parent is UINavigationController {
+            onFinish?()
         } else {
             delegate?.dismissController?()
         }

@@ -8,15 +8,31 @@
 
 import UIKit
 import SwiftyUserDefaults
-
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
+    var showStoriesPlayerView: (
+        (
+        User,
+        [StoryCellViewModel],
+        Int,
+        StoriesPlayerViewControllerDelegate,
+        (() -> Void)?) -> Void
+        )? { get set }
     var finished: (() -> Void)? { get set }
     var user: User { get set }
     var userId: UInt64 { get set }
 }
 
 class ProfileController: BaseViewController, ProfileView {
+    var showStoriesPlayerView: (
+    (
+    User,
+    [StoryCellViewModel],
+    Int,
+    StoriesPlayerViewControllerDelegate,
+    (() -> Void)?) -> Void
+    )?
+    
     var user: User
     var userId: UInt64
     var showAbout: ((UserResponse) -> Void)?
@@ -217,6 +233,7 @@ extension ProfileController {
             if userSuccess {
                 if self.actionsController == nil {
                     self.actionsController = ActionsController(user: User(self.userResponse!), mine: self.user)
+                    self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
                     self.add(childViewController: self.actionsController, addView: false)
                 }
                 self.updateViewModel()

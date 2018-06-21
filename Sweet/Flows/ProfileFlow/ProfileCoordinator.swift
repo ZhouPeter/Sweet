@@ -45,7 +45,33 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
+        profile.showStoriesPlayerView = { [weak self] (user, stories, current, delegate, completion) in
+            self?.showStoriesPlayerView(user: user,
+                                        stories: stories,
+                                        current: current,
+                                        delegate: delegate)
+            
+        }
         router.push(profile)
+    }
+    
+    private func showStoriesPlayerView(user: User,
+                                       stories: [StoryCellViewModel],
+                                       current: Int,
+                                       delegate: StoriesPlayerViewControllerDelegate) {
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
+                                                                        router: router,
+                                                                        current: current,
+                                                                        isGroup: false,
+                                                                        fromCardId: nil, 
+                                                                        storiesGroup: [stories],
+                                                                        delegate: delegate,
+                                                                        groupDelegate: nil)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
     
     private func showAbout(user: UserResponse) {

@@ -14,4 +14,10 @@ protocol CardsBaseView: BaseView {
 
 protocol CardsBaseViewDelegate: class {
     func showProfile(userId: UInt64)
+    func showStoriesGroup(user: User,
+                          storiesGroup: [[StoryCellViewModel]],
+                          currentIndex: Int,
+                          fromCardId: String?,
+                          delegate: StoriesPlayerGroupViewControllerDelegate,
+                          completion: (() -> Void)?)
 }

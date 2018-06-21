@@ -10,4 +10,5 @@ import Foundation
 
 protocol CardsFlowFactory {
     func makeCardsManagerView(user: User) -> CardsManagerView
+
 }
