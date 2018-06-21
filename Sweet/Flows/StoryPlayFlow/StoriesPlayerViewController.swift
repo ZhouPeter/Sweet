@@ -277,9 +277,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
                                       y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
             pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
+            pokeLongPress.minimumPressDuration = 0.1
             pokeLongPress.delegate = self
             view.addGestureRecognizer(pokeLongPress)
-            pokeLongPress.require(toFail: storiesScrollView.scrollViewTap)
         } else {
             pokeView.isHidden = true
             if let pokeLongPress = pokeLongPress {
@@ -295,6 +295,8 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         } else {
             tagButton.isHidden = true
         }
+        tagButton.isHidden = false
+        tagButton.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
 
     }
     

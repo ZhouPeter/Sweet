@@ -116,9 +116,10 @@ extension StoryPlayerCoordinator {
     
     private func runProfileFlow(user: User, buddyID: UInt64) {
         let navigation = UINavigationController()
-        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
-                                                                    buddyID: buddyID,
-                                                                    navigation: navigation)
+        let coordinator = coordinatorFactory.makeProfileCoordinator(
+            user: user,
+            buddyID: buddyID,
+            navigation: navigation)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
