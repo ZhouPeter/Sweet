@@ -12,7 +12,7 @@ import Moya
 enum WebAPI {
     case verify(phoneNumber: String, type: VerificationType)
     case login(body: LoginRequestBody)
-    case sendCode(phone: String, type: Int)
+    case sendCode(phone: String, type: SendSMSCodeType)
     case logout
     case update(updateParameters: [String: Any])
     case phoneChange(phone: String, code: String)
@@ -209,7 +209,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case let .login(body):
             return .requestJSONEncodable(body)
         case let .sendCode(phone, type):
-            parameters = ["phone": phone, "type": type]
+            parameters = ["phone": phone, "type": type.rawValue]
         case let .update(updateParameters):
             parameters = updateParameters
         case let .phoneChange(phone, code):
@@ -353,4 +353,11 @@ private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString
 enum VerificationType: Int {
     case login = 2
     case register = 3
+}
+
+enum SendSMSCodeType: Int {
+    case unknown
+    case login
+    case register
+    case changeNumber
 }

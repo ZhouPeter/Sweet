@@ -39,7 +39,7 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
     }
     
     private func showLogin(model: LoginRequestBody) {
-        let loginOutput = factory.makeSignUpPhoneOutput(loginRequestBody: model)
+        let loginOutput = factory.makeSignUpPhoneOutput(loginRequestBody: model, isLogin: true)
         loginOutput.onFinish = { [weak self]  isSettingPower in
             self?.finishFlow?(isSettingPower)
         }
@@ -95,7 +95,7 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
     }
     
     private func showSignUpPhone(model: LoginRequestBody) {
-        let phoneOutput = factory.makeSignUpPhoneOutput(loginRequestBody: model)
+        let phoneOutput = factory.makeSignUpPhoneOutput(loginRequestBody: model, isLogin: false)
         phoneOutput.onFinish = { [weak self]  isSettingPower in
             self?.finishFlow?(isSettingPower)
         }

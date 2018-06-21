@@ -164,7 +164,7 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
     @objc private func sendCode(_ sender: UIButton) {
         if let phone = phoneTextField.text, phone.checkPhone() {
             sender.isEnabled = false
-            web.request(.sendCode(phone: phone, type: 1)) { [weak self] (result) in
+            web.request(.sendCode(phone: phone, type: .changeNumber)) { [weak self] (result) in
                 switch result {
                 case .success:
                     self?.toast(message: "发送成功", duration: 2)

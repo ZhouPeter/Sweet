@@ -16,5 +16,5 @@ protocol AuthFlowFactory {
     func makeSignUpSexOutput(loginRequestBody: LoginRequestBody) -> SignUpSexView
     func makeSignUpNameOutput(loginRequestBody: LoginRequestBody) -> SignUpNameView
     func makeSignUpAvatarOutput(loginRequestBody: LoginRequestBody) -> SignUpAvatarView
-    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody) -> SignUpPhoneView
+    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody, isLogin: Bool) -> SignUpPhoneView
 }

@@ -83,6 +83,17 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         return line
     }()
     
+    private let isLogin: Bool
+    
+    init(isLogin: Bool) {
+        self.isLogin = isLogin
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpYellow()
@@ -143,7 +154,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     @objc private func sendCode(_ sender: UIButton) {
         if let phone = loginRequestBody.phone, phone.checkPhone() {
             sender.isEnabled = false
-            web.request(.sendCode(phone: phone, type: 1)) { [weak self] (result) in
+            web.request(.sendCode(phone: phone, type: isLogin ? .login : .register)) { [weak self] (result) in
                 switch result {
                 case .success:
                     self?.toast(message: "发送成功", duration: 2)

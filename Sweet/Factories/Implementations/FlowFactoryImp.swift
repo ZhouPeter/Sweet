@@ -36,8 +36,8 @@ ProfileFlowFactory {
         return PowerContactsController()
     }
     
-    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody) -> SignUpPhoneView {
-        let viewController = SignUpPhoneController()
+    func makeSignUpPhoneOutput(loginRequestBody: LoginRequestBody, isLogin: Bool) -> SignUpPhoneView {
+        let viewController = SignUpPhoneController(isLogin: isLogin)
         viewController.loginRequestBody = loginRequestBody
         return viewController
     }
