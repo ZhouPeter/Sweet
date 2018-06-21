@@ -19,14 +19,14 @@ final class StoryCaptureView: GPUImageView {
     
     private var isCameraSetuping = false
     
-    func setupCamera(callbacK: (() -> Void)? = nil) {
+    func setupCamera(callback: (() -> Void)? = nil) {
         logger.debug()
         guard camera == nil else {
-            callbacK?()
+            callback?()
             return
         }
         guard isCameraSetuping == false else { return }
-        isCameraSetuping = false
+        isCameraSetuping = true
         queue.async {
             self.fillMode = .preserveAspectRatioAndFill
             self.camera = GPUImageStillCamera(sessionPreset: StoryConfg.captureSessionPreset, cameraPosition: .back)
@@ -35,7 +35,7 @@ final class StoryCaptureView: GPUImageView {
             self.camera?.addTarget(self.filter)
             self.filter.addTarget(self)
             self.isCameraSetuping = false
-            DispatchQueue.main.async { callbacK?() }
+            DispatchQueue.main.async { callback?() }
         }
     }
     
@@ -97,7 +97,7 @@ final class StoryCaptureView: GPUImageView {
     
     func pauseCamera(callback: (() -> Void)? = nil) {
         logger.debug()
-        guard isPausing == false, isPaused == false, camera != nil else { return }
+        guard isPausing == false, camera != nil else { return }
         isPausing = true
         queue.async {
             self.camera?.pauseCapture()
@@ -111,7 +111,7 @@ final class StoryCaptureView: GPUImageView {
     
     func resumeCamera(callback: (() -> Void)? = nil) {
         logger.debug()
-        guard isResuming == false, isPaused, camera != nil else { return }
+        guard isResuming == false, camera != nil else { return }
         isResuming = true
         queue.async {
             self.camera?.resumeCameraCapture()
@@ -125,7 +125,7 @@ final class StoryCaptureView: GPUImageView {
     
     func stopCapture(callback: (() -> Void)? = nil) {
         logger.debug()
-        guard isStopping == false, isStarted == false, camera != nil else { return }
+        guard isStopping == false, isStarted == true, camera != nil else { return }
         isStopping = true
         queue.async {
             self.camera?.stopCapture()

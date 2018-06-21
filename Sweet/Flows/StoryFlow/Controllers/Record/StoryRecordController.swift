@@ -175,6 +175,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         toggleOffMenu()
     }
     
+    func prepare() {
+        guard TLAuthorizedManager.checkAuthorization(with: .camera) else { return }
+        self.captureView.setupCamera {
+            guard TLAuthorizedManager.checkAuthorization(with: .mic) else { return }
+            self.captureView.enableAudio()
+        }
+    }
+    
     // MARK: - Private
     
     @objc private func didTapTextGradientView() {
