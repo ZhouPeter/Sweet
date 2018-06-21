@@ -145,6 +145,7 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
             fromCardId: fromCardId)
+        controller.hero.isEnabled = true
         controller.delegate = delegate
         return controller
     }

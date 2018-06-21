@@ -32,8 +32,9 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate,
                           completion: (() -> Void)?) {
+        let navigation = UINavigationController()
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
-                                                                        router: router,
+                                                                        navigation: navigation,
                                                                         current: currentIndex,
                                                                         isGroup: true,
                                                                         fromCardId: fromCardId,

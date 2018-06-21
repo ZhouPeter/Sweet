@@ -57,6 +57,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
+//        collectionView.panGestureRecognizer.delegate = self
         collectionView.gemini.cubeAnimation().cubeDegree(90).shadowEffect(.fadeIn)
         return collectionView
     }()
@@ -143,6 +144,12 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
             }
         }
     }
+}
+
+extension StoriesPlayerGroupViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+//        return false
+//    }
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {

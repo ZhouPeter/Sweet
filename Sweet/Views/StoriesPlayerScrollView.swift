@@ -18,7 +18,7 @@ protocol StoriesPlayerScrollViewDelegate: NSObjectProtocol {
 class StoriesPlayerScrollView: UIScrollView {
     var currentIndex: Int = 0
     var middleImageView: UIImageView!
-
+    var scrollViewTap: UITapGestureRecognizer!
     private var stories = [StoryCellViewModel]()
     private var middleStory: StoryCellViewModel!
     private var isEnabled = true
@@ -35,12 +35,13 @@ class StoriesPlayerScrollView: UIScrollView {
     
     private func setupScrollView(frame: CGRect) {
         contentSize.width = frame.size.width
+        isUserInteractionEnabled = true
         contentOffset.x = 0
         isScrollEnabled = false
         isOpaque = true
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
-        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapAction(_:)))
+        scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapAction(_:)))
         addGestureRecognizer(scrollViewTap)
     }
     
@@ -72,6 +73,7 @@ class StoriesPlayerScrollView: UIScrollView {
         middleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         middleImageView.contentMode = .scaleAspectFill
         middleImageView.clipsToBounds = true
+        middleImageView.isUserInteractionEnabled = true
         addSubview(middleImageView)
     }
 }

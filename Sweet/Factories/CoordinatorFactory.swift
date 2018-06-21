@@ -16,10 +16,10 @@ protocol CoordinatorFactory {
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeProfileCoordinator(user: User,
                                 buddyID: UInt64,
-                                navigation: UINavigationController) -> Coordinator & ProfileCoordinatorOutput
+                                navigation: UINavigationController?) -> Coordinator & ProfileCoordinatorOutput
     func makeStoryPlayerCoordinator(
         user: User,
-        router: Router,
+        navigation: UINavigationController?,
         current: Int,
         isGroup: Bool,
         fromCardId: String?,
