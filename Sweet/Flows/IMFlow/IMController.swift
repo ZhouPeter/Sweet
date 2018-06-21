@@ -51,6 +51,7 @@ class IMController: BaseViewController, IMView {
                                                selector: #selector(scrollToPage(_:)),
                                                name: Notification.Name.ScrollToPage,
                                                object: nil)
+        setupLeftBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +72,18 @@ class IMController: BaseViewController, IMView {
     
     // MARK: - Private
     
+    private func setupLeftBarButton() {
+        var image = #imageLiteral(resourceName: "RightArrow")
+        if let cgImage = image.cgImage {
+            image = UIImage(cgImage: cgImage, scale: image.scale, orientation: .upMirrored)
+        }
+        let button = UIButton(type: .custom)
+        button.setImage(image, for: .normal)
+        button.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+        button.addTarget(self, action: #selector(didPressLeftBarButtonItem), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
     private func setupControllers() {
         add(childViewController: contactsView)
         contactsView.view.fill(in: view)
@@ -88,6 +101,10 @@ class IMController: BaseViewController, IMView {
         } else {
             delegate?.imViewDidPressSearchButton()
         }
+    }
+    
+    @objc func didPressLeftBarButtonItem() {
+        NotificationCenter.default.post(name: .ScrollPage, object: 1)
     }
     
     private func showInbox(_ isInboxShown: Bool) {
