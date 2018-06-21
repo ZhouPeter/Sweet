@@ -64,7 +64,7 @@ extension StoryPlayerCoordinator {
             currentIndex: current,
             fromCardId: fromCardId,
             delegate: groupDelegate)
-        storiesGroupView.onFinish = { [weak self, weak storiesGroupView] in
+        storiesGroupView.onFinish = { [weak self] in
             self?.router.popFlow()
             self?.finishFlow?()
         }
@@ -77,7 +77,6 @@ extension StoryPlayerCoordinator {
             self?.runProfileFlow(user: user, buddyID: buddyID)
         }
         router.push(storiesGroupView)
-        
     }
     private func showStoriePlayerView() {
         let storiesPlayerView = factory.makeStoriesPlayerView(

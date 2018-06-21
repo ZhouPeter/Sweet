@@ -163,7 +163,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             resultCommentLabel.text = resultComment
             avatarImageViews.forEach({ $0.isHidden = true })
         } else {
-            hiddenEmojiView(isHidden: false)
+            hiddenEmojiView(isHidden: true)
             resultCommentLabel.isHidden = true
             resultEmojiView.isHidden = true
             avatarImageViews.forEach({ $0.isHidden = true })

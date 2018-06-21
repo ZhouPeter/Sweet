@@ -10,12 +10,10 @@ import UIKit
 
 protocol BaseCardCollectionViewCellDelegate: NSObjectProtocol {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell)
-    func showWebView(cell: BaseCardCollectionViewCell)
 }
 
 extension BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {}
-    func showWebView(cell: BaseCardCollectionViewCell) {}
 }
 
 class BaseCardCollectionViewCell: UICollectionViewCell {
@@ -49,9 +47,6 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupBaseUI()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressCard(_:)))
-        tap.delegate = self
-        contentView.addGestureRecognizer(tap)
     }
     
     override var isSelected: Bool {
@@ -62,11 +57,6 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         set {}
         get { return super.isHighlighted }
-    }
-    
-    @objc private func didPressCard(_ sender: UIButton) {
-        delegate?.showWebView(cell: self)
-        self.customContent.recoverAnimation(duration: 0.3, damping: 1)
     }
     
     @objc private func menuAction(_ sender: UIButton) {

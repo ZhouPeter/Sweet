@@ -99,6 +99,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        coverMaskView.clipsToBounds = true
         coverMaskView.layer.cornerRadius = 10
         coverImageView.layer.cornerRadius = 10
         avatarImageView.layer.cornerRadius = 24

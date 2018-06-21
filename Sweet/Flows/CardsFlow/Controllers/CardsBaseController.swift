@@ -50,6 +50,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             guard let oldCell = collectionView.cellForItem(at: oldIndexPath) else { return }
             if let oldCell = oldCell as? ContentCardCollectionViewCell {
                 oldCell.resetEmojiView()
+            } else if let oldCell = oldCell as? VideoCardCollectionViewCell {
+                oldCell.resetEmojiView()
             }
             if index < cellConfigurators.count - 3 {
                 downButton.isHidden = false
@@ -451,6 +453,13 @@ extension CardsBaseController {
         self.activityId = activityId
         self.activityCardId = cardId
     }
+    func showWebView(indexPath: IndexPath) {
+        let card = cards[indexPath.row]
+        guard let url = card.url else { return }
+        let preview = WebViewController(urlString: url)
+        preview.title = card.content
+        navigationController?.pushViewController(preview, animated: true)
+    }
 }
 
 extension CardsBaseController: UICollectionViewDataSource {
@@ -478,9 +487,12 @@ extension CardsBaseController: UICollectionViewDataSource {
 extension CardsBaseController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newIndex = indexPath.row
-        guard newIndex != index else { return }
-        index = newIndex
-        scrollTo(row: index)
+        if newIndex == index {
+            showWebView(indexPath: indexPath)
+        } else {
+            index = newIndex
+            scrollTo(row: index)
+        }
     }
 }
 
@@ -514,6 +526,13 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
                                      storiesGroup: [[StoryCellViewModel]],
                                      currentIndex: Int,
                                      cardId: String?) {
+        if let index = cards.index(where: { $0.cardId == cardId}) {
+            if index != self.index {
+                self.index = index
+                scrollTo(row: self.index)
+                return
+            }
+        }
         delegate?.showStoriesGroup(
             user: user,
             storiesGroup: storiesGroup,
@@ -595,14 +614,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
-    func showWebView(cell: BaseCardCollectionViewCell) {
-        guard  let indexPath = collectionView.indexPath(for: cell) else { return }
-        let card = cards[indexPath.row]
-        guard let url = card.url else { return }
-        let preview = WebViewController(urlString: url)
-        preview.title = card.content
-        navigationController?.pushViewController(preview, animated: true)
-    }
+
     
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }

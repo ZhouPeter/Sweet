@@ -59,8 +59,9 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        stories: [StoryCellViewModel],
                                        current: Int,
                                        delegate: StoriesPlayerViewControllerDelegate) {
+        let navigation = UINavigationController()
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
-                                                                        router: router,
+                                                                        navigation: navigation,
                                                                         current: current,
                                                                         isGroup: false,
                                                                         fromCardId: nil, 
@@ -71,6 +72,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
             self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
+        router.present(navigation, animated: true)
         coordinator.start()
     }
     

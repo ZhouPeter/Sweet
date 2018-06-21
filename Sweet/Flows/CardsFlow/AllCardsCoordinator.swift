@@ -32,8 +32,10 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate,
                           completion: (() -> Void)?) {
+        let navigation = UINavigationController()
+        navigation.hero.isEnabled = true
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
-                                                                        router: router,
+                                                                        navigation: navigation,
                                                                         current: currentIndex,
                                                                         isGroup: true,
                                                                         fromCardId: fromCardId,
@@ -44,6 +46,7 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
             self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
+        router.present(navigation, animated: true)
         coordinator.start()
         
     }

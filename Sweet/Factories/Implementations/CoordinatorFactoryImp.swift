@@ -11,14 +11,14 @@ import UIKit
 final class CoordinatorFactoryImp: CoordinatorFactory {
     func makeStoryPlayerCoordinator(
         user: User,
-        router: Router,
+        navigation: UINavigationController?,
         current: Int,
         isGroup: Bool,
         fromCardId: String?,
         storiesGroup: [[StoryCellViewModel]],
         delegate: StoriesPlayerViewControllerDelegate?,
         groupDelegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
-        return StoryPlayerCoordinator(user: user, router: router, factory: FlowFactoryImp(),
+        return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
                                       coordinatorFactory: CoordinatorFactoryImp(),
                                       storiesGroup: storiesGroup, current: current,
                                       delegate: delegate, groupDelegate: groupDelegate,
@@ -36,7 +36,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     
     func makeProfileCoordinator(user: User,
                                 buddyID: UInt64,
-                                navigation: UINavigationController) -> Coordinator & ProfileCoordinatorOutput {
+                                navigation: UINavigationController?) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
                 user: user,
                 userID: buddyID,

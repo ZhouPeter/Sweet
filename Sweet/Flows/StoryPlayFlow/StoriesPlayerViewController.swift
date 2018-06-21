@@ -19,16 +19,21 @@ import Hero
     @objc optional func delStory(withStoryId storyId: UInt64)
 }
 
+class AVPlayerView: UIView {
+    override class var layerClass: Swift.AnyClass {
+        return AVPlayerLayer.self
+    }
+}
 class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
     var runProfileFlow: ((User, UInt64) -> Void)?
-
+    var pan: UIPanGestureRecognizer?
     var isVisual = true
     var user: User
     var player: AVPlayer?
     var playerItem: AVPlayerItem?
-    var playerLayer: AVPlayerLayer?
+    var playerView: UIView!
     var playbackTimeObserver: Any?
     var statusToken: NSKeyValueObservation?
     var imageTimer: Timer?
@@ -160,6 +165,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hero.isEnabled = true
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
@@ -171,7 +177,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         view.addSubview(tagButton)
-
         setTopUI()
         setBottmUI()
         update()
@@ -203,9 +208,10 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     }
     
     private func setGestureRecognizer() {
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(didPanAction(_:)))
-        swipe.direction = .down
-        view.addGestureRecognizer(swipe)
+        pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPanAction(_:)))
+        pan?.delegate = self
+        view.addGestureRecognizer(pan!)
+        
     }
     
     private func setTopUI() {
@@ -280,7 +286,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
                                       y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
             pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
+            pokeLongPress.delegate = self
             view.addGestureRecognizer(pokeLongPress)
+            pokeLongPress.require(toFail: storiesScrollView.scrollViewTap)
         } else {
             pokeView.isHidden = true
             if let pokeLongPress = pokeLongPress {
@@ -298,6 +306,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         }
 
     }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        playerView?.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        playerView?.center = view.center
+    }
     
     func initPlayer() {
         if let videoURL = stories[currentIndex].videoURL {
@@ -309,10 +322,15 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
                 player?.automaticallyWaitsToMinimizeStalling = false
             }
             player?.actionAtItemEnd = .none
-            playerLayer = AVPlayerLayer(player: player)
-            playerLayer?.videoGravity = .resizeAspectFill
-            playerLayer?.frame = view.bounds
-            view.layer.insertSublayer(playerLayer!, below: pokeView.layer)
+            playerView = AVPlayerView(frame: view.bounds)
+            playerView.hero.isEnabled = true
+            playerView.hero.id = "\(stories[0].userId)"
+            playerView.hero.modifiers = [.useNoSnapshot]
+            playerView.backgroundColor = .black
+            (playerView.layer as! AVPlayerLayer).player = player
+            playerView.hero.modifiers = [.useNoSnapshot]
+            view.insertSubview(playerView, belowSubview: pokeView)
+            
             addVideoObservers()
             addKVOObservers()
         }
@@ -333,9 +351,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             player?.currentItem?.cancelPendingSeeks()
             player?.currentItem?.asset.cancelLoading()
             player?.replaceCurrentItem(with: nil)
-            playerLayer?.removeFromSuperlayer()
+            playerView.removeFromSuperview()
             playerItem = nil
-            playerLayer = nil
+            playerView = nil
             player = nil
         } else {
             imageReset()
@@ -456,8 +474,24 @@ extension StoriesPlayerViewController {
         }
     }
     
-    @objc private func didPanAction(_ pan: UISwipeGestureRecognizer) {
-        dismiss()
+    @objc private func didPanAction(_ pan: UIPanGestureRecognizer) {
+        if playerView == nil { return }
+        let translation = pan.translation(in: nil)
+        let progress = translation.y / view.bounds.height
+        switch pan.state {
+        case .began:
+            dismiss()
+        case .changed:
+            Hero.shared.update(progress)
+            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
+        default:
+            if progress + pan.velocity(in: nil).y / view.bounds.height > 0.3 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        }
     }
     
     @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
@@ -831,5 +865,13 @@ extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
         currentIndex = currentPlayerIndex
         progressView.setProgress(ratio: 0, index: currentIndex)
         reloadPlayer()
+    }
+}
+
+extension StoriesPlayerViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith
+        otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
