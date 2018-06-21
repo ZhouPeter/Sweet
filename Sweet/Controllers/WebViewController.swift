@@ -19,6 +19,17 @@ class WebViewController: BaseViewController {
         return webView
     }()
     
+    private lazy var progressView: UIProgressView = {
+        let view = UIProgressView(progressViewStyle: .default)
+        view.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        view.progressTintColor = UIColor.xpNavBlue()
+        view.trackTintColor = .white
+        let navigationBarBounds = self.navigationController?.navigationBar.bounds ?? CGRect.zero
+        view.frame =
+            CGRect(x: 0, y: navigationBarBounds.size.height - 2, width: navigationBarBounds.size.width, height: 2)
+        return view
+    } ()
+    
     init(urlString: String) {
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -30,14 +41,33 @@ class WebViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        automaticallyAdjustsScrollViewInsets = true
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.addSubview(progressView)
         view.addSubview(webView)
         webView.fill(in: view)
+        
+        
         let request = URLRequest(url: URL(string: urlString)!)
         webView.load(request)
+        webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+    }
+    
+    override func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?) {
+        guard let change = change else { return }
+        if keyPath == "estimatedProgress" {
+            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
+                progressView.setProgress(progress, animated: true);
+            }
+        }
     }
     
     private func handleError(error: Error) {
@@ -73,5 +103,15 @@ extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         handleError(error: error)
     }
-
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        progressView.setProgress(1, animated: true)
+        UIView.animate(withDuration: 0.25, delay: 0.5, options: [], animations: {
+            self.progressView.alpha = 0
+        }, completion: nil)
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        progressView.alpha = 1
+    }
 }
