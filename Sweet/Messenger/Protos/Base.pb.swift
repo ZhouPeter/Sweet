@@ -160,6 +160,8 @@ struct SimpleUserInfo {
   ///见用户类型枚举
   var userType: UInt32 = 0
 
+  var isBlacklisted: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum Gender: SwiftProtobuf.Enum {
@@ -342,6 +344,7 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     8: .same(proto: "city"),
     9: .same(proto: "sign"),
     10: .standard(proto: "user_type"),
+    11: .same(proto: "isBlacklisted"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -357,6 +360,7 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       case 8: try decoder.decodeSingularStringField(value: &self.city)
       case 9: try decoder.decodeSingularStringField(value: &self.sign)
       case 10: try decoder.decodeSingularUInt32Field(value: &self.userType)
+      case 11: try decoder.decodeSingularBoolField(value: &self.isBlacklisted)
       default: break
       }
     }
@@ -393,6 +397,9 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if self.userType != 0 {
       try visitor.visitSingularUInt32Field(value: self.userType, fieldNumber: 10)
     }
+    if self.isBlacklisted != false {
+      try visitor.visitSingularBoolField(value: self.isBlacklisted, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -407,6 +414,7 @@ extension SimpleUserInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if self.city != other.city {return false}
     if self.sign != other.sign {return false}
     if self.userType != other.userType {return false}
+    if self.isBlacklisted != other.isBlacklisted {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }
