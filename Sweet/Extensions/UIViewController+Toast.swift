@@ -9,32 +9,32 @@
 import UIKit
 import PKHUD
 
-open class PKHUDCustomTextView: PKHUDWideBaseView {
-    static let defaultWideBaseViewFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 200, height: 104))
-    public init(text: String?) {
-        super.init(frame: PKHUDCustomTextView.defaultWideBaseViewFrame)
+class PKHUDCustomTextView: PKHUDWideBaseView {
+    static let fixedBounds = CGRect(origin: CGPoint.zero, size: CGSize(width: 200, height: 104))
+    
+    init(text: String?) {
+        super.init(frame: PKHUDCustomTextView.fixedBounds)
         commonInit(text)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit("")
     }
     
     func commonInit(_ text: String?) {
         titleLabel.text = text
-        backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        backgroundColor = .clear
         addSubview(titleLabel)
     }
     
-    open override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
-        
         let padding: CGFloat = 10.0
         titleLabel.frame = bounds.insetBy(dx: padding, dy: padding)
     }
     
-    open let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 20.0)
@@ -54,6 +54,7 @@ extension UIViewController {
 extension PKHUD {
     class func toast(message: String, duration: Double = 2, completion: (() -> Void)? = nil) {
         PKHUD.sharedHUD.contentView = PKHUDCustomTextView(text: message)
+        PKHUD.sharedHUD.effect = UIBlurEffect(style: .dark)
         PKHUD.sharedHUD.show()
         PKHUD.sharedHUD.hide(afterDelay: duration) { (_) in
             completion?()
