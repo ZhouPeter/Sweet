@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 protocol ContactSearchView: BaseView {
     var back:(() -> Void)? { get set }
     var showProfile: ((UInt64) -> Void)? { get set }
@@ -34,7 +35,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 65, height: 25)
+        searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 65, height: 44)
         searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
         searchBar.placeholder = "搜索人名、手机号"
         searchBar.setCancelText(text: "返回", textColor: .black)
@@ -54,6 +55,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         return tableView
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -65,10 +67,25 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
+        if #available(iOS 11.0, *) {
+            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.resignFirstResponder()
+    }
+    
     @objc private func backAction(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
+    
     private func removeAllData() {
         contactViewModels.removeAll()
         subscriptionsViewModels.removeAll()
@@ -77,6 +94,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         blacklistViewModels.removeAll()
         titles.removeAll()
     }
+    
     private func searchContact(name: String) {
         if name == "" {
             removeAllData()
