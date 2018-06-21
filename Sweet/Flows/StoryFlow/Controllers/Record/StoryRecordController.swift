@@ -106,7 +106,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        logger.debug()
         super.viewDidDisappear(animated)
         resumeCamera(false)
         if isDismissable == false {
@@ -228,7 +227,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     private func resumeCamera(_ isOpen: Bool) {
-        logger.debug(isOpen)
         if isOpen {
             captureView.startCaputre()
             captureView.resumeCamera()

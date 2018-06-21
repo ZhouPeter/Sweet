@@ -78,9 +78,7 @@ final class StoryCaptureView: GPUImageView {
     private var isStarting = false
     
     func startCaputre(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStarting == false, isStarted == false else { return }
-        logger.debug("success")
         isStarting = true
         queue.async {
             self.camera?.startCapture()
@@ -93,9 +91,7 @@ final class StoryCaptureView: GPUImageView {
     private var isPausing = false
     
     func pauseCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isPausing == false, isPaused == false else { return }
-        logger.debug("success")
         isPausing = true
         queue.async {
             self.camera?.pauseCapture()
@@ -108,9 +104,7 @@ final class StoryCaptureView: GPUImageView {
     private var isResuming = false
     
     func resumeCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isResuming == false, isPaused else { return }
-        logger.debug("success")
         isResuming = true
         queue.async {
             self.camera?.resumeCameraCapture()
@@ -123,9 +117,7 @@ final class StoryCaptureView: GPUImageView {
     private var isStopping = false
     
     func stopCapture(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStopping == false, isStarted == false else { return }
-        logger.debug("success")
         isStopping = true
         queue.async {
             self.camera?.stopCapture()
@@ -143,8 +135,10 @@ final class StoryCaptureView: GPUImageView {
         setupRecording {
             self.queue.async {
                 self.writer?.startRecording()
-                self.isStartingRecording = false
-                DispatchQueue.main.async { callback?() }
+                DispatchQueue.main.async {
+                    self.isStartingRecording = false
+                    callback?()
+                }
             }
         }
     }
@@ -218,7 +212,10 @@ final class StoryCaptureView: GPUImageView {
             self.writer?.setHasAudioTrack(true, audioSettings: StoryConfg.audioSetting)
             self.camera?.audioEncodingTarget = self.writer
             self.filter.addTarget(self.writer)
-            DispatchQueue.main.async { callback?() }
+            DispatchQueue.main.async {
+                self.isRecordingSetuping = false
+                callback?()
+            }
         }
     }
     
