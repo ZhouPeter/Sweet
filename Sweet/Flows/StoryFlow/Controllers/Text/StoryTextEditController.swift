@@ -61,6 +61,7 @@ final class StoryTextEditController: UIViewController {
         button.setBackgroundImage(image, for: .normal)
         button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        button.addTarget(self, action: #selector(didPressedTopicButton), for: .touchUpInside)
         return button
     } ()
     
@@ -215,7 +216,7 @@ final class StoryTextEditController: UIViewController {
                 animated: true
             )
         } else if event.type == .willHide {
-            isTextGestureEnabled = textView.hasText
+            isTextGestureEnabled = textView.hasText || topic != nil
             doTextDisplayTransform()
         }
     }
@@ -236,6 +237,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     private func layoutTextBoundingView() {
+        var rect = CGRect.zero
         var transform = CGAffineTransform.identity
         var center = textView.center
         if let textTransform = textTransform {
@@ -243,7 +245,7 @@ final class StoryTextEditController: UIViewController {
             center.x += textTransform.translation.x
             center.y += textTransform.translation.y
         }
-        var rect = textView.frame.applying(transform)
+        rect = textView.frame.applying(transform)
         let length = max(max(rect.width, rect.height), 100)
         rect.size.width = length
         rect.size.height = length
@@ -312,6 +314,11 @@ final class StoryTextEditController: UIViewController {
     
     // MARK: - Actions
     
+    @objc private func didPressedTopicButton() {
+        guard topic != nil, textView.isFirstResponder == false else { return }
+        textView.becomeFirstResponder()
+    }
+    
     @objc private func tapped(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended && textView.isFirstResponder == false {
             textView.becomeFirstResponder()
@@ -323,7 +330,10 @@ final class StoryTextEditController: UIViewController {
     @objc private func panned(_ gesture: UIPanGestureRecognizer) {
         guard isTextGestureEnabled else { return }
         if gesture.state == .began {
-            isPanTextView = textView.hasText && (isPanLocatedInTextView() || pan.numberOfTouches > 1)
+            isPanTextView = false
+            if pan.numberOfTouches > 1 || isPanLocatedInTextView() {
+                isPanTextView = textView.hasText || topic != nil
+            }
             if isPanTextView {
                 gestureDidBegin()
                 delegate?.storyTextEditControllerTextDeleteZoneDidBeginUpdate(makeTextDeleteZone())
@@ -358,7 +368,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     @objc private func pinched(_ gesture: UIPinchGestureRecognizer) {
-        guard isTextGestureEnabled, textView.hasText else { return }
+        guard isTextGestureEnabled else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
@@ -377,7 +387,7 @@ final class StoryTextEditController: UIViewController {
     }
     
     @objc private func rotated(_ gesture: UIRotationGestureRecognizer) {
-        guard isTextGestureEnabled, textView.hasText else { return }
+        guard isTextGestureEnabled else { return }
         switch gesture.state {
         case .began:
             gestureDidBegin()
