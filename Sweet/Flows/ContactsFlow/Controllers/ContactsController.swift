@@ -37,10 +37,11 @@ class ContactsController: BaseViewController, ContactsView {
         ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorInset.left = 0
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
@@ -179,7 +180,7 @@ class ContactsController: BaseViewController, ContactsView {
 
 extension ContactsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 68
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
