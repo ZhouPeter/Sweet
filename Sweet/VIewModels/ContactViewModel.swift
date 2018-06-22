@@ -17,7 +17,7 @@ struct ContactViewModel {
     var isHiddenButton: Bool
     var buttonTitle: String?
     var buttonStyle: ContactButtonStyle?
-    var callBack: ((UInt64) -> Void)?
+    var callBack: ((String) -> Void)?
     var isHiddeenSelectButton: Bool = true
     init(model: Contact) {
         self.avatarURL = URL(string: model.avatar)!
@@ -49,7 +49,7 @@ struct ContactSubcriptionSectionViewModel {
     let isHiddenButton: Bool
     var buttonTitle: String
     var buttonStyle: ContactButtonStyle
-    var callBack: ((UInt64) -> Void)?
+    var callBack: ((String) -> Void)?
     init(model: SubcriptionSection) {
         self.isHiddenButton = false
         self.avatarURL = URL(string: model.avatar)!

@@ -10,10 +10,10 @@ import UIKit
 
 class ContactTableViewCell: UITableViewCell {
 
-    private var buttonCallBack: ((UInt64) -> Void)?
+    private var buttonCallBack: ((String) -> Void)?
     private var userId: UInt64?
     private var sectionId: UInt64?
-    private var phone: UInt64?
+    private var phone: String?
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -76,9 +76,9 @@ class ContactTableViewCell: UITableViewCell {
     
     @objc private func statusAction(_ sender: UIButton) {
         if let userId = userId, let buttonCallBack = buttonCallBack {
-            buttonCallBack(userId)
+            buttonCallBack("\(userId)")
         } else if let sectionId = sectionId, let buttonCallBack = buttonCallBack {
-            buttonCallBack(sectionId)
+            buttonCallBack("\(sectionId)")
         } else if let phone = phone, let buttonCallBack = buttonCallBack {
             buttonCallBack(phone)
         }
@@ -139,7 +139,7 @@ class ContactTableViewCell: UITableViewCell {
     }
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
-        phone = UInt64(viewModel.phone)
+        phone = viewModel.phone
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = viewModel.firstNameString

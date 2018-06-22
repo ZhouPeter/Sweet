@@ -49,21 +49,21 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 response.sections.forEach({ (model) in
                     var viewModel = ContactSubcriptionSectionViewModel(model: model)
                     viewModel.callBack = { [weak self] sectionId in
-                        self?.delSectionSubscription(sectionId: sectionId)
+                        self?.delSectionSubscription(sectionId: UInt64(sectionId)!)
                     }
                     self.sectionViewModels.append(viewModel)
                 })
                 response.users.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delUserSubscription(userId: userId)
+                        self?.delUserSubscription(userId: UInt64(userId)!)
                     }
                     self.userViewModels.append(viewModel)
                 })
                 response.blocks.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delBlocklist(userId: userId)
+                        self?.delBlocklist(userId: UInt64(userId)!)
                     }
                     self.blockViewModels.append(viewModel)
                 })
@@ -84,7 +84,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.blockViewModels[index].buttonStyle = .borderGray
                 self.blockViewModels[index].buttonTitle = "恢复"
                 self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlocklist(userId: userId)
+                    self?.delBlocklist(userId: UInt64(userId)!)
                 }
                 let section: Int = self.titles.index(of: "屏蔽")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
@@ -102,7 +102,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.blockViewModels[index].buttonStyle = .backgroundColorGray
                 self.blockViewModels[index].buttonTitle = "屏蔽"
                 self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlocklist(userId: userId)
+                    self?.addBlocklist(userId: UInt64(userId)!)
                 }
                 let section: Int = self.titles.index(of: "屏蔽")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
@@ -119,7 +119,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.userViewModels[index].buttonStyle = .backgroundColorBlue
                 self.userViewModels[index].buttonTitle = "订阅"
                 self.userViewModels[index].callBack = { [weak self] userId in
-                    self?.addUserSubscription(userId: userId)
+                    self?.addUserSubscription(userId: UInt64(userId)!)
                 }
                 let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
@@ -137,7 +137,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.userViewModels[index].buttonStyle = .borderBlue
                 self.userViewModels[index].buttonTitle = "已订阅"
                 self.userViewModels[index].callBack = { [weak self] userId in
-                    self?.delUserSubscription(userId: userId)
+                    self?.delUserSubscription(userId: UInt64(userId)!)
                 }
                 let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
@@ -155,7 +155,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.sectionViewModels[index].buttonStyle = .backgroundColorBlue
                 self.sectionViewModels[index].buttonTitle = "订阅"
                 self.sectionViewModels[index].callBack = { [weak self] sectionId in
-                    self?.addSectionSubscription(sectionId: sectionId)
+                    self?.addSectionSubscription(sectionId: UInt64(sectionId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):
@@ -172,7 +172,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                 self.sectionViewModels[index].buttonStyle = .borderBlue
                 self.sectionViewModels[index].buttonTitle = "已订阅"
                 self.sectionViewModels[index].callBack = { [weak self] sectionId in
-                    self?.delSectionSubscription(sectionId: sectionId)
+                    self?.delSectionSubscription(sectionId: UInt64(sectionId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):

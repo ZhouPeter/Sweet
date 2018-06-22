@@ -17,7 +17,7 @@ class SubmitTypeView: UIView {
         return label
     }()
     
-    private lazy var selectedImageView: UIImageView = {
+    lazy var selectedImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "Selected")
         imageView.isHidden = true
@@ -54,6 +54,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.black.withAlphaComponent(0.3)
         label.textAlignment = .left
+    
         return label
     }()
     private lazy var contentSectionLabel: UILabel = {
@@ -62,16 +63,23 @@ class FeedbackController: BaseViewController, FeedbackView {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.black.withAlphaComponent(0.3)
         label.textAlignment = .left
+      
         return label
     }()
     
     private lazy var feedbackView: SubmitTypeView = {
         let view = SubmitTypeView(title: "意见反馈", isSelected: true)
+        view.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
     private lazy var appealView: SubmitTypeView = {
         let view = SubmitTypeView(title: "封禁申诉")
+        view.tag = 2
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -113,7 +121,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         button.isEnabled = false
         return button
     }()
-    
+    private var feedbackType: Int = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "意见反馈"
@@ -122,6 +130,22 @@ class FeedbackController: BaseViewController, FeedbackView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressView(_:)))
         view.addGestureRecognizer(tap)
         setupTextView()
+    }
+    
+    @objc private func didPressTypeView(_ tap: UITapGestureRecognizer) {
+        if let view = tap.view {
+            if view.tag == 1 {
+                let image = appealView.selectedImageView.image
+                feedbackView.selectedImageView.image = image
+                appealView.selectedImageView.image = nil
+                feedbackType = 1
+            } else if view.tag == 2 {
+                let image = feedbackView.selectedImageView.image
+                appealView.selectedImageView.image = image
+                feedbackView.selectedImageView.image = nil
+                feedbackType = 2
+            }
+        }
     }
     
     @objc private func didPressView(_ tap: UITapGestureRecognizer) {
