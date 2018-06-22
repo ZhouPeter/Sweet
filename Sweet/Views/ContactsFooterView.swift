@@ -12,7 +12,7 @@ class ContactsFooterView: UITableViewHeaderFooterView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.xpTextGray()
         label.textAlignment  = .center
         return label
@@ -20,7 +20,7 @@ class ContactsFooterView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor.xpGray()
+        contentView.backgroundColor = UIColor.clear
         contentView.addSubview(titleLabel)
         titleLabel.center(to: contentView)
     }

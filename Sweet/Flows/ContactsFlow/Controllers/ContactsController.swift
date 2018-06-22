@@ -18,6 +18,7 @@ class ContactsController: BaseViewController, ContactsView {
     private var between72hViewModels = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
     private var titles = [String]()
+    private var emptyView = EmptyEmojiView()
     
     private lazy var categoryViewModels: [ContactCategoryViewModel] = {
         var viewModels = [ContactCategoryViewModel]()
@@ -29,15 +30,11 @@ class ContactsController: BaseViewController, ContactsView {
     } ()
     
     private var viewModelsGroup = [[ContactViewModel]]() {
-        didSet {
-            self.showEmptyView(isShow: self.viewModelsGroup.count == 0)
-        }
+        didSet { showEmptyView(isShow: viewModelsGroup.count == 0) }
     }
     
-    private lazy var tableViewFooterView: ContactsFooterView = {
-        let view = ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
-        return view
-    } ()
+    private var tableViewFooterView =
+        ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -47,12 +44,8 @@ class ContactsController: BaseViewController, ContactsView {
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
+        tableView.backgroundColor = UIColor(hex: 0xF2F2F2)
         return tableView
-    } ()
-    
-    private lazy var emptyView: EmptyEmojiView = {
-        let view = EmptyEmojiView()
-        return view
     } ()
     
     // MARK: - Private
@@ -67,12 +60,13 @@ class ContactsController: BaseViewController, ContactsView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
-
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadContacts()
     }
+    
     private func showEmptyView(isShow: Bool) {
         if isShow {
             if emptyView.superview != nil { return }
@@ -192,6 +186,12 @@ extension ContactsController: UITableViewDelegate {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerView") as? SweetHeaderView
         view?.update(title: section == 0 ? "" : titles[section - 1])
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.backgroundView?.backgroundColor = .clear
+        }
     }
  
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

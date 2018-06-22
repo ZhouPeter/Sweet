@@ -95,6 +95,7 @@ final class ConversationController: MessagesViewController {
     // MARK: - Private
     
     private func setupCollectionView() {
+        messagesCollectionView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.register(ContentCardMessageCell.self)
@@ -250,6 +251,9 @@ extension ConversationController: MessagesDisplayDelegate {
         for message: MessageType,
         at indexPath: IndexPath,
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        if message.sender.id == "\(user.userId)" {
+            return UIColor(hex: 0x36C6FD)
+        }
         return .white
     }
     
