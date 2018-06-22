@@ -28,20 +28,21 @@ class AllCardsCoordinator: BaseCoordinator {
 }
 
 extension AllCardsCoordinator: CardsBaseViewDelegate {
+    
     func showStoriesGroup(user: User, storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
-                          delegate: StoriesPlayerGroupViewControllerDelegate,
+                          delegate: StoriesPlayerGroupViewControllerDelegate?,
                           completion: (() -> Void)?) {
         let navigation = UINavigationController()
         navigation.hero.isEnabled = true
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
                                                                         navigation: navigation,
                                                                         current: currentIndex,
+                                                                        currentStart: 0,
                                                                         isGroup: true,
                                                                         fromCardId: fromCardId,
                                                                         storiesGroup: storiesGroup,
-                                                                        delegate: nil,
-                                                                        groupDelegate: delegate)
+                                                                        delegate: delegate)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

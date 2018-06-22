@@ -66,9 +66,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     (
         User,
         [StoryCellViewModel],
-        Int,
-        StoriesPlayerViewControllerDelegate,
-        (() -> Void)?) -> Void
+        Int) -> Void
     )?
     
     var user: User
@@ -147,25 +145,15 @@ extension StoriesController: UICollectionViewDataSource {
 
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showStoriesPlayerView?(user, storyViewModels, indexPath.item, self, {
-            
-        })
-
-//        let storiesPlayViewController = StoriesPlayerViewController(user: user)
-//        storiesPlayViewController.delegate = self
-//        storiesPlayViewController.currentIndex = indexPath.item
-//        storiesPlayViewController.stories = storyViewModels
-//        self.present(storiesPlayViewController, animated: true) {
-//            storiesPlayViewController.reloadPlayer()
-//        }
+        showStoriesPlayerView?(user, storyViewModels, indexPath.item)
         
     }
 }
 
-extension StoriesController: StoriesPlayerViewControllerDelegate {
-    func delStory(withStoryId storyId: UInt64) {
-        guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
-        storyViewModels.remove(at: index)
-        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
-    }
-}
+//extension StoriesController: StoriesPlayerViewControllerDelegate {
+//    func delStory(withStoryId storyId: UInt64) {
+//        guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
+//        storyViewModels.remove(at: index)
+//        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+//    }
+//}

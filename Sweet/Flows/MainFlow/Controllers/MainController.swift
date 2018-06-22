@@ -11,11 +11,9 @@ import Pageboy
 
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
-        return self.visibleViewController
+        return self.topViewController
     }
-    open override var shouldAutorotate: Bool {
-        return false
-    }
+
     open override var childViewControllerForStatusBarHidden: UIViewController? {
         return self.topViewController
     }

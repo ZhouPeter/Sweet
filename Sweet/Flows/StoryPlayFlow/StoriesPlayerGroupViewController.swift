@@ -9,10 +9,16 @@
 import UIKit
 import Gemini
 import Hero
+import Kingfisher
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
 }
+
+extension StoriesPlayerGroupViewControllerDelegate {
+    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {}
+}
+
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     var runProfileFlow: ((User, UInt64) -> Void)?
     
@@ -42,7 +48,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         }
     }
     var storiesGroup: [[StoryCellViewModel]]
-    var subCurrentIndex = 0
+    var currentStart = 0
     var fromCardId: String?
     private var loctionMap = [IndexPath: Int]()
     private var isLoading = false
@@ -57,6 +63,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.register(StoryPlayCollectionViewCell.self, forCellWithReuseIdentifier: "placeholderCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        if #available(iOS 10.0, *) {
+            collectionView.prefetchDataSource = self
+        }
         collectionView.isPagingEnabled = true
         collectionView.gemini.cubeAnimation().cubeDegree(90).shadowEffect(.fadeIn)
         return collectionView
@@ -64,10 +73,15 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
     private var storiesPlayerControllerMap = [UICollectionViewCell: StoriesPlayerViewController]()
     
-    init(user: User, storiesGroup: [[StoryCellViewModel]], currentIndex: Int, fromCardId: String? = nil) {
+    init(user: User,
+         storiesGroup: [[StoryCellViewModel]],
+         currentIndex: Int,
+         currentStart: Int = 0,
+         fromCardId: String? = nil) {
         self.user = user
         self.storiesGroup = storiesGroup
         self.currentIndex = currentIndex
+        self.currentStart = currentStart
         self.fromCardId = fromCardId
         super.init(nibName: nil, bundle: nil)
     }
@@ -81,12 +95,10 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
-        
-        hero.isEnabled = true
         collectionView.addGestureRecognizer(pan)
         collectionView.hero.isEnabled = true
         collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)"
-
+        collectionView.isScrollEnabled = storiesGroup.count > 1
         view.addSubview(collectionView)
         collectionView.fill(in: view)
         if #available(iOS 11.0, *) {
@@ -190,6 +202,28 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     }
 }
 
+extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let urlsGroup = indexPaths.compactMap { (indexPath) -> [URL]? in
+            let stories = storiesGroup[indexPath.row]
+            let urls = stories.compactMap { (story) -> URL? in
+                if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
+                    return videoURL.videoThumbnail(size: view.bounds.size)
+                } else if let imageURL = story.imageURL {
+                    return imageURL.middleCutting(size: view.bounds.size)
+                } else {
+                    return nil
+                }
+            }
+            return urls
+        }
+        urlsGroup.forEach({
+            logger.debug($0)
+            ImagePrefetcher(urls: $0).start()
+        })
+    }
+}
+
 extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return storiesGroup.count
@@ -203,12 +237,10 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
         let playerController = getChildViewController(cell: cell)
         playerController.stories = storiesGroup[indexPath.row]
         playerController.currentIndex = loctionMap[indexPath] ?? 0
+        if currentIndex == indexPath.row { playerController.currentIndex = currentStart }
         cell.setPlaceholderContentView(view: playerController.view)
         playerController.update()
-        if currentIndex == indexPath.row {
-            playerController.currentIndex = subCurrentIndex
-            playerController.initPlayer()
-        }
+        if currentIndex == indexPath.row { playerController.initPlayer() }
         pan.require(toFail: playerController.storiesScrollView.scrollViewTap)
         return cell
     }

@@ -126,7 +126,23 @@ extension InboxCoordinator: ConversationControllerDelegate {
     }
     
     func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User) {
-        
+        let navigation = UINavigationController()
+        navigation.hero.isEnabled = true
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
+            user: user,
+            navigation: navigation,
+            current: 0,
+            currentStart: 0,
+            isGroup: false,
+            fromCardId: nil,
+            storiesGroup: [[viewModel]],
+            delegate: nil)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start()
     }
 }
 

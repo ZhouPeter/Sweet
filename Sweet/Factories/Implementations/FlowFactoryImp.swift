@@ -131,21 +131,22 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
         controller.currentIndex = current
         controller.stories = stories
         controller.delegate = delegate
-        
+        controller.hero.isEnabled = true
         return controller
     }
     
     func makeStoiesGroupView(user: User,
                              storiesGroup: [[StoryCellViewModel]],
                              currentIndex: Int,
+                             currentStart: Int,
                              fromCardId: String?,
                              delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView {
         let controller = StoriesPlayerGroupViewController(
             user: user,
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
+            currentStart: currentStart,
             fromCardId: fromCardId)
-        controller.hero.isEnabled = true
         controller.delegate = delegate
         return controller
     }
