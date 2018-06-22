@@ -175,7 +175,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         toggleOffMenu()
     }
     
+    private var isPrepared = false
+    
     func prepare() {
+        guard isPrepared == false else { return }
+        self.isPrepared = true
         guard TLAuthorizedManager.checkAuthorization(with: .camera) else { return }
         self.captureView.setupCamera {
             guard TLAuthorizedManager.checkAuthorization(with: .mic) else { return }
