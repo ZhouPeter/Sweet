@@ -124,6 +124,10 @@ extension InboxCoordinator: ConversationControllerDelegate {
             }
         }
     }
+    
+    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User) {
+        
+    }
 }
 
 extension InboxCoordinator: MessengerDelegate {

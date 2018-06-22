@@ -16,6 +16,7 @@ protocol ConversationControllerDelegate: class {
     func conversationControllerReports(buddy: User)
     func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
     func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User)
+    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User)
 }
 
 final class ConversationController: MessagesViewController {
@@ -290,11 +291,10 @@ extension ConversationController: MessageCellDelegate {
                 case .failure(let error):
                     logger.error(error)
                 case .success(let response):
-                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-                    storiesPlayViewController.stories = [StoryCellViewModel(model: response.story)]
-                    self.present(storiesPlayViewController, animated: true) {
-                        storiesPlayViewController.initPlayer()
-                    }
+                    self.delegate?.conversationControllerShowsStory(
+                        StoryCellViewModel(model: response.story),
+                        user: message.from == self.user.userId ? self.user : self.buddy
+                    )
                 }
             }
         }
