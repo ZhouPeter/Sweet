@@ -31,6 +31,17 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         return view
     } ()
     
+    private lazy var editButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "StoryEdit"), for: .normal)
+        button.setTitle("编辑", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.imageEdgeInsets = UIEdgeInsets(top: -15, left: 8, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 13, left: -33, bottom: -23, right: 0)
+        button.addTarget(self, action: #selector(didPressEditButton), for: .touchUpInside)
+        return button
+    } ()
+    
     private lazy var finishButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "StoryConfirm"), for: .normal)
@@ -96,6 +107,10 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     }
     
     private func setupEditControls() {
+        editContainer.addSubview(editButton)
+        editButton.constrain(width: 50, height: 50)
+        editButton.align(.left, to: view, inset: 10)
+        editButton.align(.bottom, to: view, inset: 25)
         editContainer.addSubview(finishButton)
         finishButton.constrain(width: 50, height: 50)
         finishButton.align(.bottom, to: view, inset: 25)
@@ -138,6 +153,10 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
             self.onCancelled?()
         }
     }
+    
+    @objc private func didPressEditButton() {
+        editController.beginEditing()
+    }
 }
 
 extension StoryTextController: StoryTextEditControllerDelegate {
@@ -149,6 +168,7 @@ extension StoryTextController: StoryTextEditControllerDelegate {
     
     func storyTextEidtControllerDidEndEditing() {
         UIView.animate(withDuration: 0.25) {
+            self.editButton.alpha = self.editController.hasText ? 0 : 1
             self.finishButton.alpha = 1
         }
     }
@@ -159,6 +179,20 @@ extension StoryTextController: StoryTextEditControllerDelegate {
             let colors = nextGradientColors(isNext: isLeft)
             gradientView.changeColors(colors, animated: true)
         }
+    }
+    
+    func storyTextEditControllerDidBeginChooseTopic() {
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.closeButton.alpha = 0
+            self.editButton.alpha = 0
+        }, completion: nil)
+    }
+    
+    func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.closeButton.alpha = 1
+            self.editButton.alpha = self.editController.hasText ? 0 : 1
+        }, completion: nil)
     }
     
     private func nextGradientColors(isNext: Bool) -> [UIColor] {
