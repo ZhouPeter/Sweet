@@ -24,13 +24,10 @@ final class StoryKeyboardControlView: UIView {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("下一步", for: .normal)
+        button.setTitle("完成", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        let image = #imageLiteral(resourceName: "NextButton")
-            .resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 17), resizingMode: .stretch)
-        button.setBackgroundImage(image, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         button.addTarget(self, action: #selector(didPressNextButton), for: .touchUpInside)
         return button
     } ()
