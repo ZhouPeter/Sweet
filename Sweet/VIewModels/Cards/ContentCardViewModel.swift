@@ -45,10 +45,7 @@ struct ContentImageModel {
     let imageURL: URL
     
     init(model: ContentImage) {
-        let scale = (UIScreen.mainWidth() - 20) / 27
-        let width = scale * CGFloat(model.width)
-        let height = scale * CGFloat(model.height)
-        size = CGSize(width: width, height: height)
+        size = CGSize(width: CGFloat(model.width), height: CGFloat(model.height))
         imageURL = URL(string: model.url)!
     }
 }
