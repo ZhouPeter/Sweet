@@ -14,9 +14,8 @@ protocol ProfileView: BaseView {
         (
         User,
         [StoryCellViewModel],
-        Int,
-        StoriesPlayerViewControllerDelegate,
-        (() -> Void)?) -> Void
+        Int
+        ) -> Void
         )? { get set }
     var finished: (() -> Void)? { get set }
     var user: User { get set }
@@ -25,14 +24,12 @@ protocol ProfileView: BaseView {
 
 class ProfileController: BaseViewController, ProfileView {
     var showStoriesPlayerView: (
-    (
-    User,
-    [StoryCellViewModel],
-    Int,
-    StoriesPlayerViewControllerDelegate,
-    (() -> Void)?) -> Void
+        (
+        User,
+        [StoryCellViewModel],
+        Int
+        ) -> Void
     )?
-    
     var user: User
     var userId: UInt64
     var showAbout: ((UserResponse) -> Void)?
@@ -103,15 +100,16 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
-        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.barStyle = .default
+    
         setBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintColor = .black
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
         if userResponse == nil || !isFirstLoad {
             loadAll()
         } else {

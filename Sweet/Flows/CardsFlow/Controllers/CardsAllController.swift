@@ -23,11 +23,15 @@ class CardsAllController: CardsBaseController, CardsAllView {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadCards()
+    }
+    
+    func loadCards() {
         if self.cards.count == 0 {
             let allCardsLastID = Defaults[.allCardsLastID]
             startLoadCards(
-                cardRequest: .all(cardId: allCardsLastID,
-                                  direction: Direction.recover)) { [weak self] (success, _) in
+            cardRequest: .all(cardId: allCardsLastID, direction: Direction.recover)) {
+                [weak self] (success, _) in
                 if success {
                     self?.collectionView.reloadData()
                     self?.collectionView.performBatchUpdates(nil, completion: { (_) in

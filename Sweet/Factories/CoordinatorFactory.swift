@@ -21,11 +21,11 @@ protocol CoordinatorFactory {
         user: User,
         navigation: UINavigationController?,
         current: Int,
+        currentStart: Int,
         isGroup: Bool,
         fromCardId: String?,
         storiesGroup: [[StoryCellViewModel]],
-        delegate: StoriesPlayerViewControllerDelegate?,
-        groupDelegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput
+        delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput
     func makeIMCoordinator(user: User, token: String, navigation: UINavigationController?) -> Coordinator
     func makeStoryCoordinator(user: User, navigation: UINavigationController?) -> Coordinator
     func makeDismissableStoryCoordinator(

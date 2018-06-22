@@ -17,9 +17,7 @@ class ActionsController: PageboyViewController {
     (
      User,
      [StoryCellViewModel],
-     Int,
-     StoriesPlayerViewControllerDelegate,
-     (() -> Void)?) -> Void
+     Int) -> Void
     )?
     var user: User {
         didSet {

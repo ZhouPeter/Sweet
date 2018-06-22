@@ -9,7 +9,7 @@
 import Foundation
 import Kingfisher
 extension UIImageView {
-    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int ) {
+    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int) {
         var urls = [URL]()
         let urlString = url.absoluteString
         for index in 0 ..< count {
@@ -21,24 +21,26 @@ extension UIImageView {
             let url = URL(string: urlString)!
             urls.append(url)
         }
-        var images = [UIImage]()
-        let queue = DispatchQueue.global()
-        let group = DispatchGroup()
-        urls.forEach { (url) in
-            group.enter()
-            queue.async {
-                ImageDownloader.default.downloadImage(with: url) { (image, _, _, _) in
-                    group.leave()
-                    if let image = image {
-                        images.append(image)
+        
+        for (index, url) in urls.enumerated() {
+            ImageDownloader.default.downloadImage(
+                with: url,
+                completionHandler: { [weak self] (image, _, _, _) in
+                    guard let `self` = self  else { return }
+                    guard let image = image  else { return }
+        
+                    DispatchQueue.main.async {
+                        self.stopAnimating()
+                        var currentImages = self.animationImages ?? [UIImage]()
+                        while currentImages.count <= index {
+                            currentImages.append(image)
+                        }
+                        currentImages[index] = image
+                        self.animationImages = currentImages
+                        self.setNeedsLayout()
+                        self.startAnimating()
                     }
-                }
-            }
-        }
-        group.notify(queue: DispatchQueue.main) {
-            self.animationImages = images
-            self.animationDuration = animationDuration
-            self.startAnimating()
+            })
         }
     }
 }

@@ -11,7 +11,7 @@ import AVFoundation
 import JXPhotoBrowser
 import SwiftyUserDefaults
 import Kingfisher
-import AudioToolbox
+import TapticEngine
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -62,13 +62,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }
     public var panPoint: CGPoint?
     public var panOffset: CGPoint?
-    public var cellConfigurators = [CellConfiguratorType]() {
-        didSet {
-            if self is CardsSubscriptionController {
-                showEmptyView(isShow: cellConfigurators.count == 0)
-            }
-        }
-    }
+    public var cellConfigurators = [CellConfiguratorType]()
     public var cards = [CardResponse]()
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
@@ -464,6 +458,9 @@ extension CardsBaseController {
 
 extension CardsBaseController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if self is CardsSubscriptionController {
+            showEmptyView(isShow: cellConfigurators.count == 0)
+        }
         return cellConfigurators.count
     }
     
@@ -513,7 +510,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                 let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
                 self.cellConfigurators[index] = configurator
                 self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                self.vibrateFeedback()
             case let .failure(error):
                 logger.error(error)
             }
@@ -569,7 +566,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
                 Defaults[.isEvaluationOthers] = true
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                self.vibrateFeedback()
             case let .failure(error):
                 logger.error(error)
             }
@@ -597,7 +594,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         self.cellConfigurators[index] = configurator
                         self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     }
-                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                    self.vibrateFeedback()
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -859,7 +856,7 @@ extension CardsBaseController {
                     acCell.updateItem(item: item, like: true)
                 }
                 self.toast(message: "❤️ 评价成功")
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                self.vibrateFeedback()
             case let  .failure(error):
                 logger.error(error)
             }

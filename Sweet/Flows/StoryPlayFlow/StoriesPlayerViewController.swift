@@ -12,11 +12,18 @@ import SwiftyUserDefaults
 import Alamofire
 import VIMediaCache
 import Hero
-@objc protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
-    @objc optional func playToBack()
-    @objc optional func playToNext()
-    @objc optional func dismissController()
-    @objc optional func delStory(withStoryId storyId: UInt64)
+protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
+    func playToBack()
+    func playToNext()
+    func dismissController()
+    func delStory(withStoryId storyId: UInt64)
+}
+
+extension StoriesPlayerViewControllerDelegate{
+    func playToBack() {}
+    func playToNext() {}
+    func dismissController() {}
+    func delStory(withStoryId storyId: UInt64) {}
 }
 
 class AVPlayerView: UIView {
@@ -42,7 +49,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var stories: [StoryCellViewModel]! {
         didSet {
             if stories.count == 0 {
-                delegate?.dismissController?()
+                delegate?.dismissController()
             } else {
                 self.isSelf = stories[0].userId == UInt64(Defaults[.userID] ?? "0")
             }
@@ -185,12 +192,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
-        pause()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.isHidden = false
         NotificationCenter.default.post(name: Notification.Name.StatusBarNoHidden, object: nil)
 
     }
@@ -277,8 +283,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
                                       y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
             pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
-            pokeLongPress.minimumPressDuration = 0.1
-            pokeLongPress.delegate = self
             view.addGestureRecognizer(pokeLongPress)
         } else {
             pokeView.isHidden = true
@@ -319,6 +323,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             addVideoObservers()
             addKVOObservers()
         }
+        player?.seek(to: CMTimeMakeWithSeconds(0.01, 1000), toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
         play()
     }
 
@@ -425,7 +430,7 @@ extension StoriesPlayerViewController {
 
     private func currentStoryPlayEnd() {
         if currentIndex == stories.count - 1 {
-            delegate?.playToNext?()
+            delegate?.playToNext()
             return
         }
         currentIndex += 1
@@ -551,7 +556,7 @@ extension StoriesPlayerViewController {
             case let .success(response):
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alertController.addAction(
-                    UIAlertAction.makeAlertAction(title: "分享联系人",
+                    UIAlertAction.makeAlertAction(title: "分享给联系人",
                                                   style: .default,
                                                   handler: { (_) in
                     let controller = ShareCardController()
@@ -601,7 +606,7 @@ extension StoriesPlayerViewController {
         if self.parent is UINavigationController {
             onFinish?()
         } else {
-            delegate?.dismissController?()
+            delegate?.dismissController()
         }
     }
     
@@ -614,7 +619,7 @@ extension StoriesPlayerViewController {
                 switch result {
                 case .success:
                     self.toast(message: "删除成功")
-                    self.delegate?.delStory?(withStoryId: self.stories[self.currentIndex].storyId)
+                    self.delegate?.delStory(withStoryId: self.stories[self.currentIndex].storyId)
                     self.stories.remove(at: self.currentIndex)
                     if self.currentIndex > self.stories.count - 1 {
                         self.currentIndex -= 1
@@ -709,15 +714,13 @@ extension StoriesPlayerViewController {
     @objc private func image(_ image: UIImage?,
                              didFinishSavingWithError error: Error?,
                              contextInfo: UnsafeMutableRawPointer?) {
-        guard let downloadBack = downloadBack else { return }
-        downloadBack(error == nil)
+        downloadBack?(error == nil)
     }
     
     @objc private func video(_ videoPath: String?,
                              didFinishSavingWithError error: Error?,
                              contextInfo: UnsafeMutableRawPointer?) {
-        guard let downloadBack = downloadBack else { return }
-        downloadBack(error == nil)
+        downloadBack?(error == nil)
     }
 }
 // MARK: - addObservers && removeObservers
@@ -770,14 +773,10 @@ extension StoriesPlayerViewController {
         if let status = playerItem?.status {
             switch status {
             case .readyToPlay:
-                logger.debug("readyToPlay")
                 if let value = playerItem?.duration.value, let scale = playerItem?.duration.timescale {
                     let totalSecond = Double(value) / Double(scale)
                     monitoringPlayback(totalSecond: totalSecond)
                 }
-            case .failed:
-                logger.debug("failed")
-                logger.debug(playerItem?.error ?? "")
             default: break
             }
         }
@@ -818,11 +817,11 @@ extension StoriesPlayerViewController: StoryUVControllerDelegate {
 // MARK: - StoriesPlayerScrollViewDelegate
 extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
     func playToBack() {
-        delegate?.playToBack?()
+        delegate?.playToBack()
     }
 
     func playToNext() {
-        delegate?.playToNext?()
+        delegate?.playToNext()
     }
 
     func playScrollView(scrollView: StoriesPlayerScrollView, currentPlayerIndex: Int) {
@@ -830,13 +829,5 @@ extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
         currentIndex = currentPlayerIndex
         progressView.setProgress(ratio: 0, index: currentIndex)
         reloadPlayer()
-    }
-}
-
-extension StoriesPlayerViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWith
-        otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }

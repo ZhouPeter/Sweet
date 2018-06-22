@@ -20,18 +20,19 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
     private let user: User
     private let storiesGroup: [[StoryCellViewModel]]
     private let current: Int
+    private let currentStart: Int
     private let isGroup: Bool
-    private weak var delegate: StoriesPlayerViewControllerDelegate?
-    private weak var groupDelegate: StoriesPlayerGroupViewControllerDelegate?
+    private weak var delegate: StoriesPlayerGroupViewControllerDelegate?
+    private weak var playerDelegate: StoriesPlayerViewControllerDelegate?
     private let fromCardId: String?
     init(user: User,
          router: Router,
          factory: StoryPlayerFlowFactory,
          coordinatorFactory: CoordinatorFactory,
          storiesGroup: [[StoryCellViewModel]],
-         current: Int,
-         delegate: StoriesPlayerViewControllerDelegate? = nil,
-         groupDelegate: StoriesPlayerGroupViewControllerDelegate? = nil,
+         current: Int = 0,
+         currentStart: Int = 0,
+         delegate: StoriesPlayerGroupViewControllerDelegate? = nil,
          isGroup: Bool = false,
          fromCardId: String? = nil) {
         self.user = user
@@ -40,9 +41,9 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
         self.coordinatorFactory = coordinatorFactory
         self.storiesGroup = storiesGroup
         self.current = current
+        self.currentStart = currentStart
         self.isGroup = isGroup
         self.delegate = delegate
-        self.groupDelegate = groupDelegate
         self.fromCardId = fromCardId
     }
     
@@ -50,7 +51,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
         if isGroup {
             showStoriesGroupView()
         } else {
-            showStoriePlayerView()
+            showStoriesGroupView()
         }
     }
     
@@ -62,8 +63,9 @@ extension StoryPlayerCoordinator {
             user: user,
             storiesGroup: storiesGroup,
             currentIndex: current,
+            currentStart: currentStart,
             fromCardId: fromCardId,
-            delegate: groupDelegate)
+            delegate: delegate)
         storiesGroupView.onFinish = { [weak self] in
             self?.router.popFlow()
             self?.finishFlow?()
@@ -76,14 +78,15 @@ extension StoryPlayerCoordinator {
         storiesGroupView.runProfileFlow = { [weak self] (user, buddyID) in
             self?.runProfileFlow(user: user, buddyID: buddyID)
         }
-        router.push(storiesGroupView)
+        router.setRootFlow(storiesGroupView)
     }
-    private func showStoriePlayerView() {
+    
+    private func showStoriesPlayerView() {
         let storiesPlayerView = factory.makeStoriesPlayerView(
             user: user,
             stories: storiesGroup[0],
             current: current,
-            delegate: delegate)
+            delegate: playerDelegate)
         storiesPlayerView.onFinish = { [weak self] in
             self?.router.popFlow()
             self?.finishFlow?()
@@ -98,7 +101,7 @@ extension StoryPlayerCoordinator {
         }
         _ = storiesPlayerView.toPresent()?.view
         storiesPlayerView.reloadPlayer()
-        router.push(storiesPlayerView)
+        router.setRootFlow(storiesPlayerView)
     }
     
     private func runStoryFlow(topic: String, finishBlock: (() -> Void)?){

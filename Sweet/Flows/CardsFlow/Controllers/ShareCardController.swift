@@ -19,10 +19,7 @@ class ShareCardController: BaseViewController {
             sendButton.isEnabled = userIds.count > 0
         }
     }
-    private lazy var topView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private lazy var topView = UIView()
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.mainWidth() - 65, height: 25)
