@@ -145,9 +145,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        logger.debug()
         super.viewWillAppear(animated)
         setupNavigation()
+        cancelDelayCameraClose()
         if blurCoverView.isHidden == false {
             resumeCamera(true)
         } else if captureView.isStarted == false {
@@ -165,7 +165,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        resumeCamera(false)
+        delayCameraClose()
         if isDismissable == false {
             topic = nil
         }
@@ -185,6 +185,27 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             guard TLAuthorizedManager.checkAuthorization(with: .mic) else { return }
             self.captureView.enableAudio()
         }
+    }
+    
+    // MARK: - Delay camera close
+    
+    private let cameraDelayQueue = DispatchQueue.global()
+    private var cameraCloseDelay: DispatchWorkItem?
+    
+    private func delayCameraClose() {
+        cameraCloseDelay?.cancel()
+        cameraCloseDelay = DispatchWorkItem(block: { [weak self] in
+            logger.debug()
+            self?.resumeCamera(false)
+        })
+        if let item = cameraCloseDelay {
+            cameraDelayQueue.asyncAfter(deadline: .now() + 1, execute: item)
+        }
+    }
+    
+    private func cancelDelayCameraClose() {
+        cameraCloseDelay?.cancel()
+        cameraCloseDelay = nil
     }
     
     // MARK: - Private

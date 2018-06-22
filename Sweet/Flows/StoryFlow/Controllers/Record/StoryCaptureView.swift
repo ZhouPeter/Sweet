@@ -11,7 +11,9 @@ import GPUImage
 
 final class StoryCaptureView: GPUImageView {
     private(set) var isPaused = false
-    private(set) var isStarted = false
+    var isStarted: Bool {
+        return camera?.isRunning ?? false
+    }
     private var filter = GPUImageBeautifyFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
@@ -20,7 +22,6 @@ final class StoryCaptureView: GPUImageView {
     private var isCameraSetuping = false
     
     func setupCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard camera == nil else {
             callback?()
             return
@@ -40,7 +41,6 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func enableAudio(callback: (() -> Void)? = nil) {
-        logger.debug()
         queue.async {
             self.camera?.addAudioInputsAndOutputs()
             DispatchQueue.main.async { callback?() }
@@ -48,7 +48,6 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func rotateCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         queue.async {
             self.camera?.rotateCamera()
             DispatchQueue.main.async { callback?() }
@@ -56,7 +55,6 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func switchFlash(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard camera?.inputCamera.hasFlash == true && camera?.inputCamera.hasTorch == true else {
             callback?()
             return
@@ -82,12 +80,10 @@ final class StoryCaptureView: GPUImageView {
     private var isStarting = false
     
     func startCaputre(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStarting == false, isStarted == false, camera != nil else { return }
         isStarting = true
         queue.async {
             self.camera?.startCapture()
-            self.isStarted = true
             self.isStarting = false
             DispatchQueue.main.async { callback?() }
         }
@@ -96,7 +92,6 @@ final class StoryCaptureView: GPUImageView {
     private var isPausing = false
     
     func pauseCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isPausing == false, camera != nil else { return }
         isPausing = true
         queue.async {
@@ -110,7 +105,6 @@ final class StoryCaptureView: GPUImageView {
     private var isResuming = false
     
     func resumeCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isResuming == false, camera != nil else { return }
         isResuming = true
         queue.async {
@@ -124,12 +118,10 @@ final class StoryCaptureView: GPUImageView {
     private var isStopping = false
     
     func stopCapture(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStopping == false, isStarted == true, camera != nil else { return }
         isStopping = true
         queue.async {
             self.camera?.stopCapture()
-            self.isStarted = false
             self.isStopping = false
             DispatchQueue.main.async { callback?() }
         }
@@ -138,7 +130,6 @@ final class StoryCaptureView: GPUImageView {
     private var isStartingRecording = false
     
     func startRecording(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStartingRecording == false else { return }
         isStartingRecording = true
         queue.async {
