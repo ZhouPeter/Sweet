@@ -24,9 +24,6 @@ class WebViewController: BaseViewController {
         view.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         view.progressTintColor = UIColor.xpNavBlue()
         view.trackTintColor = .white
-        let navigationBarBounds = self.navigationController?.navigationBar.bounds ?? CGRect.zero
-        view.frame =
-            CGRect(x: 0, y: navigationBarBounds.size.height - 2, width: navigationBarBounds.size.width, height: 2)
         return view
     } ()
     
@@ -46,10 +43,13 @@ class WebViewController: BaseViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.addSubview(progressView)
         view.addSubview(webView)
         webView.fill(in: view)
-        
+        view.addSubview(progressView)
+        progressView.constrain(height: 2)
+        progressView.align(.top, to: webView, inset: UIScreen.navBarHeight())
+        progressView.align(.left)
+        progressView.align(.right)
         
         let request = URLRequest(url: URL(string: urlString)!)
         webView.load(request)

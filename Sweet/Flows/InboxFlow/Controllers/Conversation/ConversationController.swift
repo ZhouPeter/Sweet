@@ -262,6 +262,9 @@ extension ConversationController: MessagesDisplayDelegate {
         for message: MessageType,
         at indexPath: IndexPath,
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        if message.sender.id == "\(user.userId)" {
+            return .white
+        }
         return .black
     }
 }
