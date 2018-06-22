@@ -72,6 +72,7 @@ class ContactsController: BaseViewController, ContactsView {
         if isShow {
             if emptyView.superview != nil { return }
             tableView.addSubview(emptyView)
+            emptyView.backgroundColor = .clear
             emptyView.frame = CGRect(
                 x: 0,
                 y: 8 + 80 * 2,
