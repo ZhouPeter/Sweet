@@ -11,27 +11,11 @@
 
 import UIKit
 
-protocol StoryTextEditControllerDelegate: class {
-    func storyTextEditControllerDidBeginEditing()
-    func storyTextEidtControllerDidEndEditing()
-    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer)
-    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect)
-    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect)
-    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect)
-    func storyTextEditControllerDidBeginChooseTopic()
-    func storyTextEditControllerDidEndChooseTopic(_ topic: String?)
-}
-
-extension StoryTextEditControllerDelegate {
-    func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {}
-    func storyTextEditControllerTextDeleteZoneDidBeginUpdate(_ rect: CGRect) {}
-    func storyTextEditControllerTextDeleteZoneDidUpdate(_ rect: CGRect) {}
-    func storyTextEditControllerTextDeleteZoneDidEndUpdate(_ rect: CGRect) {}
-    func storyTextEditControllerDidBeginChooseTopic() {}
-    func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {}
-}
-
 final class StoryTextEditController: UIViewController {
+    weak var delegate: StoryTextEditControllerDelegate?
+    var isTextViewEditing: Bool { return textView.isFirstResponder }
+    var hasText: Bool { return textView.hasText }
+    
     var topic: String? {
         didSet {
             if let topic = topic {
@@ -43,7 +27,6 @@ final class StoryTextEditController: UIViewController {
             keyboardControl.topicButton.updateTopic(topic ?? "添加标签")
         }
     }
-    weak var delegate: StoryTextEditControllerDelegate?
     
     var boundingRect: CGRect {
         let frame = textBoundingView.frame
@@ -81,11 +64,7 @@ final class StoryTextEditController: UIViewController {
         return button
     } ()
     
-    private var firstLineUsedRect = CGRect.zero {
-        didSet {
-            layoutTopicButton()
-        }
-    }
+    private var firstLineUsedRect = CGRect.zero { didSet { layoutTopicButton() } }
     
     private lazy var textBoundingView: UIView = {
         let view = UIView()
@@ -106,18 +85,12 @@ final class StoryTextEditController: UIViewController {
         return view
     } ()
     
-    private lazy var textView: UITextView = {
-        let view = UITextView(frame: .zero)
-        view.backgroundColor = .clear
-        view.textColor = .white
-        view.font = UIFont.systemFont(ofSize: FontSize.min)
+    private lazy var textView: TextEditView = {
+        let view = TextEditView(frame: .zero, textContainer: nil)
         view.textAlignment = self.paragraphStyle.alignment
         view.delegate = self
-        view.textContainerInset = .zero
         self.tap.delegate = self
         view.addGestureRecognizer(tap)
-        view.enableShadow()
-        view.clipsToBounds = true
         return view
     } ()
     
@@ -127,13 +100,10 @@ final class StoryTextEditController: UIViewController {
         return style
     } ()
     
-    private var textContainerHeight: CGFloat {
-        return view.bounds.height - keyboardHeight
-    }
+    private var textContainerHeight: CGFloat { return view.bounds.height - keyboardHeight }
     
     private var safeTextHeight: CGFloat {
         let height = textView.hasText ? textView.contentSize.height : 100
-        // fix content size error
         return ceil(textView.sizeThatFits(CGSize(width: textView.frame.width, height: height)).height)
     }
     
@@ -191,14 +161,6 @@ final class StoryTextEditController: UIViewController {
         isEditing = false
         textView.resignFirstResponder()
         delegate?.storyTextEidtControllerDidEndEditing()
-    }
-    
-    var isTextViewEditing: Bool {
-        return textView.isFirstResponder
-    }
-    
-    var hasText: Bool {
-        return textView.hasText
     }
     
     func deleteTextZone(at center: CGPoint) {
@@ -507,6 +469,10 @@ extension StoryTextEditController: UITextViewDelegate {
         updateTextEditTransform(animated: true)
     }
     
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        logger.debug(textView.selectedTextRange ?? "-")
+    }
+    
     private func adjustTextStorageFontSize() {
         let layoutManager = textView.layoutManager
         let range = NSRange(location: 0, length: layoutManager.numberOfGlyphs)
@@ -593,9 +559,4 @@ extension StoryTextEditController: StoryKeyboardControlViewDelegate {
         }
         topic.onCancelled = { dismissTopic(nil) }
     }
-}
-
-private struct FontSize {
-    static let max: CGFloat = 180
-    static let min: CGFloat = 20
 }
