@@ -71,6 +71,7 @@ enum WebAPI {
     case storySortList
     case getVersion
     case reportUser(userID: UInt64)
+    case feedback(comment: String, type: Int)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -198,6 +199,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/service/version/get"
         case .reportUser:
             return "/user/report"
+        case .feedback:
+            return "/user/feedback"
         }
     }
     
@@ -313,6 +316,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["type": 1]
         case .reportUser(let userID):
             parameters = ["userId": userID]
+        case .feedback(let comment, let type):
+            parameters = ["comment": comment, "type": type]
         default:
             break
         }

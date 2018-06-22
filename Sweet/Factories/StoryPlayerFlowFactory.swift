@@ -16,6 +16,7 @@ protocol StoryPlayerFlowFactory {
     func makeStoiesGroupView(user: User,
                              storiesGroup: [[StoryCellViewModel]],
                              currentIndex: Int,
+                             currentStart: Int,
                              fromCardId: String?,
                              delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView
     

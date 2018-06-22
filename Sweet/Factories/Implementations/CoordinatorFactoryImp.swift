@@ -13,16 +13,15 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         user: User,
         navigation: UINavigationController?,
         current: Int,
+        currentStart: Int,
         isGroup: Bool,
         fromCardId: String?,
         storiesGroup: [[StoryCellViewModel]],
-        delegate: StoriesPlayerViewControllerDelegate?,
-        groupDelegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
+        delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
         return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
-                                      coordinatorFactory: CoordinatorFactoryImp(),
-                                      storiesGroup: storiesGroup, current: current,
-                                      delegate: delegate, groupDelegate: groupDelegate,
-                                      isGroup: isGroup, fromCardId: fromCardId)
+                                      coordinatorFactory: CoordinatorFactoryImp(), storiesGroup: storiesGroup,
+                                      current: current, currentStart: currentStart,
+                                      delegate: delegate, isGroup: isGroup, fromCardId: fromCardId)
     }
     
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {

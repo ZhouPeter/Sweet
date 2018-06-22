@@ -117,8 +117,10 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         allView.view.alpha = isAllShown ? 1 : 0
         if isAllShown {
             delegate?.showAll(view: allView)
+            allView.loadCards()
         } else {
             delegate?.showSubscription(view: subscriptionView)
+            subscriptionView.loadCards()
         }
     }
     

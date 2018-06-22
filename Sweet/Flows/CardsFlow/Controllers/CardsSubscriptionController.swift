@@ -23,11 +23,15 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadCards()
+    }
+    
+    func loadCards() {
         if self.cards.count == 0 {
             let subCardsLastID = Defaults[.subCardsLastID]
             startLoadCards(
-            cardRequest: .sub(cardId: subCardsLastID,
-                              direction: Direction.recover)) { [weak self] (success, _) in
+            cardRequest: .sub(cardId: subCardsLastID, direction: Direction.recover)) {
+                [weak self] (success, _) in
                 if success {
                     self?.collectionView.reloadData()
                     self?.collectionView.performBatchUpdates(nil, completion: { (_) in

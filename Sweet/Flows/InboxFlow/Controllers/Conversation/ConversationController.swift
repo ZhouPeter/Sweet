@@ -298,6 +298,9 @@ extension ConversationController: MessageCellDelegate {
                         StoryCellViewModel(model: response.story),
                         user: message.from == self.user.userId ? self.user : self.buddy
                     )
+                    cell.hero.isEnabled = true
+                    cell.hero.id = "\(response.story.userId)"
+                    cell.hero.modifiers = [.arc]
                 }
             }
         }

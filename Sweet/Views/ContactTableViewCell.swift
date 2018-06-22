@@ -56,8 +56,8 @@ class ContactTableViewCell: UITableViewCell {
     
     lazy var selectButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Checked"), for: .selected)
-        button.setImage(#imageLiteral(resourceName: "UnChecked"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "StoryConfirm"), for: .selected)
+        button.setBackgroundImage(#imageLiteral(resourceName: "UnChecked"), for: .normal)
         button.isHidden = true
         return button
     }()

@@ -45,11 +45,11 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
-        profile.showStoriesPlayerView = { [weak self] (user, stories, current, delegate, completion) in
+        profile.showStoriesPlayerView = { [weak self] (user, stories, current) in
             self?.showStoriesPlayerView(user: user,
                                         stories: stories,
                                         current: current,
-                                        delegate: delegate)
+                                        delegate: nil)
             
         }
         router.push(profile)
@@ -58,16 +58,16 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private func showStoriesPlayerView(user: User,
                                        stories: [StoryCellViewModel],
                                        current: Int,
-                                       delegate: StoriesPlayerViewControllerDelegate) {
+                                       delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
                                                                         navigation: navigation,
-                                                                        current: current,
+                                                                        current: 0,
+                                                                        currentStart: current,
                                                                         isGroup: false,
                                                                         fromCardId: nil, 
                                                                         storiesGroup: [stories],
-                                                                        delegate: delegate,
-                                                                        groupDelegate: nil)
+                                                                        delegate: delegate)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

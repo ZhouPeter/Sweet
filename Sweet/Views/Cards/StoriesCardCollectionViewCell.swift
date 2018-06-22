@@ -76,7 +76,6 @@ extension StoriesCardCollectionViewCell: UICollectionViewDataSource {
         cell.hero.isEnabled = true
         cell.hero.id = "\(storiesGroup[indexPath.row][0].userId)"
         cell.hero.modifiers = [.arc]
-        logger.debug("heroID\(storiesGroup[indexPath.row][0].userId)")
         configurator.configure(cell)
         return cell
     }

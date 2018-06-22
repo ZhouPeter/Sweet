@@ -614,6 +614,10 @@
 		58EA105120B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
 		58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
 		58EA105320B7FF00001DD77C /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EA104F20B7FF00001DD77C /* GrowingTextView.m */; };
+		58EB21FF20DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */; };
+		58EB220020DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */; };
+		58EB220120DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */; };
+		58EB220220DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */; };
 		58F4074620B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
 		58F4074720B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
 		58F4074820B271C40031630C /* SweetPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074520B271C40031630C /* SweetPlayerManager.swift */; };
@@ -1430,6 +1434,7 @@
 		58EA104E20B7FEFF001DD77C /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
 		58EA104F20B7FF00001DD77C /* GrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextView.m; sourceTree = "<group>"; };
 		58EA105420B7FF81001DD77C /* Sweet-Swift-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet-Swift-Header.h"; sourceTree = "<group>"; };
+		58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+VibrateFeedback.swift"; sourceTree = "<group>"; };
 		58F4074520B271C40031630C /* SweetPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerManager.swift; sourceTree = "<group>"; };
 		58F4074A20B272410031630C /* SweetPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerItem.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2249,6 +2254,7 @@
 				58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */,
 				AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */,
 				581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */,
+				58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2696,6 +2702,7 @@
 				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
@@ -2722,6 +2729,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
@@ -2850,6 +2858,7 @@
 				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
@@ -2876,6 +2885,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
@@ -3063,6 +3073,7 @@
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
+				58EB21FF20DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F120AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
@@ -3254,6 +3265,7 @@
 				587D18DF20DB43A700D53708 /* StoriesPlayerView.swift in Sources */,
 				58D578DB2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
+				58EB220120DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
@@ -3640,6 +3652,7 @@
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				58EB220220DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				ACA3236920875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
@@ -3913,6 +3926,7 @@
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
+				58EB220020DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,

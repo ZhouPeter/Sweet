@@ -18,6 +18,6 @@ protocol CardsBaseViewDelegate: class {
                           storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int,
                           fromCardId: String?,
-                          delegate: StoriesPlayerGroupViewControllerDelegate,
+                          delegate: StoriesPlayerGroupViewControllerDelegate?,
                           completion: (() -> Void)?)
 }

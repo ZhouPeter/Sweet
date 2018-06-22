@@ -100,11 +100,10 @@ extension StoriesPlayerScrollView {
     
     private func prepare(imageView: UIImageView, withStory: StoryCellViewModel?) {
         if let story = withStory {
-            if let urlString = story.videoURL?.absoluteString {
-                let imageUrlString = urlString + "?vframe/jpg/offset/0.0/w/375/h/667"
-                imageView.kf.setImage(with: URL(string: imageUrlString))
-            } else if let URL = story.imageURL {
-                imageView.kf.setImage(with: URL)
+            if let videoURL = story.videoURL {
+                imageView.kf.setImage(with: videoURL.videoThumbnail(size: imageView.bounds.size))
+            } else if let imageURL = story.imageURL {
+                imageView.kf.setImage(with: imageURL.middleCutting(size: imageView.bounds.size))
             }
         } else {
             imageView.image = nil
