@@ -13,7 +13,7 @@ class SweetHeaderView: UITableViewHeaderFooterView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black.withAlphaComponent(0.3)
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.backgroundColor = .clear
         return label
     }()
@@ -33,13 +33,15 @@ class SweetHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setupUI() {
-        contentView.backgroundColor = UIColor.xpGray()
+        backgroundView?.backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         contentView.addSubview(titleLabel)
         titleLabel.align(.left, to: contentView, inset: 10)
         titleLabel.centerY(to: contentView)
     }
+
     func update(title: String) {
         titleLabel.text = title
     }
-
 }

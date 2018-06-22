@@ -84,7 +84,6 @@ class SweetPlayerView: UIView {
         didSet {
             playerLayer?.isHasVolume = isHasVolume
             controlView.isHasVolume = isHasVolume
-            logger.debug(isHasVolume)
         }
     }
     weak var avPlayer: AVPlayer? {

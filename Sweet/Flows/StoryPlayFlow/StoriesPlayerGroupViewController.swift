@@ -63,6 +63,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.register(StoryPlayCollectionViewCell.self, forCellWithReuseIdentifier: "placeholderCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        if #available(iOS 10.0, *) {
+            collectionView.prefetchDataSource = self
+        }
         collectionView.isPagingEnabled = true
         collectionView.gemini.cubeAnimation().cubeDegree(90).shadowEffect(.fadeIn)
         return collectionView
@@ -201,21 +204,23 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
 
 extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        let stories = indexPaths.compactMap {
-//            let stories = storiesGroup[$0.row]
-//            let urlsGroup = stories.compactMap {
-//                let videoURL = $0.videoURL!
-//                if $0.type == .video || $0.type == .poke {
-//                    return URL(string: videoURL.videoThumbnail(size: view.bounds.size))
-//                } else if let imageURL = $0.imageURL {
-//                    return URL(string: imageURL.videoThumbnail(size: view.bounds.size))
-//                } else {
-//                    return nil
-//                }
-//            }
-//        }
-//        let stories = storiesGroup[indexPaths]
-//        ImagePrefetcher(urls: urls).start()
+        let urlsGroup = indexPaths.compactMap { (indexPath) -> [URL]? in
+            let stories = storiesGroup[indexPath.row]
+            let urls = stories.compactMap { (story) -> URL? in
+                if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
+                    return videoURL.videoThumbnail(size: view.bounds.size)
+                } else if let imageURL = story.imageURL {
+                    return imageURL.middleCutting(size: view.bounds.size)
+                } else {
+                    return nil
+                }
+            }
+            return urls
+        }
+        urlsGroup.forEach({
+            logger.debug($0)
+            ImagePrefetcher(urls: $0).start()
+        })
     }
 }
 

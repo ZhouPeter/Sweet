@@ -88,14 +88,14 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
         customContent.addSubview(contentImageView)
-        contentImageView.align(.left, to: customContent)
-        contentImageView.align(.right, to: customContent)
-        contentImageView.align(.bottom, to: customContent)
-        contentImageView.equal(.height, to: contentImageView)
+        contentImageView.align(.left, to: customContent, inset: 5)
+        contentImageView.align(.right, to: customContent, inset: 5)
+        contentImageView.align(.bottom, to: customContent, inset: 5)
+//        contentImageView.equal(.height, to: contentImageView)
         contentImageView.heightAnchor.constraint(
             equalTo: contentImageView.widthAnchor,
             multiplier: 10.0 / 9.0).isActive = true
-        contentImageView.setViewRounded(cornerRadius: 10, corners: [.bottomLeft, .bottomRight])
+        contentImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         customContent.addSubview(emojiView)
         emojiViewWidthConstrain = emojiView.constrain(width: emojiWidth * 2 + 10 + 10 + 25 + 5)
         emojiView.constrain(height: emojiHeight + 10)

@@ -16,6 +16,7 @@ protocol ConversationControllerDelegate: class {
     func conversationControllerReports(buddy: User)
     func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
     func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User)
+    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User)
 }
 
 final class ConversationController: MessagesViewController {
@@ -95,6 +96,7 @@ final class ConversationController: MessagesViewController {
     // MARK: - Private
     
     private func setupCollectionView() {
+        messagesCollectionView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.register(ContentCardMessageCell.self)
@@ -250,6 +252,9 @@ extension ConversationController: MessagesDisplayDelegate {
         for message: MessageType,
         at indexPath: IndexPath,
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        if message.sender.id == "\(user.userId)" {
+            return UIColor(hex: 0x36C6FD)
+        }
         return .white
     }
     
@@ -286,11 +291,13 @@ extension ConversationController: MessageCellDelegate {
                 case .failure(let error):
                     logger.error(error)
                 case .success(let response):
-                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-                    storiesPlayViewController.stories = [StoryCellViewModel(model: response.story)]
-                    self.present(storiesPlayViewController, animated: true) {
-                        storiesPlayViewController.initPlayer()
-                    }
+                    self.delegate?.conversationControllerShowsStory(
+                        StoryCellViewModel(model: response.story),
+                        user: message.from == self.user.userId ? self.user : self.buddy
+                    )
+                    cell.hero.isEnabled = true
+                    cell.hero.id = "\(response.story.userId)"
+                    cell.hero.modifiers = [.arc]
                 }
             }
         }
