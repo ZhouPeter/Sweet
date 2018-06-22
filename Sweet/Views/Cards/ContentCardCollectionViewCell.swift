@@ -231,10 +231,10 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                 contentImageView.addSubview(imageView)
                 let current = images[offset]
                 let imageSize =
-                    CGSize(width: rint(current.size.width * scale), height: rint(current.size.height * scale))
+                    CGSize(width: floor(current.size.width * scale), height: floor(current.size.height * scale))
                 if orginX + imageSize.width > boxWidth + padding {
                     orginX = padding
-                    orginY += rint(images[offset - 1].size.height * scale)
+                    orginY += floor(images[offset - 1].size.height * scale)
                 }
                 imageView.frame = CGRect(origin: CGPoint(x: orginX, y: orginY), size: imageSize)
                 maskView.frame = imageView.bounds
