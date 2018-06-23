@@ -93,7 +93,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private lazy var playerView: SweetPlayerView = {
-        let view = SweetPlayerView.shard
+        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
         view.panGesture.isEnabled = false
         view.panGesture.require(toFail: pan)
         view.isHasVolume = false
@@ -422,8 +422,11 @@ extension CardsBaseController {
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityId in
-                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
+                activityViewModel.callBack = { [weak self] activityId in
+                    self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
+                }
+                activityViewModel.showProfile = { [weak self] buddyID in
+                    self?.showProfile(userId: buddyID)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -676,6 +679,21 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(shareAction)
+        if cardType == .content {
+            alertController.addAction(
+                UIAlertAction.makeAlertAction(
+                title: "分享到微信",
+                style: .default,
+                handler: { [weak self] (_) in
+                    guard let `self` = self else { return }
+                    if let index = self.cards.index(where: { $0.cardId == cardId }) {
+                        let text = self.cards[index].content! + "\n"
+                                    + self.cards[index].url! + "\n"
+                                    + "（信息来源：讲真APP [机智]）"
+                        WXApi.sendText(text: text, scene: .conversation)
+                    }
+            }))
+        }
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
         alertController.addAction(cancelAction)

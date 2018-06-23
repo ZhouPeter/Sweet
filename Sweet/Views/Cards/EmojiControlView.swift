@@ -68,7 +68,9 @@ class EmojiControlView: UIView {
     }
     func updateDefault(names: [String]) {
         emojiImageViews[0].image = UIImage(named: names[0])
+        emojiImageViews[0].tag = Int(String(names[0].last!))!
         emojiImageViews[1].image = UIImage(named: names[1])
+        emojiImageViews[1].tag = Int(String(names[1].last!))!
     }
     func openEmojis() {
         clearUI()
@@ -76,7 +78,9 @@ class EmojiControlView: UIView {
         let insetY: CGFloat = 5
         addSubview(keywordButton)
         keywordButton.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
-        for imageView in emojiImageViews {
+        for (index, imageView) in emojiImageViews.enumerated() {
+            imageView.tag = index + 1
+            imageView.image = UIImage(named: "Emoji\(index + 1)")
             insetX += emojiSpace + emojiWidth
             addSubview(imageView)
             imageView.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)

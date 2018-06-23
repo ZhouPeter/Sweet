@@ -165,7 +165,11 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                         sender.isEnabled = true
                     })
                 case let .failure(error):
-                    self?.toast(message: "发送失败", duration: 2)
+                    if error.code == WebErrorCode.userIsNil.rawValue {
+                        self?.toast(message: "手机号未注册", duration: 2)
+                    } else {
+                        self?.toast(message: "发送失败", duration: 2)
+                    }
                     sender.isEnabled = true
                     logger.error(error)
                 }

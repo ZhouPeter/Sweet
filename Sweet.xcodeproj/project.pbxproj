@@ -1653,6 +1653,7 @@
 			children = (
 				58CE1EBC20A53D5D00781EBF /* StoriesPlayerGroupViewController.swift */,
 				58CE1EBB20A53D5D00781EBF /* StoriesPlayerViewController.swift */,
+				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 				587D18DC20DB43A700D53708 /* StoriesPlayerView.swift */,
 				587D18E120DB43D500D53708 /* StoriesGroupView.swift */,
 				587D18E620DB442400D53708 /* StoryPlayerCoordinator.swift */,
@@ -2190,7 +2191,6 @@
 			children = (
 				ACA323A6208763AA00BDC92E /* BaseViewController.swift */,
 				58155E342091D53E00ADEFFB /* WebViewController.swift */,
-				58CE1EDE20A5652700781EBF /* StoryUVController.swift */,
 				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
 				ACDD0B0D20C802E000B7400A /* PopupController.swift */,
 				584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */,

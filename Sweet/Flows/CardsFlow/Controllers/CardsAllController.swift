@@ -23,7 +23,6 @@ class CardsAllController: CardsBaseController, CardsAllView {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadCards()
     }
     
     func loadCards() {

@@ -10,11 +10,13 @@ import UIKit
 
 class ActivityTableViewCell: UITableViewCell {
     private var viewModel: ActivityViewModel?
-
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showProfile(_:)))
+        imageView.addGestureRecognizer(tap)
         return imageView
     }()
     
@@ -155,6 +157,12 @@ class ActivityTableViewCell: UITableViewCell {
             if !viewModel.like {
                 viewModel.callBack?(viewModel.activityId)
             }
+        }
+    }
+    
+    @objc private func showProfile(_ tap: UITapGestureRecognizer) {
+        if let viewModel = viewModel {
+            viewModel.showProfile?(viewModel.actor)
         }
     }
     
