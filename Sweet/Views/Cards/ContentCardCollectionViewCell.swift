@@ -33,6 +33,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     }()
     
     var imageViews = [UIImageView]()
+    private var imageMaskViews = [UIImageView]()
 
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
@@ -146,6 +147,9 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageView.contentMode = .scaleAspectFill
             imageViews.append(imageView)
             contentImageView.addSubview(imageView)
+            let maskView = UIImageView(image: UIImage.bubbleImage(named: "CardMask", orientation: .up))
+            imageView.addSubview(maskView)
+            imageMaskViews.append(maskView)
         }
     }
     
@@ -214,23 +218,30 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageViews.forEach { $0.isHidden = true }
             return
         }
-        var orginX: CGFloat = 0
-        var orginY: CGFloat = 0
-        let sumWidth: CGFloat = UIScreen.mainWidth() - 20
+        let padding: CGFloat = 2
+        var orginX: CGFloat = padding
+        var orginY: CGFloat = padding
+        let boxWidth: CGFloat = contentImageView.bounds.width - padding * 2
+        let scale = boxWidth / 27
         for (offset, imageView) in imageViews.enumerated() {
+            let maskView = imageMaskViews[offset]
+            maskView.isHidden = true
             if offset < images.count {
                 imageView.isHidden = false
                 contentImageView.addSubview(imageView)
-                let imageSize = images[offset].size
-                if orginX + imageSize.width > sumWidth {
-                    orginX = 0
-                    orginY += images[offset - 1].size.height
+                let current = images[offset]
+                let imageSize =
+                    CGSize(width: floor(current.size.width * scale), height: floor(current.size.height * scale))
+                if orginX + imageSize.width > boxWidth + padding {
+                    orginX = padding
+                    orginY += floor(images[offset - 1].size.height * scale)
                 }
-                let size = CGSize(width: imageSize.width, height: imageSize.height)
-                let rect = CGRect(origin: CGPoint(x: orginX, y: orginY),
-                                  size: size)
-                imageView.frame = rect
-                imageView.kf.setImage(with: images[offset].imageURL.middleCutting(size: size))
+                imageView.frame = CGRect(origin: CGPoint(x: orginX, y: orginY), size: imageSize)
+                maskView.frame = imageView.bounds
+                imageView.kf.setImage(with: images[offset].imageURL.middleCutting(size: imageSize)) { (image, _, _, _) in
+                    guard image != nil else { return }
+                    maskView.isHidden = false
+                }
                 orginX += imageSize.width
             } else {
                 imageView.isHidden = true
