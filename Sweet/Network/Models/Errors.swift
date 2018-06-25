@@ -22,6 +22,7 @@ enum WebErrorCode: Int, Codable {
     case verification = 100102
     case verificationSend = 100103
     case updateLimit = 100104
+    case noCard = 200001
 }
 
 extension NSError {
