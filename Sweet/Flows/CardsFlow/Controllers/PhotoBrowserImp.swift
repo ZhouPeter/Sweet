@@ -12,14 +12,14 @@ import JXPhotoBrowser
 class PhotoBrowserImp: PhotoBrowserDelegate {
     private var thumbnaiImageViews: [UIImageView]
     private var highImageViewURLs: [URL]
-    
+
     init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL]) {
         self.thumbnaiImageViews = thumbnaiImageViews
         self.highImageViewURLs = highImageViewURLs
     }
     
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
-        return nil
+        return thumbnaiImageViews[index].image
     }
 
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {

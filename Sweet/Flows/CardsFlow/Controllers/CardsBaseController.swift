@@ -113,7 +113,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     @objc private func showVideoPlayController() {
+        playerView.hero.isEnabled = true
+        playerView.hero.id = cards[index].video
+        playerView.hero.modifiers = [.arc]
         let controller = PlayController()
+        controller.hero.isEnabled = true
         controller.avPlayer = avPlayer
         playerView.resource.scrollView = nil
         controller.resource = playerView.resource

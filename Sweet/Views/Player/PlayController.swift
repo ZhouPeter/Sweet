@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Hero
 class PlayController: UIViewController {
     var avPlayer: AVPlayer?
     var resource: SweetPlayerResource?
@@ -39,11 +40,32 @@ class PlayController: UIViewController {
             playView.setAVPlayer(player: player)
             loadItemValues()
         }
-        let recognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown))
-        recognizer.require(toFail: playView.panGesture)
-        recognizer.direction = .down
-        view.addGestureRecognizer(recognizer)
-        
+        view.hero.isEnabled = true
+        view.hero.id = resource?.definitions[0].url.absoluteString
+        print(view.hero.id)
+        let pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+        pan.require(toFail: playView.panGesture)
+        view.addGestureRecognizer(pan)
+    }
+    
+    @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: nil)
+        let progress = translation.y / view.bounds.height
+        switch gesture.state {
+        case .began:
+            logger.debug()
+            dismiss(animated: true, completion: nil)
+        case .changed:
+            Hero.shared.update(progress)
+            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: view)
+        default:
+            if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
+                Hero.shared.finish()
+            } else {
+                Hero.shared.cancel()
+            }
+        }
     }
     
     private func loadItemValues() {
