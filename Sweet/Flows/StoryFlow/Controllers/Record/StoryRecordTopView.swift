@@ -20,7 +20,7 @@ final class StoryRecordTopView: UIView {
     
     private lazy var avatarButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Logo"), for: .normal)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor

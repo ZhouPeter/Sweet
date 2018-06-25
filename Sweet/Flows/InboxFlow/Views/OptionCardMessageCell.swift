@@ -24,7 +24,7 @@ final class OptionCardMessageCell: MediaMessageCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "Avatar")
+        imageView.image = #imageLiteral(resourceName: "Logo")
         return imageView
     } ()
     
@@ -32,7 +32,7 @@ final class OptionCardMessageCell: MediaMessageCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "Avatar")
+        imageView.image = #imageLiteral(resourceName: "Logo")
         return imageView
     } ()
     

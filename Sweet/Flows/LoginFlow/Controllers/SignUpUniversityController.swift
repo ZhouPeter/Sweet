@@ -10,8 +10,11 @@ import UIKit
 
 class SignUpUniversityController: BaseViewController, SignUpUniversityView {
     var showSignUpCollege: ((LoginRequestBody) -> Void)?
-    
     var loginRequestBody: LoginRequestBody!
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
     
     private var universitys = [University]() {
         willSet {

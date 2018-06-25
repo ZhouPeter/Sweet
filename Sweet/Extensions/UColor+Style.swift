@@ -14,7 +14,7 @@ extension UIColor {
     }
     
     final class func xpTextGray() -> UIColor {
-        return UIColor(hex: 0xb2b2b2)
+        return UIColor(hex: 0x747474)
     }
     
     final class func xpDarkGray() -> UIColor {
@@ -34,7 +34,7 @@ extension UIColor {
     }
     
     final class func xpYellow() -> UIColor {
-        return UIColor(hex: 0xfffc00)
+        return UIColor(hex: 0xFFFC01)
     }
     
     final class func xpNavBlue() -> UIColor {
