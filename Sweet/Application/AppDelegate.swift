@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import AVKit
 var allowRotation = false
 
 @UIApplicationMain
@@ -45,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                object: nil)
         WXApi.registerApp("wx819697effecdb6f5")
         getSetting()
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
 //        VersionUpdateHelper.versionCheck(viewController: rootController)
         return true
     }

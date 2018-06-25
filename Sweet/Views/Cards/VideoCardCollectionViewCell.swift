@@ -75,7 +75,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     
     func resetEmojiView() {
-        emojiView.isHidden = true
         emojiViewWidthConstrain?.constant = emojiWidth * 2 + 10 + 10 + 25 + 5
         if let viewModel = viewModel {
             emojiView.reset(names: viewModel.defaultImageNameList)
@@ -91,7 +90,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentImageView.align(.left, to: customContent, inset: 5)
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 5)
-//        contentImageView.equal(.height, to: contentImageView)
         contentImageView.heightAnchor.constraint(
             equalTo: contentImageView.widthAnchor,
             multiplier: 10.0 / 9.0).isActive = true
@@ -108,7 +106,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         customContent.addSubview(resultCommentLabel)
         resultCommentLabel.constrain(width: 200, height: 104)
         resultCommentLabel.centerX(to: customContent)
-        resultCommentLabel.align(.top, inset: 200)
+        resultCommentLabel.align(.bottom, to: emojiView)
         addAvatarImageViews()
     }
     
@@ -168,7 +166,23 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             resultEmojiView.isHidden = true
             avatarImageViews.forEach({ $0.isHidden = true })
         }
-        emojiView.updateDefault(names: viewModel.defaultImageNameList)
+        updateEmojiView()
+    }
+    
+    private func updateEmojiView() {
+        guard  let viewModel = viewModel else { return }
+        switch viewModel.emojiDisplayType {
+        case .default:
+            emojiView.isHidden = true
+            resetEmojiView()
+        case .show:
+            emojiView.isHidden = false
+            resetEmojiView()
+        case .allShow:
+            emojiView.isHidden = false
+            emojiViewWidthConstrain?.constant = UIScreen.mainWidth() - 40
+            emojiView.openEmojis()
+        }
     }
 
 }
@@ -189,11 +203,14 @@ extension VideoCardCollectionViewCell {
 extension VideoCardCollectionViewCell: EmojiControlViewDelegate {
     func openKeyboard() {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
-            delegate.openKeyword()
+            delegate.openKeyboard()
         }
     }
     
     func openEmojis() {
+        if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
+            delegate.openEmojis(cardId: cardId!)
+        }
         UIView.animate(withDuration: 0.3) {
             self.emojiViewWidthConstrain?.constant = UIScreen.mainWidth() - 40
             self.emojiView.openEmojis()

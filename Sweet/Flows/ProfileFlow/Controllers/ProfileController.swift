@@ -127,7 +127,7 @@ class ProfileController: BaseViewController, ProfileView {
     }
     
     @objc private func returnAction(_ sender: UIButton) {
-        navigationController?.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     override func willMove(toParentViewController parent: UIViewController?) {

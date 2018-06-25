@@ -56,6 +56,11 @@ class WebViewController: BaseViewController {
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
     
+    deinit {
+        webView.removeObserver(self, forKeyPath: "title")
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+    }
+    
     override func observeValue(
         forKeyPath keyPath: String?,
         of object: Any?,

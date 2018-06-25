@@ -18,6 +18,7 @@ struct ContentVideoCardViewModel {
     var resultUseIDs: [UInt64]?
     var resultComment: String?
     let defaultImageNameList: [String]
+    var emojiDisplayType: EmojiViewDisplay = .default
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!

@@ -45,7 +45,7 @@ class BlockController: BaseViewController, BlockView {
                 response.list.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delBlocklist(userId: userId)
+                        self?.delBlocklist(userId: UInt64(userId)!)
                     }
                     self.viewModels.append(viewModel)
                 })
@@ -64,7 +64,7 @@ class BlockController: BaseViewController, BlockView {
                 self.viewModels[index].buttonStyle = .borderGray
                 self.viewModels[index].buttonTitle = "恢复"
                 self.viewModels[index].callBack = { [weak self] userId in
-                    self?.delBlocklist(userId: userId)
+                    self?.delBlocklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):
@@ -81,7 +81,7 @@ class BlockController: BaseViewController, BlockView {
                 self.viewModels[index].buttonStyle = .backgroundColorGray
                 self.viewModels[index].buttonTitle = "屏蔽"
                 self.viewModels[index].callBack = { [weak self] userId in
-                    self?.addBlocklist(userId: userId)
+                    self?.addBlocklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):

@@ -7,7 +7,11 @@
 //
 
 import Foundation
-
+enum EmojiViewDisplay{
+    case `default`
+    case show
+    case allShow
+}
 struct ContentCardViewModel {
     let titleString: String
     let contentString: String
@@ -19,7 +23,7 @@ struct ContentCardViewModel {
     var resultUseIDs: [UInt64]?
     var resultComment: String?
     let defaultImageNameList: [String]
-    
+    var emojiDisplayType: EmojiViewDisplay = .default
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!

@@ -112,7 +112,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 response.blacklists.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delBlacklist(userId: userId)
+                        self?.delBlacklist(userId: UInt64(userId)!)
                     }
                     self.contactViewModels.append(viewModel)
                 })
@@ -120,7 +120,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 response.subscriptions.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delSubscription(userId: userId)
+                        self?.delSubscription(userId: UInt64(userId)!)
                     }
                     self.subscriptionsViewModels.append(viewModel)
                 })
@@ -128,7 +128,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 response.blocks.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delBlock(userId: userId)
+                        self?.delBlock(userId: UInt64(userId)!)
                     }
                     self.subscriptionsViewModels.append(viewModel)
                 })
@@ -161,7 +161,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.blockViewModels[index].buttonTitle = "屏蔽"
                 self.blockViewModels[index].buttonStyle = .backgroundColorGray
                 self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlock(userId: userId)
+                    self?.addBlock(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
@@ -179,7 +179,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.blockViewModels[index].buttonTitle = "恢复"
                 self.blockViewModels[index].buttonStyle = .borderGray
                 self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlock(userId: userId)
+                    self?.delBlock(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
@@ -198,7 +198,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.blacklistViewModels[index].buttonTitle = "拉黑"
                 self.blacklistViewModels[index].buttonStyle = .backgroundColorGray
                 self.blacklistViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlacklist(userId: userId)
+                    self?.addBlacklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
@@ -216,7 +216,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.blacklistViewModels[index].buttonTitle = "恢复"
                 self.blacklistViewModels[index].buttonStyle = .borderGray
                 self.blacklistViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlacklist(userId: userId)
+                    self?.delBlacklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
@@ -250,7 +250,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.subscriptionsViewModels[index].buttonTitle = "已订阅"
                 self.subscriptionsViewModels[index].buttonStyle = .borderBlue
                 self.subscriptionsViewModels[index].callBack = { [weak self] userId in
-                    self?.delSubscription(userId: userId)
+                    self?.delSubscription(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
@@ -268,7 +268,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 self.subscriptionsViewModels[index].buttonTitle = "订阅"
                 self.subscriptionsViewModels[index].buttonStyle = .backgroundColorBlue
                 self.subscriptionsViewModels[index].callBack = { [weak self] userId in
-                    self?.addSubscription(userId: userId)
+                    self?.addSubscription(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):

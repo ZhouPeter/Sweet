@@ -147,6 +147,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         playerController.delegate = self
         playerController.fromCardId = fromCardId
         playerController.runStoryFlow = runStoryFlow
+        playerController.runProfileFlow = runProfileFlow
         add(childViewController: playerController, addView: false)
         storiesPlayerControllerMap[cell] = playerController
         return playerController
@@ -197,7 +198,10 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     }
     
     func playToNext() {
-        if currentIndex + 1 > storiesGroup.count - 1 { return }
+        if currentIndex + 1 > storiesGroup.count - 1 {
+            onFinish?()
+            return
+        }
         collectionView.scrollToItem(at: IndexPath(item: currentIndex + 1, section: 0), at: .left, animated: true)
     }
 }

@@ -67,7 +67,7 @@ extension StoryPlayerCoordinator {
             fromCardId: fromCardId,
             delegate: delegate)
         storiesGroupView.onFinish = { [weak self] in
-            self?.router.popFlow()
+            self?.router.dismissFlow()
             self?.finishFlow?()
         }
         storiesGroupView.runStoryFlow = { [weak self] topic in
@@ -128,6 +128,6 @@ extension StoryPlayerCoordinator {
         }
         addDependency(coordinator)
         router.present(navigation, animated: true)
-        coordinator.start()
+        coordinator.start(with: .present)
     }
 }

@@ -46,13 +46,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     
     public var index = 0 {
         didSet {
-            let oldIndexPath = IndexPath(item: oldValue, section: 0)
-            guard let oldCell = collectionView.cellForItem(at: oldIndexPath) else { return }
-            if let oldCell = oldCell as? ContentCardCollectionViewCell {
-                oldCell.resetEmojiView()
-            } else if let oldCell = oldCell as? VideoCardCollectionViewCell {
-                oldCell.resetEmojiView()
-            }
+            
             if index < cellConfigurators.count - 3 {
                 downButton.isHidden = false
             } else {
@@ -93,7 +87,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private lazy var playerView: SweetPlayerView = {
-        let view = SweetPlayerView.shard
+        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
         view.panGesture.isEnabled = false
         view.panGesture.require(toFail: pan)
         view.isHasVolume = false
@@ -119,7 +113,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     @objc private func showVideoPlayController() {
+        playerView.hero.isEnabled = true
+        playerView.hero.id = cards[index].video
+        playerView.hero.modifiers = [.arc]
         let controller = PlayController()
+        controller.hero.isEnabled = true
         controller.avPlayer = avPlayer
         playerView.resource.scrollView = nil
         controller.resource = playerView.resource
@@ -323,6 +321,7 @@ extension CardsBaseController {
         if let cell = cell as? ContentCardCollectionViewCell {
             self.delayItem = DispatchWorkItem {
                 cell.hiddenEmojiView(isHidden: false)
+                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         } else if let cell = cell as? VideoCardCollectionViewCell,
@@ -337,11 +336,24 @@ extension CardsBaseController {
             self.avPlayer = self.playerView.avPlayer
             self.delayItem = DispatchWorkItem {
                 cell.hiddenEmojiView(isHidden: false)
+                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         }
     }
 
+    private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
+        if cards[index].type == .content {
+            if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
+                configurator.viewModel.emojiDisplayType = emojiDisplayType
+                cellConfigurators[index] = configurator
+            }
+            if var configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> {
+                configurator.viewModel.emojiDisplayType = emojiDisplayType
+                cellConfigurators[index] = configurator
+            }
+        }
+    }
     private func scrollCard(withPoint point: CGPoint) {
         guard let start = panPoint else { return }
         var direction = Direction.unknown
@@ -422,8 +434,11 @@ extension CardsBaseController {
         case .activity:
             var viewModel = ActivitiesCardViewModel(model: card)
             for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityId in
-                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
+                activityViewModel.callBack = { [weak self] activityId in
+                    self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
+                }
+                activityViewModel.showProfile = { [weak self] buddyID in
+                    self?.showProfile(userId: buddyID)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -601,8 +616,13 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
         }
     }
     
-    func openKeyword() {
+    func openKeyboard() {
         inputBottomView.startEditing(true)
+    }
+    
+    func openEmojis(cardId: String) {
+        guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
+        showCellEmojiView(emojiDisplayType: .allShow, index: index)
     }
     
     func showImageBrowser(selectedIndex: Int) {
@@ -676,6 +696,21 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(shareAction)
+        if cardType == .content {
+            alertController.addAction(
+                UIAlertAction.makeAlertAction(
+                title: "分享到微信",
+                style: .default,
+                handler: { [weak self] (_) in
+                    guard let `self` = self else { return }
+                    if let index = self.cards.index(where: { $0.cardId == cardId }) {
+                        let text = self.cards[index].content! + "\n"
+                                    + self.cards[index].url! + "\n"
+                                    + "（信息来源：讲真APP [机智]）"
+                        WXApi.sendText(text: text, scene: .conversation)
+                    }
+            }))
+        }
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
         alertController.addAction(cancelAction)

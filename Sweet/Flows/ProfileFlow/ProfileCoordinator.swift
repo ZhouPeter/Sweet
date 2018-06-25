@@ -33,11 +33,19 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
     
     override func start() {
-        showProfile()
+        start(with: nil)
     }
+    override func start(with option: DeepLinkOption?) {
+        if let option = option {
+            showProfile(isPresent: option == .present)
+        } else {
+            showProfile()
+        }
+    }
+
     
     // MARK: - Private
-    private func showProfile() {
+    private func showProfile(isPresent: Bool = false) {
         let profile = factory.makeProfileView(user: user, userId: userID)
         profile.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
@@ -52,7 +60,11 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                         delegate: nil)
             
         }
-        router.push(profile)
+        if isPresent {
+            router.setRootFlow(profile)
+        } else {
+            router.push(profile)
+        }
     }
     
     private func showStoriesPlayerView(user: User,

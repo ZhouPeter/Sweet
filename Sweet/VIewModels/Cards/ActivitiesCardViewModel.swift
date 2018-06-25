@@ -22,6 +22,7 @@ struct ActivitiesCardViewModel {
 }
 
 struct ActivityViewModel {
+    let actor: UInt64
     var activityId: String
     let avatarURL: URL
     var leftAvatarURL: URL?
@@ -34,7 +35,9 @@ struct ActivityViewModel {
     var like: Bool
     var isHiddenLikeButton: Bool
     var callBack: ((String) -> Void)?
+    var showProfile: ((UInt64) -> Void)?
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
+        actor = model.actor
         activityId = model.activityId
         avatarURL = URL(string: model.avatar)!
         titleString = model.title
