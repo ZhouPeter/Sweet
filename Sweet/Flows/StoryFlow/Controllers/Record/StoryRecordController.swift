@@ -10,6 +10,7 @@
 import UIKit
 import Hero
 import SwiftyUserDefaults
+import Kingfisher
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
@@ -56,12 +57,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private lazy var avatarButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
+        button.kf.setImage(with: URL(string: self.user.avatar), for: .normal)
         return button
     } ()
     
@@ -122,10 +123,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        logger.debug()
     }
     
     override func viewDidLoad() {
