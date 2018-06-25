@@ -12,9 +12,9 @@ import SwiftyUserDefaults
 /// 启动引导是否显示
 private var onboardingWasShown: Bool = {
     return false
-//    let def = UserDefaults.standard
-//    let isOpened = def.bool(forKey: OnboardingController.wasShownKey)
-//    return isOpened
+    let def = UserDefaults.standard
+    let isOpened = def.bool(forKey: OnboardingController.wasShownKey)
+    return isOpened
 } ()
 
 final class ApplicationCoordinator: BaseCoordinator {

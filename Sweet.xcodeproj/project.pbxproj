@@ -551,6 +551,10 @@
 		58CE1EE520A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
 		58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
 		58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */; };
+		58CF3F8B20E102BA00D0A887 /* CardBaseController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */; };
+		58CF3F8E20E103EA00D0A887 /* CardBaseController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */; };
+		58CF3F9120E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */; };
+		58CF3F9220E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */; };
 		58D3CCE520C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
 		58D3CCE620C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
 		58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D3CCE420C8FA320078B36C /* StatusResponse.swift */; };
@@ -1419,6 +1423,7 @@
 		58CE1ED920A5590F00781EBF /* StoriesPlayerScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesPlayerScrollView.swift; sourceTree = "<group>"; };
 		58CE1EDE20A5652700781EBF /* StoryUVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVController.swift; sourceTree = "<group>"; };
 		58CE1EE320A5697700781EBF /* StoryUVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUVTableViewCell.swift; sourceTree = "<group>"; };
+		58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardBaseController+Extension.swift"; sourceTree = "<group>"; };
 		58D3CCE420C8FA320078B36C /* StatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusResponse.swift; sourceTree = "<group>"; };
 		58D578C92092D30500AE5D38 /* StoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesController.swift; sourceTree = "<group>"; };
 		58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2039,6 +2044,7 @@
 				584CDED420D0F8A400523406 /* CardsBaseView.swift */,
 				5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */,
 				5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */,
+				58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2983,6 +2989,7 @@
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58816D0E20C671040032D103 /* WXApi+Message.swift in Sources */,
 				AC2A258B20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
+				58CF3F8B20E102BA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC78F20CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				AC86A93920C4051400334D4A /* ConversationData.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
@@ -3380,6 +3387,7 @@
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				58CF3F9120E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				587D18EE20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */,
 				AC86A93B20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
@@ -3563,6 +3571,7 @@
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				5803571420AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
+				58CF3F9220E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				587D18EA20DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				AC557CB020B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC45CD8B20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
@@ -3839,6 +3848,7 @@
 				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				58816D0F20C671040032D103 /* WXApi+Message.swift in Sources */,
 				AC2A258C20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
+				58CF3F8E20E103EA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC79020CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				AC86A93A20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,

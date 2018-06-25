@@ -19,7 +19,7 @@ extension URL {
         }
     }
     
-    func videoThumbnail(size: CGSize) -> URL? {
+    func videoThumbnail(size: CGSize = .zero) -> URL? {
         let scale = UIScreen.main.scale
         return URL(string: absoluteString +
                             "?vframe/jpg/offset/0.0/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))" )
