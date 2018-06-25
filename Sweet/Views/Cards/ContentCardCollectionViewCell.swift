@@ -33,6 +33,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     } ()
     
     var imageViews = [UIImageView]()
+    var imageViewContainers = [UIView]()
 
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
@@ -121,9 +122,8 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     private func setupImageViews() {
         for index in 0..<9 {
             let imageView = UIImageView()
+            imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = 5
             imageView.tag = index
             imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(didPressImage(_:)))
@@ -131,7 +131,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageView.backgroundColor = UIColor.black
             imageView.contentMode = .scaleAspectFill
             imageViews.append(imageView)
-            contentImageView.addSubview(imageView)
+            let container = UIView()
+            container.backgroundColor = UIColor(hex: 0xf6f6f6)
+            container.clipsToBounds = true
+            container.layer.cornerRadius = 5
+            container.addSubview(imageView)
+            imageView.fill(in: container)
+            contentImageView.addSubview(container)
+            imageViewContainers.append(container)
         }
     }
     
@@ -196,7 +203,13 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     }
     
     private func update(with images: [[ContentImage]]?) {
-        imageViews.forEach { $0.isHidden = true }
+        imageViews.forEach { view in
+            view.alpha = 0
+            view.kf.cancelDownloadTask()
+        }
+        imageViewContainers.forEach { view in
+            view.isHidden = true
+        }
         guard let rowImages = images, rowImages.isNotEmpty else { return }
         let margin: CGFloat = 5
         let spacing: CGFloat = 3
@@ -212,13 +225,21 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             let factorW = (width - spacing * (columns - 1)) / columnImages.reduce(CGFloat(0), { $0 + $1.width })
             var rowHeight: CGFloat = 0
             columnImages.forEach { image in
-                let view = imageViews[viewIndex]
-                view.isHidden = false
-                view.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
-                view.kf.setImage(with: URL(string: image.url)?.middleCutting(size: view.bounds.size))
+                let imageView = imageViews[viewIndex]
+                let container = imageViewContainers[viewIndex]
+                container.isHidden = false
+                container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
+                imageView.kf.setImage(
+                    with: URL(string: image.url)?.middleCutting(size: imageView.bounds.size),
+                    completionHandler: { (image, _, _, _) in
+                        guard image != nil else { return }
+                        UIView.animate(withDuration: 0.25, animations: {
+                            imageView.alpha = 1
+                        })
+                })
                 viewIndex += 1
-                x += view.bounds.width + spacing
-                rowHeight = view.bounds.height
+                x += container.bounds.width + spacing
+                rowHeight = container.bounds.height
             }
             x = margin
             y += rowHeight + spacing
