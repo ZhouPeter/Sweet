@@ -746,7 +746,7 @@ extension CardsBaseController {
               else { return }
         guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
                                             as? ContentCardCollectionViewCell else { return  }
-        let imagURLs = configurator.viewModel.contentImages!.map({ $0.imageURL })
+        let imagURLs = configurator.viewModel.contentImages!.flatMap({ $0.compactMap { URL(string: $0.url) } })
         self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imagURLs)
         let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale

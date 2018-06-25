@@ -11,7 +11,7 @@ import Foundation
 struct ContentCardViewModel {
     let titleString: String
     let contentString: String
-    var contentImages: [ContentImageModel]?
+    var contentImages: [[ContentImage]]?
     var videoURL: URL?
     let cardId: String
     var resultImageName: String?
@@ -23,8 +23,8 @@ struct ContentCardViewModel {
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
-        if let imageList = model.contentImageList {
-            contentImages = imageList.map { ContentImageModel(model: $0) }
+        if let imageList = model.contentImages {
+            contentImages = imageList
         } else if let video = model.video {
             videoURL = URL(string: video)
         }
@@ -37,15 +37,5 @@ struct ContentCardViewModel {
             resultUseIDs =  model.result?.contactUserList.compactMap({ $0.userId })
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
-    }
-}
-
-struct ContentImageModel {
-    let size: CGSize
-    let imageURL: URL
-    
-    init(model: ContentImage) {
-        size = CGSize(width: CGFloat(model.width), height: CGFloat(model.height))
-        imageURL = URL(string: model.url)!
     }
 }

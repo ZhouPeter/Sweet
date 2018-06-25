@@ -13,8 +13,8 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func contentCardComment(cardId: String, emoji: Int)
     func showProfile(userId: UInt64)
 }
+
 class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
-    
     typealias ViewModelType = ContentCardViewModel
     private var viewModel: ViewModelType?
     private lazy var contentLabel: UILabel = {
@@ -23,17 +23,16 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         label.textColor = .black
         label.numberOfLines = 3
         return label
-    }()
+    } ()
     
     var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tag = 10086
         imageView.isUserInteractionEnabled = true
         return imageView
-    }()
+    } ()
     
     var imageViews = [UIImageView]()
-    private var imageMaskViews = [UIImageView]()
 
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
@@ -41,14 +40,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         view.layer.cornerRadius = (emojiHeight + 10) / 2
         view.delegate = self
         return view
-    }()
+    } ()
     
     lazy var resultEmojiView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.isHidden = true
         return imageView
-    }()
+    } ()
     
     lazy var resultCommentLabel: UILabel = {
         let label = UILabel()
@@ -60,7 +59,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         label.textAlignment = .center
         label.isHidden = true
         return label
-    }()
+    } ()
     
     private var avatarImageViews: [UIImageView] = [UIImageView(), UIImageView(), UIImageView()]
     private var avatarImageContraints: [NSLayoutConstraint] =  [NSLayoutConstraint]()
@@ -75,9 +74,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         if isHidden {
             emojiView.isHidden = isHidden
         } else {
-            if !resultEmojiView.isHidden || !resultCommentLabel.isHidden {
-                return
-            }
+            if !resultEmojiView.isHidden || !resultCommentLabel.isHidden { return }
             emojiView.isHidden = isHidden
         }
     }
@@ -96,15 +93,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
         customContent.addSubview(contentImageView)
-        contentImageView.align(.left, to: customContent)
-        contentImageView.align(.right, to: customContent)
-        contentImageView.align(.bottom, to: customContent)
-        contentImageView.equal(.height, to: contentImageView)
+        contentImageView.align(.left, to: customContent, inset: 5)
+        contentImageView.align(.right, to: customContent, inset: 5)
+        contentImageView.align(.bottom, to: customContent, inset: 5)
         contentImageView.heightAnchor.constraint(
                 equalTo: contentImageView.widthAnchor,
                 multiplier: 10.0 / 9.0).isActive = true
         contentImageView.setViewRounded(cornerRadius: 10, corners: [.bottomLeft, .bottomRight])
-        setImageViews()
+        setupImageViews()
         
         customContent.addSubview(emojiView)
         emojiViewWidthConstrain = emojiView.constrain(width: emojiWidth * 2 + 10 + 10 + 25 + 5)
@@ -122,34 +118,20 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         addAvatarImageViews()
     }
     
-    private func setImageViews() {
-        var orginX: CGFloat = 0
-        var orginY: CGFloat = 0
-        let sumWidth: CGFloat = UIScreen.mainWidth() - 20
-        let sumHeight: CGFloat = sumWidth * 10 / 9
+    private func setupImageViews() {
         for index in 0..<9 {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = 5
             imageView.tag = index
             imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(didPressImage(_:)))
             imageView.addGestureRecognizer(tap)
-            if orginX + sumWidth / 3 > sumWidth {
-                orginX = 0
-                orginY += sumHeight / 3
-            }
-            let rect = CGRect(origin: CGPoint(x: orginX, y: orginY),
-                              size: CGSize(width: sumWidth / 3, height: sumHeight / 3))
-            imageView.frame = rect
-            orginX += sumWidth / 3
             imageView.backgroundColor = UIColor.black
             imageView.contentMode = .scaleAspectFill
             imageViews.append(imageView)
             contentImageView.addSubview(imageView)
-            let maskView = UIImageView(image: UIImage.bubbleImage(named: "CardMask", orientation: .up))
-            imageView.addSubview(maskView)
-            imageMaskViews.append(maskView)
         }
     }
     
@@ -183,7 +165,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.text = viewModel.contentString
-        setContentImages(images: viewModel.contentImages)
+        update(with: viewModel.contentImages)
      
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {
             hiddenEmojiView(isHidden: true)
@@ -213,40 +195,33 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         emojiView.updateDefault(names: viewModel.defaultImageNameList)
     }
     
-    private func setContentImages(images: [ContentImageModel]?) {
-        guard let images = images else {
-            imageViews.forEach { $0.isHidden = true }
-            return
-        }
-        let padding: CGFloat = 2
-        var orginX: CGFloat = padding
-        var orginY: CGFloat = padding
-        let boxWidth: CGFloat = contentImageView.bounds.width - padding * 2
-        let scale = boxWidth / 27
-        for (offset, imageView) in imageViews.enumerated() {
-            let maskView = imageMaskViews[offset]
-            maskView.isHidden = true
-            if offset < images.count {
-                imageView.isHidden = false
-                contentImageView.addSubview(imageView)
-                let current = images[offset]
-                let imageSize =
-                    CGSize(width: floor(current.size.width * scale), height: floor(current.size.height * scale))
-                if orginX + imageSize.width > boxWidth + padding {
-                    orginX = padding
-                    orginY += floor(images[offset - 1].size.height * scale)
-                }
-                imageView.frame = CGRect(origin: CGPoint(x: orginX, y: orginY), size: imageSize)
-                maskView.frame = imageView.bounds
-                imageView.kf.setImage(with: images[offset].imageURL.middleCutting(size: imageSize)) { (image, _, _, _) in
-                    guard image != nil else { return }
-                    maskView.isHidden = false
-                }
-                orginX += imageSize.width
-            } else {
-                imageView.isHidden = true
-                imageView.removeFromSuperview()
+    private func update(with images: [[ContentImage]]?) {
+        imageViews.forEach { $0.isHidden = true }
+        guard let rowImages = images, rowImages.isNotEmpty else { return }
+        let margin: CGFloat = 5
+        let spacing: CGFloat = 3
+        let width = contentImageView.bounds.width - margin * 2
+        let height = contentImageView.bounds.height - margin * 2
+        let rows = CGFloat(rowImages.count)
+        let factorH = (height - spacing * (rows - 1)) / rowImages.reduce(CGFloat(0), { $0 + ($1.first?.height ?? 0) })
+        var viewIndex = 0
+        var x = margin
+        var y = margin
+        rowImages.forEach { (columnImages) in
+            let columns = CGFloat(columnImages.count)
+            let factorW = (width - spacing * (columns - 1)) / columnImages.reduce(CGFloat(0), { $0 + $1.width })
+            var rowHeight: CGFloat = 0
+            columnImages.forEach { image in
+                let view = imageViews[viewIndex]
+                view.isHidden = false
+                view.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
+                view.kf.setImage(with: URL(string: image.url)?.middleCutting(size: view.bounds.size))
+                viewIndex += 1
+                x += view.bounds.width + spacing
+                rowHeight = view.bounds.height
             }
+            x = margin
+            y += rowHeight + spacing
         }
     }
 }
@@ -280,6 +255,7 @@ extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
             self.emojiView.openEmojis()
         }
     }
+    
     func selectEmoji(emoji: Int) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.contentCardComment(cardId: cardId!, emoji: emoji)
