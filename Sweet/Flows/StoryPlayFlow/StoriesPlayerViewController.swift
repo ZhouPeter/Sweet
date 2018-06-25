@@ -299,9 +299,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         } else {
             tagButton.isHidden = true
         }
-        tagButton.isHidden = false
-        tagButton.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-
     }
     
     func initPlayer() {

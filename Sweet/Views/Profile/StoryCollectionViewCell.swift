@@ -30,10 +30,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
         set {}
         get { return super.isSelected}
     }
-    
+
     override var isHighlighted: Bool {
         set {}
-        get { return super.isHighlighted }
+        get { return super.isHighlighted}
     }
     
     override init(frame: CGRect) {
@@ -62,10 +62,11 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
     
     func update(viewModel: StoryCellViewModel) {
+        logger.debug(self)
+        pokeView.isHidden = true
         storyImageView.image = nil
         storyImageView.animationImages = nil
         storyImageView.stopAnimating()
-        pokeView.isHidden = true
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .video {
                 storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)

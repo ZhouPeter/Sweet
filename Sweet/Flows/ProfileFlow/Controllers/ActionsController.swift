@@ -77,8 +77,8 @@ extension ActionsController: PageboyViewControllerDelegate {
     func pageboyViewController(_ pageboyViewController: PageboyViewController,
                                willScrollToPageAt index: Int,
                                direction: PageboyViewController.NavigationDirection, animated: Bool) {
-        let viewController = pageControllers[index]
-        viewController.loadRequest()
+//        let viewController = pageControllers[index]
+//        viewController.loadRequest()
     }
     
 }

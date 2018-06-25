@@ -16,13 +16,10 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .poke {
-//                let width = Int(UIScreen.mainWidth() / 3)
-//                let height = Int(UIScreen.mainHeight() / 3)
-//                let urlString = videoURL.absoluteString + "?vframe/jpg/offset/0.0/w/\(width)/h/\(height)"
                 coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
-                let centerX = contentView.bounds.width / 2 + viewModel.pokeCenter.x * contentView.bounds.width
-                let centerY = contentView.bounds.height / 2 + viewModel.pokeCenter.y * contentView.bounds.height
+                let centerX = viewModel.pokeCenter.x * contentView.bounds.width
+                let centerY = viewModel.pokeCenter.y * contentView.bounds.height
                 pokeViewCenterXConstraint?.constant = centerX
                 pokeViewCenterYConstraint?.constant = centerY
             } else {
@@ -35,7 +32,6 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         }
         avatarImageView.kf.setImage(with: viewModel.avatarImageURL)
         nameLabel.text = viewModel.name
-        infoLabel.text = viewModel.info
         avatarCirCleImageView.image = viewModel.isRead ? #imageLiteral(resourceName: "StoryRead") : #imageLiteral(resourceName: "StoryUnread")
 
     }
@@ -88,20 +84,11 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         return label
     }()
     
-    private lazy var infoLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        coverMaskView.clipsToBounds = true
-        coverMaskView.layer.cornerRadius = 10
-        coverImageView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
+        coverMaskView.layer.cornerRadius = 5
+        coverImageView.layer.cornerRadius = 5
         avatarImageView.layer.cornerRadius = 24
         setupUI()
     }
@@ -121,12 +108,12 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         pokeView.constrain(width: 50, height: 50)
         pokeViewCenterXConstraint = pokeView.centerX(to: contentView)
         pokeViewCenterYConstraint = pokeView.centerY(to: contentView)
-        contentView.addSubview(infoLabel)
-        infoLabel.centerX(to: contentView)
-        infoLabel.align(.bottom, to: contentView, inset: 16)
+//        contentView.addSubview(infoLabel)
+//        infoLabel.centerX(to: contentView)
+//        infoLabel.align(.bottom, to: contentView, inset: 16)
         contentView.addSubview(nameLabel)
         nameLabel.centerX(to: contentView)
-        nameLabel.pin(.top, to: infoLabel)
+        nameLabel.align(.bottom, inset: 5)
         contentView.addSubview(avatarCirCleImageView)
         avatarCirCleImageView.constrain(width: 50, height: 50)
         avatarCirCleImageView.centerX(to: contentView)

@@ -119,6 +119,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.backgroundColor = UIColor(hex: 0x9B9B9B).withAlphaComponent(0.35)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(submitAction(_:)), for: .touchUpInside)
         return button
     }()
     private var feedbackType: Int = 1
@@ -132,17 +133,28 @@ class FeedbackController: BaseViewController, FeedbackView {
         setupTextView()
     }
     
+    @objc private func submitAction(_ sender: UIButton) {
+        web.request(.feedback(comment: textView.text, type: feedbackType)) { (result) in
+            switch result {
+            case .success:
+                self.toast(message: "提交成功", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            case .failure:
+                self.toast(message: "提交失败")
+            }
+        }
+    }
+    
     @objc private func didPressTypeView(_ tap: UITapGestureRecognizer) {
         if let view = tap.view {
             if view.tag == 1 {
-                let image = appealView.selectedImageView.image
-                feedbackView.selectedImageView.image = image
-                appealView.selectedImageView.image = nil
+                feedbackView.selectedImageView.isHidden = false
+                appealView.selectedImageView.isHidden = true
                 feedbackType = 1
             } else if view.tag == 2 {
-                let image = feedbackView.selectedImageView.image
-                appealView.selectedImageView.image = image
-                feedbackView.selectedImageView.image = nil
+                feedbackView.selectedImageView.isHidden = true
+                appealView.selectedImageView.isHidden = false
                 feedbackType = 2
             }
         }
