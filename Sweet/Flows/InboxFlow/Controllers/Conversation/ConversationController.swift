@@ -267,6 +267,13 @@ extension ConversationController: MessagesDisplayDelegate {
         }
         return .black
     }
+    
+    func avatarSize(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: 32, height: 32)
+    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}
@@ -303,6 +310,15 @@ extension ConversationController: MessageCellDelegate {
                     cell.hero.modifiers = [.arc]
                 }
             }
+        }
+    }
+
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+        if messages[indexPath.section].sender.id == "\(user.userId)" {
+            delegate?.conversationControllerShowsProfile(buddy: user)
+        } else {
+            delegate?.conversationControllerShowsProfile(buddy: buddy)
         }
     }
 }

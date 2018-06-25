@@ -1099,6 +1099,10 @@
 		ACDD0B0F20C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
 		ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
 		ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD0B0D20C802E000B7400A /* PopupController.swift */; };
+		ACDFD27720E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */; };
+		ACDFD27820E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */; };
+		ACDFD27920E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */; };
+		ACDFD27A20E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */; };
 		ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
 		ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = ACE560A520997AA900CE2564 /* NSURL+Path.m */; };
@@ -1575,6 +1579,7 @@
 		ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardMessageCell.swift; sourceTree = "<group>"; };
 		ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardPreviewController.swift; sourceTree = "<group>"; };
 		ACDD0B0D20C802E000B7400A /* PopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupController.swift; sourceTree = "<group>"; };
+		ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetTextMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		ACE560A420997AA900CE2564 /* NSURL+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Path.h"; sourceTree = "<group>"; };
 		ACE560A520997AA900CE2564 /* NSURL+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Path.m"; sourceTree = "<group>"; };
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
@@ -2350,6 +2355,7 @@
 			children = (
 				ACA9CC4220C6764C00873643 /* SweetMessagesFlowLayout.swift */,
 				ACA9CC4720C6769800873643 /* SweetMessageSizeCalculator.swift */,
+				ACDFD27620E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift */,
 				AC616F8D20C6B55A00AD9004 /* MediaMessageCell.swift */,
 				ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */,
 				ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */,
@@ -3031,6 +3037,7 @@
 				AC9EF783208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				5863A83F20ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				589E6BB420A95D990038FAED /* CardsManagerController.swift in Sources */,
+				ACDFD27720E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				AC972512209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC45CD6C20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
@@ -3477,6 +3484,7 @@
 				ACDB24C820BEB3100039368E /* ContactsView.swift in Sources */,
 				AC05F44120DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				5803575520AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
+				ACDFD27920E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
@@ -3677,6 +3685,7 @@
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC616F9D20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
+				ACDFD27A20E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
@@ -3884,6 +3893,7 @@
 				58BD52C020888EE800F7C3E1 /* SignUpSexView.swift in Sources */,
 				5863A84020ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				AC9EF784208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
+				ACDFD27820E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				589E6BB520A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,

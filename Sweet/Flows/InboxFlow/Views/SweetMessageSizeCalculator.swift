@@ -14,23 +14,15 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
         guard case let .custom(value) = message.kind else {
             return super.messageContainerSize(for: message)
         }
-        let maxWidth = messageContainerMaxWidth(for: message) * 0.8
+        let maxWidth = 200
         if value is StoryMessageContent {
             return CGSize(width: maxWidth, height: maxWidth)
         }
         if let content = value as? OptionCardContent {
             return CGSize(width: maxWidth, height: maxWidth)
-//            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
-//            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
-//            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
-//            return size
         }
         if let content = value as? ContentCardContent {
             return CGSize(width: maxWidth, height: maxWidth)
-//            let boxSize = CGSize(width: maxWidth - 10 * 2, height: CGFloat.greatestFiniteMagnitude)
-//            let textSize = content.text.boundingSize(font: UIFont.preferredFont(forTextStyle: .body), size: boxSize)
-//            let size = CGSize(width: maxWidth, height: textSize.height + 6 * 2 + 140)
-//            return size
         }
         return super.messageContainerSize(for: message)
     }
