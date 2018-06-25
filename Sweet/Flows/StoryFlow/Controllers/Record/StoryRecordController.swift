@@ -69,6 +69,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     private lazy var avatarCircle: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.image = #imageLiteral(resourceName: "StoryUnread")
         return view
     } ()
     
