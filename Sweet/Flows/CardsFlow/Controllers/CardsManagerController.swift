@@ -107,6 +107,7 @@ class CardsManagerController: BaseViewController, CardsManagerView {
             leftBadgeView.text = nil
         }
     }
+    
     // MARK: - Private
     private func setupControllers() {
         add(childViewController: subscriptionView)

@@ -899,6 +899,14 @@
 		AC84FE8420E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */; };
 		AC84FE8520E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */; };
 		AC84FE8620E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */; };
+		AC84FE8820E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */; };
+		AC84FE8920E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */; };
+		AC84FE8A20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */; };
+		AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */; };
+		AC84FE8D20E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
+		AC84FE8E20E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
+		AC84FE8F20E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
+		AC84FE9020E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
 		AC85299520B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
 		AC85299620B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
 		AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
@@ -1537,6 +1545,8 @@
 		AC84FE7720E21B83008FC795 /* Guide+StoryRecordTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+StoryRecordTip.swift"; sourceTree = "<group>"; };
 		AC84FE7C20E21BA4008FC795 /* Guide+SwipeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+SwipeTip.swift"; sourceTree = "<group>"; };
 		AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+StoryPlayTip.swift"; sourceTree = "<group>"; };
+		AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+SameCardChoiceTip.swift"; sourceTree = "<group>"; };
+		AC84FE8C20E22876008FC795 /* FocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
 		AC85299420B3BA41002358FE /* StoryRecordTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordTopView.swift; sourceTree = "<group>"; };
 		AC86A93120C3F2C000334D4A /* InstantMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessageData.swift; sourceTree = "<group>"; };
 		AC86A93820C4051400334D4A /* ConversationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
@@ -2107,6 +2117,8 @@
 				AC84FE7C20E21BA4008FC795 /* Guide+SwipeTip.swift */,
 				AC84FE7720E21B83008FC795 /* Guide+StoryRecordTip.swift */,
 				AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */,
+				AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */,
+				AC84FE8C20E22876008FC795 /* FocusView.swift */,
 			);
 			path = Guide;
 			sourceTree = "<group>";
@@ -3068,6 +3080,7 @@
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC2A257820BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58BD52B62088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
+				AC84FE8820E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58816CF820C634C70032D103 /* EvaluationListResponse.swift in Sources */,
@@ -3175,6 +3188,7 @@
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */,
+				AC84FE8D20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237D20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -3396,6 +3410,7 @@
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				AC616FA220C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				585B68C420AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				AC84FE8A20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				AC2A257F20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
@@ -3404,6 +3419,7 @@
 				589E6BB620A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121A2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */,
+				AC84FE8F20E22876008FC795 /* FocusView.swift in Sources */,
 				58155E282091B3E300ADEFFB /* AboutController.swift in Sources */,
 				AC21759120C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				AC2A257A20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -3631,6 +3647,7 @@
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				583BC78320CE1CEC00C4494E /* EvaluationViewModel.swift in Sources */,
+				AC84FE9020E22876008FC795 /* FocusView.swift in Sources */,
 				58816CF120C62C370032D103 /* EvaluationController.swift in Sources */,
 				ACDB24B120BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC2A257120BBF16B00A82E62 /* Messenger.swift in Sources */,
@@ -3666,6 +3683,7 @@
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				AC616F9820C6BCAA00AD9004 /* MessageContent.swift in Sources */,
+				AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				585B68BB20AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
@@ -3942,6 +3960,7 @@
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC2A257920BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				AC972520209ABD5E009FB966 /* StoryTextView.swift in Sources */,
+				AC84FE8920E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58816CF920C634C70032D103 /* EvaluationListResponse.swift in Sources */,
@@ -4049,6 +4068,7 @@
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */,
+				AC84FE8E20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				ACA3237E20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,

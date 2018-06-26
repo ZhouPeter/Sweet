@@ -446,13 +446,18 @@ extension CardsBaseController: UICollectionViewDataSource {
 
 extension CardsBaseController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let newIndex = indexPath.row
-        if newIndex == index {
-            showWebView(indexPath: indexPath)
-        } else {
-            index = newIndex
-            scrollTo(row: index)
-        }
+//        if Defaults[.isSameCardChoiceGuideShown] == false {
+            let rect = CGRect(x: 120, y: 550, width: 150, height: 50)
+            Guide.showSameCardChoiceTip(with: rect)
+//            Defaults[.isSameCardChoiceGuideShown] = true
+//        }
+//        let newIndex = indexPath.row
+//        if newIndex == index {
+//            showWebView(indexPath: indexPath)
+//        } else {
+//            index = newIndex
+//            scrollTo(row: index)
+//        }
     }
 }
 
