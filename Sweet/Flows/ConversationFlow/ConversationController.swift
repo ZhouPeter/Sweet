@@ -11,15 +11,11 @@ import MessageKit
 import Kingfisher
 import STPopupPreview
 
-protocol ConversationControllerDelegate: class {
-    func conversationControllerShowsProfile(buddy: User)
-    func conversationControllerReports(buddy: User)
-    func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
-    func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User)
-    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User)
+protocol ConversationView: BaseView {
+    var delegate: ConversationControllerDelegate? { get set }
 }
 
-final class ConversationController: MessagesViewController {
+final class ConversationController: MessagesViewController, ConversationView {
     weak var delegate: ConversationControllerDelegate?
     
     private let user: User
@@ -40,7 +36,6 @@ final class ConversationController: MessagesViewController {
         self.user = user
         self.buddy = buddy
         super.init(nibName: nil, bundle: nil)
-        Messenger.shared.startConversation(userID: buddy.userId)
         Messenger.shared.addDelegate(self)
         Messenger.shared.loadMessages(from: buddy)
     }
@@ -77,9 +72,13 @@ final class ConversationController: MessagesViewController {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
     }
     
+    override func willMove(toParentViewController parent: UIViewController?) {
+        guard parent == nil else { return }
+        delegate?.conversationDidFinish()
+    }
+    
     deinit {
         logger.debug()
-        Messenger.shared.endConversation(userID: buddy.userId)
     }
     
     func didBlock() {
