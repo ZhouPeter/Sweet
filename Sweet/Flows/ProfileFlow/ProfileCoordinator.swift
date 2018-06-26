@@ -66,11 +66,27 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                         delegate: delegate)
             
         }
+        profile.showConversation = { [weak self] (user, buddy) in
+            self?.showConversation(user: user, buddy: buddy)
+        }
         if isPresent {
             router.setRootFlow(profile)
         } else {
             router.push(profile)
         }
+    }
+    
+    private func showConversation(user: User, buddy: User) {
+        let coordinator = ConversationCoordinator(
+            user: user,
+            buddy: buddy,
+            router: router,
+            coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
     
     private func showStoriesPlayerView(user: User,

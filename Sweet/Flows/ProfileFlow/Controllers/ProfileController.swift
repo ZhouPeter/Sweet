@@ -21,9 +21,11 @@ protocol ProfileView: BaseView {
     var finished: (() -> Void)? { get set }
     var user: User { get set }
     var userId: UInt64 { get set }
+    var showConversation: ((User, User) -> Void)? { get set }
 }
 
 class ProfileController: BaseViewController, ProfileView {
+    var showConversation: ((User, User) -> Void)?
     var showStoriesPlayerView: (
         (
         User,
@@ -282,8 +284,9 @@ extension ProfileController {
         }
         self.baseInfoViewModel?.sendMessageAction = { [weak self] in
             if let user = self?.user, let buddy = self?.userResponse {
-                let conversationController = ConversationController(user: user, buddy: User(buddy))
-                self?.navigationController?.pushViewController(conversationController, animated: true)
+                self?.showConversation?(user, User(buddy))
+//                let conversationController = ConversationController(user: user, buddy: User(buddy))
+//                self?.navigationController?.pushViewController(conversationController, animated: true)
             }
         }
     }
