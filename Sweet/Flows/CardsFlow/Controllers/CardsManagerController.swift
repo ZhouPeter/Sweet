@@ -163,7 +163,7 @@ extension CardsManagerController {
     
     private func showScrollNavGuide() -> Bool {
         if Defaults[.isScrollNavigationGuideShown] == false {
-            Guide.showSwipeTips("划动屏幕也能切换页面")
+            Guide.showSwipeTip("划动屏幕也能切换页面")
             Defaults[.isScrollNavigationGuideShown] = true
             return true
         }

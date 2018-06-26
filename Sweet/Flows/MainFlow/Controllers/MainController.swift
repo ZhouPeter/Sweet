@@ -42,6 +42,7 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     private var statusBarStyle = UIStatusBarStyle.lightContent
     private var statusBarHidden: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black

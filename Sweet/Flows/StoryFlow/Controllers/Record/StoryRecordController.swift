@@ -487,7 +487,7 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     
     func requestAllAuthorizeSuccess() {
         if Defaults[.isStoryRecordGuideShown] == false {
-            Guide.showStoryRecordTips()
+            Guide.showStoryRecordTip()
             Defaults[.isStoryRecordGuideShown] = true
         }
     }

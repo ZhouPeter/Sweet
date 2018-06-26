@@ -172,7 +172,7 @@ extension StoryTextController: StoryTextEditControllerDelegate {
             self.finishButton.alpha = 1
         }
         if Defaults[.isTextStoryGuideShown] == false {
-            Guide.showSwipeTips("划动屏幕切换底色")
+            Guide.showSwipeTip("划动屏幕切换底色")
             Defaults[.isTextStoryGuideShown] = true
         }
     }

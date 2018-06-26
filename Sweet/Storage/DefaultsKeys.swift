@@ -26,5 +26,6 @@ extension DefaultsKeys {
     static let isTextStoryGuideShown = DefaultsKey<Bool>("isTextStoryGuideShown")
     static let isStoryFilterGuideShown = DefaultsKey<Bool>("isStoryFilterGuideShown")
     static let isScrollNavigationGuideShown = DefaultsKey<Bool>("isScrollNavigationGuideShown")
+    static let isStoryPlayGuideShown = DefaultsKey<Bool>("isStoryPlayGuideShown")
 }
 
