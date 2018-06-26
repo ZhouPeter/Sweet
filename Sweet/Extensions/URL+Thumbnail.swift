@@ -14,8 +14,6 @@ extension URL {
         if absoluteString.contains("?imageView2") {
             return self
         } else {
-            logger.debug(URL(string: absoluteString +
-                "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))"))
             return URL(string: absoluteString +
                             "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
         }
@@ -23,7 +21,8 @@ extension URL {
     
     func videoThumbnail(size: CGSize = .zero) -> URL? {
         let scale = UIScreen.main.scale
-        return URL(string: absoluteString +
-                            "?vframe/jpg/offset/0.0/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))" )
+        let url = URL(string: absoluteString +
+            "?vframe/jpg/offset/0.0/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))" )
+        return url
     }
 }

@@ -347,7 +347,7 @@ extension CardsBaseController {
     }
 
     private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
-        if cards[index].type == .content {
+        if cards[index].type == .content && cards[index].result == nil {
             if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
                 configurator.viewModel.emojiDisplayType = emojiDisplayType
                 cellConfigurators[index] = configurator
@@ -376,7 +376,7 @@ extension CardsBaseController {
                 index += 1
                 self.scrollTo(row: index)
             }
-        } else if start.y - point.y > 0 {
+        } else if start.y - point.y >= 0 {
             self.scrollTo(row: index)
         } else if start.y - point.y < -30 {
             if index == 0 {

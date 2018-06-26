@@ -76,7 +76,6 @@ class EvaluationTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.title
         likeImageView.image = viewModel.likeButtonImage
         likeImageView.isHidden = viewModel.isHiddenLikeImage
-        likeImageView.isHidden = !viewModel.isHiddenLikeImage
         likeCountLabel.text = viewModel.likeCountString
     }
     

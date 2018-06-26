@@ -50,9 +50,9 @@ extension CardsBaseController {
                     handler: { [weak self] (_) in
                         guard let `self` = self else { return }
                         if let index = self.cards.index(where: { $0.cardId == cardId }) {
-                            let text = self.cards[index].content! + "\n"
-                                + self.cards[index].url! + "\n"
-                                + "（信息来源：讲真APP [机智]）"
+                            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
+                                + "讲真APP，你的同学都在玩：" + "\n"
+                                + "[机智]http://t.cn/RrXTSg5"
                             WXApi.sendText(text: text, scene: .conversation)
                         }
                 }))
@@ -93,8 +93,8 @@ extension CardsBaseController {
                 activityViewModel.callBack = { [weak self] activityId in
                     self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
                 }
-                activityViewModel.showProfile = { [weak self] buddyID in
-                    self?.showProfile(userId: buddyID)
+                activityViewModel.showProfile = { [weak self] (buddyID, setTop) in
+                    self?.showProfile(userId: buddyID, setTop: setTop)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
