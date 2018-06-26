@@ -13,10 +13,11 @@ let loginedKey = DefaultsKey<Bool>("logined") // 定义了你的key
 
 class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     var onFinish: ((Bool) -> Void)?
-    
     var showSetting: (() -> Void)?
-    
     var loginRequestBody: LoginRequestBody!
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
     private var storage: Storage?
     private lazy var codeLabel: UILabel = {
         let label = UILabel()

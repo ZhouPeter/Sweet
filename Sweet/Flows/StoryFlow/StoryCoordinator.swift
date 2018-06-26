@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 protocol StoryCoodinatorOutput: class {
     var finishFlow: (() -> Void)? { get set }
@@ -58,6 +59,9 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         }
         controller.onAlbumChoosed = { [weak self] topic in
             self?.showAlbumView(with: topic)
+        }
+        controller.onAvatarButtonPressed = { [weak self] in
+            self?.showRecentStories()
         }
         if isDismissable {
             controller.onDismissed = { [weak self] in
@@ -112,6 +116,26 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
             self?.showStoryEditView(with: url, isPhoto: true, topic: topic)
         }
         router.push(controller)
+    }
+    
+    private func showRecentStories() {
+        web.request(
+            .storyList(page: 0, userId: user.userId),
+            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case .failure(let error):
+                    logger.error(error)
+                case .success(let response):
+                    Defaults[.isPersonalStoryChecked] = true
+//                    let viewModels = response.list.map(StoryCellViewModel.init(model:))
+//                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
+//                    storiesPlayViewController.stories = viewModels
+//                    self.present(storiesPlayViewController, animated: true) {
+//                        storiesPlayViewController.initPlayer()
+//                    }
+                }
+        }
     }
 
     private func dismiss() {

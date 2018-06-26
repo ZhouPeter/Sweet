@@ -14,7 +14,7 @@ private var onboardingWasShown: Bool = {
     let def = UserDefaults.standard
     let isOpened = def.bool(forKey: OnboardingController.wasShownKey)
     return isOpened
-}()
+} ()
 
 final class ApplicationCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory

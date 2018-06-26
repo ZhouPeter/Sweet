@@ -17,6 +17,8 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     var onTextChoosed: ((String?) -> Void)?
     var onAlbumChoosed: ((String?) -> Void)?
     var onDismissed: (() -> Void)?
+    var onAvatarButtonPressed: (() -> Void)?
+    
     override var prefersStatusBarHidden: Bool { return true }
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     private let recordContainer = UIView()
@@ -410,23 +412,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     // MARK: - Actions
     
     @objc private func didPressAvatarButton() {
-        web.request(
-            .storyList(page: 0, userId: user.userId),
-            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case .failure(let error):
-                    logger.error(error)
-                case .success(let response):
-                    Defaults[.isPersonalStoryChecked] = true
-                    let viewModels = response.list.map(StoryCellViewModel.init(model:))
-                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-                    storiesPlayViewController.stories = viewModels
-                    self.present(storiesPlayViewController, animated: true) {
-                        storiesPlayViewController.initPlayer()
-                    }
-                }
-        }
+        onAvatarButtonPressed?()
     }
     
     @objc private func didPressMenuButton() {

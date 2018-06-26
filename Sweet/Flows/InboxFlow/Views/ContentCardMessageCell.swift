@@ -24,7 +24,7 @@ final class ContentCardMessageCell: MediaMessageCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "Avatar")
+        imageView.image = #imageLiteral(resourceName: "Logo")
         return imageView
     } ()
     
