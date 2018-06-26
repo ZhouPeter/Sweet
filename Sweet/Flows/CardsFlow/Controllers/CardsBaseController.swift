@@ -25,8 +25,7 @@ enum CardRequest {
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
-    private var delayItem: DispatchWorkItem?
-    private lazy var inputBottomView: InputBottomView = {
+    lazy var inputBottomView: InputBottomView = {
         let view = InputBottomView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
@@ -35,6 +34,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         view.maxLength = 50
         return view
     } ()
+    var inputBottomViewBottom: NSLayoutConstraint?
+    var inputBottomViewHeight: NSLayoutConstraint?
     
     private lazy var downButton: UIButton = {
         let button = UIButton()
@@ -62,6 +63,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     public var activityId: String?
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
+    private var delayItem: DispatchWorkItem?
     public lazy var collectionView: CardsCollectionView = {
         let collectionView = CardsCollectionView()
         collectionView.dataSource = self
@@ -102,8 +104,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var avPlayer: AVPlayer?
     private let keyboard = KeyboardObserver()
     private var keyboardHeight: CGFloat = 0
-    private var inputBottomViewBottom: NSLayoutConstraint?
-    private var inputBottomViewHeight: NSLayoutConstraint?
+ 
     private var photoBrowserImp: PhotoBrowserImp!
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
@@ -360,13 +361,13 @@ extension CardsBaseController {
     private func scrollCard(withPoint point: CGPoint) {
         guard let start = panPoint else { return }
         var direction = Direction.unknown
-        if point.y < start.y {
+        if  start.y - point.y > 30 {
             direction = .down
             if index == collectionView.numberOfItems(inSection: 0) - 1 {
                 let cardId = cards[index].cardId
                 let request: CardRequest = self is CardsAllController ?
-                                                .all(cardId: cardId, direction: direction) :
-                                                .sub(cardId: cardId, direction: direction)
+                    .all(cardId: cardId, direction: direction) :
+                    .sub(cardId: cardId, direction: direction)
                 self.startLoadCards(cardRequest: request) { (success, cards) in
                     if let cards = cards, cards.count > 0, success { self.index += 1 }
                     self.scrollTo(row: self.index)
@@ -375,14 +376,41 @@ extension CardsBaseController {
                 index += 1
                 self.scrollTo(row: index)
             }
-        } else {
+        } else if start.y - point.y > 0 {
+            self.scrollTo(row: index)
+        } else if start.y - point.y < -30 {
             if index == 0 {
                 self.scrollTo(row: index)
             } else {
                 self.index -=  1
                 self.scrollTo(row: index)
             }
+        } else if start.y - point.y < 0 {
+            self.scrollTo(row: index)
         }
+//        if point.y < start.y {
+//            direction = .down
+//            if index == collectionView.numberOfItems(inSection: 0) - 1 {
+//                let cardId = cards[index].cardId
+//                let request: CardRequest = self is CardsAllController ?
+//                                                .all(cardId: cardId, direction: direction) :
+//                                                .sub(cardId: cardId, direction: direction)
+//                self.startLoadCards(cardRequest: request) { (success, cards) in
+//                    if let cards = cards, cards.count > 0, success { self.index += 1 }
+//                    self.scrollTo(row: self.index)
+//                }
+//            } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
+//                index += 1
+//                self.scrollTo(row: index)
+//            }
+//        } else {
+//            if index == 0 {
+//                self.scrollTo(row: index)
+//            } else {
+//                self.index -=  1
+//                self.scrollTo(row: index)
+//            }
+//        }
     }
     
     private func scrollTo(row: Int, completion: (() -> Void)? = nil) {
@@ -646,28 +674,4 @@ extension CardsBaseController {
         browser.show()
     }
 }
-// MARK: - InputBottomViewDelegate
-extension CardsBaseController: InputBottomViewDelegate {
-    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
-        inputBottomViewHeight?.constant = height + 20
-    }
-    
-    func inputBottomViewDidPressSend(withText text: String?) {
-        guard cards[index].type == .content else { return }
-        let cardId = self.cards[index].cardId
-        web.request(
-            .commentCard(cardId: cardId, comment: text!, emoji: 0),
-            responseType: Response<SelectResult>.self) {(result) in
-                switch result {
-                case let .success(response):
-                    guard cardId == self.cards[self.index].cardId else { return }
-                    self.cards[self.index].result = response
-                    self.reloadContentCell(index: self.index)
-                    self.vibrateFeedback()
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
-        inputBottomView.startEditing(false)
-    }
-}
+

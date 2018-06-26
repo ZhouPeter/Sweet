@@ -165,7 +165,31 @@ extension CardsBaseController {
     }
     
 }
-
+// MARK: - InputBottomViewDelegate
+extension CardsBaseController: InputBottomViewDelegate {
+    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
+        inputBottomViewHeight?.constant = height + 20
+    }
+    
+    func inputBottomViewDidPressSend(withText text: String?) {
+        guard cards[index].type == .content else { return }
+        let cardId = self.cards[index].cardId
+        web.request(
+            .commentCard(cardId: cardId, comment: text!, emoji: 0),
+            responseType: Response<SelectResult>.self) {(result) in
+                switch result {
+                case let .success(response):
+                    guard cardId == self.cards[self.index].cardId else { return }
+                    self.cards[self.index].result = response
+                    self.reloadContentCell(index: self.index)
+                    self.vibrateFeedback()
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+        inputBottomView.startEditing(false)
+    }
+}
 // MARK: - InputTextViewDelegate
 extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
