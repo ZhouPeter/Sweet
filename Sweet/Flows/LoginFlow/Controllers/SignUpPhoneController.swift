@@ -158,7 +158,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
             web.request(.sendCode(phone: phone, type: isLogin ? .login : .register)) { [weak self] (result) in
                 switch result {
                 case .success:
-                    self?.toast(message: "发送成功", duration: 2)
+                    self?.toast(message: "发送成功")
                     TimerHelper.countDown(time: 60, countDownBlock: { (timeout) in
                         sender.setTitle("剩余\(timeout)秒", for: .normal)
                     }, endBlock: {
@@ -167,22 +167,22 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     })
                 case let .failure(error):
                     if error.code == WebErrorCode.userIsNil.rawValue {
-                        self?.toast(message: "手机号未注册", duration: 2)
+                        self?.toast(message: "手机号未注册")
                     } else {
-                        self?.toast(message: "发送失败", duration: 2)
+                        self?.toast(message: "发送失败")
                     }
                     sender.isEnabled = true
                     logger.error(error)
                 }
             }
         } else {
-            self.toast(message: "你的手机号码不正确", duration: 2)
+            self.toast(message: "你的手机号码不正确")
         }
     }
     
     @objc private func enteringAction(_ sender: UIButton) {
         if let text = phoneTextField.text, !text.checkPhone() {
-            self.toast(message: "你的手机号码不正确", duration: 2)
+            self.toast(message: "你的手机号码不正确")
             return
         }
         web.request(
@@ -191,6 +191,9 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
             completion: { result in
                 switch result {
                 case let .failure(error):
+                    if error.code == WebErrorCode.verification.rawValue {
+                        self.toast(message: "手机号或验证码输入错误")
+                    }
                     logger.error(error)
                 case let.success(response):
                     logger.debug(response)
