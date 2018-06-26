@@ -54,7 +54,6 @@ extension InboxCoordinator: InboxViewDelegate {
     }
     
     func inboxStartConversation(_ conversation: Conversation) {
-        Messenger.shared.markConversationAsRead(userID: conversation.user.userId)
         let coordinator = ConversationCoordinator(
             user: user,
             buddy: conversation.user,
