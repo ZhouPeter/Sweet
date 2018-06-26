@@ -24,6 +24,7 @@ struct ContentCardViewModel {
     var resultComment: String?
     let defaultImageNameList: [String]
     var emojiDisplayType: EmojiViewDisplay = .default
+    let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
@@ -33,6 +34,7 @@ struct ContentCardViewModel {
             videoURL = URL(string: video)
         }
         cardId = model.cardId
+        contentId = model.contentId
         if let comment = model.result?.comment, comment != "" {
             resultComment = comment
         } else if let emoji = model.result?.emoji, emoji != 0 {

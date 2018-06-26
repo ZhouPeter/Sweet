@@ -388,29 +388,6 @@ extension CardsBaseController {
         } else if start.y - point.y < 0 {
             self.scrollTo(row: index)
         }
-//        if point.y < start.y {
-//            direction = .down
-//            if index == collectionView.numberOfItems(inSection: 0) - 1 {
-//                let cardId = cards[index].cardId
-//                let request: CardRequest = self is CardsAllController ?
-//                                                .all(cardId: cardId, direction: direction) :
-//                                                .sub(cardId: cardId, direction: direction)
-//                self.startLoadCards(cardRequest: request) { (success, cards) in
-//                    if let cards = cards, cards.count > 0, success { self.index += 1 }
-//                    self.scrollTo(row: self.index)
-//                }
-//            } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
-//                index += 1
-//                self.scrollTo(row: index)
-//            }
-//        } else {
-//            if index == 0 {
-//                self.scrollTo(row: index)
-//            } else {
-//                self.index -=  1
-//                self.scrollTo(row: index)
-//            }
-//        }
     }
     
     private func scrollTo(row: Int, completion: (() -> Void)? = nil) {
@@ -485,10 +462,11 @@ extension CardsBaseController: UICollectionViewDelegate {
 }
 
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
-    func showProfile(userId: UInt64) {
-        delegate?.showProfile(userId: userId)
+
+    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
+        delegate?.showProfile(userId: userId, setTop: setTop)
     }
-    
+
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
         web.request(
             .choiceCard(cardId: cardId, index: selectedIndex),
@@ -566,6 +544,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
             .commentCard(cardId: cardId, comment: "", emoji: emoji),

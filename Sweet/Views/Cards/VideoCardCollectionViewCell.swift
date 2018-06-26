@@ -196,7 +196,8 @@ extension VideoCardCollectionViewCell {
     
     @objc private func didPressResultAvatar(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag])
+            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag],
+                                 setTop: SetTop(contentId: viewModel?.contentId, preferenceId: nil))
         }
     }
 }

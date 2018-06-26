@@ -128,14 +128,30 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                     logger.error(error)
                 case .success(let response):
                     Defaults[.isPersonalStoryChecked] = true
-//                    let viewModels = response.list.map(StoryCellViewModel.init(model:))
-//                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-//                    storiesPlayViewController.stories = viewModels
-//                    self.present(storiesPlayViewController, animated: true) {
-//                        storiesPlayViewController.initPlayer()
-//                    }
+                    self.addStoryPlayerCoordinator([response.list.compactMap({ StoryCellViewModel(model: $0)})])
                 }
         }
+    }
+    
+    
+    private func addStoryPlayerCoordinator(_ storiesGroup: [[StoryCellViewModel]]) {
+        let navigation = UINavigationController()
+        navigation.hero.isEnabled = true
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
+            user: user,
+            navigation: navigation,
+            current: 0,
+            currentStart: 0,
+            isGroup: false,
+            fromCardId: nil,
+            storiesGroup: storiesGroup,
+            delegate: nil)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start()
     }
 
     private func dismiss() {

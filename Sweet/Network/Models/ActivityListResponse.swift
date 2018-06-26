@@ -22,4 +22,6 @@ struct ActivityResponse: Codable {
     let subtitle: String
     let title: String
     let fromCardId: String
+    let preferenceId: UInt64?
+    let contentId: String?
 }

@@ -102,8 +102,8 @@ ProfileFlowFactory {
         return CardsManagerController(user: user)
     }
     
-    func makeProfileView(user: User, userId: UInt64) -> ProfileView {
-        return ProfileController(user: user, userId: userId)
+    func makeProfileView(user: User, userId: UInt64, setTop: SetTop?) -> ProfileView {
+        return ProfileController(user: user, userId: userId, setTop: setTop)
     }
     
     func makeTopicListView() -> TopicListView {

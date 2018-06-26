@@ -17,8 +17,10 @@ struct ChoiceCardViewModel {
     var avatarURLs: [URL]?
     var userIDs: [UInt64]?
     let cardId: String
+    let preferenceId: UInt64?
     init(model: CardResponse) {
         self.cardId = model.cardId
+        self.preferenceId = model.preferenceId
         self.titleString = model.name!
         self.contentString = model.content!
         self.imageURL = model.imageList!.map({ (url) -> URL in

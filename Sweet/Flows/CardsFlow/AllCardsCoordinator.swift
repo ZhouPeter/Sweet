@@ -27,7 +27,7 @@ class AllCardsCoordinator: BaseCoordinator {
     }
 }
 
-extension AllCardsCoordinator: CardsBaseViewDelegate {
+extension AllCardsCoordinator: CardsBaseViewDelegate {    
     
     func showStoriesGroup(user: User, storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
@@ -52,8 +52,11 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
         
     }
     
-    func showProfile(userId: UInt64) {
-        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
+    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
+        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                    userID: userId,
+                                                                    setTop: setTop,
+                                                                    router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

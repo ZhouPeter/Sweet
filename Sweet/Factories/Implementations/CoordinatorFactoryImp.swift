@@ -9,6 +9,15 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
+        return ProfileCoordinator(
+            user: user,
+            userID: userID,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp())
+    }
+    
     func makeStoryPlayerCoordinator(
         user: User,
         navigation: UINavigationController?,
@@ -24,10 +33,12 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
                                       delegate: delegate, isGroup: isGroup, fromCardId: fromCardId)
     }
     
-    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
+    func makeProfileCoordinator(user: User, userID: UInt64,
+                                setTop: SetTop?, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
                 user: user,
                 userID: userID,
+                setTop: setTop,
                 router: router,
                 factory: FlowFactoryImp(),
                 coordinatorFactory: CoordinatorFactoryImp())

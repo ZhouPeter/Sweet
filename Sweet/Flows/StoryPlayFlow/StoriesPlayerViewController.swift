@@ -16,14 +16,14 @@ protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     func playToBack()
     func playToNext()
     func dismissController()
-    func delStory(withStoryId storyId: UInt64)
+    func delStory(storyId: UInt64)
 }
 
 extension StoriesPlayerViewControllerDelegate{
     func playToBack() {}
     func playToNext() {}
     func dismissController() {}
-    func delStory(withStoryId storyId: UInt64) {}
+    func delStory(storyId: UInt64) {}
 }
 
 class AVPlayerView: UIView {
@@ -616,7 +616,7 @@ extension StoriesPlayerViewController {
                 switch result {
                 case .success:
                     self.toast(message: "删除成功")
-                    self.delegate?.delStory(withStoryId: self.stories[self.currentIndex].storyId)
+                    self.delegate?.delStory(storyId: self.stories[self.currentIndex].storyId)
                     self.stories.remove(at: self.currentIndex)
                     if self.currentIndex > self.stories.count - 1 {
                         self.currentIndex -= 1

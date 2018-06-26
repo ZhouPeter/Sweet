@@ -69,8 +69,6 @@ final class OptionCardPreviewController: UIViewController {
 
 extension OptionCardPreviewController: ChoiceCardCollectionViewCellDelegate {
     
-    func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {}
-    
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
         web.request(
             .choiceCard(cardId: cardId, index: selectedIndex),

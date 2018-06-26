@@ -14,7 +14,8 @@ protocol ProfileView: BaseView {
         (
         User,
         [StoryCellViewModel],
-        Int
+        Int,
+        StoriesPlayerGroupViewControllerDelegate?
         ) -> Void
         )? { get set }
     var finished: (() -> Void)? { get set }
@@ -27,11 +28,13 @@ class ProfileController: BaseViewController, ProfileView {
         (
         User,
         [StoryCellViewModel],
-        Int
+        Int,
+        StoriesPlayerGroupViewControllerDelegate?
         ) -> Void
     )?
     var user: User
     var userId: UInt64
+    let setTop: SetTop?
     var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
     var userResponse: UserResponse? {
@@ -87,9 +90,10 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
-    init(user: User, userId: UInt64) {
+    init(user: User, userId: UInt64, setTop: SetTop? = nil) {
         self.user = user
         self.userId = userId
+        self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -230,7 +234,9 @@ extension ProfileController {
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
                 if self.actionsController == nil {
-                    self.actionsController = ActionsController(user: User(self.userResponse!), mine: self.user)
+                    self.actionsController = ActionsController(user: User(self.userResponse!),
+                                                               mine: self.user,
+                                                               setTop: self.setTop)
                     self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
                     self.add(childViewController: self.actionsController, addView: false)
                 }

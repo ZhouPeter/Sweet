@@ -11,9 +11,10 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func openKeyboard()
     func contentCardComment(cardId: String, emoji: Int)
-    func showProfile(userId: UInt64)
+    func showProfile(userId: UInt64, setTop: SetTop?)
     func openEmojis(cardId: String)
 }
+
 
 class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentCardViewModel
@@ -276,7 +277,8 @@ extension ContentCardCollectionViewCell {
     
     @objc private func didPressResultAvatar(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag])
+            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag],
+                                 setTop: SetTop(contentId: viewModel?.contentId, preferenceId: nil))
         }
     }
 }

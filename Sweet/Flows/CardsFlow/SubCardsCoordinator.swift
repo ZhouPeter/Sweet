@@ -51,8 +51,11 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
         
     }
     
-    func showProfile(userId: UInt64) {
-        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user, userID: userId, router: router)
+    func showProfile(userId: UInt64, setTop: SetTop?) {
+        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                    userID: userId,
+                                                                    setTop: setTop,
+                                                                    router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

@@ -13,7 +13,13 @@ protocol CoordinatorFactory {
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
     func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
-    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput
+    func makeProfileCoordinator(user: User,
+                                userID: UInt64,
+                                router: Router) -> Coordinator & ProfileCoordinatorOutput
+    func makeProfileCoordinator(user: User,
+                                userID: UInt64,
+                                setTop: SetTop?,
+                                router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeProfileCoordinator(user: User,
                                 buddyID: UInt64,
                                 navigation: UINavigationController?) -> Coordinator & ProfileCoordinatorOutput

@@ -13,10 +13,12 @@ import Kingfisher
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
+    func delStory(storyId: UInt64)
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {}
+    func delStory(storyId: UInt64) {}
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
@@ -188,6 +190,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
+    func delStory(storyId: UInt64) {
+        delegate?.delStory(storyId: storyId)
+    }
     func dismissController() {
         onFinish?()
     }
