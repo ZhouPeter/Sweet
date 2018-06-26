@@ -19,3 +19,12 @@ extension DefaultsKeys {
     static let review = DefaultsKey<Int>("review")
     static let isPersonalStoryChecked = DefaultsKey<Bool>("isPersonalStoryChecked")
 }
+
+// Guide
+extension DefaultsKeys {
+    static let isStoryRecordGuideShown = DefaultsKey<Bool>("isStoryRecordGuideShown")
+    static let isTextStoryGuideShown = DefaultsKey<Bool>("isTextStoryGuideShown")
+    static let isStoryFilterGuideShown = DefaultsKey<Bool>("isStoryFilterGuideShown")
+    static let isScrollNavigationGuideShown = DefaultsKey<Bool>("isScrollNavigationGuideShown")
+}
+

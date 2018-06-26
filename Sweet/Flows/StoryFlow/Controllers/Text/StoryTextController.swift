@@ -171,6 +171,10 @@ extension StoryTextController: StoryTextEditControllerDelegate {
             self.editButton.alpha = self.editController.hasText ? 0 : 1
             self.finishButton.alpha = 1
         }
+        if Defaults[.isTextStoryGuideShown] == false {
+            Guide.showSwipeTips("划动屏幕切换底色")
+            Defaults[.isTextStoryGuideShown] = true
+        }
     }
     
     func storyTextEditControllerDidPan(_ pan: UIPanGestureRecognizer) {

@@ -899,6 +899,10 @@
 		AC86A93F20C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
 		AC86A94020C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
 		AC86A94120C4DC3F00334D4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93D20C4DC3F00334D4A /* User.swift */; };
+		AC87BC6620E1FD7D002BA32C /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87BC6520E1FD7D002BA32C /* Guide.swift */; };
+		AC87BC6720E1FD7D002BA32C /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87BC6520E1FD7D002BA32C /* Guide.swift */; };
+		AC87BC6820E1FD7D002BA32C /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87BC6520E1FD7D002BA32C /* Guide.swift */; };
+		AC87BC6920E1FD7D002BA32C /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87BC6520E1FD7D002BA32C /* Guide.swift */; };
 		AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
 		AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
 		AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EA9E120ABF43D0033615D /* GradientView.swift */; };
@@ -1517,6 +1521,7 @@
 		AC86A93120C3F2C000334D4A /* InstantMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessageData.swift; sourceTree = "<group>"; };
 		AC86A93820C4051400334D4A /* ConversationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
 		AC86A93D20C4DC3F00334D4A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AC87BC6520E1FD7D002BA32C /* Guide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guide.swift; sourceTree = "<group>"; };
 		AC8EA9E120ABF43D0033615D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		AC8EA9E620ABF62F0033615D /* GradientSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSwitchView.swift; sourceTree = "<group>"; };
 		AC8EA9EB20AC03500033615D /* TextGradientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGradientController.swift; sourceTree = "<group>"; };
@@ -1770,6 +1775,7 @@
 				ACCD27EB20C54155002E96AB /* BadgeView.swift */,
 				58816D1220C67D1A0032D103 /* ModuleTableViewCell.swift */,
 				587D18C920DA310300D53708 /* CustomSegmentedControl.swift */,
+				AC87BC6520E1FD7D002BA32C /* Guide.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3149,6 +3155,7 @@
 				ACA9CC4820C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3120C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				583BC78020CE1BBC00C4494E /* EvaluationViewModel.swift in Sources */,
+				AC87BC6620E1FD7D002BA32C /* Guide.swift in Sources */,
 				AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091920B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9EC20AC03500033615D /* TextGradientController.swift in Sources */,
@@ -3403,6 +3410,7 @@
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
+				AC87BC6820E1FD7D002BA32C /* Guide.swift in Sources */,
 				5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				AC86A94020C4DC3F00334D4A /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -3657,6 +3665,7 @@
 				583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				AC87BC6920E1FD7D002BA32C /* Guide.swift in Sources */,
 				AC616FAD20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				ACA9CC4120C6734300873643 /* StoryMessageCell.swift in Sources */,
 				5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
@@ -4008,6 +4017,7 @@
 				ACA9CC4920C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3220C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				583BC78120CE1CEB00C4494E /* EvaluationViewModel.swift in Sources */,
+				AC87BC6720E1FD7D002BA32C /* Guide.swift in Sources */,
 				AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				AC8EA9ED20AC03500033615D /* TextGradientController.swift in Sources */,
