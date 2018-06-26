@@ -10,6 +10,7 @@ import UIKit
 import Gemini
 import Hero
 import Kingfisher
+import SwiftyUserDefaults
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
@@ -115,6 +116,14 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
                             fromCardId: fromCardId,
                             storyGroupIndex: currentIndex)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Defaults[.isStoryPlayGuideShown] == false {
+            Guide.showStoryPlayTip()
+            Defaults[.isStoryPlayGuideShown] = true
+        }
     }
     
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {

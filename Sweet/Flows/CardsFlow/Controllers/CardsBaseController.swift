@@ -555,6 +555,14 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.cards[index].result = response
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
+                    if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
+                        let rect = CGRect(x: (UIScreen.mainWidth() - CGFloat(response.contactUserList.count) * 50) / 2,
+                                          y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 40 - 5,
+                                          width: CGFloat(response.contactUserList.count) * 50,
+                                          height: 50)
+                        Guide.showSameCardChoiceTip(with: rect)
+                        Defaults[.isSameCardChoiceGuideShown] = true
+                    }
                 case let .failure(error):
                     logger.error(error)
                 }

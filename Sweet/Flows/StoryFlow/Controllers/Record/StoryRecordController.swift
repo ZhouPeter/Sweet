@@ -485,7 +485,12 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
         startCamera()
     }
     
-    func requestAllAuthorizeSuccess() {}
+    func requestAllAuthorizeSuccess() {
+        if Defaults[.isStoryRecordGuideShown] == false {
+            Guide.showStoryRecordTip()
+            Defaults[.isStoryRecordGuideShown] = true
+        }
+    }
 }
 
 extension StoryRecordController: StoryRecordBottomViewDelegate {
