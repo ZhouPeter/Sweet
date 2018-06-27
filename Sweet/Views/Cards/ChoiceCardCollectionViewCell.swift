@@ -200,7 +200,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         cardId = viewModel.cardId
         self.viewModel = viewModel
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString
+        contentLabel.attributedText = viewModel.contentTextAttributed
         leftImageView.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftImageView.frame.size))
         rightImageView.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: rightImageView.frame.size))
         if let selectedIndex = viewModel.selectedIndex,

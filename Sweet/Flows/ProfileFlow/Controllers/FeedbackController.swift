@@ -88,6 +88,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.textColor = .black
         textView.backgroundColor = .white
+        textView.returnKeyType = .done
         textView.delegate = self
         return textView
     }()
@@ -224,6 +225,15 @@ class FeedbackController: BaseViewController, FeedbackView {
 }
 
 extension FeedbackController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         let maxLength = 100
         if textView.text.count > maxLength {

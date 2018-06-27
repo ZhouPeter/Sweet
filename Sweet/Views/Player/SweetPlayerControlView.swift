@@ -226,9 +226,6 @@ class SweetPlayerControlView: UIView {
             break
         case .playedToTheEnd:
             break
-//            startButton.isSelected = false
-//            showPlayToTheEndView()
-//            controlViewAnimation(isShow: true)
         default:
             break
         }

@@ -15,6 +15,7 @@ enum EmojiViewDisplay{
 struct ContentCardViewModel {
     let titleString: String
     let contentString: String
+    let contentTextAttributed: NSAttributedString
     var contentImages: [[ContentImage]]?
     var videoURL: URL?
     let cardId: String
@@ -28,6 +29,7 @@ struct ContentCardViewModel {
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
+        contentTextAttributed = contentString.getTextAttributed(lineSpacing: 6)
         if let imageList = model.contentImages {
             contentImages = imageList
         } else if let video = model.video {
@@ -44,4 +46,6 @@ struct ContentCardViewModel {
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
     }
+    
+   
 }

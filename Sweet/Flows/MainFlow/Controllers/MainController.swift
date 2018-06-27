@@ -46,7 +46,7 @@ final class MainController: PageboyViewController, MainView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        VolumeBar.shared.start()
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
         if let nav = navigationController { onViewDidLoad?(nav) }

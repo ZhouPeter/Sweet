@@ -161,7 +161,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             self.playerView.setAVPlayer(player: avPlayer)
         }
     }
-
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.playerView.pause()
+    }
+    
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
@@ -584,7 +588,6 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
-
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
         let cardType = cards[index].type
@@ -613,9 +616,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                 logger.error(error)
             }
         }
-       
     }
-    
 }
 
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
