@@ -18,4 +18,14 @@ extension String {
         return rect.size
     }
     
+    func getTextAttributed(lineSpacing: CGFloat) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: self)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle,
+                                      value: paragraphStyle,
+                                      range: NSRange(location: 0, length: attributedString.length))
+        return attributedString
+    }
+    
 }

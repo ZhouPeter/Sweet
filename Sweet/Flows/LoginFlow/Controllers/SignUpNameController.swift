@@ -18,6 +18,8 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         textField.font = UIFont.systemFont(ofSize: 30)
         textField.textColor = .black
         textField.tintColor = .black
+        textField.returnKeyType = .done
+        textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldEditChanged(_:)), for: .editingChanged)
         return textField
     }()
@@ -46,6 +48,8 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         view.backgroundColor = UIColor.xpYellow()
         setupUI()
         nicknameTextField.becomeFirstResponder()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        view.addGestureRecognizer(tap)
 
     }
     private func setupUI() {
@@ -63,6 +67,11 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         nextButton.align(.right, to: view, inset: 28)
         nextButton.constrain(height: 50)
         nextButton.setViewRounded()
+    }
+    
+    
+    @objc private func didTap(_ tap: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
     @objc private func nextAction(_ sender: ShrinkButton) {
@@ -85,6 +94,13 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         alertController.addAction(doneAction)
         alertController.preferredAction = doneAction
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension SignUpNameController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

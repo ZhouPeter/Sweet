@@ -11,6 +11,7 @@ import Foundation
 struct ContentVideoCardViewModel {
     let titleString: String
     let contentString: String
+    let contentTextAttributed: NSAttributedString
     var videoURL: URL
     let cardId: String
     var resultImageName: String?
@@ -23,6 +24,7 @@ struct ContentVideoCardViewModel {
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
+        contentTextAttributed = self.contentString.getTextAttributed(lineSpacing: 6)
         cardId = model.cardId
         contentId = model.contentId
         videoURL = URL(string: model.video!)!

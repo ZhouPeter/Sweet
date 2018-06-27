@@ -161,7 +161,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             self.playerView.setAVPlayer(player: avPlayer)
         }
     }
-
+    
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:

@@ -11,6 +11,7 @@ import Foundation
 struct ChoiceCardViewModel {
     let titleString: String
     let contentString: String
+    let contentTextAttributed: NSAttributedString
     let imageURL: [URL]
     var selectedIndex: Int?
     var percent: Double?
@@ -23,6 +24,7 @@ struct ChoiceCardViewModel {
         self.preferenceId = model.preferenceId
         self.titleString = model.name!
         self.contentString = model.content!
+        self.contentTextAttributed = contentString.getTextAttributed(lineSpacing: 6)
         self.imageURL = model.imageList!.map({ (url) -> URL in
             return URL(string: url)!
         })

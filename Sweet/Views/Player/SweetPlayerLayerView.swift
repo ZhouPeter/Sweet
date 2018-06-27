@@ -177,7 +177,7 @@ class SweetPlayerLayerView: UIView {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        removePlayerNotifations()
         statusToken?.invalidate()
         loadedToken?.invalidate()
         bufferEmptyToken?.invalidate()
@@ -262,16 +262,43 @@ class SweetPlayerLayerView: UIView {
         playDidEnd   = false
         configPlayer()
     }
+    fileprivate func addPlayerNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(moviePlayDidEnd),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationWillEnterForeground),
+            name: .UIApplicationWillEnterForeground,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidEnterBackground),
+            name: .UIApplicationDidEnterBackground,
+            object: nil)
+    }
+    
+    fileprivate func removePlayerNotifations() {
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
+    }
+    
+    @objc private func applicationWillEnterForeground() {
+        play()
+    }
+    @objc private func applicationDidEnterBackground() {
+        pause()
+    }
     
     fileprivate func onPlayerItemChange() {
         if lastPlayerItem == playerItem {
             return
         }
-        if let item = lastPlayerItem {
-            NotificationCenter.default.removeObserver(
-                self,
-                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                object: item)
+        if  lastPlayerItem != nil {
+            removePlayerNotifations()
             statusToken?.invalidate()
             loadedToken?.invalidate()
             bufferEmptyToken?.invalidate()
@@ -281,10 +308,7 @@ class SweetPlayerLayerView: UIView {
         lastPlayerItem = playerItem
         
         if let item = playerItem {
-            NotificationCenter.default.addObserver(self, selector: #selector(moviePlayDidEnd),
-                                                   name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                                   object: playerItem)
-            
+            addPlayerNotifications()
             statusToken = item.observe(\.status, options: .new) { (_, _) in
                 if self.player?.status == .readyToPlay {
                     self.state = .buffering

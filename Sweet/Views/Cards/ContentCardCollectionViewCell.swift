@@ -172,7 +172,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString 
+        contentLabel.attributedText = viewModel.contentTextAttributed
         update(with: viewModel.contentImages)
      
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {

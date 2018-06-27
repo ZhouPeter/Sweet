@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApi.registerApp("wx819697effecdb6f5")
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-//        VersionUpdateHelper.versionCheck(viewController: rootController)
+        VersionUpdateHelper.versionCheck(viewController: rootController)
         return true
     }
     

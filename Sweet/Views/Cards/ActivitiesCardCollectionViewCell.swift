@@ -66,6 +66,11 @@ extension ActivitiesCardCollectionViewCell: UITableViewDataSource {
               for: indexPath) as? ActivityTableViewCell else { fatalError() }
         if let feedViewModel = viewModel?.activityViewModels[indexPath.row] {
             cell.update(feedViewModel)
+            if indexPath.row == 3 {
+                cell.separatorInset.left = UIScreen.mainWidth()
+            } else {
+                cell.separatorInset.left = 70
+            }
         }
         return cell
     }

@@ -87,7 +87,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     func updateWith(_ viewModel: EvaluationCardViewModel) {
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString
+        contentLabel.attributedText = viewModel.contentTextAttributed
         leftImageView.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftImageView.frame.size))
         rightImageView.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: leftImageView.frame.size))
         if let selectedIndex = viewModel.selectedIndex {

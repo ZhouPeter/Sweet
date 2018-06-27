@@ -139,7 +139,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString
+        contentLabel.attributedText = viewModel.contentTextAttributed
         contentImageView.kf.setImage(with:  viewModel.videoURL.videoThumbnail())
         if let resultImageName = viewModel.resultImageName, let urls = viewModel.resultAvatarURLs {
             hiddenEmojiView(isHidden: true)
