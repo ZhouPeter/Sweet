@@ -228,7 +228,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             view.isHidden = true
         }
         guard let rowImages = images, rowImages.isNotEmpty else { return }
-        let margin: CGFloat = 5
+        let margin: CGFloat = 0
         let spacing: CGFloat = 3
         let width = contentImageView.bounds.width - margin * 2
         let height = contentImageView.bounds.height - margin * 2
