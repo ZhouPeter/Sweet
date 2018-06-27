@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 protocol SweetPlayerControlViewDelegate: class {
 
     func controlView(controlView: SweetPlayerControlView, didPressButton button: UIButton)

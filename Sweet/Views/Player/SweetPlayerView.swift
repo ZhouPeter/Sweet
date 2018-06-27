@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+
 protocol SweetPlayerViewDelegate: class {
     func sweetPlayer(player: SweetPlayerView,
                      playerStateDidChange state: SweetPlayerState)
