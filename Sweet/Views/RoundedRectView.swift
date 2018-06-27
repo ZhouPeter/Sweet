@@ -24,6 +24,7 @@ class RoundedRectView: UIView {
     var shadowRadius: CGFloat
     var cornerRadius: CGFloat
     var shadowOpacity: CGFloat
+    var shadowOffset: CGSize
     private var shadowLayer: CAShapeLayer
     private var foregroundLayer: CAShapeLayer
     
@@ -35,6 +36,7 @@ class RoundedRectView: UIView {
         shadowRadius = 5
         isShadowEnabled = false
         shadowOpacity = 0.15
+        shadowOffset = CGSize.zero
         shadowLayer = CAShapeLayer()
         foregroundLayer = CAShapeLayer()
         super.init(frame: frame)
@@ -63,7 +65,7 @@ class RoundedRectView: UIView {
             shadowLayer.shadowPath = shadowLayer.path
             shadowLayer.shadowOpacity = Float(shadowOpacity)
             shadowLayer.shadowRadius = shadowRadius
-            shadowLayer.shadowOffset = .zero
+            shadowLayer.shadowOffset = shadowOffset
         } else {
             shadowLayer.shadowPath = nil
             shadowLayer.removeFromSuperlayer()

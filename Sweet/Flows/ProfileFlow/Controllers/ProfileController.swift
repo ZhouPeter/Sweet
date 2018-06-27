@@ -98,16 +98,38 @@ class ProfileController: BaseViewController, ProfileView {
         self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
-    
+    private var storage: Storage?
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = Storage(userID: user.userId)
         setTableView()
-    
         setBackButton()
+        readLocalData()
+    }
+    
+    func readLocalData() {
+        storage?.read({ [weak self, userId] (realm) in
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: userId) else { return }
+            self?.userResponse = UserResponse(data: user)
+        }) { [weak self] in
+            if self?.userResponse != nil { self?.loadTableView() }
+        }
+    }
+    
+    func saveUserData() {
+        storage?.write({ [weak self] (realm) in
+            guard let `self` = self, let userResponse = self.userResponse else { return }
+           realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
+        }) { (success) in
+            if success {
+                logger.debug("用户数据保存成功")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -217,7 +239,18 @@ extension ProfileController {
         view.addSubview(tableView)
         tableView.fill(in: view)
     }
-    
+    private func loadTableView() {
+        if self.actionsController == nil {
+            self.actionsController = ActionsController(user: User(self.userResponse!),
+                                                       mine: self.user,
+                                                       setTop: self.setTop)
+            self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
+            self.add(childViewController: self.actionsController, addView: false)
+        }
+        self.saveUserData()
+        self.updateViewModel()
+        self.tableView.reloadData()
+    }
     private func loadAll(isLoadUser: Bool = true) {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
@@ -235,15 +268,7 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
-                if self.actionsController == nil {
-                    self.actionsController = ActionsController(user: User(self.userResponse!),
-                                                               mine: self.user,
-                                                               setTop: self.setTop)
-                    self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
-                    self.add(childViewController: self.actionsController, addView: false)
-                }
-                self.updateViewModel()
-                self.tableView.reloadData()
+               self.loadTableView()
             }
         }
     }

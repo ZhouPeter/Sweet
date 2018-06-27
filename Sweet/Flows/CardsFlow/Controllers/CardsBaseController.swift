@@ -622,7 +622,8 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
         if self.cards[index].type == .story {
-            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
+            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
+                guard let `self` = self else { return }
                 switch result {
                 case .success:
                     if storyGroupIndex > 3 { return }

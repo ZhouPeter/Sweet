@@ -25,7 +25,8 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         view.shadowInsetX = 0
         view.shadowInsetY = 0
         view.cornerRadius = 10
-        view.shadowOpacity = 0.2
+        view.shadowOpacity = 0.1
+        view.shadowOffset = CGSize(width: 0, height: 3)
         return view
     }()
     

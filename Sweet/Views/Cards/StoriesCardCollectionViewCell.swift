@@ -74,7 +74,7 @@ extension StoriesCardCollectionViewCell: UICollectionViewDataSource {
         let configurator = cellConfigurators[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configurator.reuseIdentifier, for: indexPath)
         cell.hero.isEnabled = true
-        cell.hero.id = "\(storiesGroup[indexPath.row][0].userId)"
+        cell.hero.id = "\(storiesGroup[indexPath.row][0].userId)" + (cardId ?? "")
         cell.hero.modifiers = [.arc]
         configurator.configure(cell)
         return cell

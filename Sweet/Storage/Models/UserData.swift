@@ -20,6 +20,11 @@ class UserData: Object {
     @objc dynamic var signature: String = ""
     @objc dynamic var city: String?
     @objc dynamic var isBlacklisted = false
+    @objc dynamic var isBlock = false
+    @objc dynamic var isSubscription = false
+    @objc dynamic var likeCount = 0
+
+
     let userType = RealmOptional<Int32>()
     
     override static func primaryKey() -> String? {
@@ -38,6 +43,23 @@ class UserData: Object {
         data.gender = info.gender.rawValue
         data.userType.value = Int32(info.userType)
         data.isBlacklisted = info.isBlacklisted
+        return data
+    }
+    
+    class func data(with response: UserResponse) -> UserData {
+        let data = UserData()
+        data.userID = Int64(response.userId)
+        data.avatarURLString = response.avatar
+        data.nickname = response.nickname
+        data.university = response.universityName
+        data.college = response.collegeName
+        data.enrollment = Int(response.enrollment)
+        data.signature = response.signature
+        data.gender = response.gender.rawValue
+        data.likeCount = response.likeCount
+        data.isBlacklisted = response.blacklist
+        data.isBlock = response.blacklist
+        data.isSubscription = response.subscription
         return data
     }
     
@@ -72,5 +94,23 @@ extension User {
         city = data.city
         userType = data.userType.value
         isBlacklisted = data.isBlacklisted
+    }
+}
+
+extension UserResponse {
+    init(data: UserData) {
+        userId = UInt64(data.userID)
+        nickname = data.nickname
+        avatar = data.avatarURLString
+        collegeName = data.college ?? ""
+        universityName = data.university ?? ""
+        enrollment = data.enrollment
+        gender = Gender(rawValue: data.gender) ?? .unknown
+        phone = data.phone ?? ""
+        signature = data.signature
+        likeCount = data.likeCount
+        subscription = data.isSubscription
+        blacklist = data.isBlacklisted
+        block = data.isBlock
     }
 }

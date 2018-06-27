@@ -64,12 +64,13 @@ class StoryUVController: BaseViewController {
     }   
     
     private func loadStoryUvlist() {
-        web.request(.storyDetailsUvlist(storyId: storyId), responseType: Response<StoryUvList>.self) { (result) in
+        web.request(.storyDetailsUvlist(storyId: storyId),
+                    responseType: Response<StoryUvList>.self) { [weak self] (result) in
             switch result {
             case let .success(response):
-                self.storyUvList = response
-                self.likeCountLabel.text = "获赞\(response.likeCount)"
-                self.tableView.reloadData()
+                self?.storyUvList = response
+                self?.likeCountLabel.text = "获赞\(response.likeCount)"
+                self?.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
             }
