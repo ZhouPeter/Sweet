@@ -11,7 +11,6 @@
 import UIKit
 import TapticEngine
 import SwiftyUserDefaults
-import VolumeBar
 
 final class StoryEditController: BaseViewController, StoryEditView, StoryEditCancellable {
     var onCancelled: (() -> Void)?
@@ -88,21 +87,13 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         self.isPhoto = isPhoto
         self.topic = topic
         textController.topic = topic
-        if isPhoto == false {
-            VolumeBar.shared.start()
-        }
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        VolumeBar.shared.stop()
-        logger.debug()
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
