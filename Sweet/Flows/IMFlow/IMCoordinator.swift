@@ -41,8 +41,8 @@ final class IMCoordinator: BaseCoordinator {
     
     private func updateAvatar() {
         var urlString: String?
-        self.storage.read({ (realm) in
-            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self.storage.userID) else { return }
+        self.storage.read({ [weak self] (realm) in
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self?.storage.userID) else { return }
             urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
         }, callback: { [weak self] in
             guard let urlString = urlString else { return }

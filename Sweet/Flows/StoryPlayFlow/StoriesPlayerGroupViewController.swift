@@ -89,6 +89,10 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         super.init(nibName: nil, bundle: nil)
     }
     
+    deinit {
+        logger.debug()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,7 +104,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         view.backgroundColor = .clear
         collectionView.addGestureRecognizer(pan)
         collectionView.hero.isEnabled = true
-        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)"
+        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)" + (fromCardId ?? "")
         collectionView.isScrollEnabled = storiesGroup.count > 1
         view.addSubview(collectionView)
         collectionView.fill(in: view)
@@ -183,7 +187,8 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 
     private func loadMoreStoriesGroup() {
         if isLoading { return }
-        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { (result) in
+        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { [weak self] (result) in
+            guard let `self` = self else { return }
             self.isLoading = false
             switch result {
             case let .success(response):
@@ -290,8 +295,6 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
                     savePlayerControllerLoction(cell: cell)
                     storiesPlayerControllerMap[cell]?.closePlayer()
                 }
-            }
-            for cell in collectionView.visibleCells {
                 if let indexPath = collectionView.indexPath(for: cell), indexPath.row == currentIndex {
                     readPlayerControllerLoction(cell: cell)
                     storiesPlayerControllerMap[cell]?.reloadPlayer()

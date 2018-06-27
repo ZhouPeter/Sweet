@@ -66,8 +66,8 @@ class StoryPlayProgressView: UIView {
         self.index = index
         let indexPath = IndexPath(row: index, section: 0)
         self.ratio = ratio
-        DispatchQueue.main.async {
-            let cell = self.collectionView.cellForItem(at: indexPath) as? ProgressCollectionViewCell
+        DispatchQueue.main.async { [weak self] in
+            let cell = self?.collectionView.cellForItem(at: indexPath) as? ProgressCollectionViewCell
             cell?.setProgressView(ratio: ratio)
         }
     }
@@ -79,7 +79,8 @@ class StoryPlayProgressView: UIView {
     private func setCollectionViewCells(currentIndex: Int) {
         for row in 0..<count {
             let indexPath = IndexPath(row: row, section: 0)
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
                 let cell = self.collectionView.cellForItem(at: indexPath) as? ProgressCollectionViewCell
                 if  row < self.index {
                     cell?.setProgressView(ratio: 1)
