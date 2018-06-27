@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyUserDefaults
 import AVKit
+import VolumeBar
+
 var allowRotation = false
 
 @UIApplicationMain
@@ -36,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
+        setupVolumeBar()
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
@@ -101,6 +104,7 @@ extension AppDelegate {
             }
         }
     }
+    
     @objc func logoutAuth(notification: Notification) {
         if let coordinator = applicationCoordinator as? ApplicationCoordinator {
             coordinator.removeAllDependency()
@@ -150,6 +154,14 @@ extension AppDelegate {
     
     private func showControllerWithMessge(userInfo: [AnyHashable: Any]) {
         
+    }
+    
+    private func setupVolumeBar() {
+        let volumeBar = VolumeBar.shared
+        var style = VolumeBarStyle.likeInstagram
+        style.height = 2
+        style.cornerRadius = 1
+        volumeBar.style = style
     }
 }
 

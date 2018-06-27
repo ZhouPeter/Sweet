@@ -128,6 +128,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                     logger.error(error)
                 case .success(let response):
                     Defaults[.isPersonalStoryChecked] = true
+                    guard response.list.isNotEmpty else { return }
                     self.addStoryPlayerCoordinator([response.list.compactMap({ StoryCellViewModel(model: $0)})])
                 }
         }

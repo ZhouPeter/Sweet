@@ -25,6 +25,8 @@ target 'Sweet' do
   pod 'STPopupPreview'
   pod 'Gemini'
   pod 'KMNavigationBarTransition'
+  pod 'VolumeBar', '~> 3.0.3'
+  
   target 'Sweet Dev' do
   end
   

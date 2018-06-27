@@ -40,6 +40,7 @@ PODS:
   - UMCPush (3.2.1):
     - UMCCommon
   - VIMediaCache (0.4)
+  - VolumeBar (3.0.3)
   - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
@@ -63,6 +64,7 @@ DEPENDENCIES:
   - TapticEngine
   - UMCPush
   - VIMediaCache
+  - VolumeBar (~> 3.0.3)
   - WechatOpenSDK
 
 SPEC REPOS:
@@ -91,6 +93,7 @@ SPEC REPOS:
     - UMCCommon
     - UMCPush
     - VIMediaCache
+    - VolumeBar
     - WechatOpenSDK
 
 EXTERNAL SOURCES:
@@ -136,8 +139,9 @@ SPEC CHECKSUMS:
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
+  VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 57dbf538457a970538b697bdd5a3f8ac1747b1e0
+PODFILE CHECKSUM: 6ecc16af4f8470124b6e630a9da123f3dac999dd
 
 COCOAPODS: 1.5.3
