@@ -25,18 +25,6 @@ enum CardRequest {
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
-    lazy var inputBottomView: InputBottomView = {
-        let view = InputBottomView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.shouldSendNilText = true
-        view.placeHolder = "说点什么..."
-        view.maxLength = 50
-        return view
-    } ()
-    var inputBottomViewBottom: NSLayoutConstraint?
-    var inputBottomViewHeight: NSLayoutConstraint?
-    
     private lazy var downButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "DownArrow"), for: .normal)
@@ -55,6 +43,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             }
         }
     }
+    private var lastIndex = 0
     public var panPoint: CGPoint?
     public var panOffset: CGPoint?
     public var cellConfigurators = [CellConfiguratorType]()
@@ -76,7 +65,9 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             changeHandler: { (object, change) in
             if change.newValue == change.oldValue { return }
             if object.contentOffset.y + cardOffset  == CGFloat(self.index) * cardCellHeight {
+                if self.lastIndex == self.index { return }
                 self.changeCurrentCell()
+                self.lastIndex = self.index
             }
         })
         return collectionView
@@ -102,8 +93,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     
     private var isFetchLoadCards = false
     private var avPlayer: AVPlayer?
-    private let keyboard = KeyboardObserver()
-    private var keyboardHeight: CGFloat = 0
  
     private var photoBrowserImp: PhotoBrowserImp!
     lazy var inputTextView: InputTextView = {
@@ -149,8 +138,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
-        addInputBottomView()
-        keyboard.observe { [weak self] in self?.handleKeyboardEvent($0) }
         Messenger.shared.addDelegate(self)
     }
     
@@ -164,38 +151,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.playerView.pause()
-    }
-    
-    private func handleKeyboardEvent(_ event: KeyboardEvent) {
-        switch event.type {
-        case .willShow, .willHide, .willChangeFrame:
-            keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
-            if inputBottomView.isEditing() {
-                if keyboardHeight == 0 {
-                    inputBottomViewBottom?.constant = InputBottomView.defaultHeight()
-                } else {
-                    inputBottomViewBottom?.constant = -keyboardHeight
-                }
-            }
-            UIView.animate(
-                withDuration: event.duration,
-                delay: 0,
-                options: UIViewAnimationOptions(rawValue: UInt(event.curve.rawValue)),
-                animations: {
-                    self.view.layoutIfNeeded()
-            }, completion: nil)
-        default:
-            break
-        }
-    }
-
-    private func addInputBottomView() {
-        view.addSubview(inputBottomView)
-        inputBottomView.align(.left, to: view)
-        inputBottomView.align(.right, to: view)
-        inputBottomViewHeight = inputBottomView.constrain(height: InputBottomView.defaultHeight())
-        inputBottomViewBottom = inputBottomView.align(.bottom, to: view, inset: -InputBottomView.defaultHeight())
-        view.layoutIfNeeded()
     }
     
     private func showEmptyView(isShow: Bool) {
@@ -320,7 +275,6 @@ extension CardsBaseController {
         self.saveLastId()
         self.playerView.isHasVolume = false
         self.playerView.pause()
-//        self.playerView.playerLayer?.resetPlayer()
         if self.cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
@@ -536,6 +490,13 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    func shareCard(cardId: String) {
+        let controller = ShareCardController()
+        controller.sendCallback = { (text, userIds) in
+            self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+        }
+        self.present(controller, animated: true, completion: nil)
+    }
     
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(

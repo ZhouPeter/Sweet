@@ -52,7 +52,7 @@ class ProfileController: BaseViewController, ProfileView {
             }
         }
     }
-    private var actionsController: ActionsController!
+    private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
     private var isFirstLoad = true
     private lazy var tableView: UITableView = {
@@ -244,8 +244,8 @@ extension ProfileController {
             self.actionsController = ActionsController(user: User(self.userResponse!),
                                                        mine: self.user,
                                                        setTop: self.setTop)
-            self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
-            self.add(childViewController: self.actionsController, addView: false)
+            self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
+            self.add(childViewController: self.actionsController!, addView: false)
         }
         self.saveUserData()
         self.updateViewModel()
@@ -351,7 +351,9 @@ extension ProfileController: UITableViewDataSource {
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
            cell.delegate = self
-           cell.setPlaceholderContentView(view: actionsController.view)
+            if let view = actionsController?.view {
+                cell.setPlaceholderContentView(view: view)
+            }
            return cell
         }
     }
@@ -359,6 +361,6 @@ extension ProfileController: UITableViewDataSource {
 
 extension ProfileController: ActionsTableViewCellDelegate {
     func selectedAction(at index: Int) {
-        actionsController.scrollToPage(.at(index: index), animated: true)
+        actionsController?.scrollToPage(.at(index: index), animated: true)
     }
 }

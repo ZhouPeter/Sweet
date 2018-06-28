@@ -15,13 +15,13 @@ extension CardsBaseController {
                                      cardId: String,
                                      sectionId: UInt64) -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
-            let controller = ShareCardController()
-            controller.sendCallback = { (text, userIds) in
-                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
-            }
-            self.present(controller, animated: true, completion: nil)
-        }
+//        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
+//            let controller = ShareCardController()
+//            controller.sendCallback = { (text, userIds) in
+//                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+//            }
+//            self.present(controller, animated: true, completion: nil)
+//        }
         let subscriptionAction = UIAlertAction.makeAlertAction(
             title: status.subscription ? "取消订阅" : "订阅该栏目",
             style: .default) { (_) in
@@ -41,7 +41,7 @@ extension CardsBaseController {
                 }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-        alertController.addAction(shareAction)
+//        alertController.addAction(shareAction)
         if cardType == .content {
             alertController.addAction(
                 UIAlertAction.makeAlertAction(
@@ -142,7 +142,7 @@ extension CardsBaseController {
         self.activityCardId = cardId
     }
     
-    private func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
+    func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
         let card  = cards[index]
         let from = UInt64(Defaults[.userID]!)!
@@ -171,31 +171,7 @@ extension CardsBaseController {
     }
     
 }
-// MARK: - InputBottomViewDelegate
-extension CardsBaseController: InputBottomViewDelegate {
-    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
-        inputBottomViewHeight?.constant = height + 20
-    }
-    
-    func inputBottomViewDidPressSend(withText text: String?) {
-        guard cards[index].type == .content else { return }
-        let cardId = self.cards[index].cardId
-        web.request(
-            .commentCard(cardId: cardId, comment: text!, emoji: 0),
-            responseType: Response<SelectResult>.self) {(result) in
-                switch result {
-                case let .success(response):
-                    guard cardId == self.cards[self.index].cardId else { return }
-                    self.cards[self.index].result = response
-                    self.reloadContentCell(index: self.index)
-                    self.vibrateFeedback()
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
-        inputBottomView.startEditing(false)
-    }
-}
+
 // MARK: - InputTextViewDelegate
 extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {

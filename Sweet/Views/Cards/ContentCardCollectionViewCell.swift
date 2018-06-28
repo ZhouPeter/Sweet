@@ -12,6 +12,7 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func contentCardComment(cardId: String, emoji: Int)
     func showProfile(userId: UInt64, setTop: SetTop?)
     func openEmojis(cardId: String)
+    func shareCard(cardId: String)
 }
 
 
@@ -38,9 +39,17 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
 
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
+        view.backgroundColor = .clear
         view.delegate = self
         return view
     } ()
+    
+    lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
+        button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +85,10 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         emojiView.align(.right, inset: 50)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
+        customContent.addSubview(shareButton)
+        shareButton.constrain(width: 24, height: 24)
+        shareButton.align(.right, inset: 10)
+        shareButton.centerY(to: emojiView)
 
     }
     
@@ -177,9 +190,22 @@ extension ContentCardCollectionViewCell {
                                  setTop: SetTop(contentId: viewModel?.contentId, preferenceId: nil))
         }
     }
+    
+    @objc private func didPressShare(_ sender: UIButton) {
+        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
+            delegate.shareCard(cardId: cardId!)
+        }
+    }
 }
 
 extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
+    func didTapAvatar(index: Int) {
+        if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
+            if let viewModel = viewModel, let userIDs = viewModel.resultUseIDs {
+                delegate.showProfile(userId: userIDs[index], setTop: nil)
+            }
+        }
+    }
     
     func openEmojis() {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
