@@ -12,6 +12,10 @@ protocol ProfileCoordinatorOutput: class {
     var finishFlow: (() -> Void)? { get set }
 }
 
+struct SetTop {
+    let contentId: String?
+    let preferenceId: UInt64?
+}
 class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     var finishFlow: (() -> Void)?
     private let factory: ProfileFlowFactory
@@ -19,40 +23,70 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private let router: Router
     private let user: User
     private let userID: UInt64
-    
+    private let setTop: SetTop?
     init(user: User,
          userID: UInt64,
+         setTop: SetTop? = nil,
          router: Router,
          factory: ProfileFlowFactory,
          coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.userID = userID
+        self.setTop = setTop
         self.router = router
         self.factory = factory
         self.coordinatorFactory = coordinatorFactory
     }
     
     override func start() {
-        showProfile()
+        start(with: nil)
     }
+    override func start(with option: DeepLinkOption?) {
+        if let option = option {
+            showProfile(isPresent: option == .present)
+        } else {
+            showProfile()
+        }
+    }
+
     
     // MARK: - Private
-    private func showProfile() {
-        let profile = factory.makeProfileView(user: user, userId: userID)
+    private func showProfile(isPresent: Bool = false) {
+        let profile = factory.makeProfileView(user: user, userId: userID, setTop: setTop)
         profile.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
-        profile.showStoriesPlayerView = { [weak self] (user, stories, current) in
+        profile.showStoriesPlayerView = { [weak self] (user, stories, current, delegate) in
             self?.showStoriesPlayerView(user: user,
                                         stories: stories,
                                         current: current,
-                                        delegate: nil)
+                                        delegate: delegate)
             
         }
-        router.push(profile)
+        profile.showConversation = { [weak self] (user, buddy) in
+            self?.showConversation(user: user, buddy: buddy)
+        }
+        if isPresent {
+            router.setRootFlow(profile)
+        } else {
+            router.push(profile)
+        }
+    }
+    
+    private func showConversation(user: User, buddy: User) {
+        let coordinator = ConversationCoordinator(
+            user: user,
+            buddy: buddy,
+            router: router,
+            coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
     
     private func showStoriesPlayerView(user: User,

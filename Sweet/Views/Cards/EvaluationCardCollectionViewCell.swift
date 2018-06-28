@@ -19,22 +19,24 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         return label
     }()
     
-    private lazy var leftButton: UIButton = {
-        let button = UIButton()
-        button.adjustsImageWhenHighlighted = false
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tag = 0
-        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
-        return button
+    private lazy var leftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.tag = 0
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     
-    private lazy var rightButton: UIButton = {
-        let button = UIButton()
-        button.adjustsImageWhenHighlighted = false
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tag = 1
-        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
-        return button
+    private lazy var rightImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     
     private lazy var selectedButton: UIButton = {
@@ -59,25 +61,25 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 18)
-        customContent.addSubview(leftButton)
-        leftButton.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
-        leftButton.align(.left, to: customContent, inset: 5)
-        leftButton.align(.bottom, to: customContent, inset: 5)
-        leftButton.align(.top, to: customContent, inset: 140)
-        customContent.addSubview(rightButton)
-        rightButton.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
-        rightButton.align(.right, to: customContent, inset: 5)
-        rightButton.align(.bottom, to: customContent, inset: 5)
-        rightButton.align(.top, to: leftButton)
+        customContent.addSubview(leftImageView)
+        leftImageView.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
+        leftImageView.align(.left, to: customContent, inset: 5)
+        leftImageView.align(.bottom, to: customContent, inset: 5)
+        leftImageView.align(.top, to: customContent, inset: 140)
+        customContent.addSubview(rightImageView)
+        rightImageView.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
+        rightImageView.align(.right, to: customContent, inset: 5)
+        rightImageView.align(.bottom, to: customContent, inset: 5)
+        rightImageView.align(.top, to: leftImageView)
         
-        leftButton.setViewRounded(cornerRadius: 5, corners: .allCorners)
-        rightButton.setViewRounded(cornerRadius: 5, corners: .allCorners)
+        leftImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
+        rightImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         
         customContent.addSubview(selectedButton)
         selectedButton.constrain(width: 40, height: 40)
-        selectedButton.centerY(to: leftButton)
-        selectedButtonCenterXLeftConstraint = selectedButton.centerX(to: leftButton)
-        selectedButtonCenterXRightConstraint = selectedButton.centerX(to: rightButton)
+        selectedButton.centerY(to: leftImageView)
+        selectedButtonCenterXLeftConstraint = selectedButton.centerX(to: leftImageView)
+        selectedButtonCenterXRightConstraint = selectedButton.centerX(to: rightImageView)
         selectedButtonCenterXLeftConstraint?.isActive = true
         selectedButtonCenterXRightConstraint?.isActive = false
     }
@@ -85,9 +87,9 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     func updateWith(_ viewModel: EvaluationCardViewModel) {
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString
-        leftButton.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftButton.frame.size), for: .normal)
-        rightButton.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: leftButton.frame.size), for: .normal)
+        contentLabel.attributedText = viewModel.contentTextAttributed
+        leftImageView.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftImageView.frame.size))
+        rightImageView.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: leftImageView.frame.size))
         if let selectedIndex = viewModel.selectedIndex {
             if selectedIndex == 0 {
                 selectedButtonCenterXRightConstraint?.isActive = false
@@ -114,11 +116,11 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
             selectedButton.isHidden = false
         }
     }
-    @objc private func selectAction(sender: UIButton) {
+    @objc private func selectAction(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? EvaluationCardCollectionViewCellDelegate {
             if let cardId = cardId {
-                if selectedButton.isHidden {
-                    delegate.selectEvaluationCard(cell: self, cardId: cardId, selectedIndex: sender.tag)
+                if selectedButton.isHidden, let tag = tap.view?.tag {
+                    delegate.selectEvaluationCard(cell: self, cardId: cardId, selectedIndex: tag)
                 }
             }
         }

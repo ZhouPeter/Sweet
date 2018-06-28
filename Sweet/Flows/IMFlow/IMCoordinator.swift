@@ -38,18 +38,22 @@ final class IMCoordinator: BaseCoordinator {
         _ = imView.toPresent()?.view
         router.setRootFlow(imView)
     }
-}
-
-extension IMCoordinator: IMViewDelegate {
-    func imViewDidLoad() {
+    
+    private func updateAvatar() {
         var urlString: String?
-        self.storage.read({ (realm) in
-            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self.storage.userID) else { return }
+        self.storage.read({ [weak self] (realm) in
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self?.storage.userID) else { return }
             urlString = user.avatarURLString + "?imageView2/1/w/30/h/30"
         }, callback: { [weak self] in
             guard let urlString = urlString else { return }
             self?.imView.updateAvatarImage(withURLString: urlString)
         })
+    }
+}
+
+extension IMCoordinator: IMViewDelegate {
+    func imViewDidLoad() {
+        updateAvatar()
     }
     
     func imViewDidPressSearchButton() {
@@ -74,6 +78,7 @@ extension IMCoordinator: IMViewDelegate {
     func imViewDidShowInbox(_ view: InboxView) {
         guard inboxCoordinator == nil else {
             inboxCoordinator?.start()
+            updateAvatar()
             return
         }
         let coordinator = coordinatorFactory.makeInboxCoordinator(user: user, router: router, token: token)

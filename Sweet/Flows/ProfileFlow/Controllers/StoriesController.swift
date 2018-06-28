@@ -66,7 +66,8 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     (
         User,
         [StoryCellViewModel],
-        Int) -> Void
+        Int,
+        StoriesPlayerGroupViewControllerDelegate?) -> Void
     )?
     
     var user: User
@@ -96,7 +97,8 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         return collectionView
 
     }()
-    
+    private var page = 0
+    private var loadFinish = false
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green
@@ -106,22 +108,46 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadRequest()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
     }
     
     func loadRequest() {
-        web.request(.storyList(page: 0, userId: user.userId),
-                    responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-            guard let `self` = self else { return }
-            switch result {
-            case let .success(response):
-                self.storyViewModels = response.list.map({
-                    return StoryCellViewModel(model: $0)
-                })
-                self.collectionView.reloadData()
-            case let .failure(error):
-                logger.error(error)
-            }
+        page = 0
+        web.request(
+            .storyList(page: 0, userId: user.userId),
+            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case let .success(response):
+                    self.loadFinish = response.list.count < 20
+                    self.storyViewModels = response.list.map({return StoryCellViewModel(model: $0)})
+                    self.collectionView.contentOffset = .zero
+                    self.collectionView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+    }
+    
+    func loadMoreRequest() {
+        if loadFinish { return }
+        page += 1
+        web.request(
+            .storyList(page: page, userId: user.userId),
+            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case let .success(response):
+                    self.loadFinish = response.list.count < 20
+                    self.storyViewModels.append(contentsOf: response.list.map({ return StoryCellViewModel(model: $0)}))
+                    self.collectionView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
+                }
         }
     }
 }
@@ -141,19 +167,27 @@ extension StoriesController: UICollectionViewDataSource {
         cell.update(viewModel: storyViewModels[indexPath.row])
         return cell
     }
+    
 }
 
 extension StoriesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showStoriesPlayerView?(user, storyViewModels, indexPath.item)
-        
+        showStoriesPlayerView?(user, storyViewModels, indexPath.item, self)
+    
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        if indexPath.row == storyViewModels.count - 1 {
+            loadMoreRequest()
+        }
     }
 }
 
-//extension StoriesController: StoriesPlayerViewControllerDelegate {
-//    func delStory(withStoryId storyId: UInt64) {
-//        guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
-//        storyViewModels.remove(at: index)
-//        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
-//    }
-//}
+extension StoriesController: StoriesPlayerGroupViewControllerDelegate {
+    func delStory(storyId: UInt64) {
+        guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
+        storyViewModels.remove(at: index)
+        collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+    }
+}

@@ -9,10 +9,10 @@
 import UIKit
 protocol ChoiceCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
     func selectChoiceCard(cardId: String, selectedIndex: Int)
-    func showProfile(userId: UInt64)
+    func showProfile(userId: UInt64, setTop: SetTop?)
 }
 extension ChoiceCardCollectionViewCellDelegate {
-    func showProfile(userId: UInt64) {}
+    func showProfile(userId: UInt64, setTop: SetTop?) {}
 }
 class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
 
@@ -25,22 +25,24 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         return label
     }()
     
-    private lazy var leftButton: UIButton = {
-        let button = UIButton()
-        button.adjustsImageWhenHighlighted = false
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tag = 0
-        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
-        return button
+    private lazy var leftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.tag = 0
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     
-    private lazy var rightButton: UIButton = {
-        let button = UIButton()
-        button.adjustsImageWhenHighlighted = false
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tag = 1
-        button.addTarget(self, action: #selector(selectAction(sender:)), for: .touchUpInside)
-        return button
+    private lazy var rightImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
+        imageView.addGestureRecognizer(tap)
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     
     private lazy var leftMaskView: UIView = {
@@ -108,24 +110,24 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 18)
-        customContent.addSubview(leftButton)
-        leftButton.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
-        leftButton.align(.left, to: customContent, inset: 5)
-        leftButton.align(.bottom, to: customContent, inset: 5)
-        leftButton.align(.top, to: customContent, inset: 140)
-        customContent.addSubview(rightButton)
-        rightButton.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
-        rightButton.align(.right, to: customContent, inset: 5)
-        rightButton.align(.bottom, to: customContent, inset: 5)
-        rightButton.align(.top, to: leftButton)
-        leftButton.setViewRounded(cornerRadius: 5, corners: .allCorners)
-        rightButton.setViewRounded(cornerRadius: 5, corners: .allCorners)
+        customContent.addSubview(leftImageView)
+        leftImageView.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
+        leftImageView.align(.left, to: customContent, inset: 5)
+        leftImageView.align(.bottom, to: customContent, inset: 5)
+        leftImageView.align(.top, to: customContent, inset: 140)
+        customContent.addSubview(rightImageView)
+        rightImageView.equal(.width, to: customContent, multiplier: 0.5, offset: -6.5)
+        rightImageView.align(.right, to: customContent, inset: 5)
+        rightImageView.align(.bottom, to: customContent, inset: 5)
+        rightImageView.align(.top, to: leftImageView)
+        leftImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
+        rightImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         customContent.addSubview(selectedButton)
         selectedButton.constrain(width: 40, height: 40)
-        let offset = leftButton.bounds.height / 4
-        selectedButton.centerY(to: leftButton, offset: -offset)
-        selectedButtonCenterXLeftConstraint = selectedButton.centerX(to: leftButton)
-        selectedButtonCenterXRightConstraint = selectedButton.centerX(to: rightButton)
+        let offset = leftImageView.bounds.height / 4
+        selectedButton.centerY(to: leftImageView, offset: -offset)
+        selectedButtonCenterXLeftConstraint = selectedButton.centerX(to: leftImageView)
+        selectedButtonCenterXRightConstraint = selectedButton.centerX(to: rightImageView)
         selectedButtonCenterXRightConstraint?.isActive = false
         selectedButtonCenterXLeftConstraint?.isActive = true
         
@@ -135,16 +137,16 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     }
     
     private func addButtonMaskViews() {
-        leftButton.addSubview(leftMaskView)
-        leftMaskView.align(.left, to: leftButton)
-        leftMaskView.align(.right, to: leftButton)
-        leftMaskView.align(.bottom, to: leftButton)
+        leftImageView.addSubview(leftMaskView)
+        leftMaskView.align(.left, to: leftImageView)
+        leftMaskView.align(.right, to: leftImageView)
+        leftMaskView.align(.bottom, to: leftImageView)
         leftMaskViewHeightConstraint = leftMaskView.constrain(height: 0)
         
-        rightButton.addSubview(rightMaskView)
-        rightMaskView.align(.left, to: rightButton)
-        rightMaskView.align(.right, to: rightButton)
-        rightMaskView.align(.bottom, to: rightButton)
+        rightImageView.addSubview(rightMaskView)
+        rightMaskView.align(.left, to: rightImageView)
+        rightMaskView.align(.right, to: rightImageView)
+        rightMaskView.align(.bottom, to: rightImageView)
         rightMaskViewHeightConstraint =  rightMaskView.constrain(height: 0)
     }
     
@@ -198,9 +200,9 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         cardId = viewModel.cardId
         self.viewModel = viewModel
         titleLabel.text = viewModel.titleString
-        contentLabel.text = viewModel.contentString
-        leftButton.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftButton.frame.size), for: .normal)
-        rightButton.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: rightButton.frame.size), for: .normal)
+        contentLabel.attributedText = viewModel.contentTextAttributed
+        leftImageView.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftImageView.frame.size))
+        rightImageView.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: rightImageView.frame.size))
         if let selectedIndex = viewModel.selectedIndex,
            let urls = viewModel.avatarURLs,
            let percent = viewModel.percent {
@@ -225,7 +227,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                 rightMaskView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                 leftPercentLabel.text = String(format: "%.0f%@", percent, "%")
                 rightPercentLabel.text = String(format: "%.0f%@", 100 - percent, "%")
-                let sumHeight = leftButton.bounds.height / 2 - 50
+                let sumHeight = leftImageView.bounds.height / 2 - 50
                 leftMaskViewHeightConstraint?.constant = 50 + sumHeight * CGFloat(percent) / 100
                 rightMaskViewHeightConstraint?.constant = 50 + sumHeight * (1 - CGFloat(percent) / 100)
 
@@ -248,7 +250,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                 leftMaskView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                 rightPercentLabel.text = String(format: "%.0f%@", percent, "%")
                 leftPercentLabel.text = String(format: "%.0f%@", 100 - percent, "%")
-                let sumHeight = leftButton.bounds.height / 2 - 50
+                let sumHeight = leftImageView.bounds.height / 2 - 50
                 rightMaskViewHeightConstraint?.constant = 50 + sumHeight * CGFloat(percent) / 100
                 leftMaskViewHeightConstraint?.constant = 50 + sumHeight * (1 - CGFloat(percent) / 100)
             }
@@ -271,17 +273,18 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         selectedButton.isHidden = isHidden
     }
     
-    @objc private func selectAction(sender: UIButton) {
+    @objc private func selectAction(_ tap: UITapGestureRecognizer) {
         if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate {
-            if let cardId = cardId, selectedButton.isHidden {
-                delegate.selectChoiceCard(cardId: cardId, selectedIndex: sender.tag)
+            if let cardId = cardId, selectedButton.isHidden, let tag = tap.view?.tag {
+                delegate.selectChoiceCard(cardId: cardId, selectedIndex: tag)
             }
         }
     }
     
     @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
         if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.userIDs![view.tag])
+            delegate.showProfile(userId: viewModel!.userIDs![view.tag],
+                                 setTop: SetTop(contentId: nil, preferenceId: viewModel?.preferenceId))
         }
     }
 }

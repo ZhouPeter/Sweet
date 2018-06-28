@@ -13,6 +13,7 @@ protocol StoryRecordView: BaseView {
     var onTextChoosed: ((String?) -> Void)? { get set }
     var onAlbumChoosed: ((String?) -> Void)? { get set }
     var onDismissed: (() -> Void)? { get set }
+    var onAvatarButtonPressed: (() -> Void)? { get set }
     
     func prepare()
 }

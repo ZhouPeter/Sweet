@@ -11,9 +11,11 @@ import SwiftyUserDefaults
 class ActivitiesController: UIViewController, PageChildrenProtocol {
     var user: User
     var avatar: String
-    init(user: User, avatar: String) {
+    let setTop: SetTop?
+    init(user: User, avatar: String, setTop: SetTop? = nil) {
         self.user = user
         self.avatar = avatar
+        self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,7 +24,8 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     }
     private var activityList = [ActivityResponse]()
     private var viewModels = [ActivityViewModel]()
-    
+    private var page = 0
+    private var loadFinish = false
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorInset.left = 0
@@ -46,23 +49,52 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     }
     
     func loadRequest() {
+        page = 0
         web.request(
-          .activityList(page: 0, userId: user.userId),
-          responseType: Response<ActivityListResponse>.self) { (result) in
-            switch result {
-            case let .success(response):
-                self.activityList = response.list
-                self.viewModels = response.list.map {
-                    var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
-                    viewModel.callBack = { activityId in
-                        self.showInputView(activityId: viewModel.activityId)
+            .activityList(page: 0, userId: user.userId,
+                          contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
+            responseType: Response<ActivityListResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    self.activityList = response.list
+                    self.loadFinish = response.list.count < 10
+                    self.viewModels = response.list.map {
+                        var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        viewModel.callBack = { activityId in
+                            self.showInputView(activityId: viewModel.activityId)
+                        }
+                        return viewModel
                     }
-                    return viewModel
+                    self.tableView.contentOffset = .zero
+                    self.tableView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
                 }
-                self.tableView.reloadData()
-            case let .failure(error):
-                logger.error(error)
-            }
+        }
+    }
+    
+    func loadMoreRequest() {
+        if loadFinish { return }
+        page += 1
+        web.request(
+            .activityList(page: page, userId: user.userId,
+                          contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
+            responseType: Response<ActivityListResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    self.activityList.append(contentsOf: response.list)
+                    self.loadFinish = response.list.count < 10
+                    self.viewModels.append(contentsOf: response.list.map {
+                        var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        viewModel.callBack = { activityId in
+                            self.showInputView(activityId: viewModel.activityId)
+                        }
+                        return viewModel
+                    })
+                    self.tableView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
+                }
         }
     }
     
@@ -146,7 +178,12 @@ extension ActivitiesController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activityList.count
+        return viewModels.count
+    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModels.count - 1 {
+            loadMoreRequest()
+        }
     }
 }
 

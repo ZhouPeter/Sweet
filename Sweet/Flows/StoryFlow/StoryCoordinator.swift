@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyUserDefaults
 
 protocol StoryCoodinatorOutput: class {
     var finishFlow: (() -> Void)? { get set }
@@ -58,6 +59,9 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         }
         controller.onAlbumChoosed = { [weak self] topic in
             self?.showAlbumView(with: topic)
+        }
+        controller.onAvatarButtonPressed = { [weak self] in
+            self?.showRecentStories()
         }
         if isDismissable {
             controller.onDismissed = { [weak self] in
@@ -112,6 +116,43 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
             self?.showStoryEditView(with: url, isPhoto: true, topic: topic)
         }
         router.push(controller)
+    }
+    
+    private func showRecentStories() {
+        web.request(
+            .storyList(page: 0, userId: user.userId),
+            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case .failure(let error):
+                    logger.error(error)
+                case .success(let response):
+                    Defaults[.isPersonalStoryChecked] = true
+                    guard response.list.isNotEmpty else { return }
+                    self.addStoryPlayerCoordinator([response.list.compactMap({ StoryCellViewModel(model: $0)})])
+                }
+        }
+    }
+    
+    
+    private func addStoryPlayerCoordinator(_ storiesGroup: [[StoryCellViewModel]]) {
+        let navigation = UINavigationController()
+        navigation.hero.isEnabled = true
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
+            user: user,
+            navigation: navigation,
+            current: 0,
+            currentStart: 0,
+            isGroup: false,
+            fromCardId: nil,
+            storiesGroup: storiesGroup,
+            delegate: nil)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start()
     }
 
     private func dismiss() {

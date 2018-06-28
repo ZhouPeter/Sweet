@@ -8,6 +8,7 @@
 
 import UIKit
 import Pageboy
+import VolumeBar
 
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -42,6 +43,7 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     private var statusBarStyle = UIStatusBarStyle.lightContent
     private var statusBarHidden: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -60,6 +62,12 @@ final class MainController: PageboyViewController, MainView {
         addObservers()
         onStoryFlowSelect?(story)
         onIMFlowSelect?(imList)
+        VolumeBar.shared.start()
+        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelAlert
+        DispatchQueue.main.async {
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+        }
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

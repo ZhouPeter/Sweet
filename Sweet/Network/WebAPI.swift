@@ -20,7 +20,7 @@ enum WebAPI {
     case getUserProfile(userId: UInt64)
     case storyList(page: Int, userId: UInt64)
     case evaluationList(page: Int, userId: UInt64)
-    case activityList(page: Int, userId: UInt64)
+    case activityList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
@@ -220,9 +220,15 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case let .uploadContacts(contacts):
             parameters = ["contacts": contacts]
         case let .storyList(page, userId),
-             let .evaluationList(page, userId),
-             let .activityList(page, userId):
+             let .evaluationList(page, userId):
             parameters = ["page": page, "userId": userId]
+        case let .activityList(page, userId, contentId, preferenceId):
+            parameters = ["page": page, "userId": userId]
+            if let contentId = contentId {
+                parameters["contentId"] = contentId
+            } else if let preferenceId = preferenceId {
+                parameters["preferenceId"] = preferenceId
+            }
         case let .searchUniversity(name):
             parameters = ["universityName": name]
         case let .searchCollege(collegeName, universityName):

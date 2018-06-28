@@ -8,9 +8,11 @@
 
 import UIKit
 import SwiftyUserDefaults
+
 protocol CardsManagerView: BaseView {
     var delegate: CardsManagerViewDelegate? { get set }
 }
+
 protocol CardsManagerViewDelegate: class {
     func showAll(view: CardsAllView)
     func showSubscription(view: CardsSubscriptionView)
@@ -105,6 +107,7 @@ class CardsManagerController: BaseViewController, CardsManagerView {
             leftBadgeView.text = nil
         }
     }
+    
     // MARK: - Private
     private func setupControllers() {
         add(childViewController: subscriptionView)
@@ -150,11 +153,22 @@ extension CardsManagerController: MessengerDelegate {
 // MARK: - Actions
 extension CardsManagerController {
     @objc private func leftAction(sender: UIButton) {
+        if showScrollNavGuide() { return }
         NotificationCenter.default.post(name: Notification.Name.ScrollPage, object: 0)
     }
     
     @objc private func rightAction(sender: UIButton) {
+        if showScrollNavGuide() { return }
         NotificationCenter.default.post(name: Notification.Name.ScrollPage, object: 2)
+    }
+    
+    private func showScrollNavGuide() -> Bool {
+        if Defaults[.isScrollNavigationGuideShown] == false {
+            Guide.showSwipeTip("划动屏幕也能切换页面")
+            Defaults[.isScrollNavigationGuideShown] = true
+            return true
+        }
+         return false
     }
     
     @objc private func scrollToPage(_ noti: Notification) {

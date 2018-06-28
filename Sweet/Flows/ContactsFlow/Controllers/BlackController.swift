@@ -43,7 +43,7 @@ class BlackController: BaseViewController, BlackView {
                 response.list.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        self?.delBlacklist(userId: userId)
+                        self?.delBlacklist(userId: UInt64(userId)!)
                     }
                     self.viewModels.append(viewModel)
                 })                                                                                                                              
@@ -62,7 +62,7 @@ class BlackController: BaseViewController, BlackView {
                 self.viewModels[index].buttonStyle = .borderGray
                 self.viewModels[index].buttonTitle = "恢复"
                 self.viewModels[index].callBack = { [weak self] userId in
-                    self?.delBlacklist(userId: userId)
+                    self?.delBlacklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):
@@ -79,7 +79,7 @@ class BlackController: BaseViewController, BlackView {
                 self.viewModels[index].buttonStyle = .backgroundColorGray
                 self.viewModels[index].buttonTitle = "拉黑"
                 self.viewModels[index].callBack = { [weak self] userId in
-                    self?.addBlacklist(userId: userId)
+                    self?.addBlacklist(userId: UInt64(userId)!)
                 }
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             case let .failure(error):

@@ -25,11 +25,13 @@ struct CardListResponse: Codable {
 struct CardResponse: Codable {
     let cardId: String
     let sectionId: UInt64?
+    let contentId: String?
+    let preferenceId: UInt64?
     var activityList: [ActivityResponse]?
     let defaultEmojiList: [EmojiType]?
     let content: String?
     let imageList: [String]?
-    let contentImageList: [ContentImage]?
+    let contentImages: [[ContentImage]]?
     let video: String?
     var storyList: [[StoryResponse]]?
     var result: SelectResult?
@@ -47,8 +49,8 @@ struct CardResponse: Codable {
 }
 
 struct ContentImage: Codable {
-    let width: Double
-    let height: Double
+    let width: CGFloat
+    let height: CGFloat
     let url: String
 }
 

@@ -16,14 +16,14 @@ protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     func playToBack()
     func playToNext()
     func dismissController()
-    func delStory(withStoryId storyId: UInt64)
+    func delStory(storyId: UInt64)
 }
 
 extension StoriesPlayerViewControllerDelegate{
     func playToBack() {}
     func playToNext() {}
     func dismissController() {}
-    func delStory(withStoryId storyId: UInt64) {}
+    func delStory(storyId: UInt64) {}
 }
 
 class AVPlayerView: UIView {
@@ -65,7 +65,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     }
     var fromCardId: String?
     weak var delegate: StoriesPlayerViewControllerDelegate?
-    private  var downloadBack: ((Bool) -> Void)?
+    private var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
     private lazy var topContentView: UIView = {
@@ -196,7 +196,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        navigationController?.navigationBar.isHidden = false
         NotificationCenter.default.post(name: Notification.Name.StatusBarNoHidden, object: nil)
 
     }
@@ -299,9 +298,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         } else {
             tagButton.isHidden = true
         }
-        tagButton.isHidden = false
-        tagButton.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 100))
-
     }
     
     func initPlayer() {
@@ -551,19 +547,19 @@ extension StoriesPlayerViewController {
         self.pause()
         let userId = stories[currentIndex].userId
         let storyId = stories[currentIndex].storyId
-        web.request(WebAPI.userStatus(userId: userId), responseType: Response<StatusResponse>.self) { (result) in
+        web.request(WebAPI.userStatus(userId: userId), responseType: Response<StatusResponse>.self) { [weak self] (result) in
             switch result {
             case let .success(response):
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alertController.addAction(
                     UIAlertAction.makeAlertAction(title: "分享给联系人",
                                                   style: .default,
-                                                  handler: { (_) in
+                                                  handler: { [weak self] (_) in
                     let controller = ShareCardController()
-                    controller.sendCallback = { (text, userIds) in
-                        self.sendMessage(text: text, userIds: userIds)
+                    controller.sendCallback = { [weak self] (text, userIds) in
+                        self?.sendMessage(text: text, userIds: userIds)
                     }
-                    self.present(controller, animated: true, completion: nil)
+                    self?.present(controller, animated: true, completion: nil)
                 }))
                 alertController.addAction(UIAlertAction.makeAlertAction(
                     title: response.subscription ? "取消订阅" : "订阅该用户",
@@ -590,8 +586,12 @@ extension StoriesPlayerViewController {
                     web.request(.reportStory(storyId: storyId), completion: { (_) in })
                 })
                 alertController.addAction(reportAction)
-                alertController.addAction(UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
+                alertController.addAction(
+                    UIAlertAction.makeAlertAction(title: "取消", style: .cancel){ [weak self] (_) in
+                        self?.play()
+                    }
+                )
+                self?.present(alertController, animated: true, completion: nil)
             case let .failure(error):
                 logger.error(error)
             }
@@ -619,7 +619,7 @@ extension StoriesPlayerViewController {
                 switch result {
                 case .success:
                     self.toast(message: "删除成功")
-                    self.delegate?.delStory(withStoryId: self.stories[self.currentIndex].storyId)
+                    self.delegate?.delStory(storyId: self.stories[self.currentIndex].storyId)
                     self.stories.remove(at: self.currentIndex)
                     if self.currentIndex > self.stories.count - 1 {
                         self.currentIndex -= 1

@@ -19,7 +19,7 @@ struct PhoneContactViewModel {
     var buttonStyle: ContactButtonStyle = .borderBlue
     var buttonIsEnabled: Bool
     let nameCenterYOffsetAvatar: CGFloat
-    var callBack: ((UInt64) -> Void)?
+    var callBack: ((String) -> Void)?
     var userId: UInt64?
     init(model: PhoneContact) {
         self.phone = model.phone

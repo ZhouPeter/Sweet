@@ -30,7 +30,7 @@ class EmojiControlView: UIView {
         button.addTarget(self, action: #selector(openAction(sender:)), for: .touchUpInside)
         return button
     }()
-    private lazy var keywordButton: UIButton = {
+    private lazy var keyboardButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Keyword"), for: .normal)
         button.addTarget(self, action: #selector(keywordAction(sender:)), for: .touchUpInside)
@@ -68,15 +68,19 @@ class EmojiControlView: UIView {
     }
     func updateDefault(names: [String]) {
         emojiImageViews[0].image = UIImage(named: names[0])
+        emojiImageViews[0].tag = Int(String(names[0].last!))!
         emojiImageViews[1].image = UIImage(named: names[1])
+        emojiImageViews[1].tag = Int(String(names[1].last!))!
     }
     func openEmojis() {
         clearUI()
         var insetX: CGFloat = 10
         let insetY: CGFloat = 5
-        addSubview(keywordButton)
-        keywordButton.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
-        for imageView in emojiImageViews {
+        addSubview(keyboardButton)
+        keyboardButton.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
+        for (index, imageView) in emojiImageViews.enumerated() {
+            imageView.tag = index + 1
+            imageView.image = UIImage(named: "Emoji\(index + 1)")
             insetX += emojiSpace + emojiWidth
             addSubview(imageView)
             imageView.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
@@ -98,7 +102,7 @@ class EmojiControlView: UIView {
     }
     
     private func clearUI() {
-        keywordButton.removeFromSuperview()
+        keyboardButton.removeFromSuperview()
         openButton.removeFromSuperview()
         emojiImageViews.forEach { $0.removeFromSuperview() }
         openButton.removeFromSuperview()

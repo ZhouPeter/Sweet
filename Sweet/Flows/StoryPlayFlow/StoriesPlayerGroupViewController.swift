@@ -10,13 +10,16 @@ import UIKit
 import Gemini
 import Hero
 import Kingfisher
+import SwiftyUserDefaults
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
+    func delStory(storyId: UInt64)
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {}
+    func delStory(storyId: UInt64) {}
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
@@ -86,6 +89,10 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         super.init(nibName: nil, bundle: nil)
     }
     
+    deinit {
+        logger.debug()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -97,7 +104,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         view.backgroundColor = .clear
         collectionView.addGestureRecognizer(pan)
         collectionView.hero.isEnabled = true
-        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)"
+        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)" + (fromCardId ?? "")
         collectionView.isScrollEnabled = storiesGroup.count > 1
         view.addSubview(collectionView)
         collectionView.fill(in: view)
@@ -113,6 +120,14 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
                             fromCardId: fromCardId,
                             storyGroupIndex: currentIndex)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Defaults[.isStoryPlayGuideShown] == false {
+            Guide.showStoryPlayTip()
+            Defaults[.isStoryPlayGuideShown] = true
+        }
     }
     
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
@@ -147,6 +162,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         playerController.delegate = self
         playerController.fromCardId = fromCardId
         playerController.runStoryFlow = runStoryFlow
+        playerController.runProfileFlow = runProfileFlow
         add(childViewController: playerController, addView: false)
         storiesPlayerControllerMap[cell] = playerController
         return playerController
@@ -171,7 +187,8 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 
     private func loadMoreStoriesGroup() {
         if isLoading { return }
-        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { (result) in
+        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { [weak self] (result) in
+            guard let `self` = self else { return }
             self.isLoading = false
             switch result {
             case let .success(response):
@@ -187,6 +204,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
+    func delStory(storyId: UInt64) {
+        delegate?.delStory(storyId: storyId)
+    }
     func dismissController() {
         onFinish?()
     }
@@ -197,7 +217,10 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
     }
     
     func playToNext() {
-        if currentIndex + 1 > storiesGroup.count - 1 { return }
+        if currentIndex + 1 > storiesGroup.count - 1 {
+            onFinish?()
+            return
+        }
         collectionView.scrollToItem(at: IndexPath(item: currentIndex + 1, section: 0), at: .left, animated: true)
     }
 }
@@ -208,7 +231,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
             let stories = storiesGroup[indexPath.row]
             let urls = stories.compactMap { (story) -> URL? in
                 if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
-                    return videoURL.videoThumbnail(size: view.bounds.size)
+                    return videoURL.videoThumbnail()
                 } else if let imageURL = story.imageURL {
                     return imageURL.middleCutting(size: view.bounds.size)
                 } else {
@@ -272,8 +295,6 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
                     savePlayerControllerLoction(cell: cell)
                     storiesPlayerControllerMap[cell]?.closePlayer()
                 }
-            }
-            for cell in collectionView.visibleCells {
                 if let indexPath = collectionView.indexPath(for: cell), indexPath.row == currentIndex {
                     readPlayerControllerLoction(cell: cell)
                     storiesPlayerControllerMap[cell]?.reloadPlayer()

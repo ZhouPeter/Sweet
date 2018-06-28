@@ -82,7 +82,7 @@ class InviteController: BaseViewController, InviteView {
                                     self.present(alert, animated: true, completion: nil)
                                 }
                                 Defaults[.isInvited] = true
-                                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                                self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
                             case let .failure(error):
                                 logger.error(error)
                             }

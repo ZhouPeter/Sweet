@@ -10,12 +10,15 @@
 import UIKit
 import Hero
 import SwiftyUserDefaults
+import Kingfisher
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
     var onRecorded: ((URL, Bool, String?) -> Void)?
     var onTextChoosed: ((String?) -> Void)?
     var onAlbumChoosed: ((String?) -> Void)?
     var onDismissed: (() -> Void)?
+    var onAvatarButtonPressed: (() -> Void)?
+    
     override var prefersStatusBarHidden: Bool { return true }
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     private let recordContainer = UIView()
@@ -56,18 +59,19 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private lazy var avatarButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "Avatar"), for: .normal)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
+        button.kf.setImage(with: URL(string: self.user.avatar), for: .normal)
         return button
     } ()
     
     private lazy var avatarCircle: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.image = #imageLiteral(resourceName: "StoryUnread")
         return view
     } ()
     
@@ -122,10 +126,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        logger.debug()
     }
     
     override func viewDidLoad() {
@@ -412,23 +412,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     // MARK: - Actions
     
     @objc private func didPressAvatarButton() {
-        web.request(
-            .storyList(page: 0, userId: user.userId),
-            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case .failure(let error):
-                    logger.error(error)
-                case .success(let response):
-                    Defaults[.isPersonalStoryChecked] = true
-                    let viewModels = response.list.map(StoryCellViewModel.init(model:))
-                    let storiesPlayViewController = StoriesPlayerViewController(user: self.user)
-                    storiesPlayViewController.stories = viewModels
-                    self.present(storiesPlayViewController, animated: true) {
-                        storiesPlayViewController.initPlayer()
-                    }
-                }
-        }
+        onAvatarButtonPressed?()
     }
     
     @objc private func didPressMenuButton() {
@@ -501,7 +485,12 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
         startCamera()
     }
     
-    func requestAllAuthorizeSuccess() {}
+    func requestAllAuthorizeSuccess() {
+        if Defaults[.isStoryRecordGuideShown] == false {
+            Guide.showStoryRecordTip()
+            Defaults[.isStoryRecordGuideShown] = true
+        }
+    }
 }
 
 extension StoryRecordController: StoryRecordBottomViewDelegate {

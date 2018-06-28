@@ -11,6 +11,7 @@ import Foundation
 struct ContentVideoCardViewModel {
     let titleString: String
     let contentString: String
+    let contentTextAttributed: NSAttributedString
     var videoURL: URL
     let cardId: String
     var resultImageName: String?
@@ -18,10 +19,14 @@ struct ContentVideoCardViewModel {
     var resultUseIDs: [UInt64]?
     var resultComment: String?
     let defaultImageNameList: [String]
+    var emojiDisplayType: EmojiViewDisplay = .default
+    let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
+        contentTextAttributed = self.contentString.getTextAttributed(lineSpacing: 6)
         cardId = model.cardId
+        contentId = model.contentId
         videoURL = URL(string: model.video!)!
         if let comment = model.result?.comment, comment != "" {
             resultComment = comment

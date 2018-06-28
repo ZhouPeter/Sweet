@@ -14,24 +14,29 @@ protocol ProfileView: BaseView {
         (
         User,
         [StoryCellViewModel],
-        Int
+        Int,
+        StoriesPlayerGroupViewControllerDelegate?
         ) -> Void
         )? { get set }
     var finished: (() -> Void)? { get set }
     var user: User { get set }
     var userId: UInt64 { get set }
+    var showConversation: ((User, User) -> Void)? { get set }
 }
 
 class ProfileController: BaseViewController, ProfileView {
+    var showConversation: ((User, User) -> Void)?
     var showStoriesPlayerView: (
         (
         User,
         [StoryCellViewModel],
-        Int
+        Int,
+        StoriesPlayerGroupViewControllerDelegate?
         ) -> Void
     )?
     var user: User
     var userId: UInt64
+    let setTop: SetTop?
     var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
     var userResponse: UserResponse? {
@@ -87,21 +92,44 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
-    init(user: User, userId: UInt64) {
+    init(user: User, userId: UInt64, setTop: SetTop? = nil) {
         self.user = user
         self.userId = userId
+        self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
-    
+    private var storage: Storage?
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = Storage(userID: user.userId)
         setTableView()
-    
         setBackButton()
+        readLocalData()
+    }
+    
+    func readLocalData() {
+        storage?.read({ [weak self, userId] (realm) in
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: userId) else { return }
+            self?.userResponse = UserResponse(data: user)
+        }) { [weak self] in
+            if self?.userResponse != nil { self?.loadTableView() }
+        }
+    }
+    
+    func saveUserData() {
+        storage?.write({ [weak self] (realm) in
+            guard let `self` = self, let userResponse = self.userResponse else { return }
+           realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
+        }) { (success) in
+            if success {
+                logger.debug("用户数据保存成功")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +155,7 @@ class ProfileController: BaseViewController, ProfileView {
     }
     
     @objc private func returnAction(_ sender: UIButton) {
-        navigationController?.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     override func willMove(toParentViewController parent: UIViewController?) {
@@ -211,7 +239,18 @@ extension ProfileController {
         view.addSubview(tableView)
         tableView.fill(in: view)
     }
-    
+    private func loadTableView() {
+        if self.actionsController == nil {
+            self.actionsController = ActionsController(user: User(self.userResponse!),
+                                                       mine: self.user,
+                                                       setTop: self.setTop)
+            self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
+            self.add(childViewController: self.actionsController, addView: false)
+        }
+        self.saveUserData()
+        self.updateViewModel()
+        self.tableView.reloadData()
+    }
     private func loadAll(isLoadUser: Bool = true) {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
@@ -229,13 +268,7 @@ extension ProfileController {
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
-                if self.actionsController == nil {
-                    self.actionsController = ActionsController(user: User(self.userResponse!), mine: self.user)
-                    self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
-                    self.add(childViewController: self.actionsController, addView: false)
-                }
-                self.updateViewModel()
-                self.tableView.reloadData()
+               self.loadTableView()
             }
         }
     }
@@ -276,8 +309,9 @@ extension ProfileController {
         }
         self.baseInfoViewModel?.sendMessageAction = { [weak self] in
             if let user = self?.user, let buddy = self?.userResponse {
-                let conversationController = ConversationController(user: user, buddy: User(buddy))
-                self?.navigationController?.pushViewController(conversationController, animated: true)
+                self?.showConversation?(user, User(buddy))
+//                let conversationController = ConversationController(user: user, buddy: User(buddy))
+//                self?.navigationController?.pushViewController(conversationController, animated: true)
             }
         }
     }

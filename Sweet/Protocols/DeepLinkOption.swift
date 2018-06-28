@@ -13,6 +13,7 @@ struct DeepLinkURLConstants {
     static let Login = "login"
     static let SignUp = "signUp"
     static let Power = "Power"
+    static let Present = "Present"
 }
 
 enum DeepLinkOption {
@@ -20,7 +21,7 @@ enum DeepLinkOption {
     case login
     case signUp
     case power
-    
+    case present
     static func build(with dict: [String: AnyObject]?) -> DeepLinkOption? {
         guard let id = dict?["launch_id"] as? String else { return nil }
         switch id {

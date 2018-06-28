@@ -25,11 +25,12 @@ struct StoryCollectionViewCellModel {
         name = model.nickname
         info  = "\(model.university)\n\(model.college)\n\(model.enrollment)"
         avatarImageURL = URL(string: model.avatar)
-        if model.type == .image {
+        if model.type == .image || model.type == .text {
             imageURL = URL(string: model.content)
         } else if model.type  == .video || model.type == .poke {
             if model.type == .poke {
-                pokeCenter = CGPoint(x: model.centerX ?? 0, y: model.centerY ?? 0)
+                pokeCenter = CGPoint(x: min(max(model.centerX ?? 0, -0.5), 0.5),
+                                     y: min(max(model.centerY ?? 0, -0.5), 0.5))
             }
             videoURL = URL(string: model.content)
         }

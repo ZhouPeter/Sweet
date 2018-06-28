@@ -15,8 +15,10 @@ class MessageContentHelper {
             let url: String
             if let videoUrl = resultCard.video {
                 url = videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667"
+            } else if let imageURL = resultCard.contentImages?.first?.first?.url {
+                url = imageURL
             } else {
-                url = resultCard.contentImageList![0].url
+                return nil
             }
             let content = ContentCardContent(identifier: resultCard.cardId,
                                              cardType: InstantMessage.CardType.content,

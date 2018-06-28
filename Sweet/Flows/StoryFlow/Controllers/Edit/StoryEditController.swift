@@ -94,10 +94,6 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        logger.debug()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
@@ -117,6 +113,10 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        if Defaults[.isStoryFilterGuideShown] == false {
+            Guide.showSwipeTip("划动屏幕切换滤镜")
+            Defaults[.isStoryFilterGuideShown] = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

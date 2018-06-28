@@ -17,7 +17,7 @@ class SubmitTypeView: UIView {
         return label
     }()
     
-    private lazy var selectedImageView: UIImageView = {
+    lazy var selectedImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "Selected")
         imageView.isHidden = true
@@ -54,6 +54,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.black.withAlphaComponent(0.3)
         label.textAlignment = .left
+    
         return label
     }()
     private lazy var contentSectionLabel: UILabel = {
@@ -62,16 +63,23 @@ class FeedbackController: BaseViewController, FeedbackView {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.black.withAlphaComponent(0.3)
         label.textAlignment = .left
+      
         return label
     }()
     
     private lazy var feedbackView: SubmitTypeView = {
         let view = SubmitTypeView(title: "意见反馈", isSelected: true)
+        view.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
     private lazy var appealView: SubmitTypeView = {
         let view = SubmitTypeView(title: "封禁申诉")
+        view.tag = 2
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
+        view.addGestureRecognizer(tap)
         return view
     }()
     
@@ -80,6 +88,7 @@ class FeedbackController: BaseViewController, FeedbackView {
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.textColor = .black
         textView.backgroundColor = .white
+        textView.returnKeyType = .done
         textView.delegate = self
         return textView
     }()
@@ -111,9 +120,10 @@ class FeedbackController: BaseViewController, FeedbackView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.backgroundColor = UIColor(hex: 0x9B9B9B).withAlphaComponent(0.35)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(submitAction(_:)), for: .touchUpInside)
         return button
     }()
-    
+    private var feedbackType: Int = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "意见反馈"
@@ -122,6 +132,33 @@ class FeedbackController: BaseViewController, FeedbackView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressView(_:)))
         view.addGestureRecognizer(tap)
         setupTextView()
+    }
+    
+    @objc private func submitAction(_ sender: UIButton) {
+        web.request(.feedback(comment: textView.text, type: feedbackType)) { (result) in
+            switch result {
+            case .success:
+                self.toast(message: "提交成功", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            case .failure:
+                self.toast(message: "提交失败")
+            }
+        }
+    }
+    
+    @objc private func didPressTypeView(_ tap: UITapGestureRecognizer) {
+        if let view = tap.view {
+            if view.tag == 1 {
+                feedbackView.selectedImageView.isHidden = false
+                appealView.selectedImageView.isHidden = true
+                feedbackType = 1
+            } else if view.tag == 2 {
+                feedbackView.selectedImageView.isHidden = true
+                appealView.selectedImageView.isHidden = false
+                feedbackType = 2
+            }
+        }
     }
     
     @objc private func didPressView(_ tap: UITapGestureRecognizer) {
@@ -188,6 +225,15 @@ class FeedbackController: BaseViewController, FeedbackView {
 }
 
 extension FeedbackController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         let maxLength = 100
         if textView.text.count > maxLength {

@@ -17,7 +17,8 @@ class ActionsController: PageboyViewController {
     (
      User,
      [StoryCellViewModel],
-     Int) -> Void
+     Int,
+     StoriesPlayerGroupViewControllerDelegate?) -> Void
     )?
     var user: User {
         didSet {
@@ -27,9 +28,11 @@ class ActionsController: PageboyViewController {
         }
     }
     var mine: User
-    init(user: User, mine: User) {
+    let setTop: SetTop?
+    init(user: User, mine: User, setTop: SetTop? = nil) {
         self.user = user
         self.mine = mine
+        self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,7 +41,7 @@ class ActionsController: PageboyViewController {
     }
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
-        let feedsController = ActivitiesController(user: user, avatar: mine.avatar)
+        let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
         let storysController = StoriesController(user: user)
         storysController.showStoriesPlayerView = showStoriesPlayerView
         let estimatesController = EvaluationController(user: user)

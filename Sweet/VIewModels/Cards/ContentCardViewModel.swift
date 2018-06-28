@@ -7,11 +7,16 @@
 //
 
 import Foundation
-
+enum EmojiViewDisplay{
+    case `default`
+    case show
+    case allShow
+}
 struct ContentCardViewModel {
     let titleString: String
     let contentString: String
-    var contentImages: [ContentImageModel]?
+    let contentTextAttributed: NSAttributedString
+    var contentImages: [[ContentImage]]?
     var videoURL: URL?
     let cardId: String
     var resultImageName: String?
@@ -19,16 +24,19 @@ struct ContentCardViewModel {
     var resultUseIDs: [UInt64]?
     var resultComment: String?
     let defaultImageNameList: [String]
-    
+    var emojiDisplayType: EmojiViewDisplay = .default
+    let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
-        if let imageList = model.contentImageList {
-            contentImages = imageList.map { ContentImageModel(model: $0) }
+        contentTextAttributed = contentString.getTextAttributed(lineSpacing: 6)
+        if let imageList = model.contentImages {
+            contentImages = imageList
         } else if let video = model.video {
             videoURL = URL(string: video)
         }
         cardId = model.cardId
+        contentId = model.contentId
         if let comment = model.result?.comment, comment != "" {
             resultComment = comment
         } else if let emoji = model.result?.emoji, emoji != 0 {
@@ -38,14 +46,6 @@ struct ContentCardViewModel {
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
     }
-}
-
-struct ContentImageModel {
-    let size: CGSize
-    let imageURL: URL
     
-    init(model: ContentImage) {
-        size = CGSize(width: CGFloat(model.width), height: CGFloat(model.height))
-        imageURL = URL(string: model.url)!
-    }
+   
 }

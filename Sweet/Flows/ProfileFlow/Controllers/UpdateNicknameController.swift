@@ -87,7 +87,6 @@ class UpdateNicknameController: BaseViewController, UpdateProtocol {
                 self?.toast(message: "保存失败", duration: 2)
             }
         }
-        
     }
     
     @objc private func textFieldEditChanged(_ textField: UITextField) {

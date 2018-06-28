@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+
 protocol SweetPlayerViewDelegate: class {
     func sweetPlayer(player: SweetPlayerView,
                      playerStateDidChange state: SweetPlayerState)
@@ -111,7 +112,7 @@ class SweetPlayerView: UIView {
             self.playerLayer?.videoGravity = videoGravity
         }
     }
-    static let shard = SweetPlayerView(controlView: SweetPlayerCellControlView())
+//    static let shard = SweetPlayerView(controlView: SweetPlayerCellControlView())
     init(controlView: SweetPlayerControlView = SweetPlayerControlView()) {
         super.init(frame: .zero)
         self.controlView = controlView

@@ -11,44 +11,40 @@ import UIKit
 class AuthViewController: BaseViewController, AuthView {
     var showSignUp: ((LoginRequestBody) -> Void)?
     var showLogin: ((LoginRequestBody) -> Void)?
-    
     var loginRequestBody = LoginRequestBody()
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("登录", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.setTitleColor(UIColor.xpTextGray(), for: .normal)
         button.addTarget(self, action: #selector(loginAction(_:)), for: .touchUpInside)
         return button
-    }()
+    } ()
     
-    private lazy var logoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "Logo_icon")
-        return imageView
-    }()
     private lazy var bottomLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13)
         setNoteLabelAttributedString(label: label)
         label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showUserWebView(_:)))
         label.addGestureRecognizer(tap)
         return label
-    }()
+    } ()
 
     private lazy var registerButton: ShrinkButton = {
         let button = ShrinkButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("注册", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor.xpNavBlue()
         button.addTarget(self, action: #selector(registerAction(_:)), for: .touchUpInside)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 25
         return button
-    }()
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,23 +93,22 @@ class AuthViewController: BaseViewController, AuthView {
     }
     
     private func setupUI() {
-        view.backgroundColor = UIColor.xpYellow()
-        view.addSubview(loginButton)
-        loginButton.align(.right, to: view, inset: 16)
-        loginButton.constrain(width: 60, height: 40)
-        loginButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 44 : 20)
-        view.addSubview(logoImageView)
-        logoImageView.constrain(width: 130, height: 130)
-        logoImageView.centerX(to: view)
-        logoImageView.align(.top, to: view, inset: 100)
+        let imageView = UIImageView(image: UIScreen.isIphoneX() ? #imageLiteral(resourceName: "LoginCoverX") : #imageLiteral(resourceName: "LoginCover"))
+        imageView.contentMode = .scaleAspectFill
+        view.addSubview(imageView)
+        imageView.fill(in: view)
         view.addSubview(bottomLabel)
-        bottomLabel.centerX(to: view)
         bottomLabel.align(.bottom, to: view, inset: 20)
+        bottomLabel.centerX(to: view)
+        
         view.addSubview(registerButton)
+        view.addSubview(loginButton)
+        registerButton.align(.bottom, to: view, inset: 100)
         registerButton.align(.left, to: view, inset: 28)
         registerButton.align(.right, to: view, inset: 28)
         registerButton.constrain(height: 50)
-        registerButton.pin(.top, to: bottomLabel, spacing: -20)
-        registerButton.setViewRounded()
+        loginButton.equal(.size, to: registerButton)
+        loginButton.centerX(to: view)
+        loginButton.pin(.bottom, to: registerButton)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 protocol SweetPlayerControlViewDelegate: class {
 
     func controlView(controlView: SweetPlayerControlView, didPressButton button: UIButton)
@@ -225,9 +226,6 @@ class SweetPlayerControlView: UIView {
             break
         case .playedToTheEnd:
             break
-//            startButton.isSelected = false
-//            showPlayToTheEndView()
-//            controlViewAnimation(isShow: true)
         default:
             break
         }

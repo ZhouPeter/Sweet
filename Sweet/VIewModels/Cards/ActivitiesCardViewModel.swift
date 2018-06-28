@@ -22,6 +22,7 @@ struct ActivitiesCardViewModel {
 }
 
 struct ActivityViewModel {
+    let actor: UInt64
     var activityId: String
     let avatarURL: URL
     var leftAvatarURL: URL?
@@ -34,7 +35,10 @@ struct ActivityViewModel {
     var like: Bool
     var isHiddenLikeButton: Bool
     var callBack: ((String) -> Void)?
+    var showProfile: ((UInt64, SetTop?) -> Void)?
+    let setTop: SetTop?
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
+        actor = model.actor
         activityId = model.activityId
         avatarURL = URL(string: model.avatar)!
         titleString = model.title
@@ -42,7 +46,7 @@ struct ActivityViewModel {
         contentString = model.body.content
         commentString = model.body.comment
         if model.body.emoji.rawValue > 0 {
-            emojiImage = UIImage(named: "Emoji\(model.body.emoji)")
+            emojiImage = UIImage(named: "Emoji\(model.body.emoji.rawValue)")
         } else {
             emojiImage = nil
         }
@@ -52,5 +56,6 @@ struct ActivityViewModel {
             leftAvatarURL = userAvatarURL
             rightAvatarURL = avatarURL
         }
+        setTop = SetTop(contentId: model.contentId, preferenceId: model.preferenceId)
     }
 }

@@ -31,16 +31,16 @@ class StoriesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     typealias ViewModelType = StoriesCardViewModel
     
     lazy var collectionView: UICollectionView = {
-        let itemWidth = (UIScreen.mainWidth() - 20 * 2 - 5) / 2
-        let itemHeight = (cardCellHeight - 20 * 2 - 10) / 2
+        let itemWidth = (UIScreen.mainWidth() - 15 * 2 - 3) / 2
+        let itemHeight = (cardCellHeight - 15 * 2 - 3) / 2
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        layout.minimumInteritemSpacing  = 5
-        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(cellType: StoryCardCollectionViewCell.self)
@@ -74,7 +74,7 @@ extension StoriesCardCollectionViewCell: UICollectionViewDataSource {
         let configurator = cellConfigurators[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configurator.reuseIdentifier, for: indexPath)
         cell.hero.isEnabled = true
-        cell.hero.id = "\(storiesGroup[indexPath.row][0].userId)"
+        cell.hero.id = "\(storiesGroup[indexPath.row][0].userId)" + (cardId ?? "")
         cell.hero.modifiers = [.arc]
         configurator.configure(cell)
         return cell

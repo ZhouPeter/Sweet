@@ -109,12 +109,12 @@ class ContactsController: BaseViewController, ContactsView {
                 blacklistModels.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
-                        web.request(.delBlacklist(userId: userId), completion: { (result) in
+                        web.request(.delBlacklist(userId: UInt64(userId)!), completion: { (result) in
                             switch result {
                             case let .failure(error):
                                 logger.error(error)
                             case .success:
-                                self?.delBlacklist(userId: userId)
+                                self?.delBlacklist(userId: UInt64(userId)!)
                             }
                         })
                     }
@@ -148,7 +148,7 @@ class ContactsController: BaseViewController, ContactsView {
                 self.allViewModels[index].buttonStyle = .backgroundColorGray
                 self.allViewModels[index].buttonTitle = "拉黑"
                 self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlacklist(userId: userId)
+                    self?.addBlacklist(userId: UInt64(userId)!)
                 }
                 let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
                 self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
@@ -167,7 +167,7 @@ class ContactsController: BaseViewController, ContactsView {
                 self.allViewModels[index].buttonStyle = .borderGray
                 self.allViewModels[index].buttonTitle = "恢复"
                 self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlacklist(userId: userId)
+                    self?.delBlacklist(userId: UInt64(userId)!)
                 }
                 let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
                 self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]

@@ -38,16 +38,15 @@ class WebViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        automaticallyAdjustsScrollViewInsets = true
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         view.addSubview(webView)
-        webView.fill(in: view)
+        webView.fill(in: view, top: UIScreen.navBarHeight())
         view.addSubview(progressView)
         progressView.constrain(height: 2)
-        progressView.align(.top, to: webView, inset: UIScreen.navBarHeight())
+        progressView.align(.top, to: view, inset: UIScreen.navBarHeight())
         progressView.align(.left)
         progressView.align(.right)
         
@@ -55,6 +54,11 @@ class WebViewController: BaseViewController {
         webView.load(request)
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+    }
+    
+    deinit {
+        webView.removeObserver(self, forKeyPath: "title")
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
     }
     
     override func observeValue(
@@ -71,18 +75,15 @@ class WebViewController: BaseViewController {
     }
     
     private func handleError(error: Error) {
-        if let urlString = (error as NSError).userInfo[NSURLErrorFailingURLStringErrorKey]
-            as? String {
-            let url = URL(string: urlString)
-            if let url = url {
-                if UIApplication.shared.canOpenURL(url) {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    } else {
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-            }
+        guard
+            let urlString = (error as NSError).userInfo[NSURLErrorFailingURLStringErrorKey] as? String,
+            let url = URL(string: urlString),
+            UIApplication.shared.canOpenURL(url)
+        else { return }
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
         }
     }
 }

@@ -25,8 +25,7 @@ enum CardRequest {
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
-    private var delayItem: DispatchWorkItem?
-    private lazy var inputBottomView: InputBottomView = {
+    lazy var inputBottomView: InputBottomView = {
         let view = InputBottomView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
@@ -35,6 +34,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         view.maxLength = 50
         return view
     } ()
+    var inputBottomViewBottom: NSLayoutConstraint?
+    var inputBottomViewHeight: NSLayoutConstraint?
     
     private lazy var downButton: UIButton = {
         let button = UIButton()
@@ -46,13 +47,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     
     public var index = 0 {
         didSet {
-            let oldIndexPath = IndexPath(item: oldValue, section: 0)
-            guard let oldCell = collectionView.cellForItem(at: oldIndexPath) else { return }
-            if let oldCell = oldCell as? ContentCardCollectionViewCell {
-                oldCell.resetEmojiView()
-            } else if let oldCell = oldCell as? VideoCardCollectionViewCell {
-                oldCell.resetEmojiView()
-            }
+            
             if index < cellConfigurators.count - 3 {
                 downButton.isHidden = false
             } else {
@@ -64,10 +59,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     public var panOffset: CGPoint?
     public var cellConfigurators = [CellConfiguratorType]()
     public var cards = [CardResponse]()
+    public var activityCardId: String?
+    public var activityId: String?
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
-    private var activityCardId: String?
-    private var activityId: String?
+    private var delayItem: DispatchWorkItem?
     public lazy var collectionView: CardsCollectionView = {
         let collectionView = CardsCollectionView()
         collectionView.dataSource = self
@@ -93,7 +89,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private lazy var playerView: SweetPlayerView = {
-        let view = SweetPlayerView.shard
+        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
         view.panGesture.isEnabled = false
         view.panGesture.require(toFail: pan)
         view.isHasVolume = false
@@ -108,8 +104,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var avPlayer: AVPlayer?
     private let keyboard = KeyboardObserver()
     private var keyboardHeight: CGFloat = 0
-    private var inputBottomViewBottom: NSLayoutConstraint?
-    private var inputBottomViewHeight: NSLayoutConstraint?
+ 
     private var photoBrowserImp: PhotoBrowserImp!
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
@@ -119,7 +114,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     @objc private func showVideoPlayController() {
+        playerView.hero.isEnabled = true
+        playerView.hero.id = cards[index].video
+        playerView.hero.modifiers = [.arc]
         let controller = PlayController()
+        controller.hero.isEnabled = true
         controller.avPlayer = avPlayer
         playerView.resource.scrollView = nil
         controller.resource = playerView.resource
@@ -162,7 +161,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             self.playerView.setAVPlayer(player: avPlayer)
         }
     }
-
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.playerView.pause()
+    }
+    
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
@@ -283,6 +286,9 @@ extension CardsBaseController {
                     }
                     callback?(true, response.list)
                 case let .failure(error):
+                    if error.code == WebErrorCode.noCard.rawValue && direction == Direction.down {
+                        self.toast(message: "全部看完啦")
+                    }
                     logger.error(error)
                     self.isFetchLoadCards = false
                     callback?(false, nil)
@@ -323,6 +329,7 @@ extension CardsBaseController {
         if let cell = cell as? ContentCardCollectionViewCell {
             self.delayItem = DispatchWorkItem {
                 cell.hiddenEmojiView(isHidden: false)
+                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         } else if let cell = cell as? VideoCardCollectionViewCell,
@@ -337,21 +344,34 @@ extension CardsBaseController {
             self.avPlayer = self.playerView.avPlayer
             self.delayItem = DispatchWorkItem {
                 cell.hiddenEmojiView(isHidden: false)
+                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         }
     }
 
+    private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
+        if cards[index].type == .content && cards[index].result == nil {
+            if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
+                configurator.viewModel.emojiDisplayType = emojiDisplayType
+                cellConfigurators[index] = configurator
+            }
+            if var configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> {
+                configurator.viewModel.emojiDisplayType = emojiDisplayType
+                cellConfigurators[index] = configurator
+            }
+        }
+    }
     private func scrollCard(withPoint point: CGPoint) {
         guard let start = panPoint else { return }
         var direction = Direction.unknown
-        if point.y < start.y {
+        if  start.y - point.y > 30 {
             direction = .down
             if index == collectionView.numberOfItems(inSection: 0) - 1 {
                 let cardId = cards[index].cardId
                 let request: CardRequest = self is CardsAllController ?
-                                                .all(cardId: cardId, direction: direction) :
-                                                .sub(cardId: cardId, direction: direction)
+                    .all(cardId: cardId, direction: direction) :
+                    .sub(cardId: cardId, direction: direction)
                 self.startLoadCards(cardRequest: request) { (success, cards) in
                     if let cards = cards, cards.count > 0, success { self.index += 1 }
                     self.scrollTo(row: self.index)
@@ -360,13 +380,17 @@ extension CardsBaseController {
                 index += 1
                 self.scrollTo(row: index)
             }
-        } else {
+        } else if start.y - point.y >= 0 {
+            self.scrollTo(row: index)
+        } else if start.y - point.y < -30 {
             if index == 0 {
                 self.scrollTo(row: index)
             } else {
                 self.index -=  1
                 self.scrollTo(row: index)
             }
+        } else if start.y - point.y < 0 {
+            self.scrollTo(row: index)
         }
     }
     
@@ -395,58 +419,6 @@ extension CardsBaseController {
         }
     }
     
-    private func appendConfigurator(card: CardResponse) {
-        switch card.type {
-        case .content:
-            if card.video != nil {
-                let viewModel = ContentVideoCardViewModel(model: card)
-                let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
-                cellConfigurators.append(configurator)
-                cards.append(card)
-            } else {
-                let viewModel = ContentCardViewModel(model: card)
-                let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-                cellConfigurators.append(configurator)
-                cards.append(card)
-            }
-        case .choice:
-            let viewModel = ChoiceCardViewModel(model: card)
-            let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.append(configurator)
-            cards.append(card)
-        case .evaluation:
-            let viewModel = EvaluationCardViewModel(model: card)
-            let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.append(configurator)
-            cards.append(card)
-        case .activity:
-            var viewModel = ActivitiesCardViewModel(model: card)
-            for(offset, var activityViewModel) in viewModel.activityViewModels.enumerated() {
-                activityViewModel.callBack = { activityId in
-                    self.showInputView(cardId: viewModel.cardId, activityId: activityId)
-                }
-                viewModel.activityViewModels[offset] = activityViewModel
-            }
-            let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.append(configurator)
-            cards.append(card)
-        case .story:
-            let viewModel = StoriesCardViewModel(model: card)
-            let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
-            cellConfigurators.append(configurator)
-            cards.append(card)
-        default: break
-        }
-    }
-    
-    private func showInputView(cardId: String, activityId: String) {
-        let window = UIApplication.shared.keyWindow!
-        window.addSubview(inputTextView)
-        inputTextView.fill(in: window)
-        inputTextView.startEditing(isStarted: true)
-        self.activityId = activityId
-        self.activityCardId = cardId
-    }
     func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
@@ -494,10 +466,11 @@ extension CardsBaseController: UICollectionViewDelegate {
 }
 
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
-    func showProfile(userId: UInt64) {
-        delegate?.showProfile(userId: userId)
+
+    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
+        delegate?.showProfile(userId: userId, setTop: setTop)
     }
-    
+
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
         web.request(
             .choiceCard(cardId: cardId, index: selectedIndex),
@@ -575,6 +548,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
             .commentCard(cardId: cardId, comment: "", emoji: emoji),
@@ -583,26 +557,29 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                 case let .success(response):
                     guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                     self.cards[index].result = response
-                    if self.cards[index].type == .content, self.cards[index].video == nil {
-                        let viewModel = ContentCardViewModel(model: self.cards[index])
-                        let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-                        self.cellConfigurators[index] = configurator
-                        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-                    } else if self.cards[index].type == .content, self.cards[index].video != nil {
-                        let viewModel = ContentVideoCardViewModel(model: self.cards[index])
-                        let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
-                        self.cellConfigurators[index] = configurator
-                        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-                    }
+                    self.reloadContentCell(index: index)
                     self.vibrateFeedback()
+                    if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
+                        let rect = CGRect(x: (UIScreen.mainWidth() - CGFloat(response.contactUserList.count) * 50) / 2,
+                                          y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 40 - 5,
+                                          width: CGFloat(response.contactUserList.count) * 50,
+                                          height: 50)
+                        Guide.showSameCardChoiceTip(with: rect)
+                        Defaults[.isSameCardChoiceGuideShown] = true
+                    }
                 case let .failure(error):
                     logger.error(error)
                 }
         }
     }
     
-    func openKeyword() {
+    func openKeyboard() {
         inputBottomView.startEditing(true)
+    }
+    
+    func openEmojis(cardId: String) {
+        guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
+        showCellEmojiView(emojiDisplayType: .allShow, index: index)
     }
     
     func showImageBrowser(selectedIndex: Int) {
@@ -611,8 +588,6 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 }
 
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
-
-    
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
         let cardType = cards[index].type
@@ -641,80 +616,14 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                 logger.error(error)
             }
         }
-       
-    }
-    
-    private func makeAlertController(status: StatusResponse,
-                                     cardType: CardResponse.CardType,
-                                     cardId: String,
-                                     sectionId: UInt64) -> UIAlertController {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
-            let controller = ShareCardController()
-            controller.sendCallback = { (text, userIds) in
-                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
-            }
-            self.present(controller, animated: true, completion: nil)
-        }
-        let subscriptionAction = UIAlertAction.makeAlertAction(
-                title: status.subscription ? "取消订阅" : "订阅该栏目",
-                style: .default) { (_) in
-            if status.subscription {
-                web.request(.delSectionSubscription(sectionId: sectionId), completion: { (_) in })
-            } else {
-                web.request(.addSectionSubscription(sectionId: sectionId), completion: { (_) in })
-            }
-        }
-        let blockAction = UIAlertAction.makeAlertAction(
-                title: status.block ? "取消屏蔽" : "屏蔽该栏目",
-                style: .default) { (_) in
-            if status.block {
-                web.request(.delSectionBlock(sectionId: sectionId), completion: { (_) in })
-            } else {
-                web.request(.addSectionBlock(sectionId: sectionId), completion: { (_) in })
-            }
-        }
-        let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-        alertController.addAction(shareAction)
-        alertController.addAction(subscriptionAction)
-        alertController.addAction(blockAction)
-        alertController.addAction(cancelAction)
-        return alertController
-    }
-    
-    private func sendMessge(cardId: String, text: String, userIds: [UInt64]) {
-        guard let index = cards.index(where: { $0.cardId == cardId }) else {fatalError()}
-        let card  = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
-        if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
-            if card.type == .content, let content = content as? ContentCardContent {
-                userIds.forEach {
-                    Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
-                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
-                }
-            } else if card.type == .choice, let content = content as? OptionCardContent {
-                userIds.forEach {
-                    Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
-                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
-                }
-            } else if card.type == .evaluation, let content = content as? OptionCardContent {
-                userIds.forEach {
-                    Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
-                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
-                }
-            }
-        }
-        NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
 }
 
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
         if self.cards[index].type == .story {
-            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
+            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
+                guard let `self` = self else { return }
                 switch result {
                 case .success:
                     if storyGroupIndex > 3 { return }
@@ -746,7 +655,7 @@ extension CardsBaseController {
               else { return }
         guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
                                             as? ContentCardCollectionViewCell else { return  }
-        let imagURLs = configurator.viewModel.contentImages!.map({ $0.imageURL })
+        let imagURLs = configurator.viewModel.contentImages!.flatMap({ $0.compactMap { URL(string: $0.url) } })
         self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imagURLs)
         let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
@@ -754,112 +663,4 @@ extension CardsBaseController {
         browser.show()
     }
 }
-// MARK: - InputBottomViewDelegate
-extension CardsBaseController: InputBottomViewDelegate {
-    func inputBottomViewDidChangeHeight(_ height: CGFloat) {
-        inputBottomViewHeight?.constant = height + 20
-    }
-    
-    func inputBottomViewDidPressSend(withText text: String?) {
-        guard cards[index].type == .content else { return }
-        let cardId = self.cards[index].cardId
-        web.request(
-            .commentCard(cardId: cardId, comment: text!, emoji: 0),
-            responseType: Response<SelectResult>.self) {(result) in
-                switch result {
-                case let .success(response):
-                    guard cardId == self.cards[self.index].cardId else { return }
-                    self.cards[self.index].result = response
-                    let viewModel = ContentCardViewModel(model: self.cards[self.index])
-                    let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-                    self.cellConfigurators[self.index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: self.index, section: 0)])
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
-        inputBottomView.startEditing(false)
-    }
-}
 
-// MARK: - InputTextViewDelegate
-extension CardsBaseController: InputTextViewDelegate {
-    func inputTextViewDidPressSendMessage(text: String) {
-        inputTextView.clear()
-        inputTextView.removeFromSuperview()
-        sendActivityMessages(text: text)
-   
-    }
-    
-    func removeInputTextView() {
-        inputTextView.clear()
-        inputTextView.removeFromSuperview()
-    }
-}
-
-extension CardsBaseController: MessengerDelegate {
-    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        if success {
-        } else {
-            self.toast(message: "发送失败")
-        }
-    }
-}
-
-// MARK: - ActivityMessage Methods
-extension CardsBaseController {
-    func sendActivityMessages(text: String) {
-        let card = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
-        guard let cardId = activityCardId, let activityId = activityId else { return }
-        guard card.type == .activity, card.cardId == cardId else { return }
-        guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
-        let toUserId = card.activityList![index].actor
-        let cardID = card.activityList![index].fromCardId
-        web.request(
-            WebAPI.getCard(cardID: cardID),
-            responseType: Response<CardGetResponse>.self) { (result) in
-                switch result {
-                case let .success(response):
-                    let resultCard = response.card
-                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.type == .content, let content = content as? ContentCardContent {
-                            Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
-                        } else if resultCard.type == .choice, let content = content as? OptionCardContent {
-                            Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
-                        }
-                    } else {
-                        return
-                    }
-                    Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
-                    self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
-    }
-
-    private func requestActivityCardLike(cardId: String, activityId: String, comment: String) {
-        web.request(.activityCardLike(cardId: cardId, activityId: activityId, comment: comment)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-                guard let item = self.cards[index].activityList!.index(
-                    where: { $0.activityId == activityId }) else { return }
-                self.cards[index].activityList![item].like = true
-                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
-                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
-                self.cellConfigurators[index] = configurator
-                if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
-                    let acCell = cell as? ActivitiesCardCollectionViewCell {
-                    acCell.updateItem(item: item, like: true)
-                }
-                self.toast(message: "❤️ 评价成功")
-                self.vibrateFeedback()
-            case let  .failure(error):
-                logger.error(error)
-            }
-        }
-    }
-}

@@ -10,11 +10,13 @@ import UIKit
 
 class ActivityTableViewCell: UITableViewCell {
     private var viewModel: ActivityViewModel?
-
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showProfile(_:)))
+        imageView.addGestureRecognizer(tap)
         return imageView
     }()
     
@@ -51,10 +53,7 @@ class ActivityTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
-    private lazy var emojiImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+    private lazy var emojiImageView = UIImageView()
     
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
@@ -105,6 +104,10 @@ class ActivityTableViewCell: UITableViewCell {
         contentView.addSubview(commentLabel)
         commentLabel.align(.left, to: titleLabel)
         commentLabel.align(.bottom, to: avatarImageView)
+        contentView.addSubview(emojiImageView)
+        emojiImageView.constrain(width: 20, height: 20)
+        emojiImageView.align(.left, to: titleLabel)
+        emojiImageView.align(.bottom, to: avatarImageView)
         contentView.addSubview(contentLabel)
         contentLabel.align(.left, to: titleLabel)
         contentLabel.pin(.bottom, to: commentLabel, spacing: 7)
@@ -133,28 +136,24 @@ class ActivityTableViewCell: UITableViewCell {
         commentLabel.text = viewModel.commentString
         emojiImageView.image = viewModel.emojiImage
         contentLabel.text = viewModel.contentString
-        if viewModel.like {
-            likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            likeButton.setImage(#imageLiteral(resourceName: "Unlike"), for: .normal)
-        }
+        likeButton.setImage(viewModel.like ? #imageLiteral(resourceName: "Like") : #imageLiteral(resourceName: "Unlike"), for: .normal)
         likeButton.isHidden = viewModel.isHiddenLikeButton
     }
     
     func update(like: Bool) {
-        if like {
-            likeButton.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            likeButton.setImage(#imageLiteral(resourceName: "Unlike"), for: .normal)
-        }
+        likeButton.setImage(like ? #imageLiteral(resourceName: "Like") : #imageLiteral(resourceName: "Unlike"), for: .normal)
         viewModel?.like = like
     }
     
     @objc private func likeAction(_ sender: UIButton) {
+        if let viewModel = viewModel, !viewModel.like {
+            viewModel.callBack?(viewModel.activityId)
+        }
+    }
+    
+    @objc private func showProfile(_ tap: UITapGestureRecognizer) {
         if let viewModel = viewModel {
-            if !viewModel.like {
-                viewModel.callBack?(viewModel.activityId)
-            }
+            viewModel.showProfile?(viewModel.actor, viewModel.setTop)
         }
     }
     

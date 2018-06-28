@@ -18,7 +18,8 @@ class EvaluationController: UIViewController, PageChildrenProtocol {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    private var page = 0
+    private var loadFinish = false
     private var evaluationList = [EvaluationResponse]()
     private var viewModels = [EvaluationViewModel]()
     private lazy var tableView: UITableView = {
@@ -52,6 +53,7 @@ class EvaluationController: UIViewController, PageChildrenProtocol {
                 switch result {
                 case let .success(response):
                     self.evaluationList = response.list
+                    self.loadFinish = response.list.count < 10
                     self.viewModels = response.list.map({
                         var viewModel = EvaluationViewModel(model: $0)
                         viewModel.isHiddenLikeImage = UInt64(Defaults[.userID]!)! == self.user.userId
@@ -64,7 +66,32 @@ class EvaluationController: UIViewController, PageChildrenProtocol {
                 case let .failure(error):
                     logger.error(error)
                 }
-            
+        }
+    }
+    
+    func loadMoreRequest() {
+        if loadFinish { return }
+        page += 1
+        web.request(
+            .evaluationList(page: 0, userId: user.userId),
+            responseType: Response<EvaluationListResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    self.evaluationList = response.list
+                    self.loadFinish = response.list.count < 10
+                    self.viewModels.append(contentsOf: response.list.map({
+                        var viewModel = EvaluationViewModel(model: $0)
+                        viewModel.isHiddenLikeImage = UInt64(Defaults[.userID]!)! == self.user.userId
+                        viewModel.callback = {
+                            self.showInputView(evaluationId: viewModel.evaluationId)
+                        }
+                        return viewModel
+                    }))
+                    self.tableView.reloadData()
+                case let .failure(error):
+                    logger.error(error)
+                }
+                
         }
     }
 
@@ -155,5 +182,11 @@ extension EvaluationController: UITableViewDataSource {
 extension EvaluationController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModels.count - 1 {
+            loadMoreRequest()
+        }
     }
 }
