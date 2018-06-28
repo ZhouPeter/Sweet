@@ -135,6 +135,7 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
@@ -310,8 +311,6 @@ extension ProfileController {
         self.baseInfoViewModel?.sendMessageAction = { [weak self] in
             if let user = self?.user, let buddy = self?.userResponse {
                 self?.showConversation?(user, User(buddy))
-//                let conversationController = ConversationController(user: user, buddy: User(buddy))
-//                self?.navigationController?.pushViewController(conversationController, animated: true)
             }
         }
     }

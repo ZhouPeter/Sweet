@@ -139,7 +139,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(collectionView)
-        collectionView.fill(in: view, top: UIScreen.navBarHeight())
+        collectionView.fill(in: view)
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         } else {

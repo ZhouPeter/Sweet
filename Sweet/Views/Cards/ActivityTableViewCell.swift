@@ -58,7 +58,7 @@ class ActivityTableViewCell: UITableViewCell {
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         return label
     }()
     
