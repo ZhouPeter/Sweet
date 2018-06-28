@@ -16,11 +16,12 @@ struct StoryCollectionViewCellModel {
     var videoURL: URL?
     var isRead: Bool
     let timestampString: String
-    let sourceUserId: Int
+    let sourceUserId: UInt64
     var created: Int?
     let storyId: UInt64
     let type: StoryType
     var pokeCenter: CGPoint = CGPoint(x: 0.5, y: 0.5)
+    var callback: ((UInt64) -> Void)?
     init(model: StoryResponse) {
         name = model.nickname
         info  = "\(model.university)\n\(model.college)\n\(model.enrollment)"
@@ -37,7 +38,7 @@ struct StoryCollectionViewCellModel {
         isRead = model.read
         timestampString = TimerHelper.timeBeforeInfo(timeInterval: TimeInterval(model.created))
         created = model.created
-        sourceUserId = Int(model.userId)
+        sourceUserId = model.userId
         storyId = model.storyId
         type = model.type
     }

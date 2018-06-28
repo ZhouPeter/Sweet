@@ -10,13 +10,13 @@ import Foundation
 
 extension UINavigationBar {
     func setBackgroundGradientImage(colors: [UIColor]) {
-        let image = gradientImage(
-            bounds: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: UIScreen.navBarHeight()),
-            colors: colors)
-        self.setBackgroundImage(image, for: .default)
+        let image = UINavigationBar.gradientImage(
+                    bounds: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: UIScreen.navBarHeight()),
+                    colors: colors)
+        setBackgroundImage(image, for: .default)
     }
     
-    func gradientImage(bounds: CGRect, colors: [UIColor]) -> UIImage {
+    class func gradientImage(bounds: CGRect, colors: [UIColor]) -> UIImage {
         var array = [AnyHashable]()
         for color in colors {
             array.append(color.cgColor)

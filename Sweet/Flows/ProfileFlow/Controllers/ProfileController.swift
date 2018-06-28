@@ -109,7 +109,6 @@ class ProfileController: BaseViewController, ProfileView {
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
-        readLocalData()
     }
     
     func readLocalData() {
@@ -282,6 +281,7 @@ extension ProfileController {
                 completion?(true)
             case let .failure(error):
                 logger.error(error)
+                self.readLocalData()
                 completion?(false)
             }
         }
@@ -334,7 +334,7 @@ extension ProfileController: UITableViewDelegate {
 
 extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return baseInfoViewModel == nil ? 0 : 2
+        return (baseInfoViewModel == nil || actionsController == nil) ? 0 : 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

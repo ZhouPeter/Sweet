@@ -39,11 +39,12 @@ class WebViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         view.addSubview(webView)
-        webView.fill(in: view, top: UIScreen.navBarHeight())
+        webView.fill(in: view, top: topLayoutGuide.length)
         view.addSubview(progressView)
         progressView.constrain(height: 2)
         progressView.align(.top, to: view, inset: UIScreen.navBarHeight())

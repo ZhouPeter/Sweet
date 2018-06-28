@@ -10,7 +10,9 @@ import UIKit
 import Kingfisher
 class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = StoryCollectionViewCellModel
+    private var viewModel: ViewModelType?
     func updateWith(_ viewModel: StoryCollectionViewCellModel) {
+        self.viewModel = viewModel
         coverImageView.image = nil
         coverImageView.animationImages = nil
         coverImageView.stopAnimating()
@@ -69,6 +71,9 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar(_:)))
+        imageView.addGestureRecognizer(tap)
         return imageView
     }()
     private lazy var avatarCirCleImageView: UIImageView = {
@@ -122,6 +127,12 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         avatarImageView.constrain(width: 48, height: 48)
         avatarImageView.center(to: avatarCirCleImageView)
     
+    }
+    
+    @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
+        if let viewModel = viewModel {
+            viewModel.callback?(viewModel.sourceUserId)
+        }
     }
 
 }

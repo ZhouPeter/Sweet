@@ -318,7 +318,6 @@ extension CardsBaseController {
     
     func changeCurrentCell() {
         self.saveLastId()
-        self.delayItem?.cancel()
         self.playerView.isHasVolume = false
         self.playerView.pause()
 //        self.playerView.playerLayer?.resetPlayer()
@@ -326,13 +325,7 @@ extension CardsBaseController {
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        if let cell = cell as? ContentCardCollectionViewCell {
-            self.delayItem = DispatchWorkItem {
-                cell.hiddenEmojiView(isHidden: false)
-                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
-        } else if let cell = cell as? VideoCardCollectionViewCell,
+        if let cell = cell as? VideoCardCollectionViewCell,
                   let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             weak var weakSelf = self
             weak var weakCell = cell
@@ -342,16 +335,11 @@ extension CardsBaseController {
             resource.fatherViewTag = weakCell?.contentImageView.tag
             self.playerView.setVideo(resource: resource)
             self.avPlayer = self.playerView.avPlayer
-            self.delayItem = DispatchWorkItem {
-                cell.hiddenEmojiView(isHidden: false)
-                self.showCellEmojiView(emojiDisplayType: .show, index: self.index)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: self.delayItem!)
         }
     }
 
     private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
-        if cards[index].type == .content && cards[index].result == nil {
+        if cards[index].type == .content  {
             if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
                 configurator.viewModel.emojiDisplayType = emojiDisplayType
                 cellConfigurators[index] = configurator
@@ -572,11 +560,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                 }
         }
     }
-    
-    func openKeyboard() {
-        inputBottomView.startEditing(true)
-    }
-    
+
     func openEmojis(cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         showCellEmojiView(emojiDisplayType: .allShow, index: index)

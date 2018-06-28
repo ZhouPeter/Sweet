@@ -102,7 +102,13 @@ extension CardsBaseController {
             cellConfigurators.append(configurator)
             cards.append(card)
         case .story:
-            let viewModel = StoriesCardViewModel(model: card)
+            var viewModel = StoriesCardViewModel(model: card)
+            for (offset, var cellModel) in viewModel.storyCellModels.enumerated() {
+                cellModel.callback = { [weak self] userId in
+                    self?.showProfile(userId: userId)
+                }
+                viewModel.storyCellModels[offset] = cellModel
+            }
             let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)

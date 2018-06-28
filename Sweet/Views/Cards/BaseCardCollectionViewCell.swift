@@ -39,8 +39,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     
     lazy var menuButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Menu_black").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = UIColor(hex: 0x9b9b9b)
+        button.setImage(#imageLiteral(resourceName: "More_Gray"), for: .normal)
         button.addTarget(self, action: #selector(menuAction(_:)), for: .touchUpInside)
         return button
     }()

@@ -18,11 +18,6 @@ struct StoriesCardViewModel {
         storiesCellModels = model.storyList!.map {
            return $0.map { return StoryCollectionViewCellModel(model: $0) }
         }
-//        var isReads = model.storyList!.map({ (model) -> Bool in
-//            var isRead = true
-//            model.forEach({ if $0.read == false {isRead = false} })
-//            return isRead
-//        })
         storyCellModels = storiesCellModels.map {
             var storiesCellModel = $0
             var isRead = true

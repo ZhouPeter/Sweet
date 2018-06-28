@@ -24,7 +24,7 @@ target 'Sweet' do
   pod 'WechatOpenSDK'
   pod 'STPopupPreview'
   pod 'Gemini'
-  pod '777723'
+  pod 'KMNavigationBarTransition'
   pod 'VolumeBar', '~> 3.0.3'
   
   target 'Sweet Dev' do
