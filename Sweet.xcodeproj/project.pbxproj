@@ -1073,6 +1073,10 @@
 		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
+		ACA83C0B20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
+		ACA83C0C20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
+		ACA83C0D20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
+		ACA83C0E20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
 		ACA9CC3E20C6734300873643 /* StoryMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */; };
 		ACA9CC3F20C6734300873643 /* StoryMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */; };
 		ACA9CC4020C6734300873643 /* StoryMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */; };
@@ -1614,6 +1618,7 @@
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMessageCell.swift; sourceTree = "<group>"; };
 		ACA9CC4220C6764C00873643 /* SweetMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		ACA9CC4720C6769800873643 /* SweetMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessageSizeCalculator.swift; sourceTree = "<group>"; };
@@ -2300,6 +2305,7 @@
 			children = (
 				ACA323492087497900BDC92E /* AppDelegate.swift */,
 				ACA3234E2087498900BDC92E /* ApplicationCoordinator.swift */,
+				ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -3137,6 +3143,7 @@
 				ACA323972087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534E2090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				ACA9CC3E20C6734300873643 /* StoryMessageCell.swift in Sources */,
+				ACA83C0B20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				58D5790120944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA1208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
@@ -3381,6 +3388,7 @@
 				AC2A257020BBF16B00A82E62 /* Messenger.swift in Sources */,
 				58816D1520C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
+				ACA83C0D20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				58BD53232090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				AC86A93420C3F2C000334D4A /* InstantMessageData.swift in Sources */,
@@ -3838,6 +3846,7 @@
 				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
+				ACA83C0E20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
 				AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */,
@@ -4028,6 +4037,7 @@
 				ACA323982087608500BDC92E /* RouterImp.swift in Sources */,
 				58BD534F2090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				ACA9CC3F20C6734300873643 /* StoryMessageCell.swift in Sources */,
+				ACA83C0C20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				58D5790220944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA2208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
