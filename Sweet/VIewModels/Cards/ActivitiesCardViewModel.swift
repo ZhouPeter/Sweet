@@ -37,6 +37,7 @@ struct ActivityViewModel {
     var callBack: ((String) -> Void)?
     var showProfile: ((UInt64, SetTop?) -> Void)?
     let setTop: SetTop?
+    let url: String?
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
         actor = model.actor
         activityId = model.activityId
@@ -57,5 +58,6 @@ struct ActivityViewModel {
             rightAvatarURL = avatarURL
         }
         setTop = SetTop(contentId: model.contentId, preferenceId: model.preferenceId)
+        url = model.url
     }
 }

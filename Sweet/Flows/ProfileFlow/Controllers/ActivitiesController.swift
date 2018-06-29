@@ -180,15 +180,24 @@ extension ActivitiesController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModels.count
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModels.count - 1 {
-            loadMoreRequest()
-        }
-    }
+  
 }
 
 extension ActivitiesController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (cardCellHeight - 50) / 4
+    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModels.count - 1 {
+            loadMoreRequest()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let url = viewModels[indexPath.row].url {
+            let controller = WebViewController(urlString: url)
+            controller.title = viewModels[indexPath.row].contentString
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
 }

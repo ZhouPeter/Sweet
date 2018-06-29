@@ -75,7 +75,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private lazy var dismissButton: UIButton = {
         let dismissButton = UIButton()
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
         dismissButton.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissAction(sender:)), for: .touchUpInside)
         return dismissButton
@@ -83,22 +82,22 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.clipsToBounds = true
+        avatarImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar(_:)))
+        avatarImageView.addGestureRecognizer(tap)
         return avatarImageView
     }()
     
     private lazy var storyInfoLabel: UILabel = {
         let storyInfoLabel = UILabel()
-        storyInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         storyInfoLabel.numberOfLines = 0
         return storyInfoLabel
     }()
     
     private lazy var menuButton: UIButton = {
         let menuButton = UIButton()
-        menuButton.translatesAutoresizingMaskIntoConstraints = false
         menuButton.setImage( #imageLiteral(resourceName: "Menu_white").withRenderingMode(.alwaysTemplate), for: .normal)
         menuButton.tintColor = .white
         if isSelf {
@@ -172,6 +171,8 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
+        view.addGestureRecognizer(pokeLongPress)
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
@@ -186,6 +187,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         setTopUI()
         setBottmUI()
         update()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,7 +203,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     }
     
     func update() {
-        setUserData()
         updateForStories(stories: stories, currentIndex: currentIndex)
         progressView.reset(count: stories.count, index: currentIndex)
     }
@@ -214,7 +215,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         view.addSubview(topContentView)
         topContentView.align(.left)
         topContentView.align(.right)
-        topContentView.align(.top, inset: UIScreen.isIphoneX() ? 44 : 0)
+        topContentView.align(.top, inset: UIScreen.safeTopMargin())
         topContentView.constrain(height: 70)
         topContentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
@@ -276,18 +277,16 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     }
     
     private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
+        setUserData()
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
             pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
                                       y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
-            pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
-            view.addGestureRecognizer(pokeLongPress)
+            pokeLongPress.isEnabled = true
         } else {
             pokeView.isHidden = true
-            if let pokeLongPress = pokeLongPress {
-                view.removeGestureRecognizer(pokeLongPress)
-            }
+            pokeLongPress.isEnabled = false
         }
         if let touchArea = stories[currentIndex].touchArea {
             tagButton.isHidden = false
@@ -311,11 +310,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             }
             player?.actionAtItemEnd = .none
             playerView = AVPlayerView(frame: view.bounds)
+            playerView.backgroundColor = .black
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
             playerView.isUserInteractionEnabled = false
             view.insertSubview(playerView, belowSubview: pokeView)
-            
             addVideoObservers()
             addKVOObservers()
         }
@@ -453,6 +452,11 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
+    
+    @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
+        runProfileFlow?(user, stories[currentIndex].userId)
+    }
+    
     @objc private func didPressTag(_ sender: UIButton) {
         if stories[currentIndex].userId != user.userId {
             let topic = stories[currentIndex].tag

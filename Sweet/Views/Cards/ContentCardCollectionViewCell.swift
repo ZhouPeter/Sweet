@@ -155,11 +155,8 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                 let container = imageViewContainers[viewIndex]
                 container.isHidden = false
                 container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
-                let scale = UIScreen.main.scale
-                let imageSize =
-                    CGSize(width: imageView.bounds.size.width * scale, height: imageView.bounds.height * scale)
                 imageView.kf.setImage(
-                    with: URL(string: image.url)?.middleCutting(size: imageSize),
+                    with: URL(string: image.url)?.middleCutting(size: imageView.bounds.size),
                     completionHandler: { (image, _, _, _) in
                         guard image != nil else { return }
                         UIView.animate(withDuration: 0.25, animations: {

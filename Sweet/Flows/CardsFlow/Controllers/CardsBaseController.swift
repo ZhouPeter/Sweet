@@ -21,7 +21,7 @@ enum CardRequest {
     case all(cardId: String?, direction: Direction?)
     case sub(cardId: String?, direction: Direction?)
 }
-
+let preloadingCount = 5
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
@@ -32,11 +32,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         button.isHidden = true
         return button
     }()
-    
+    private var maxIndex = 0
     public var index = 0 {
         didSet {
-            
-            if index < cellConfigurators.count - 3 {
+            if index > maxIndex { maxIndex = index }
+            if index < maxIndex - 2 {
                 downButton.isHidden = false
             } else {
                 downButton.isHidden = true
@@ -198,7 +198,7 @@ extension CardsBaseController {
         }
     }
     @objc private func didPressDownButton(_ sender: UIButton) {
-        index = cellConfigurators.count - 1
+        index = maxIndex
         scrollTo(row: index)
     }
 }
@@ -319,6 +319,7 @@ extension CardsBaseController {
                     self.scrollTo(row: self.index)
                 }
             } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
+                self.preloadingCard()
                 index += 1
                 self.scrollTo(row: index)
             }
@@ -336,17 +337,21 @@ extension CardsBaseController {
         }
     }
     
+    private func preloadingCard() {
+        if self.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
+            logger.debug(cards[index].content ?? "")
+            let cardId = cards[index].cardId
+            let direction = Direction.down
+            let request: CardRequest = self is CardsAllController ?
+                .all(cardId: cardId, direction: direction) :
+                .sub(cardId: cardId, direction: direction)
+            self.startLoadCards(cardRequest: request)
+        }
+    }
+    
     private func scrollTo(row: Int, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            if row == self.cards.count - 1 {
-                let cardId = self.cards[row].cardId
-                let direction = Direction.down
-                let request: CardRequest = self is CardsAllController ?
-                    .all(cardId: cardId, direction: direction) :
-                    .sub(cardId: cardId, direction: direction)
-                self.startLoadCards(cardRequest: request)
-            }
             self.pan.isEnabled = true
             let offset: CGFloat =  CGFloat(row) * cardCellHeight - cardOffset
             UIView.animate(
@@ -369,7 +374,7 @@ extension CardsBaseController {
         navigationController?.pushViewController(preview, animated: true)
     }
 }
-
+// MARK: - UICollectionViewDataSource
 extension CardsBaseController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self is CardsSubscriptionController {
@@ -394,7 +399,7 @@ extension CardsBaseController: UICollectionViewDataSource {
         return cell
     }
 }
-
+// MARK: - UICollectionViewDelegate
 extension CardsBaseController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newIndex = indexPath.row
@@ -406,7 +411,7 @@ extension CardsBaseController: UICollectionViewDelegate {
         }
     }
 }
-
+// MARK: - ChoiceCardCollectionViewCellDelegate
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
 
     func showProfile(userId: UInt64, setTop: SetTop? = nil) {
@@ -432,7 +437,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
         }
     }
 }
-
+// MARK: - StoriesCardCollectionViewCellDelegate
 extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
     func showStoriesPlayerController(cell: UICollectionViewCell,
                                      storiesGroup: [[StoryCellViewModel]],
@@ -455,7 +460,7 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
         )
     }
 }
-
+// MARK: - EvaluationCardCollectionViewCellDelegate
 extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
     func selectEvaluationCard(cell: EvaluationCardCollectionViewCell, cardId: String, selectedIndex: Int) {
         web.request(.evaluateCard(cardId: cardId, index: selectedIndex)) { [weak self] (result) in
@@ -488,7 +493,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
         }
     }
 }
-
+// MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
         let controller = ShareCardController()
@@ -509,10 +514,10 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
-                        let rect = CGRect(x: (UIScreen.mainWidth() - CGFloat(response.contactUserList.count) * 50) / 2,
-                                          y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 40 - 5,
-                                          width: CGFloat(response.contactUserList.count) * 50,
-                                          height: 50)
+                        let rect = CGRect(x: 20 + 32 + 8 + 1 + 8 - 4,
+                                          y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
+                                          width: CGFloat(response.contactUserList.count) * 40,
+                                          height: 40)
                         Guide.showSameCardChoiceTip(with: rect)
                         Defaults[.isSameCardChoiceGuideShown] = true
                     }
@@ -531,10 +536,10 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
         showBrower(index: index, originPageIndex: selectedIndex)
     }
 }
-
+// MARK: - BaseCardCollectionViewCellDelegate
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
-        guard  let index = cards.index(where: { $0.cardId == cardId }) else { fatalError() }
+        guard  let index = cards.index(where: { $0.cardId == cardId }) else { return }
         let cardType = cards[index].type
         if cardType == .activity {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -563,7 +568,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         }
     }
 }
-
+// MARK: - StoriesPlayerGroupViewControllerDelegate<#name#>
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
         if self.cards[index].type == .story {
@@ -592,6 +597,14 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
         }
     }
 
+}
+// MARK: - ActivitiesCardCollectionViewCellDelegate
+extension CardsBaseController: ActivitiesCardCollectionViewCellDelegate {
+    func showWebController(url: String, content: String) {
+        let controller = WebViewController(urlString: url)
+        controller.title = content
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension CardsBaseController {

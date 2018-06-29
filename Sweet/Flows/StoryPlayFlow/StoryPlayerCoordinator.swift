@@ -25,6 +25,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
     private weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     private weak var playerDelegate: StoriesPlayerViewControllerDelegate?
     private let fromCardId: String?
+    private let fromUserId: UInt64?
     init(user: User,
          router: Router,
          factory: StoryPlayerFlowFactory,
@@ -34,7 +35,8 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
          currentStart: Int = 0,
          delegate: StoriesPlayerGroupViewControllerDelegate? = nil,
          isGroup: Bool = false,
-         fromCardId: String? = nil) {
+         fromCardId: String? = nil,
+         fromUserId: UInt64? = nil) {
         self.user = user
         self.router = router
         self.factory = factory
@@ -45,6 +47,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
         self.isGroup = isGroup
         self.delegate = delegate
         self.fromCardId = fromCardId
+        self.fromUserId = fromUserId
     }
     
     override func start() {
@@ -118,6 +121,11 @@ extension StoryPlayerCoordinator {
     }
     
     private func runProfileFlow(user: User, buddyID: UInt64) {
+        if buddyID == fromUserId {
+            self.router.dismissFlow()
+            self.finishFlow?()
+            return
+        }
         let navigation = UINavigationController()
         let coordinator = coordinatorFactory.makeProfileCoordinator(
             user: user,

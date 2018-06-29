@@ -14,4 +14,8 @@ protocol StoriesGroupView: BaseView {
     var onFinish: (() -> Void)? { get set }
     func pause()
     func play()
+
+}
+
+protocol StoriesGroupViewDelegate: class {
 }

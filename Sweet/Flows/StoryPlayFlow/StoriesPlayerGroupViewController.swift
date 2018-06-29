@@ -23,6 +23,7 @@ extension StoriesPlayerGroupViewControllerDelegate {
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
+    
     var runProfileFlow: ((User, UInt64) -> Void)?
     
     var runStoryFlow: ((String) -> Void)?
@@ -204,6 +205,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
+    
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
     }

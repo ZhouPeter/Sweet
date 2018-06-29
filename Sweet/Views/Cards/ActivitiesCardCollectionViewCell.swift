@@ -8,7 +8,7 @@
 
 import UIKit
 protocol ActivitiesCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
-    
+    func showWebController(url: String, content: String)
 }
 class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     private var viewModel: ViewModelType?
@@ -79,5 +79,13 @@ extension ActivitiesCardCollectionViewCell: UITableViewDataSource {
 extension ActivitiesCardCollectionViewCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel!.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let delegate = delegate as? ActivitiesCardCollectionViewCellDelegate,
+            let feedViewModel = viewModel?.activityViewModels[indexPath.row],
+            let url = feedViewModel.url {
+            delegate.showWebController(url: url, content: feedViewModel.contentString)
+        }
     }
 }

@@ -55,6 +55,8 @@ class EmojiControlView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
+        let tap = UITapGestureRecognizer(target: self, action: nil)
+        addGestureRecognizer(tap)
         setup()
     }
     private var defaultEmojiList = [Int]()
@@ -76,7 +78,10 @@ class EmojiControlView: UIView {
             index += 1
             addSubview($0)
         }
-        emojiImageViews.forEach { addSubview($0) }
+        emojiImageViews.forEach {
+            $0.frame = CGRect(x: 10, y: 9, width: 32, height: 32)
+            addSubview($0)
+        }
         addSubview(openButton)
     }
     
@@ -134,6 +139,11 @@ class EmojiControlView: UIView {
         for (index, imageView) in emojiImageViews.enumerated() {
             logger.debug(imageView.tag)
             if !indexs.contains(imageView.tag) {
+                imageView.transform = .identity
+                UIView.animate(withDuration: 0.2) {
+                    let transform = CGAffineTransform(translationX: insetX, y: 0)
+                    imageView.transform = transform
+                }
                 imageView.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
                 imageView.isHidden = false
                 insetX += emojiWidth + emojiSpace
@@ -146,6 +156,7 @@ class EmojiControlView: UIView {
     private func clearUI() {
         for (index, imageView) in emojiImageViews.enumerated() {
             imageView.tag = index + 1
+            imageView.frame = CGRect(x: 10, y: 9, width: 32, height: 32)
             imageView.isHidden = true
         }
         avatarImageViews.forEach { $0.isHidden = true }
@@ -153,6 +164,9 @@ class EmojiControlView: UIView {
         resultImageView.isHidden = true
         segmentView.isHidden = true
     }
+}
+// MARK: - Action Methods
+extension EmojiControlView {
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
         delegate?.didTapAvatar(index: tap.view!.tag)
     }
