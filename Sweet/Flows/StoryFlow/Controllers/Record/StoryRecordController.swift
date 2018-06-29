@@ -57,6 +57,17 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return button
     } ()
     
+    private lazy var avatarFakeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.isUserInteractionEnabled = false
+        self.avatarButton.addSubview(view)
+        view.fill(in: self.avatarButton)
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        return view
+    } ()
+    
     private lazy var avatarButton: UIButton = {
         let button = UIButton(type: .custom)
         button.clipsToBounds = true
@@ -150,7 +161,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         cancelDelayCameraClose()
         if blurCoverView.isHidden == false {
             resumeCamera(true)
-        } else if captureView.isStarted == false {
+        } else if captureView.isPaused || captureView.isStarted == false {
             captureView.startCaputre()
             captureView.resumeCamera()
         }
@@ -185,6 +196,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             guard TLAuthorizedManager.checkAuthorization(with: .mic) else { return }
             self.captureView.enableAudio()
         }
+    }
+    
+    func chooseCameraRecord() {
+        bottomView.selectBottomButton(at: 1, animated: false)
+        switchStoryType(.record, animated: false)
     }
     
     // MARK: - Delay camera close
@@ -407,6 +423,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         backButton.constrain(width: 30, height: 30)
         backButton.align(.right, to: recordContainer, inset: 10)
         backButton.centerY(to: menuButton)
+        avatarFakeView.hero.id = "avatar"
     }
     
     // MARK: - Actions
@@ -509,8 +526,20 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
         }
     }
     
-    private func switchStoryType(_ type: StoryRecordType) {
+    private func switchStoryType(_ type: StoryRecordType, animated: Bool = true) {
         current = type
+        let showTextGradient: (Bool) -> Void = { [weak self] isShown in
+            let alpha: CGFloat = isShown ? 1 : 0
+            guard let `self`  = self else { return }
+            if animated {
+                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+                    self.textGradientController.view.alpha = alpha
+                }, completion: nil)
+            } else {
+                self.textGradientController.view.alpha = alpha
+            }
+        }
+        
         if type == .text {
             if textGradientController.view.superview == nil {
                 addChildViewController(textGradientController)
@@ -518,20 +547,13 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
                 view.insertSubview(textGradientController.view, belowSubview: bottomView)
                 textGradientController.view.fill(in: view)
             }
-            textGradientController.view.alpha = 0
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                self.textGradientController.view.alpha = 1
-            }, completion: nil)
+            showTextGradient(true)
             captureView.pauseCamera()
             return
         }
         
         if type == .record {
-            if self.textGradientController.view.alpha > 0 {
-                UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-                    self.textGradientController.view.alpha = 0
-                }, completion: nil)
-            }
+            showTextGradient(false)
             captureView.startCaputre()
             captureView.resumeCamera()
             return

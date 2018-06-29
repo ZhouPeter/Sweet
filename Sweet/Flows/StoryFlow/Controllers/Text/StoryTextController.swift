@@ -126,22 +126,21 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     @objc private func didPressFinishButton() {
         finishButton.alpha = 0
         closeButton.alpha = 0
-        var fileURL: URL?
-        if let image = view.screenshot(afterScreenUpdates: true) {
-            fileURL = image.writeToCache()
-        }
-        finishButton.alpha = 1
-        closeButton.alpha = 1
-        
-        guard let url = fileURL else {
-            logger.error("url is nil")
-            return
-        }
-        publisher.publish(with: url, storyType: .text, topic: topic) { [weak self] (result) in
-            logger.debug(result)
+//        var fileURL: URL?
+//        if let image = view.screenshot(afterScreenUpdates: true) {
+//            fileURL = image.writeToCache()
+//        }
+//
+//        guard let url = fileURL else {
+//            logger.error("url is nil")
+//            return
+//        }
+//        publisher.publish(with: url, storyType: .text, topic: topic) { [weak self] (result) in
+//            logger.debug(result)
             Defaults[.isPersonalStoryChecked] = false
-            self?.onFinished?()
-        }
+            view.hero.id = "avatar"
+            onFinished?()
+//        }
     }
     
     @objc private func didPressCloseButton() {

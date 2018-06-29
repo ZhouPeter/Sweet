@@ -22,6 +22,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     private let user: User
     private let isDismissable: Bool
     private let topic: String?
+    private weak var recordView: StoryRecordView?
     
     init(user: User,
          router: Router,
@@ -51,6 +52,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         } else {
             controller = factory.makeStoryRecordView(user: user)
         }
+        recordView = controller
         controller.onRecorded = { [weak self] url, isPhoto, topic in
             self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
@@ -90,6 +92,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     private func showStoryTextView(with topic: String?) {
         let controller = factory.makeStoryTextView(with: topic)
         controller.onFinished = { [weak self] in
+            self?.recordView?.chooseCameraRecord()
             self?.router.popFlow(animated: true)
         }
         controller.onCancelled = { [weak self] in

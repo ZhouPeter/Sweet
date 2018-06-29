@@ -16,4 +16,5 @@ protocol StoryRecordView: BaseView {
     var onAvatarButtonPressed: (() -> Void)? { get set }
     
     func prepare()
+    func chooseCameraRecord()
 }
