@@ -17,7 +17,7 @@ var allowRotation = false
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var rootController = UINavigationController()
+    var rootController = UINavigationController(rootViewController: RootViewController())
 
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
