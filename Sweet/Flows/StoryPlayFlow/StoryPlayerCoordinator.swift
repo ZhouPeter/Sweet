@@ -26,6 +26,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
     private weak var playerDelegate: StoriesPlayerViewControllerDelegate?
     private let fromCardId: String?
     private let fromUserId: UInt64?
+    private let fromMessageId: String?
     init(user: User,
          router: Router,
          factory: StoryPlayerFlowFactory,
@@ -36,7 +37,8 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
          delegate: StoriesPlayerGroupViewControllerDelegate? = nil,
          isGroup: Bool = false,
          fromCardId: String? = nil,
-         fromUserId: UInt64? = nil) {
+         fromUserId: UInt64? = nil,
+         fromMessageId: String? = nil) {
         self.user = user
         self.router = router
         self.factory = factory
@@ -48,6 +50,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
         self.delegate = delegate
         self.fromCardId = fromCardId
         self.fromUserId = fromUserId
+        self.fromMessageId = fromMessageId
     }
     
     override func start() {
@@ -68,6 +71,7 @@ extension StoryPlayerCoordinator {
             currentIndex: current,
             currentStart: currentStart,
             fromCardId: fromCardId,
+            fromMessageId:  fromMessageId,
             delegate: delegate)
         storiesGroupView.onFinish = { [weak self] in
             self?.router.dismissFlow()

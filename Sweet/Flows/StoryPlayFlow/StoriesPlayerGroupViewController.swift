@@ -54,6 +54,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     var storiesGroup: [[StoryCellViewModel]]
     var currentStart = 0
     var fromCardId: String?
+    var fromMessageId: String?
     private var loctionMap = [IndexPath: Int]()
     private var isLoading = false
     private lazy var collectionView: GeminiCollectionView = {
@@ -81,12 +82,14 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
          storiesGroup: [[StoryCellViewModel]],
          currentIndex: Int,
          currentStart: Int = 0,
-         fromCardId: String? = nil) {
+         fromCardId: String? = nil,
+         fromMessageId: String? = nil) {
         self.user = user
         self.storiesGroup = storiesGroup
         self.currentIndex = currentIndex
         self.currentStart = currentStart
         self.fromCardId = fromCardId
+        self.fromMessageId = fromMessageId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -105,7 +108,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         view.backgroundColor = .clear
         collectionView.addGestureRecognizer(pan)
         collectionView.hero.isEnabled = true
-        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)" + (fromCardId ?? "")
+        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)" + (fromCardId ?? "") + (fromMessageId ?? "")
         collectionView.isScrollEnabled = storiesGroup.count > 1
         view.addSubview(collectionView)
         collectionView.fill(in: view)

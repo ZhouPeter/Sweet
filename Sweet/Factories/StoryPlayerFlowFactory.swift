@@ -18,6 +18,7 @@ protocol StoryPlayerFlowFactory {
                              currentIndex: Int,
                              currentStart: Int,
                              fromCardId: String?,
+                             fromMessageId: String?,
                              delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView
     
 }

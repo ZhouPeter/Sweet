@@ -608,6 +608,10 @@
 		58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
+		58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
+		58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
+		58DECE6720E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58E870B620CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
 		58E870B720CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
 		58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
@@ -1483,6 +1487,7 @@
 		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
+		58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardBaseController+CellDelegate.swift"; sourceTree = "<group>"; };
 		58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AnimationImages.swift"; sourceTree = "<group>"; };
 		58EA104820B7FEDD001DD77C /* InputBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBottomView.m; sourceTree = "<group>"; };
 		58EA104920B7FEDE001DD77C /* InputBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputBottomView.h; sourceTree = "<group>"; };
@@ -2095,6 +2100,7 @@
 				5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */,
 				5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */,
 				58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */,
+				58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3155,6 +3161,7 @@
 				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				580907BF20B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37E20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
+				58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -3463,6 +3470,7 @@
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				AC616FAC20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
+				58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				ACA9CC4020C6734300873643 /* StoryMessageCell.swift in Sources */,
 				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
@@ -3606,6 +3614,7 @@
 			files = (
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4620C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
+				58DECE6720E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				ACC96E7520DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				5863A83D20ABCF3B0016B089 /* StoryUvList.swift in Sources */,
 				581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
@@ -4049,6 +4058,7 @@
 				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37F20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
+				58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,

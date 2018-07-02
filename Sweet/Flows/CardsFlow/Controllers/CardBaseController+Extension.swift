@@ -15,13 +15,6 @@ extension CardsBaseController {
                                      cardId: String,
                                      sectionId: UInt64) -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
-//            let controller = ShareCardController()
-//            controller.sendCallback = { (text, userIds) in
-//                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
-//            }
-//            self.present(controller, animated: true, completion: nil)
-//        }
         let subscriptionAction = UIAlertAction.makeAlertAction(
             title: status.subscription ? "取消订阅" : "订阅该栏目",
             style: .default) { (_) in
@@ -41,7 +34,6 @@ extension CardsBaseController {
                 }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-//        alertController.addAction(shareAction)
         if cardType == .content {
             alertController.addAction(
                 UIAlertAction.makeAlertAction(

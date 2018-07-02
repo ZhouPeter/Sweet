@@ -140,13 +140,15 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
                              currentIndex: Int,
                              currentStart: Int,
                              fromCardId: String?,
+                             fromMessageId: String?,
                              delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView {
         let controller = StoriesPlayerGroupViewController(
             user: user,
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
             currentStart: currentStart,
-            fromCardId: fromCardId)
+            fromCardId: fromCardId,
+            fromMessageId: fromMessageId)
         controller.delegate = delegate
         return controller
     }
