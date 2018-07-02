@@ -612,6 +612,10 @@
 		58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6720E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
+		58DECE6920EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */; };
+		58DECE6A20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */; };
+		58DECE6B20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */; };
+		58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */; };
 		58E870B620CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
 		58E870B720CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
 		58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */; };
@@ -1488,6 +1492,7 @@
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
 		58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardBaseController+CellDelegate.swift"; sourceTree = "<group>"; };
+		58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributeString+Size.swift"; sourceTree = "<group>"; };
 		58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AnimationImages.swift"; sourceTree = "<group>"; };
 		58EA104820B7FEDD001DD77C /* InputBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBottomView.m; sourceTree = "<group>"; };
 		58EA104920B7FEDE001DD77C /* InputBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputBottomView.h; sourceTree = "<group>"; };
@@ -2365,6 +2370,7 @@
 				581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */,
 				58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */,
 				58F0993B20E47F1400C9373A /* UINavigationBar+GradientImage .swift */,
+				58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3070,6 +3076,7 @@
 				587D18E720DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
+				58DECE6920EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
@@ -3530,6 +3537,7 @@
 				5803573220AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				5872A85120D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				581D7BF620D9ED1F000D1E26 /* VersionUpdateHelper.swift in Sources */,
+				58DECE6B20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				ACFC208120AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				58816CF520C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
@@ -3821,6 +3829,7 @@
 				58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				AC557CB720B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
+				58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				ACDB24E120BECFD50039368E /* InboxView.swift in Sources */,
@@ -3967,6 +3976,7 @@
 				587D18E820DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */,
+				58DECE6A20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				ACA3236120875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */,

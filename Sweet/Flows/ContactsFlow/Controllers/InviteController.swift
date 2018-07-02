@@ -9,9 +9,14 @@
 import UIKit
 import SwiftyUserDefaults
 protocol InviteView: BaseView {
-    
+    var delegate: InviteViewDelegate? { get set }
+}
+
+protocol InviteViewDelegate: class {
+    func showProfile(userId: UInt64)
 }
 class InviteController: BaseViewController, InviteView {
+    weak var delegate: InviteViewDelegate?
     private var viewModels = [PhoneContactViewModel]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -160,6 +165,10 @@ extension InviteController: UITableViewDelegate {
                         logger.error(error)
                     }
                 }
+            }
+        } else if indexPath.section == 1 {
+            if let userId = viewModels[indexPath.row].userId {
+                delegate?.showProfile(userId: userId)
             }
         }
     }
