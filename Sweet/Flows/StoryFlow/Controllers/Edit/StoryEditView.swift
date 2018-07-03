@@ -10,5 +10,5 @@ import Foundation
 
 protocol StoryEditView: BaseView {
     var onCancelled: (() -> Void)? { get set }
-    var onFinished: ((URL) -> Void)? { get set }
+    var onFinished: (() -> Void)? { get set }
 }

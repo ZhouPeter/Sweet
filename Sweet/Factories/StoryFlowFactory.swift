@@ -11,9 +11,9 @@ import Foundation
 protocol StoryFlowFactory {
     func makeStoryRecordView(user: User) -> StoryRecordView
     func makeDismissableStoryRecordView(user: User, topic: String?) -> StoryRecordView
-    func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView
+    func makeStoryEditView(user: User, fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView
     func makeTopicListView() -> TopicListView
-    func makeStoryTextView(with topic: String?) -> StoryTextView
+    func makeStoryTextView(with topic: String?, user: User) -> StoryTextView
     func makeAlbumView() -> AlbumView
     func makePhotoCropView(with photo: UIImage) -> PhotoCropView
 }

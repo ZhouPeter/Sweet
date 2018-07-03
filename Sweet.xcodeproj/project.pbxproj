@@ -725,6 +725,14 @@
 		AC2A259C20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
 		AC2A259D20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
 		AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2A258620BD2B9F00A82E62 /* General.pb.swift */; };
+		AC2D51ED20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */; };
+		AC2D51EE20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */; };
+		AC2D51EF20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */; };
+		AC2D51F020EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */; };
+		AC2D51F420EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */; };
+		AC2D51F520EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */; };
+		AC2D51F620EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */; };
+		AC2D51F720EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */; };
 		AC2F978720904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
 		AC2F978820904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
 		AC2F978920904A9900D5DE4F /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F978620904A9900D5DE4F /* UserData.swift */; };
@@ -845,10 +853,14 @@
 		AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
 		AC557CAF20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
 		AC557CB020B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
-		AC557CB420B8070D0068F1B3 /* StoryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */; };
-		AC557CB520B8070D0068F1B3 /* StoryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */; };
-		AC557CB620B8070D0068F1B3 /* StoryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */; };
-		AC557CB720B8070D0068F1B3 /* StoryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */; };
+		AC58388620E9CDCB00A57161 /* TaskRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388520E9CDCB00A57161 /* TaskRunner.swift */; };
+		AC58388720E9CDCB00A57161 /* TaskRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388520E9CDCB00A57161 /* TaskRunner.swift */; };
+		AC58388820E9CDCB00A57161 /* TaskRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388520E9CDCB00A57161 /* TaskRunner.swift */; };
+		AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388520E9CDCB00A57161 /* TaskRunner.swift */; };
+		AC58388D20E9E32800A57161 /* StoryDraftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388C20E9E32800A57161 /* StoryDraftData.swift */; };
+		AC58388E20E9E32800A57161 /* StoryDraftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388C20E9E32800A57161 /* StoryDraftData.swift */; };
+		AC58388F20E9E32800A57161 /* StoryDraftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388C20E9E32800A57161 /* StoryDraftData.swift */; };
+		AC58389020E9E32800A57161 /* StoryDraftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC58388C20E9E32800A57161 /* StoryDraftData.swift */; };
 		AC616F8E20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616F8D20C6B55A00AD9004 /* MediaMessageCell.swift */; };
 		AC616F8F20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616F8D20C6B55A00AD9004 /* MediaMessageCell.swift */; };
 		AC616F9020C6B55A00AD9004 /* MediaMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616F8D20C6B55A00AD9004 /* MediaMessageCell.swift */; };
@@ -1177,6 +1189,18 @@
 		ACE560B6209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
 		ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
 		ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
+		ACEC5C2320EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
+		ACEC5C2420EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
+		ACEC5C2520EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
+		ACEC5C2620EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
+		ACEC5C2F20EB2083006E0BAA /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */; };
+		ACEC5C3020EB2083006E0BAA /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */; };
+		ACEC5C3120EB2083006E0BAA /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */; };
+		ACEC5C3220EB2083006E0BAA /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */; };
+		ACEC5C3420EB2221006E0BAA /* StoryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */; };
+		ACEC5C3520EB2221006E0BAA /* StoryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */; };
+		ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */; };
+		ACEC5C3720EB2221006E0BAA /* StoryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */; };
 		ACF1A70C20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
@@ -1526,6 +1550,8 @@
 		AC2A258420BD2B9F00A82E62 /* Base.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.pb.swift; sourceTree = "<group>"; };
 		AC2A258520BD2B9F00A82E62 /* User.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.pb.swift; sourceTree = "<group>"; };
 		AC2A258620BD2B9F00A82E62 /* General.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = General.pb.swift; sourceTree = "<group>"; };
+		AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+RawRepresentable.swift"; sourceTree = "<group>"; };
+		AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+RawRepresentable.swift"; sourceTree = "<group>"; };
 		AC2F978620904A9900D5DE4F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
@@ -1557,7 +1583,8 @@
 		AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
 		AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCropController.swift; sourceTree = "<group>"; };
 		AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Write.swift"; sourceTree = "<group>"; };
-		AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPublisher.swift; sourceTree = "<group>"; };
+		AC58388520E9CDCB00A57161 /* TaskRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRunner.swift; sourceTree = "<group>"; };
+		AC58388C20E9E32800A57161 /* StoryDraftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDraftData.swift; sourceTree = "<group>"; };
 		AC616F8D20C6B55A00AD9004 /* MediaMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageCell.swift; sourceTree = "<group>"; };
 		AC616F9420C6BCAA00AD9004 /* MessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContent.swift; sourceTree = "<group>"; };
 		AC616F9920C6BE6E00AD9004 /* ContentCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardContent.swift; sourceTree = "<group>"; };
@@ -1657,6 +1684,9 @@
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
 		ACE560AF209983AF00CE2564 /* StoryRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordView.swift; sourceTree = "<group>"; };
 		ACE560B4209984A000CE2564 /* StoryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditView.swift; sourceTree = "<group>"; };
+		ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPublishTask.swift; sourceTree = "<group>"; };
+		ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
+		ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDraft.swift; sourceTree = "<group>"; };
 		ACF1A70B20919FDF0046BF21 /* ShootButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootButton.swift; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -2007,6 +2037,7 @@
 				AC2F978620904A9900D5DE4F /* UserData.swift */,
 				AC86A93120C3F2C000334D4A /* InstantMessageData.swift */,
 				AC86A93820C4051400334D4A /* ConversationData.swift */,
+				AC58388C20E9E32800A57161 /* StoryDraftData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2077,7 +2108,9 @@
 				AC557C9520B7E5CA0068F1B3 /* Album */,
 				AC97251C209ABD39009FB966 /* Text */,
 				AC97251B209ABD14009FB966 /* Edit */,
-				AC557CB320B8070D0068F1B3 /* StoryPublisher.swift */,
+				AC58388520E9CDCB00A57161 /* TaskRunner.swift */,
+				ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */,
+				ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2371,6 +2404,8 @@
 				58EB21FE20DCD92000337DDF /* UIViewController+VibrateFeedback.swift */,
 				58F0993B20E47F1400C9373A /* UINavigationBar+GradientImage .swift */,
 				58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */,
+				AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */,
+				AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2458,6 +2493,7 @@
 				AC972541209B2728009FB966 /* KeyboardListener.swift */,
 				AC2A257C20BCF83E00A82E62 /* MulticastDelegate.swift */,
 				581D7BF320D9ED1F000D1E26 /* VersionUpdateHelper.swift */,
+				ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3019,6 +3055,7 @@
 				ACC6620A20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4320C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				58BD52DF2089F31200F7C3E1 /* DeepLinkOption.swift in Sources */,
+				ACEC5C3420EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */,
@@ -3058,6 +3095,7 @@
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
+				AC58388620E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37920AC0405007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				58F0993C20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
@@ -3104,6 +3142,7 @@
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
+				AC2D51ED20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				58816CEE20C62BF20032D103 /* EvaluationController.swift in Sources */,
 				58CAB38820AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
@@ -3169,6 +3208,7 @@
 				580907BF20B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37E20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
+				AC58388D20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -3199,7 +3239,6 @@
 				AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
-				AC557CB420B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				AC616FA020C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
@@ -3267,12 +3306,14 @@
 				5803C1222099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
+				ACEC5C2F20EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				AC45CD7420AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				AC05F43F20DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B47209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				ACEC5C2320EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
@@ -3321,6 +3362,7 @@
 				58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				5803573020AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC207F20AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
+				AC2D51F420EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
@@ -3351,6 +3393,7 @@
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
+				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				587D18CC20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				5803575020AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D620BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
@@ -3364,6 +3407,7 @@
 				AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
+				ACEC5C2520EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				587D18DF20DB43A700D53708 /* StoriesPlayerView.swift in Sources */,
@@ -3377,6 +3421,7 @@
 				5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583BC79120CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
+				AC58388F20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
@@ -3435,6 +3480,7 @@
 				AC616F9720C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
+				AC2D51EF20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				585B68BA20AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074820B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				585B68D320B1211E00E734BC /* PlayController.swift in Sources */,
@@ -3444,6 +3490,7 @@
 				AC6C1D9020A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C9806920E325BE006BA830 /* UColor+Style.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
+				AC58388820E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				AC616FA220C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				585B68C420AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC84FE8A20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
@@ -3542,7 +3589,6 @@
 				58BD53502090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				58816CF520C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				58CAB37B20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
-				AC557CB620B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				587D18E420DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				5843DA7020A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
@@ -3566,6 +3612,7 @@
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58CAB38A20AD581A007230AA /* CardsBaseController.swift in Sources */,
+				ACEC5C3120EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */,
@@ -3611,6 +3658,7 @@
 				58447B4E209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58CE1ED220A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
+				AC2D51F620EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 			);
@@ -3642,6 +3690,7 @@
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				581D7BF720D9ED1F000D1E26 /* VersionUpdateHelper.swift in Sources */,
 				587D18D420DA465E00D53708 /* FeedbackController.swift in Sources */,
+				AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
@@ -3658,8 +3707,10 @@
 				AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				583BC79220CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
+				ACEC5C2620EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				58816CFB20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
+				ACEC5C3220EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				AC1778C220BF99C500D5330F /* IMView.swift in Sources */,
 				AC05F43B20DCA49300EC6CAA /* TextEditView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -3749,6 +3800,7 @@
 				589E6BB720A95D990038FAED /* CardsManagerController.swift in Sources */,
 				AC84121B2088828E0086891C /* WebAPI.swift in Sources */,
 				58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */,
+				AC2D51F720EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58155E292091B3E300ADEFFB /* AboutController.swift in Sources */,
 				AC21759220C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -3780,6 +3832,7 @@
 				AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */,
+				ACEC5C3720EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */,
@@ -3788,6 +3841,7 @@
 				58447B2F209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				AC04E9912099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				58EA105320B7FF00001DD77C /* GrowingTextView.m in Sources */,
+				AC2D51F020EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				AC972522209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				58CE1EDD20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259220BD2B9F00A82E62 /* Command.pb.swift in Sources */,
@@ -3827,7 +3881,6 @@
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				58816CF620C62EF30032D103 /* EvaluationTableViewCell.swift in Sources */,
 				58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
-				AC557CB720B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
@@ -3898,6 +3951,7 @@
 				58CE1ED320A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58C75C20209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B59209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
+				AC58389020E9E32800A57161 /* StoryDraftData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3919,6 +3973,7 @@
 				ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACA9CC4420C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				58BD52E02089F32600F7C3E1 /* DeepLinkOption.swift in Sources */,
+				ACEC5C3520EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */,
@@ -3958,6 +4013,7 @@
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				AC58388720E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				58F0993D20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
@@ -4004,6 +4060,7 @@
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
+				AC2D51EE20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				58816CEF20C62BF20032D103 /* EvaluationController.swift in Sources */,
 				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,
@@ -4069,6 +4126,7 @@
 				580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58CAB37F20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
+				AC58388E20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -4099,7 +4157,6 @@
 				AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
-				AC557CB520B8070D0068F1B3 /* StoryPublisher.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				AC616FA120C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
@@ -4167,12 +4224,14 @@
 				5803C1232099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
+				ACEC5C3020EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				AC45CD7520AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				AC05F44020DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B48209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				ACEC5C2420EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
@@ -4221,6 +4280,7 @@
 				58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				5803573120AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208020AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
+				AC2D51F520EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,

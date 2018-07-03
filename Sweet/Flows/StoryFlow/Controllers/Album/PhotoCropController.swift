@@ -70,7 +70,7 @@ final class PhotoCropController: UIViewController, PhotoCropView {
     }
     
     private func finish(with image: UIImage) {
-        guard let url = image.writeToCache() else { return }
+        guard let url = image.writeToCache(withAlpha: false) else { return }
         onFinished?(url)
     }
     

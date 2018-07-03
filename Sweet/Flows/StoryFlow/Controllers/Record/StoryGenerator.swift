@@ -51,6 +51,7 @@ final class StoryGenerator {
     }
     
     func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
+        logger.debug(fileURL)
         movie = GPUImageMovie(url: fileURL)
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
         writer = GPUImageMovieWriter(movieURL: url, size: StoryConfg.videoSize)
