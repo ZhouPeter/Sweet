@@ -128,7 +128,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         closeButton.alpha = 0
         var filename: String?
         if let image = view.screenshot(afterScreenUpdates: true) {
-            filename = image.writeToCache()?.lastPathComponent
+            filename = image.writeToCache(withAlpha: true)?.lastPathComponent
         }
         guard let name = filename else {
             logger.error("filename is nil")

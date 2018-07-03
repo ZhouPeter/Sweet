@@ -15,6 +15,9 @@ class StoryDraftData: Object {
     @objc dynamic var pokeCenter: String?
     @objc dynamic var contentRect: String?
     @objc dynamic var date = Date()
+    @objc dynamic var generatedFilename: String?
+    @objc dynamic var overlayFilename: String?
+    @objc dynamic var filterFilename: String?
     
     override static func primaryKey() -> String? {
         return "filename"
@@ -28,6 +31,9 @@ class StoryDraftData: Object {
         data.pokeCenter = draft.pokeCenter?.rawValue
         data.contentRect = draft.contentRect?.rawValue
         data.date = draft.date
+        data.filterFilename = draft.filterFilename
+        data.generatedFilename = draft.generatedFilename
+        data.overlayFilename = draft.overlayFilename
         return data
     }
 }

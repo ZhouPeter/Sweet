@@ -16,11 +16,20 @@ struct StoryDraft {
     var contentRect: CGRect?
     let date: Date
     var fileURL: URL {
-        if storyType == .image || storyType == .text {
-            return URL.photoCacheURL(withName: filename)
+        var name: String
+        if let file = generatedFilename {
+            name = file
+        } else {
+            name = filename
         }
-        return URL.videoCacheURL(withName: filename)
+        if storyType.isVideoFile {
+            return URL.videoCacheURL(withName: name)
+        }
+        return URL.photoCacheURL(withName: name)
     }
+    var generatedFilename: String?
+    var overlayFilename: String?
+    var filterFilename: String?
     
     init(filename: String, storyType: StoryType, date: Date) {
         self.filename = filename
@@ -40,5 +49,8 @@ struct StoryDraft {
         if let poke = data.pokeCenter {
             pokeCenter = CGPoint(rawValue: poke)
         }
+        generatedFilename = data.generatedFilename
+        overlayFilename = data.overlayFilename
+        filterFilename = data.filterFilename
     }
 }

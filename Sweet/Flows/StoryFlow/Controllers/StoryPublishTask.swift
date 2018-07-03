@@ -9,8 +9,10 @@
 import UIKit
 
 class StoryPublishTask: AsynchronousOperation {
-    let draft: StoryDraft
-    let storage: Storage
+    private var draft: StoryDraft
+    private let storage: Storage
+    private let generator = StoryGenerator()
+    private var filter: LookupFilter?
     
     init(storage: Storage, draft: StoryDraft) {
         self.draft = draft
@@ -26,42 +28,79 @@ class StoryPublishTask: AsynchronousOperation {
             return
         }
         state = .executing
-        logger.debug(draft.filename)
-        publish(
-        with: draft.fileURL,
-        storyType: draft.storyType,
-        topic: draft.topic,
-        pokeCenter: draft.pokeCenter,
-        contentRect: draft.contentRect) { [weak self] (result) in
+        
+        generate { [weak self] in
             guard let `self` = self else { return }
-            logger.debug(result)
-            self.storage.write({ (realm) in
-                guard result else { return }
-                if let data = realm.object(ofType: StoryDraftData.self, forPrimaryKey: self.draft.filename) {
-                    realm.delete(data)
+            self.publish(completion: { (result) in
+                self.storage.write({ (realm) in
+                    guard result else { return }
+                    if let data = realm.object(ofType: StoryDraftData.self, forPrimaryKey: self.draft.filename) {
+                        realm.delete(data)
+                    }
+                }) { (_) in
+                    self.state = .finished
                 }
-            }) { (_) in
-                self.state = .finished
-            }
+            })
         }
     }
     
-    private func publish(
-        with url: URL,
-        storyType: StoryType,
-        topic: String? = nil,
-        pokeCenter: CGPoint? = nil,
-        contentRect: CGRect? = nil,
-        completion: @escaping (Bool) -> Void) {
+    private func generate(callback: @escaping () -> Void) {
+        guard draft.generatedFilename == nil else {
+            callback()
+            return
+        }
+        let filter: LookupFilter
+        if let name = draft.filterFilename, let image = UIImage(named: name) {
+            filter = LookupFilter(lookupImage: image)
+        } else {
+            filter = LookupFilter(lookupImage: UIImage(named: "NA")!)
+        }
+        self.filter = filter
+        let handleOutput: ((URL?) -> Void) = { [weak self] url in
+            guard let url = url, let `self` = self else { return }
+            logger.debug(url)
+            self.draft.generatedFilename = url.lastPathComponent
+            self.storage.write({ (realm) in
+                realm.add(StoryDraftData.data(with: self.draft), update: true)
+            }, callback: { (_) in callback() })
+        }
+        if draft.storyType.isVideoFile {
+            var overlay: UIImage?
+            if let name = draft.overlayFilename {
+                overlay = UIImage(contentsOfFile: URL.photoCacheURL(withName: name).path)
+            }
+            DispatchQueue.main.async {
+                self.generator.generateVideo(
+                    with: URL.videoCacheURL(withName: self.draft.filename),
+                    filter: filter,
+                    overlay: overlay,
+                    callback: handleOutput
+                )
+            }
+        } else {
+            var overlay: UIImage?
+            if let name = draft.overlayFilename {
+                overlay = UIImage(contentsOfFile: URL.photoCacheURL(withName: name).path)
+            }
+            generator.generateImage(
+                with: URL.photoCacheURL(withName: draft.filename),
+                filter: filter,
+                overlay: overlay,
+                callback: handleOutput
+            )
+        }
+    }
+    
+    private func publish(completion: @escaping (Bool) -> Void) {
         let uploadType: UploadType
-        switch storyType {
+        switch draft.storyType {
         case .text, .image:
             uploadType = .storyImage
         default:
             uploadType = .storyVideo
         }
-        Upload.uploadFileToQiniu(localURL: url, type: uploadType) { (token, error) in
-            guard let token = token else {
+        Upload.uploadFileToQiniu(localURL: draft.fileURL, type: uploadType) { [weak self] (token, error) in
+            guard let token = token, let `self` = self else {
                 logger.debug("upload failed \(error?.localizedDescription ?? "")")
                 completion(false)
                 return
@@ -70,10 +109,10 @@ class StoryPublishTask: AsynchronousOperation {
             web.request(
                 .publishStory(
                     url: token.urlString,
-                    type: storyType,
-                    topic: topic,
-                    pokeCenter: pokeCenter,
-                    contentRect: contentRect
+                    type: self.draft.storyType,
+                    topic: self.draft.topic,
+                    pokeCenter: self.draft.pokeCenter,
+                    contentRect: self.draft.contentRect
                 ),
                 completion: { (result) in
                     logger.debug(result)

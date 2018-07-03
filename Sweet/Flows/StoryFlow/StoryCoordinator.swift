@@ -79,7 +79,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
-        controller.onFinished = { [weak self] _ in
+        controller.onFinished = { [weak self] in
             if self?.isDismissable == true {
                 self?.dismiss()
             } else {

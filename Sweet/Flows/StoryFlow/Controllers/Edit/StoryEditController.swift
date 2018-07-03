@@ -14,7 +14,7 @@ import SwiftyUserDefaults
 
 final class StoryEditController: BaseViewController, StoryEditView, StoryEditCancellable {
     var onCancelled: (() -> Void)?
-    var onFinished: ((URL) -> Void)?
+    var onFinished: (() -> Void)?
     var presentable: UIViewController { return self }
     private let fileURL: URL
     private let isPhoto: Bool
@@ -291,73 +291,47 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     @objc private func didPressFinishButton() {
         previewController.stopPreview()
         let image = editContainerView.screenshot()
-        let filter = previewController.currentFilter()
+        let filterName = previewController.currentFilterName()
+        let overlayFilename = image?.writeToCache(withAlpha: true)?.lastPathComponent
         if isPhoto {
-            storyGenerator.generateImage(with: fileURL, filter: filter, overlay: image) { [weak self] (url) in
-                guard let `self` = self else { return }
-                guard let url = url else {
-                    logger.error("story generate failed")
-                    return
-                }
-                self.finish(
-                    with: url,
-                    storyType: .image,
-                    topic: self.topic,
-                    pokeCenter: nil,
-                    contentRect: nil
-                )
-            }
+            var draft = StoryDraft(filename: fileURL.lastPathComponent, storyType: .image, date: Date())
+            draft.topic = topic
+            draft.overlayFilename = overlayFilename
+            draft.filterFilename = filterName
+            finish(with: draft)
         } else {
-            storyGenerator.generateVideo(with: fileURL, filter: filter, overlay: image) { [weak self] (url) in
-                guard let `self` = self else { return }
-                guard let url = url else {
-                    logger.error("story generate failed")
-                    return
-                }
-                var pokeCenter: CGPoint?
-                let type: StoryType
-                var contentRect: CGRect?
-                if self.textController.hasText && self.textController.topic != nil {
-                    contentRect = self.textController.boundingRect
-                }
-                if !self.pokeView.isHidden {
-                    type = .poke
-                    let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / (self.view.bounds.width / 2)
-                    let centerY = (self.pokeView.center.y - self.view.bounds.width / 2) / (self.view.bounds.height / 2)
-                    pokeCenter = CGPoint(
-                        x: min(max(centerX, -0.5), 0.5),
-                        y: min(max(centerY, -0.5), 0.5)
-                    )
-                } else {
-                    type = .video
-                }
-                self.finish(
-                    with: url,
-                    storyType: type,
-                    topic: self.topic,
-                    pokeCenter: pokeCenter,
-                    contentRect: contentRect
-                )
+            var pokeCenter: CGPoint?
+            let type: StoryType
+            var contentRect: CGRect?
+            if self.textController.hasText && self.textController.topic != nil {
+                contentRect = self.textController.boundingRect
             }
+            if !self.pokeView.isHidden {
+                type = .poke
+                let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / (self.view.bounds.width / 2)
+                let centerY = (self.pokeView.center.y - self.view.bounds.width / 2) / (self.view.bounds.height / 2)
+                pokeCenter = CGPoint(
+                    x: min(max(centerX, -0.5), 0.5),
+                    y: min(max(centerY, -0.5), 0.5)
+                )
+            } else {
+                type = .video
+            }
+            var draft = StoryDraft(filename: fileURL.lastPathComponent, storyType: type, date: Date())
+            draft.topic = topic
+            draft.pokeCenter = pokeCenter
+            draft.contentRect = contentRect
+            draft.overlayFilename = overlayFilename
+            draft.filterFilename = filterName
+            finish(with: draft)
         }
     }
 
-    private func finish(
-        with url: URL,
-        storyType: StoryType,
-        topic: String?,
-        pokeCenter: CGPoint?,
-        contentRect: CGRect?) {
-        let filename = url.lastPathComponent
-        logger.debug(filename)
-        var draft = StoryDraft(filename: filename, storyType: storyType, date: Date())
-        draft.topic = topic
-        draft.pokeCenter = pokeCenter
-        draft.contentRect = contentRect
+    private func finish(with draft: StoryDraft) {
         TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
         previewController.view.hero.id = "avatar"
         Defaults[.isPersonalStoryChecked] = false
-        onFinished?(url)
+        onFinished?()
     }
 }
 
