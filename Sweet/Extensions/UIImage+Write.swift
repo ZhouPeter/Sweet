@@ -9,10 +9,20 @@
 import UIKit
 
 extension UIImage {
-    func writeToCache() -> URL? {
-        guard let data = UIImageJPEGRepresentation(self, 0.8) else { return nil }
+    func writeToCache(withAlpha: Bool) -> URL? {
+        let data: Data
+        let suffix: String
+        if withAlpha {
+            guard let image = UIImagePNGRepresentation(self) else { return nil }
+            data = image
+            suffix = ".png"
+        } else {
+            guard let image = UIImageJPEGRepresentation(self, 0.8) else { return nil }
+            data = image
+            suffix = ".jpg"
+        }
         do {
-            let url = URL.photoCacheURL(withName: UUID().uuidString + ".jpg")
+            let url = URL.photoCacheURL(withName: UUID().uuidString + suffix)
             try data.write(to: url)
             return url
         } catch {

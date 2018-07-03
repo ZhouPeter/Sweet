@@ -31,6 +31,7 @@
 @property (strong, nonatomic) LookupFilter *backFilter;
 @property (strong, nonatomic) LookupFilter *foreFilter;
 @property (assign, nonatomic) BOOL isFilterSwitching;
+@property (strong, nonatomic) NSArray <NSString *> *filterNames;
 
 @end
 
@@ -83,6 +84,10 @@
     return [self makeFilterWithIndex:self.filterIndex];
 }
 
+- (NSString *)currentFilterName {
+    return self.filterNames[self.filterIndex];
+}
+
 #pragma mark - Private
 
 - (void)setupPreviews {
@@ -114,6 +119,7 @@
 }
 
 - (void)setupFilters {
+    self.filterNames = @[@"NA", @"S", @"Fe", @"Cu", @"C"];
     self.lookupImages = @[[UIImage imageNamed:@"NA"],
                           [UIImage imageNamed:@"S"],
                           [UIImage imageNamed:@"Fe"],

@@ -74,19 +74,6 @@ class WebViewController: BaseViewController {
             }
         }
     }
-    
-    private func handleError(error: Error) {
-        guard
-            let urlString = (error as NSError).userInfo[NSURLErrorFailingURLStringErrorKey] as? String,
-            let url = URL(string: urlString),
-            UIApplication.shared.canOpenURL(url)
-        else { return }
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
 }
 
 extension WebViewController: WKNavigationDelegate {
@@ -97,14 +84,6 @@ extension WebViewController: WKNavigationDelegate {
         }
         decisionHandler(.allow)
     }
-    
-//    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-//        handleError(error: error)
-//    }
-//    
-//    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-//        handleError(error: error)
-//    }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         progressView.setProgress(1, animated: true)

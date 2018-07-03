@@ -14,6 +14,13 @@ enum StoryType: UInt, Codable {
     case video
     case text
     case poke
+    
+    var isVideoFile: Bool {
+        if self == .video || self == .poke {
+            return true
+        }
+        return false
+    }
 }
 
 struct StoryListResponse: Codable {

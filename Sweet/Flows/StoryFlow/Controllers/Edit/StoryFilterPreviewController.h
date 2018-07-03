@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stopPreview;
 - (void)didPan:(UIPanGestureRecognizer *)recognizer;
 - (LookupFilter *)currentFilter;
+- (NSString *)currentFilterName;
 
 @end
 
