@@ -25,7 +25,7 @@ struct ContentVideoCardViewModel {
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!
-        contentTextAttributed = self.contentString.getTextAttributed(lineSpacing: 6)
+        contentTextAttributed = self.contentString.getTextAttributed(lineSpacing: 5)
         cardId = model.cardId
         contentId = model.contentId
         videoURL = URL(string: model.video!)!

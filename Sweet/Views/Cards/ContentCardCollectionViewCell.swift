@@ -18,12 +18,12 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
 
 class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentCardViewModel
-    private var viewModel: ViewModelType?
-    private lazy var contentLabel: UILabel = {
+    var viewModel: ViewModelType?
+    lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         return label
     } ()
     
@@ -64,19 +64,21 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                              emojiType: viewModel.emojiDisplayType)
         }
     }
-    
+    var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
+        contentLabelHeight = contentLabel.constrain(height: contentLabel.font.lineHeight)
         customContent.addSubview(contentImageView)
         contentImageView.align(.left, to: customContent, inset: 5)
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
-        contentImageView.heightAnchor.constraint(
-                equalTo: contentImageView.widthAnchor,
-                multiplier: 1).isActive = true
+//        contentImageView.heightAnchor.constraint(
+//                equalTo: contentImageView.widthAnchor,
+//                multiplier: 1).isActive = true
+        contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
         
@@ -124,8 +126,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        update(with: viewModel.contentImages)
+        contentLabel.lineBreakMode = .byTruncatingTail
+//        update(with: viewModel.contentImages)
+        update(with: viewModel.imageURLList)
         resetEmojiView()
+    }
+    
+    private func update(with imageURLs: [URL]?) {
+        layout(urls: imageURLs)
     }
     
     private func update(with images: [[ContentImage]]?) {

@@ -28,4 +28,14 @@ extension String {
         return attributedString
     }
     
+    func boundingSize(font: UIFont, size: CGSize, lineSpacing: CGFloat) -> CGSize{
+        let text = self as NSString
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        let attributes = [NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                          NSAttributedStringKey.font: font]
+        let option = NSStringDrawingOptions.usesLineFragmentOrigin
+        let rect: CGRect = text.boundingRect(with: size, options: option, attributes: attributes, context: nil)
+        return rect.size
+    }
 }
