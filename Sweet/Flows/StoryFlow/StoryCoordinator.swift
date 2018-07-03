@@ -80,6 +80,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
             self?.router.popFlow(animated: true)
         }
         controller.onFinished = { [weak self] in
+            self?.recordView?.isAvatarCircleAnamtionEnabled = true
             if self?.isDismissable == true {
                 self?.dismiss()
             } else {
@@ -93,6 +94,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         let controller = factory.makeStoryTextView(with: topic, user: user)
         controller.onFinished = { [weak self] in
             self?.recordView?.chooseCameraRecord()
+            self?.recordView?.isAvatarCircleAnamtionEnabled = true
             self?.router.popFlow(animated: true)
         }
         controller.onCancelled = { [weak self] in

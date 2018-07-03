@@ -18,6 +18,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     var onAlbumChoosed: ((String?) -> Void)?
     var onDismissed: (() -> Void)?
     var onAvatarButtonPressed: (() -> Void)?
+    var isAvatarCircleAnamtionEnabled: Bool = false
     
     override var prefersStatusBarHidden: Bool { return true }
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
@@ -84,6 +85,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.contentMode = .scaleAspectFill
         view.image = #imageLiteral(resourceName: "StoryUnread")
         return view
+    } ()
+    
+    private lazy var avatarCircleMask: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.lineWidth = 2
+        layer.lineCap = kCALineCapRound
+        layer.fillColor = nil
+        layer.strokeColor = UIColor.white.cgColor
+        layer.transform = CATransform3DMakeRotation(-CGFloat.pi * 0.5, 0, 0, 1)
+        return layer
     } ()
     
     private lazy var menuButton: UIButton = {
@@ -169,9 +180,38 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.hideTopControls(false)
             self.bottomView.alpha = 1
             self.topicButton.alpha = 1
-            self.avatarCircle.alpha = Defaults[.isPersonalStoryChecked] == false ? 1 : 0
         }, completion: nil)
         shootButton.resetProgress()
+        avatarCircle.isHidden = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateAvatarCircle()
+    }
+    
+    private func animateAvatarCircle() {
+        if isAvatarCircleAnamtionEnabled {
+            avatarCircle.isHidden = false
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.duration = 0.5
+            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            avatarCircleMask.add(animation, forKey: nil)
+        } else {
+            if Defaults[.isPersonalStoryChecked] {
+                avatarCircle.isHidden = true
+            } else {
+                avatarCircle.isHidden = false
+            }
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        avatarCircleMask.frame = CGRect(origin: .zero, size: avatarCircle.bounds.size)
+        avatarCircleMask.path = UIBezierPath(ovalIn: avatarCircleMask.bounds.insetBy(dx: 1, dy: 1)).cgPath
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -202,7 +242,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         bottomView.selectBottomButton(at: 1, animated: false)
         switchStoryType(.record, animated: false)
     }
-    
+        
     // MARK: - Delay camera close
     
     private let cameraDelayQueue = DispatchQueue.global()
@@ -411,6 +451,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         avatarButton.align(.top, to: recordContainer, inset: 10)
         avatarCircle.equal(.size, to: avatarButton)
         avatarCircle.center(to: avatarButton)
+        avatarCircle.layer.mask = avatarCircleMask
         menuButton.constrain(width: 40, height: 40)
         menuButton.centerY(to: avatarButton)
         menuButton.pin(.right, to: avatarButton, spacing: 10)
