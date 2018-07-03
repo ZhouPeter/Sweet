@@ -11,7 +11,7 @@ import MessageKit
 import Kingfisher
 
 final class StoryMessageCell: MediaMessageCell {
-    private lazy var thumbnailImageView: UIImageView = {
+    lazy var thumbnailImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         return view

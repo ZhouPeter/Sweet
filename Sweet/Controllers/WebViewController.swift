@@ -39,11 +39,12 @@ class WebViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         view.addSubview(webView)
-        webView.fill(in: view, top: UIScreen.navBarHeight())
+        webView.fill(in: view, top: topLayoutGuide.length)
         view.addSubview(progressView)
         progressView.constrain(height: 2)
         progressView.align(.top, to: view, inset: UIScreen.navBarHeight())
@@ -73,19 +74,6 @@ class WebViewController: BaseViewController {
             }
         }
     }
-    
-    private func handleError(error: Error) {
-        guard
-            let urlString = (error as NSError).userInfo[NSURLErrorFailingURLStringErrorKey] as? String,
-            let url = URL(string: urlString),
-            UIApplication.shared.canOpenURL(url)
-        else { return }
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
 }
 
 extension WebViewController: WKNavigationDelegate {
@@ -95,14 +83,6 @@ extension WebViewController: WKNavigationDelegate {
             webView.load(navigationAction.request)
         }
         decisionHandler(.allow)
-    }
-    
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        handleError(error: error)
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        handleError(error: error)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

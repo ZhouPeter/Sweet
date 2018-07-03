@@ -90,8 +90,8 @@ ProfileFlowFactory {
         return StoryRecordController(user: user)
     }
     
-    func makeStoryEditView(fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
-        return StoryEditController(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+    func makeStoryEditView(user: User, fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
+        return StoryEditController(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
     }
     
     func makeDismissableStoryRecordView(user: User, topic: String?) -> StoryRecordView {
@@ -110,8 +110,8 @@ ProfileFlowFactory {
         return TopicListController()
     }
     
-    func makeStoryTextView(with topic: String?) -> StoryTextView {
-        return StoryTextController(topic: topic)
+    func makeStoryTextView(with topic: String?, user: User) -> StoryTextView {
+        return StoryTextController(user: user, topic: topic)
     }
     
     func makeAlbumView() -> AlbumView {
@@ -140,13 +140,15 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
                              currentIndex: Int,
                              currentStart: Int,
                              fromCardId: String?,
+                             fromMessageId: String?,
                              delegate: StoriesPlayerGroupViewControllerDelegate?) -> StoriesGroupView {
         let controller = StoriesPlayerGroupViewController(
             user: user,
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
             currentStart: currentStart,
-            fromCardId: fromCardId)
+            fromCardId: fromCardId,
+            fromMessageId: fromMessageId)
         controller.delegate = delegate
         return controller
     }

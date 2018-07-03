@@ -9,9 +9,14 @@
 import UIKit
 import SwiftyUserDefaults
 protocol InviteView: BaseView {
-    
+    var delegate: InviteViewDelegate? { get set }
+}
+
+protocol InviteViewDelegate: class {
+    func showProfile(userId: UInt64)
 }
 class InviteController: BaseViewController, InviteView {
+    weak var delegate: InviteViewDelegate?
     private var viewModels = [PhoneContactViewModel]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -54,6 +59,7 @@ class InviteController: BaseViewController, InviteView {
         tableView.fill(in: view)
         loadPhoneContactList()
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
@@ -159,6 +165,10 @@ extension InviteController: UITableViewDelegate {
                         logger.error(error)
                     }
                 }
+            }
+        } else if indexPath.section == 1 {
+            if let userId = viewModels[indexPath.row].userId {
+                delegate?.showProfile(userId: userId)
             }
         }
     }

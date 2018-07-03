@@ -8,7 +8,6 @@
 
 import Foundation
 enum EmojiViewDisplay{
-    case `default`
     case show
     case allShow
 }
@@ -24,7 +23,8 @@ struct ContentCardViewModel {
     var resultUseIDs: [UInt64]?
     var resultComment: String?
     let defaultImageNameList: [String]
-    var emojiDisplayType: EmojiViewDisplay = .default
+    let defaultEmojiList: [Int]
+    var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
@@ -45,6 +45,8 @@ struct ContentCardViewModel {
             resultUseIDs =  model.result?.contactUserList.compactMap({ $0.userId })
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
+        defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
+
     }
     
    

@@ -22,6 +22,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     private let user: User
     private let isDismissable: Bool
     private let topic: String?
+    private weak var recordView: StoryRecordView?
     
     init(user: User,
          router: Router,
@@ -51,6 +52,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         } else {
             controller = factory.makeStoryRecordView(user: user)
         }
+        recordView = controller
         controller.onRecorded = { [weak self] url, isPhoto, topic in
             self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
         }
@@ -73,11 +75,12 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     private func showStoryEditView(with fileURL: URL, isPhoto: Bool, topic: String?) {
-        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+        let controller = factory.makeStoryEditView(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
-        controller.onFinished = { [weak self] _ in
+        controller.onFinished = { [weak self] in
+            self?.recordView?.isAvatarCircleAnamtionEnabled = true
             if self?.isDismissable == true {
                 self?.dismiss()
             } else {
@@ -88,8 +91,10 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     private func showStoryTextView(with topic: String?) {
-        let controller = factory.makeStoryTextView(with: topic)
+        let controller = factory.makeStoryTextView(with: topic, user: user)
         controller.onFinished = { [weak self] in
+            self?.recordView?.chooseCameraRecord()
+            self?.recordView?.isAvatarCircleAnamtionEnabled = true
             self?.router.popFlow(animated: true)
         }
         controller.onCancelled = { [weak self] in
@@ -133,7 +138,6 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                 }
         }
     }
-    
     
     private func addStoryPlayerCoordinator(_ storiesGroup: [[StoryCellViewModel]]) {
         let navigation = UINavigationController()

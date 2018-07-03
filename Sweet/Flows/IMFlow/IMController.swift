@@ -56,7 +56,8 @@ class IMController: BaseViewController, IMView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barTintColor = UIColor.xpNavPurple()
+        let colors = [UIColor(hex: 0xDD9AFD), UIColor(hex: 0xB861FB)]
+        navigationController?.navigationBar.setBackgroundGradientImage(colors: colors)
         navigationController?.navigationBar.barStyle = .black
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         if isInboxShown {

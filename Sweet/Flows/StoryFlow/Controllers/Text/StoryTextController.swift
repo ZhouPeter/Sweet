@@ -57,11 +57,11 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         button.enableShadow()
         return button
     } ()
+    private let user: User
     
-    private lazy var publisher = StoryPublisher()
-    
-    init(topic: String?) {
+    init(user: User, topic: String?) {
         self.topic = topic
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -126,22 +126,20 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     @objc private func didPressFinishButton() {
         finishButton.alpha = 0
         closeButton.alpha = 0
-        var fileURL: URL?
+        var filename: String?
         if let image = view.screenshot(afterScreenUpdates: true) {
-            fileURL = image.writeToCache()
+            filename = image.writeToCache(withAlpha: true)?.lastPathComponent
         }
-        finishButton.alpha = 1
-        closeButton.alpha = 1
-        
-        guard let url = fileURL else {
-            logger.error("url is nil")
+        guard let name = filename else {
+            logger.error("filename is nil")
             return
         }
-        publisher.publish(with: url, storyType: .text, topic: topic) { [weak self] (result) in
-            logger.debug(result)
-            Defaults[.isPersonalStoryChecked] = false
-            self?.onFinished?()
-        }
+        var draft = StoryDraft(filename: name, storyType: .text, date: Date())
+        draft.topic = topic
+        TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
+        Defaults[.isPersonalStoryChecked] = false
+        view.hero.id = "avatar"
+        onFinished?()
     }
     
     @objc private func didPressCloseButton() {

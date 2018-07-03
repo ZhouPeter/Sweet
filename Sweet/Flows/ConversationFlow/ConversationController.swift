@@ -66,6 +66,7 @@ final class ConversationController: MessagesViewController, ConversationView {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
@@ -302,11 +303,14 @@ extension ConversationController: MessageCellDelegate {
                 case .success(let response):
                     self.delegate?.conversationControllerShowsStory(
                         StoryCellViewModel(model: response.story),
-                        user: message.from == self.user.userId ? self.user : self.buddy
+                        user: message.from == self.user.userId ? self.user : self.buddy,
+                        messageId: message.messageId
                     )
-                    cell.hero.isEnabled = true
-                    cell.hero.id = "\(response.story.userId)"
-                    cell.hero.modifiers = [.arc]
+                    if let cell = cell as? StoryMessageCell {
+                        cell.thumbnailImageView.hero.isEnabled = true
+                        cell.thumbnailImageView.hero.id = "\(response.story.userId)" + message.messageId
+                        cell.thumbnailImageView.hero.modifiers = [.arc]
+                    }
                 }
             }
         }

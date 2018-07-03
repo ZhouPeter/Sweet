@@ -52,7 +52,7 @@ class ProfileController: BaseViewController, ProfileView {
             }
         }
     }
-    private var actionsController: ActionsController!
+    private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
     private var isFirstLoad = true
     private lazy var tableView: UITableView = {
@@ -109,7 +109,6 @@ class ProfileController: BaseViewController, ProfileView {
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
-        readLocalData()
     }
     
     func readLocalData() {
@@ -135,6 +134,7 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
@@ -244,8 +244,8 @@ extension ProfileController {
             self.actionsController = ActionsController(user: User(self.userResponse!),
                                                        mine: self.user,
                                                        setTop: self.setTop)
-            self.actionsController.showStoriesPlayerView = self.showStoriesPlayerView
-            self.add(childViewController: self.actionsController, addView: false)
+            self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
+            self.add(childViewController: self.actionsController!, addView: false)
         }
         self.saveUserData()
         self.updateViewModel()
@@ -281,6 +281,7 @@ extension ProfileController {
                 completion?(true)
             case let .failure(error):
                 logger.error(error)
+                self.readLocalData()
                 completion?(false)
             }
         }
@@ -310,8 +311,6 @@ extension ProfileController {
         self.baseInfoViewModel?.sendMessageAction = { [weak self] in
             if let user = self?.user, let buddy = self?.userResponse {
                 self?.showConversation?(user, User(buddy))
-//                let conversationController = ConversationController(user: user, buddy: User(buddy))
-//                self?.navigationController?.pushViewController(conversationController, animated: true)
             }
         }
     }
@@ -335,7 +334,7 @@ extension ProfileController: UITableViewDelegate {
 
 extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return baseInfoViewModel == nil ? 0 : 2
+        return (baseInfoViewModel == nil || actionsController == nil) ? 0 : 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -352,7 +351,9 @@ extension ProfileController: UITableViewDataSource {
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
            cell.delegate = self
-           cell.setPlaceholderContentView(view: actionsController.view)
+            if let view = actionsController?.view {
+                cell.setPlaceholderContentView(view: view)
+            }
            return cell
         }
     }
@@ -360,6 +361,6 @@ extension ProfileController: UITableViewDataSource {
 
 extension ProfileController: ActionsTableViewCellDelegate {
     func selectedAction(at index: Int) {
-        actionsController.scrollToPage(.at(index: index), animated: true)
+        actionsController?.scrollToPage(.at(index: index), animated: true)
     }
 }

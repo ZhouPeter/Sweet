@@ -22,7 +22,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
     private let user: User
-    private let userID: UInt64
+    private let buddyID: UInt64
     private let setTop: SetTop?
     init(user: User,
          userID: UInt64,
@@ -31,7 +31,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
          factory: ProfileFlowFactory,
          coordinatorFactory: CoordinatorFactory) {
         self.user = user
-        self.userID = userID
+        self.buddyID = userID
         self.setTop = setTop
         self.router = router
         self.factory = factory
@@ -52,7 +52,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     
     // MARK: - Private
     private func showProfile(isPresent: Bool = false) {
-        let profile = factory.makeProfileView(user: user, userId: userID, setTop: setTop)
+        let profile = factory.makeProfileView(user: user, userId: buddyID, setTop: setTop)
         profile.showAbout = { [weak self] (user) in
             self?.showAbout(user: user)
         }
@@ -94,12 +94,18 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        current: Int,
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
+//        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
+//                                                                        navigation: navigation,
+//                                                                        current: 0,
+//                                                                        currentStart: current,
+//                                                                        isGroup: false,
+//                                                                        fromCardId: nil,
+//                                                                        storiesGroup: [stories],
+//                                                                        delegate: delegate)
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
                                                                         navigation: navigation,
-                                                                        current: 0,
                                                                         currentStart: current,
-                                                                        isGroup: false,
-                                                                        fromCardId: nil, 
+                                                                        fromUserId: buddyID,
                                                                         storiesGroup: [stories],
                                                                         delegate: delegate)
         coordinator.finishFlow = { [weak self, weak coordinator] in

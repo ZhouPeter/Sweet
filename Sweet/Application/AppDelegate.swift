@@ -10,14 +10,14 @@ import UIKit
 import SwiftyUserDefaults
 import AVKit
 import VolumeBar
-
+import Contacts
 var allowRotation = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var rootController = UINavigationController()
+    var rootController = UINavigationController(rootViewController: RootViewController())
 
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -43,14 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(logoutAuth),
-                                               name: NSNotification.Name(logoutNotiName),
-                                               object: nil)
         WXApi.registerApp("wx819697effecdb6f5")
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)
+        uploadContacts()
+        addObservers()
         return true
     }
     
@@ -89,6 +87,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - Privates
 extension AppDelegate {
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(logoutAuth),
+                                               name: NSNotification.Name(logoutNotiName),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(contactStoreDidChange(_:)),
+                                               name: NSNotification.Name.CNContactStoreDidChange,
+                                               object: nil)
+    }
+    @objc private func uploadContacts() {
+        if web.tokenSource.token != nil {
+            let contacts = Contacts.getContacts()
+            web.request(.uploadContacts(contacts: contacts)) { (_) in }
+        }
+    }
+    @objc private func contactStoreDidChange(_ notification: NSNotification) {
+        uploadContacts()
+    }
+    
     private func getSetting() {
         let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
         web.request(.getSetting(version: version!)) { (result) in

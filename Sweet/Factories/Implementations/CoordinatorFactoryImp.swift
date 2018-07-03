@@ -9,6 +9,29 @@
 import UIKit
 
 final class CoordinatorFactoryImp: CoordinatorFactory {
+    func makeStoryPlayerCoordinator(
+        user: User,
+        navigation: UINavigationController?,
+        fromMessageId: String?,
+        storiesGroup: [[StoryCellViewModel]]) -> Coordinator & StoryPlayerCoordinatorOutput {
+        return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
+                                      coordinatorFactory: CoordinatorFactoryImp(),
+                                      storiesGroup: storiesGroup, fromMessageId: fromMessageId)
+    }
+    
+    func makeStoryPlayerCoordinator(
+        user: User,
+        navigation: UINavigationController?,
+        currentStart: Int,
+        fromUserId: UInt64?,
+        storiesGroup: [[StoryCellViewModel]],
+        delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
+        return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
+                                      coordinatorFactory: CoordinatorFactoryImp(), storiesGroup: storiesGroup,
+                                      current: 0, currentStart: currentStart, delegate: delegate,
+                                      isGroup: false, fromCardId: nil, fromUserId: fromUserId)
+    }
+    
     func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
             user: user,

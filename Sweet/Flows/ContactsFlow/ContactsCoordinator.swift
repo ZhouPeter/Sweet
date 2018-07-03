@@ -39,42 +39,49 @@ extension ContactsCoordinator: ContactsViewDelegate {
     func contactsShowSubscription() {
         let subscriptionView = factory.makeSubscriptionOutput()
         subscriptionView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
+            self?.addProfileCoordinator(userID: userId)
         }
         router.push(subscriptionView)
     }
     
     func contactsShowInvite() {
         let inviteView = factory.makeInviteOutput()
+        inviteView.delegate = self
         router.push(inviteView)
     }
     
     func contactsShowBlock() {
         let blockView = factory.makeBlockOutput()
         blockView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
+            self?.addProfileCoordinator(userID: userId)
         }
         router.push(blockView)
     }
     
     func contactsShowProfile(userID: UInt64) {
-        showProfile(userID: userID)
+        addProfileCoordinator(userID: userID)
     }
     
     func contactsShowBlack() {
         let blackView = factory.makeBlackOutput()
         blackView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
+            self?.addProfileCoordinator(userID: userId)
         }
         router.push(blackView)
     }
     
-    private func showProfile(userID: UInt64) {
+    private func addProfileCoordinator(userID: UInt64) {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userID, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
         coordinator.start()
+    }
+}
+
+extension ContactsCoordinator: InviteViewDelegate {
+    func showProfile(userId: UInt64) {
+        addProfileCoordinator(userID: userId)
     }
 }

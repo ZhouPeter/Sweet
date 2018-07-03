@@ -13,7 +13,7 @@ protocol ConversationControllerDelegate: class {
     func conversationControllerReports(buddy: User)
     func conversationController(_ controller: ConversationController, blocksBuddy buddy: User)
     func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User)
-    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User)
+    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User, messageId: String)
     func conversationDidFinish()
 }
 

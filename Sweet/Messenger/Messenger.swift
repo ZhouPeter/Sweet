@@ -382,6 +382,7 @@ final class Messenger {
         var userIDsNotSaved = [UInt64]()
         storage?.write({ (realm) in
             userIDs.forEach({ (userID) in
+                guard userID != myID else { return }
                 guard let userData = realm.object(ofType: UserData.self, forPrimaryKey: Int64(userID)) else {
                     userIDsNotSaved.append(userID)
                     return

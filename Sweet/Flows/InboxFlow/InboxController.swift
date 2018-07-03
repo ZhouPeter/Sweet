@@ -31,7 +31,7 @@ final class InboxController: BaseViewController, InboxView {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(tableView)
-        tableView.fill(in: view, top: UIScreen.navBarHeight())
+        tableView.fill(in: view)
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         } else {
