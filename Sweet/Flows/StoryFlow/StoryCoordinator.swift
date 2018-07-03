@@ -75,7 +75,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     private func showStoryEditView(with fileURL: URL, isPhoto: Bool, topic: String?) {
-        let controller = factory.makeStoryEditView(fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+        let controller = factory.makeStoryEditView(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
@@ -90,7 +90,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     private func showStoryTextView(with topic: String?) {
-        let controller = factory.makeStoryTextView(with: topic)
+        let controller = factory.makeStoryTextView(with: topic, user: user)
         controller.onFinished = { [weak self] in
             self?.recordView?.chooseCameraRecord()
             self?.router.popFlow(animated: true)
@@ -136,7 +136,6 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                 }
         }
     }
-    
     
     private func addStoryPlayerCoordinator(_ storiesGroup: [[StoryCellViewModel]]) {
         let navigation = UINavigationController()
