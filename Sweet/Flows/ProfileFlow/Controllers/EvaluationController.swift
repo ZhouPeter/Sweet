@@ -139,7 +139,9 @@ extension EvaluationController {
                     } else {
                         return
                     }
-                    Messenger.shared.sendLike(from: from, to: toUserId, extra: String(evaluationId))
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendLike(from: from, to: toUserId, extra: String(evaluationId))
+                    )
                     if text != "" {
                         Messenger.shared.sendText(text, from: from, to: toUserId, extra: String(evaluationId))
                     }

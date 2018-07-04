@@ -20,6 +20,7 @@ enum CardRequest {
     case sub(cardId: String?, direction: Direction?)
 }
 let preloadingCount = 5
+
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
@@ -136,7 +137,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
-        Messenger.shared.addDelegate(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
