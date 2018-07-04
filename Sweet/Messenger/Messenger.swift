@@ -59,7 +59,9 @@ final class Messenger {
     private var messagesUnreadCount: Int? {
         didSet {
             if let count = messagesUnreadCount {
-                UIApplication.shared.applicationIconBadgeNumber = count
+                DispatchQueue.main.async {
+                    UIApplication.shared.applicationIconBadgeNumber = count
+                }
             }
         }
     }
