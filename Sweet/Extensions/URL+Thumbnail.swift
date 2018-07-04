@@ -11,7 +11,7 @@ import Foundation
 extension URL {
     func imageView2(size: CGSize) -> URL? {
         let scale = UIScreen.main.scale
-        if absoluteString.contains("?imageView2") {
+        if absoluteString.contains("?imageView2") || lastPathComponent.lowercased().hasSuffix(".gif") {
             return self
         } else {
             return URL(string: absoluteString +

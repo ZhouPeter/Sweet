@@ -9,7 +9,6 @@
 import Foundation
 
 extension ContentCardCollectionViewCell {
-    
     func layout(urls: [URL]?) {
         imageViews.forEach { view in
             view.alpha = 0
@@ -315,6 +314,7 @@ extension ContentCardCollectionViewCell {
             }
         }
     }
+    
     func seven(urls: [URL]) {
         let margin: CGFloat = 0
         let spacing: CGFloat = 3
@@ -514,13 +514,12 @@ extension ContentCardCollectionViewCell {
     }
 
     func setImage(url : URL?, imageView: UIImageView) {
-        imageView.kf.setImage(
-            with: url?.imageView2(size: imageView.bounds.size),
-            completionHandler: { (image, _, _, _) in
-                guard image != nil else { return }
-                UIView.animate(withDuration: 0.25, animations: {
-                    imageView.alpha = 1
-                })
+        guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
+        imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
+            guard image != nil else { return }
+            UIView.animate(withDuration: 0.25, animations: {
+                imageView.alpha = 1
+            })
         })
     }
 }

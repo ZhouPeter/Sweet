@@ -127,7 +127,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
         contentLabel.lineBreakMode = .byTruncatingTail
-//        update(with: viewModel.contentImages)
         update(with: viewModel.imageURLList)
         resetEmojiView()
     }
@@ -163,13 +162,12 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                 let container = imageViewContainers[viewIndex]
                 container.isHidden = false
                 container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
-                imageView.kf.setImage(
-                    with: URL(string: image.url)?.imageView2(size: imageView.bounds.size),
-                    completionHandler: { (image, _, _, _) in
-                        guard image != nil else { return }
-                        UIView.animate(withDuration: 0.25, animations: {
-                            imageView.alpha = 1
-                        })
+                let url = URL(string: image.url)?.imageView2(size: imageView.bounds.size)
+                imageView.kf.setImage(with: url, completionHandler: { (image, _, _, _) in
+                    guard image != nil else { return }
+                    UIView.animate(withDuration: 0.25, animations: {
+                        imageView.alpha = 1
+                    })
                 })
                 viewIndex += 1
                 x += container.bounds.width + spacing

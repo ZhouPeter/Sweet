@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyUserDefaults
+import JDStatusBarNotification
 
 extension CardsBaseController {
     func makeAlertController(status: StatusResponse,

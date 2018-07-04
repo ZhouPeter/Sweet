@@ -10,6 +10,8 @@ import UIKit
 import Pageboy
 import VolumeBar
 import Reachability
+import JDStatusBarNotification
+
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
         return self.topViewController

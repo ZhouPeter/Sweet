@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyUserDefaults
 import JXPhotoBrowser
+import JDStatusBarNotification
 
 // MARK: - ChoiceCardCollectionViewCellDelegate
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
