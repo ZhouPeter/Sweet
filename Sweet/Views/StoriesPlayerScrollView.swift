@@ -103,7 +103,7 @@ extension StoriesPlayerScrollView {
             if let videoURL = story.videoURL {
                 imageView.kf.setImage(with: videoURL.videoThumbnail())
             } else if let imageURL = story.imageURL {
-                imageView.kf.setImage(with: imageURL.middleCutting(size: imageView.bounds.size))
+                imageView.kf.setImage(with: imageURL.imageView2(size: imageView.bounds.size))
             }
         } else {
             imageView.image = nil

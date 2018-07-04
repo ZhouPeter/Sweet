@@ -35,7 +35,8 @@ final class ContentCardMessageCell: MediaMessageCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ContentCardContent else { return }
         label.text = content.text
-        imageView.kf.setImage(with: URL(string: content.imageURLString))
+        imageView.kf
+            .setImage(with: URL(string: content.imageURLString)?.imageView2(size: imageView.bounds.size))
         showLoading(false)
     }
     

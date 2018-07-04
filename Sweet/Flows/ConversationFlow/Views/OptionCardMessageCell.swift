@@ -55,8 +55,10 @@ final class OptionCardMessageCell: MediaMessageCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? OptionCardContent else { return }
         label.text = content.text
-        leftOptionImageView.kf.setImage(with: URL(string: content.leftImageURLString))
-        rightOptionImageView.kf.setImage(with: URL(string: content.rightImageURLString))
+        leftOptionImageView.kf
+            .setImage(with: URL(string: content.leftImageURLString)?.imageView2(size: leftOptionImageView.bounds.size))
+        rightOptionImageView.kf
+            .setImage(with: URL(string: content.rightImageURLString)?.imageView2(size: leftOptionImageView.bounds.size))
         leftResultView.isHidden = content.result != .left
         rightResultView.isHidden = content.result != .right
         showLoading(false)

@@ -515,7 +515,7 @@ extension ContentCardCollectionViewCell {
 
     func setImage(url : URL?, imageView: UIImageView) {
         imageView.kf.setImage(
-            with: url?.middleCutting(size: imageView.bounds.size),
+            with: url?.imageView2(size: imageView.bounds.size),
             completionHandler: { (image, _, _, _) in
                 guard image != nil else { return }
                 UIView.animate(withDuration: 0.25, animations: {

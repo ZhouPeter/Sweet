@@ -1209,6 +1209,10 @@
 		ACF1A70D20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
 		ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1A70B20919FDF0046BF21 /* ShootButton.swift */; };
+		ACF29FF220ECB89800959CE5 /* DeliverTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF29FF120ECB89800959CE5 /* DeliverTask.swift */; };
+		ACF29FF320ECB89800959CE5 /* DeliverTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF29FF120ECB89800959CE5 /* DeliverTask.swift */; };
+		ACF29FF420ECB89800959CE5 /* DeliverTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF29FF120ECB89800959CE5 /* DeliverTask.swift */; };
+		ACF29FF520ECB89800959CE5 /* DeliverTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF29FF120ECB89800959CE5 /* DeliverTask.swift */; };
 		ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
 		ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
 		ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
@@ -1693,6 +1697,7 @@
 		ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDraft.swift; sourceTree = "<group>"; };
 		ACF1A70B20919FDF0046BF21 /* ShootButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootButton.swift; sourceTree = "<group>"; };
+		ACF29FF120ECB89800959CE5 /* DeliverTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverTask.swift; sourceTree = "<group>"; };
 		ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		ACF2DEB82089E02F00660425 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		ACF2DEBD2089E04F00660425 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -2005,6 +2010,7 @@
 				AC616F9E20C6BE9600AD9004 /* Message */,
 				AC2A256D20BBF16B00A82E62 /* Messenger.swift */,
 				AC39E55320C7AF0800340564 /* Messenger+Send.swift */,
+				ACF29FF120ECB89800959CE5 /* DeliverTask.swift */,
 				AC956BA720C0246400B40D9A /* MessageTicket.swift */,
 				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
 				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
@@ -3104,6 +3110,7 @@
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9920B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */,
+				ACF29FF220ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				5803572120AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
@@ -3406,6 +3413,7 @@
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				58BD531920902C1A00F7C3E1 /* BaseInfoTableViewCell.swift in Sources */,
+				ACF29FF420ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
 				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
@@ -3953,6 +3961,7 @@
 				AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
+				ACF29FF520ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
@@ -4025,6 +4034,7 @@
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9A20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */,
+				ACF29FF320ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				5803572220AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,

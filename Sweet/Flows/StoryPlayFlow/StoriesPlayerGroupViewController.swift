@@ -240,7 +240,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
                 if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
                     return videoURL.videoThumbnail()
                 } else if let imageURL = story.imageURL {
-                    return imageURL.middleCutting(size: view.bounds.size)
+                    return imageURL.imageView2(size: view.bounds.size)
                 } else {
                     return nil
                 }
