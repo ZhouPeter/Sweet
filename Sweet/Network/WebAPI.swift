@@ -170,7 +170,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         case .removeRecentMessage:
             return "/message/del"
         case .getSetting:
-            return "/get/setting"
+            return "/setting/get"
         case .shareCard:
             return "/card/share"
         case .shareStory:

@@ -127,19 +127,25 @@ extension CardsBaseController {
         if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
             if card.type == .content, let content = content as? ContentCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
             } else if card.type == .choice, let content = content as? OptionCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
             } else if card.type == .evaluation, let content = content as? OptionCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
@@ -161,24 +167,6 @@ extension CardsBaseController: InputTextViewDelegate {
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-    }
-}
-
-extension CardsBaseController: MessengerDelegate {
-    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        if success {
-            if message.type == .card {
-                JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
-            } else if message.type == .like || message.type == .text {
-                JDStatusBarNotification.show(withStatus: "赞评成功", dismissAfter: 2)
-            }
-        } else {
-            if message.type == .card {
-                JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
-            } else if message.type == .like || message.type == .text {
-                JDStatusBarNotification.show(withStatus: "赞评失败", dismissAfter: 2)
-            }
-        }
     }
 }
 
@@ -207,7 +195,7 @@ extension CardsBaseController {
                     } else {
                         return
                     }
-                    Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
+                    waitingIMNotifications.append(Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId))
                     if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
                 case let .failure(error):

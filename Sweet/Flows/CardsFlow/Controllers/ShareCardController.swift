@@ -51,7 +51,11 @@ class ShareCardController: BaseViewController {
         tableView.dataSource = self
         return tableView
     }()
-    
+    private lazy var segmentLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.xpSeparatorGray()
+        return view
+    }()
     private lazy var shareTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "分享的话..."
@@ -138,7 +142,7 @@ class ShareCardController: BaseViewController {
         tableView.align(.left)
         tableView.align(.right)
         tableView.pin(.bottom, to: topView)
-        tableView.pin(.top, to: shareTextField)
+        tableView.pin(.top, to: segmentLineView)
 
     }
     
@@ -169,6 +173,11 @@ class ShareCardController: BaseViewController {
         shareTextField.align(.right)
         shareTextField.pin(.top, to: sendButton)
         shareTextField.constrain(height: 50)
+        view.addSubview(segmentLineView)
+        segmentLineView.align(.left)
+        segmentLineView.align(.right)
+        segmentLineView.constrain(height: 0.5)
+        segmentLineView.pin(.top, to: shareTextField)
     }
     private var contactViewModels = [ContactViewModel]()
 

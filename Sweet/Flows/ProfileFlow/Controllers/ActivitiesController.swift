@@ -145,7 +145,9 @@ extension ActivitiesController {
                     } else {
                         return
                     }
-                    Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
                     self.requestActivityLike(activityId: activityId, comment: text)
                 case let .failure(error):
