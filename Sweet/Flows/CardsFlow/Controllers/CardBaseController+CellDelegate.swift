@@ -71,7 +71,6 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 self.cards[index].result = SelectResult(contactUserList: [SelectResult.UserAvatar](),
                                                         index: selectedIndex,
                                                         percent: 0,
-                                                        comment: nil,
                                                         emoji: nil)
                 let viewModel = EvaluationCardViewModel(model: self.cards[index])
                 let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
@@ -95,11 +94,16 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
-        let controller = ShareCardController()
-        controller.sendCallback = { (text, userIds) in
-            self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+        if let index = self.cards.index(where: { $0.cardId == cardId }) {
+            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
+                + "讲真APP，你的同学都在玩：" + "\n"
+                + "[机智]http://t.cn/RrXTSg5"
+            let controller = ShareCardController(shareText: text)
+            controller.sendCallback = { (text, userIds) in
+                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+            }
+            self.present(controller, animated: true, completion: nil)
         }
-        self.present(controller, animated: true, completion: nil)
     }
     
     func contentCardComment(cardId: String, emoji: Int) {
@@ -120,6 +124,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         Guide.showSameCardChoiceTip(with: rect)
                         Defaults[.isSameCardChoiceGuideShown] = true
                     }
+                    JDStatusBarNotification.show(withStatus: "表态成功", dismissAfter: 2)
                 case let .failure(error):
                     logger.error(error)
                 }

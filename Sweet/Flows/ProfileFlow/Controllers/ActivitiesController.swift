@@ -162,7 +162,6 @@ extension ActivitiesController {
                 let viewModel = ActivityViewModel(model: self.activityList[item])
                 self.viewModels[item] = viewModel
                 self.tableView.reloadRows(at: [IndexPath(row: item, section: 0)], with: .automatic)
-                self.toast(message: "❤️ 评价成功")
             case let  .failure(error):
                 logger.error(error)
             }

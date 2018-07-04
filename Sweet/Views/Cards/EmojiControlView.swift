@@ -16,13 +16,14 @@ protocol EmojiControlViewDelegate: NSObjectProtocol {
     func selectEmoji(emoji: Int)
     func didTapAvatar(index: Int)
 }
+
 class EmojiControlView: UIView {
     weak var delegate: EmojiControlViewDelegate?
     private lazy var openButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Open"), for: .normal)
         button.addTarget(self, action: #selector(openAction(sender:)), for: .touchUpInside)
-        button.contentHorizontalAlignment = .left
+        button.contentHorizontalAlignment = .right
         return button
     }()
     private lazy var resultImageView: UIImageView = {
@@ -51,6 +52,7 @@ class EmojiControlView: UIView {
     private lazy var avatarImageViews: [UIImageView] = {
         return [UIImageView(), UIImageView(), UIImageView()]
     }()
+    private var defaultEmojiList = [Int]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,11 +61,11 @@ class EmojiControlView: UIView {
         addGestureRecognizer(tap)
         setup()
     }
-    private var defaultEmojiList = [Int]()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func setup() {
         addSubview(resultImageView)
         addSubview(segmentView)
@@ -79,7 +81,8 @@ class EmojiControlView: UIView {
             addSubview($0)
         }
         emojiImageViews.forEach {
-            $0.frame = CGRect(x: 10, y: 9, width: 32, height: 32)
+            layoutIfNeeded()
+            $0.frame = CGRect(x: bounds.width - 10 - 32, y: 9, width: 32, height: 32)
             addSubview($0)
         }
         addSubview(openButton)
@@ -98,32 +101,35 @@ class EmojiControlView: UIView {
     }
     
     func updateResult(imageName: String, resultAvatarURLs: [URL]) {
-        var insetX: CGFloat = 10
+        layoutIfNeeded()
+        var insetX: CGFloat = bounds.width - 10 - 32
         let insetY: CGFloat = 9
+        let lineWidth: CGFloat = 1
         resultImageView.image = UIImage(named: imageName)
         resultImageView.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
         resultImageView.isHidden = false
-        insetX += emojiWidth + 8
+        insetX -= lineWidth + emojiSpace
         if resultAvatarURLs.count > 0 {
             segmentView.frame = CGRect(x: insetX, y: insetY, width: 1, height: emojiHeight)
             segmentView.isHidden = false
-            insetX += 8 + 1
+            insetX -= emojiWidth + emojiSpace
         }
         for (index, avatarURL) in resultAvatarURLs.enumerated() {
             avatarImageViews[index].frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
-            insetX += emojiWidth + emojiSpace
+            insetX -= emojiWidth + emojiSpace
             avatarImageViews[index].isHidden = false
             avatarImageViews[index].kf.setImage(with: avatarURL)
         }
     }
     
     func updateShow(indexs: [Int]) {
-        var insetX: CGFloat = 10
+        layoutIfNeeded()
+        var insetX: CGFloat = bounds.width - 10 - 32
         let insetY: CGFloat = 9
         indexs.forEach {
             emojiImageViews[$0 - 1].frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
             emojiImageViews[$0 - 1].isHidden = false
-            insetX += emojiWidth + emojiSpace
+            insetX -= emojiWidth + emojiSpace
             emojiImageViews[$0 - 1].image = UIImage(named: "Emoji\($0)")
             emojiImageViews[$0 - 1].tag = $0
         }
@@ -134,19 +140,20 @@ class EmojiControlView: UIView {
     func updateAllShow(indexs: [Int]) {
         updateShow(indexs: indexs)
         openButton.isHidden = true
-        var insetX: CGFloat = 10 + CGFloat(defaultEmojiList.count) * 40
+        layoutIfNeeded()
+        var insetX: CGFloat = bounds.width - 10 - 32 - CGFloat(defaultEmojiList.count) * 40
         let insetY: CGFloat = 9
         for (index, imageView) in emojiImageViews.enumerated() {
             logger.debug(imageView.tag)
             if !indexs.contains(imageView.tag) {
                 imageView.transform = .identity
                 UIView.animate(withDuration: 0.2) {
-                    let transform = CGAffineTransform(translationX: insetX, y: 0)
+                    let transform = CGAffineTransform(translationX: insetX - imageView.frame.origin.x, y: 0)
                     imageView.transform = transform
                 }
                 imageView.frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
                 imageView.isHidden = false
-                insetX += emojiWidth + emojiSpace
+                insetX -= emojiWidth + emojiSpace
                 imageView.image = UIImage(named: "Emoji\(index + 1)")
                 imageView.tag = index + 1
             }
@@ -156,7 +163,8 @@ class EmojiControlView: UIView {
     private func clearUI() {
         for (index, imageView) in emojiImageViews.enumerated() {
             imageView.tag = index + 1
-            imageView.frame = CGRect(x: 10, y: 9, width: 32, height: 32)
+            layoutIfNeeded()
+            imageView.frame = CGRect(x: bounds.width - 10 - 32, y: 9, width: 32, height: 32)
             imageView.isHidden = true
         }
         avatarImageViews.forEach { $0.isHidden = true }

@@ -72,13 +72,13 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentImageView.align(.bottom, to: customContent, inset: 50)
         contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
         customContent.addSubview(emojiView)
-        emojiView.align(.left)
-        emojiView.align(.right, inset: 50)
+        emojiView.align(.right)
+        emojiView.align(.left, inset: 50)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
         customContent.addSubview(shareButton)
         shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.right, inset: 10)
+        shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
     }
 
@@ -112,12 +112,13 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     
     private func loadedResourceForPlay(asset: AVAsset) {
         let tracks = asset.tracks
+        let videoWidth = contentImageView.bounds.width
         for track in tracks where track.mediaType  == .video {
             let naturalSize = track.naturalSize
             let videoMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentLabel.font.lineHeight
             if naturalSize.width < naturalSize.height {
-                if videoMaxHeight / (UIScreen.mainWidth() - 30) > naturalSize.height / naturalSize.width {
-                    let scaleHeight = (UIScreen.mainWidth() - 30) * (naturalSize.height / naturalSize.width)
+                if videoMaxHeight / videoWidth > naturalSize.height / naturalSize.width {
+                    let scaleHeight = videoWidth * (naturalSize.height / naturalSize.width)
                     contentViewHeight?.constant = scaleHeight
                     contentLabelHeight?.constant = contentLabel.font.lineHeight + videoMaxHeight - scaleHeight
                 } else {
@@ -128,12 +129,14 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                     if let subview = subview as? SweetPlayerView {
                         customContent.layoutIfNeeded()
                         subview.frame = contentImageView.bounds
-                        subview.layoutIfNeeded()
                     }
                 }
             } else {
-                let videoHeight = UIScreen.mainWidth() - 30
-                contentLabelHeight?.constant = contentLabel.font.lineHeight + videoMaxHeight - videoHeight
+                let videoHeight = videoWidth
+                let contentMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - videoHeight
+                let contentHeight = viewModel!.contentHeight
+                contentLabelHeight?.constant = contentHeight > contentMaxHeight ? contentMaxHeight : contentHeight
+                contentViewHeight?.constant = videoHeight
             }
         }
     }

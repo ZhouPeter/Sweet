@@ -64,6 +64,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         view.addSubview(tableView)
         tableView.fill(in: view)
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
