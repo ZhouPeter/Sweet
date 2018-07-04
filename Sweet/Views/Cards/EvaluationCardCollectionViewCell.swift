@@ -88,8 +88,8 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        leftImageView.kf.setImage(with: viewModel.imageURL[0].imageView2(size: leftImageView.frame.size))
-        rightImageView.kf.setImage(with: viewModel.imageURL[1].imageView2(size: leftImageView.frame.size))
+        leftImageView.kf.setImage(with: viewModel.imageURL[0])
+        rightImageView.kf.setImage(with: viewModel.imageURL[1])
         if let selectedIndex = viewModel.selectedIndex {
             if selectedIndex == 0 {
                 selectedButtonCenterXRightConstraint?.isActive = false
