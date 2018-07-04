@@ -35,12 +35,10 @@ class DeliverTask<Response>: AsynchronousOperation where Response: Message {
             return
         }
         state = .executing
-        logger.info(module, command)
         HandlerManager
             .sharedInstance()
             .addHandler(module, commandId: command + 1, handler: MessageHandler<Response>(callback: { [weak self] (message) in
                 guard let `self` = self else { return }
-                logger.info("OK", self.module, self.command, message)
                 self.state = .finished
                 self.callback?(0, message)
         }))
@@ -48,7 +46,6 @@ class DeliverTask<Response>: AsynchronousOperation where Response: Message {
         service.send(package, moduleId: module, commandId: command) { [weak self] (code) in
             guard let `self` = self else { return }
             if code.rawValue != 0 {
-                logger.error("send error code: \(code.rawValue)")
                 self.state = .finished
                 self.callback?(code.rawValue, nil)
             }

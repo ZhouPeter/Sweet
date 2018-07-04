@@ -511,11 +511,18 @@ final class Messenger {
         })
     }
     
-    private let deliverQueue: OperationQueue = {
+    private var deliverQueues = [Int: OperationQueue]()
+    
+    private func getDeliverQueue(forModule module: Int, command: Int) -> OperationQueue {
+        let key = (module << 16) | command
+        if let queue = deliverQueues[key] {
+            return queue
+        }
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
+        deliverQueues[key] = queue
         return queue
-    } ()
+    }
     
     private func send<T, R> (
         _ message: T,
@@ -534,7 +541,7 @@ final class Messenger {
             callback: {(_, message) in
                 callback?(message)
         })
-        deliverQueue.addOperation(task)
+        getDeliverQueue(forModule: module, command: command).addOperation(task)
     }
     
     private func updateUnreadCount() {
