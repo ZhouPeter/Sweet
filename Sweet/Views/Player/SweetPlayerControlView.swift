@@ -45,6 +45,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         label.textColor = .white
         return label
     }()
+    
     override func customizeUIComponents() {
         bottomMaskView.isHidden = true
         topMaskView.isHidden = true
@@ -55,8 +56,8 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         addSubview(progressView)
         progressView.align(.left, inset: 5)
         progressView.align(.right, inset: 5)
-        progressView.constrain(height: 3)
         progressView.align(.bottom)
+        progressView.constrain(height: 3)
         addSubview(timeLabel)
         timeLabel.align(.right, inset: 6)
         timeLabel.align(.bottom, inset: 6)

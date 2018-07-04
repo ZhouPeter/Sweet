@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
-
+import JDStatusBarNotification
 protocol CardsManagerView: BaseView {
     var delegate: CardsManagerViewDelegate? { get set }
 }
