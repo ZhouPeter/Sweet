@@ -17,6 +17,7 @@ protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     func playToNext()
     func dismissController()
     func delStory(storyId: UInt64)
+    func updateStory(story: StoryCellViewModel, position: (Int, Int))
 }
 
 extension StoriesPlayerViewControllerDelegate{
@@ -24,6 +25,7 @@ extension StoriesPlayerViewControllerDelegate{
     func playToNext() {}
     func dismissController() {}
     func delStory(storyId: UInt64) {}
+    func updateStory(story: StoryCellViewModel, position: (Int, Int)) {}
 }
 
 class AVPlayerView: UIView {
@@ -55,6 +57,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             }
         }
     }
+    
     private var isSelf = true
     var currentIndex: Int = 0 {
         willSet {
@@ -63,6 +66,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             }
         }
     }
+    var groupIndex: Int = 0
     var fromCardId: String?
     weak var delegate: StoriesPlayerViewControllerDelegate?
     private var downloadBack: ((Bool) -> Void)?
@@ -120,10 +124,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         if isSelf {
-            bottomButton.setImage( #imageLiteral(resourceName: "History"), for: .normal)
+            bottomButton.setImage(#imageLiteral(resourceName: "History"), for: .normal)
             bottomButton.addTarget(self, action: #selector(openStoryHistory(sender:)), for: .touchUpInside)
         } else {
-            bottomButton.setImage( #imageLiteral(resourceName: "Heart_White"), for: .normal)
+            bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
+            bottomButton.setImage(#imageLiteral(resourceName: "StoryLike"), for: .disabled)
             bottomButton.addTarget(self, action: #selector(sendMessage(sender:)), for: .touchUpInside)
         }
         return bottomButton
@@ -278,6 +283,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
         setUserData()
+        bottomButton.isEnabled = !stories[currentIndex].like
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
@@ -654,8 +660,18 @@ extension StoriesPlayerViewController {
             if like { Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId)}
             if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: fromCardId) }
             if like {
-                web.request(WebAPI.likeStory(storyId: storyId, comment: text, fromCardId: fromCardId),
-                            completion: {_ in })
+                web.request(
+                    WebAPI.likeStory(storyId: storyId, comment: text, fromCardId: fromCardId),
+                    completion: { result in
+                        switch result {
+                        case .success:
+                            self.bottomButton.isEnabled = false
+                            self.stories[self.currentIndex].like = true
+                            self.delegate?.updateStory(story: self.stories[self.currentIndex],
+                                                       position: (self.groupIndex, self.currentIndex))
+                        case .failure: break
+                        }
+                })
             } else {
                 web.request(.shareStory(storyId: storyId, comment: text, userId: $0, fromCardId: fromCardId),
                             completion: {_ in })

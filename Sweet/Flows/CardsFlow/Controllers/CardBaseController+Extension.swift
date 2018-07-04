@@ -34,21 +34,6 @@ extension CardsBaseController {
                 }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-        if cardType == .content {
-            alertController.addAction(
-                UIAlertAction.makeAlertAction(
-                    title: "分享到微信",
-                    style: .default,
-                    handler: { [weak self] (_) in
-                        guard let `self` = self else { return }
-                        if let index = self.cards.index(where: { $0.cardId == cardId }) {
-                            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
-                                + "讲真APP，你的同学都在玩：" + "\n"
-                                + "[机智]http://t.cn/RrXTSg5"
-                            WXApi.sendText(text: text, scene: .conversation)
-                        }
-                }))
-        }
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
         alertController.addAction(cancelAction)
@@ -161,7 +146,6 @@ extension CardsBaseController {
         }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
-    
 }
 
 // MARK: - InputTextViewDelegate
@@ -182,8 +166,17 @@ extension CardsBaseController: InputTextViewDelegate {
 extension CardsBaseController: MessengerDelegate {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
         if success {
+            if message.type == .card {
+                JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
+            } else if message.type == .like || message.type == .text {
+                JDStatusBarNotification.show(withStatus: "赞评成功", dismissAfter: 2)
+            }
         } else {
-            self.toast(message: "发送失败")
+            if message.type == .card {
+                JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
+            } else if message.type == .like || message.type == .text {
+                JDStatusBarNotification.show(withStatus: "赞评失败", dismissAfter: 2)
+            }
         }
     }
 }
@@ -237,7 +230,6 @@ extension CardsBaseController {
                     let acCell = cell as? ActivitiesCardCollectionViewCell {
                     acCell.updateItem(item: item, like: true)
                 }
-                self.toast(message: "❤️ 评价成功")
                 self.vibrateFeedback()
             case let  .failure(error):
                 logger.error(error)

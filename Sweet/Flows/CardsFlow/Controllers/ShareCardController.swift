@@ -46,6 +46,7 @@ class ShareCardController: BaseViewController {
         tableView.separatorInset.left = 0
         tableView.tableFooterView = UIView()
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
+        tableView.register(ModuleTableViewCell.self, forCellReuseIdentifier: "moduleCell")
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -71,7 +72,18 @@ class ShareCardController: BaseViewController {
         return button
     }()
     private let keyboard = KeyboardObserver()
-    private var sendButtonBottomConstraint: NSLayoutConstraint? 
+    private var sendButtonBottomConstraint: NSLayoutConstraint?
+    private let shareText: String?
+    
+    init(shareText: String? = nil) {
+        self.shareText = shareText
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -207,15 +219,31 @@ extension ShareCardController: UISearchBarDelegate {
 }
 
 extension ShareCardController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return shareText == nil ? 1 : 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactViewModels.count
+        if section == 0 && shareText != nil {
+            return 1
+        } else {
+            return contactViewModels.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
-        cell.update(viewModel: contactViewModels[indexPath.row])
-        return cell
+        if indexPath.section == 0  && shareText != nil {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
+            cell.accessoryType = .disclosureIndicator
+            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "分享给微信好友")
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
+            cell.update(viewModel: contactViewModels[indexPath.row])
+            return cell
+        }
     }
 }
 
@@ -225,13 +253,17 @@ extension ShareCardController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
-        cell.selectButton.isSelected = !cell.selectButton.isSelected
-        if cell.selectButton.isSelected {
-            userIds.append(contactViewModels[indexPath.row].userId)
+        if indexPath.section == 0 && shareText != nil {
+            WXApi.sendText(text: shareText!, scene: .conversation)
         } else {
-            if let index = userIds.index(where: {$0 == contactViewModels[indexPath.row].userId}) {
-                userIds.remove(at: index)
+            guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
+            cell.selectButton.isSelected = !cell.selectButton.isSelected
+            if cell.selectButton.isSelected {
+                userIds.append(contactViewModels[indexPath.row].userId)
+            } else {
+                if let index = userIds.index(where: {$0 == contactViewModels[indexPath.row].userId}) {
+                    userIds.remove(at: index)
+                }
             }
         }
     }

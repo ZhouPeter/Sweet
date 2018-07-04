@@ -83,13 +83,13 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         setupImageViews()
         
         customContent.addSubview(emojiView)
-        emojiView.align(.left)
-        emojiView.align(.right, inset: 50)
+        emojiView.align(.right)
+        emojiView.align(.left, inset: 50)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
         customContent.addSubview(shareButton)
         shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.right, inset: 10)
+        shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
 
     }

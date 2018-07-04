@@ -315,7 +315,10 @@ extension CardsBaseController {
     }
 
     private func scrollCard(withPoint point: CGPoint) {
-        guard let start = panPoint else { return }
+        guard let start = panPoint else {
+            pan.isEnabled = true
+            return
+        }
         var direction = Direction.unknown
         if  start.y - point.y > 30 {
             direction = .down

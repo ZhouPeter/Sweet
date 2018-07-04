@@ -26,7 +26,8 @@ target 'Sweet' do
   pod 'Gemini'
   pod 'KMNavigationBarTransition'
   pod 'VolumeBar', '~> 3.0.3'
-  
+  pod 'JDStatusBarNotification'
+  pod 'ReachabilitySwift'
   target 'Sweet Dev' do
   end
   

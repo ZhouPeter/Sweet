@@ -208,7 +208,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
-    
+    func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
+        storiesGroup[position.0][position.1] = story
+    }
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
     }
@@ -264,6 +266,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
             for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}
         let playerController = getChildViewController(cell: cell)
         playerController.stories = storiesGroup[indexPath.row]
+        playerController.groupIndex = indexPath.row
         playerController.currentIndex = loctionMap[indexPath] ?? 0
         if currentIndex == indexPath.row { playerController.currentIndex = currentStart }
         cell.setPlaceholderContentView(view: playerController.view)
