@@ -9,13 +9,13 @@
 import Foundation
 
 extension URL {
-    func middleCutting(size: CGSize) -> URL? {
+    func imageView2(size: CGSize) -> URL? {
         let scale = UIScreen.main.scale
         if absoluteString.contains("?imageView2") {
             return self
         } else {
             return URL(string: absoluteString +
-                            "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
+                            "?imageView2/5/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
         }
     }
     

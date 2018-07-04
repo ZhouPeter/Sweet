@@ -349,7 +349,6 @@ extension CardsBaseController {
     
     private func preloadingCard() {
         if self.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
-            logger.debug(cards[index].content ?? "")
             let cardId = cards[index].cardId
             let direction = Direction.down
             let request: CardRequest = self is CardsAllController ?
