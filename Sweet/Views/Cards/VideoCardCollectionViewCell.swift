@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentVideoCardViewModel
@@ -15,7 +16,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         return label
     }()
     
@@ -25,6 +26,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         imageView.backgroundColor = .black
         imageView.tag = 10086
         imageView.isUserInteractionEnabled = true
+        imageView.layer.cornerRadius = 5
+        imageView.clipsToBounds = true
         return imageView
     }()
         
@@ -55,20 +58,19 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                              emojiType: viewModel.emojiDisplayType)
         }
     }
-    
+    private var contentViewHeight: NSLayoutConstraint?
+    private var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
+        contentLabelHeight = contentLabel.constrain(height: contentLabel.font.lineHeight)
         customContent.addSubview(contentImageView)
         contentImageView.align(.left, to: customContent, inset: 5)
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
-        contentImageView.heightAnchor.constraint(
-            equalTo: contentImageView.widthAnchor,
-            multiplier: 1).isActive = true
-        contentImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
+        contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
         customContent.addSubview(emojiView)
         emojiView.align(.left)
         emojiView.align(.right, inset: 50)
@@ -80,7 +82,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         shareButton.centerY(to: emojiView)
     }
 
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -90,8 +91,51 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
+        contentLabel.lineBreakMode = .byTruncatingTail
         contentImageView.kf.setImage(with:  viewModel.videoURL.videoThumbnail())
         resetEmojiView()
+        loadItemValues()
+
+    }
+    
+    private func loadItemValues() {
+        let resource = SweetPlayerResource(url: viewModel!.videoURL)
+        let asset = resource.definitions[0].avURLAsset
+        asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
+            DispatchQueue.main.async {
+                if asset.isPlayable {
+                    self.loadedResourceForPlay(asset: asset)
+                }
+            }
+        }
+    }
+    
+    private func loadedResourceForPlay(asset: AVAsset) {
+        let tracks = asset.tracks
+        for track in tracks where track.mediaType  == .video {
+            let naturalSize = track.naturalSize
+            let videoMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentLabel.font.lineHeight
+            if naturalSize.width < naturalSize.height {
+                if videoMaxHeight / (UIScreen.mainWidth() - 30) > naturalSize.height / naturalSize.width {
+                    let scaleHeight = (UIScreen.mainWidth() - 30) * (naturalSize.height / naturalSize.width)
+                    contentViewHeight?.constant = scaleHeight
+                    contentLabelHeight?.constant = contentLabel.font.lineHeight + videoMaxHeight - scaleHeight
+                } else {
+                    contentViewHeight?.constant = videoMaxHeight
+                    contentLabelHeight?.constant = contentLabel.font.lineHeight
+                }
+                for subview in contentImageView.subviews {
+                    if let subview = subview as? SweetPlayerView {
+                        customContent.layoutIfNeeded()
+                        subview.frame = contentImageView.bounds
+                        subview.layoutIfNeeded()
+                    }
+                }
+            } else {
+                let videoHeight = UIScreen.mainWidth() - 30
+                contentLabelHeight?.constant = contentLabel.font.lineHeight + videoMaxHeight - videoHeight
+            }
+        }
     }
 
 }

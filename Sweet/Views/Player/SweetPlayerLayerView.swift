@@ -202,6 +202,7 @@ class SweetPlayerLayerView: UIView {
                                              width: width,
                                              height: self.bounds.height)
         }
+    
     }
     
     func playerToNil() {
