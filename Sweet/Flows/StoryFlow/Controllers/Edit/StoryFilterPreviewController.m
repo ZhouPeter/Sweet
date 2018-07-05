@@ -126,12 +126,6 @@
         [self.filterNames addObject:name];
         [self.lookupImages addObject:[UIImage imageNamed:name]];
     }
-//    self.filterNames = @[@"NA", @"S", @"Fe", @"Cu", @"C"];
-//    self.lookupImages = @[[UIImage imageNamed:@"NA"],
-//                          [UIImage imageNamed:@"S"],
-//                          [UIImage imageNamed:@"Fe"],
-//                          [UIImage imageNamed:@"Cu"],
-//                          [UIImage imageNamed:@"C"]];
     self.backFilter = [self makeFilterWithIndex:1];
     self.foreFilter = [self makeFilterWithIndex:0];
     

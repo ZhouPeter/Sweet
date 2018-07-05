@@ -18,8 +18,8 @@ extension UIButton {
         contentEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
     }
     
-    func updateTopic(_ topic: String) {
-        setAttributedTitle(NSMutableAttributedString(topic: topic, fontSize: 20), for: .normal)
+    func updateTopic(_ topic: String, withHashTag: Bool = true) {
+        setAttributedTitle(NSMutableAttributedString(topic: topic, fontSize: 20, withHashTag: withHashTag), for: .normal)
     }
 }
 
@@ -28,9 +28,13 @@ extension NSMutableAttributedString {
         topic: String,
         fontSize: CGFloat,
         hashColor: UIColor = UIColor(hex: 0xF8E71C),
-        textColor: UIColor = UIColor.white) {
+        textColor: UIColor = UIColor.white,
+        withHashTag: Bool = true) {
         let font = UIFont.boldSystemFont(ofSize: fontSize)
-        self.init(string: "# ", attributes: [.font: font, .foregroundColor: hashColor])
+        self.init(string: "")
+        if withHashTag {
+            append(NSAttributedString(string: "# ", attributes: [.font: font, .foregroundColor: hashColor]))
+        }
         append(NSAttributedString(string: topic, attributes: [.font: font, .foregroundColor: textColor]))
     }
 }

@@ -61,8 +61,8 @@ final class StoryRecordBottomView: UIView {
         buttons.append(albumButton)
         
         addSubview(indicator)
-        indicator.constrain(width: 30, height: 30)
-        indicator.pin(.bottom, to: shootButton, spacing: -10)
+        indicator.constrain(width: 8, height: 8)
+        indicator.pin(.bottom, to: shootButton, spacing: -5)
         indicatorCenterX = indicator.centerX(to: shootButton)
     }
     
