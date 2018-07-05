@@ -133,7 +133,7 @@ class EmojiControlView: UIView {
             emojiImageViews[$0 - 1].image = UIImage(named: "Emoji\($0)")
             emojiImageViews[$0 - 1].tag = $0
         }
-        openButton.frame = CGRect(x: insetX, y: 17, width: 40, height: 16)
+        openButton.frame = CGRect(x: insetX - emojiSpace, y: 17, width: 40, height: 16)
         openButton.isHidden = false
     }
     

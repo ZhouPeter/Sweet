@@ -76,6 +76,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 let viewModel = EvaluationCardViewModel(model: self.cards[index])
                 let configurator = CellConfigurator<EvaluationCardCollectionViewCell>(viewModel: viewModel)
                 self.cellConfigurators[index] = configurator
+                logger.debug("评价完成")
                 cell.updateWith(selectedIndex)
                 if !Defaults[.isEvaluationOthers] {
                     let alert = UIAlertController(title: "你的好友将会收到你的评价",
@@ -125,7 +126,6 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         Guide.showSameCardChoiceTip(with: rect)
                         Defaults[.isSameCardChoiceGuideShown] = true
                     }
-                    JDStatusBarNotification.show(withStatus: "表态成功", dismissAfter: 2)
                 case let .failure(error):
                     logger.error(error)
                 }

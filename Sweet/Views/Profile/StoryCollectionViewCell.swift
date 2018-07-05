@@ -83,7 +83,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
             recoveryImageView.isHidden = false
             recoveryLabel.isHidden = false
             recoveryImageView.image = #imageLiteral(resourceName: "SelfVisual")
-            recoveryLabel.text =  "仅自己可见"
+            recoveryLabel.text =  viewModel.visualText
         } else {
             recoveryImageView.isHidden = true
             recoveryLabel.isHidden = true

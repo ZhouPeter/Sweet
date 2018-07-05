@@ -80,6 +80,11 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         self.customContent.recoverAnimation(duration: 0.3, damping: 1)
     }
     
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        self.customContent.recoverAnimation(duration: 0.3, damping: 1)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
