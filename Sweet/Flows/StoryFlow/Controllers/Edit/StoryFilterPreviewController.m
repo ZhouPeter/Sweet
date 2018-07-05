@@ -17,7 +17,7 @@
 @property (strong, nonatomic) GPUImageOutput *output;
 @property (strong, nonatomic) GPUImageView *backPreview;
 @property (strong, nonatomic) GPUImageView *forePreview;
-@property (strong, nonatomic) NSArray *lookupImages;
+@property (strong, nonatomic) NSMutableArray *lookupImages;
 @property (assign, nonatomic) BOOL isNextFilter;
 @property (assign, nonatomic) BOOL isDirectionConfirmed;
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
@@ -31,7 +31,7 @@
 @property (strong, nonatomic) LookupFilter *backFilter;
 @property (strong, nonatomic) LookupFilter *foreFilter;
 @property (assign, nonatomic) BOOL isFilterSwitching;
-@property (strong, nonatomic) NSArray <NSString *> *filterNames;
+@property (strong, nonatomic) NSMutableArray <NSString *> *filterNames;
 
 @end
 
@@ -119,12 +119,19 @@
 }
 
 - (void)setupFilters {
-    self.filterNames = @[@"NA", @"S", @"Fe", @"Cu", @"C"];
-    self.lookupImages = @[[UIImage imageNamed:@"NA"],
-                          [UIImage imageNamed:@"S"],
-                          [UIImage imageNamed:@"Fe"],
-                          [UIImage imageNamed:@"Cu"],
-                          [UIImage imageNamed:@"C"]];
+    self.filterNames = [NSMutableArray array];
+    self.lookupImages = [NSMutableArray array];
+    for (int i = 1; i < 7; i++) {
+        NSString *name = [NSString stringWithFormat:@"%d", i];
+        [self.filterNames addObject:name];
+        [self.lookupImages addObject:[UIImage imageNamed:name]];
+    }
+//    self.filterNames = @[@"NA", @"S", @"Fe", @"Cu", @"C"];
+//    self.lookupImages = @[[UIImage imageNamed:@"NA"],
+//                          [UIImage imageNamed:@"S"],
+//                          [UIImage imageNamed:@"Fe"],
+//                          [UIImage imageNamed:@"Cu"],
+//                          [UIImage imageNamed:@"C"]];
     self.backFilter = [self makeFilterWithIndex:1];
     self.foreFilter = [self makeFilterWithIndex:0];
     
