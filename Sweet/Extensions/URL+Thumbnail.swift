@@ -14,8 +14,9 @@ extension URL {
         if absoluteString.contains("?imageView2") || lastPathComponent.lowercased().hasSuffix(".gif") {
             return self
         } else {
-            return URL(string: absoluteString +
-                            "?imageView2/5/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
+            let longEdge = size.width > size.height ? Int(size.width * scale) : Int(size.height * scale)
+            let shortEdge = size.width < size.height ? Int(size.width * scale) : Int(size.height * scale)
+            return URL(string: absoluteString + "?imageView2/5/w/\(longEdge)/h/\(shortEdge)")
         }
     }
     

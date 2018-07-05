@@ -101,7 +101,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+    private lazy var pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +139,6 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            logger.debug()
             dismiss(animated: true, completion: nil)
         case .changed:
             Hero.shared.update(progress)
