@@ -353,6 +353,10 @@
 		589E6BDC20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
 		589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
 		589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
+		58A79FEB20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
+		58A79FEC20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
+		58A79FED20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
+		58A79FEE20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
 		58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
@@ -1435,6 +1439,7 @@
 		589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardViewModel.swift; sourceTree = "<group>"; };
 		589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivityCardTableViewCell.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Metrics.swift"; sourceTree = "<group>"; };
@@ -1783,6 +1788,7 @@
 			children = (
 				580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */,
 				58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */,
+				58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */,
 				58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */,
 				589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */,
 				589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */,
@@ -3110,6 +3116,7 @@
 				58BD52AD208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9920B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */,
+				58A79FEB20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				ACF29FF220ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				5803572120AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
@@ -3490,6 +3497,7 @@
 				5803571D20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
 				AC4D090920B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACFC208620AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
+				58A79FED20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				585B68CE20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -3773,6 +3781,7 @@
 				ACBE052720B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
+				58A79FEE20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				AC86A93520C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
@@ -4034,6 +4043,7 @@
 				58BD52AE208871BC00F7C3E1 /* SignUpCollegeController.swift in Sources */,
 				AC557C9A20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */,
+				58A79FEC20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				ACF29FF320ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				5803572220AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
@@ -4489,7 +4499,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -4510,7 +4523,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -4530,7 +4546,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4551,7 +4571,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4570,7 +4594,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4590,7 +4618,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4616,7 +4648,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -4643,7 +4678,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

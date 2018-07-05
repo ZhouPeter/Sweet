@@ -12,22 +12,22 @@ class EmptyEmojiView: UIView {
 
     private lazy var emojiImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "EmptyEmoji")
         return imageView
     }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "快去首页发现有趣的同学"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor(hex: 0x9b9b9b)
         label.textAlignment = .center
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(image: UIImage? = nil, title: String = "") {
+        super.init(frame: .zero)
         setupUI()
+        titleLabel.text = title
+        emojiImageView.image = image ?? #imageLiteral(resourceName: "EmptyEmoji")
     }
     
     required init?(coder aDecoder: NSCoder) {

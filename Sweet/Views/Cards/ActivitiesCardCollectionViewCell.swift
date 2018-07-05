@@ -21,7 +21,7 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         tableView.separatorInset.right = 10
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(ActivityTableViewCell.self, forCellReuseIdentifier: "activityCell")
+        tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "activityCell")
         return tableView
     }()
     
@@ -43,13 +43,13 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     func updateWith(_ viewModel: ActivitiesCardViewModel) {
         self.cardId = viewModel.cardId
         self.viewModel = viewModel
-        self.titleLabel.text = "用户动态"
+        self.titleLabel.text = "好友动态"
         tableView.reloadData()
     }
     
     func updateItem(item: Int, like: Bool) {
         let cell = tableView.cellForRow(at: IndexPath(row: item, section: 0))
-        if let cell = cell as? ActivityTableViewCell {
+        if let cell = cell as? AcitivityCardTableViewCell {
             cell.update(like: like)
         }
     }
@@ -63,13 +63,13 @@ extension ActivitiesCardCollectionViewCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
               withIdentifier: "activityCell",
-              for: indexPath) as? ActivityTableViewCell else { fatalError() }
+              for: indexPath) as? AcitivityCardTableViewCell else { fatalError() }
         if let feedViewModel = viewModel?.activityViewModels[indexPath.row] {
             cell.update(feedViewModel)
             if indexPath.row == 3 {
                 cell.separatorInset.left = UIScreen.mainWidth()
             } else {
-                cell.separatorInset.left = 70
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
             }
         }
         return cell
@@ -82,10 +82,8 @@ extension ActivitiesCardCollectionViewCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let delegate = delegate as? ActivitiesCardCollectionViewCellDelegate,
-            let feedViewModel = viewModel?.activityViewModels[indexPath.row],
-            let url = feedViewModel.url {
-            delegate.showWebController(url: url, content: feedViewModel.contentString)
+        if  let feedViewModel = viewModel?.activityViewModels[indexPath.row] {
+            feedViewModel.showProfile?(feedViewModel.actor, feedViewModel.setTop)
         }
     }
 }

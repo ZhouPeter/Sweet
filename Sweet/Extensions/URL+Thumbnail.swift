@@ -15,7 +15,7 @@ extension URL {
             return self
         } else {
             return URL(string: absoluteString +
-                            "?imageView2/5/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
+                    "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
         }
     }
     

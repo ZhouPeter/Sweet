@@ -125,6 +125,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 case let .success(response):
                     self.loadFinish = response.list.count < 20
                     self.storyViewModels = response.list.map({return StoryCellViewModel(model: $0)})
+                    self.reviewViewModels()
                     self.collectionView.contentOffset = .zero
                     self.collectionView.reloadData()
                 case let .failure(error):
@@ -144,10 +145,20 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 case let .success(response):
                     self.loadFinish = response.list.count < 20
                     self.storyViewModels.append(contentsOf: response.list.map({ return StoryCellViewModel(model: $0)}))
+                    self.reviewViewModels()
                     self.collectionView.reloadData()
                 case let .failure(error):
                     logger.error(error)
                 }
+        }
+    }
+    
+    private func reviewViewModels() {
+        for index in 0..<storyViewModels.count {
+            if storyViewModels[index].created/1000 + 72 * 3600 < Int(Date().timeIntervalSince1970) {
+                storyViewModels[index].visualText = "仅自己可见"
+                break
+            }
         }
     }
 }

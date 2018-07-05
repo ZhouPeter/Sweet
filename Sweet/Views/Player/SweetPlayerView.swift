@@ -286,7 +286,7 @@ extension SweetPlayerView {
                 self.isVolume = false
                 if isFullScreen {
                     fullScreenButtonPressed()
-                } else {
+                } else if velocityPoint.y > 0 {
                     delegate?.sweetPlayerSwipeDown()
                 }
             }

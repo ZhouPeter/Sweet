@@ -74,9 +74,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
     private lazy var emptyView: EmptyEmojiView = {
-        let view = EmptyEmojiView()
-        view.titleLabel.text = "快去首页订阅有趣的内容"
-        return view
+        if self is CardsAllController {
+            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
+            return view
+        } else {
+            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页订阅有趣的内容")
+            return view
+        }
     }()
     
     private lazy var playerView: SweetPlayerView = {
@@ -192,7 +196,8 @@ extension CardsBaseController {
             collectionView.contentOffset = offset
         } else {
             gesture.isEnabled = false
-            scrollCard(withPoint: point)
+            let velocityY = gesture.velocity(in: nil).y
+            scrollCard(withPoint: point, velocityY: velocityY)
         }
     }
     @objc private func didPressDownButton(_ sender: UIButton) {
@@ -314,13 +319,14 @@ extension CardsBaseController {
         }
     }
 
-    private func scrollCard(withPoint point: CGPoint) {
+    private func scrollCard(withPoint point: CGPoint, velocityY: CGFloat) {
         guard let start = panPoint else {
             pan.isEnabled = true
             return
         }
         var direction = Direction.unknown
-        if  start.y - point.y > 30 {
+        let targetY = point.y + velocityY
+        if  start.y - targetY > cardCellHeight * 0.3 {
             direction = .down
             if index == collectionView.numberOfItems(inSection: 0) - 1 {
                 let cardId = cards[index].cardId
@@ -336,16 +342,16 @@ extension CardsBaseController {
                 index += 1
                 self.scrollTo(row: index)
             }
-        } else if start.y - point.y >= 0 {
+        } else if start.y - targetY >= 0 {
             self.scrollTo(row: index)
-        } else if start.y - point.y < -30 {
+        } else if start.y - targetY < -cardCellHeight * 0.3 {
             if index == 0 {
                 self.scrollTo(row: index)
             } else {
                 self.index -=  1
                 self.scrollTo(row: index)
             }
-        } else if start.y - point.y < 0 {
+        } else if start.y - targetY < 0 {
             self.scrollTo(row: index)
         }
     }
@@ -364,7 +370,9 @@ extension CardsBaseController {
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
-        let preview = WebViewController(urlString: url)
+        let preview = WebViewController(urlString: url) { [weak self] in
+            self?.shareCard(cardId: card.cardId)
+        }
         preview.title = card.content
         navigationController?.pushViewController(preview, animated: true)
     }
@@ -372,9 +380,7 @@ extension CardsBaseController {
 // MARK: - UICollectionViewDataSource
 extension CardsBaseController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self is CardsSubscriptionController {
-            showEmptyView(isShow: cellConfigurators.count == 0)
-        }
+        showEmptyView(isShow: cellConfigurators.count == 0)
         return cellConfigurators.count
     }
     

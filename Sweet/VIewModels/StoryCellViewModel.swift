@@ -23,6 +23,7 @@ struct StoryCellViewModel {
     let type: StoryType
     var pokeCenter: CGPoint = CGPoint(x: 0, y: 0)
     var touchArea: CGRect?
+    var visualText: String = ""
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname

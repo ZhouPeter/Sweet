@@ -27,6 +27,11 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return label
     } ()
     
+//    lazy var contentWebView: UIWebView = {
+//        let webView = UIWebView()
+//        return webView
+//    }()
+    
     var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tag = 10086

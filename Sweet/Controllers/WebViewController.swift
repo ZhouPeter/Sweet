@@ -12,7 +12,7 @@ import WebKit
 class WebViewController: BaseViewController {
     
     var urlString: String
-    
+    private let shareCallback: (() -> Void)?
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
@@ -27,8 +27,17 @@ class WebViewController: BaseViewController {
         return view
     } ()
     
-    init(urlString: String) {
+    private lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "ShareItem"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.addTarget(self, action: #selector(shareAction(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    init(urlString: String, shareCallback: (() -> Void)? = nil) {
         self.urlString = urlString
+        self.shareCallback = shareCallback
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,6 +52,7 @@ class WebViewController: BaseViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
+        if shareCallback != nil { navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)}
         view.addSubview(webView)
         webView.fill(in: view, top: topLayoutGuide.length)
         view.addSubview(progressView)
@@ -50,7 +60,6 @@ class WebViewController: BaseViewController {
         progressView.align(.top, to: view, inset: UIScreen.navBarHeight())
         progressView.align(.left)
         progressView.align(.right)
-        
         let request = URLRequest(url: URL(string: urlString)!)
         webView.load(request)
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
@@ -73,6 +82,10 @@ class WebViewController: BaseViewController {
                 progressView.setProgress(progress, animated: true);
             }
         }
+    }
+    
+    @objc private func shareAction(_ sender: UIButton) {
+        shareCallback?()
     }
 }
 
