@@ -30,7 +30,8 @@ final class ConversationController: MessagesViewController, ConversationView {
         guard let image = UIImage.bubbleImage(named: "MessageBubble", orientation: .up) else { fatalError() }
         return image
     } ()
-    private var bubbleMaskCache = [UIView: UIImageView]()
+    private var incommingBubbleMaskCache = [UIView: UIImageView]()
+    private var outgoingBubbleMaskCache = [UIView: UIImageView]()
     
     init(user: User, buddy: User) {
         self.user = user
@@ -100,6 +101,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messagesCollectionView.register(StoryMessageCell.self)
         messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.register(ContentCardMessageCell.self)
+        messagesCollectionView.register(SweetTextMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -150,6 +152,16 @@ final class ConversationController: MessagesViewController, ConversationView {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let message = messages[indexPath.section]
+        if case .text = message.kind {
+            let cell = messagesCollectionView.dequeueReusableCell(SweetTextMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            if message.sender.id == "\(user.userId)" {
+                cell.configureGradientColors([UIColor(hex: 0x66e5ff), UIColor(hex: 0x36c6fd)])
+            } else {
+                cell.configureGradientColors([UIColor.white, UIColor.white])
+            }
+            return cell
+        }
         guard case let .custom(value) = message.kind else {
             return super.collectionView(collectionView, cellForItemAt: indexPath)
         }
@@ -236,13 +248,23 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .custom({ [weak self] (container) in
             guard let `self` = self else { return }
-            if let mask = self.bubbleMaskCache[container] {
-                mask.frame = container.bounds
-                container.mask = mask
-                return
+            let isIncomming = message.sender.id == "\(self.buddy.userId)"
+            let mask: UIImageView
+            if isIncomming {
+                if let maskView = self.incommingBubbleMaskCache[container] {
+                    mask = maskView
+                } else {
+                    mask = self.makeBubbleMask(isIncomming: true)
+                    self.incommingBubbleMaskCache[container] = mask
+                }
+            } else {
+                if let maskView = self.outgoingBubbleMaskCache[container] {
+                    mask = maskView
+                } else {
+                    mask = self.makeBubbleMask(isIncomming: false)
+                    self.outgoingBubbleMaskCache[container] = mask
+                }
             }
-            let mask = self.makeBubbleMask(isIncomming: message.sender.id == "\(self.buddy.userId)")
-            self.bubbleMaskCache[container] = mask
             mask.frame = container.bounds
             container.mask = mask
         })
@@ -252,9 +274,6 @@ extension ConversationController: MessagesDisplayDelegate {
         for message: MessageType,
         at indexPath: IndexPath,
         in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        if message.sender.id == "\(user.userId)" {
-            return UIColor(hex: 0x36C6FD)
-        }
         return .white
     }
     
