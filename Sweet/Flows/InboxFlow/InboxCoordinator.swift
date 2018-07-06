@@ -40,10 +40,12 @@ final class InboxCoordinator: BaseCoordinator {
         Messenger.shared.login(with: user, token: token)
     }
     
+    private var isLocalConversationsLoaded = false
+    
     override func start() {
-        if isOffline && Messenger.shared.state == .online {
-            isOffline = false
-            Messenger.shared.loadConversations()
+        if !isLocalConversationsLoaded {
+            isLocalConversationsLoaded = true
+            Messenger.shared.loadLocalConversations()
         }
     }
 }
@@ -70,7 +72,10 @@ extension InboxCoordinator: InboxViewDelegate {
 extension InboxCoordinator: MessengerDelegate {
     func messengerDidLogin(user: User, success: Bool) {
         logger.debug(user.nickname, success)
-        start()
+        if isOffline && Messenger.shared.state == .online {
+            isOffline = false
+            Messenger.shared.loadConversations()
+        }
     }
     
     func messengerDidLogout(user: User) {
