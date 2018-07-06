@@ -22,6 +22,8 @@ struct ContentVideoCardViewModel {
     let defaultEmojiList: [Int]
     var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
+    var isMuted: Bool = false
+    var currentTime: TimeInterval = 0.0
     init(model: CardResponse) {
         titleString = model.name!
         contentString = model.content!

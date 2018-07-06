@@ -97,6 +97,10 @@
 		58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9020A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
 		58325B9120A2F496000E851F /* ContactSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58325B8D20A2F496000E851F /* ContactSearchController.swift */; };
+		5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
+		5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
+		5833DD2C20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
+		5833DD2D20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
 		583BC77920CE198900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
 		583BC77C20CE1A1800C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
 		583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
@@ -1376,6 +1380,7 @@
 		581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		581D7BF320D9ED1F000D1E26 /* VersionUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionUpdateHelper.swift; sourceTree = "<group>"; };
 		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
+		5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerCellControlView.swift; sourceTree = "<group>"; };
 		583BC77820CE198900C4494E /* MessageContentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentHelper.swift; sourceTree = "<group>"; };
 		583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationViewModel.swift; sourceTree = "<group>"; };
 		583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVideoCardViewModel.swift; sourceTree = "<group>"; };
@@ -1955,6 +1960,7 @@
 				585B68CB20B1142600E734BC /* SweetPlayerLayerView.swift */,
 				585B68C120AF1D8E00E734BC /* SweetPlayerExtensions.swift */,
 				585B68B720AF182200E734BC /* SweetPlayerControlView.swift */,
+				5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */,
 				585B68BC20AF183E00E734BC /* SweetPlayerView.swift */,
 				58F4074520B271C40031630C /* SweetPlayerManager.swift */,
 				58F4074A20B272410031630C /* SweetPlayerItem.swift */,
@@ -3279,6 +3285,7 @@
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
+				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330E20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
@@ -3508,6 +3515,7 @@
 				ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				580907BC20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236220875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				5833DD2C20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				AC616F9720C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -3980,6 +3988,7 @@
 				ACA9CC4B20C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58447B4F209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
+				5833DD2D20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				AC9DF12B20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				ACA3239520875FB100BDC92E /* UIView+Layout.swift in Sources */,
@@ -4206,6 +4215,7 @@
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
+				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */,

@@ -318,6 +318,9 @@ class SweetPlayerLayerView: UIView {
                             self.shouldSeekTo = 0
                             self.hasReadyToPlay = true
                             self.state = .readyToPlay
+                            if self.isPlaying {
+                                self.play()
+                            }
                         })
                     } else {
                         self.hasReadyToPlay = true

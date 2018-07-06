@@ -93,7 +93,6 @@ extension CardsBaseController {
         }
     }
     
-
     func reloadContentCell(index: Int) {
         if self.cards[index].type == .content, self.cards[index].video == nil {
             let viewModel = ContentCardViewModel(model: self.cards[index])

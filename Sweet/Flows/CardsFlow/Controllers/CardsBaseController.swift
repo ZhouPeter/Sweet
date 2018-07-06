@@ -85,6 +85,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     
     private lazy var playerView: SweetPlayerView = {
         let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
+        view.delegate = self
         view.panGesture.isEnabled = false
         view.panGesture.require(toFail: pan)
         view.isHasVolume = false
@@ -300,12 +301,13 @@ extension CardsBaseController {
         let configurator = self.cellConfigurators[self.index]
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         if let cell = cell as? VideoCardCollectionViewCell,
-                  let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
+                let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             weak var weakSelf = self
             weak var weakCell = cell
             if let resource = playerView.resource,
                resource.definitions[0].url == configurator.viewModel.videoURL {
-                playerView.seek(0) { [weak playerView] in
+                playerView.isHasVolume = configurator.viewModel.isMuted
+                playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                     playerView?.play()
                 }
                 return
@@ -314,8 +316,12 @@ extension CardsBaseController {
             resource.indexPath = indexPath
             resource.scrollView = weakSelf?.collectionView
             resource.fatherViewTag = weakCell?.contentImageView.tag
-            self.playerView.setVideo(resource: resource)
-            self.avPlayer = self.playerView.avPlayer
+            playerView.setVideo(resource: resource)
+            playerView.isHasVolume = configurator.viewModel.isMuted
+            playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
+                playerView?.play()
+            }
+            avPlayer = playerView.avPlayer
         }
     }
 
@@ -340,6 +346,9 @@ extension CardsBaseController {
             } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
                 self.preloadingCard()
                 index += 1
+                self.scrollTo(row: index)
+            } else if index > collectionView.numberOfItems(inSection: 0) - 1 {
+                index = collectionView.numberOfItems(inSection: 0) - 1 >= 0 ? collectionView.numberOfItems(inSection: 0) - 1 : 0
                 self.scrollTo(row: index)
             }
         } else if start.y - targetY >= 0 {

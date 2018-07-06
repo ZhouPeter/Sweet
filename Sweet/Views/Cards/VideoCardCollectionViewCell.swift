@@ -149,13 +149,7 @@ extension VideoCardCollectionViewCell {
             delegate.showImageBrowser(selectedIndex: view.tag)
         }
     }
-    
-    @objc private func didPressResultAvatar(_ tap: UITapGestureRecognizer) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag],
-                                 setTop: SetTop(contentId: viewModel?.contentId, preferenceId: nil))
-        }
-    }
+
     @objc private func didPressShare(_ sender: UIButton) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.shareCard(cardId: cardId!)
@@ -166,7 +160,8 @@ extension VideoCardCollectionViewCell: EmojiControlViewDelegate {
     func didTapAvatar(index: Int) {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             if let viewModel = viewModel, let userIDs = viewModel.resultUseIDs {
-                delegate.showProfile(userId: userIDs[index], setTop: nil)
+                delegate.showProfile(userId: userIDs[index],
+                                     setTop: SetTop(contentId: viewModel.contentId, preferenceId: nil))
             }
         }
     }

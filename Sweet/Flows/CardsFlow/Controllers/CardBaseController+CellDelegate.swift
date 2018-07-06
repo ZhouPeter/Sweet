@@ -241,3 +241,27 @@ extension CardsBaseController {
         }
     }
 }
+
+extension CardsBaseController: SweetPlayerViewDelegate {
+    func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
+        if let indexPath = player.resource.indexPath {
+            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
+                if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
+                    configurator.viewModel.isMuted = isMuted
+                    cellConfigurators[indexPath.row] = configurator
+                }
+            }
+        }
+    }
+    
+    func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {
+        if let indexPath = player.resource.indexPath {
+            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
+                if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
+                    configurator.viewModel.currentTime = currentTime
+                    cellConfigurators[indexPath.row] = configurator
+                }
+            }
+        }
+    }
+}
