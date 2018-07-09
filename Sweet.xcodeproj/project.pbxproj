@@ -789,10 +789,6 @@
 		AC45CD6D20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */; };
 		AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */; };
 		AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */; };
-		AC45CD7420AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */; };
-		AC45CD7520AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */; };
-		AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */; };
-		AC45CD7720AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */; };
 		AC45CD8420AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */; };
 		AC45CD8520AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */; };
 		AC45CD8620AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */; };
@@ -1133,6 +1129,10 @@
 		ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
 		ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
 		ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
+		ACB5793E20F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
+		ACB5793F20F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
+		ACB5794020F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
+		ACB5794120F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
 		ACBE052420B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
 		ACBE052520B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
 		ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */; };
@@ -1586,8 +1586,6 @@
 		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
 		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
 		AC45CD6B20AD4D2C005C4AA0 /* StoryCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCaptureView.swift; sourceTree = "<group>"; };
-		AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautifyFilter.m; sourceTree = "<group>"; };
-		AC45CD7320AD4EDC005C4AA0 /* GPUImageBeautifyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautifyFilter.h; sourceTree = "<group>"; };
 		AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLStoryAuthorizationController.swift; sourceTree = "<group>"; };
 		AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLAuthorizedManager.swift; sourceTree = "<group>"; };
 		AC4D090620B7A80F007686EB /* TextColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColorButton.swift; sourceTree = "<group>"; };
@@ -1685,6 +1683,8 @@
 		ACA9CC4720C6769800873643 /* SweetMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardMessageCell.swift; sourceTree = "<group>"; };
 		ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSearchCell.swift; sourceTree = "<group>"; };
+		ACB5793C20F336FE006D597E /* BeautyFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeautyFilter.h; sourceTree = "<group>"; };
+		ACB5793D20F336FE006D597E /* BeautyFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeautyFilter.m; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
 		ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditCancellable.swift; sourceTree = "<group>"; };
@@ -2248,8 +2248,8 @@
 				AC04E9862099C87F004401AC /* LookupFilter.m */,
 				AC8EAA0120AC39900033615D /* XGPUImageMovie.h */,
 				AC8EAA0220AC39900033615D /* XGPUImageMovie.m */,
-				AC45CD7320AD4EDC005C4AA0 /* GPUImageBeautifyFilter.h */,
-				AC45CD7220AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m */,
+				ACB5793C20F336FE006D597E /* BeautyFilter.h */,
+				ACB5793D20F336FE006D597E /* BeautyFilter.m */,
 				ACF7A8C820B431FB00592BC9 /* StoryPokeView.swift */,
 			);
 			path = Edit;
@@ -3350,12 +3350,12 @@
 				5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C2F20EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
-				AC45CD7420AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				AC05F43F20DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B47209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				ACB5793E20F336FE006D597E /* BeautyFilter.m in Sources */,
 				ACEC5C2320EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
@@ -3559,7 +3559,6 @@
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
-				AC45CD7620AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
 				583BC78C20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
@@ -3616,6 +3615,7 @@
 				AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
+				ACB5794020F336FE006D597E /* BeautyFilter.m in Sources */,
 				58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				AC84FE7F20E21BA4008FC795 /* Guide+SwipeTip.swift in Sources */,
 				AC525AB4208DD714001070B2 /* InboxController.swift in Sources */,
@@ -3859,7 +3859,6 @@
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
-				AC45CD7720AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				AC84FE7420E21B5D008FC795 /* DashView.swift in Sources */,
 				AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
@@ -3879,6 +3878,7 @@
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				587D18EF20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */,
+				ACB5794120F336FE006D597E /* BeautyFilter.m in Sources */,
 				AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */,
@@ -4283,12 +4283,12 @@
 				5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C3020EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
-				AC45CD7520AD4EDC005C4AA0 /* GPUImageBeautifyFilter.m in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
 				AC05F44020DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				58447B48209C2E07004C2FFE /* ContactsController.swift in Sources */,
+				ACB5793F20F336FE006D597E /* BeautyFilter.m in Sources */,
 				ACEC5C2420EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
