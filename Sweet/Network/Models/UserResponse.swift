@@ -26,6 +26,7 @@ struct UserResponse: Codable {
     var subscription: Bool
     var blacklist: Bool
     var block: Bool
+    let common: Int
 }
 
 extension User {

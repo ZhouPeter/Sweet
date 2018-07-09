@@ -10,12 +10,19 @@ import UIKit
 
 class AcitivityCardTableViewCell: UITableViewCell {
 
-    private var viewModel: ActivityViewModel?
+    private var viewModel: ActivityCardViewModel?
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
+    }()
+    private lazy var sameImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+        
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -90,9 +97,17 @@ class AcitivityCardTableViewCell: UITableViewCell {
         avatarImageView.align(.top, inset: 10)
         avatarImageView.constrain(width: 20, height: 20)
         avatarImageView.setViewRounded()
+        contentView.addSubview(sameImageView)
+        sameImageView.align(.left, inset: 20)
+        sameImageView.centerY(to: avatarImageView)
+        sameImageView.constrain(width: 20, height: 20)
+        sameImageView.setViewRounded()
         contentView.addSubview(titleLabel)
         titleLabel.centerY(to: avatarImageView)
-        titleLabel.pin(.right, to: avatarImageView, spacing: 8)
+        titleLabel.pin(.right, to: sameImageView, spacing: 8)
+        let constraint = titleLabel.leftAnchor.constraint(equalTo: sameImageView.rightAnchor, constant: 8)
+        constraint.priority = .defaultHigh
+        constraint.isActive = true
         contentView.addSubview(subtitleLabel)
         subtitleLabel.centerY(to: avatarImageView)
         subtitleLabel.pin(.right, to: titleLabel, spacing: 4)
@@ -121,9 +136,11 @@ class AcitivityCardTableViewCell: UITableViewCell {
         likeButton.pin(.bottom, to: contentBackgroundView)
     }
     
-    func update(_ viewModel: ActivityViewModel) {
+    func update(_ viewModel: ActivityCardViewModel) {
         self.viewModel = viewModel
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        sameImageView.kf.setImage(with: viewModel.sameAvatarURL)
+        sameImageView.isHidden = viewModel.sameAvatarURL == nil
         titleLabel.text = viewModel.titleString
         subtitleLabel.text = viewModel.subtitleString
         commentLabel.text = viewModel.commentString

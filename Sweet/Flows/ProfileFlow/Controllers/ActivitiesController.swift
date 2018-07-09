@@ -23,7 +23,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     private var activityList = [ActivityResponse]()
-    private var viewModels = [ActivityViewModel]()
+    private var viewModels = [ActivityCardViewModel]()
     private var page = 0
     private var loadFinish = false
     private lazy var tableView: UITableView = {
@@ -32,7 +32,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(ActivityTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
+        tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
         return tableView
     }()
     private lazy var inputTextView: InputTextView = {
@@ -59,7 +59,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
                     self.activityList = response.list
                     self.loadFinish = response.list.count < 10
                     self.viewModels = response.list.map {
-                        var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        var viewModel = ActivityCardViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
                         viewModel.callBack = { activityId in
                             self.showInputView(activityId: viewModel.activityId)
                         }
@@ -85,7 +85,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
                     self.activityList.append(contentsOf: response.list)
                     self.loadFinish = response.list.count < 10
                     self.viewModels.append(contentsOf: response.list.map {
-                        var viewModel = ActivityViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        var viewModel = ActivityCardViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
                         viewModel.callBack = { activityId in
                             self.showInputView(activityId: viewModel.activityId)
                         }
@@ -161,7 +161,8 @@ extension ActivitiesController {
             case .success:
                 guard let item = self.activityList.index(where: { $0.activityId == activityId }) else { return }
                 self.activityList[item].like = true
-                let viewModel = ActivityViewModel(model: self.activityList[item])
+                let viewModel = ActivityCardViewModel(model: self.activityList[item],
+                                                      userAvatarURL: URL(string: self.avatar))
                 self.viewModels[item] = viewModel
                 self.tableView.reloadRows(at: [IndexPath(row: item, section: 0)], with: .automatic)
             case let  .failure(error):
@@ -173,7 +174,7 @@ extension ActivitiesController {
 extension ActivitiesController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "ActivityCell", for: indexPath) as? ActivityTableViewCell else {fatalError()}
+            withIdentifier: "ActivityCell", for: indexPath) as? AcitivityCardTableViewCell else {fatalError()}
         cell.update(viewModels[indexPath.row])
         return cell
     }

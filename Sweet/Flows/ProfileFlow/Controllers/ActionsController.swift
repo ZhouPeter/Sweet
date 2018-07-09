@@ -44,10 +44,8 @@ class ActionsController: PageboyViewController {
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
         let storysController = StoriesController(user: user)
         storysController.showStoriesPlayerView = showStoriesPlayerView
-        let estimatesController = EvaluationController(user: user)
         viewControllers.append(feedsController)
         viewControllers.append(storysController)
-        viewControllers.append(estimatesController)
         return viewControllers
     }()
     

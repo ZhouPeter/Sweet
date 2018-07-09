@@ -29,12 +29,25 @@ struct ContentCardViewModel {
     let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
-        contentString = model.content! 
-        contentHeight = contentString.boundingSize(
-            font: UIFont.systemFont(ofSize: 18),
-            size:CGSize(width: UIScreen.mainWidth() - 30, height: CGFloat.greatestFiniteMagnitude),
-            lineSpacing: 5).height
-        contentTextAttributed = contentString.getTextAttributed(lineSpacing: 5)
+        contentString = model.content!
+        let attributedText = try? NSMutableAttributedString(
+            data: contentString.data(using: String.Encoding.unicode)!,
+            options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+            documentAttributes: nil)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5
+        paragraphStyle.paragraphSpacing = 0
+        paragraphStyle.paragraphSpacingBefore = 0
+
+        attributedText?.addAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18),
+                                       NSAttributedStringKey.paragraphStyle: paragraphStyle],
+                                      range: NSRange(location: 0, length: attributedText!.length))
+        let rect = attributedText?.boundingRect(
+            with: CGSize(width: UIScreen.mainWidth() - 40, height: 0),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil)
+        contentHeight = rect!.height + 1
+        contentTextAttributed = attributedText!
         if  model.imageList != nil {
             imageURLList = model.imageList?.compactMap { URL(string: $0) }
         } else if let video = model.video {

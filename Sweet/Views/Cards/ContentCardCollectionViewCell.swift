@@ -27,11 +27,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return label
     } ()
     
-//    lazy var contentWebView: UIWebView = {
-//        let webView = UIWebView()
-//        return webView
-//    }()
-    
     var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tag = 10086
@@ -132,6 +127,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
         contentLabel.lineBreakMode = .byTruncatingTail
+//        contentLabel.sizeToFit()
         update(with: viewModel.imageURLList)
         resetEmojiView()
     }

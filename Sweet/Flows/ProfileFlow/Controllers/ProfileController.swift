@@ -44,9 +44,9 @@ class ProfileController: BaseViewController, ProfileView {
             if let newValue = newValue {
                 if newValue.userId == UInt64(Defaults[.userID] ?? "0") {
                     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
-                    navigationItem.title = "我的"
+                    navigationItem.title = "个人主页"
                 } else {
-                    navigationItem.title = newValue.nickname
+                    navigationItem.title = "个人主页"
                     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuButton)
                 }
             }
@@ -62,7 +62,7 @@ class ProfileController: BaseViewController, ProfileView {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(hex: 0xf2f2f2)
-        tableView.register(UINib(nibName: "BaseInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "baseCell")
+        tableView.register(UserInfoTableViewCell.self, forCellReuseIdentifier: "userInfoCell")
         tableView.register(ActionsTableViewCell.self, forCellReuseIdentifier: "actionsCell")
         tableView.backgroundColor = UIColor.xpGray()
         return tableView
@@ -176,55 +176,42 @@ extension ProfileController {
     @objc private func menuAction(sender: UIButton) {
         guard let userId = userResponse?.userId,
             let blacklist = userResponse?.blacklist,
-            let block = userResponse?.block else { return }
+            let block = userResponse?.block,
+            let subscription = userResponse?.subscription else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let sendMessageAction = UIAlertAction.makeAlertAction(title: "发送消息", style: .default) { [weak self] (_) in
+            self?.sendMessage()
+        }
+        let subscriptionAction = UIAlertAction.makeAlertAction(
+        title: subscription ? "取消订阅" : "订阅",
+        style: .default) { [weak self] (_) in
+            if subscription {
+                self?.delUserSubscription(userId: userId)
+            } else {
+                self?.addUserSubscription(userId: userId)
+            }
+        }
         let shieldAction = UIAlertAction.makeAlertAction(
-            title: block ? "取消屏蔽" : "屏蔽他/她的来源",
+            title: block ? "取消屏蔽" : "屏蔽",
             style: .default) { [weak self] (_) in
             if block {
-                web.request(.delBlock(userId: userId), completion: { (result) in
-                    switch result {
-                    case let .failure(error):
-                        logger.debug(error)
-                    case .success:
-                        self?.userResponse?.block = !block
-                    }
-                })
+                self?.delUserBlock(userId: userId)
             } else {
-                web.request(.addBlock(userId: userId), completion: { (result) in
-                    switch result {
-                    case let .failure(error):
-                        logger.debug(error)
-                    case .success:
-                        self?.userResponse?.block = !block
-                    }
-                })
+                self?.addUserBlock(userId: userId)
             }
         }
         let addBlacklistAction = UIAlertAction.makeAlertAction(
             title: blacklist ? "移出黑名单" : "加入黑名单",
             style: .default) { [weak self] (_) in
             if blacklist {
-                web.request(.delBlacklist(userId: userId), completion: {  (result) in
-                    switch result {
-                    case let .failure(error):
-                        logger.debug(error)
-                    case .success:
-                        self?.userResponse?.blacklist = !blacklist
-                    }
-                })
+                self?.delUserBlacklist(userId: userId)
             } else {
-                web.request(.addBlacklist(userId: userId), completion: { (result) in
-                    switch result {
-                    case let .failure(error):
-                        logger.debug(error)
-                    case .success:
-                        self?.userResponse?.blacklist = !blacklist
-                    }
-                })
+                self?.addUserBlacklist(userId: userId)
             }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
+        alertController.addAction(sendMessageAction)
+        alertController.addAction(subscriptionAction)
         alertController.addAction(shieldAction)
         alertController.addAction(addBlacklistAction)
         alertController.addAction(cancelAction)
@@ -288,33 +275,85 @@ extension ProfileController {
     }
 
     private func updateViewModel() {
-        self.baseInfoViewModel = BaseInfoCellViewModel(user: userResponse!)
-        self.baseInfoViewModel?.subscribeAction = { [weak self] userId in
-            guard let `self` = self, let subscription = self.userResponse?.subscription else { return }
-            web.request(
-                subscription ?
-                    .delUserSubscription(userId: userId) : .addUserSubscription(userId: userId),
-                completion: { (result) in
+        baseInfoViewModel = BaseInfoCellViewModel(user: userResponse!)
+    }
+    
+    private func sendMessage() {
+        if let buddy = userResponse {
+            showConversation?(user, User(buddy))
+        }
+    }
+
+    private func delUserBlock(userId: UInt64) {
+        web.request(.delBlock(userId: userId), completion: { (result) in
+            switch result {
+            case let .failure(error):
+                logger.debug(error)
+            case .success:
+                self.userResponse?.block = false
+            }
+        })
+    }
+    
+    private func addUserBlock(userId: UInt64) {
+        web.request(.addBlock(userId: userId), completion: { (result) in
+            switch result {
+            case let .failure(error):
+                logger.debug(error)
+            case .success:
+                self.userResponse?.block = true
+            }
+        })
+    }
+    
+    private func delUserBlacklist(userId: UInt64) {
+        web.request(.delBlacklist(userId: userId), completion: {  (result) in
+            switch result {
+            case let .failure(error):
+                logger.debug(error)
+            case .success:
+                self.userResponse?.blacklist = false
+            }
+        })
+    }
+    
+    private func addUserBlacklist(userId: UInt64) {
+        web.request(.addBlacklist(userId: userId), completion: { (result) in
+            switch result {
+            case let .failure(error):
+                logger.debug(error)
+            case .success:
+                self.userResponse?.blacklist = true
+            }
+        })
+    }
+    
+    private func delUserSubscription(userId: UInt64) {
+        web.request(
+            .delUserSubscription(userId: userId),
+            completion: { (result) in
                 switch result {
                 case .success:
-                    self.userResponse!.subscription = !self.userResponse!.subscription
-                    self.baseInfoViewModel?.subscribeButtonString
-                        = self.userResponse!.subscription ? "已订阅" : "订阅"
-                    self.baseInfoViewModel?.subscriptionButtonStyle
-                        = self.userResponse!.subscription ? .borderBlue: .backgroundColorBlue
-                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    self.userResponse!.subscription = false
                 case let .failure(error):
                     logger.error(error)
                 }
-            })
-        }
-        self.baseInfoViewModel?.sendMessageAction = { [weak self] in
-            if let user = self?.user, let buddy = self?.userResponse {
-                self?.showConversation?(user, User(buddy))
-            }
-        }
+        })
     }
     
+    private func addUserSubscription(userId: UInt64) {
+        web.request(
+            .addUserSubscription(userId: userId),
+            completion: { (result) in
+                switch result {
+                case .success:
+                    self.userResponse!.subscription = true
+                case let .failure(error):
+                    logger.error(error)
+                }
+        })
+    }
+ 
 }
 
 // MARK: - UITableViewDelegate
@@ -340,8 +379,8 @@ extension ProfileController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "baseCell",
-                for: indexPath) as? BaseInfoTableViewCell else { fatalError() }
+                withIdentifier: "userInfoCell",
+                for: indexPath) as? UserInfoTableViewCell else { fatalError() }
             if let viewModel = baseInfoViewModel {
                 cell.updateWith(viewModel)
             }
