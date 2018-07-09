@@ -11,32 +11,27 @@ import SwiftyUserDefaults
 struct BaseInfoCellViewModel {
     let userId: UInt64
     let avatarImageURL: URL
-    let nameString: String
-    let networkString: String
+    let nicknameSexAttributedString: NSAttributedString
+    let collegeInfoString: String
+    let starContactString: String
     let signatureString: String
-    let likeCountString: String
-    var subscribeButtonString: String
-    var subscribeAction: ((UInt64) -> Void)?
-    var sendMessageAction: (() -> Void)?
     let cellHeight: CGFloat
-    let subscriptionButtonHidden: Bool
-    let sendMessageButtonHidden: Bool
-    var subscriptionButtonStyle: ContactButtonStyle
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
-        nameString = user.nickname
-        let sex = user.gender.rawValue == 1 ? "男生" : "女生"
-        networkString = sex + "·" + "\(user.enrollment)" + "级\n" +
-                        user.universityName + "\n" +
-                        user.collegeName
-        signatureString = user.signature
-        likeCountString = "♥️\(user.likeCount)"
+        let string = "\(user.nickname)" +  (user.gender.rawValue == 1 ? "♂" : "♀")
+        let attributedString = NSMutableAttributedString(string: string, attributes: [
+            .font: UIFont.boldSystemFont(ofSize: 18),
+            .foregroundColor: UIColor.black
+            ])
+        attributedString.addAttribute(.foregroundColor,
+                                    value: user.gender.rawValue == 1 ? UIColor(hex: 0x4A90E2) : UIColor(hex: 0xB761F9),
+                                    range: NSRange(location: user.nickname.utf16.count, length: 1))
+        nicknameSexAttributedString = attributedString
         let userID = UInt64(Defaults[.userID] ?? "0")
-        subscriptionButtonHidden = user.userId == userID
-        sendMessageButtonHidden = user.userId == userID
-        subscribeButtonString = user.subscription ? "已订阅" : "订阅"
-        subscriptionButtonStyle = user.subscription ? .borderBlue : .backgroundColorBlue
-        cellHeight = user.userId == userID ? 140 : 180
+        starContactString = "\(user.likeCount)获赞" + (user.userId == userID ? "" : "·" + "\(user.common)共同联系人")
+        collegeInfoString = user.universityName + "·" + user.collegeName + "·" + "\(user.enrollment)级"
+        signatureString = user.signature
+        cellHeight = 224
     }
 }

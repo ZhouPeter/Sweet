@@ -14,8 +14,8 @@ class ActionsTableViewCell: UITableViewCell {
     weak var delegate: ActionsTableViewCellDelegate?
     private lazy var buttons: [UIButton] = {
         var buttons = [UIButton]()
-        let titles = ["动态", "小故事", "好友评价"]
-        for index in 0 ..< 3 {
+        let titles = ["动态", "小故事"]
+        for index in 0 ..< titles.count {
             let button = UIButton()
             button.backgroundColor = .white
             button.setTitle(titles[index], for: .normal)
@@ -27,6 +27,11 @@ class ActionsTableViewCell: UITableViewCell {
         }
         buttons[0].titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         return buttons
+    }()
+    private lazy var selectedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: 0x5FC3FF)
+        return view
     }()
     
     lazy var placeholderView: UIView = {
@@ -50,12 +55,22 @@ class ActionsTableViewCell: UITableViewCell {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         }
         sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        selectedView.transform = .identity
+        let newX = 14 +  UIScreen.mainWidth() / CGFloat(self.buttons.count) * CGFloat(sender.tag)
+        UIView.animate(withDuration: 0.2) {
+            let transform = CGAffineTransform(translationX: newX - self.selectedView.frame.origin.x, y: 0)
+            self.selectedView.transform = transform
+        }
+        selectedView.frame = CGRect(x: newX,
+                                    y: 48,
+                                    width: UIScreen.mainWidth() / CGFloat(buttons.count) - 28,
+                                    height: 2)
         delegate?.selectedAction(at: sender.tag)
     }
     
     private func setupUI() {
-        let buttonWidth: CGFloat = (UIScreen.mainWidth() - CGFloat(buttons.count) - 1) / CGFloat(buttons.count)
-        let buttonHeight: CGFloat = 49
+        let buttonWidth: CGFloat = UIScreen.mainWidth() / CGFloat(buttons.count)
+        let buttonHeight: CGFloat = 48
         for (index, button) in buttons.enumerated() {
             contentView.addSubview(button)
             button.frame = CGRect(x: buttonWidth * CGFloat(index) + CGFloat(index),
@@ -63,6 +78,11 @@ class ActionsTableViewCell: UITableViewCell {
                                   width: buttonWidth,
                                   height: buttonHeight)
         }
+        contentView.addSubview(selectedView)
+        selectedView.frame = CGRect(x: 14,
+                                    y: 48,
+                                    width: UIScreen.mainWidth() / CGFloat(buttons.count) - 28,
+                                    height: 2)
         contentView.addSubview(placeholderView)
         placeholderView.fill(in: contentView, top: 50)
     }
