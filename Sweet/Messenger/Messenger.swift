@@ -253,7 +253,6 @@ final class Messenger {
     // MARK: - Conversations
     
     func loadConversations() {
-        logger.debug()
         guard let userID = user?.userId, state == .online else { return }
         var request = RecentGetReq()
         request.from = userID
@@ -261,6 +260,21 @@ final class Messenger {
             guard let response = response else { return }
             self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: false)
         }
+    }
+    
+    func loadLocalConversations() {
+        var conversations = [Conversation]()
+        storage?.read({ (realm) in
+            realm.objects(ConversationData.self).forEach({ (result) in
+                if let conversation = Conversation(data: result) {
+                    conversations.append(conversation)
+                }
+            })
+        }, callback: {
+            logger.debug(conversations.count)
+            self.updateUnreadCount()
+            self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
+        })
     }
     
     func removeConversation(userID: UInt64) {

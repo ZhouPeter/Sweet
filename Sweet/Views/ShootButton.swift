@@ -93,7 +93,10 @@ final class ShootButton: UIButton {
             trackingStart = nil
             return
         }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.strokeEnd = progress
+        CATransaction.commit()
     }
     
     private func startTimer() {
