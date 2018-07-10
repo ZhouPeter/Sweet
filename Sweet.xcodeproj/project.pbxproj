@@ -943,10 +943,6 @@
 		AC84FE8E20E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
 		AC84FE8F20E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
 		AC84FE9020E22876008FC795 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84FE8C20E22876008FC795 /* FocusView.swift */; };
-		AC85299520B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
-		AC85299620B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
-		AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
-		AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC85299420B3BA41002358FE /* StoryRecordTopView.swift */; };
 		AC86A93220C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
 		AC86A93320C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
 		AC86A93420C3F2C000334D4A /* InstantMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86A93120C3F2C000334D4A /* InstantMessageData.swift */; };
@@ -1616,7 +1612,6 @@
 		AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+StoryPlayTip.swift"; sourceTree = "<group>"; };
 		AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+SameCardChoiceTip.swift"; sourceTree = "<group>"; };
 		AC84FE8C20E22876008FC795 /* FocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
-		AC85299420B3BA41002358FE /* StoryRecordTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordTopView.swift; sourceTree = "<group>"; };
 		AC86A93120C3F2C000334D4A /* InstantMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessageData.swift; sourceTree = "<group>"; };
 		AC86A93820C4051400334D4A /* ConversationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
 		AC86A93D20C4DC3F00334D4A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -2270,7 +2265,6 @@
 				AC45CD8320AD57A2005C4AA0 /* TLAuthorizedManager.swift */,
 				AC45CD8220AD57A2005C4AA0 /* TLStoryAuthorizationController.swift */,
 				ACFC207720AE993D00D696B9 /* StoryGenerator.swift */,
-				AC85299420B3BA41002358FE /* StoryRecordTopView.swift */,
 				ACF7A8BC20B3D78B00592BC9 /* StoryRecordBottomView.swift */,
 			);
 			path = Record;
@@ -3146,7 +3140,6 @@
 				58447B5B209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53272090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528520883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
-				AC85299520B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
 				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
@@ -3465,7 +3458,6 @@
 				AC45CD8A20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
-				AC85299720B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */,
@@ -3764,7 +3756,6 @@
 				AC45CD8B20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				5843DA4E209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
-				AC85299820B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				5872A84B20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
@@ -4074,7 +4065,6 @@
 				58447B5C209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				58BD53282090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
-				AC85299620B3BA41002358FE /* StoryRecordTopView.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
 				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,

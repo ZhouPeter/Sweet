@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "彩圈-小故事卡.png",
+      "filename" : "StoryUnread.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "彩圈-小故事卡@2x.png",
+      "filename" : "StoryUnread@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "彩圈-小故事卡@3x.png",
+      "filename" : "StoryUnread@3x.png",
       "scale" : "3x"
     }
   ],
