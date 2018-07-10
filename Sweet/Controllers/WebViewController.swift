@@ -82,6 +82,11 @@ class WebViewController: BaseViewController {
                 progressView.setProgress(progress, animated: true);
             }
         }
+        if keyPath == "title" {
+            if let title = change[NSKeyValueChangeKey.newKey] as? String {
+                navigationItem.title = title
+            }
+        }
     }
     
     @objc private func shareAction(_ sender: UIButton) {

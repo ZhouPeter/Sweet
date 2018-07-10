@@ -206,7 +206,6 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
 extension CardsBaseController: ActivitiesCardCollectionViewCellDelegate {
     func showWebController(url: String, content: String) {
         let controller = WebViewController(urlString: url)
-        controller.title = content
         navigationController?.pushViewController(controller, animated: true)
     }
 }

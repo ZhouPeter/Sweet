@@ -131,7 +131,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     
     private func showWebView(title: String, urlString: String) {
         let webViewController = WebViewController(urlString: urlString)
-        webViewController.navigationItem.title = title
         router.push(webViewController)
     }
     

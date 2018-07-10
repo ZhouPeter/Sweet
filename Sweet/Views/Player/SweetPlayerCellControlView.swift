@@ -29,7 +29,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
     
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
-        view.progressTintColor = UIColor(hex: 0x36C6FD)
+        view.progressTintColor = UIColor.white
         return view
     }()
     private lazy var timeLabel: UILabel = {
