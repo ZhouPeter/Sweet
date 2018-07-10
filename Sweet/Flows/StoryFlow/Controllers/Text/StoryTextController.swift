@@ -136,6 +136,9 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         }
         var draft = StoryDraft(filename: name, storyType: .text, date: Date())
         draft.topic = topic
+        if editController.hasText || editController.topic != nil {
+            draft.contentRect = editController.boundingRect
+        }
         TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
         Defaults[.isPersonalStoryChecked] = false
         view.hero.id = "avatar"
