@@ -49,15 +49,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         super.init(frame: frame)
         setupUI()
     }
-
-    func resetEmojiView() {
-        if let viewModel = viewModel {
-            emojiView.update(indexs: viewModel.defaultEmojiList,
-                             resultImage: viewModel.resultImageName,
-                             resultAvatarURLs: viewModel.resultAvatarURLs,
-                             emojiType: viewModel.emojiDisplayType)
-        }
-    }
     private var contentViewHeight: NSLayoutConstraint?
     private var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
@@ -96,6 +87,19 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         resetEmojiView()
         loadItemValues()
 
+    }
+    
+    func updateEmojiView(viewModel: ContentVideoCardViewModel) {
+        self.viewModel = viewModel
+        resetEmojiView()
+    }
+    func resetEmojiView() {
+        if let viewModel = viewModel {
+            emojiView.update(indexs: viewModel.defaultEmojiList,
+                             resultImage: viewModel.resultImageName,
+                             resultAvatarURLs: viewModel.resultAvatarURLs,
+                             emojiType: viewModel.emojiDisplayType)
+        }
     }
     
     private func loadItemValues() {

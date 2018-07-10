@@ -17,7 +17,12 @@ class UserInfoTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    private lazy var nicknameLabel = UILabel()
+    private lazy var nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        return label
+    }()
+    
     private lazy var heartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Star")
@@ -64,30 +69,30 @@ class UserInfoTableViewCell: UITableViewCell {
     
     private func setupUI() {
         contentView.addSubview(avatarImageView)
-        avatarImageView.align(.left, inset: 20)
+        avatarImageView.centerX(to: contentView)
         avatarImageView.align(.top, inset: 15)
         avatarImageView.constrain(width: 60, height: 60)
         avatarImageView.setViewRounded()
         contentView.addSubview(nicknameLabel)
-        nicknameLabel.align(.left, to: avatarImageView)
+        nicknameLabel.centerX(to: avatarImageView)
         nicknameLabel.pin(.bottom, to: avatarImageView, spacing: 10)
-        contentView.addSubview(heartImageView)
-        heartImageView.align(.left, to: avatarImageView)
-        heartImageView.pin(.bottom, to: nicknameLabel, spacing: 8)
-        heartImageView.constrain(width: 24, height: 24)
         contentView.addSubview(starContactLabel)
-        starContactLabel.centerY(to: heartImageView)
-        starContactLabel.pin(.right, to: heartImageView, spacing: 4)
+        starContactLabel.pin(.bottom, to: nicknameLabel, spacing: 8)
+        starContactLabel.centerX(to: avatarImageView, offset: 14)
+        contentView.addSubview(heartImageView)
+        heartImageView.centerY(to: starContactLabel)
+        heartImageView.constrain(width: 24, height: 24)
+        heartImageView.pin(.left, to: starContactLabel, spacing: 4)
         contentView.addSubview(segmentLineView)
         segmentLineView.align(.left)
         segmentLineView.align(.right)
         segmentLineView.constrain(height: 0.5)
         segmentLineView.pin(.bottom, to: heartImageView, spacing: 10)
         contentView.addSubview(collegeInfoLabel)
-        collegeInfoLabel.align(.left, to: avatarImageView)
+        collegeInfoLabel.centerX(to: avatarImageView)
         collegeInfoLabel.pin(.bottom, to: segmentLineView, spacing: 10)
         contentView.addSubview(signatureLabel)
-        signatureLabel.align(.left, to: avatarImageView)
+        signatureLabel.centerX(to: avatarImageView)
         signatureLabel.pin(.bottom, to: collegeInfoLabel, spacing: 10)
         contentView.addSubview(bottomMaskView)
         bottomMaskView.align(.left)

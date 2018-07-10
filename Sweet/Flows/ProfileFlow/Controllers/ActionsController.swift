@@ -12,6 +12,10 @@ protocol PageChildrenProtocol {
     var user: User { get set }
     func loadRequest()
 }
+
+protocol ActionsControllerDelegate: NSObjectProtocol {
+    func actionsScrollViewDidScoll(scrollView: UIScrollView)
+}
 class ActionsController: PageboyViewController {
     var showStoriesPlayerView: (
     (
@@ -29,6 +33,7 @@ class ActionsController: PageboyViewController {
     }
     var mine: User
     let setTop: SetTop?
+    weak var actionsDelegate: ActionsControllerDelegate?
     init(user: User, mine: User, setTop: SetTop? = nil) {
         self.user = user
         self.mine = mine
@@ -42,7 +47,9 @@ class ActionsController: PageboyViewController {
     private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
+        feedsController.delegate = self
         let storysController = StoriesController(user: user)
+        storysController.delegate = self
         storysController.showStoriesPlayerView = showStoriesPlayerView
         viewControllers.append(feedsController)
         viewControllers.append(storysController)
@@ -55,6 +62,14 @@ class ActionsController: PageboyViewController {
         dataSource = self
         delegate = self
         pageControllers[0].loadRequest()
+    }
+}
+extension ActionsController: ActivitiesControllerDelegate, StoriesControllerDelegate {
+    func acitvitiesScrollViewDidScroll(scrollView: UIScrollView) {
+        actionsDelegate?.actionsScrollViewDidScoll(scrollView: scrollView)
+    }
+    func storiesScrollViewDidScroll(scrollView: UIScrollView) {
+        actionsDelegate?.actionsScrollViewDidScoll(scrollView: scrollView)
     }
 }
 

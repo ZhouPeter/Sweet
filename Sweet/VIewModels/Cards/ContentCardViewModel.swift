@@ -13,8 +13,7 @@ enum EmojiViewDisplay{
 }
 struct ContentCardViewModel {
     let titleString: String
-    let contentString: String
-    let contentTextAttributed: NSAttributedString
+    let contentTextAttributed: NSAttributedString?
     let contentHeight: CGFloat
     var contentImages: [[ContentImage]]?
     var imageURLList: [URL]?
@@ -29,22 +28,14 @@ struct ContentCardViewModel {
     let contentId: String?
     init(model: CardResponse) {
         titleString = model.name!
-        contentString = model.content!
-        let attributedText = try? NSMutableAttributedString(
-            data: contentString.data(using: String.Encoding.unicode)!,
-            options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-            documentAttributes: nil)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 5
-        attributedText?.addAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18),
-                                       NSAttributedStringKey.paragraphStyle: paragraphStyle],
-                                      range: NSRange(location: 0, length: attributedText!.length))
+        let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
+                                                                    textColor: .black)
         let rect = attributedText?.boundingRect(
             with: CGSize(width: UIScreen.mainWidth() - 40, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading],
             context: nil)
-        contentHeight = ceil(rect!.height) + 1
-        contentTextAttributed = attributedText!
+        contentHeight = ceil(rect?.height ?? 0) + 1
+        contentTextAttributed = attributedText
         if  model.imageList != nil {
             imageURLList = model.imageList?.compactMap { URL(string: $0) }
         } else if let video = model.video {

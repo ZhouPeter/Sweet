@@ -78,12 +78,16 @@ extension StoryPlayerCoordinator {
             self?.finishFlow?()
         }
         storiesGroupView.runStoryFlow = { [weak self, weak storiesGroupView] topic in
+            storiesGroupView?.pause()
             self?.runStoryFlow(topic: topic, finishBlock: {
                 storiesGroupView?.play()
             })
         }
-        storiesGroupView.runProfileFlow = { [weak self] (user, buddyID) in
-            self?.runProfileFlow(user: user, buddyID: buddyID)
+        storiesGroupView.runProfileFlow = { [weak self, weak storiesGroupView] (user, buddyID) in
+            storiesGroupView?.pause()
+            self?.runProfileFlow(user: user, buddyID: buddyID, finishBlock: {
+                storiesGroupView?.play()
+            })
         }
         router.setRootFlow(storiesGroupView)
     }
@@ -99,12 +103,16 @@ extension StoryPlayerCoordinator {
             self?.finishFlow?()
         }
         storiesPlayerView.runStoryFlow = { [weak self, weak storiesPlayerView] topic in
+            storiesPlayerView?.pause()
             self?.runStoryFlow(topic: topic, finishBlock: {
                 storiesPlayerView?.play()
             })
         }
-        storiesPlayerView.runProfileFlow = { [weak self] (user, buddyID) in
-            self?.runProfileFlow(user: user, buddyID: buddyID)
+        storiesPlayerView.runProfileFlow = { [weak self, weak storiesPlayerView] (user, buddyID) in
+            storiesPlayerView?.pause()
+            self?.runProfileFlow(user: user, buddyID: buddyID, finishBlock: {
+                storiesPlayerView?.play()
+            })
         }
         _ = storiesPlayerView.toPresent()?.view
         storiesPlayerView.reloadPlayer()
@@ -124,7 +132,7 @@ extension StoryPlayerCoordinator {
         coordinator.start()
     }
     
-    private func runProfileFlow(user: User, buddyID: UInt64) {
+    private func runProfileFlow(user: User, buddyID: UInt64, finishBlock: (() -> Void)?) {
         if buddyID == fromUserId {
             self.router.dismissFlow()
             self.finishFlow?()
@@ -137,6 +145,7 @@ extension StoryPlayerCoordinator {
             navigation: navigation)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
+            finishBlock?()
         }
         addDependency(coordinator)
         router.present(navigation, animated: true)

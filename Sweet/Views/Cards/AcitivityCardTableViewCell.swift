@@ -150,7 +150,7 @@ class AcitivityCardTableViewCell: UITableViewCell {
             resultTitleLabel.text = "选择了"
         }
         emojiImageView.image = viewModel.emojiImage
-        contentLabel.text = viewModel.contentString
+        contentLabel.attributedText = viewModel.contentAttributedString
         likeButton.setImage(viewModel.like ? #imageLiteral(resourceName: "Like") : #imageLiteral(resourceName: "Unlike"), for: .normal)
         likeButton.isHidden = viewModel.isHiddenLikeButton
     }
