@@ -43,6 +43,8 @@ class AboutBottomView: UIView {
         let view = RoundedTopView()
         view.fillColor = .white
         view.cornerRadius = 8
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
+        view.addGestureRecognizer(tap)
         return view
     }()
     private lazy var versionLabel: UILabel = {

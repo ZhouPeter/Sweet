@@ -51,7 +51,6 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
             }
         }
         delegate?.showStoriesGroup(
-            user: user,
             storiesGroup: storiesGroup,
             currentIndex: currentIndex,
             fromCardId: cardId,

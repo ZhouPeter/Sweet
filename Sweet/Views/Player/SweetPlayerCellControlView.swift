@@ -34,7 +34,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
     }()
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = .white
         return label
     }()
@@ -43,7 +43,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         bottomMaskView.isHidden = true
         topMaskView.isHidden = true
         addSubview(voiceButton)
-        voiceButton.constrain(width: 30, height: 30)
+        voiceButton.constrain(width: 33, height: 33)
         voiceButton.align(.right, inset: 10)
         voiceButton.align(.bottom, inset: 50)
         addSubview(progressView)
@@ -52,7 +52,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         progressView.align(.bottom)
         progressView.constrain(height: 3)
         addSubview(timeLabel)
-        timeLabel.align(.right, inset: 6)
+        timeLabel.align(.right, inset: 10)
         timeLabel.align(.bottom, inset: 6)
     }
     override func playTimeDidChange(currentTime: TimeInterval, totalTime: TimeInterval) {

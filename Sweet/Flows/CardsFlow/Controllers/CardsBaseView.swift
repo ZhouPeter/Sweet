@@ -14,8 +14,7 @@ protocol CardsBaseView: BaseView {
 
 protocol CardsBaseViewDelegate: class {
     func showProfile(userId: UInt64, setTop: SetTop?)
-    func showStoriesGroup(user: User,
-                          storiesGroup: [[StoryCellViewModel]],
+    func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int,
                           fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,

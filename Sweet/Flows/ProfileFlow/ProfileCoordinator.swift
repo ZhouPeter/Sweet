@@ -94,15 +94,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        current: Int,
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
-//        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
-//                                                                        navigation: navigation,
-//                                                                        current: 0,
-//                                                                        currentStart: current,
-//                                                                        isGroup: false,
-//                                                                        fromCardId: nil,
-//                                                                        storiesGroup: [stories],
-//                                                                        delegate: delegate)
-        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: self.user,
                                                                         navigation: navigation,
                                                                         currentStart: current,
                                                                         fromUserId: buddyID,

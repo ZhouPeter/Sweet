@@ -36,17 +36,14 @@ struct ContentCardViewModel {
             documentAttributes: nil)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
-        paragraphStyle.paragraphSpacing = 0
-        paragraphStyle.paragraphSpacingBefore = 0
-
         attributedText?.addAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18),
                                        NSAttributedStringKey.paragraphStyle: paragraphStyle],
                                       range: NSRange(location: 0, length: attributedText!.length))
         let rect = attributedText?.boundingRect(
-            with: CGSize(width: UIScreen.mainWidth() - 40, height: 0),
+            with: CGSize(width: UIScreen.mainWidth() - 40, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading],
             context: nil)
-        contentHeight = rect!.height + 1
+        contentHeight = ceil(rect!.height) + 1
         contentTextAttributed = attributedText!
         if  model.imageList != nil {
             imageURLList = model.imageList?.compactMap { URL(string: $0) }
@@ -65,6 +62,4 @@ struct ContentCardViewModel {
         defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
 
     }
-    
-   
 }
