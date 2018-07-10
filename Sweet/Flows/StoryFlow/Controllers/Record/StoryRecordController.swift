@@ -73,23 +73,28 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         let button = UIButton(type: .custom)
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
         button.kf.setImage(with: URL(string: self.user.avatar), for: .normal)
         return button
     } ()
     
+    private lazy var avatarCircleWhite: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.image = UIImage(named: "AvatarCircleWhite")
+        return view
+    } ()
+    
     private lazy var avatarCircle: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.image = #imageLiteral(resourceName: "StoryUnread")
+        view.image = UIImage(named: "AvatarCircleOrange")
         return view
     } ()
     
     private lazy var avatarCircleMask: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.lineWidth = 2
+        layer.lineWidth = 3
         layer.lineCap = kCALineCapRound
         layer.fillColor = nil
         layer.strokeColor = UIColor.white.cgColor
@@ -195,6 +200,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func animateAvatarCircle() {
         if isAvatarCircleAnamtionEnabled {
+            isAvatarCircleAnamtionEnabled = false
             avatarCircle.isHidden = false
             let animation = CABasicAnimation(keyPath: "strokeEnd")
             animation.fromValue = 0
@@ -214,7 +220,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         avatarCircleMask.frame = CGRect(origin: .zero, size: avatarCircle.bounds.size)
-        avatarCircleMask.path = UIBezierPath(ovalIn: avatarCircleMask.bounds.insetBy(dx: 1, dy: 1)).cgPath
+        avatarCircleMask.path = UIBezierPath(ovalIn: avatarCircleMask.bounds.insetBy(dx: 1.5, dy: 1.5)).cgPath
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -450,6 +456,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupTopView() {
         recordContainer.addSubview(avatarButton)
+        avatarButton.addSubview(avatarCircleWhite)
         recordContainer.addSubview(avatarCircle)
         recordContainer.addSubview(cameraSwitchButton)
         recordContainer.addSubview(flashButton)
@@ -457,12 +464,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         cameraSwitchButton.alpha = 0
         recordContainer.addSubview(menuButton)
         recordContainer.addSubview(backButton)
-        avatarButton.constrain(width: 40, height: 40)
+        avatarButton.constrain(width: 39, height: 39)
         avatarButton.align(.left, to: recordContainer, inset: 10)
         avatarButton.align(.top, to: recordContainer, inset: 10)
-        avatarCircle.equal(.size, to: avatarButton)
+        avatarCircle.constrain(width: 40, height: 40)
         avatarCircle.center(to: avatarButton)
         avatarCircle.layer.mask = avatarCircleMask
+        avatarCircleWhite.equal(.size, to: avatarCircle)
+        avatarCircleWhite.center(to: avatarButton)
         menuButton.constrain(width: 40, height: 40)
         menuButton.centerY(to: avatarButton)
         menuButton.pin(.right, to: avatarButton, spacing: 10)
