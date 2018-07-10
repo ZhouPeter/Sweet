@@ -35,7 +35,7 @@ final class ConversationCoordinator: BaseCoordinator, ConversationCoordinatorOup
         let conversation = ConversationController(user: user, buddy: buddy)
         conversation.delegate = self
         router.push(conversation)
-        Messenger.shared.startConversation(userID: user.userId)
+        Messenger.shared.startConversation(userID: buddy.userId)
     }
 }
 

@@ -303,19 +303,20 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
             var pokeCenter: CGPoint?
             let type: StoryType
             var contentRect: CGRect?
-            if self.textController.hasText && self.textController.topic != nil {
+            if self.textController.hasText || self.textController.topic != nil {
                 contentRect = self.textController.boundingRect
             }
             if !self.pokeView.isHidden {
                 type = .poke
-                let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / (self.view.bounds.width / 2)
-                let centerY = (self.pokeView.center.y - self.view.bounds.width / 2) / (self.view.bounds.height / 2)
+                let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / self.view.bounds.width
+                let centerY = (self.pokeView.center.y - self.view.bounds.height / 2) / self.view.bounds.height
                 pokeCenter = CGPoint(
                     x: min(max(centerX, -0.5), 0.5),
                     y: min(max(centerY, -0.5), 0.5)
                 )
             } else {
                 type = .video
+
             }
             var draft = StoryDraft(filename: fileURL.lastPathComponent, storyType: type, date: Date())
             draft.topic = topic

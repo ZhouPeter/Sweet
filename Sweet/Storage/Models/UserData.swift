@@ -112,5 +112,6 @@ extension UserResponse {
         subscription = data.isSubscription
         blacklist = data.isBlacklisted
         block = data.isBlock
+        common = 0
     }
 }

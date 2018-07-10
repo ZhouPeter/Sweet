@@ -10,6 +10,12 @@ import Foundation
 import MessageKit
 
 final class SweetMessageSizeCalculator: MessageSizeCalculator {
+    override init(layout: MessagesCollectionViewFlowLayout?) {
+        super.init(layout: layout)
+        incomingMessagePadding = UIEdgeInsets(top: 10, left: 8, bottom: 0, right: 30)
+        outgoingMessagePadding = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 8)
+    }
+    
     override func messageContainerSize(for message: MessageType) -> CGSize {
         guard case let .custom(value) = message.kind else {
             return super.messageContainerSize(for: message)
@@ -18,10 +24,7 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
         if value is StoryMessageContent {
             return CGSize(width: maxWidth, height: maxWidth)
         }
-        if let content = value as? OptionCardContent {
-            return CGSize(width: maxWidth, height: maxWidth)
-        }
-        if let content = value as? ContentCardContent {
+        if value is OptionCardContent || value is ContentCardContent {
             return CGSize(width: maxWidth, height: maxWidth)
         }
         return super.messageContainerSize(for: message)

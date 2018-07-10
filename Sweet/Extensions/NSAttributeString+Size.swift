@@ -9,10 +9,5 @@
 import Foundation
 
 extension NSAttributedString {
-    func getAttributedStringSize(width: CGFloat) -> CGSize {
-        let size = self.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude),
-                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                     context: nil).size
-        return size
-    }
+    
 }

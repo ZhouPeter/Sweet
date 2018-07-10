@@ -9,6 +9,8 @@
 import UIKit
 import Pageboy
 import VolumeBar
+import Reachability
+import JDStatusBarNotification
 
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -43,7 +45,7 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     private var statusBarStyle = UIStatusBarStyle.lightContent
     private var statusBarHidden: Bool = false
-    
+    private var reachability = Reachability()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -58,8 +60,8 @@ final class MainController: PageboyViewController, MainView {
         bounces = false
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
-
         addObservers()
+        try? reachability?.startNotifier()
         onStoryFlowSelect?(story)
         onIMFlowSelect?(imList)
         VolumeBar.shared.start()
@@ -139,8 +141,22 @@ final class MainController: PageboyViewController, MainView {
             name: .StatusBarNoHidden,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reachabilityChanged(note:)),
+            name: .reachabilityChanged,
+            object: reachability)
+
     }
-    
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
+        switch reachability.connection {
+        case .none:
+            JDStatusBarNotification.show(withStatus: "当前网络不可用，请检查你的网络设置")
+        default:
+            JDStatusBarNotification.dismiss()
+        }
+    }
     @objc func didReceivePageScrollDiableNote() {
         isScrollEnabled = false
     }

@@ -69,7 +69,7 @@ class StoryUVController: BaseViewController {
             switch result {
             case let .success(response):
                 self?.storyUvList = response
-                self?.likeCountLabel.text = "获赞\(response.likeCount)"
+                self?.likeCountLabel.text = response.likeCount == 0 ? "暂无获赞" : "获赞\(response.likeCount)"
                 self?.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)

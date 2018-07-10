@@ -46,11 +46,16 @@ class ShareCardController: BaseViewController {
         tableView.separatorInset.left = 0
         tableView.tableFooterView = UIView()
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
+        tableView.register(ModuleTableViewCell.self, forCellReuseIdentifier: "moduleCell")
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
-    
+    private lazy var segmentLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.xpSeparatorGray()
+        return view
+    }()
     private lazy var shareTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "分享的话..."
@@ -71,7 +76,18 @@ class ShareCardController: BaseViewController {
         return button
     }()
     private let keyboard = KeyboardObserver()
-    private var sendButtonBottomConstraint: NSLayoutConstraint? 
+    private var sendButtonBottomConstraint: NSLayoutConstraint?
+    private let shareText: String?
+    
+    init(shareText: String? = nil) {
+        self.shareText = shareText
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -126,7 +142,7 @@ class ShareCardController: BaseViewController {
         tableView.align(.left)
         tableView.align(.right)
         tableView.pin(.bottom, to: topView)
-        tableView.pin(.top, to: shareTextField)
+        tableView.pin(.top, to: segmentLineView)
 
     }
     
@@ -157,6 +173,11 @@ class ShareCardController: BaseViewController {
         shareTextField.align(.right)
         shareTextField.pin(.top, to: sendButton)
         shareTextField.constrain(height: 50)
+        view.addSubview(segmentLineView)
+        segmentLineView.align(.left)
+        segmentLineView.align(.right)
+        segmentLineView.constrain(height: 0.5)
+        segmentLineView.pin(.top, to: shareTextField)
     }
     private var contactViewModels = [ContactViewModel]()
 
@@ -207,15 +228,31 @@ extension ShareCardController: UISearchBarDelegate {
 }
 
 extension ShareCardController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return shareText == nil ? 1 : 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactViewModels.count
+        if section == 0 && shareText != nil {
+            return 1
+        } else {
+            return contactViewModels.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
-        cell.update(viewModel: contactViewModels[indexPath.row])
-        return cell
+        if indexPath.section == 0  && shareText != nil {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
+            cell.accessoryType = .disclosureIndicator
+            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "分享给微信好友")
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
+            cell.update(viewModel: contactViewModels[indexPath.row])
+            return cell
+        }
     }
 }
 
@@ -225,13 +262,17 @@ extension ShareCardController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
-        cell.selectButton.isSelected = !cell.selectButton.isSelected
-        if cell.selectButton.isSelected {
-            userIds.append(contactViewModels[indexPath.row].userId)
+        if indexPath.section == 0 && shareText != nil {
+            WXApi.sendText(text: shareText!, scene: .conversation)
         } else {
-            if let index = userIds.index(where: {$0 == contactViewModels[indexPath.row].userId}) {
-                userIds.remove(at: index)
+            guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
+            cell.selectButton.isSelected = !cell.selectButton.isSelected
+            if cell.selectButton.isSelected {
+                userIds.append(contactViewModels[indexPath.row].userId)
+            } else {
+                if let index = userIds.index(where: {$0 == contactViewModels[indexPath.row].userId}) {
+                    userIds.remove(at: index)
+                }
             }
         }
     }

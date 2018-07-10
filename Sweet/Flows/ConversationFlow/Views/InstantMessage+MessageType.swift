@@ -28,7 +28,7 @@ extension InstantMessage: MessageType {
         case .text:
             return .text(rawContent)
         case .like:
-            return .emoji("❤️")
+            return .text("❤️")
         default:
             return .text("[不支持该消息类型]")
         }

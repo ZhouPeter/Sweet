@@ -101,7 +101,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+    private lazy var pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +139,6 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            logger.debug()
             dismiss(animated: true, completion: nil)
         case .changed:
             Hero.shared.update(progress)
@@ -208,7 +207,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 }
 
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
-    
+    func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
+        storiesGroup[position.0][position.1] = story
+    }
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
     }
@@ -238,7 +239,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
                 if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
                     return videoURL.videoThumbnail()
                 } else if let imageURL = story.imageURL {
-                    return imageURL.middleCutting(size: view.bounds.size)
+                    return imageURL.imageView2(size: view.bounds.size)
                 } else {
                     return nil
                 }
@@ -264,6 +265,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
             for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}
         let playerController = getChildViewController(cell: cell)
         playerController.stories = storiesGroup[indexPath.row]
+        playerController.groupIndex = indexPath.row
         playerController.currentIndex = loctionMap[indexPath] ?? 0
         if currentIndex == indexPath.row { playerController.currentIndex = currentStart }
         cell.setPlaceholderContentView(view: playerController.view)

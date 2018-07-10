@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
-
+import JDStatusBarNotification
 protocol CardsManagerView: BaseView {
     var delegate: CardsManagerViewDelegate? { get set }
 }
@@ -17,6 +17,7 @@ protocol CardsManagerViewDelegate: class {
     func showAll(view: CardsAllView)
     func showSubscription(view: CardsSubscriptionView)
 }
+var waitingIMNotifications = [InstantMessage]()
 
 class CardsManagerController: BaseViewController, CardsManagerView {
 
@@ -147,6 +148,28 @@ extension CardsManagerController: MessengerDelegate {
             rightBadgeView.isHidden = true
             rightButton.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         }
+    }
+    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        if let index = waitingIMNotifications.index(where: {  $0.localID == message.localID }) {
+            showStatusBarNotification(messageType: message.type, success: success, messageIndex: index)
+        }
+    }
+    
+    func showStatusBarNotification(messageType: IMType, success: Bool, messageIndex: Int) {
+        if success {
+            if messageType == .card {
+                JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
+            } else if messageType == .like || messageType == .text {
+                JDStatusBarNotification.show(withStatus: "赞评成功", dismissAfter: 2)
+            }
+        } else {
+            if messageType == .card {
+                JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
+            } else if messageType == .like || messageType == .text {
+                JDStatusBarNotification.show(withStatus: "赞评失败", dismissAfter: 2)
+            }
+        }
+        waitingIMNotifications.remove(at: messageIndex)
     }
 }
 

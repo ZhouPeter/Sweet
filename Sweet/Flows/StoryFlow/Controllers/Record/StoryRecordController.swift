@@ -46,7 +46,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private var topic: String? {
         didSet {
-            topicButton.updateTopic(topic ?? "添加标签")
+            updateTopicButton()
         }
     }
     
@@ -157,13 +157,16 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.addSubview(recordContainer)
         recordContainer.backgroundColor = .clear
         recordContainer.fill(in: view)
-        topicButton.updateTopic(topic ?? "添加标签")
+        updateTopicButton()
         setupCaptureView()
         setupTopView()
         setupShootButton()
         setupBottomView()
         setupCoverView()
         checkAuthorized()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleCameraPosition))
+        tap.numberOfTapsRequired = 2
+        recordContainer.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -265,6 +268,14 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     // MARK: - Private
+    
+    private func updateTopicButton() {
+        if let topic = topic {
+            topicButton.updateTopic(topic)
+        } else {
+            topicButton.updateTopic("添加标签", withHashTag: false)
+        }
+    }
     
     @objc private func didTapTextGradientView() {
         enablePageScroll = false
@@ -517,6 +528,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     @objc private func didPressCameraSwitchButton() {
+        toggleCameraPosition()
+    }
+    
+    @objc private func toggleCameraPosition() {
         toggleOffMenu()
         captureView.rotateCamera()
         cameraSwitchButton.isSelected = !cameraSwitchButton.isSelected

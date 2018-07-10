@@ -22,6 +22,8 @@ protocol SweetPlayerViewDelegate: class {
                      playerIsPlaying playing: Bool)
     func sweetPlayer(player: SweetPlayerView,
                      playerOrientChanged isFullscreen: Bool)
+    func sweetPlayer(player: SweetPlayerView,
+                     isMuted: Bool)
     func sweetPlayerSwipeDown()
 }
 
@@ -38,6 +40,8 @@ extension SweetPlayerViewDelegate {
                      playerIsPlaying playing: Bool) {}
     func sweetPlayer(player: SweetPlayerView,
                      playerOrientChanged isFullscreen: Bool) {}
+    func sweetPlayer(player: SweetPlayerView,
+                     isMuted: Bool) {}
     func sweetPlayerSwipeDown() {}
 }
 
@@ -286,7 +290,7 @@ extension SweetPlayerView {
                 self.isVolume = false
                 if isFullScreen {
                     fullScreenButtonPressed()
-                } else {
+                } else if velocityPoint.y > 0 {
                     delegate?.sweetPlayerSwipeDown()
                 }
             }
@@ -422,8 +426,7 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 play()
             case .mute:
                 isHasVolume = !isHasVolume
-                controlView.isHasVolume = isHasVolume
-                playerLayer?.isHasVolume = isHasVolume
+                delegate?.sweetPlayer(player: self, isMuted: isHasVolume)
             default:
                 logger.error("unhandled Actions")
             }

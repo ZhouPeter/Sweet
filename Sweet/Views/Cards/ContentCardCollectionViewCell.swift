@@ -18,12 +18,12 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
 
 class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentCardViewModel
-    private var viewModel: ViewModelType?
-    private lazy var contentLabel: UILabel = {
+    var viewModel: ViewModelType?
+    lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         return label
     } ()
     
@@ -64,30 +64,32 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                              emojiType: viewModel.emojiDisplayType)
         }
     }
-    
+    var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
         customContent.addSubview(contentLabel)
         contentLabel.align(.left, to: customContent, inset: 10)
         contentLabel.align(.right, to: customContent, inset: 10)
         contentLabel.pin(.bottom, to: titleLabel, spacing: 15)
+        contentLabelHeight = contentLabel.constrain(height: contentLabel.font.lineHeight)
         customContent.addSubview(contentImageView)
         contentImageView.align(.left, to: customContent, inset: 5)
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
-        contentImageView.heightAnchor.constraint(
-                equalTo: contentImageView.widthAnchor,
-                multiplier: 1).isActive = true
+//        contentImageView.heightAnchor.constraint(
+//                equalTo: contentImageView.widthAnchor,
+//                multiplier: 1).isActive = true
+        contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
         
         customContent.addSubview(emojiView)
-        emojiView.align(.left)
-        emojiView.align(.right, inset: 50)
+        emojiView.align(.right)
+        emojiView.align(.left, inset: 50)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
         customContent.addSubview(shareButton)
         shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.right, inset: 10)
+        shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
 
     }
@@ -124,8 +126,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        update(with: viewModel.contentImages)
+        contentLabel.lineBreakMode = .byTruncatingTail
+//        contentLabel.sizeToFit()
+        update(with: viewModel.imageURLList)
         resetEmojiView()
+    }
+    
+    private func update(with imageURLs: [URL]?) {
+        layout(urls: imageURLs)
     }
     
     private func update(with images: [[ContentImage]]?) {
@@ -155,13 +163,12 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                 let container = imageViewContainers[viewIndex]
                 container.isHidden = false
                 container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
-                imageView.kf.setImage(
-                    with: URL(string: image.url)?.middleCutting(size: imageView.bounds.size),
-                    completionHandler: { (image, _, _, _) in
-                        guard image != nil else { return }
-                        UIView.animate(withDuration: 0.25, animations: {
-                            imageView.alpha = 1
-                        })
+                let url = URL(string: image.url)?.imageView2(size: imageView.bounds.size)
+                imageView.kf.setImage(with: url, completionHandler: { (image, _, _, _) in
+                    guard image != nil else { return }
+                    UIView.animate(withDuration: 0.25, animations: {
+                        imageView.alpha = 1
+                    })
                 })
                 viewIndex += 1
                 x += container.bounds.width + spacing
@@ -181,13 +188,6 @@ extension ContentCardCollectionViewCell {
         }
     }
     
-    @objc private func didPressResultAvatar(_ tap: UITapGestureRecognizer) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.resultUseIDs![view.tag],
-                                 setTop: SetTop(contentId: viewModel?.contentId, preferenceId: nil))
-        }
-    }
-    
     @objc private func didPressShare(_ sender: UIButton) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.shareCard(cardId: cardId!)
@@ -199,7 +199,8 @@ extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
     func didTapAvatar(index: Int) {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             if let viewModel = viewModel, let userIDs = viewModel.resultUseIDs {
-                delegate.showProfile(userId: userIDs[index], setTop: nil)
+                delegate.showProfile(userId: userIDs[index],
+                                     setTop: SetTop(contentId: viewModel.contentId, preferenceId: nil))
             }
         }
     }

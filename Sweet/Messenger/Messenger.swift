@@ -59,7 +59,9 @@ final class Messenger {
     private var messagesUnreadCount: Int? {
         didSet {
             if let count = messagesUnreadCount {
-                UIApplication.shared.applicationIconBadgeNumber = count
+                DispatchQueue.main.async {
+                    UIApplication.shared.applicationIconBadgeNumber = count
+                }
             }
         }
     }
@@ -84,7 +86,7 @@ final class Messenger {
             name: .UIApplicationDidEnterBackground,
             object: nil
         )
-
+        
     }
     
     // MARK: - Public
@@ -205,7 +207,7 @@ final class Messenger {
                 .filter(
                     NSPredicate(
                         format: "createDate < %@ &&" +
-                        " ((from = \(user.userId) && to = \(buddy.userId)) ||" +
+                            " ((from = \(user.userId) && to = \(buddy.userId)) ||" +
                         " (from = \(buddy.userId) && to = \(user.userId)))",
                         lastMessage.createDate as CVarArg
                     )
@@ -251,7 +253,6 @@ final class Messenger {
     // MARK: - Conversations
     
     func loadConversations() {
-        logger.debug()
         guard let userID = user?.userId, state == .online else { return }
         var request = RecentGetReq()
         request.from = userID
@@ -259,6 +260,21 @@ final class Messenger {
             guard let response = response else { return }
             self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: false)
         }
+    }
+    
+    func loadLocalConversations() {
+        var conversations = [Conversation]()
+        storage?.read({ (realm) in
+            realm.objects(ConversationData.self).forEach({ (result) in
+                if let conversation = Conversation(data: result) {
+                    conversations.append(conversation)
+                }
+            })
+        }, callback: {
+            logger.debug(conversations.count)
+            self.updateUnreadCount()
+            self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
+        })
     }
     
     func removeConversation(userID: UInt64) {
@@ -297,7 +313,7 @@ final class Messenger {
     }
     
     // MARK: - Private
-
+    
     private func getMessages(with IDs: [UInt64], callback: @escaping ([InstantMessage]) -> Void) {
         var request = GetReq()
         request.msgIDList = IDs
@@ -350,7 +366,7 @@ final class Messenger {
         storage?.write({ (realm) in
             var dataArray = [InstantMessageData]()
             messages.forEach({ (message) in
-                userIDs.insert(message.from == userID ? message.to : message.from)                
+                userIDs.insert(message.from == userID ? message.to : message.from)
                 var localMessage: InstantMessageData?
                 if let remoteID = message.remoteID, remoteID != 0 {
                     localMessage = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)").first
@@ -509,25 +525,39 @@ final class Messenger {
         })
     }
     
+    private var deliverQueues = [Int: OperationQueue]()
+    
+    private func getDeliverQueue(forModule module: Int, command: Int) -> OperationQueue {
+        let key = (module << 16) | command
+        if let queue = deliverQueues[key] {
+            return queue
+        }
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        deliverQueues[key] = queue
+        return queue
+    }
+    
     private func send<T, R> (
         _ message: T,
         responseType: R.Type,
         callback: ((R?) -> Void)?) where T: Message & MessageTicket, R: Message {
-        let module = message.module.rawValue
-        let command = message.command
-        HandlerManager.sharedInstance()
-            .addHandler(module, commandId: command + 1, handler: MessageHandler<R>(callback: callback))
         let package = ImPackageRawdata()
         package.body = try? message.serializedData()
         if package.body == nil { logger.error("package body is nil") }
-        service.send(package, moduleId: module, commandId: command) { (code) in
-            if code.rawValue != 0 {
-                logger.error("message send failed", message)
-                callback?(nil)
-            }
-        }
+        let module = message.module.rawValue
+        let command = message.command
+        let task = DeliverTask<R>(
+            service: service,
+            package: package,
+            module: module,
+            command: command,
+            callback: {(_, message) in
+                callback?(message)
+        })
+        getDeliverQueue(forModule: module, command: command).addOperation(task)
     }
-
+    
     private func updateUnreadCount() {
         var unreadLikes = 0
         var unreadMessages = 0
@@ -547,7 +577,7 @@ final class Messenger {
             })
         })
     }
-
+    
     @objc private func syncBadgeNumber() {
         guard let count = messagesUnreadCount else { return }
         var request = BadgeSyncReq()
@@ -556,3 +586,4 @@ final class Messenger {
         UIApplication.shared.applicationIconBadgeNumber = count
     }
 }
+

@@ -22,6 +22,12 @@ final class TaskRunner {
             name: .UIApplicationDidEnterBackground,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willEnterForeground),
+            name: .UIApplicationWillEnterForeground,
+            object: nil
+        )
     }
     
     func run(_ operation: Operation) {

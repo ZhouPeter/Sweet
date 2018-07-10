@@ -16,35 +16,6 @@ protocol SweetPlayerControlViewDelegate: class {
                      onSliderEvent event: UIControlEvents)
 }
 
-class SweetPlayerCellControlView: SweetPlayerControlView {
-    override var isHasVolume: Bool {
-        didSet {
-            if isHasVolume {
-                voiceButton.setImage(#imageLiteral(resourceName: "Voice"), for: .normal)
-            } else {
-                voiceButton.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
-            }
-        }
-    }
-    private lazy var voiceButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
-        button.tag = SweetPlayerControlView.ButtonType.mute.rawValue
-        button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    override func customizeUIComponents() {
-        bottomMaskView.isHidden = true
-        topMaskView.isHidden = true
-        addSubview(voiceButton)
-        voiceButton.constrain(width: 30, height: 30)
-        voiceButton.align(.right, inset: 10)
-        voiceButton.align(.top, inset: 10)
-    }
-
-}
-
 class SweetPlayerControlView: UIView {
     weak var delegate: SweetPlayerControlViewDelegate?
     weak var player: SweetPlayerView?

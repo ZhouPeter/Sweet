@@ -201,8 +201,8 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         self.viewModel = viewModel
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        leftImageView.kf.setImage(with: viewModel.imageURL[0].middleCutting(size: leftImageView.frame.size))
-        rightImageView.kf.setImage(with: viewModel.imageURL[1].middleCutting(size: rightImageView.frame.size))
+        leftImageView.kf.setImage(with: viewModel.imageURL[0])
+        rightImageView.kf.setImage(with: viewModel.imageURL[1])
         if let selectedIndex = viewModel.selectedIndex,
            let urls = viewModel.avatarURLs,
            let percent = viewModel.percent {

@@ -17,15 +17,15 @@ final class ShootButton: UIButton {
     
     private let innerCircle: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.fillColor = UIColor(white: 1, alpha: 0.9).cgColor
+        layer.fillColor = UIColor(white: 1, alpha: 1).cgColor
         layer.strokeColor = nil
         return layer
     } ()
     
     private let outerCircle: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.fillColor = UIColor(white: 1, alpha: 0.4).cgColor
-        layer.strokeColor = nil
+        layer.fillColor = nil
+        layer.strokeColor = UIColor(white: 1, alpha: 0.4).cgColor
         return layer
     } ()
     
@@ -57,24 +57,22 @@ final class ShootButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let outerInset: CGFloat = 5
-        let outerPathBounds = bounds.insetBy(dx: outerInset, dy: outerInset)
-        let outerPath = UIBezierPath(ovalIn: outerPathBounds)
-        outerCircle.path = outerPath.cgPath
+        let outerLineWidth: CGFloat = 5
+        let outerInset = outerLineWidth * 0.5
+        let outerPathRect = bounds.insetBy(dx: outerInset, dy: outerInset)
+        outerCircle.path = UIBezierPath(ovalIn: outerPathRect).cgPath
+        outerCircle.lineWidth = outerLineWidth
         outerCircle.bounds = bounds
         outerCircle.position = CGPoint(x: bounds.midX, y: bounds.midY)
+        
+        let innterInset: CGFloat = 9
+        let innerPathRect = bounds.insetBy(dx: innterInset, dy: innterInset)
+        innerCircle.path = UIBezierPath(ovalIn: innerPathRect).cgPath
         innerCircle.frame = outerCircle.bounds
-        let innerInset: CGFloat = 5
-        let innerPathBounds = bounds.insetBy(dx: outerInset + innerInset, dy: outerInset + innerInset)
-        let innerPath = UIBezierPath(ovalIn: innerPathBounds)
-        innerCircle.path = innerPath.cgPath
-        let lineWidth = (outerPathBounds.width - innerPathBounds.width) * 0.5
-        let progressBounds = innerPathBounds.insetBy(dx: -lineWidth * 0.5, dy: -lineWidth * 0.5)
-        let progressPath = UIBezierPath(ovalIn: progressBounds)
-        progressLayer.path = progressPath.cgPath
-        progressLayer.bounds = progressBounds
-        progressLayer.position = CGPoint(x: outerPathBounds.midX, y: outerPathBounds.midY)
-        progressLayer.lineWidth = lineWidth
+        
+        progressLayer.path = UIBezierPath(ovalIn: outerPathRect).cgPath
+        progressLayer.frame = outerCircle.bounds
+        progressLayer.lineWidth = outerLineWidth
     }
     
     func resetProgress() {
@@ -95,7 +93,10 @@ final class ShootButton: UIButton {
             trackingStart = nil
             return
         }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.strokeEnd = progress
+        CATransaction.commit()
     }
     
     private func startTimer() {

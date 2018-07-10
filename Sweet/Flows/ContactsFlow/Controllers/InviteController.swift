@@ -117,7 +117,6 @@ extension InviteController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "moduleCell", for: indexPath)
                 as? ModuleTableViewCell else {fatalError()}
             cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "从微信邀请")
-
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(

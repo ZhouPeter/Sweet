@@ -42,8 +42,7 @@ class PlayController: UIViewController {
         }
         view.hero.isEnabled = true
         view.hero.id = resource?.definitions[0].url.absoluteString
-        print(view.hero.id)
-        let pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
+        let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playView.panGesture)
         view.addGestureRecognizer(pan)
     }

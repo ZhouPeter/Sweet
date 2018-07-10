@@ -140,7 +140,7 @@ extension InstantMessage {
         do {
             content = try JSONDecoder().decode(T.self, from: data)
         } catch {
-            logger.error(error)
+            logger.error(error, T.self)
         }
     }
 }

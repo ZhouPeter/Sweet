@@ -34,21 +34,6 @@ extension CardsBaseController {
                 }
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-        if cardType == .content {
-            alertController.addAction(
-                UIAlertAction.makeAlertAction(
-                    title: "分享到微信",
-                    style: .default,
-                    handler: { [weak self] (_) in
-                        guard let `self` = self else { return }
-                        if let index = self.cards.index(where: { $0.cardId == cardId }) {
-                            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
-                                + "讲真APP，你的同学都在玩：" + "\n"
-                                + "[机智]http://t.cn/RrXTSg5"
-                            WXApi.sendText(text: text, scene: .conversation)
-                        }
-                }))
-        }
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
         alertController.addAction(cancelAction)
@@ -108,7 +93,6 @@ extension CardsBaseController {
         }
     }
     
-
     func reloadContentCell(index: Int) {
         if self.cards[index].type == .content, self.cards[index].video == nil {
             let viewModel = ContentCardViewModel(model: self.cards[index])
@@ -141,19 +125,25 @@ extension CardsBaseController {
         if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
             if card.type == .content, let content = content as? ContentCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
             } else if card.type == .choice, let content = content as? OptionCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
             } else if card.type == .evaluation, let content = content as? OptionCardContent {
                 userIds.forEach {
-                    Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                    waitingIMNotifications.append(
+                        Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
+                    )
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
@@ -161,7 +151,6 @@ extension CardsBaseController {
         }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
-    
 }
 
 // MARK: - InputTextViewDelegate
@@ -176,15 +165,6 @@ extension CardsBaseController: InputTextViewDelegate {
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-    }
-}
-
-extension CardsBaseController: MessengerDelegate {
-    func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        if success {
-        } else {
-            self.toast(message: "发送失败")
-        }
     }
 }
 
@@ -213,7 +193,7 @@ extension CardsBaseController {
                     } else {
                         return
                     }
-                    Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
+                    waitingIMNotifications.append(Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId))
                     if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
                 case let .failure(error):
@@ -237,7 +217,6 @@ extension CardsBaseController {
                     let acCell = cell as? ActivitiesCardCollectionViewCell {
                     acCell.updateItem(item: item, like: true)
                 }
-                self.toast(message: "❤️ 评价成功")
                 self.vibrateFeedback()
             case let  .failure(error):
                 logger.error(error)

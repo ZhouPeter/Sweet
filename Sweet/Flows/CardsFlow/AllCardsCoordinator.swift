@@ -29,7 +29,7 @@ class AllCardsCoordinator: BaseCoordinator {
 
 extension AllCardsCoordinator: CardsBaseViewDelegate {    
     
-    func showStoriesGroup(user: User, storiesGroup: [[StoryCellViewModel]],
+    func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,
                           completion: (() -> Void)?) {

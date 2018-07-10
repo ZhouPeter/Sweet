@@ -14,7 +14,7 @@ final class StoryCaptureView: GPUImageView {
     var isStarted: Bool {
         return camera?.isRunning ?? false
     }
-    private var filter = GPUImageBeautifyFilter()
+    private var filter = BeautyFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
     private var queue = DispatchQueue.global()

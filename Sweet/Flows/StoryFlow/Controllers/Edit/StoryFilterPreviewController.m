@@ -10,14 +10,13 @@
 #import "StoryFilterPreviewController.h"
 #import "LookupFilter.h"
 #import "XGPUImageMovie.h"
-#import "GPUImageBeautifyFilter.h"
 
 @interface StoryFilterPreviewController ()
 
 @property (strong, nonatomic) GPUImageOutput *output;
 @property (strong, nonatomic) GPUImageView *backPreview;
 @property (strong, nonatomic) GPUImageView *forePreview;
-@property (strong, nonatomic) NSArray *lookupImages;
+@property (strong, nonatomic) NSMutableArray *lookupImages;
 @property (assign, nonatomic) BOOL isNextFilter;
 @property (assign, nonatomic) BOOL isDirectionConfirmed;
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
@@ -27,11 +26,10 @@
 
 @property (strong, nonatomic) CAShapeLayer *maskLayer;
 @property (assign, nonatomic) CGFloat maskRatio;
-@property (strong, nonatomic) GPUImageBeautifyFilter *beautyFilter;
 @property (strong, nonatomic) LookupFilter *backFilter;
 @property (strong, nonatomic) LookupFilter *foreFilter;
 @property (assign, nonatomic) BOOL isFilterSwitching;
-@property (strong, nonatomic) NSArray <NSString *> *filterNames;
+@property (strong, nonatomic) NSMutableArray <NSString *> *filterNames;
 
 @end
 
@@ -40,7 +38,6 @@
 - (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto {
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.isPhoto = isPhoto;
-        self.beautyFilter = [[GPUImageBeautifyFilter alloc] init];
         if (isPhoto) {
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
@@ -119,21 +116,20 @@
 }
 
 - (void)setupFilters {
-    self.filterNames = @[@"NA", @"S", @"Fe", @"Cu", @"C"];
-    self.lookupImages = @[[UIImage imageNamed:@"NA"],
-                          [UIImage imageNamed:@"S"],
-                          [UIImage imageNamed:@"Fe"],
-                          [UIImage imageNamed:@"Cu"],
-                          [UIImage imageNamed:@"C"]];
+    self.filterNames = [NSMutableArray array];
+    self.lookupImages = [NSMutableArray array];
+    for (int i = 1; i < 7; i++) {
+        NSString *name = [NSString stringWithFormat:@"%d", i];
+        [self.filterNames addObject:name];
+        [self.lookupImages addObject:[UIImage imageNamed:name]];
+    }
     self.backFilter = [self makeFilterWithIndex:1];
     self.foreFilter = [self makeFilterWithIndex:0];
     
-    [self.output addTarget:self.beautyFilter];
-    
-    [self.beautyFilter addTarget:self.backFilter];
+    [self.output addTarget:self.backFilter];
     [self.backFilter addTarget:self.backPreview];
     
-    [self.beautyFilter addTarget:self.foreFilter];
+    [self.output addTarget:self.foreFilter];
     [self.foreFilter addTarget:self.forePreview];
     
     if (self.isPhoto) {
@@ -166,12 +162,10 @@
 - (void)setupNewFilter:(LookupFilter *)filter {
     [self.foreFilter removeAllTargets];
     [self.backFilter removeAllTargets];
-    [self.beautyFilter removeAllTargets];
     [self.output removeAllTargets];
     self.backFilter = filter;
-    [self.output addTarget:self.beautyFilter];
-    [self.beautyFilter addTarget:self.foreFilter];
-    [self.beautyFilter addTarget:self.backFilter];
+    [self.output addTarget:self.foreFilter];
+    [self.output addTarget:self.backFilter];
     [self.foreFilter addTarget:self.forePreview];
     [self.backFilter addTarget:self.backPreview];
     if (self.isPhoto) {
