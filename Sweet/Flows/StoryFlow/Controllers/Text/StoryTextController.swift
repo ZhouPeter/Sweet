@@ -127,8 +127,9 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         finishButton.alpha = 0
         closeButton.alpha = 0
         var filename: String?
-        if let image = view.screenshot(afterScreenUpdates: true) {
-            filename = image.writeToCache(withAlpha: true)?.lastPathComponent
+        let image = view.screenshot(afterScreenUpdates: true)
+        if let snap = image {
+            filename = snap.writeToCache(withAlpha: true)?.lastPathComponent
         }
         guard let name = filename else {
             logger.error("filename is nil")
@@ -142,6 +143,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
         Defaults[.isPersonalStoryChecked] = false
         view.hero.id = "avatar"
+        NotificationCenter.default.post(name: .avatarFakeImageUpdate, object: image)
         onFinished?()
     }
     
