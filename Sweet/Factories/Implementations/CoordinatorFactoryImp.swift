@@ -31,16 +31,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
                                       current: 0, currentStart: currentStart, delegate: delegate,
                                       isGroup: false, fromCardId: nil, fromUserId: fromUserId)
     }
-    
-    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
-        return ProfileCoordinator(
-            user: user,
-            userID: userID,
-            router: router,
-            factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp())
-    }
-    
+
     func makeStoryPlayerCoordinator(
         user: User,
         navigation: UINavigationController?,
@@ -65,6 +56,15 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
                 router: router,
                 factory: FlowFactoryImp(),
                 coordinatorFactory: CoordinatorFactoryImp())
+    }
+    
+    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
+        return ProfileCoordinator(
+            user: user,
+            userID: userID,
+            router: router,
+            factory: FlowFactoryImp(),
+            coordinatorFactory: CoordinatorFactoryImp())
     }
     
     func makeProfileCoordinator(user: User,

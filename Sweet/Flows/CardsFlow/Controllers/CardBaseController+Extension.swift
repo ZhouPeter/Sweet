@@ -98,12 +98,16 @@ extension CardsBaseController {
             let viewModel = ContentCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
-            self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: viewModel)
+            }
         } else if self.cards[index].type == .content, self.cards[index].video != nil {
             let viewModel = ContentVideoCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
-            self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: viewModel)
+            }
         }
     }
 }

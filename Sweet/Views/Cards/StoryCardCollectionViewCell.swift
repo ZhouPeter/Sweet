@@ -35,7 +35,6 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         avatarImageView.kf.setImage(with: viewModel.avatarImageURL)
         nameLabel.text = viewModel.name
         avatarCirCleImageView.image = viewModel.isRead ? #imageLiteral(resourceName: "StoryRead") : #imageLiteral(resourceName: "StoryUnread")
-
     }
     
     override var isSelected: Bool {
@@ -124,9 +123,8 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         avatarCirCleImageView.centerX(to: contentView)
         avatarCirCleImageView.pin(.top, to: nameLabel)
         contentView.addSubview(avatarImageView)
-        avatarImageView.constrain(width: 48, height: 48)
+        avatarImageView.constrain(width: 46, height: 46)
         avatarImageView.center(to: avatarCirCleImageView)
-    
     }
     
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {

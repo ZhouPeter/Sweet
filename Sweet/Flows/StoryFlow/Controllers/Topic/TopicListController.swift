@@ -33,17 +33,21 @@ final class TopicListController: UIViewController, TopicListView {
         allButton.enableShadow()
         return allButton
     } ()
-    
+    private let keyboardObserver = KeyboardObserver()
     private weak var addTopicButton: UIButton?
     private weak var searchField: UITextField?
     private var searchRequest: Cancellable?
     private var topics = [String]()
+    private var tableViewBottom: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.addSubview(tableView)
-        tableView.fill(in: view)
+        tableView.align(.left)
+        tableView.align(.right)
+        tableView.align(.top)
+        tableViewBottom = tableView.align(.bottom)
         let inset: CGFloat = 56
         tableView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -inset)
@@ -62,6 +66,10 @@ final class TopicListController: UIViewController, TopicListView {
         allButton.align(.left, to: view, inset: 10)
         
         loadAllTopics()
+        
+        keyboardObserver.observe { [weak self] (event) in
+            self?.tableViewBottom?.constant = -(UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y)
+        }
     }
     
     // MARK: - Private

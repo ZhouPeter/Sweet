@@ -36,7 +36,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     var imageViews = [UIImageView]()
     var imageViewContainers = [UIView]()
-
+    var imageIcons = [UIButton]()
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
         view.backgroundColor = .clear
@@ -55,15 +55,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         super.init(frame: frame)
         setupUI()
     }
-    
-    func resetEmojiView() {
-        if let viewModel = viewModel {
-            emojiView.update(indexs: viewModel.defaultEmojiList,
-                             resultImage: viewModel.resultImageName,
-                             resultAvatarURLs: viewModel.resultAvatarURLs,
-                             emojiType: viewModel.emojiDisplayType)
-        }
-    }
     var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
         customContent.addSubview(contentLabel)
@@ -75,9 +66,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         contentImageView.align(.left, to: customContent, inset: 5)
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
-//        contentImageView.heightAnchor.constraint(
-//                equalTo: contentImageView.widthAnchor,
-//                multiplier: 1).isActive = true
         contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
@@ -96,6 +84,14 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     private func setupImageViews() {
         for index in 0..<9 {
+            let imageIcon = UIButton()
+            imageIcon.layer.cornerRadius = 3
+            imageIcon.layer.borderColor = UIColor.white.cgColor
+            imageIcon.layer.borderWidth = 1
+            imageIcon.clipsToBounds = true
+            imageIcon.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            imageIcon.titleLabel?.textColor = .white
+            imageIcons.append(imageIcon)
             let imageView = UIImageView()
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
@@ -105,6 +101,10 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageView.addGestureRecognizer(tap)
             imageView.backgroundColor = UIColor.black
             imageView.contentMode = .scaleAspectFill
+            imageView.addSubview(imageIcon)
+            imageIcon.align(.right, inset: 5)
+            imageIcon.align(.bottom, inset: 5)
+            imageIcon.constrain(width: 32, height: 16)
             imageViews.append(imageView)
             let container = UIView()
             container.backgroundColor = UIColor(hex: 0xf6f6f6)
@@ -127,11 +127,23 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
         contentLabel.lineBreakMode = .byTruncatingTail
-//        contentLabel.sizeToFit()
         update(with: viewModel.imageURLList)
         resetEmojiView()
     }
     
+    func updateEmojiView(viewModel: ContentCardViewModel) {
+        self.viewModel = viewModel
+        resetEmojiView()
+    }
+    
+    func resetEmojiView() {
+        if let viewModel = viewModel {
+            emojiView.update(indexs: viewModel.defaultEmojiList,
+                             resultImage: viewModel.resultImageName,
+                             resultAvatarURLs: viewModel.resultAvatarURLs,
+                             emojiType: viewModel.emojiDisplayType)
+        }
+    }
     private func update(with imageURLs: [URL]?) {
         layout(urls: imageURLs)
     }
@@ -140,6 +152,9 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         imageViews.forEach { view in
             view.alpha = 0
             view.kf.cancelDownloadTask()
+        }
+        imageIcons.forEach { (view) in
+            view.isHidden = true
         }
         imageViewContainers.forEach { view in
             view.isHidden = true

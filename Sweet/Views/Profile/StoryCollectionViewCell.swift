@@ -39,6 +39,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 5
         contentView.layer.masksToBounds = true
         setupUI()
     }

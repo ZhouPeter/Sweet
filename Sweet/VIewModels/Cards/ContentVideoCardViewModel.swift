@@ -10,9 +10,8 @@ import Foundation
 
 struct ContentVideoCardViewModel {
     let titleString: String
-    let contentString: String
     let contentHeight: CGFloat
-    let contentTextAttributed: NSAttributedString
+    let contentTextAttributed: NSAttributedString?
     var videoURL: URL
     let cardId: String
     var resultImageName: String?
@@ -26,12 +25,14 @@ struct ContentVideoCardViewModel {
     var currentTime: TimeInterval = 0.0
     init(model: CardResponse) {
         titleString = model.name!
-        contentString = model.content!
-        contentHeight = contentString.boundingSize(
-            font: UIFont.systemFont(ofSize: 18),
-            size: CGSize(width: UIScreen.mainWidth() - 30, height: CGFloat.greatestFiniteMagnitude),
-            lineSpacing: 5).height
-        contentTextAttributed = self.contentString.getTextAttributed(lineSpacing: 5)
+        let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
+                                                                    textColor: .black)
+        let rect = attributedText?.boundingRect(
+            with: CGSize(width: UIScreen.mainWidth() - 40, height: CGFloat.greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil)
+        contentHeight = ceil(rect?.height ?? 0) + 1
+        contentTextAttributed = attributedText
         cardId = model.cardId
         contentId = model.contentId
         videoURL = URL(string: model.video!)!

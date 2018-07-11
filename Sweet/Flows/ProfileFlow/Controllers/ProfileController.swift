@@ -231,6 +231,7 @@ extension ProfileController {
             self.actionsController = ActionsController(user: User(self.userResponse!),
                                                        mine: self.user,
                                                        setTop: self.setTop)
+            self.actionsController?.actionsDelegate = self
             self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
             self.add(childViewController: self.actionsController!, addView: false)
         }
@@ -356,6 +357,25 @@ extension ProfileController {
  
 }
 
+
+extension ProfileController: ActionsControllerDelegate {
+    func actionsScrollViewDidScoll(scrollView: UIScrollView) {
+        if tableView.contentOffset.y < 224 - UIScreen.navBarHeight() {
+            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
+                                     -UIScreen.navBarHeight()),
+                                 224 - UIScreen.navBarHeight())
+            tableView.contentOffset.y = newOffsetY
+            scrollView.contentOffset.y = 0
+        } else if tableView.contentOffset.y == 224 - UIScreen.navBarHeight() && scrollView.contentOffset.y < 0 {
+            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
+                                     -UIScreen.navBarHeight()),
+                                 224 - UIScreen.navBarHeight())
+            tableView.contentOffset.y = newOffsetY
+            scrollView.contentOffset.y = 0
+        }
+        
+    }
+}
 // MARK: - UITableViewDelegate
 
 extension ProfileController: UITableViewDelegate {
@@ -364,7 +384,7 @@ extension ProfileController: UITableViewDelegate {
         if indexPath.row == 0 {
             return viewModel.cellHeight
         } else {
-            return UIScreen.mainHeight() - viewModel.cellHeight - UIScreen.navBarHeight()
+            return UIScreen.mainHeight() - UIScreen.navBarHeight()
         }
     }
 }

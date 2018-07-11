@@ -382,7 +382,6 @@ extension CardsBaseController {
         let preview = WebViewController(urlString: url) { [weak self] in
             self?.shareCard(cardId: card.cardId)
         }
-        preview.title = card.content
         navigationController?.pushViewController(preview, animated: true)
     }
 }

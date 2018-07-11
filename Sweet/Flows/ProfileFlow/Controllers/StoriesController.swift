@@ -10,6 +10,7 @@ import UIKit
 protocol StoriesView: BaseView {
     
 }
+
 class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var selfIndex: Int = 0
     private let width = UIScreen.mainWidth() / 3
@@ -61,6 +62,10 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 }
+
+protocol StoriesControllerDelegate: NSObjectProtocol {
+    func storiesScrollViewDidScroll(scrollView: UIScrollView)
+}
 class StoriesController: UIViewController, PageChildrenProtocol {
     var showStoriesPlayerView: (
     (
@@ -71,6 +76,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     )?
     
     var user: User
+    weak var delegate: StoriesControllerDelegate?
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -83,10 +89,11 @@ class StoriesController: UIViewController, PageChildrenProtocol {
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.mainWidth() / 3,
-                                 height: UIScreen.mainHeight() / 3)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: (UIScreen.mainWidth() - 12) / 3,
+                                 height: (UIScreen.mainHeight() - 12) / 3)
+        layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
@@ -182,6 +189,10 @@ extension StoriesController: UICollectionViewDataSource {
 }
 
 extension StoriesController: UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.storiesScrollViewDidScroll(scrollView: scrollView)
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showStoriesPlayerView?(user, storyViewModels, indexPath.item, self)
     

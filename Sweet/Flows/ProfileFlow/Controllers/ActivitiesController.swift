@@ -8,10 +8,14 @@
 
 import UIKit
 import SwiftyUserDefaults
+protocol ActivitiesControllerDelegate: NSObjectProtocol {
+    func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
+}
 class ActivitiesController: UIViewController, PageChildrenProtocol {
     var user: User
     var avatar: String
     let setTop: SetTop?
+    weak var delegate: ActivitiesControllerDelegate?
     init(user: User, avatar: String, setTop: SetTop? = nil) {
         self.user = user
         self.avatar = avatar
@@ -186,6 +190,9 @@ extension ActivitiesController: UITableViewDataSource {
 }
 
 extension ActivitiesController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.acitvitiesScrollViewDidScroll(scrollView: scrollView)
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (cardCellHeight - 50) / 4
     }
@@ -198,7 +205,6 @@ extension ActivitiesController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
             let controller = WebViewController(urlString: url)
-            controller.title = viewModels[indexPath.row].contentString
             navigationController?.pushViewController(controller, animated: true)
         }
     }

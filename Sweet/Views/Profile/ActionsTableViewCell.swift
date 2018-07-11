@@ -41,7 +41,6 @@ class ActionsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor.xpGray()
         selectionStyle = .none
         setupUI()
     }
@@ -55,12 +54,13 @@ class ActionsTableViewCell: UITableViewCell {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         }
         sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        selectedView.transform = .identity
         let newX = 14 +  UIScreen.mainWidth() / CGFloat(self.buttons.count) * CGFloat(sender.tag)
         UIView.animate(withDuration: 0.2) {
             let transform = CGAffineTransform(translationX: newX - self.selectedView.frame.origin.x, y: 0)
             self.selectedView.transform = transform
+
         }
+        selectedView.transform = .identity
         selectedView.frame = CGRect(x: newX,
                                     y: 48,
                                     width: UIScreen.mainWidth() / CGFloat(buttons.count) - 28,

@@ -332,6 +332,10 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
         previewController.view.hero.id = "avatar"
         Defaults[.isPersonalStoryChecked] = false
+        NotificationCenter.default.post(
+            name: .avatarFakeImageUpdate,
+            object: previewController.view.screenshot(afterScreenUpdates: true)
+        )
         onFinished?()
     }
 }

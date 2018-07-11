@@ -69,8 +69,8 @@ struct ActivityCardViewModel {
     var sameAvatarURL: URL?
     let titleString: String
     let subtitleString: String
-    let contentString: String
     let commentString: String
+    let contentAttributedString: NSAttributedString?
     let emojiImage: UIImage?
     var like: Bool
     var isHiddenLikeButton: Bool
@@ -84,8 +84,9 @@ struct ActivityCardViewModel {
         avatarURL = URL(string: model.avatar)!
         titleString = model.title
         subtitleString = model.subtitle
-        contentString = model.body.content
         commentString = model.body.comment
+        contentAttributedString = model.body.content.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 12),
+                                                                             textColor: UIColor(white: 0, alpha: 0.5))
         if model.body.emoji.rawValue > 0 {
             emojiImage = UIImage(named: "Emoji\(model.body.emoji.rawValue)")
         } else {
