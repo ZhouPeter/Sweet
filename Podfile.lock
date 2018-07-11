@@ -64,7 +64,7 @@ DEPENDENCIES:
   - STPopupPreview
   - SwiftProtobuf
   - SwiftyUserDefaults
-  - SwipeCellKit
+  - SwipeCellKit (= 2.3.2)
   - TapticEngine
   - UMCPush
   - VIMediaCache
@@ -150,6 +150,6 @@ SPEC CHECKSUMS:
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 9fc0980d0b291b491b69d799b828510b6a363b50
+PODFILE CHECKSUM: 1f5d4b8d753eedb72ae412dab77a1f5a29699a5c
 
 COCOAPODS: 1.5.3
