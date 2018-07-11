@@ -64,7 +64,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
-        emojiView.align(.left, inset: 50)
+        emojiView.align(.left)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
         customContent.addSubview(shareButton)

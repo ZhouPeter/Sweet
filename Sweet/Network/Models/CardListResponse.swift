@@ -17,7 +17,11 @@ enum EmojiType: UInt, Codable {
     case happy
     case smile
 }
-
+enum SourceType: UInt, Codable {
+    case `default`
+    case weibo
+    case weixin
+}
 struct CardListResponse: Codable {
     let list: [CardResponse]
 }
@@ -38,6 +42,10 @@ struct CardResponse: Codable {
     let type: CardType
     let name: String?
     let url: String?
+    let thumbnail: String?
+    let title: String?
+    let brief: String?
+    let sourceType: SourceType
     enum CardType: UInt, Codable {
         case unknown
         case content

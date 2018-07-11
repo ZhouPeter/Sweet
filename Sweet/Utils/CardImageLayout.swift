@@ -21,7 +21,10 @@ extension ContentCardCollectionViewCell {
         imageViewContainers.forEach { view in
             view.isHidden = true
         }
-        guard let urls = urls, urls.isNotEmpty else { return }
+        guard let urls = urls, urls.isNotEmpty else {
+            zero()
+            return
+        }
   
         switch urls.count {
         case 1:
@@ -44,12 +47,17 @@ extension ContentCardCollectionViewCell {
             break
         }
     }
+    func zero() {
+        titleLabel.layoutIfNeeded()
+        let contentHeight = viewModel!.contentHeight
+        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height - (sourceInfoView.isHidden ? 0 : 80)
+        contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+    }
     
     func one(urls: [URL]) {
         let margin: CGFloat = 0
         let spacing: CGFloat = 3
         let width = contentImageView.bounds.width - margin * 2
-        let imageView = imageViews[0]
         let container = imageViewContainers[0]
         container.isHidden = false
         let containerMinSize = CGSize(width: (width - 2 * spacing) / 3 , height: (width - 2 * spacing) / 3)
@@ -232,7 +240,6 @@ extension ContentCardCollectionViewCell {
                 let containerSize = CGSize(width: (width - spacing) / 2, height: scaleHeight)
                 y = contentImageView.bounds.height - containerSize.height - bottomHeight - spacing
                 urls.forEach { (url) in
-                    let imageView = imageViews[viewIndex]
                     let container = imageViewContainers[viewIndex]
                     container.isHidden = false
                     if viewIndex <= 1 {
@@ -395,7 +402,6 @@ extension ContentCardCollectionViewCell {
             y = contentImageView.bounds.height - bottomHeight * 3 - spacing * 2
             urls.forEach { (url) in
                 let container = imageViewContainers[viewIndex]
-                let imageIcon = imageIcons[viewIndex]
                 container.isHidden = false
                 if viewIndex <= 1 {
                     container.frame = CGRect(origin: CGPoint(x: x, y: y), size: containerMinSize)

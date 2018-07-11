@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import JXPhotoBrowser
 protocol ProfileView: BaseView {
     var showAbout: ((UserResponse) -> Void)? { get set }
     var showStoriesPlayerView: (
@@ -52,6 +53,7 @@ class ProfileController: BaseViewController, ProfileView {
             }
         }
     }
+    private var photoBrowserImp: AvatarPhotoBrowserImp?
     private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
     private var isFirstLoad = true
@@ -401,6 +403,7 @@ extension ProfileController: UITableViewDataSource {
            guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "userInfoCell",
                 for: indexPath) as? UserInfoTableViewCell else { fatalError() }
+            cell.delegate = self
             if let viewModel = baseInfoViewModel {
                 cell.updateWith(viewModel)
             }
@@ -415,6 +418,16 @@ extension ProfileController: UITableViewDataSource {
             }
            return cell
         }
+    }
+}
+
+extension ProfileController: UserInfoTableViewCellDelegate {
+    func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
+        photoBrowserImp = AvatarPhotoBrowserImp(thumbnaiImageViews: [imageView], highImageViewURLs: [highURL])
+        let browser = PhotoBrowser(delegate: photoBrowserImp!, originPageIndex: 0)
+        browser.animationType = .scale
+        browser.plugins.append(CustomNumberPageControlPlugin())
+        browser.show()
     }
 }
 

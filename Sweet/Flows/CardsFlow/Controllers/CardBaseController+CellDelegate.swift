@@ -95,15 +95,25 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
-        if let index = self.cards.index(where: { $0.cardId == cardId }) {
-            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
-                + "讲真APP，你的同学都在玩：" + "\n"
-                + "[机智]http://t.cn/RrXTSg5"
+        if let index = cards.index(where: { $0.cardId == cardId }) {
+            let text: String?
+            if let url = cards[index].url {
+                if  let string = cards[index].content!.htmlStringReplaceTag() {
+                    let substring = string.prefix(50)
+                    text = substring + url + "\n" + "\n"
+                        + "讲真APP，你的同学都在玩：" + "\n"
+                        + "[机智]http://t.cn/RrXTSg5"
+                } else {
+                    text = nil
+                }
+            } else {
+                text = nil
+            }
             let controller = ShareCardController(shareText: text)
             controller.sendCallback = { (text, userIds) in
                 self.sendMessge(cardId: cardId, text: text, userIds: userIds)
             }
-            self.present(controller, animated: true, completion: nil)
+            present(controller, animated: true, completion: nil)
         }
     }
     
@@ -118,7 +128,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
-                        let rect = CGRect(x: 20 + 32 + 8 + 1 + 8 - 4,
+                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - 40,
                                           y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
                                           width: CGFloat(response.contactUserList.count) * 40,
                                           height: 40)

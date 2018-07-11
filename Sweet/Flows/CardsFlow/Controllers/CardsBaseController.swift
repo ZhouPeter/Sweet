@@ -305,6 +305,7 @@ extension CardsBaseController {
             weak var weakSelf = self
             weak var weakCell = cell
             if let resource = playerView.resource,
+                resource.indexPath == indexPath,
                resource.definitions[0].url == configurator.viewModel.videoURL {
                 playerView.isHasVolume = configurator.viewModel.isMuted
                 playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
