@@ -35,6 +35,8 @@ class WebViewController: BaseViewController {
         return button
     }()
     
+    private var displayLink: CADisplayLink?
+    
     init(urlString: String, shareCallback: (() -> Void)? = nil) {
         self.urlString = urlString
         self.shareCallback = shareCallback
@@ -54,7 +56,7 @@ class WebViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .black
         if shareCallback != nil { navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)}
         view.addSubview(webView)
-        webView.fill(in: view, top: topLayoutGuide.length)
+        webView.fill(in: view, top: UIScreen.navBarHeight())
         view.addSubview(progressView)
         progressView.constrain(height: 2)
         progressView.align(.top, to: view, inset: UIScreen.navBarHeight())
@@ -63,12 +65,12 @@ class WebViewController: BaseViewController {
         let request = URLRequest(url: URL(string: urlString)!)
         webView.load(request)
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+//        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
     
     deinit {
         webView.removeObserver(self, forKeyPath: "title")
-        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+//        webView.removeObserver(self, forKeyPath: "estimatedProgress")
     }
     
     override func observeValue(
@@ -77,11 +79,11 @@ class WebViewController: BaseViewController {
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?) {
         guard let change = change else { return }
-        if keyPath == "estimatedProgress" {
-            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
-                progressView.setProgress(progress, animated: true);
-            }
-        }
+//        if keyPath == "estimatedProgress" {
+//            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
+//                progressView.setProgress(progress, animated: true);
+//            }
+//        }
         if keyPath == "title" {
             if let title = change[NSKeyValueChangeKey.newKey] as? String {
                 navigationItem.title = title
@@ -105,6 +107,8 @@ extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         progressView.setProgress(1, animated: true)
+        displayLink?.invalidate()
+        displayLink = nil
         UIView.animate(withDuration: 0.25, delay: 0.5, options: [], animations: {
             self.progressView.alpha = 0
         }, completion: nil)
@@ -112,5 +116,18 @@ extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         progressView.alpha = 1
+        progressView.setProgress(0, animated: false)
+        displayLink?.invalidate()
+        displayLink = CADisplayLink(target: self, selector: #selector(updateProgress))
+        displayLink?.add(to: .current, forMode: .commonModes)
+    }
+    
+    @objc private func updateProgress() {
+        if progressView.progress >= 0.9 {
+            displayLink?.invalidate()
+            displayLink = nil
+            return
+        }
+        progressView.setProgress(progressView.progress + 0.0025, animated: true)
     }
 }
