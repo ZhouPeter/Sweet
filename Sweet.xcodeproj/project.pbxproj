@@ -64,6 +64,10 @@
 		580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886B20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
+		580F887220F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
+		580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
+		580F887420F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
+		580F887520F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
 		58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD120F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
@@ -1365,6 +1369,7 @@
 		580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumberPageControlPlugin.swift; sourceTree = "<group>"; };
 		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
 		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
+		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
 		58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
 		58155E11209175AF00ADEFFB /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
@@ -1799,6 +1804,7 @@
 				58EA104F20B7FF00001DD77C /* GrowingTextView.m */,
 				58EA104920B7FEDE001DD77C /* InputBottomView.h */,
 				58EA104820B7FEDD001DD77C /* InputBottomView.m */,
+				580F887120F5FDD9009148CC /* SourceInfoView.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -3108,6 +3114,7 @@
 				AC84FE7820E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				580F887220F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
@@ -3414,6 +3421,7 @@
 				AC8EA9E420ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				583BC78720CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
+				580F887420F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
@@ -3897,6 +3905,7 @@
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
+				580F887520F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				AC525AB5208DD714001070B2 /* InboxController.swift in Sources */,
 				58816CFF20C655750032D103 /* ActivitiesController.swift in Sources */,
 				AC45CD8720AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
@@ -4035,6 +4044,7 @@
 				AC84FE7920E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,

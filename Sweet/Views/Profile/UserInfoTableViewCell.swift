@@ -7,14 +7,18 @@
 //
 
 import UIKit
-
+protocol UserInfoTableViewCellDelegate: class {
+    func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL)
+}
 class UserInfoTableViewCell: UITableViewCell {
-    
+    weak var delegate: UserInfoTableViewCellDelegate?
     private var viewModel: BaseInfoCellViewModel?
-
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
+        imageView.addGestureRecognizer(tap)
         return imageView
     }()
     private lazy var nicknameLabel: UILabel = {
@@ -108,5 +112,9 @@ class UserInfoTableViewCell: UITableViewCell {
         starContactLabel.text = viewModel.starContactString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
+    }
+    
+    @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
+        delegate?.didPressAvatarImageView(avatarImageView, highURL: viewModel!.avatarImageURL)
     }
 }

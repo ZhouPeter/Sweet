@@ -26,6 +26,9 @@ struct ContentCardViewModel {
     let defaultEmojiList: [Int]
     var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
+    let thumbnailURL: URL?
+    let sourceTitle: String?
+    let sourceBrief: String?
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
@@ -51,6 +54,8 @@ struct ContentCardViewModel {
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
         defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
-
+        thumbnailURL = URL(string: model.thumbnail ?? "")
+        sourceTitle = model.title
+        sourceBrief = model.brief
     }
 }

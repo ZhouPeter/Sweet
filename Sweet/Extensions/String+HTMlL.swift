@@ -21,4 +21,37 @@ extension String {
                                       range: NSRange(location: 0, length: attributedText!.length))
         return attributedText
     }
+    
+    func htmlStringReplaceTag() -> String? {
+        do {
+            let imgRegular = try NSRegularExpression(pattern: "<img[^>]*>", options: [])
+            let spritImgRegular = try NSRegularExpression(pattern: "</img[^>]*>", options: [])
+            let brRegular = try NSRegularExpression(pattern: "<br[^>]*>", options: [])
+            let spritBrRegular = try NSRegularExpression(pattern: "</br[^>]*>", options: [])
+            var string = self
+            string = imgRegular.stringByReplacingMatches(
+                in: string,
+                options: .reportProgress,
+                range: NSRange(location: 0, length: string.utf16.count),
+                withTemplate: "")
+            string = spritImgRegular.stringByReplacingMatches(
+                in: string,
+                options: .reportProgress,
+                range: NSRange(location: 0, length: string.utf16.count),
+                withTemplate: "")
+            string = brRegular.stringByReplacingMatches(
+                in: string,
+                options: .reportProgress,
+                range: NSRange(location: 0, length: string.utf16.count),
+                withTemplate: "\n")
+            string = spritBrRegular.stringByReplacingMatches(
+                in: string,
+                options: .reportProgress,
+                range: NSRange(location: 0, length: string.utf16.count),
+                withTemplate: "")
+            return string
+        } catch {
+            return nil
+        }
+    }
 }
