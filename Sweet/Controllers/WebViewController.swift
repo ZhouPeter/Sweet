@@ -65,12 +65,11 @@ class WebViewController: BaseViewController {
         let request = URLRequest(url: URL(string: urlString)!)
         webView.load(request)
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
-//        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
     }
     
     deinit {
         webView.removeObserver(self, forKeyPath: "title")
-//        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        displayLink?.invalidate()
     }
     
     override func observeValue(
@@ -78,14 +77,8 @@ class WebViewController: BaseViewController {
         of object: Any?,
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?) {
-        guard let change = change else { return }
-//        if keyPath == "estimatedProgress" {
-//            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
-//                progressView.setProgress(progress, animated: true);
-//            }
-//        }
         if keyPath == "title" {
-            if let title = change[NSKeyValueChangeKey.newKey] as? String {
+            if let title = change?[NSKeyValueChangeKey.newKey] as? String {
                 navigationItem.title = title
             }
         }
