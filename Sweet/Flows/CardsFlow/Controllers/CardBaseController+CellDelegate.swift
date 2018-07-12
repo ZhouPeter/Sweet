@@ -178,7 +178,7 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                             self.present(alert, animated: true, completion: nil)
                         case let .failure(error):
                             logger.error(error)
-                        }
+                    }
         }
     }
 }
@@ -228,7 +228,7 @@ extension CardsBaseController {
             as? ContentCardCollectionViewCell else { return  }
         let imageURLs = configurator.viewModel.imageURLList!
         self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imageURLs)
-        let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
+        let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
         browser.show()

@@ -291,13 +291,19 @@ enum MsgCmdID: SwiftProtobuf.Enum {
   /// 撤回消息通知响应
   case revokeNotifyAck // = 14
 
-  ///获取未读id列表
+  ///获取未读消息列表
   case unreadReq // = 15
 
-  ///获取未读id列表响应
+  ///获取未读消息列表响应
   case unreadResp // = 16
   case recentReq // = 17
   case recentResp // = 18
+
+  ///获取未读消息id列表请求
+  case unreadMsgidReq // = 19
+
+  ///获取未读消息id列表响应
+  case unreadMsgidResp // = 20
   case UNRECOGNIZED(Int)
 
   init() {
@@ -325,6 +331,8 @@ enum MsgCmdID: SwiftProtobuf.Enum {
     case 16: self = .unreadResp
     case 17: self = .recentReq
     case 18: self = .recentResp
+    case 19: self = .unreadMsgidReq
+    case 20: self = .unreadMsgidResp
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -350,6 +358,8 @@ enum MsgCmdID: SwiftProtobuf.Enum {
     case .unreadResp: return 16
     case .recentReq: return 17
     case .recentResp: return 18
+    case .unreadMsgidReq: return 19
+    case .unreadMsgidResp: return 20
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -434,5 +444,7 @@ extension MsgCmdID: SwiftProtobuf._ProtoNameProviding {
     16: .same(proto: "UNREAD_RESP"),
     17: .same(proto: "RECENT_REQ"),
     18: .same(proto: "RECENT_RESP"),
+    19: .same(proto: "UNREAD_MSGID_REQ"),
+    20: .same(proto: "UNREAD_MSGID_RESP"),
   ]
 }

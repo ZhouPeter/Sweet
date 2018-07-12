@@ -665,6 +665,7 @@ extension StoriesPlayerViewController {
                     completion: { result in
                         switch result {
                         case .success:
+                            self.vibrateFeedback()
                             self.bottomButton.isEnabled = false
                             self.stories[self.currentIndex].like = true
                             self.delegate?.updateStory(story: self.stories[self.currentIndex],

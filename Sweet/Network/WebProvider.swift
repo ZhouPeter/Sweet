@@ -1,4 +1,4 @@
- //
+//
 //  WebProvider.swift
 //  Sweet
 //
@@ -18,8 +18,8 @@ final class WebProvider {
     private lazy var provider = MoyaProvider<WebAPI>(
         plugins: [
             SignPlugin(signClosure: Signer.sign),
-            AuthPlugin(tokenClosure: { self.tokenSource.token }),
-            NetworkLoggerPlugin(verbose: true)
+            AuthPlugin(tokenClosure: { self.tokenSource.token })
+//            NetworkLoggerPlugin(verbose: true)
         ]
     )
     
@@ -103,5 +103,5 @@ extension WebProvider {
         Defaults.remove(.userID)
         web.tokenSource.token = nil
         NotificationCenter.default.post(name: NSNotification.Name(logoutNotiName), object: nil)
-    }  
+    }
 }

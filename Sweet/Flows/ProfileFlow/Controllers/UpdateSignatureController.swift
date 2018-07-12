@@ -41,8 +41,9 @@ class UpdateSignatureController: BaseViewController, UpdateProtocol {
     private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("保存", for: .normal)
-        button.isUserInteractionEnabled = false
-        button.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .normal)
+        button.isEnabled = false
+        button.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .disabled)
+        button.setTitleColor(.black, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 30)
         button.addTarget(self, action: #selector(saveAction(_:)), for: .touchUpInside)
         return button
@@ -117,12 +118,10 @@ extension UpdateSignatureController: UITextViewDelegate {
             textView.text = String(textView.text[startIndex..<endIndex])
         }
         countLabel.text = "\(30 - textView.text.count)"
-        if !textView.text.isEmpty && textView.text != "" && textView.text != signature {
-            saveButton.isUserInteractionEnabled = true
-            saveButton.setTitleColor(.black, for: .normal)
+        if textView.text != signature {
+            saveButton.isEnabled = true
         } else {
-            saveButton.isUserInteractionEnabled = false
-            saveButton.setTitleColor(UIColor.black.withAlphaComponent(0.5), for: .normal)
+            saveButton.isEnabled = false
         }
     }
 }

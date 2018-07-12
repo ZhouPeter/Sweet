@@ -10,6 +10,7 @@ import UIKit
 import MessageKit
 import Kingfisher
 import STPopupPreview
+import JXPhotoBrowser
 
 protocol ConversationView: BaseView {
     var delegate: ConversationControllerDelegate? { get set }
@@ -17,7 +18,7 @@ protocol ConversationView: BaseView {
 
 final class ConversationController: MessagesViewController, ConversationView {
     weak var delegate: ConversationControllerDelegate?
-    
+    private var photoBrowserDelegate: PhotoBrowserImp?
     private let user: User
     private var buddy: User
     private let refreshControl = UIRefreshControl()
@@ -102,6 +103,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.register(SweetTextMessageCell.self)
+        messagesCollectionView.register(ImageMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -180,6 +182,11 @@ final class ConversationController: MessagesViewController, ConversationView {
         }
         if value is ContentCardContent {
             let cell = messagesCollectionView.dequeueReusableCell(ContentCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+        if value is ImageMessageContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ImageMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
@@ -301,6 +308,17 @@ extension ConversationController: MessageCellDelegate {
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
         let message = messages[indexPath.section]
+        if let content = message.content as? ImageMessageContent,
+            let cell = cell as? ImageMessageCell, message.type == .image {
+            let browserDelegate =
+                PhotoBrowserImp(thumbnaiImageViews: [cell.imageView], highImageViewURLs: [URL(string: content.url)!])
+            photoBrowserDelegate = browserDelegate
+            let browser = CustomPhotoBrowser(delegate: browserDelegate, originPageIndex: 0)
+            browser.animationType = .scale
+            browser.plugins.append(CustomNumberPageControlPlugin())
+            browser.show()
+            return
+        }
         guard message.type == .card || message.type == .story else { return }
         if let content = message.content as? OptionCardContent {
             let preview = OptionCardPreviewController(content: content)

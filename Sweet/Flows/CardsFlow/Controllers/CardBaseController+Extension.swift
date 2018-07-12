@@ -36,6 +36,12 @@ extension CardsBaseController {
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(subscriptionAction)
         alertController.addAction(blockAction)
+        if cardType == .content {
+            let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
+                web.request(.cardReport(cardId: cardId), completion: { (_) in })
+            }
+            alertController.addAction(reportAction)
+        }
         alertController.addAction(cancelAction)
         return alertController
     }

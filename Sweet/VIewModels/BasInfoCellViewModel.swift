@@ -15,17 +15,18 @@ struct BaseInfoCellViewModel {
     let collegeInfoString: String
     let starContactString: String
     let signatureString: String
+    let isHiddenEdit: Bool
     let cellHeight: CGFloat
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
-        let string = "\(user.nickname)" +  (user.gender.rawValue == 1 ? "♂" : "♀")
+        let string = "\(user.nickname)" +  (user.gender == .male ? "♂" : "♀")
         let attributedString = NSMutableAttributedString(string: string, attributes: [
             .font: UIFont.boldSystemFont(ofSize: 18),
             .foregroundColor: UIColor.black
             ])
         attributedString.addAttribute(.foregroundColor,
-                                    value: user.gender.rawValue == 1 ? UIColor(hex: 0x4A90E2) : UIColor(hex: 0xB761F9),
+                                    value: user.gender == .male ? UIColor(hex: 0x4A90E2) : UIColor(hex: 0xB761F9),
                                     range: NSRange(location: user.nickname.utf16.count, length: 1))
         nicknameSexAttributedString = attributedString
         let userID = UInt64(Defaults[.userID] ?? "0")
@@ -33,6 +34,7 @@ struct BaseInfoCellViewModel {
                             + (user.userId == userID ? "" : "·" + "\(user.common)共同联系人")
         collegeInfoString = user.universityName + "·" + user.collegeName + "·" + "\(user.enrollment)级"
         signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
-        cellHeight = 224
+        isHiddenEdit = userID == user.userId ? user.signature != "" : true
+        cellHeight = 244
     }
 }
