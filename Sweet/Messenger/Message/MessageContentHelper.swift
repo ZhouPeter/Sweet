@@ -11,7 +11,7 @@ import Foundation
 class MessageContentHelper {
     
     class func getContentCardContent(resultCard: CardResponse) -> MessageContent? {
-        if resultCard.type == .content {
+        if resultCard.cardEnumType == .content {
             let url: String
             if let videoUrl = resultCard.video {
                 url = videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667"
@@ -26,7 +26,7 @@ class MessageContentHelper {
                                              imageURLString: url,
                                              url: resultCard.url!)
             return content
-        } else if resultCard.type == .choice {
+        } else if resultCard.cardEnumType == .choice {
             let result = resultCard.result == nil ? -1 : resultCard.result!.index!
             let content = OptionCardContent(identifier: resultCard.cardId,
                                             cardType: InstantMessage.CardType.preference,
@@ -35,7 +35,7 @@ class MessageContentHelper {
                                             rightImageURLString: resultCard.imageList![1],
                                             result: OptionCardContent.Result(rawValue: result)!)
             return content
-        } else if resultCard.type == .evaluation {
+        } else if resultCard.cardEnumType == .evaluation {
             let result = resultCard.result == nil ? -1 : resultCard.result!.index!
             let content = OptionCardContent(identifier: resultCard.cardId,
                                             cardType: InstantMessage.CardType.evaluation,

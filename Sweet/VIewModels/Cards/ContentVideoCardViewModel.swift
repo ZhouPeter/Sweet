@@ -26,7 +26,8 @@ struct ContentVideoCardViewModel {
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
-                                                                    textColor: .black)
+                                                                    textColor: .black,
+                                                                    lineSpacing: 5)
         let rect = attributedText?.boundingRect(
             with: CGSize(width: UIScreen.mainWidth() - 40, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading],

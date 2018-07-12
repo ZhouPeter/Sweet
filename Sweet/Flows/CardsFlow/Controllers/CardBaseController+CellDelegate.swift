@@ -67,7 +67,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
             switch result {
             case .success:
                 guard let index = self.cards.index(where: { $0.cardId == cardId }),
-                    self.cards[index].type == .evaluation else { return }
+                    self.cards[index].cardEnumType == .evaluation else { return }
                 self.cards[index].result = SelectResult(contactUserList: [SelectResult.UserAvatar](),
                                                         index: selectedIndex,
                                                         percent: 0,
@@ -154,7 +154,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { return }
-        let cardType = cards[index].type
+        let cardType = cards[index].cardEnumType
         if cardType == .activity {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .destructive) { (_) in
@@ -178,14 +178,14 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                             self.present(alert, animated: true, completion: nil)
                         case let .failure(error):
                             logger.error(error)
-                        }
+                    }
         }
     }
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
-        if self.cards[index].type == .story {
+        if self.cards[index].cardEnumType == .story {
             web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
                 guard let `self` = self else { return }
                 switch result {
@@ -228,7 +228,7 @@ extension CardsBaseController {
             as? ContentCardCollectionViewCell else { return  }
         let imageURLs = configurator.viewModel.imageURLList!
         self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imageURLs)
-        let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
+        let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
         browser.show()
@@ -237,7 +237,7 @@ extension CardsBaseController {
 
 extension CardsBaseController {
     private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
-        if cards[index].type == .content  {
+        if cards[index].cardEnumType == .content  {
             if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
                 configurator.viewModel.emojiDisplayType = emojiDisplayType
                 cellConfigurators[index] = configurator
@@ -253,7 +253,7 @@ extension CardsBaseController {
 extension CardsBaseController: SweetPlayerViewDelegate {
     func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
         if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
+            if cards[indexPath.row].cardEnumType == .content, cards[indexPath.row].video != nil {
                 if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
                     configurator.viewModel.isMuted = isMuted
                     cellConfigurators[indexPath.row] = configurator
@@ -264,7 +264,7 @@ extension CardsBaseController: SweetPlayerViewDelegate {
     
     func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {
         if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
+            if cards[indexPath.row].cardEnumType == .content, cards[indexPath.row].video != nil {
                 if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
                     configurator.viewModel.currentTime = currentTime
                     cellConfigurators[indexPath.row] = configurator

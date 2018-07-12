@@ -10,14 +10,17 @@ import Foundation
 
 
 extension String {
-    func getHtmlAttributedString(font: UIFont, textColor: UIColor) -> NSAttributedString? {
+    func getHtmlAttributedString(font: UIFont, textColor: UIColor, lineSpacing: CGFloat) -> NSAttributedString? {
         let addHeaderString = "<head><style>img{width:\(font.pointSize)px ;height: \(font.pointSize)px}</style></head>" + self
         let attributedText = try? NSMutableAttributedString(
             data: addHeaderString.data(using: String.Encoding.unicode)!,
             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
             documentAttributes: nil)
-        attributedText?.addAttributes([NSAttributedStringKey.font: font,
-                                       NSAttributedStringKey.foregroundColor: textColor],
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        attributedText?.addAttributes([ NSAttributedStringKey.paragraphStyle:paragraphStyle, 
+                                        NSAttributedStringKey.font: font,
+                                        NSAttributedStringKey.foregroundColor: textColor],
                                       range: NSRange(location: 0, length: attributedText!.length))
         return attributedText
     }

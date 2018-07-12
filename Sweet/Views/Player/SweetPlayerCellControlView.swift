@@ -45,7 +45,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         addSubview(voiceButton)
         voiceButton.constrain(width: 33, height: 33)
         voiceButton.align(.right, inset: 10)
-        voiceButton.align(.bottom, inset: 50)
+        voiceButton.align(.bottom, inset: 40)
         addSubview(progressView)
         progressView.align(.left, inset: 0)
         progressView.align(.right, inset: 0).priority = UILayoutPriority.defaultHigh

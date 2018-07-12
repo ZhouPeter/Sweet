@@ -12,6 +12,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
+    var cellNumber: Int = 0
     var user: User
     var avatar: String
     let setTop: SetTop?
@@ -27,7 +28,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     private var activityList = [ActivityResponse]()
-    private var viewModels = [ActivityCardViewModel]()
+    private var viewModels = [ActivityCardViewModel]() {
+        didSet {
+            cellNumber = viewModels.count
+        }
+    }
     private var page = 0
     private var loadFinish = false
     private lazy var tableView: UITableView = {
@@ -141,9 +146,9 @@ extension ActivitiesController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.type == .content, let content = content as? ContentCardContent {
+                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
                             Messenger.shared.sendContentCard(content, from: from, to: toUserId)
-                        } else if resultCard.type == .choice, let content = content as? OptionCardContent {
+                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId)
                         }
                     } else {
