@@ -42,6 +42,8 @@ struct InstantMessage {
             return  "[分享]"
         case .like:
             return "[赞]"
+        case .image:
+            return "[图片]"
         default:
             return "[未知消息]"
         }
@@ -90,7 +92,7 @@ extension InstantMessage {
         createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
         sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
         extra = proto.extra.isEmpty ? nil : proto.extra
-        parseCardContent()
+        parseContent()
     }
     
     init(data: InstantMessageData) {
@@ -109,25 +111,29 @@ extension InstantMessage {
         isSent = data.isSent
         isRead = data.isRead
         extra = data.extra
-        parseCardContent()
+        parseContent()
     }
     
-    mutating func parseCardContent() {
-        guard type == .story || type == .card,
+    mutating func parseContent() {
+        guard
             let data = rawContent.data(using: .utf8),
-            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let contentType = json?["type"] as? Int
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
         else {
             return
         }
+        if type == .image {
+            parseContent(ImageMessageContent.self, data: data)
+            return
+        }
+        guard type == .story || type == .card, let contentType = json?["type"] as? Int else { return }
         if type == .story {
-            parseCardContent(StoryMessageContent.self, data: data)
+            parseContent(StoryMessageContent.self, data: data)
         } else if type == .card, let cardType = CardType(rawValue: contentType) {
             switch cardType {
             case .content:
-                parseCardContent(ContentCardContent.self, data: data)
+                parseContent(ContentCardContent.self, data: data)
             case .evaluation, .preference:
-                parseCardContent(OptionCardContent.self, data: data)
+                parseContent(OptionCardContent.self, data: data)
             default:
                 logger.error("unsupported card type: \(cardType)")
             }
@@ -136,7 +142,7 @@ extension InstantMessage {
         }
     }
     
-    mutating func parseCardContent<T>(_ contentType: T.Type, data: Data) where T: MessageContent {
+    mutating func parseContent<T>(_ contentType: T.Type, data: Data) where T: MessageContent {
         do {
             content = try JSONDecoder().decode(T.self, from: data)
         } catch {

@@ -34,6 +34,8 @@ class MediaMessageCell: MessageContentCell {
     }
     
     func setup() {
+        contentView.backgroundColor = .clear
+        messageContainerView.backgroundColor = .clear
         messageContainerView.addSubview(activityIndicatorContainerView)
         activityIndicatorContainerView.fill(in: messageContainerView)
         activityIndicatorContainerView.addSubview(activityIndicator)
