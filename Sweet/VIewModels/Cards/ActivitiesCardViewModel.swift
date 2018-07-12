@@ -86,7 +86,8 @@ struct ActivityCardViewModel {
         subtitleString = model.subtitle
         commentString = model.body.comment
         contentAttributedString = model.body.content.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 12),
-                                                                             textColor: UIColor(white: 0, alpha: 0.5))
+                                                                             textColor: UIColor(white: 0, alpha: 0.5),
+                                                                             lineSpacing: 0)
         if model.body.emoji.rawValue > 0 {
             emojiImage = UIImage(named: "Emoji\(model.body.emoji.rawValue)")
         } else {

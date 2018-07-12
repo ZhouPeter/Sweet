@@ -28,15 +28,6 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
         return button
     }()
     
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Back").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        button.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     init(avatar: String) {
         self.avatar = avatar
         super.init(nibName: nil, bundle: nil)
@@ -48,10 +39,13 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .white
         view.backgroundColor = .black
         navigationItem.title = "修改头像"
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         view.addSubview(avatarImageView)
         avatarImageView.constrain(width: UIScreen.mainWidth(), height: UIScreen.mainWidth())
         avatarImageView.centerX(to: view)
@@ -121,8 +115,10 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
                                 case .success:
                                     self.avatarImageView.kf.setImage(with: localURL)
                                     self.saveCompletion?(url)
+                                    self.toast(message: "头像修改成功", duration: 2)
+
                                 case let .failure(error):
-                                    self.toast(message: "修改头像失败", duration: 2)
+                                    self.toast(message: "头像修改失败", duration: 2)
                                     logger.error(error)
                                 }
                 })

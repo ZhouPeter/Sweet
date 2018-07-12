@@ -34,7 +34,7 @@ final class ContentCardMessageCell: MediaMessageCell {
         and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ContentCardContent else { return }
-        label.attributedText = content.text.getHtmlAttributedString(font: label.font, textColor: .black)
+        label.attributedText = content.text.getHtmlAttributedString(font: label.font, textColor: .black, lineSpacing: 0)
         imageView.kf
             .setImage(with: URL(string: content.imageURLString)?.imageView2(size: imageView.bounds.size))
         showLoading(false)

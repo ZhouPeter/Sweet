@@ -35,12 +35,20 @@ class UpdateController: BaseViewController, UpdateView {
         if let user = user {
             storage = Storage(userID: user.userId)
         }
+        
         navigationItem.title = "修改资料"
         view.addSubview(tableView)
         tableView.fill(in: view)
         setViewModels()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
+    }
     deinit {
         writeUserData()
     }
@@ -73,8 +81,7 @@ class UpdateController: BaseViewController, UpdateView {
                 self?.viewModels[0][0].content = avatar
                 self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             }
-            let navigationController = BlackNavigationController(rootViewController: controller)
-            self.present(navigationController, animated: true, completion: nil)
+            self.navigationController?.pushViewController(controller, animated: true)
         }
         userViewModels.append(avatarViewModel)
         let nameViewModel = UpdateCellViewModel(title: "姓名", content: user.nickname) { [weak self] in

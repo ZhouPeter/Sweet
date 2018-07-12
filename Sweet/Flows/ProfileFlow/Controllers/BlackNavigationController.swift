@@ -13,7 +13,7 @@ class BlackNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.tintColor = .white
-        navigationBar.barTintColor = UIColor(hex: 0x4a4a4a)
+        navigationBar.barTintColor = .black
         navigationBar.barStyle = .black
     }
 }

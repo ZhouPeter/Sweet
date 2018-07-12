@@ -368,6 +368,13 @@ extension ProfileController: ActionsControllerDelegate {
                                  224 - UIScreen.navBarHeight())
             tableView.contentOffset.y = newOffsetY
             scrollView.contentOffset.y = 0
+            let point = scrollView.panGestureRecognizer.translation(in: nil)
+            if point.y > 0 && tableView.contentOffset.y > (224 - UIScreen.navBarHeight()) / 4 {
+
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self.tableView.contentOffset.y = -UIScreen.navBarHeight()
+                }, completion: nil)
+            }
         } else if tableView.contentOffset.y == 224 - UIScreen.navBarHeight() && scrollView.contentOffset.y < 0 {
             let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
                                      -UIScreen.navBarHeight()),
@@ -375,12 +382,28 @@ extension ProfileController: ActionsControllerDelegate {
             tableView.contentOffset.y = newOffsetY
             scrollView.contentOffset.y = 0
         }
-        
     }
 }
 // MARK: - UITableViewDelegate
 
 extension ProfileController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let point = scrollView.panGestureRecognizer.translation(in: nil)
+        if point.y < 0 {
+            if let actionsController = actionsController {
+                var isEnableScroll = false
+                for controller in actionsController.pageControllers {
+                    if controller.cellNumber > 0 {
+                        isEnableScroll = true
+                        break
+                    }
+                }
+                if !isEnableScroll {
+                    scrollView.contentOffset.y = -UIScreen.navBarHeight()
+                }
+            }
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard  let viewModel = baseInfoViewModel else { return 0 }
         if indexPath.row == 0 {
@@ -423,11 +446,16 @@ extension ProfileController: UITableViewDataSource {
 
 extension ProfileController: UserInfoTableViewCellDelegate {
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
-        photoBrowserImp = AvatarPhotoBrowserImp(thumbnaiImageViews: [imageView], highImageViewURLs: [highURL])
-        let browser = PhotoBrowser(delegate: photoBrowserImp!, originPageIndex: 0)
-        browser.animationType = .scale
-        browser.plugins.append(CustomNumberPageControlPlugin())
-        browser.show()
+        if user.userId == userId {
+            let controller = UpdateAvatarController(avatar: highURL.absoluteString)
+            navigationController?.pushViewController(controller, animated: true)
+        } else {
+            photoBrowserImp = AvatarPhotoBrowserImp(thumbnaiImageViews: [imageView], highImageViewURLs: [highURL])
+            let browser = PhotoBrowser(delegate: photoBrowserImp!, originPageIndex: 0)
+            browser.animationType = .scale
+            browser.plugins.append(CustomNumberPageControlPlugin())
+            browser.show()
+        }
     }
 }
 

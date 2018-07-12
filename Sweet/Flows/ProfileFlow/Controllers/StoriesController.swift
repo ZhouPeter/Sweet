@@ -67,6 +67,8 @@ protocol StoriesControllerDelegate: NSObjectProtocol {
     func storiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
+    
+    var cellNumber: Int = 0
     var showStoriesPlayerView: (
     (
         User,
@@ -85,7 +87,11 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private var storyViewModels = [StoryCellViewModel]()
+    private var storyViewModels = [StoryCellViewModel]() {
+        didSet {
+            cellNumber = storyViewModels.count
+        }
+    }
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

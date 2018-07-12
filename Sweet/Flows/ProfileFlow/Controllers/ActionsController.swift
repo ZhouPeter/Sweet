@@ -10,6 +10,7 @@ import UIKit
 import Pageboy
 protocol PageChildrenProtocol {
     var user: User { get set }
+    var cellNumber: Int { get set }
     func loadRequest()
 }
 
@@ -40,11 +41,10 @@ class ActionsController: PageboyViewController {
         self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
+    lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
         feedsController.delegate = self

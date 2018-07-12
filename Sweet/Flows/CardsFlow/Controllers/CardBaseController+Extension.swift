@@ -41,7 +41,7 @@ extension CardsBaseController {
     }
     
     func appendConfigurator(card: CardResponse) {
-        switch card.type {
+        switch card.cardEnumType {
         case .content:
             if card.video != nil {
                 let viewModel = ContentVideoCardViewModel(model: card)
@@ -94,14 +94,14 @@ extension CardsBaseController {
     }
     
     func reloadContentCell(index: Int) {
-        if self.cards[index].type == .content, self.cards[index].video == nil {
+        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
             let viewModel = ContentCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: viewModel)
             }
-        } else if self.cards[index].type == .content, self.cards[index].video != nil {
+        } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
             let viewModel = ContentVideoCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
@@ -127,7 +127,7 @@ extension CardsBaseController {
         let card  = cards[index]
         let from = UInt64(Defaults[.userID]!)!
         if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
-            if card.type == .content, let content = content as? ContentCardContent {
+            if card.cardEnumType == .content, let content = content as? ContentCardContent {
                 userIds.forEach {
                     waitingIMNotifications.append(
                         Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
@@ -135,7 +135,7 @@ extension CardsBaseController {
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
-            } else if card.type == .choice, let content = content as? OptionCardContent {
+            } else if card.cardEnumType == .choice, let content = content as? OptionCardContent {
                 userIds.forEach {
                     waitingIMNotifications.append(
                         Messenger.shared.sendPreferenceCard(content, from: from, to: $0, extra: cardId)
@@ -143,7 +143,7 @@ extension CardsBaseController {
                     if text != "" { Messenger.shared.sendText(text, from: from, to: $0) }
                     web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
                 }
-            } else if card.type == .evaluation, let content = content as? OptionCardContent {
+            } else if card.cardEnumType == .evaluation, let content = content as? OptionCardContent {
                 userIds.forEach {
                     waitingIMNotifications.append(
                         Messenger.shared.sendEvaluationCard(content, from: from, to: $0, extra: cardId)
@@ -178,7 +178,7 @@ extension CardsBaseController {
         let card = cards[index]
         let from = UInt64(Defaults[.userID]!)!
         guard let cardId = activityCardId, let activityId = activityId else { return }
-        guard card.type == .activity, card.cardId == cardId else { return }
+        guard card.cardEnumType == .activity, card.cardId == cardId else { return }
         guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
         let toUserId = card.activityList![index].actor
         let cardID = card.activityList![index].fromCardId
@@ -189,9 +189,9 @@ extension CardsBaseController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.type == .content, let content = content as? ContentCardContent {
+                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
                             Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
-                        } else if resultCard.type == .choice, let content = content as? OptionCardContent {
+                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
                         }
                     } else {
