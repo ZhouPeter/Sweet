@@ -122,6 +122,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButton"), for: .normal)
         messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButtonDisabled"), for: .disabled)
         messageInputBar.sendButton.setTitle(nil, for: .normal)
+        messageInputBar.padding.right = 2
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.placeholder = "说点什么"
