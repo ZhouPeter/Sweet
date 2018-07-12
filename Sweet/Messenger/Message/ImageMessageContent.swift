@@ -10,4 +10,8 @@ import Foundation
 
 struct ImageMessageContent: MessageContent {
     let url: String
+    
+    enum CodingKeys: String, CodingKey {
+        case url = "image_url"
+    }
 }
