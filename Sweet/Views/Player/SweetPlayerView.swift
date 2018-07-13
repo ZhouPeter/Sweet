@@ -426,7 +426,7 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 play()
             case .mute:
                 isHasVolume = !isHasVolume
-                delegate?.sweetPlayer(player: self, isMuted: isHasVolume)
+                delegate?.sweetPlayer(player: self, isMuted: !isHasVolume)
             default:
                 logger.error("unhandled Actions")
             }

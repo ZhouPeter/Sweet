@@ -21,6 +21,11 @@ enum SourceType: UInt, Codable {
     case `default`
     case weibo
     case weixin
+    case douyin
+    case toutiaohao
+    case zhihu
+    case bilibili
+    case xiaohongshu
 }
 struct CardListResponse: Codable {
     let list: [CardResponse]

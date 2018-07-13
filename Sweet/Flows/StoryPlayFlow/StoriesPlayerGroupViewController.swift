@@ -199,6 +199,9 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
                     let storyCellViewModels = $0.map { StoryCellViewModel(model: $0) }
                     self.appendGroup(storyCellViewModels: storyCellViewModels)
                 })
+                if response.list.count == 0 && self.currentIndex == self.storiesGroup.count - 1 {
+                    self.dismiss(animated: true, completion: nil)
+                }
             case let .failure(error):
                 logger.error(error)
             }

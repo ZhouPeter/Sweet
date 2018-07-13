@@ -48,6 +48,7 @@ struct StoryResponse: Codable {
     let centerX: CGFloat?
     let centerY: CGFloat?
     var touchArea: TouchArea?
+    let uvNum: UInt
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -65,6 +66,7 @@ struct StoryResponse: Codable {
         case centerX = "x"
         case centerY = "y"
         case touchArea
+        case uvNum
     }
 }
 struct TouchArea: Codable {

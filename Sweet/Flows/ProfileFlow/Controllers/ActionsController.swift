@@ -32,6 +32,7 @@ class ActionsController: PageboyViewController {
             }
         }
     }
+    var showStory: (() -> Void)?
     var mine: User
     let setTop: SetTop?
     weak var actionsDelegate: ActionsControllerDelegate?
@@ -50,6 +51,7 @@ class ActionsController: PageboyViewController {
         feedsController.delegate = self
         let storysController = StoriesController(user: user)
         storysController.delegate = self
+        storysController.showStory = showStory
         storysController.showStoriesPlayerView = showStoriesPlayerView
         viewControllers.append(feedsController)
         viewControllers.append(storysController)

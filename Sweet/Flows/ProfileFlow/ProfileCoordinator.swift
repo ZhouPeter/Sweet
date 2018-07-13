@@ -69,13 +69,26 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profile.showConversation = { [weak self] (user, buddy) in
             self?.showConversation(user: user, buddy: buddy)
         }
+        profile.showStory = { [weak self] in
+            self?.showStory()
+        }
         if isPresent {
             router.setRootFlow(profile)
         } else {
             router.push(profile)
         }
     }
-    
+    private func showStory() {
+        let navigation = UINavigationController()
+        let coordinator = coordinatorFactory
+            .makeDismissableStoryCoordinator(user: user, topic: nil, navigation: navigation)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start()
+    }
     private func showConversation(user: User, buddy: User) {
         let coordinator = ConversationCoordinator(
             user: user,

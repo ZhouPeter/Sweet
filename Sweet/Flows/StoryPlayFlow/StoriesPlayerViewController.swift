@@ -121,10 +121,13 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private lazy var bottomButton: UIButton = {
         let bottomButton = UIButton()
+        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        bottomButton.setTitleColor(.black, for: .normal)
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         if isSelf {
-            bottomButton.setImage(#imageLiteral(resourceName: "History"), for: .normal)
+//            bottomButton.setImage(#imageLiteral(resourceName: "History"), for: .normal)
+            bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
             bottomButton.addTarget(self, action: #selector(openStoryHistory(sender:)), for: .touchUpInside)
         } else {
             bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
@@ -283,7 +286,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
         setUserData()
-        bottomButton.isEnabled = !stories[currentIndex].like
+        if isSelf {
+            bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
+        } else {
+            bottomButton.isEnabled = !stories[currentIndex].like
+        }
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
@@ -489,6 +496,7 @@ extension StoriesPlayerViewController {
     @objc private func openStoryHistory(sender: UIButton) {
         pause()
         topContentView.isHidden = true
+        bottomButton.isHidden = true
         let storyId = stories[currentIndex].storyId
         let uvViewController = StoryUVController(storyId: storyId, user: user)
         uvViewController.runProfileFlow = runProfileFlow
@@ -832,6 +840,7 @@ extension StoriesPlayerViewController {
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
         topContentView.isHidden = false
+        bottomButton.isHidden = false
         play()
     }
 }

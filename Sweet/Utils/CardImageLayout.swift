@@ -521,7 +521,7 @@ extension ContentCardCollectionViewCell {
                 imageIcon.isHidden = false
                 imageIcon.setTitle("GIF", for: .normal)
             } else {
-                if CGFloat(info.height) / CGFloat(info.width) > UIScreen.mainHeight() / UIScreen.mainWidth() {
+                if CGFloat(info.height) / CGFloat(info.width) > 1.95 {
                     imageIcon.isHidden = false
                     imageIcon.setTitle("长图", for: .normal)
                 } else {

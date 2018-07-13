@@ -71,6 +71,7 @@ class StoriesPlayerScrollView: UIScrollView {
     
     private func addImageView(frame: CGRect) {
         middleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        middleImageView.backgroundColor = .black
         middleImageView.contentMode = .scaleAspectFill
         middleImageView.clipsToBounds = true
         middleImageView.isUserInteractionEnabled = true

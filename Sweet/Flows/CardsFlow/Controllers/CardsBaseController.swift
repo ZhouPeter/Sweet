@@ -20,7 +20,7 @@ enum CardRequest {
     case sub(cardId: String?, direction: Direction?)
 }
 let preloadingCount = 5
-
+var isVideoMuted = true
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
@@ -53,7 +53,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             options: [.new, .old],
             changeHandler: { (object, change) in
             if change.newValue == change.oldValue { return }
-            if object.contentOffset.y + cardOffset  == CGFloat(self.index) * cardCellHeight {
+            if ceil(object.contentOffset.y + cardOffset)  == ceil(CGFloat(self.index) * cardCellHeight) {
                 if self.lastIndex == self.index { return }
                 self.changeCurrentCell()
                 self.lastIndex = self.index
@@ -307,7 +307,7 @@ extension CardsBaseController {
             if let resource = playerView.resource,
                 resource.indexPath == indexPath,
                resource.definitions[0].url == configurator.viewModel.videoURL {
-                playerView.isHasVolume = configurator.viewModel.isMuted
+                playerView.isHasVolume = !isVideoMuted
                 playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                     playerView?.play()
                 }
@@ -318,7 +318,7 @@ extension CardsBaseController {
             resource.scrollView = weakSelf?.collectionView
             resource.fatherViewTag = weakCell?.contentImageView.tag
             playerView.setVideo(resource: resource)
-            playerView.isHasVolume = configurator.viewModel.isMuted
+            playerView.isHasVolume = !isVideoMuted
             playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                 playerView?.play()
             }

@@ -32,10 +32,12 @@ class CustomPhotoBrowser: PhotoBrowser {
 class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     private var thumbnaiImageViews: [UIImageView]
     private var highImageViewURLs: [URL]
+    private var shareText: String?
 
-    init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL]) {
+    init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL], shareText: String? = nil) {
         self.thumbnaiImageViews = thumbnaiImageViews
         self.highImageViewURLs = highImageViewURLs
+        self.shareText = shareText
     }
     
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
@@ -62,7 +64,7 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
         let alert = UIAlertController()
         let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
-            let controller = ShareCardController()
+            let controller = ShareCardController(shareText: self.shareText)
             controller.sendCallback = { (text, userIds) in
                 self.sendImage(url: url, text: text, userIds: userIds)
             }

@@ -98,13 +98,10 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
         if let index = cards.index(where: { $0.cardId == cardId }) {
             let text: String?
             if let url = cards[index].url {
-                if  let string = cards[index].content!.htmlStringReplaceTag() {
-                    let substring = string.prefix(50)
-                    text = substring + url + "\n" + "\n"
-                        + "讲真APP，你的同学都在玩：" + "\n"
-                        + "[机智]http://t.cn/RrXTSg5"
+                if let source = cards[index].sourceEnumType, source == .douyin {
+                    text = "我正在看「\(cards[index].name!)」的抖音视频 \(url)"
                 } else {
-                    text = nil
+                    text = String.getShareText(content: cards[index].content, url: cards[index].url)
                 }
             } else {
                 text = nil
@@ -227,7 +224,10 @@ extension CardsBaseController {
         guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
             as? ContentCardCollectionViewCell else { return  }
         let imageURLs = configurator.viewModel.imageURLList!
-        self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imageURLs)
+        let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
+        photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
+                                          highImageViewURLs: imageURLs,
+                                          shareText: shareText)
         let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
@@ -252,14 +252,7 @@ extension CardsBaseController {
 
 extension CardsBaseController: SweetPlayerViewDelegate {
     func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
-        if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].cardEnumType == .content, cards[indexPath.row].video != nil {
-                if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
-                    configurator.viewModel.isMuted = isMuted
-                    cellConfigurators[indexPath.row] = configurator
-                }
-            }
-        }
+       isVideoMuted = isMuted
     }
     
     func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {

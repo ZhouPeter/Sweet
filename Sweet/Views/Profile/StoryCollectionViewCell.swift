@@ -14,6 +14,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var storyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -39,8 +40,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.backgroundColor = .clear
-        contentView.layer.cornerRadius = 5
-        contentView.layer.masksToBounds = true
         setupUI()
     }
     
