@@ -122,11 +122,11 @@ extension InboxController: SwipeTableViewCellDelegate {
         for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
         options.expansionStyle = SwipeExpansionStyle(
-            target: .percentage(1),
+            target: .percentage(0.5),
             elasticOverscroll: false,
             completionAnimation: .bounce
         )
-        options.transitionStyle = .border
+        options.transitionStyle = .drag
         return options
     }
     
