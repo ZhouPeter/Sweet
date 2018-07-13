@@ -23,9 +23,11 @@ protocol ProfileView: BaseView {
     var user: User { get set }
     var userId: UInt64 { get set }
     var showConversation: ((User, User) -> Void)? { get set }
+    var showStory: (() -> Void)? { get set }
 }
 
 class ProfileController: BaseViewController, ProfileView {
+    var showStory: (() -> Void)?
     var showConversation: ((User, User) -> Void)?
     var showStoriesPlayerView: (
         (
@@ -233,8 +235,9 @@ extension ProfileController {
             self.actionsController = ActionsController(user: User(self.userResponse!),
                                                        mine: self.user,
                                                        setTop: self.setTop)
-            self.actionsController?.actionsDelegate = self
+            self.actionsController!.actionsDelegate = self
             self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
+            self.actionsController!.showStory = self.showStory
             self.add(childViewController: self.actionsController!, addView: false)
         }
         self.saveUserData()

@@ -25,6 +25,23 @@ extension String {
         return attributedText
     }
     
+    static func getShareText(content: String?, url: String?) -> String? {
+        let text: String?
+        if let content = content, let url = url {
+            if let string = content.htmlStringReplaceTag() {
+                let substring = string.prefix(50)
+                text = substring + url + "\n" + "\n"
+                    + "讲真APP，你的同学都在玩：" + "\n"
+                    + "[机智]http://t.cn/RrXTSg5"
+            } else {
+                text = nil
+            }
+        } else {
+            text = nil
+        }
+        return text
+    }
+    
     func htmlStringReplaceTag() -> String? {
         do {
             let imgRegular = try NSRegularExpression(pattern: "<img[^>]*>", options: [])

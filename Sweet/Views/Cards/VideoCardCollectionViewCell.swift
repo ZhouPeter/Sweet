@@ -81,7 +81,11 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.attributedText = viewModel.contentTextAttributed
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                self.contentLabel.attributedText = viewModel.contentTextAttributed
+            }
+        }
         contentLabel.lineBreakMode = .byTruncatingTail
         contentImageView.kf.setImage(with:  viewModel.videoURL.videoThumbnail())
         resetEmojiView()
@@ -119,15 +123,18 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let videoWidth = contentImageView.bounds.width
         for track in tracks where track.mediaType  == .video {
             let naturalSize = track.naturalSize
-            let videoMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentLabel.font.lineHeight
+            let contentMinHeight =
+                (contentLabel.text == "" || contentLabel.text == nil) ? 0 : contentLabel.font.lineHeight
+            var videoMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentMinHeight
+            if contentMinHeight == 0 { videoMaxHeight += 10 }
             if naturalSize.width < naturalSize.height {
                 if videoMaxHeight / videoWidth > naturalSize.height / naturalSize.width {
                     let scaleHeight = videoWidth * (naturalSize.height / naturalSize.width)
                     contentViewHeight?.constant = scaleHeight
-                    contentLabelHeight?.constant = contentLabel.font.lineHeight + videoMaxHeight - scaleHeight
+                    contentLabelHeight?.constant = contentMinHeight + videoMaxHeight - scaleHeight
                 } else {
                     contentViewHeight?.constant = videoMaxHeight
-                    contentLabelHeight?.constant = contentLabel.font.lineHeight
+                    contentLabelHeight?.constant = contentMinHeight
                 }
                 for subview in contentImageView.subviews {
                     if let subview = subview as? SweetPlayerView {
