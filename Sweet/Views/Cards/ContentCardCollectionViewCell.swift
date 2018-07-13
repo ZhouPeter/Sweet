@@ -137,7 +137,11 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.attributedText = viewModel.contentTextAttributed
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                self.contentLabel.attributedText = viewModel.contentTextAttributed
+            }
+        }
         contentLabel.lineBreakMode = .byTruncatingTail
         update(with: viewModel.thumbnailURL, title: viewModel.sourceTitle, brief: viewModel.sourceBrief)
         update(with: viewModel.imageURLList)

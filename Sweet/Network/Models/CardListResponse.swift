@@ -39,13 +39,19 @@ struct CardResponse: Codable {
     let video: String?
     var storyList: [[StoryResponse]]?
     var result: SelectResult?
-    let type: CardType
+    let type: UInt
+    var cardEnumType: CardType {
+        return CardType(rawValue: type) ?? .unknown
+    }
     let name: String?
     let url: String?
     let thumbnail: String?
     let title: String?
     let brief: String?
-    let sourceType: SourceType
+    let sourceType: UInt
+    var sourceEnumType: SourceType? {
+        return SourceType(rawValue: sourceType)
+    }
     enum CardType: UInt, Codable {
         case unknown
         case content
