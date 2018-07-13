@@ -70,7 +70,6 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                 self?.dismiss()
             }
         }
-        controller.prepare()
         router.setRootFlow(controller)
     }
     

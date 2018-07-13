@@ -62,7 +62,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
     
     func update(viewModel: StoryCellViewModel) {
-        logger.debug(self)
         pokeView.isHidden = true
         storyImageView.image = nil
         storyImageView.animationImages = nil
