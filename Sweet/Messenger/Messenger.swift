@@ -154,12 +154,12 @@ final class Messenger {
     // MARK: - Messages
     
     func send(_ message: InstantMessage) {
+        saveMessages([message], update: true)
         guard state == .online else {
             multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
             return
         }
         let request = message.makeSendRequest()
-        saveMessages([message], update: true)
         send(request, responseType: SendResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
@@ -384,6 +384,7 @@ final class Messenger {
                 } else {
                     dataArray.append(newMessage)
                 }
+                logger.debug(newMessage)
             })
             realm.add(dataArray, update: true)
         }, callback: { (_) in
