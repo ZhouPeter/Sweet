@@ -154,21 +154,30 @@ final class Messenger {
     // MARK: - Messages
     
     func send(_ message: InstantMessage) {
+        saveMessages([message], update: true)
         guard state == .online else {
-            multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
+            var msg = message
+            msg.isFailed = true
+            msg.isSent = false
+            saveMessages([msg], update: true)
+            multicastDelegate.invoke({ $0.messengerDidSendMessage(msg, success: false) })
             return
         }
         let request = message.makeSendRequest()
-        saveMessages([message], update: true)
         send(request, responseType: SendResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
-                self.multicastDelegate.invoke({ $0.messengerDidSendMessage(message, success: false) })
+                var msg = message
+                msg.isFailed = true
+                msg.isSent = false
+                self.saveMessages([msg], update: true)
+                self.multicastDelegate.invoke({ $0.messengerDidSendMessage(msg, success: false) })
                 return
             }
             var messageSent = message
             messageSent.remoteID = response.msgID
             messageSent.sentDate = Date()
             messageSent.isSent = true
+            messageSent.isFailed = false
             self.serverDate = Date(timeIntervalSince1970: Double(response.timestamp) / 1000)
             self.saveMessages([messageSent], update: true, callback: {
                 self.multicastDelegate.invoke({ $0.messengerDidSendMessage(messageSent, success: true) })
@@ -461,12 +470,17 @@ final class Messenger {
     }
     
     private func connect() {
+        guard state != .online else {
+            logger.debug("User is already Online")
+            return
+        }
         guard let user = self.user else {
             logger.debug("user is nil")
             return
         }
         state = .connecting
         web.request(.socketAddress, responseType: Response<SocketAddressResponse>.self) { (result) in
+            logger.debug(result)
             if case let .failure(error) = result {
                 logger.error(error)
                 self.state = .offline
@@ -493,6 +507,7 @@ final class Messenger {
     }
     
     private func login(_ callback: @escaping (Date?) -> Void) {
+        logger.debug()
         guard let user = self.user, let token = self.token else {
             logger.debug("User is nil")
             callback(nil)
@@ -516,6 +531,7 @@ final class Messenger {
     }
     
     private func connect(with address: SocketAddress, completion: @escaping () -> Void) {
+        logger.debug()
         service.start(address.host, port: address.port, onConnected: {
             logger.debug("Service connected")
             completion()

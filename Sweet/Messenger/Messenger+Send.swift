@@ -12,7 +12,7 @@ extension Messenger {
     @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: .text, extra: extra)
         message.rawContent = text
-        send(message)
+        DispatchQueue.main.async { self.send(message) }
         return message
     }
     
@@ -62,7 +62,7 @@ extension Messenger {
         extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: type, extra: extra)
         message.content = content
-        send(message)
+        DispatchQueue.main.async { self.send(message) }
         return message
     }
 }

@@ -21,6 +21,8 @@ struct InstantMessage {
     var sentDate = Date()
     var isSent = false
     var isRead = false
+    var isFailed = false
+    var isSending = false
     var extra: String?
     var content: MessageContent? {
         didSet {
@@ -110,6 +112,7 @@ extension InstantMessage {
         sentDate = data.sentDate
         isSent = data.isSent
         isRead = data.isRead
+        isFailed = data.isFailed
         extra = data.extra
         parseContent()
     }

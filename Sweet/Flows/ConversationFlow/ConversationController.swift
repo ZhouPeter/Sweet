@@ -55,6 +55,9 @@ final class ConversationController: MessagesViewController, ConversationView {
         layout.emojiMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
         layout.sizeCalculator.incomingAvatarPosition = avatarPosition
         layout.sizeCalculator.outgoingAvatarPosition = avatarPosition
+        let accessoryViewSize = CGSize(width: 35, height: 35)
+        layout.setMessageIncomingAccessoryViewSize(accessoryViewSize)
+        layout.setMessageOutgoingAccessoryViewSize(accessoryViewSize)
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: layout)
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
@@ -301,6 +304,65 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 32, height: 32)
     }
+    
+    func configureAccessoryView(
+        _ accessoryView: UIView,
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView) {
+        let imMessage = messages[indexPath.section]
+        let resendButton = addAccessoryResendButtonIfNeeds(accessoryView)
+        resendButton.isHidden = true
+        resendButton.indexPath = indexPath
+        let indicator = addAccessoryIndicatorIfNeeds(accessoryView)
+        indicator.stopAnimating()
+        if imMessage.from == user.userId, imMessage.isSent == false {
+            if imMessage.isFailed {
+                resendButton.isHidden = false
+            } else {
+                indicator.isHidden = false
+                indicator.startAnimating()
+            }
+        }
+    }
+    
+    @discardableResult private func addAccessoryIndicatorIfNeeds(_ accessoryView: UIView) -> UIActivityIndicatorView {
+        let tag = 2
+        if let indicator = accessoryView.viewWithTag(tag) as? UIActivityIndicatorView {
+            return indicator
+        }
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        accessoryView.addSubview(indicator)
+        indicator.fill(in: accessoryView, top: 10)
+        indicator.tag = tag
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        return indicator
+    }
+    
+    @discardableResult private func addAccessoryResendButtonIfNeeds(_ accessoryView: UIView) -> IndexPathButton {
+        let tag = 1
+        if let button = accessoryView.viewWithTag(tag) as? IndexPathButton {
+            return button
+        }
+        let button = IndexPathButton()
+        button.tag = tag
+        button.setImage(UIImage(named: "Failed"), for: .normal)
+        accessoryView.addSubview(button)
+        button.fill(in: accessoryView, top: 10)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(didPressResendButton(button:)), for: .touchUpInside)
+        return button
+    }
+    
+    @objc private func didPressResendButton(button: IndexPathButton) {
+        guard let indexPath = button.indexPath else { return }
+        var message = messages[indexPath.section]
+        message.isFailed = false
+        messages[indexPath.section] = message
+        messagesCollectionView.reloadSections([indexPath.section])
+        Messenger.shared.send(message)
+    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}
@@ -386,7 +448,10 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        
+        guard let section = messages.firstIndex(where: { $0.localID == message.localID }) else  { return }
+        let indexPath = IndexPath(row: 0, section: section)
+        messages[indexPath.section] = message
+        messagesCollectionView.reloadSections([section])
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
