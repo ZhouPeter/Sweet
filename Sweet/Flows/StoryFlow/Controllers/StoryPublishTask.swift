@@ -53,7 +53,7 @@ class StoryPublishTask: AsynchronousOperation {
         if let name = draft.filterFilename, let image = UIImage(named: name) {
             filter = LookupFilter(lookupImage: image)
         } else {
-            filter = LookupFilter(lookupImage: UIImage(named: "NA")!)
+            filter = LookupFilter(lookupImage: UIImage(named: "1")!)
         }
         self.filter = filter
         let handleOutput: ((URL?) -> Void) = { [weak self] url in

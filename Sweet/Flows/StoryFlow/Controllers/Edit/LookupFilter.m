@@ -33,7 +33,7 @@
 }
 
 + (instancetype)defaultFilter {
-    return [[LookupFilter alloc] initWithLookupImage:[UIImage imageNamed:@"NA"]];
+    return [[LookupFilter alloc] initWithLookupImage:[UIImage imageNamed:@"1"]];
 }
 
 @end
