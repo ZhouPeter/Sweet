@@ -314,9 +314,14 @@ extension ConversationController: MessagesDisplayDelegate {
         let resendButton = addAccessoryResendButtonIfNeeds(accessoryView)
         resendButton.isHidden = true
         resendButton.indexPath = indexPath
+        let indicator = addAccessoryIndicatorIfNeeds(accessoryView)
+        indicator.stopAnimating()
         if imMessage.from == user.userId, imMessage.isSent == false {
             if imMessage.isFailed {
                 resendButton.isHidden = false
+            } else {
+                indicator.isHidden = false
+                indicator.startAnimating()
             }
         }
     }
@@ -328,7 +333,7 @@ extension ConversationController: MessagesDisplayDelegate {
         }
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         accessoryView.addSubview(indicator)
-        indicator.fill(in: accessoryView)
+        indicator.fill(in: accessoryView, top: 10)
         indicator.tag = tag
         indicator.hidesWhenStopped = true
         indicator.stopAnimating()
@@ -344,7 +349,7 @@ extension ConversationController: MessagesDisplayDelegate {
         button.tag = tag
         button.setImage(UIImage(named: "Failed"), for: .normal)
         accessoryView.addSubview(button)
-        button.fill(in: accessoryView)
+        button.fill(in: accessoryView, top: 10)
         button.isHidden = true
         button.addTarget(self, action: #selector(didPressResendButton(button:)), for: .touchUpInside)
         return button
@@ -353,9 +358,9 @@ extension ConversationController: MessagesDisplayDelegate {
     @objc private func didPressResendButton(button: IndexPathButton) {
         guard let indexPath = button.indexPath else { return }
         var message = messages[indexPath.section]
-        button.isHidden = true
         message.isFailed = false
         messages[indexPath.section] = message
+        messagesCollectionView.reloadSections([indexPath.section])
         Messenger.shared.send(message)
     }
 }
