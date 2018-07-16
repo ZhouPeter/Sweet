@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdateGenderController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var gender: Gender
     private var genders: [Gender] = [.male, .female]
@@ -62,12 +62,13 @@ extension UpdateGenderController: UITableViewDelegate {
         return 56
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         web.request(.update(
             updateParameters: ["gender": genders[indexPath.row].rawValue,
                                "type": UpdateUserType.gender.rawValue])) { [weak self] (result) in
             guard let `self` = self else { return }
             switch result {
-            case .success:
+            case let .success(response):
                 self.gender = self.genders[indexPath.row]
                 for cell in tableView.visibleCells {
                     if let cell = cell as? UpdateGenderTableViewCell, let indexPath = tableView.indexPath(for: cell) {
@@ -75,9 +76,15 @@ extension UpdateGenderController: UITableViewDelegate {
                                     isSelected: self.genders[indexPath.row] == self.gender)
                     }
                 }
-                self.saveCompletion?(self.gender == .male ? "男" : "女")
+                let remain = response["remain"] as? Int
+                self.saveCompletion?(self.gender == .male ? "男" : "女", remain)
                 self.navigationController?.popViewController(animated: true)
             case let .failure(error):
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self.toast(message: "修改次数已用完")
+                } else {
+                    self.toast(message: "修改失败")
+                }
                 logger.error(error)
             }
         }

@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdateSignatureController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var signature: String
     private lazy var signatureTextView: UITextView = {
@@ -97,11 +97,17 @@ class UpdateSignatureController: BaseViewController, UpdateProtocol {
                                                "type": UpdateUserType.signature.rawValue])) { [weak self] (result) in
             guard let `self` = self else { return }
             switch result {
-            case .success:
+            case let .success(response):
                 self.signature = self.signatureTextView.text
-                self.saveCompletion?(self.signature)
+                let remain = response["remain"] as? Int
+                self.saveCompletion?(self.signature, remain)
                 self.navigationController?.popViewController(animated: true)
             case let .failure(error):
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self.toast(message: "修改次数已用完")
+                } else {
+                    self.toast(message: "修改失败")
+                }
                 logger.error(error)
             }
         }

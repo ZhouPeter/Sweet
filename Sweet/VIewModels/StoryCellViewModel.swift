@@ -25,6 +25,7 @@ struct StoryCellViewModel {
     var touchArea: CGRect?
     var visualText: String = ""
     var uvNum: UInt
+    var timestampString: String
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
@@ -54,5 +55,6 @@ struct StoryCellViewModel {
         let storyTime = TimerHelper.storyTime(timeInterval: TimeInterval(model.created))
         subtitle = storyTime.day + storyTime.time
         uvNum = model.uvNum
+        timestampString = ""
     }
 }

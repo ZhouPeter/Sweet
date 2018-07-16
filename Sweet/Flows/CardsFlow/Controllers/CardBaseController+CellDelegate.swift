@@ -116,11 +116,11 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
-            .commentCard(cardId: cardId, comment: "", emoji: emoji),
+            .commentCard(cardId: cardId, emoji: emoji),
             responseType: Response<SelectResult>.self) { (result) in
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                 switch result {
                 case let .success(response):
-                    guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                     self.cards[index].result = response
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
@@ -133,6 +133,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         Defaults[.isSameCardChoiceGuideShown] = true
                     }
                 case let .failure(error):
+                    self.reloadContentCell(index: index)
                     logger.error(error)
                 }
         }

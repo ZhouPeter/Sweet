@@ -100,7 +100,7 @@ class EmojiControlView: UIView {
         }
     }
     
-    func updateResult(imageName: String, resultAvatarURLs: [URL]) {
+    private func updateResult(imageName: String, resultAvatarURLs: [URL]) {
         layoutIfNeeded()
         var insetX: CGFloat = bounds.width - 10 - 32
         let insetY: CGFloat = 9
@@ -122,7 +122,7 @@ class EmojiControlView: UIView {
         }
     }
     
-    func updateShow(indexs: [Int]) {
+    private func updateShow(indexs: [Int]) {
         layoutIfNeeded()
         var insetX: CGFloat = bounds.width - 10 - 32
         let insetY: CGFloat = 9
@@ -137,7 +137,7 @@ class EmojiControlView: UIView {
         openButton.isHidden = false
     }
     
-    func updateAllShow(indexs: [Int]) {
+    private func updateAllShow(indexs: [Int]) {
         updateShow(indexs: indexs)
         openButton.isHidden = true
         layoutIfNeeded()
@@ -166,6 +166,7 @@ class EmojiControlView: UIView {
             layoutIfNeeded()
             imageView.frame = CGRect(x: bounds.width - 10 - 32, y: 9, width: 32, height: 32)
             imageView.isHidden = true
+            imageView.isUserInteractionEnabled = true
         }
         avatarImageViews.forEach { $0.isHidden = true }
         openButton.isHidden = true
@@ -186,6 +187,7 @@ extension EmojiControlView {
     
     @objc private func selectEmojiAction(tap: UITapGestureRecognizer) {
         if let view = tap.view {
+            emojiImageViews.forEach { $0.isUserInteractionEnabled = false }
             delegate?.selectEmoji(emoji: view.tag)
         }
     }

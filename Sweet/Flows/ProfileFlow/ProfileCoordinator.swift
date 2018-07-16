@@ -53,9 +53,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     // MARK: - Private
     private func showProfile(isPresent: Bool = false) {
         let profile = factory.makeProfileView(user: user, userId: buddyID, setTop: setTop)
-        profile.showAbout = { [weak self] (user) in
-            self?.showAbout(user: user)
-        }
+        profile.delegate = self
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
@@ -121,24 +119,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         coordinator.start()
     }
     
-    private func showAbout(user: UserResponse) {
-        let aboutOutput  = factory.makeProfileAboutOutput(user: user)
-        aboutOutput.showWebView = { [weak self] (title, urlString) in
-            self?.showWebView(title: title, urlString: urlString)
-        }
-        
-        aboutOutput.showFeedback = { [weak self] in
-            self?.showFeedback()
-        }
-        
-        aboutOutput.showUpdate = { [weak self] (user) in
-            self?.showUpdate(user: user)
-        }
-        router.push(aboutOutput)
-    }
-    
-    private func showUpdate(user: UserResponse) {
-        let updateOutput = factory.makeProfileUpdateOutput(user: user)
+    private func showUpdate(user: UserResponse, updateRemain: UpdateRemainResponse) {
+        let updateOutput = factory.makeProfileUpdateOutput(user: user, updateRemain: updateRemain)
         router.push(updateOutput)
     }
     
@@ -150,5 +132,24 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private func showFeedback() {
         let feedback = FeedbackController()
         router.push(feedback)
+    }
+}
+
+
+extension ProfileCoordinator: ProfileViewDelegate {
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse) {
+        let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain)
+        aboutOutput.showWebView = { [weak self] (title, urlString) in
+            self?.showWebView(title: title, urlString: urlString)
+        }
+        
+        aboutOutput.showFeedback = { [weak self] in
+            self?.showFeedback()
+        }
+        
+        aboutOutput.showUpdate = { [weak self] (user, updateRemain) in
+            self?.showUpdate(user: user, updateRemain: updateRemain)
+        }
+        router.push(aboutOutput)
     }
 }

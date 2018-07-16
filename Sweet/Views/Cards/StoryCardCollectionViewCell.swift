@@ -37,15 +37,15 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         avatarCirCleImageView.image = viewModel.isRead ? #imageLiteral(resourceName: "StoryRead") : #imageLiteral(resourceName: "StoryUnread")
     }
     
-    override var isSelected: Bool {
-        set {}
-        get { return super.isSelected }
-    }
-    
-    override var isHighlighted: Bool {
-        set {}
-        get { return super.isHighlighted }
-    }
+//    override var isSelected: Bool {
+//        set {}
+//        get { return super.isSelected }
+//    }
+//    
+//    override var isHighlighted: Bool {
+//        set {}
+//        get { return super.isHighlighted }
+//    }
     
     private lazy var coverMaskView: UIView = {
         let view = UIView()

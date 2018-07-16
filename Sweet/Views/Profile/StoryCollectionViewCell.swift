@@ -10,11 +10,25 @@ import UIKit
 import Kingfisher
 class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var pokeView = StorySmallPokeView()
-
+    private lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(white: 0.15, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.backgroundColor = .white
+        label.textAlignment = .center
+        label.layer.cornerRadius = 2
+        label.layer.masksToBounds = true
+        return label
+    }()
+    private var token: NSKeyValueObservation?
+    
     private lazy var storyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        token = imageView.observe(\.isAnimating, options: [.new], changeHandler: { (object, change) in
+            print(change.newValue ?? "")
+        })
         return imageView
     }()
     
@@ -27,18 +41,19 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    override var isSelected: Bool {
-        set {}
-        get { return super.isSelected}
-    }
-
-    override var isHighlighted: Bool {
-        set {}
-        get { return super.isHighlighted}
-    }
+//    override var isSelected: Bool {
+//        set {}
+//        get { return super.isSelected}
+//    }
+//
+//    override var isHighlighted: Bool {
+//        set {}
+//        get { return super.isHighlighted}
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        contentView.clipsToBounds = true
         contentView.backgroundColor = .clear
         setupUI()
     }
@@ -50,6 +65,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(storyImageView)
         storyImageView.fill(in: contentView)
+        contentView.addSubview(timeLabel)
+        timeLabel.align(.left, inset: 5)
+        timeLabel.align(.top, inset: 5)
+        timeLabel.constrain(width: 48, height: 24)
         contentView.addSubview(recoveryImageView)
         recoveryImageView.align(.left, to: contentView, inset: 10)
         recoveryImageView.align(.bottom, to: contentView, inset: 10)
@@ -62,7 +81,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
     
     func update(viewModel: StoryCellViewModel) {
-        logger.debug(self)
         pokeView.isHidden = true
         storyImageView.image = nil
         storyImageView.animationImages = nil
@@ -78,6 +96,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
             }
         } else if let imageURL = viewModel.imageURL {
             storyImageView.kf.setImage(with: imageURL)
+        }
+        if viewModel.timestampString == ""  {
+            timeLabel.isHidden = true
+        } else {
+            timeLabel.text = viewModel.timestampString
+            timeLabel.isHidden = false
         }
         if viewModel.created/1000 + 72 * 3600 < Int(Date().timeIntervalSince1970) {
             recoveryImageView.isHidden = false

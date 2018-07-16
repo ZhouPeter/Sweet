@@ -29,6 +29,5 @@ struct StoriesCardViewModel {
         storiesGroup = model.storyList!.map {
             return $0.map { return StoryCellViewModel(model: $0) }
         }
-       
     }
 }

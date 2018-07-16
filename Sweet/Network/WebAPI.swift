@@ -15,6 +15,7 @@ enum WebAPI {
     case sendCode(phone: String, type: SendSMSCodeType)
     case logout
     case update(updateParameters: [String: Any])
+    case updateRemain
     case phoneChange(phone: String, code: String)
     case uploadContacts(contacts: [[String: Any]])
     case getUserProfile(userId: UInt64)
@@ -46,7 +47,7 @@ enum WebAPI {
     case subscriptionCards(cardId: String?, direction: Direction?)
     case evaluateCard(cardId: String, index: Int)
     case choiceCard(cardId: String, index: Int)
-    case commentCard(cardId: String, comment: String, emoji: Int)
+    case commentCard(cardId: String, emoji: Int)
     case activityCardLike(cardId: String?, activityId: String, comment: String)
     case storyDetailsUvlist(storyId: UInt64)
     case storyRead(storyId: UInt64, fromCardId: String?)
@@ -87,6 +88,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/logout"
         case .update:
             return "/user/update"
+        case .updateRemain:
+            return "/user/update/remain/get"
         case .phoneChange:
             return "/user/phone/change"
         case .uploadContacts:
@@ -287,8 +290,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             if let rect = rect {
                 parameters["touchArea"] = ["x": rect.minX, "y": rect.minY, "width": rect.width, "height": rect.height]
             }
-        case let .commentCard(cardId, comment, emoji):
-            parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
+        case let .commentCard(cardId, emoji):
+            parameters = ["cardId": cardId, "emoji": emoji]
         case let .removeRecentMessage(userID):
             parameters = ["userId": userID]
         case let .activityCardLike(cardId, activityId, comment):

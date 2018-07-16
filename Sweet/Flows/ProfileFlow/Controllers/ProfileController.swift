@@ -10,7 +10,7 @@ import UIKit
 import SwiftyUserDefaults
 import JXPhotoBrowser
 protocol ProfileView: BaseView {
-    var showAbout: ((UserResponse) -> Void)? { get set }
+    var delegate: ProfileViewDelegate? { get set }
     var showStoriesPlayerView: (
         (
         User,
@@ -26,7 +26,13 @@ protocol ProfileView: BaseView {
     var showStory: (() -> Void)? { get set }
 }
 
+protocol ProfileViewDelegate: class {
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse)
+}
+
 class ProfileController: BaseViewController, ProfileView {
+    weak var delegate: ProfileViewDelegate?
+    
     var showStory: (() -> Void)?
     var showConversation: ((User, User) -> Void)?
     var showStoriesPlayerView: (
@@ -40,21 +46,26 @@ class ProfileController: BaseViewController, ProfileView {
     var user: User
     var userId: UInt64
     let setTop: SetTop?
-    var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
     var userResponse: UserResponse? {
         willSet {
             if let newValue = newValue {
-                if newValue.userId == UInt64(Defaults[.userID] ?? "0") {
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
-                    navigationItem.title = "个人主页"
-                } else {
-                    navigationItem.title = "个人主页"
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuButton)
+                DispatchQueue.main.async {
+                    if  let IDString = Defaults[.userID],
+                        let userID = UInt64(IDString),
+                        newValue.userId == userID {
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.moreButton)
+                        self.navigationItem.title = "个人主页"
+                    } else {
+                        self.navigationItem.title = "个人主页"
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.menuButton)
+                    }
                 }
             }
         }
     }
+    
+    private var updateRemain: UpdateRemainResponse?
     private var photoBrowserImp: AvatarPhotoBrowserImp?
     private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
@@ -94,6 +105,18 @@ class ProfileController: BaseViewController, ProfileView {
         button.setImage(#imageLiteral(resourceName: "Back"), for: .normal)
         button.addTarget(self, action: #selector(returnAction(_:)), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var avatarView: UIView = {
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let imageView = UIImageView()
+        imageView.kf.setImage(with: URL(string: userResponse!.avatar))
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        view.addSubview(imageView)
+        return view
     }()
     
     init(user: User, userId: UInt64, setTop: SetTop? = nil) {
@@ -173,8 +196,8 @@ class ProfileController: BaseViewController, ProfileView {
 
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
-        guard let user = userResponse else { return }
-        self.showAbout?(user)
+        guard let user = userResponse, let updateRemain = updateRemain else { return }
+        delegate?.showAbout(user: user, updateRemain: updateRemain)
     }
     
     @objc private func menuAction(sender: UIButton) {
@@ -259,6 +282,12 @@ extension ProfileController {
         } else {
             userSuccess = true
         }
+        group.enter()
+        queue.async {
+            self.loadUpdateRemain(completion: { (isSuccess) in
+                group.leave()
+            })
+        }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
                self.loadTableView()
@@ -266,6 +295,18 @@ extension ProfileController {
         }
     }
     
+    private func loadUpdateRemain(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
+        web.request(.updateRemain, responseType: Response<UpdateRemainResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                self.updateRemain = response
+                completion?(true)
+            case let .failure(error):
+                completion?(false)
+                logger.error(error)
+            }
+        }
+    }
     private func loadUserData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
         web.request(.getUserProfile(userId: self.userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
@@ -365,6 +406,7 @@ extension ProfileController {
 
 extension ProfileController: ActionsControllerDelegate {
     func actionsScrollViewDidScoll(scrollView: UIScrollView) {
+        navigationItem.titleView = nil
         if tableView.contentOffset.y < 244 - UIScreen.navBarHeight() {
             let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
                                      -UIScreen.navBarHeight()),
@@ -378,12 +420,15 @@ extension ProfileController: ActionsControllerDelegate {
                     self.tableView.contentOffset.y = -UIScreen.navBarHeight()
                 }, completion: nil)
             }
-        } else if tableView.contentOffset.y == 244 - UIScreen.navBarHeight() && scrollView.contentOffset.y < 0 {
-            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
-                                     -UIScreen.navBarHeight()),
-                                 244 - UIScreen.navBarHeight())
-            tableView.contentOffset.y = newOffsetY
-            scrollView.contentOffset.y = 0
+        } else if tableView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+            if scrollView.contentOffset.y < 0 {
+                let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
+                                         -UIScreen.navBarHeight()),
+                                     244 - UIScreen.navBarHeight())
+                tableView.contentOffset.y = newOffsetY
+                scrollView.contentOffset.y = 0
+            }
+            navigationItem.titleView = avatarView
         }
     }
 }

@@ -21,6 +21,7 @@ extension String {
     }
     
     func phoneMiddleHidden() -> String {
+        guard self.checkPhone() else { return self }
         let phone = "\(self[...self.index(self.startIndex, offsetBy: 2)])" +
                     "****" +
                     "\(self[self.index(self.startIndex, offsetBy: 7)...])"
