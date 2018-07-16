@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdatePhoneController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var phone: String
     var smsCode: String = ""
@@ -151,11 +151,16 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
         guard let phone = phoneTextField.text, phone.checkPhone(), let smsCode = smsCodeTextField.text  else { return }
         web.request(.phoneChange(phone: phone, code: smsCode)) { [weak self] (result) in
             switch result {
-            case .success:
-                self?.saveCompletion?(phone)
+            case let .success(response):
+                let remain = response["remain"] as? Int
+                self?.saveCompletion?(phone, remain)
                 self?.navigationController?.popViewController(animated: true)
             case let .failure(error):
-                self?.toast(message: "修改手机号失败", duration: 2)
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self?.toast(message: "修改次数已用完")
+                } else {
+                    self?.toast(message: "修改失败")
+                }
                 logger.error(error)
             }
         }

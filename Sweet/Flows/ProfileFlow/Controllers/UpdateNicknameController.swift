@@ -8,11 +8,11 @@
 
 import UIKit
 protocol UpdateProtocol {
-    var saveCompletion: ((String) -> Void)? { get set }
+    var saveCompletion: ((String, Int?) -> Void)? { get set }
 }
 
 class UpdateNicknameController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var nickname: String
     private lazy var nicknameTextField: UITextField = {
@@ -80,11 +80,16 @@ class UpdateNicknameController: BaseViewController, UpdateProtocol {
         web.request(.update(
             updateParameters: ["nickname": text, "type": UpdateUserType.nickname.rawValue])) { [weak self] (result) in
             switch result {
-            case .success:
-                self?.saveCompletion?(text)
+            case let .success(response):
+                let remain = response["remain"] as? Int
+                self?.saveCompletion?(text, remain)
                 self?.navigationController?.popViewController(animated: true)
-            case .failure:
-                self?.toast(message: "保存失败", duration: 2)
+            case let .failure(error):
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self?.toast(message: "修改次数已用完")
+                } else {
+                    self?.toast(message: "修改失败")
+                }
             }
         }
     }

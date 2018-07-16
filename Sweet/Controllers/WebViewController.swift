@@ -14,7 +14,9 @@ class WebViewController: BaseViewController {
     var urlString: String
     private let shareCallback: (() -> Void)?
     private lazy var webView: WKWebView = {
-        let webView = WKWebView()
+        let config = WKWebViewConfiguration()
+        config.allowsInlineMediaPlayback = true
+        let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         return webView
     }()

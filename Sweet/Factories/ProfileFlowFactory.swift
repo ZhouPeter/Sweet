@@ -10,6 +10,6 @@ import Foundation
 
 protocol ProfileFlowFactory {
     func makeProfileView(user: User, userId: UInt64, setTop: SetTop?) -> ProfileView
-    func makeProfileAboutOutput(user: UserResponse) -> AboutView
-    func makeProfileUpdateOutput(user: UserResponse) -> UpdateView
+    func makeProfileAboutOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> AboutView
+    func makeProfileUpdateOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> UpdateView
 }

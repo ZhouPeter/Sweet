@@ -17,15 +17,13 @@ final class FlowFactoryImp:
     PowerFlowFactory,
 ProfileFlowFactory {
     
-    func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
-        let viewController = UpdateController()
-        viewController.user = user
+    func makeProfileUpdateOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> UpdateView {
+        let viewController = UpdateController(user: user, updateRemain: updateRemain)
         return viewController
     }
     
-    func makeProfileAboutOutput(user: UserResponse) -> AboutView {
-        let viewController = AboutController()
-        viewController.user = user
+    func makeProfileAboutOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> AboutView {
+        let viewController = AboutController(user: user, updateRemain: updateRemain)
         return viewController
     }
 

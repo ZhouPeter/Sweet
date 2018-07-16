@@ -150,7 +150,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        collectionView.reloadData()
+        self.collectionView.reloadData()
     }
     
     func loadRequest() {
@@ -197,6 +197,16 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 storyViewModels[index].visualText = "仅自己可见"
                 break
             }
+        }
+        var beforeTimeString = ""
+        for index in 0..<storyViewModels.count {
+            var timestampString = TimerHelper.timeToMonthDay(timeInterval: TimeInterval(storyViewModels[index].created))
+            if timestampString == beforeTimeString {
+                timestampString = ""
+            } else {
+                beforeTimeString = timestampString
+            }
+            storyViewModels[index].timestampString = timestampString
         }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdateCollegeController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var universityName: String
     private var colleges = [College]()
@@ -115,10 +115,16 @@ extension UpdateCollegeController: UITableViewDelegate {
         }
         web.request(.update(updateParameters: parameters)) { (result) in
             switch result {
-            case .success:
-                self.saveCompletion?(self.universityName + "#" + self.colleges[indexPath.row].collegeName)
+            case let .success(response):
+                let remain = response["remain"] as? Int
+                self.saveCompletion?(self.universityName + "#" + self.colleges[indexPath.row].collegeName, remain)
                 self.popToUpdateController()
             case let .failure(error):
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self.toast(message: "修改次数已用完")
+                } else {
+                    self.toast(message: "修改失败")
+                }
                 logger.error(error)
             }
         }

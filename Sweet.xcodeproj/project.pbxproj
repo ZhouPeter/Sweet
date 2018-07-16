@@ -68,6 +68,10 @@
 		580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
 		580F887420F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
 		580F887520F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
+		580F888620FC91CC009148CC /* UpdateRemainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888520FC91CC009148CC /* UpdateRemainResponse.swift */; };
+		580F888720FC91CC009148CC /* UpdateRemainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888520FC91CC009148CC /* UpdateRemainResponse.swift */; };
+		580F888820FC91CC009148CC /* UpdateRemainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888520FC91CC009148CC /* UpdateRemainResponse.swift */; };
+		580F888920FC91CC009148CC /* UpdateRemainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888520FC91CC009148CC /* UpdateRemainResponse.swift */; };
 		58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD120F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
@@ -1378,6 +1382,7 @@
 		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
 		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
 		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
+		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
 		58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
 		58155E11209175AF00ADEFFB /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
@@ -2573,6 +2578,7 @@
 				58816CF720C634C70032D103 /* EvaluationListResponse.swift */,
 				58816D0020C656860032D103 /* ActivityListResponse.swift */,
 				58D3CCE420C8FA320078B36C /* StatusResponse.swift */,
+				580F888520FC91CC009148CC /* UpdateRemainResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3230,6 +3236,7 @@
 				5863A83A20ABCE6F0016B089 /* StoryUvList.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
 				589E6BD620A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				580F888620FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				58CE1EBD20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E820931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC120A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -3443,6 +3450,7 @@
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
 				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
+				580F888820FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				587D18CC20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				5803575020AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D620BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
@@ -3983,6 +3991,7 @@
 				58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				5803572420AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				580F888920FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */,
@@ -4166,6 +4175,7 @@
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
 				589E6BD720A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				580F888720FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				58CE1EBE20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
 				58D578E920931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
 				58CE1EC220A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,

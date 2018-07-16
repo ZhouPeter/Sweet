@@ -112,7 +112,47 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
             DispatchQueue.main.async {
                 if asset.isPlayable {
-                    self.loadedResourceForPlay(asset: asset)
+//                    self.loadedResourceForPlay(asset: asset)
+                    self.loadedResourceForPlay2(asset: asset)
+                }
+            }
+        }
+    }
+    
+    private func loadedResourceForPlay2(asset: AVAsset) {
+        guard  let viewModel = viewModel else { return }
+        let tracks = asset.tracks
+        let videoWidth = contentImageView.bounds.width
+        let contentHeight = viewModel.contentHeight
+        for track in tracks where track.mediaType  == .video {
+             let naturalSize = track.naturalSize
+            if naturalSize.width < naturalSize.height {
+                var videoHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentHeight
+                if contentLabel.text == "" || contentLabel.text == nil {
+                    videoHeight += 10 + contentHeight
+                }
+                if videoHeight > videoWidth {
+                    if videoHeight / videoWidth > naturalSize.height / naturalSize.width {
+                        videoHeight = videoWidth * (naturalSize.height / naturalSize.width)
+                    }
+                    contentViewHeight?.constant = videoHeight
+                    contentLabelHeight?.constant = contentHeight
+                } else {
+                    videoHeight = videoWidth
+                    contentViewHeight?.constant = videoHeight
+                    contentLabelHeight?.constant = contentHeight - (videoHeight - videoWidth)
+                }
+            } else {
+                let videoHeight = videoWidth
+                let contentMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - videoHeight
+                let contentHeight = viewModel.contentHeight
+                contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
+                contentViewHeight?.constant = videoHeight
+            }
+            for subview in contentImageView.subviews {
+                if let subview = subview as? SweetPlayerView {
+                    customContent.layoutIfNeeded()
+                    subview.frame = contentImageView.bounds
                 }
             }
         }

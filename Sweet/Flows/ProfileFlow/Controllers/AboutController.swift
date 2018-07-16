@@ -105,19 +105,29 @@ class AboutBottomView: UIView {
 
 protocol AboutView: BaseView {
     var showWebView: ((String, String) -> Void)? { get set }
-    var showUpdate: ((UserResponse) -> Void)? { get set }
+    var showUpdate: ((UserResponse, UpdateRemainResponse) -> Void)? { get set }
     var showFeedback: (() -> Void)? { get set }
 
 }
 class AboutController: BaseViewController, AboutView {
     
-    var showUpdate: ((UserResponse) -> Void)?
+    var showUpdate: ((UserResponse, UpdateRemainResponse) -> Void)?
     
     var showFeedback: (() -> Void)?
     
     var showWebView: ((String, String) -> Void)?
     
-    var user: UserResponse?
+    private var user: UserResponse
+    private var updateRemain: UpdateRemainResponse
+    init(user: UserResponse, updateRemain: UpdateRemainResponse) {
+        self.user = user
+        self.updateRemain = updateRemain
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "更多"
@@ -135,7 +145,7 @@ class AboutController: BaseViewController, AboutView {
         updateRectView.align(.top, to: view, inset: UIScreen.navBarHeight() + 20)
         updateRectView.clickCallBack = { [weak self] in
             guard let `self` = self else { return }
-            self.showUpdate?(self.user!)
+            self.showUpdate?(self.user, self.updateRemain)
         }
         let questionRectView = AboutRectView(title: "常见问题")
         view.addSubview(questionRectView)

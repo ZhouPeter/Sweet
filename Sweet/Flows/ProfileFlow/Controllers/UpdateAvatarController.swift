@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import SwiftyUserDefaults
 class UpdateAvatarController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var avatar: String
     private lazy var avatarImageView: UIImageView = {
@@ -112,13 +112,18 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
                                                "type": UpdateUserType.avatar.rawValue]),
                             completion: { (result) in
                                 switch result {
-                                case .success:
+                                case let .success(response):
                                     self.avatarImageView.kf.setImage(with: localURL)
-                                    self.saveCompletion?(url)
+                                    let remain = response["remain"] as? Int
+                                    self.saveCompletion?(url, remain)
                                     self.toast(message: "头像修改成功", duration: 2)
 
                                 case let .failure(error):
-                                    self.toast(message: "头像修改失败", duration: 2)
+                                    if error.code == WebErrorCode.updateLimit.rawValue {
+                                        self.toast(message: "修改次数已用完")
+                                    } else {
+                                        self.toast(message: "头像修改失败")
+                                    }
                                     logger.error(error)
                                 }
                 })

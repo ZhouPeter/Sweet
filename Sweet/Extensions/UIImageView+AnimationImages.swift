@@ -40,7 +40,9 @@ extension UIImageView {
                 self.stopAnimating()
                 self.animationImages = images
                 self.animationDuration = animationDuration
+                logger.debug(self.isAnimating)
                 self.startAnimating()
+                logger.debug(self.isAnimating)
             }
         }
     }

@@ -15,7 +15,7 @@ class TimerHelper {
         let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.schedule(wallDeadline: .now(), repeating: 1)
         timer.setEventHandler {
-            if timeout < 0 {
+            if timeout <= 0 {
                 timer.cancel()
                 DispatchQueue.main.async {
                     endBlock?()
@@ -53,6 +53,17 @@ class TimerHelper {
         } else {
             return "\(second)s"
         }
+    }
+    
+    class func timeToMonthDay(timeInterval: TimeInterval) -> String {
+        let formatter =  DateFormatter()
+        formatter.dateFormat = "MM/dd"
+        var timeInterval = Int(timeInterval)
+        if String(timeInterval).count == 13 {
+            timeInterval /= 1000
+        }
+        let date = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+        return formatter.string(from: date)
     }
     
     class func storyTime(timeInterval: TimeInterval) -> (day: String, time: String) {
