@@ -19,7 +19,7 @@ target 'Sweet' do
   pod 'JXPhotoBrowser'
   pod 'libimcloud', :git => 'https://gitee.com/miaobo/iOS.LIBIMCLOUD.git', :branch => 'master'
   pod 'SwiftProtobuf'
-  pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git', :tag => '1.0.0-beta.1'
+  pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git', :branch => 'development'
   pod 'SwipeCellKit', '2.3.2'
   pod 'WechatOpenSDK'
   pod 'STPopupPreview'

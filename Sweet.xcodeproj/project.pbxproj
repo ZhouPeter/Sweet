@@ -675,6 +675,14 @@
 		AC0BA70720EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BA70520EF44BC009C1FC6 /* SweetTextMessageCell.swift */; };
 		AC0BA70820EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BA70520EF44BC009C1FC6 /* SweetTextMessageCell.swift */; };
 		AC0BA70920EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0BA70520EF44BC009C1FC6 /* SweetTextMessageCell.swift */; };
+		AC0E829920FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */; };
+		AC0E829A20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */; };
+		AC0E829B20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */; };
+		AC0E829C20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */; };
+		AC0E829E20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */; };
+		AC0E829F20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */; };
+		AC0E82A020FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */; };
+		AC0E82A120FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */; };
 		AC1778BF20BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
 		AC1778C020BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
 		AC1778C120BF99C500D5330F /* IMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778BE20BF99C500D5330F /* IMView.swift */; };
@@ -1561,6 +1569,8 @@
 		AC05F43720DCA49300EC6CAA /* TextEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditView.swift; sourceTree = "<group>"; };
 		AC05F43E20DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditControllerDelegate.swift; sourceTree = "<group>"; };
 		AC0BA70520EF44BC009C1FC6 /* SweetTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetTextMessageCell.swift; sourceTree = "<group>"; };
+		AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessageCell.swift; sourceTree = "<group>"; };
+		AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPathButton.swift; sourceTree = "<group>"; };
 		AC1778BE20BF99C500D5330F /* IMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMView.swift; sourceTree = "<group>"; };
 		AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCoordinator.swift; sourceTree = "<group>"; };
@@ -2225,6 +2235,8 @@
 				ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */,
 				AC52FDCC20F72B9F00267913 /* ImageMessageCell.swift */,
 				AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */,
+				AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */,
+				AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3285,6 +3297,7 @@
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				AC616FA020C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
+				AC0E829920FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC1778BF20BF99C500D5330F /* IMView.swift in Sources */,
 				5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
@@ -3371,6 +3384,7 @@
 				AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
 				AC557CAD20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
+				AC0E829E20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53212090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				ACDB24DE20BECFD50039368E /* InboxView.swift in Sources */,
@@ -3522,6 +3536,7 @@
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
 				5803571820AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
+				AC0E829B20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				AC525ABF208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				58D578FE20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACFC207A20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
@@ -3540,6 +3555,7 @@
 				58155E2D2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				AC2F978E20904F8000D5DE4F /* Storage.swift in Sources */,
 				ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */,
+				AC0E82A020FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				AC6C1D9020A993F500F45F82 /* TopicCell.swift in Sources */,
 				58C9806920E325BE006BA830 /* UColor+Style.swift in Sources */,
 				ACA3237F20875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
@@ -3771,6 +3787,7 @@
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				587D18E520DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */,
+				AC0E829C20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC7C8E5720E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
@@ -3826,6 +3843,7 @@
 				5803571920AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
+				AC0E82A120FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACFC207B20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
@@ -4221,6 +4239,7 @@
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				AC616FA120C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
+				AC0E829A20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC1778C020BF99C500D5330F /* IMView.swift in Sources */,
 				5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
@@ -4307,6 +4326,7 @@
 				AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
 				AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
+				AC0E829F20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
 				58BD53222090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				ACDB24DF20BECFD50039368E /* InboxView.swift in Sources */,

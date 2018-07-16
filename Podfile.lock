@@ -12,7 +12,7 @@ PODS:
   - KMNavigationBarTransition (1.1.5)
   - libimcloud (0.2.7):
     - CocoaAsyncSocket (~> 7.5.1)
-  - MessageKit (1.0.0-beta.1)
+  - MessageKit (1.0.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
@@ -53,7 +53,7 @@ DEPENDENCIES:
   - Kingfisher
   - KMNavigationBarTransition
   - libimcloud (from `https://gitee.com/miaobo/iOS.LIBIMCLOUD.git`, branch `master`)
-  - MessageKit (from `https://github.com/MessageKit/MessageKit.git`, tag `1.0.0-beta.1`)
+  - MessageKit (from `https://github.com/MessageKit/MessageKit.git`, branch `development`)
   - Moya (~> 11.0)
   - NVActivityIndicatorView
   - Pageboy (~> 2.0)
@@ -107,16 +107,16 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
   MessageKit:
+    :branch: development
     :git: https://github.com/MessageKit/MessageKit.git
-    :tag: 1.0.0-beta.1
 
 CHECKOUT OPTIONS:
   libimcloud:
     :commit: ff6cddbcee9ea5b703b72686a4291d73209ee450
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
   MessageKit:
+    :commit: 57165b75d5c65fd396dbc282df14b4aca072527f
     :git: https://github.com/MessageKit/MessageKit.git
-    :tag: 1.0.0-beta.1
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -128,7 +128,7 @@ SPEC CHECKSUMS:
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   libimcloud: 13cf95770c1179d7e0b3c10e7829e5475e830433
-  MessageKit: 6f1313d60e480e4b09641582c65f3e36825a5bf4
+  MessageKit: 16160036b16476b04bd0e9f2c7ce67e662e503e4
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
@@ -150,6 +150,6 @@ SPEC CHECKSUMS:
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 1f5d4b8d753eedb72ae412dab77a1f5a29699a5c
+PODFILE CHECKSUM: 204218f0e99437662584fdc71b4f3c96e391d88a
 
 COCOAPODS: 1.5.3
