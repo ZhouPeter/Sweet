@@ -37,7 +37,7 @@ struct ContentVideoCardViewModel {
         cardId = model.cardId
         contentId = model.contentId
         videoURL = URL(string: model.video!)!
-        videoPicURL = URL(string: model.videoPic!)
+        videoPicURL = URL(string: model.videoPic ?? "")
         if let emoji = model.result?.emoji, emoji != 0 {
             resultImageName = "ResultEmoji\(emoji)"
             resultAvatarURLs = model.result?.contactUserList.compactMap({ URL(string: $0.avatar) })
