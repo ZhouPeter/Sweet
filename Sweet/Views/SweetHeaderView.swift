@@ -37,7 +37,7 @@ class SweetHeaderView: UITableViewHeaderFooterView {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         contentView.addSubview(titleLabel)
-        titleLabel.align(.left, to: contentView, inset: 10)
+        titleLabel.align(.left, to: contentView, inset: 16)
         titleLabel.centerY(to: contentView)
     }
 

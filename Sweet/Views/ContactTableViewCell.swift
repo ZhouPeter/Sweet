@@ -87,7 +87,7 @@ class ContactTableViewCell: UITableViewCell {
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.centerY(to: contentView)
-        avatarImageView.align(.left, to: contentView, inset: 10)
+        avatarImageView.align(.left, to: contentView, inset: 16)
         avatarImageViewMaskLayer = avatarImageView.setViewRounded().maskLayer
         avatarImageView.addSubview(avatarLabel)
         avatarLabel.fill(in: avatarImageView)

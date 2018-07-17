@@ -83,10 +83,6 @@ final class ConversationController: MessagesViewController, ConversationView {
         delegate?.conversationDidFinish()
     }
     
-    deinit {
-        logger.debug()
-    }
-    
     func didBlock() {
         buddy.isBlacklisted = true
         let controller = UIAlertController(title: "是否举报该用户", message: nil, preferredStyle: .alert)

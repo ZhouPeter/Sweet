@@ -19,9 +19,10 @@ final class InboxController: BaseViewController, InboxView {
         view.dataSource = self
         view.delegate = self
         view.register(cellType: ConversationCell.self)
-        view.separatorInset.left = 0
-        view.sectionHeaderHeight = 8
-        view.backgroundColor = UIColor(hex: 0xF2F2F2)
+        view.sectionHeaderHeight = 0.1
+        view.backgroundColor = .clear
+        view.separatorColor = UIColor(hex: 0xF2F2F2)
+        view.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 0)
         return view
     } ()
     
@@ -151,7 +152,7 @@ extension InboxController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
+        return 0.1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -38,14 +38,15 @@ class ContactsController: BaseViewController, ContactsView {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.separatorInset.left = 0
         tableView.delegate = self
         tableView.dataSource = self
         tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
-        tableView.backgroundColor = UIColor(hex: 0xF2F2F2)
+        tableView.backgroundColor = UIColor(hex: 0xf7f7f7)
+        tableView.separatorColor = UIColor(hex: 0xF2F2F2)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
         return tableView
     } ()
     
@@ -53,7 +54,7 @@ class ContactsController: BaseViewController, ContactsView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.xpGray()
+        view.backgroundColor = UIColor(hex: 0xf7f7f7)
         view.addSubview(tableView)
         tableView.fill(in: view, bottom: UIScreen.safeBottomMargin())
         if #available(iOS 11.0, *) {
@@ -198,7 +199,7 @@ extension ContactsController: UITableViewDelegate {
  
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 8
+            return 0.1
         } else {
             return 25
         }
