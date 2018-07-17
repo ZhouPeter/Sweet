@@ -64,9 +64,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                         delegate: delegate)
             
         }
-        profile.showConversation = { [weak self] (user, buddy) in
-            self?.showConversation(user: user, buddy: buddy)
-        }
         profile.showStory = { [weak self] in
             self?.showStory()
         }
@@ -87,18 +84,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         router.present(navigation, animated: true)
         coordinator.start()
     }
-    private func showConversation(user: User, buddy: User) {
-        let coordinator = ConversationCoordinator(
-            user: user,
-            buddy: buddy,
-            router: router,
-            coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in
-            self?.removeDependency(coordinator)
-        }
-        addDependency(coordinator)
-        coordinator.start()
-    }
+   
     
     private func showStoriesPlayerView(user: User,
                                        stories: [StoryCellViewModel],
@@ -151,5 +137,18 @@ extension ProfileCoordinator: ProfileViewDelegate {
             self?.showUpdate(user: user, updateRemain: updateRemain)
         }
         router.push(aboutOutput)
+    }
+
+    func showConversation(user: User, buddy: User) {
+        let coordinator = ConversationCoordinator(
+            user: user,
+            buddy: buddy,
+            router: router,
+            coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

@@ -23,6 +23,7 @@ class UserData: Object {
     @objc dynamic var isBlock = false
     @objc dynamic var isSubscription = false
     @objc dynamic var likeCount = 0
+    @objc dynamic var common = 0
 
 
     let userType = RealmOptional<Int32>()
@@ -60,6 +61,7 @@ class UserData: Object {
         data.isBlacklisted = response.blacklist
         data.isBlock = response.blacklist
         data.isSubscription = response.subscription
+        data.common = response.common
         return data
     }
     
@@ -112,6 +114,6 @@ extension UserResponse {
         subscription = data.isSubscription
         blacklist = data.isBlacklisted
         block = data.isBlock
-        common = 0
+        common = data.common
     }
 }

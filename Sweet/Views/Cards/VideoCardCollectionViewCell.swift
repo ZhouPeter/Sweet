@@ -87,7 +87,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             }
         }
         contentLabel.lineBreakMode = .byTruncatingTail
-        contentImageView.kf.setImage(with:  viewModel.videoURL.videoThumbnail())
+        contentImageView.kf.setImage(with:  viewModel.videoPicURL)
         resetEmojiView()
         loadItemValues()
 

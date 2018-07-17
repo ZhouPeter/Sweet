@@ -73,6 +73,7 @@ enum WebAPI {
     case getVersion
     case reportUser(userID: UInt64)
     case feedback(comment: String, type: Int)
+    case cardActionLog
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -204,6 +205,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/report"
         case .feedback:
             return "/user/feedback"
+        case .cardActionLog:
+            return "/card/action/log"
         }
     }
     

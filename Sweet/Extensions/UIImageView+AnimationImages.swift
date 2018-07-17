@@ -36,7 +36,10 @@ extension UIImageView {
                     }
                 }
             }
+         
             group.notify(queue: DispatchQueue.main) {
+//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
+//                self.kf.setImage(with: url)
                 self.stopAnimating()
                 self.animationImages = images
                 self.animationDuration = animationDuration
