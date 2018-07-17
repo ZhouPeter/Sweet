@@ -41,15 +41,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-//    override var isSelected: Bool {
-//        set {}
-//        get { return super.isSelected}
-//    }
-//
-//    override var isHighlighted: Bool {
-//        set {}
-//        get { return super.isHighlighted}
-//    }
+    override var isSelected: Bool {
+        set {}
+        get { return super.isSelected}
+    }
+
+    override var isHighlighted: Bool {
+        set {}
+        get { return super.isHighlighted}
+    }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)

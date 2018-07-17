@@ -98,6 +98,7 @@ class ContactTableViewCell: UITableViewCell {
         nameCenterYConstraints?.isActive = true
         contentView.addSubview(infoLabel)
         infoLabel.align(.left, to: nameLabel)
+        infoLabel.align(.right, inset: 80)
         infoLabel.align(.bottom, to: avatarImageView)
         infoLabel.align(.right, to: contentView, inset: 30)
         contentView.addSubview(statusButton)

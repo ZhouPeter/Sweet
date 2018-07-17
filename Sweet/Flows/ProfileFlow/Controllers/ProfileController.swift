@@ -22,19 +22,18 @@ protocol ProfileView: BaseView {
     var finished: (() -> Void)? { get set }
     var user: User { get set }
     var userId: UInt64 { get set }
-    var showConversation: ((User, User) -> Void)? { get set }
     var showStory: (() -> Void)? { get set }
 }
 
 protocol ProfileViewDelegate: class {
     func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse)
+    func showConversation(user: User, buddy: User)
 }
 
 class ProfileController: BaseViewController, ProfileView {
     weak var delegate: ProfileViewDelegate?
     
     var showStory: (() -> Void)?
-    var showConversation: ((User, User) -> Void)?
     var showStoriesPlayerView: (
         (
         User,
@@ -136,6 +135,26 @@ class ProfileController: BaseViewController, ProfileView {
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
+        loadAll()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
+        if !isFirstLoad { readLocalData() }
+        if isFirstLoad { isFirstLoad = false }
+//        if userResponse == nil || !isFirstLoad {
+//            loadAll()
+//        } else {
+//            updateViewModel()
+//            tableView.reloadData()
+//            loadAll(isLoadUser: false)
+//        }
+//        if isFirstLoad { isFirstLoad = false }
     }
     
     func readLocalData() {
@@ -150,31 +169,13 @@ class ProfileController: BaseViewController, ProfileView {
     func saveUserData() {
         storage?.write({ [weak self] (realm) in
             guard let `self` = self, let userResponse = self.userResponse else { return }
-           realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
+            realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
         }) { (success) in
             if success {
                 logger.debug("用户数据保存成功")
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.tintColor = .black
-        if userResponse == nil || !isFirstLoad {
-            loadAll()
-        } else {
-            updateViewModel()
-            tableView.reloadData()
-            loadAll(isLoadUser: false)
-        }
-        if isFirstLoad { isFirstLoad = false }
-    }
-    
     private func setBackButton() {
         if navigationController?.viewControllers.count == 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -282,11 +283,13 @@ extension ProfileController {
         } else {
             userSuccess = true
         }
-        group.enter()
-        queue.async {
-            self.loadUpdateRemain(completion: { (isSuccess) in
-                group.leave()
-            })
+        if user.userId == userId {
+            group.enter()
+            queue.async {
+                self.loadUpdateRemain(completion: { (isSuccess) in
+                    group.leave()
+                })
+            }
         }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
@@ -327,7 +330,7 @@ extension ProfileController {
     
     private func sendMessage() {
         if let buddy = userResponse {
-            showConversation?(user, User(buddy))
+            delegate?.showConversation(user: user, buddy: User(buddy))
         }
     }
 

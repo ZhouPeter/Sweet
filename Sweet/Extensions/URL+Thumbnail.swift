@@ -17,7 +17,7 @@ struct ImageInfo: Codable {
 extension URL {
     func imageView2(size: CGSize) -> URL? {
         let scale = UIScreen.main.scale
-        if absoluteString.contains("?imageView2") || lastPathComponent.lowercased().hasSuffix(".gif") {
+        if absoluteString.contains("?imageView2") {
             return self
         } else {
             if size.width <= 1 || size.height <= 1 {

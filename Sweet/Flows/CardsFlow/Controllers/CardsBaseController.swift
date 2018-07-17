@@ -384,6 +384,21 @@ extension CardsBaseController {
             self?.shareCard(cardId: card.cardId)
         }
         navigationController?.pushViewController(preview, animated: true)
+        CardAction.clickUrl.actionLog(card: card)
+        CardTimerHelper.countDown(time: 10, countDownBlock: { time in
+            guard let last = self.navigationController?.viewControllers.last,
+                  let webController = last as? WebViewController,
+                  webController.urlString == card.url else {
+                CardTimerHelper.cancelTimer()
+                return
+            }
+        }) {
+            if let last = self.navigationController?.viewControllers.last,
+                let webController = last as? WebViewController,
+                webController.urlString == card.url {
+                CardAction.clickUrlBack.actionLog(card: card)
+            }
+        }
     }
 }
 // MARK: - UICollectionViewDataSource

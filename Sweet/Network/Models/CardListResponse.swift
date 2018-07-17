@@ -42,6 +42,7 @@ struct CardResponse: Codable {
     let imageList: [String]?
     let contentImages: [[ContentImage]]?
     let video: String?
+    let videoPic: String?
     var storyList: [[StoryResponse]]?
     var result: SelectResult?
     let type: UInt

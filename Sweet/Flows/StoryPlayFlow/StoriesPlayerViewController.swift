@@ -304,9 +304,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         if let touchArea = stories[currentIndex].touchArea {
             tagButton.isHidden = false
             tagButton.frame = touchArea
-            if stories[currentIndex].userId == user.userId {
-                tagButton.isHidden = true
-            }
+//            if stories[currentIndex].userId == user.userId {
+//                tagButton.isHidden = true
+//            }
         } else {
             tagButton.isHidden = true
         }
@@ -471,10 +471,8 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func didPressTag(_ sender: UIButton) {
-        if stories[currentIndex].userId != user.userId {
-            let topic = stories[currentIndex].tag
-            runStoryFlow?(topic)
-        }
+        let topic = stories[currentIndex].tag
+        runStoryFlow?(topic)
     }
     
     @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
