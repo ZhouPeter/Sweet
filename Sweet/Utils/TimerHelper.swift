@@ -7,7 +7,33 @@
 //
 
 import Foundation
-
+class CardTimerHelper {
+    static var timer: DispatchSourceTimer?
+    class func countDown(time: Int, countDownBlock: ((Int) -> Void)?, endBlock: (() -> Void)? ) {
+        let queue = DispatchQueue.global()
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        var timeout = time
+        timer?.schedule(wallDeadline: .now(), repeating: 1)
+        timer?.setEventHandler {
+            if timeout <= 0 {
+                timer?.cancel()
+                DispatchQueue.main.async {
+                    endBlock?()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    timeout -= 1
+                    countDownBlock?(timeout)
+                }
+            }
+        }
+        timer?.resume()
+    }
+    class func cancelTimer() {
+        timer?.cancel()
+        timer = nil
+    }
+}
 class TimerHelper {
     class func countDown(time: Int, countDownBlock: ((Int) -> Void)?, endBlock: (() -> Void)? ) {
         var timeout = time

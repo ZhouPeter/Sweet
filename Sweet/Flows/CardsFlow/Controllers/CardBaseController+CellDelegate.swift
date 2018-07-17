@@ -31,6 +31,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                     self.cellConfigurators[index] = configurator
                     self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     self.vibrateFeedback()
+                    CardAction.clickPreference.actionLog(card: self.cards[index])
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -124,6 +125,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.cards[index].result = response
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
+                    CardAction.clickComment.actionLog(card: self.cards[index])
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
                         let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - 40,
                                           y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
@@ -229,10 +231,14 @@ extension CardsBaseController {
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
                                           highImageViewURLs: imageURLs,
                                           shareText: shareText)
+        photoBrowserImp.lookedAllCallback = {
+            CardAction.clickAll.actionLog(card: self.cards[index])
+        }
         let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
         browser.show()
+        CardAction.clickImg.actionLog(card: cards[index])
     }
 }
 
@@ -252,6 +258,11 @@ extension CardsBaseController {
 }
 
 extension CardsBaseController: SweetPlayerViewDelegate {
+    func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
+        if state == .playedToTheEnd {
+            CardAction.playEnd.actionLog(card: cards[index])
+        }
+    }
     func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
        isVideoMuted = isMuted
     }

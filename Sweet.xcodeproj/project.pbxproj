@@ -76,6 +76,10 @@
 		580F888E20FD8867009148CC /* GIFImageMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888C20FD8867009148CC /* GIFImageMake.swift */; };
 		580F888F20FD8867009148CC /* GIFImageMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888C20FD8867009148CC /* GIFImageMake.swift */; };
 		580F889020FD8867009148CC /* GIFImageMake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F888C20FD8867009148CC /* GIFImageMake.swift */; };
+		580F889420FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
+		580F889520FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
+		580F889620FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
+		580F889720FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
 		58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD120F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
@@ -1388,6 +1392,7 @@
 		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
 		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
 		580F888C20FD8867009148CC /* GIFImageMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImageMake.swift; sourceTree = "<group>"; };
+		580F889320FDF104009148CC /* CardActionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardActionEnum.swift; sourceTree = "<group>"; };
 		58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
 		58155E11209175AF00ADEFFB /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
@@ -2160,6 +2165,7 @@
 		AC525ABB208DF3C2001070B2 /* CardsFlow */ = {
 			isa = PBXGroup;
 			children = (
+				580F889320FDF104009148CC /* CardActionEnum.swift */,
 				AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */,
 				584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */,
 				584CDED920D1032F00523406 /* SubCardsCoordinator.swift */,
@@ -3160,6 +3166,7 @@
 				AC64646620E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				580F889420FDF104009148CC /* CardActionEnum.swift in Sources */,
 				AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58816D0E20C671040032D103 /* WXApi+Message.swift in Sources */,
@@ -3484,6 +3491,7 @@
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
+				580F889620FDF104009148CC /* CardActionEnum.swift in Sources */,
 				5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				583BC79120CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
@@ -3746,6 +3754,7 @@
 				581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */,
+				580F889720FDF104009148CC /* CardActionEnum.swift in Sources */,
 				589E6BC620A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58461D3420C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -4102,6 +4111,7 @@
 				AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
+				580F889520FDF104009148CC /* CardActionEnum.swift in Sources */,
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				58816D0F20C671040032D103 /* WXApi+Message.swift in Sources */,
