@@ -92,13 +92,14 @@ class ContactTableViewCell: UITableViewCell {
         avatarImageView.addSubview(avatarLabel)
         avatarLabel.fill(in: avatarImageView)
         contentView.addSubview(nameLabel)
-        nameLabel.pin(.right, to: avatarImageView, spacing: 10)
+        nameLabel.align(.left, to: contentView, inset: 66)
         nameCenterYConstraints = nameLabel.centerYAnchor.constraint(
             equalTo: avatarImageView.centerYAnchor, constant: -10)
         nameCenterYConstraints?.isActive = true
         contentView.addSubview(infoLabel)
-        infoLabel.pin(.right, to: avatarImageView, spacing: 10)
+        infoLabel.align(.left, to: nameLabel)
         infoLabel.align(.bottom, to: avatarImageView)
+        infoLabel.align(.right, to: contentView, inset: 30)
         contentView.addSubview(statusButton)
         statusButton.constrain(width: 62, height: 28)
         statusButton.centerY(to: contentView)
@@ -107,7 +108,6 @@ class ContactTableViewCell: UITableViewCell {
         selectButton.constrain(width: 22, height: 22)
         selectButton.centerY(to: contentView)
         selectButton.align(.right, inset: 12)
-        
     }
     
     func update(viewModel: ContactViewModel) {
