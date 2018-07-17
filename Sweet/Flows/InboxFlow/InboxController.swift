@@ -13,6 +13,7 @@ import SwipeCellKit
 final class InboxController: BaseViewController, InboxView {
     weak var delegate: InboxViewDelegate?
     private var conversations = [Conversation]()
+    private let headerView = WarningHeaderView()
     
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
@@ -38,6 +39,7 @@ final class InboxController: BaseViewController, InboxView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 40)
     }
     
     func didUpdateConversations(_ conversations: [Conversation]) {
@@ -59,6 +61,20 @@ final class InboxController: BaseViewController, InboxView {
             return $0.user.nickname > $1.user.nickname
         })
         tableView.reloadData()
+    }
+    
+    func didUpdateUserOnlineState(isUserOnline: Bool) {
+        let insets: UIEdgeInsets
+        if isUserOnline {
+            tableView.tableHeaderView = nil
+            insets = UIEdgeInsets(top: -headerView.bounds.height, left: 0, bottom: 0, right: 0)
+        } else {
+            tableView.tableHeaderView = headerView
+            insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.tableView.contentInset = insets
+        }, completion: nil)
     }
 }
 

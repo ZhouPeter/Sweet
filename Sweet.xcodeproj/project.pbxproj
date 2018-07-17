@@ -823,6 +823,10 @@
 		AC4D091A20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
 		AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
 		AC4D091C20B7BE3A007686EB /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */; };
+		AC51D93620FDE964004A52BA /* WarningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51D93520FDE964004A52BA /* WarningHeaderView.swift */; };
+		AC51D93720FDE964004A52BA /* WarningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51D93520FDE964004A52BA /* WarningHeaderView.swift */; };
+		AC51D93820FDE964004A52BA /* WarningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51D93520FDE964004A52BA /* WarningHeaderView.swift */; };
+		AC51D93920FDE964004A52BA /* WarningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC51D93520FDE964004A52BA /* WarningHeaderView.swift */; };
 		AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
 		AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC525A89208D87CB001070B2 /* MainCoordinator.swift */; };
@@ -1610,6 +1614,7 @@
 		AC4D090D20B7B1AC007686EB /* TopicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListView.swift; sourceTree = "<group>"; };
 		AC4D091320B7B774007686EB /* UIButton+Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Topic.swift"; sourceTree = "<group>"; };
 		AC4D091820B7BE3A007686EB /* TopicHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHeaderView.swift; sourceTree = "<group>"; };
+		AC51D93520FDE964004A52BA /* WarningHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningHeaderView.swift; sourceTree = "<group>"; };
 		AC525A89208D87CB001070B2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		AC525A94208DB1E9001070B2 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		AC525AA0208DD6E9001070B2 /* StoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCoordinator.swift; sourceTree = "<group>"; };
@@ -2021,6 +2026,7 @@
 				ACDB24E620BED0DE0039368E /* ConversationCell.swift */,
 				ACDB24DD20BECFD50039368E /* InboxView.swift */,
 				AC525AB1208DD714001070B2 /* InboxController.swift */,
+				AC51D93520FDE964004A52BA /* WarningHeaderView.swift */,
 			);
 			path = InboxFlow;
 			sourceTree = "<group>";
@@ -3405,6 +3411,7 @@
 				58F4074620B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				58BD52912088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				AC1778CF20BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
+				AC51D93620FDE964004A52BA /* WarningHeaderView.swift in Sources */,
 				58BD52EB208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				AC4D090E20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B3208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,
@@ -3644,6 +3651,7 @@
 				AC841215208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC616F9C20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
+				AC51D93820FDE964004A52BA /* WarningHeaderView.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACB5794020F336FE006D597E /* BeautyFilter.m in Sources */,
@@ -3914,6 +3922,7 @@
 				AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */,
+				AC51D93920FDE964004A52BA /* WarningHeaderView.swift in Sources */,
 				ACEC5C3720EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
@@ -4350,6 +4359,7 @@
 				58F4074720B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				58BD52922088478B00F7C3E1 /* UIView+Round.swift in Sources */,
 				AC1778D020BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
+				AC51D93720FDE964004A52BA /* WarningHeaderView.swift in Sources */,
 				58BD52EC208DBC0A00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				AC4D090F20B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58BD52B4208880DA00F7C3E1 /* SignUpEnrollmentController.swift in Sources */,

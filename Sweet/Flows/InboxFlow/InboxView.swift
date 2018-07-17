@@ -12,6 +12,7 @@ protocol InboxView: BaseView {
     var delegate: InboxViewDelegate? { get set }
     
     func didUpdateConversations(_ conversations: [Conversation])
+    func didUpdateUserOnlineState(isUserOnline: Bool)
 }
 
 protocol InboxViewDelegate: class {
