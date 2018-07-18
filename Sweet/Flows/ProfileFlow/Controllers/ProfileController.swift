@@ -115,6 +115,8 @@ class ProfileController: BaseViewController, ProfileView {
         imageView.clipsToBounds = true
         imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         view.addSubview(imageView)
+        view.layer.cornerRadius = 15
+        view.clipsToBounds = true
         return view
     }()
     
@@ -408,7 +410,19 @@ extension ProfileController {
 
 
 extension ProfileController: ActionsControllerDelegate {
-    func actionsScrollViewDidScoll(scrollView: UIScrollView) {
+    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView) {
+//        let contentHeight = scrollView.contentSize.height
+//        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
+//            return
+//        } else {
+//            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
+//                                 244 - UIScreen.navBarHeight())
+//            tableView.contentOffset.y = newOffsetY
+//            scrollView.contentOffset.y = contentHeight - scrollView.frame.height
+//        }
+    }
+    
+    func actionsScrollViewDidScroll(scrollView: UIScrollView) {
         navigationItem.titleView = nil
         if tableView.contentOffset.y < 244 - UIScreen.navBarHeight() {
             let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,

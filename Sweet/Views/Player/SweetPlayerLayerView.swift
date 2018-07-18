@@ -265,7 +265,7 @@ class SweetPlayerLayerView: UIView {
     fileprivate func addPlayerNotifications() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(moviePlayDidEnd),
+            selector: #selector(moviePlayDidEnd(_:)),
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil)
         NotificationCenter.default.addObserver(
@@ -445,21 +445,25 @@ class SweetPlayerLayerView: UIView {
             }
         }
     }
-    
-    // MARK: - Notification Event
-    @objc fileprivate func moviePlayDidEnd() {
+    fileprivate func moviePlayDidEnd() {
         if state != .playedToTheEnd {
             if let playerItem = playerItem {
                 delegate?.sweetPlayer(player: self,
-                                   playTimeDidChange: CMTimeGetSeconds(playerItem.duration),
-                                   totalTime: CMTimeGetSeconds(playerItem.duration))
+                                      playTimeDidChange: CMTimeGetSeconds(playerItem.duration),
+                                      totalTime: CMTimeGetSeconds(playerItem.duration))
             }
-            
             self.state = .playedToTheEnd
             self.isPlaying = false
             self.playDidEnd = true
             self.timer?.invalidate()
         }
+    }
+    // MARK: - Notification Event
+    @objc fileprivate func moviePlayDidEnd(_ noti: Notification) {
+        guard let object = noti.object,
+            let item = object as? AVPlayerItem,
+            item == playerItem else { return }
+       moviePlayDidEnd()
     }
     
     /**

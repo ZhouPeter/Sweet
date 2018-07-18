@@ -22,13 +22,14 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }()
     private var token: NSKeyValueObservation?
     
-    private lazy var storyImageView: UIImageView = {
+    lazy var storyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         token = imageView.observe(\.isAnimating, options: [.new], changeHandler: { (object, change) in
             print(change.newValue ?? "")
         })
+        imageView.isHighlighted = false
         return imageView
     }()
     

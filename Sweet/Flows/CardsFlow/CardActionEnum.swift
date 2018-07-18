@@ -25,14 +25,16 @@ enum CardAction: String {
                                     preferenceId: preferenceId)
     }
     
-    func actionLog(card: CardResponse) {
+    func actionLog(card: CardResponse, completion: ((_ isSuccess: Bool) -> Void)? = nil) {
         let actionApi = makeActionLogWebApi(card: card)
         web.request(actionApi) { (result) in
             switch result {
             case .success:
-                logger.debug(self.rawValue, " actionLog success")
+                completion?(true)
+                logger.debug(self.rawValue, "actionLog success")
             case let .failure(error):
-                logger.debug(error, self.rawValue + " actionLog failure")
+                completion?(false)
+                logger.debug(error, self.rawValue + "actionLog failure")
             }
         }
     }
