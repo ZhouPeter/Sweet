@@ -33,26 +33,17 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     private var thumbnaiImageViews: [UIImageView]
     private var highImageViewURLs: [URL]
     private var shareText: String?
-    private var lookedIndexs: [Int] = [Int]()
-    var lookedAllCallback: (() -> Void)?
     init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL], shareText: String? = nil) {
         self.thumbnaiImageViews = thumbnaiImageViews
         self.highImageViewURLs = highImageViewURLs
         self.shareText = shareText
     }
-    func photoBrowser(_ photoBrowser: PhotoBrowser, didDismissWithIndex index: Int, image: UIImage?) {
-        if lookedIndexs.count == highImageViewURLs.count {
-            lookedAllCallback?()
-        }
-    }
+    
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
         return thumbnaiImageViews[index].image
     }
 
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {
-        if lookedAllCallback != nil, !lookedIndexs.contains(index) {
-            lookedIndexs.append(index)
-        }
         return thumbnaiImageViews[index]
     }
     

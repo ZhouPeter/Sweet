@@ -231,12 +231,10 @@ extension CardsBaseController {
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
                                           highImageViewURLs: imageURLs,
                                           shareText: shareText)
-        photoBrowserImp.lookedAllCallback = {
-            CardAction.clickAll.actionLog(card: self.cards[index])
-        }
         let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
+        browser.plugins.append(CustomChangeBrowerPlugin(card: cards[index]))
         browser.show()
         CardAction.clickImg.actionLog(card: cards[index])
     }

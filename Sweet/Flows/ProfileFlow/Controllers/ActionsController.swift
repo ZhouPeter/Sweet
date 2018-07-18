@@ -65,6 +65,7 @@ class ActionsController: PageboyViewController {
         delegate = self
         pageControllers[0].loadRequest()
     }
+
 }
 extension ActionsController: ActivitiesControllerDelegate, StoriesControllerDelegate {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView) {
