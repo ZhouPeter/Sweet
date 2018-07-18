@@ -10,7 +10,8 @@ import Foundation
 import JXPhotoBrowser
 import PKHUD
 import SwiftyUserDefaults
-
+import Photos
+import Kingfisher
 class CustomPhotoBrowser: PhotoBrowser {
     private var backButton: UIButton = {
         let button = UIButton()
@@ -70,6 +71,13 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
             photoBrowser.present(controller, animated: true, completion: nil)
         }
         let downloadAction = UIAlertAction.makeAlertAction(title: "保存到手机", style: .default) { (_) in
+//            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//            PHPhotoLibrary.shared().performChanges({
+//                
+//                PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL:  )
+//            }, completionHandler: { (isSuccess, error) in
+//                
+//            })
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)

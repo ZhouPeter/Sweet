@@ -89,6 +89,7 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 protocol StoriesControllerDelegate: NSObjectProtocol {
     func storiesScrollViewDidScroll(scrollView: UIScrollView)
+    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView)
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
     
@@ -150,7 +151,15 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+//        for cell in collectionView.visibleCells {
+//            if let cell = cell as? StoryCollectionViewCell {
+//                cell.storyImageView.startAnimating()
+//            }
+//        }
         self.collectionView.reloadData()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func loadRequest() {
@@ -166,6 +175,9 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                     self.reviewViewModels()
                     self.collectionView.contentOffset = .zero
                     self.collectionView.reloadData()
+                    self.collectionView.performBatchUpdates(nil, completion: { (_) in
+                        self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView)
+                    })
                 case let .failure(error):
                     logger.error(error)
                 }
