@@ -14,6 +14,7 @@ final class StoryGenerator {
     private var writer: GPUImageMovieWriter?
     
     func generateImage(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
+        logger.debug(fileURL)
         DispatchQueue.global().async {
             guard let image = UIImage(contentsOfFile: fileURL.path) else {
                 DispatchQueue.main.async { callback(nil) }

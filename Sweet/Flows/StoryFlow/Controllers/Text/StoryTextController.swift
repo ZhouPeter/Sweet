@@ -126,6 +126,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     @objc private func didPressFinishButton() {
         finishButton.alpha = 0
         closeButton.alpha = 0
+        editButton.alpha = 0
         var filename: String?
         let image = view.screenshot(afterScreenUpdates: true)
         if let snap = image {

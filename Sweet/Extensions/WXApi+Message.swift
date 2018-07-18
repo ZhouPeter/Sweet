@@ -17,7 +17,7 @@ extension WXApi {
         let message = WXMediaMessage()
         let imageWidth: CGFloat = 50
         let thumbnailSize = CGSize(width: imageWidth, height: image.size.height / image.size.width * imageWidth)
-        let thumbImage = image.reSize(newSize: thumbnailSize, interpolationQuality: .medium)
+        let thumbImage = image.resize(newSize: thumbnailSize, interpolationQuality: .medium)
         message.setThumbImage(thumbImage)
         let obj = WXImageObject()
         obj.imageData = UIImageJPEGRepresentation(image, 0.7)

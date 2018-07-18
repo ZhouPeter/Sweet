@@ -290,7 +290,8 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     @objc private func didPressFinishButton() {
         previewController.stopPreview()
-        let image = editContainerView.screenshot()
+        let size = CGSize(width: 720, height: 1280)
+        let image = editContainerView.screenshot()?.scaleAndCropImage(toSize: size)
         let filterName = previewController.currentFilterName()
         let overlayFilename = image?.writeToCache(withAlpha: true)?.lastPathComponent
         if isPhoto {
