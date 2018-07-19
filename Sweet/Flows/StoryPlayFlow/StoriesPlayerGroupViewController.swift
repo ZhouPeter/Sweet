@@ -13,12 +13,10 @@ import Kingfisher
 import SwiftyUserDefaults
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
     func delStory(storyId: UInt64)
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {}
     func delStory(storyId: UInt64) {}
 }
 
@@ -44,13 +42,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     var user: User
-    var currentIndex: Int {
-        didSet {
-            delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                                fromCardId: fromCardId,
-                                storyGroupIndex: currentIndex)
-        }
-    }
+    var currentIndex: Int
     var storiesGroup: [[StoryCellViewModel]]
     var currentStart = 0
     var fromCardId: String?
@@ -121,9 +113,6 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.setContentOffset(CGPoint(x: UIScreen.mainWidth() * CGFloat(currentIndex),
                                                 y: 0),
                                         animated: true)
-        delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                            fromCardId: fromCardId,
-                            storyGroupIndex: currentIndex)
     }
     
     override func viewDidAppear(_ animated: Bool) {
