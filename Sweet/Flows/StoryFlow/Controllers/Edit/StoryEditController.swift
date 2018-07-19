@@ -303,10 +303,6 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         } else {
             var pokeCenter: CGPoint?
             let type: StoryType
-            var contentRect: CGRect?
-            if self.textController.hasText || self.textController.topic != nil {
-                contentRect = self.textController.boundingRect
-            }
             if !self.pokeView.isHidden {
                 type = .poke
                 let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / self.view.bounds.width
@@ -317,12 +313,11 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
                 )
             } else {
                 type = .video
-
             }
             var draft = StoryDraft(filename: fileURL.lastPathComponent, storyType: type, date: Date())
             draft.topic = topic
             draft.pokeCenter = pokeCenter
-            draft.contentRect = contentRect
+            draft.touchPoints = textController.makeTouchArea()
             draft.overlayFilename = overlayFilename
             draft.filterFilename = filterName
             finish(with: draft)

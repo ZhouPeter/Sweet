@@ -76,7 +76,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textViewContainer: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(red: 0.1, green: 0.2, blue: 0.1, alpha: 0.2)
         self.pinch.delegate = self
         view.addGestureRecognizer(pinch)
         self.rotation.delegate = self
@@ -177,6 +177,54 @@ final class StoryTextEditController: UIViewController {
             self.view.alpha = 1
             self.clear()
         })
+    }
+    
+//    private lazy var debugAreaLayer: CAShapeLayer = {
+//        let layer = CAShapeLayer()
+//        layer.fillColor = UIColor.brown.cgColor
+//        layer.frame = self.view.bounds
+//        self.view.layer.insertSublayer(layer, at: 0)
+//        return layer
+//    } ()
+
+    func makeTouchArea() -> [CGPoint]? {
+        if topic == nil { return nil }
+        let transform = textTransform?.makeCGAffineTransform() ?? CGAffineTransform.identity
+        let topicOffset = CGPoint(x: topicButton.center.x - textView.center.x,
+                                  y: topicButton.center.y - textView.center.y)
+        var center = textView.center
+        center.x += (textTransform?.translation.x ?? 0)
+        center.y += (textTransform?.translation.y ?? 0)
+        center = center.applying(transform.inverted())
+        center.x += topicOffset.x
+        center.y += topicOffset.y
+        let halfWidth = topicButton.bounds.width * 0.5
+        let halfHeight = topicButton.bounds.height * 0.5
+        let topLeft = CGPoint(
+            x: center.x - halfWidth,
+            y: center.y - halfHeight
+        ).applying(transform)
+        let topRight = CGPoint(
+            x: center.x + halfWidth,
+            y: center.y - halfHeight
+            ).applying(transform)
+        let bottomLeft = CGPoint(
+            x: center.x - halfWidth,
+            y: center.y + halfHeight
+            ).applying(transform)
+        let bottomRight = CGPoint(
+            x: center.x + halfWidth,
+            y: center.y + halfHeight
+            ).applying(transform)
+        let path = UIBezierPath()
+        path.move(to: topLeft)
+        path.addLine(to: topRight)
+        path.addLine(to: bottomRight)
+        path.addLine(to: bottomLeft)
+        path.addLine(to: topLeft)
+        path.close()
+//        debugAreaLayer.path = path.cgPath
+        return [topLeft, topRight, bottomRight, bottomLeft]
     }
     
     // MARK: - Private
