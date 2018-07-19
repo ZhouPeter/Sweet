@@ -159,7 +159,7 @@ class InputTextView: UIView {
     }()
     private let keyboardObserver = KeyboardObserver()
     private var senderButtonBottomConstraint: NSLayoutConstraint?
-
+    private var downPan: CustomPanGestureRecognizer!
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -168,6 +168,8 @@ class InputTextView: UIView {
             self.setPlaceholder(isHidden: textView.text != "")
             self.contentSizeToFit()
         })
+        downPan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(downPanAction(_:)))
+        addGestureRecognizer(downPan)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -279,6 +281,19 @@ extension InputTextView {
     }
     @objc private func cancelAction(_ sender: UIButton) {
         delegate?.removeInputTextView()
+    }
+    
+    @objc private func downPanAction(_ gesture: CustomPanGestureRecognizer) {
+        let translation = gesture.translation(in: nil)
+        let progress = translation.y / bounds.height
+        switch gesture.state {
+        case .began: break
+        case .changed: break
+        default:
+            if progress + gesture.velocity(in: nil).y / bounds.height > 0.3 {
+                delegate?.removeInputTextView()
+            }
+        }
     }
 }
 

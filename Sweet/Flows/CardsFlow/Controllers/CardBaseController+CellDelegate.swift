@@ -184,32 +184,32 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
-        if self.cards[index].cardEnumType == .story {
-            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case .success:
-                    if storyGroupIndex > 3 { return }
-                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
-                    let storys = self.cards[index].storyList![storyGroupIndex]
-                    var newStorys = [StoryResponse]()
-                    for var story in storys {
-                        story.read = true
-                        newStorys.append(story)
-                    }
-                    self.cards[index].storyList![storyGroupIndex] = newStorys
-                    var viewModel = StoriesCardViewModel(model: self.cards[index])
-                    viewModel.storyCellModels[storyGroupIndex].isRead = true
-                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
-                    self.cellConfigurators[index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-                case let .failure(error):
-                    logger.error(error)
-                }
-            }
-        }
-    }
+//    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
+//        if self.cards[index].cardEnumType == .story {
+//            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
+//                guard let `self` = self else { return }
+//                switch result {
+//                case .success:
+//                    if storyGroupIndex > 3 { return }
+//                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
+//                    let storys = self.cards[index].storyList![storyGroupIndex]
+//                    var newStorys = [StoryResponse]()
+//                    for var story in storys {
+//                        story.read = true
+//                        newStorys.append(story)
+//                    }
+//                    self.cards[index].storyList![storyGroupIndex] = newStorys
+//                    var viewModel = StoriesCardViewModel(model: self.cards[index])
+//                    viewModel.storyCellModels[storyGroupIndex].isRead = true
+//                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
+//                    self.cellConfigurators[index] = configurator
+//                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+//                case let .failure(error):
+//                    logger.error(error)
+//                }
+//            }
+//        }
+//    }
     
 }
 // MARK: - ActivitiesCardCollectionViewCellDelegate

@@ -35,21 +35,37 @@ class ContactsController: BaseViewController, ContactsView {
     
     private var tableViewFooterView =
         ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
-    
+    private lazy var tableViewHeaderView: UIView = {
+        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainWidth(), height: 44))
+        searchController.searchBar.frame = view.bounds
+        view.addSubview(searchController.searchBar)
+        return view
+    }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.separatorInset.left = 60
         tableView.delegate = self
         tableView.dataSource = self
         tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.tableFooterView = tableViewFooterView
+        tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = UIColor(hex: 0xf7f7f7)
         tableView.separatorColor = UIColor(hex: 0xF2F2F2)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 0)
         return tableView
     } ()
-    
+    private lazy var searchController: UISearchController = {
+        let resultController = ContactSearchController()
+        let searchController = UISearchController(searchResultsController: resultController)
+        searchController.searchResultsUpdater = resultController
+        searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
+        searchController.searchBar.placeholder = "搜索人名、手机号"
+        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.setCancelText(text: "返回", textColor: .black)
+        searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
+        return searchController
+    }()
     // MARK: - Private
     
     override func viewDidLoad() {
@@ -199,7 +215,7 @@ extension ContactsController: UITableViewDelegate {
  
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 0.1
+            return CGFloat.leastNormalMagnitude
         } else {
             return 25
         }
@@ -233,8 +249,10 @@ extension ContactsController: UITableViewDataSource {
             withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
         if indexPath.section == 0 {
             cell.updateCategroy(viewModel: categoryViewModels[indexPath.row])
+            cell.accessoryType = .disclosureIndicator
         } else {
             cell.update(viewModel: viewModelsGroup[indexPath.section - 1][indexPath.row])
+            cell.accessoryType = .none
         }
         return cell
     }

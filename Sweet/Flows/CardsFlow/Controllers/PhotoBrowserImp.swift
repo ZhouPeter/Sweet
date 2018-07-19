@@ -12,6 +12,7 @@ import PKHUD
 import SwiftyUserDefaults
 import Photos
 import Kingfisher
+import MobileCoreServices
 class CustomPhotoBrowser: PhotoBrowser {
     private var backButton: UIButton = {
         let button = UIButton()
@@ -32,8 +33,8 @@ class CustomPhotoBrowser: PhotoBrowser {
 }
 class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     private var thumbnaiImageViews: [UIImageView]
-    private var highImageViewURLs: [URL]
     private var shareText: String?
+    var highImageViewURLs: [URL]
     init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL], shareText: String? = nil) {
         self.thumbnaiImageViews = thumbnaiImageViews
         self.highImageViewURLs = highImageViewURLs
@@ -71,32 +72,16 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
             photoBrowser.present(controller, animated: true, completion: nil)
         }
         let downloadAction = UIAlertAction.makeAlertAction(title: "保存到手机", style: .default) { (_) in
-//            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//            PHPhotoLibrary.shared().performChanges({
-//                
-//                PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL:  )
-//            }, completionHandler: { (isSuccess, error) in
-//                
-//            })
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            self.saveImage(url: url)
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alert.addAction(shareAction)
         alert.addAction(downloadAction)
         alert.addAction(cancelAction)
         photoBrowser.present(alert, animated: true, completion: nil)
+        
     }
-    
-    @objc func image(_ image: UIImage?,
-                             didFinishSavingWithError error: Error?,
-                             contextInfo: UnsafeMutableRawPointer?) {
-        if error == nil {
-            PKHUD.toast(message: "保存成功")
-        } else {
-            PKHUD.toast(message: "保存失败")
-        }
-    }
-    
+
     private func sendImage(url: String, text: String, userIds: [UInt64]) {
         if let IDString = Defaults[.userID], let from = UInt64(IDString) {
             userIds.forEach {
@@ -108,16 +93,41 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     }
 }
 
+extension PhotoBrowserImp {
+    func saveImage(url: String) {
+        PHPhotoLibrary.shared().performChanges({
+            let  fileURL = URL(fileURLWithPath: ImageCache.default.cachePath(forKey: url))
+            let fileManager = FileManager.default
+            guard fileManager.fileExists(atPath: fileURL.path) else { return }
+            guard let data = try? Data(contentsOf: fileURL) else { return }
+            //            let tempPath = NSTemporaryDirectory().appending("TempImageToSaveToPhoto.jpg")
+            //            let tempUrl = URL(fileURLWithPath: tempPath)
+            //            try? data.write(to: tempUrl)
+            //            PHAssetCreationRequest.forAsset().addResource(with: .photo, fileURL: tempUrl, options: nil)
+            
+            PHAssetCreationRequest.forAsset().addResource(with: .photo, data: data, options: nil)
+        }, completionHandler: { (success, error) in
+            DispatchQueue.main.async {
+                if error == nil {
+                    PKHUD.toast(message: "保存成功")
+                } else {
+                    PKHUD.toast(message: "保存失败")
+                }
+            }
+        })
+    }
+}
+
 class AvatarPhotoBrowserImp: PhotoBrowserImp {
     
     override func photoBrowser(_ photoBrowser: PhotoBrowser, didLongPressForIndex index: Int, image: UIImage) {
-        showAlertSheet(photoBrowser: photoBrowser, image: image)
+        showAlertSheet(photoBrowser: photoBrowser, image: image, url: highImageViewURLs[index].absoluteString)
     }
     
-    private func showAlertSheet(photoBrowser: PhotoBrowser, image: UIImage) {
+    private func showAlertSheet(photoBrowser: PhotoBrowser, image: UIImage, url: String) {
         let alert = UIAlertController()
         let downloadAction = UIAlertAction.makeAlertAction(title: "保存到手机", style: .default) { (_) in
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            self.saveImage(url: url)
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alert.addAction(downloadAction)
