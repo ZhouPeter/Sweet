@@ -67,7 +67,7 @@ final class InboxController: BaseViewController, InboxView {
         let insets: UIEdgeInsets
         if isUserOnline {
             tableView.tableHeaderView = nil
-            insets = UIEdgeInsets(top: -headerView.bounds.height, left: 0, bottom: 0, right: 0)
+            insets = UIEdgeInsets(top: -headerView.bounds.height + 5, left: 0, bottom: 0, right: 0)
         } else {
             tableView.tableHeaderView = headerView
             insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
