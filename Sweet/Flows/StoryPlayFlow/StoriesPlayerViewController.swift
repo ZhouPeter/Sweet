@@ -37,7 +37,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
     var runProfileFlow: ((User, UInt64) -> Void)?
-    var pan: UIPanGestureRecognizer?
+    
     var isVisual = true
     var user: User
     var player: AVPlayer?
@@ -72,6 +72,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     private var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
+    private var uvViewController: StoryUVController!
     private lazy var topContentView: UIView = {
         let view = UIView()
         return view
@@ -126,9 +127,9 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         if isSelf {
-//            bottomButton.setImage(#imageLiteral(resourceName: "History"), for: .normal)
-            bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
-            bottomButton.addTarget(self, action: #selector(openStoryHistory(sender:)), for: .touchUpInside)
+            bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+            bottomButton.setImage(#imageLiteral(resourceName: "UvOpen"), for: .selected)
+            bottomButton.addTarget(self, action: #selector(showStoryHistory(sender:)), for: .touchUpInside)
         } else {
             bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             bottomButton.setImage(#imageLiteral(resourceName: "StoryLike"), for: .disabled)
@@ -152,6 +153,8 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     }()
 
     private var pokeLongPress: UILongPressGestureRecognizer!
+    private var upPan: CustomPanGestureRecognizer!
+
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -181,6 +184,8 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         super.viewDidLoad()
         pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
         view.addGestureRecognizer(pokeLongPress)
+        upPan = CustomPanGestureRecognizer(orientation: .up, target: self, action: #selector(upPanAction(_:)))
+        view.addGestureRecognizer(upPan)
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
@@ -287,7 +292,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
         setUserData()
         if isSelf {
-            bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
+            bottomButton.isSelected = false
         } else {
             bottomButton.isEnabled = !stories[currentIndex].like
         }
@@ -304,9 +309,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         if let touchArea = stories[currentIndex].touchArea {
             tagButton.isHidden = false
             tagButton.frame = touchArea
-//            if stories[currentIndex].userId == user.userId {
-//                tagButton.isHidden = true
-//            }
         } else {
             tagButton.isHidden = true
         }
@@ -430,7 +432,7 @@ extension StoriesPlayerViewController {
         timerNumber = 0
         imageTimer?.invalidate()
     }
-
+   
 }
 
 // MARK: - Privates
@@ -444,7 +446,24 @@ extension StoriesPlayerViewController {
         currentIndex += 1
         reloadPlayer()
     }
-    
+    private func sendMessage() {
+        pause()
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.startEditing(isStarted: true)
+    }
+    private func showStoryHistory() {
+        pause()
+        topContentView.isHidden = true
+        bottomButton.isSelected = true
+        let storyId = stories[currentIndex].storyId
+        uvViewController = StoryUVController(storyId: storyId, user: user)
+        uvViewController.runProfileFlow = runProfileFlow
+        uvViewController.delegate = self
+        add(childViewController: uvViewController)
+        view.tag = 100
+    }
     func play() {
         web.request(.storyRead(storyId: stories[currentIndex].storyId, fromCardId: nil)) { (_) in }
         if stories[currentIndex].videoURL != nil && stories[currentIndex].type != .poke {
@@ -487,32 +506,33 @@ extension StoriesPlayerViewController {
         }
     }
     
+    @objc private func upPanAction(_ gesture: CustomPanGestureRecognizer) {
+        let translation = gesture.translation(in: nil)
+        let progress = translation.y / view.bounds.height
+        switch gesture.state {
+        case .began: break
+        case .changed: break
+        default:
+            if progress + gesture.velocity(in: nil).y / view.bounds.height < -0.3 {
+                if isSelf {
+                    showStoryHistory()
+                } else {
+                    sendMessage()
+                }
+            }
+        }
+    }
+    
     @objc private func dismissAction(sender: UIButton) {
         dismiss()
     }
     
-    @objc private func openStoryHistory(sender: UIButton) {
-        pause()
-        topContentView.isHidden = true
-        bottomButton.isHidden = true
-        let storyId = stories[currentIndex].storyId
-        let uvViewController = StoryUVController(storyId: storyId, user: user)
-        uvViewController.runProfileFlow = runProfileFlow
-        uvViewController.delegate = self
-        addChildViewController(uvViewController)
-        uvViewController.didMove(toParentViewController: self)
-        guard let childView = uvViewController.view else { return }
-        view.tag = 100
-        view.addSubview(childView)
-        uvViewController.view.frame = view.bounds
+    @objc private func showStoryHistory(sender: UIButton) {
+       showStoryHistory()
     }
     
     @objc private func sendMessage(sender: UIButton) {
-        pause()
-        let window = UIApplication.shared.keyWindow!
-        window.addSubview(inputTextView)
-        inputTextView.fill(in: window)
-        inputTextView.startEditing(isStarted: true)
+        sendMessage()
     }
     
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
@@ -838,7 +858,7 @@ extension StoriesPlayerViewController {
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
         topContentView.isHidden = false
-        bottomButton.isHidden = false
+        bottomButton.isSelected = false
         play()
     }
 }
