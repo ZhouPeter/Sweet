@@ -30,14 +30,16 @@
 @property (strong, nonatomic) LookupFilter *foreFilter;
 @property (assign, nonatomic) BOOL isFilterSwitching;
 @property (strong, nonatomic) NSMutableArray <NSString *> *filterNames;
+@property (assign, nonatomic) BOOL isScaleFilled;
 
 @end
 
 @implementation StoryFilterPreviewController
 
-- (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto {
+- (instancetype)initWithFileURL:(NSURL *)url isPhoto:(BOOL)isPhoto isScaleFilled:(BOOL)isScaleFilled {
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.isPhoto = isPhoto;
+        self.isScaleFilled = isScaleFilled;
         if (isPhoto) {
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
@@ -88,14 +90,19 @@
 #pragma mark - Private
 
 - (void)setupPreviews {
+    GPUImageFillModeType fillMode =
+    self.isScaleFilled ? kGPUImageFillModePreserveAspectRatioAndFill : kGPUImageFillModePreserveAspectRatio;
+    
     self.backPreview = [[GPUImageView alloc] initWithFrame:self.view.bounds];
     self.backPreview.userInteractionEnabled = NO;
-    self.backPreview.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+    self.backPreview.fillMode = fillMode;
+    [self.backPreview setBackgroundColorRed:0 green:0 blue:0 alpha:1];
     [self.view addSubview:self.backPreview];
     
     self.forePreview = [[GPUImageView alloc] initWithFrame:self.view.bounds];
     self.forePreview.userInteractionEnabled = NO;
-    self.forePreview.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+    self.forePreview.fillMode = fillMode;
+    [self.forePreview setBackgroundColorRed:0 green:0 blue:0 alpha:1];
     [self.view addSubview:self.forePreview];
     
     self.maskLayer = [CAShapeLayer layer];

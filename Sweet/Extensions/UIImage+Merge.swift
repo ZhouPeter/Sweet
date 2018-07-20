@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     func merged(_ image: UIImage, backgroundColor: UIColor?, size: CGSize) -> UIImage? {
-        guard let newImage = scaled(size.width / self.size.width) else {
+        guard let newImage = scaled(min(size.width / self.size.width, size.height / self.size.height)) else {
             return nil
         }
         UIGraphicsBeginImageContextWithOptions(size, false, 1)

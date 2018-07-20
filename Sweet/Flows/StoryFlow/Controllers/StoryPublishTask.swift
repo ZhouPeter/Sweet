@@ -58,7 +58,7 @@ class StoryPublishTask: AsynchronousOperation {
         self.filter = filter
         let handleOutput: ((URL?) -> Void) = { [weak self] url in
             guard let url = url, let `self` = self else { return }
-            logger.debug(url)
+            logger.debug(self.draft.fileURL, url)
             self.draft.generatedFilename = url.lastPathComponent
             self.storage.write({ (realm) in
                 realm.add(StoryDraftData.data(with: self.draft), update: true)

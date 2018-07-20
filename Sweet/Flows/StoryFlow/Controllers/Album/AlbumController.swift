@@ -11,11 +11,11 @@ import Photos
 
 protocol AlbumView: BaseView {
     var onCancelled: (() -> Void)? { get set }
-    var onFinished: ((UIImage) -> Void)? { get set }
+    var onFinished: ((URL, Bool) -> Void)? { get set }
 }
 
 final class AlbumController: UIViewController, AlbumView {
-    var onFinished: ((UIImage) -> Void)?
+    var onFinished: ((URL, Bool) -> Void)?
     var onCancelled: (() -> Void)?
     
     private var fetchResult: PHFetchResult<PHAsset>?
@@ -101,11 +101,11 @@ final class AlbumController: UIViewController, AlbumView {
     }
 
     @objc private func didPressRightBarButton() {
-        guard let indexPath = selectedIndexPath, let result = fetchResult else { return }
-        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-            guard let image = image else { return }
-            self?.onFinished?(image)
-        }
+//        guard let indexPath = selectedIndexPath, let result = fetchResult else { return }
+//        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
+//            guard let image = image else { return }
+//            self?.onFinished?(image)
+//        }
     }
 }
 
@@ -136,9 +136,10 @@ extension AlbumController: UICollectionViewDataSource {
 extension AlbumController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let result = fetchResult else { return }
+        let isPhoto = true
         AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-            guard let image = image else { return }
-            self?.onFinished?(image)
+            guard let url = image?.writeToCache(withAlpha: false) else { return }
+            self?.onFinished?(url, isPhoto)
         }
     }
 }

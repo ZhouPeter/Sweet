@@ -19,7 +19,9 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     private let fileURL: URL
     private let isPhoto: Bool
     private var topic: String?
-    private lazy var previewController = StoryFilterPreviewController(fileURL: self.fileURL, isPhoto: self.isPhoto)
+    private let source: StoryMediaSource
+    private lazy var previewController =
+        StoryFilterPreviewController(fileURL: self.fileURL, isPhoto: self.isPhoto, isScaleFilled: self.source == .shoot)
     private var textController = StoryTextEditController()
     
     private lazy var closeButton: UIButton = {
@@ -82,11 +84,12 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     } ()
     private let user: User
     
-    init(user: User, fileURL: URL, isPhoto: Bool, topic: String?) {
+    init(user: User, fileURL: URL, isPhoto: Bool, source: StoryMediaSource, topic: String?) {
         self.user = user
         self.fileURL = fileURL
         self.isPhoto = isPhoto
         self.topic = topic
+        self.source = source
         textController.topic = topic
         super.init(nibName: nil, bundle: nil)
     }
@@ -390,7 +393,7 @@ extension StoryEditController: StoryTextEditControllerDelegate {
             self.textController.view.alpha = 1
         })
     }
-
+    
     func storyTextEditControllerDidBeginChooseTopic() {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.finishButton.alpha = 0
