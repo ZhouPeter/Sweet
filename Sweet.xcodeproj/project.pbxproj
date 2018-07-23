@@ -80,6 +80,10 @@
 		580F889520FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
 		580F889620FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
 		580F889720FDF104009148CC /* CardActionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F889320FDF104009148CC /* CardActionEnum.swift */; };
+		5811E396210579FB00558C00 /* CardMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811E395210579FB00558C00 /* CardMessageManager.swift */; };
+		5811E397210579FB00558C00 /* CardMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811E395210579FB00558C00 /* CardMessageManager.swift */; };
+		5811E398210579FB00558C00 /* CardMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811E395210579FB00558C00 /* CardMessageManager.swift */; };
+		5811E399210579FB00558C00 /* CardMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5811E395210579FB00558C00 /* CardMessageManager.swift */; };
 		58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
 		58150FD120F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */; };
@@ -1405,6 +1409,7 @@
 		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
 		580F888C20FD8867009148CC /* GIFImageMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImageMake.swift; sourceTree = "<group>"; };
 		580F889320FDF104009148CC /* CardActionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardActionEnum.swift; sourceTree = "<group>"; };
+		5811E395210579FB00558C00 /* CardMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardMessageManager.swift; sourceTree = "<group>"; };
 		58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		58155E0C20916D0E00ADEFFB /* ActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsController.swift; sourceTree = "<group>"; };
 		58155E11209175AF00ADEFFB /* ActivitiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesController.swift; sourceTree = "<group>"; };
@@ -2186,6 +2191,7 @@
 				584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */,
 				584CDED920D1032F00523406 /* SubCardsCoordinator.swift */,
 				AC525AC1208DF3EC001070B2 /* Controllers */,
+				5811E395210579FB00558C00 /* CardMessageManager.swift */,
 			);
 			path = CardsFlow;
 			sourceTree = "<group>";
@@ -3121,6 +3127,7 @@
 			files = (
 				5803574420AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
+				5811E396210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				AC616F9520C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3D209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -3607,6 +3614,7 @@
 				AC2A257A20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58150FD120F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
+				5811E398210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
@@ -3959,6 +3967,7 @@
 				5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				AC86A94120C4DC3F00334D4A /* User.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
+				5811E399210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				58816D1120C671040032D103 /* WXApi+Message.swift in Sources */,
 				AC4141FE20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
@@ -4075,6 +4084,7 @@
 			files = (
 				5803574520AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
+				5811E397210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				AC616F9620C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3E209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,

@@ -14,10 +14,12 @@ import SwiftyUserDefaults
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func delStory(storyId: UInt64)
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int))
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
     func delStory(storyId: UInt64) {}
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {}
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
@@ -197,10 +199,11 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         }
     }
 }
-
+// MARK: - StoriesPlayerViewControllerDelegate
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
         storiesGroup[position.0][position.1] = story
+        if position.0 <= 4 { delegate?.updateStory(story: story, postion: position) }
     }
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)

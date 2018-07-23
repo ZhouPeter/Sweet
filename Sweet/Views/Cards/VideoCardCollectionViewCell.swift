@@ -84,9 +84,9 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         DispatchQueue.global().async {
             DispatchQueue.main.async {
                 self.contentLabel.attributedText = viewModel.contentTextAttributed
+                self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        contentLabel.lineBreakMode = .byTruncatingTail
         contentImageView.kf.setImage(with:  viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail() )
         resetEmojiView()
         loadItemValues()
@@ -124,10 +124,12 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let tracks = asset.tracks
         let videoWidth = contentImageView.bounds.width
         let contentHeight = viewModel.contentHeight
+        let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
+        let contentMaxHeight = videoContentSumHeight - videoWidth
         for track in tracks where track.mediaType  == .video {
              let naturalSize = track.naturalSize
             if naturalSize.width < naturalSize.height {
-                var videoHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentHeight
+                var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
                 if contentLabel.text == "" || contentLabel.text == nil {
                     videoHeight += 10 + contentHeight
                 }
@@ -135,16 +137,14 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                     if videoHeight / videoWidth > naturalSize.height / naturalSize.width {
                         videoHeight = videoWidth * (naturalSize.height / naturalSize.width)
                     }
-                    contentViewHeight?.constant = videoHeight
-                    contentLabelHeight?.constant = contentHeight
                 } else {
                     videoHeight = videoWidth
-                    contentViewHeight?.constant = videoHeight
-                    contentLabelHeight?.constant = contentHeight - (videoHeight - videoWidth)
                 }
+                contentViewHeight?.constant = videoHeight
+                contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
             } else {
                 let videoHeight = videoWidth
-                let contentMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - videoHeight
+                let contentMaxHeight = videoContentSumHeight - videoHeight
                 let contentHeight = viewModel.contentHeight
                 contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
                 contentViewHeight?.constant = videoHeight

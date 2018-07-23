@@ -78,6 +78,7 @@ struct ActivityCardViewModel {
     var showProfile: ((UInt64, SetTop?) -> Void)?
     let setTop: SetTop?
     let url: String?
+    let fromCardId: String
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
         actor = model.actor
         activityId = model.activityId
@@ -100,5 +101,6 @@ struct ActivityCardViewModel {
         }
         setTop = SetTop(contentId: model.contentId, preferenceId: model.preferenceId)
         url = model.url
+        fromCardId = model.fromCardId
     }
 }

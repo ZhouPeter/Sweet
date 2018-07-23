@@ -66,6 +66,20 @@ struct CardResponse: Codable {
         case story
         case evaluation
     }
+    
+    func makeShareText() -> String? {
+        let text: String?
+        if let url = url {
+            if let source = sourceEnumType, source == .douyin {
+                text = "我正在看「\(name!)」的抖音视频 \(url)"
+            } else {
+                text = String.getShareText(content: content, url: url)
+            }
+        } else {
+            text = nil
+        }
+        return text
+    }
 }
 
 struct ContentImage: Codable {

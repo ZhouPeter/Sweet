@@ -465,7 +465,17 @@ extension StoriesPlayerViewController {
         view.tag = 100
     }
     func play() {
-        web.request(.storyRead(storyId: stories[currentIndex].storyId, fromCardId: nil)) { (_) in }
+        let storyId = stories[currentIndex].storyId
+        web.request(.storyRead(storyId: storyId, fromCardId: nil)) { (result) in
+            switch result {
+            case .success:
+                if let index = self.stories.index(where: {$0.storyId == storyId}) {
+                    self.stories[index].read = true
+                    self.delegate?.updateStory(story: self.stories[index], position: (self.groupIndex, self.currentIndex))
+                }
+            case .failure: break
+            }
+        }
         if stories[currentIndex].videoURL != nil && stories[currentIndex].type != .poke {
             player?.play()
         } else if stories[currentIndex].imageURL != nil {

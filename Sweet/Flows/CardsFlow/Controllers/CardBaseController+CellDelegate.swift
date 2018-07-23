@@ -97,19 +97,12 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
-            let text: String?
-            if let url = cards[index].url {
-                if let source = cards[index].sourceEnumType, source == .douyin {
-                    text = "我正在看「\(cards[index].name!)」的抖音视频 \(url)"
-                } else {
-                    text = String.getShareText(content: cards[index].content, url: cards[index].url)
-                }
-            } else {
-                text = nil
-            }
+            let text = cards[index].makeShareText()
             let controller = ShareCardController(shareText: text)
             controller.sendCallback = { (text, userIds) in
-                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else {fatalError()}
+                let card  = self.cards[index]
+                CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
             }
             present(controller, animated: true, completion: nil)
         }
@@ -184,32 +177,42 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
-//    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
-//        if self.cards[index].cardEnumType == .story {
-//            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
-//                guard let `self` = self else { return }
-//                switch result {
-//                case .success:
-//                    if storyGroupIndex > 3 { return }
-//                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
-//                    let storys = self.cards[index].storyList![storyGroupIndex]
-//                    var newStorys = [StoryResponse]()
-//                    for var story in storys {
-//                        story.read = true
-//                        newStorys.append(story)
-//                    }
-//                    self.cards[index].storyList![storyGroupIndex] = newStorys
-//                    var viewModel = StoriesCardViewModel(model: self.cards[index])
-//                    viewModel.storyCellModels[storyGroupIndex].isRead = true
-//                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
-//                    self.cellConfigurators[index] = configurator
-//                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-//                case let .failure(error):
-//                    logger.error(error)
-//                }
-//            }
-//        }
-//    }
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {
+        guard self.cards[index].cardEnumType == .story else { return }
+        guard var configurator = cellConfigurators[index] as? CellConfigurator<StoriesCardCollectionViewCell> else {
+            return
+        }
+        configurator.viewModel.updateStory(story: story, postion: postion)
+        cellConfigurators[index] = configurator
+        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+    }
+    
+    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
+        if self.cards[index].cardEnumType == .story {
+            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
+                guard let `self` = self else { return }
+                switch result {
+                case .success:
+                    if storyGroupIndex > 3 { return }
+                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
+                    let storys = self.cards[index].storyList![storyGroupIndex]
+                    var newStorys = [StoryResponse]()
+                    for var story in storys {
+                        story.read = true
+                        newStorys.append(story)
+                    }
+                    self.cards[index].storyList![storyGroupIndex] = newStorys
+                    var viewModel = StoriesCardViewModel(model: self.cards[index])
+                    viewModel.storyCellModels[storyGroupIndex].isRead = true
+                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
+                    self.cellConfigurators[index] = configurator
+                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                case let .failure(error):
+                    logger.error(error)
+                }
+            }
+        }
+    }
     
 }
 // MARK: - ActivitiesCardCollectionViewCellDelegate

@@ -18,9 +18,10 @@ enum CardAction: String {
     case clickPreference = "click_preference"
     private func makeActionLogWebApi(card: CardResponse) -> WebAPI {
         let preferenceId: String? = card.preferenceId == nil ? nil : String(card.preferenceId!)
+        let sectionId: String? = card.sectionId == nil ? nil : String(card.sectionId!)
         return WebAPI.cardActionLog(action: rawValue,
                                     cardId: card.cardId,
-                                    sectionId: String(card.sectionId!),
+                                    sectionId: sectionId,
                                     contentId: card.contentId,
                                     preferenceId: preferenceId)
     }
