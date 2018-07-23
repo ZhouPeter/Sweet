@@ -158,7 +158,8 @@ extension UIView {
     @discardableResult public func pin(
         _ edge: Edge,
         to anchorView: UIView,
-        spacing: CGFloat = 0) -> NSLayoutConstraint {
+        spacing: CGFloat = 0,
+        priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
         switch edge {
@@ -171,6 +172,7 @@ extension UIView {
         case .bottom:
             constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: spacing)
         }
+        constraint.priority = priority
         constraint.isActive = true
         return constraint
     }

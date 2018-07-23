@@ -14,8 +14,7 @@ private let buttonSpace: CGFloat = 50
 
 class ContactsController: BaseViewController, ContactsView {
     weak var delegate: ContactsViewDelegate?
-    
-    private var between72hViewModels = [ContactViewModel]()
+    private var blacklistViewModel = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
     private var titles = [String]()
     private var emptyView = EmptyEmojiView()
@@ -32,15 +31,7 @@ class ContactsController: BaseViewController, ContactsView {
     private var viewModelsGroup = [[ContactViewModel]]() {
         didSet { showEmptyView(isShow: viewModelsGroup.count == 0) }
     }
-    
-    private var tableViewFooterView =
-        ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
-    private lazy var tableViewHeaderView: UIView = {
-        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.mainWidth(), height: 44))
-        searchController.searchBar.frame = view.bounds
-        view.addSubview(searchController.searchBar)
-        return view
-    }()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorInset.left = 60
@@ -49,7 +40,6 @@ class ContactsController: BaseViewController, ContactsView {
         tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
-        tableView.tableFooterView = tableViewFooterView
         tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = UIColor(hex: 0xf7f7f7)
         tableView.separatorColor = UIColor(hex: 0xF2F2F2)
@@ -103,7 +93,7 @@ class ContactsController: BaseViewController, ContactsView {
     
     private func removeData() {
         allViewModels.removeAll()
-        between72hViewModels.removeAll()
+        blacklistViewModel.removeAll()
         viewModelsGroup.removeAll()
         titles.removeAll()
     }
@@ -118,13 +108,10 @@ class ContactsController: BaseViewController, ContactsView {
                 models.forEach({ (model) in
                     let viewModel = ContactViewModel(model: model)
                     self.allViewModels.append(viewModel)
-                    if model.lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
-                        self.between72hViewModels.append(viewModel)
-                    }
                 })
                 let blacklistModels = response.blacklist
                 blacklistModels.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    var viewModel = ContactViewModel(model: model)
                     viewModel.callBack = { [weak self] userId in
                         web.request(.delBlacklist(userId: UInt64(userId)!), completion: { (result) in
                             switch result {
@@ -135,21 +122,16 @@ class ContactsController: BaseViewController, ContactsView {
                             }
                         })
                     }
-                    self.allViewModels.append(viewModel)
+                    self.blacklistViewModel.append(viewModel)
                 })
-                self.between72hViewModels.sort {
-                     return $0.lastTime > $1.lastTime
-                }
-                if self.between72hViewModels.count > 0 {
-                    self.viewModelsGroup.append(self.between72hViewModels)
-                    self.titles.append("最近联系")
-                }
                 if self.allViewModels.count > 0 {
                     self.viewModelsGroup.append(self.allViewModels)
-                    self.titles.append("全部")
+                    self.titles.append("联系人")
                 }
-                let countTitle = "\(self.allViewModels.count)位联系人"
-                self.tableViewFooterView.update(title: countTitle)
+                if self.blacklistViewModel.count > 0 {
+                    self.viewModelsGroup.append(self.blacklistViewModel)
+                    self.titles.append("黑名单")
+                }
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
@@ -161,34 +143,12 @@ class ContactsController: BaseViewController, ContactsView {
         web.request(.delBlacklist(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
-                self.allViewModels[index].buttonStyle = .backgroundColorGray
-                self.allViewModels[index].buttonTitle = "拉黑"
-                self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlacklist(userId: UInt64(userId)!)
-                }
-                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
-        }
-    }
-    
-    private func addBlacklist(userId: UInt64) {
-        web.request(.addBlacklist(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
-                self.allViewModels[index].buttonStyle = .borderGray
-                self.allViewModels[index].buttonTitle = "恢复"
-                self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlacklist(userId: UInt64(userId)!)
-                }
-                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.loadContacts()
+//                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
+//                self.allViewModels[index].callBack = nil
+//                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
+//                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
+//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
             case let .failure(error):
                 logger.error(error)
             }
@@ -229,8 +189,20 @@ extension ContactsController: UITableViewDelegate {
                 delegate?.contactsShowSubscription()
             }
         } else {
-            let userID = viewModelsGroup[indexPath.section - 1][indexPath.row].userId
-            delegate?.contactsShowProfile(userID: userID)
+            let viewModel = viewModelsGroup[indexPath.section - 1][indexPath.row]
+            let userID = viewModel.userId
+            if titles[indexPath.section - 1] == "黑名单" {
+                let alertSheet = UIAlertController()
+                alertSheet.addAction(UIAlertAction.makeAlertAction(title: "移出黑名单",
+                                                                   style: .default,
+                                                                   handler: { (_) in
+                    self.delBlacklist(userId: userID)
+                }))
+                alertSheet.addAction(UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil))
+                self.present(alertSheet, animated: true, completion: nil)
+            } else {
+                delegate?.contactsShowProfile(userID: userID)
+            }
         }
     }
 }
