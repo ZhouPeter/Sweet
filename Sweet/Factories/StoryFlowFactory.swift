@@ -25,5 +25,4 @@ protocol StoryFlowFactory {
     func makeTopicListView() -> TopicListView
     func makeStoryTextView(with topic: String?, user: User) -> StoryTextView
     func makeAlbumView() -> AlbumView
-    func makePhotoCropView(with photo: UIImage) -> PhotoCropView
 }

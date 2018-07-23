@@ -38,21 +38,13 @@ final class AlbumController: UIViewController, AlbumView {
         return view
     } ()
     
-    private lazy var rightBarButton =
-        UIBarButtonItem(title: "继续", style: .plain, target: self, action: #selector(didPressRightBarButton))
-    
-    private var selectedIndexPath: IndexPath? {
-        didSet {
-            rightBarButton.isEnabled = selectedIndexPath != nil
-        }
+    deinit {
+        logger.debug()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "所有照片"
-        navigationItem.rightBarButtonItem = rightBarButton
-        rightBarButton.isEnabled = false
-        
         view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.fill(in: view)
@@ -99,14 +91,6 @@ final class AlbumController: UIViewController, AlbumView {
         fetchResult = AssetManager.fetch()
         collectionView.reloadData()
     }
-
-    @objc private func didPressRightBarButton() {
-//        guard let indexPath = selectedIndexPath, let result = fetchResult else { return }
-//        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-//            guard let image = image else { return }
-//            self?.onFinished?(image)
-//        }
-    }
 }
 
 extension AlbumController: UICollectionViewDataSource {
@@ -136,10 +120,51 @@ extension AlbumController: UICollectionViewDataSource {
 extension AlbumController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let result = fetchResult else { return }
-        let isPhoto = true
-        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-            guard let url = image?.writeToCache(withAlpha: false) else { return }
-            self?.onFinished?(url, isPhoto)
+        let asset = result[indexPath.row]
+        if asset.mediaType == .image {
+            AssetManager.resolveAsset(asset) { [weak self] (image) in
+                guard let url = image?.writeToCache(withAlpha: false) else { return }
+                self?.onFinished?(url, true)
+            }
+            return
+        }
+        if asset.mediaType == .video {
+            AssetManager.resolveAVAsset(asset) { [weak self] (url) in
+                guard let `self` = self, let url = url else { return }
+                logger.debug(url)
+                let controller = UIVideoEditorController()
+                controller.videoPath = url.path
+                controller.videoMaximumDuration = 10
+                controller.delegate = self
+                controller.videoQuality = .typeHigh
+                self.present(controller, animated: true, completion: nil)
+            }
+            return
+        }
+    }
+}
+
+extension AlbumController: UIVideoEditorControllerDelegate, UINavigationControllerDelegate {
+    func videoEditorControllerDidCancel(_ editor: UIVideoEditorController) {
+        logger.debug()
+        editor.dismiss(animated: true, completion: nil)
+    }
+    
+    func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: Error) {
+        logger.error(error)
+        editor.dismiss(animated: true, completion: nil)
+    }
+    
+    func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
+        logger.debug(editedVideoPath)
+        editor.dismiss(animated: false, completion: nil)
+        let editedVideoURL = URL(string: editedVideoPath)!
+        do {
+            let target = URL.videoCacheURL(withName: editedVideoURL.lastPathComponent)
+            try FileManager.default.moveItem(at: editedVideoURL, to: target)
+            self.onFinished?(target, false)
+        } catch {
+            logger.error(error)
         }
     }
 }

@@ -120,10 +120,6 @@ ProfileFlowFactory {
     func makeAlbumView() -> AlbumView {
         return AlbumController()
     }
-    
-    func makePhotoCropView(with photo: UIImage) -> PhotoCropView {
-        return PhotoCropController(with: photo)
-    }
 }
 extension FlowFactoryImp: StoryPlayerFlowFactory {
     func makeStoriesPlayerView(user: User,

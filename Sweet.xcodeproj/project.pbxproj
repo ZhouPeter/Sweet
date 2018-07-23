@@ -887,10 +887,6 @@
 		AC557CA420B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
 		AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
 		AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */; };
-		AC557CA820B7F64B0068F1B3 /* PhotoCropController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */; };
-		AC557CA920B7F64B0068F1B3 /* PhotoCropController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */; };
-		AC557CAA20B7F64B0068F1B3 /* PhotoCropController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */; };
-		AC557CAB20B7F64B0068F1B3 /* PhotoCropController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */; };
 		AC557CAD20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
 		AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
 		AC557CAF20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */; };
@@ -1638,7 +1634,6 @@
 		AC557C9820B7E5E60068F1B3 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
 		AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsManager.swift; sourceTree = "<group>"; };
-		AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCropController.swift; sourceTree = "<group>"; };
 		AC557CAC20B7F8C20068F1B3 /* UIImage+Write.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Write.swift"; sourceTree = "<group>"; };
 		AC58388520E9CDCB00A57161 /* TaskRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRunner.swift; sourceTree = "<group>"; };
 		AC58388C20E9E32800A57161 /* StoryDraftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDraftData.swift; sourceTree = "<group>"; };
@@ -2211,7 +2206,6 @@
 			isa = PBXGroup;
 			children = (
 				AC557C9820B7E5E60068F1B3 /* AlbumController.swift */,
-				AC557CA720B7F64B0068F1B3 /* PhotoCropController.swift */,
 				AC557C9D20B7EA6C0068F1B3 /* AlbumCell.swift */,
 				AC557CA220B7EDEE0068F1B3 /* AssetsManager.swift */,
 			);
@@ -3405,7 +3399,6 @@
 				58D578CF2092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2B2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F7209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
-				AC557CA820B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				58155E2120917A5700ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACDB24E720BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */,
@@ -3520,7 +3513,6 @@
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
-				AC557CAA20B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				5863A84120ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				ACF2DEC52089E58D00660425 /* Errors.swift in Sources */,
@@ -3826,7 +3818,6 @@
 				58BD53572090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC7C8E5720E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				AC972515209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
-				AC557CAB20B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				5863A84220ABDB7C0016B089 /* InputTextView.swift in Sources */,
 				ACF2DEC62089E58D00660425 /* Errors.swift in Sources */,
@@ -4359,7 +4350,6 @@
 				58D578D02092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58155E2C2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
 				58D578F8209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
-				AC557CA920B7F64B0068F1B3 /* PhotoCropController.swift in Sources */,
 				58155E2220917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				ACDB24E820BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */,
