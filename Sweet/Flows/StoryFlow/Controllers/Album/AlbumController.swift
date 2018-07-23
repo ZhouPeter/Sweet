@@ -138,6 +138,7 @@ extension AlbumController: UICollectionViewDelegate {
                 guard let `self` = self, let url = url else { return }
                 logger.debug(url)
                 let controller = UIVideoEditorController()
+                controller.view.tintColor = .black
                 controller.videoPath = url.path
                 controller.videoMaximumDuration = 10
                 controller.delegate = self
