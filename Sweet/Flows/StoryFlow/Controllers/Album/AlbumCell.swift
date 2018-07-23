@@ -9,14 +9,14 @@
 import UIKit
 
 class AlbumCell: UICollectionViewCell {
-    override var isSelected: Bool {
-        didSet {
-            checkImageView.image = isSelected ? #imageLiteral(resourceName: "Checked") : #imageLiteral(resourceName: "UnChecked")
-        }
-    }
-    
     private var imageView = UIImageView()
-    private var checkImageView = UIImageView(image: #imageLiteral(resourceName: "UnChecked"))
+    private var label: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    } ()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,13 +28,20 @@ class AlbumCell: UICollectionViewCell {
         setup()
     }
     
-    func configureCell(_ image: UIImage) {
+    func configureCell(_ image: UIImage, duration: TimeInterval? = nil) {
         let animated = imageView.alpha < 1
         imageView.image = image
         if animated {
             UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
                 self.imageView.alpha = 1
             }, completion: nil)
+        }
+        if let duration = duration {
+            let minutes = Int(floor(duration / 60))
+            let seconds = Int(duration - Double(minutes * 60))
+            label.text = String(format: "%2d:%02d", minutes, seconds)
+        } else {
+            label.text = nil
         }
     }
     
@@ -44,11 +51,10 @@ class AlbumCell: UICollectionViewCell {
         imageView.fill(in: contentView)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        contentView.addSubview(checkImageView)
-        checkImageView.constrain(width: 20, height: 20)
-        checkImageView.align(.top, to: contentView, inset: 5)
-        checkImageView.align(.right, to: contentView, inset: 5)
-        checkImageView.alpha = 0
+        contentView.addSubview(label)
+        label.align(.left, to: contentView, inset: 5)
+        label.align(.bottom)
+        label.align(.right, to: contentView, inset: 5)
         imageView.alpha = 0
     }
 }

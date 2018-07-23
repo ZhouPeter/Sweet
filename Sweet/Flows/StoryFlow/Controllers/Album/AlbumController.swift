@@ -110,7 +110,11 @@ extension AlbumController: UICollectionViewDataSource {
         let asset = result[indexPath.row]
         AssetManager.resolveAsset(asset, size: itemSize) { image in
             if let image = image {
-                cell.configureCell(image)
+                var duration: TimeInterval?
+                if asset.mediaType == .video {
+                    duration = asset.duration
+                }
+                cell.configureCell(image, duration: duration)
             }
         }
         return cell
