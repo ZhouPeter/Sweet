@@ -93,10 +93,23 @@ class AssetManager {
         PHImageManager
             .default()
             .requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, _, _) in
-                if let urlAsset = avAsset as? AVURLAsset {
-                    completion(urlAsset.url)
-                } else {
-                    completion(nil)
+                DispatchQueue.main.async {
+                    if let urlAsset = avAsset as? AVURLAsset {
+                        let url = URL.videoCacheURL(withName: urlAsset.url.lastPathComponent)
+                        if FileManager.default.fileExists(atPath: url.path) {
+                            completion(url)
+                            return
+                        }
+                        do {
+                            try FileManager.default.copyItem(at: urlAsset.url, to: url)
+                            completion(url)
+                        } catch {
+                            logger.error(error)
+                            completion(nil)
+                        }
+                    } else {
+                        completion(nil)
+                    }
                 }
             })
     }

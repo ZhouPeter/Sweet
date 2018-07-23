@@ -18,6 +18,7 @@ final class AlbumController: UIViewController, AlbumView {
     var onFinished: ((URL, Bool) -> Void)?
     var onCancelled: (() -> Void)?
     
+    private var isTrimmed = false
     private var fetchResult: PHFetchResult<PHAsset>?
     
     private lazy var itemSize: CGSize = {
@@ -140,7 +141,8 @@ extension AlbumController: UICollectionViewDelegate {
                 controller.videoPath = url.path
                 controller.videoMaximumDuration = 10
                 controller.delegate = self
-                controller.videoQuality = .typeHigh
+                controller.videoQuality = .typeMedium
+                self.isTrimmed = false
                 self.present(controller, animated: true, completion: nil)
             }
             return
@@ -161,11 +163,16 @@ extension AlbumController: UIVideoEditorControllerDelegate, UINavigationControll
     
     func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
         logger.debug(editedVideoPath)
+        guard isTrimmed == false else { return }
+        isTrimmed = true
         editor.dismiss(animated: false, completion: nil)
         let editedVideoURL = URL(string: editedVideoPath)!
         do {
             let target = URL.videoCacheURL(withName: editedVideoURL.lastPathComponent)
-            try FileManager.default.moveItem(at: editedVideoURL, to: target)
+            if FileManager.default.fileExists(atPath: target.path) {
+                try? FileManager.default.removeItem(atPath: target.path)
+            }
+            try FileManager.default.copyItem(atPath: editedVideoURL.path, toPath: target.path)
             self.onFinished?(target, false)
         } catch {
             logger.error(error)
