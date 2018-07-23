@@ -97,6 +97,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private var isFetchLoadCards = false
+    
     private var avPlayer: AVPlayer?
  
     lazy var inputTextView: InputTextView = {
@@ -160,6 +161,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         if isShow {
             if emptyView.superview != nil { return }
             collectionView.addSubview(emptyView)
+            if self is CardsAllController {
+                if isFetchLoadCards {
+                    emptyView.update(image: #imageLiteral(resourceName: "CardLoading"), title: "加载中")
+                } else  {
+                    emptyView.update(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
+                }
+            }
             emptyView.frame = CGRect(x: 0,
                                      y: -10,
                                      width: collectionView.bounds.width,

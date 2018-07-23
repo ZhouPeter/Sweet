@@ -30,6 +30,11 @@ class EmptyEmojiView: UIView {
         emojiImageView.image = image ?? #imageLiteral(resourceName: "EmptyEmoji")
     }
     
+    func update(image: UIImage, title: String) {
+        titleLabel.text = title
+        emojiImageView.image = image 
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,7 +42,7 @@ class EmptyEmojiView: UIView {
     private func setupUI() {
         backgroundColor = UIColor(hex: 0xF2F2F2)
         addSubview(emojiImageView)
-        emojiImageView.constrain(width: 150, height: 150)
+        emojiImageView.constrain(width: 120, height: 120)
         emojiImageView.centerX(to: self)
         emojiImageView.align(.top, to: self, inset: 120)
         addSubview(titleLabel)
