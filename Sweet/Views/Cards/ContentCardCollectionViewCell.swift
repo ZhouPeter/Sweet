@@ -140,9 +140,9 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         DispatchQueue.global().async {
             DispatchQueue.main.async {
                 self.contentLabel.attributedText = viewModel.contentTextAttributed
+                self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        contentLabel.lineBreakMode = .byTruncatingTail
         update(with: viewModel.thumbnailURL, title: viewModel.sourceTitle, brief: viewModel.sourceBrief)
         update(with: viewModel.imageURLList)
         resetEmojiView()

@@ -260,6 +260,7 @@ extension StoriesController: UICollectionViewDelegate {
 }
 
 extension StoriesController: StoriesPlayerGroupViewControllerDelegate {
+    
     func delStory(storyId: UInt64) {
         guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
         storyViewModels.remove(at: index)

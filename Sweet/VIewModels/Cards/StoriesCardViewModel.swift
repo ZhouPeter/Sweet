@@ -11,8 +11,8 @@ import Foundation
 struct StoriesCardViewModel {
     let cardId: String
     var storyCellModels: [StoryCollectionViewCellModel]
-    let storiesCellModels: [[StoryCollectionViewCellModel]]
-    let storiesGroup: [[StoryCellViewModel]]
+    var storiesCellModels: [[StoryCollectionViewCellModel]]
+    var storiesGroup: [[StoryCellViewModel]]
     init(model: CardResponse) {
         cardId = model.cardId
         storiesCellModels = model.storyList!.map {
@@ -28,6 +28,19 @@ struct StoriesCardViewModel {
         }
         storiesGroup = model.storyList!.map {
             return $0.map { return StoryCellViewModel(model: $0) }
+        }
+    }
+    
+    mutating func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {
+        storiesGroup[postion.0][postion.1].read = story.read
+        storiesCellModels[postion.0][postion.1].isRead = story.read
+        storyCellModels = storiesCellModels.map {
+            var storiesCellModel = $0
+            var isRead = true
+            storiesCellModel.forEach({ if $0.isRead == false {isRead = false} })
+            var storyCellModel = storiesCellModel[0]
+            storyCellModel.isRead = isRead
+            return storyCellModel
         }
     }
 }

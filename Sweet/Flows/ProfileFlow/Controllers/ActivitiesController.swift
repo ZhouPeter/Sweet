@@ -209,8 +209,28 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
-            let controller = WebViewController(urlString: url)
+            let controller = WebViewController(urlString: url) {
+                self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
+            }
             navigationController?.pushViewController(controller, animated: true)
         }
     }
 }
+extension ActivitiesController {
+    func shareCard(cardId: String) {
+        web.request(WebAPI.getCard(cardID: cardId), responseType: Response<CardGetResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                let text = response.card.makeShareText()
+                let controller = ShareCardController(shareText: text)
+                controller.sendCallback = { (text, userIds) in
+                    CardMessageManager.shard.sendMessage(card: response.card, text: text, userIds: userIds)
+                }
+                self.present(controller, animated: true, completion: nil)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+}
+
