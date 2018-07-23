@@ -329,7 +329,10 @@ extension ConversationController: MessagesDisplayDelegate {
         }
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         accessoryView.addSubview(indicator)
-        indicator.fill(in: accessoryView, top: 10)
+        indicator.align(.left)
+        indicator.align(.right)
+        indicator.align(.bottom)
+        indicator.align(.top, to: accessoryView, inset: 10, priority: .defaultHigh)
         indicator.tag = tag
         indicator.hidesWhenStopped = true
         indicator.stopAnimating()
@@ -345,7 +348,10 @@ extension ConversationController: MessagesDisplayDelegate {
         button.tag = tag
         button.setImage(UIImage(named: "Failed"), for: .normal)
         accessoryView.addSubview(button)
-        button.fill(in: accessoryView, top: 10)
+        button.align(.left)
+        button.align(.right)
+        button.align(.bottom)
+        button.align(.top, to: accessoryView, inset: 10, priority: .defaultHigh)
         button.isHidden = true
         button.addTarget(self, action: #selector(didPressResendButton(button:)), for: .touchUpInside)
         return button
