@@ -375,6 +375,10 @@
 		589E6BDC20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
 		589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
 		589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */; };
+		58A084E52105F2A500221339 /* TapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A084E42105F2A500221339 /* TapGestureRecognizer.swift */; };
+		58A084E62105F2A500221339 /* TapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A084E42105F2A500221339 /* TapGestureRecognizer.swift */; };
+		58A084E72105F2A500221339 /* TapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A084E42105F2A500221339 /* TapGestureRecognizer.swift */; };
+		58A084E82105F2A500221339 /* TapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A084E42105F2A500221339 /* TapGestureRecognizer.swift */; };
 		58A79FEB20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
 		58A79FEC20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
 		58A79FED20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
@@ -1480,6 +1484,7 @@
 		589E6BD020A98B6C0038FAED /* ContentCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardViewModel.swift; sourceTree = "<group>"; };
 		589E6BD520A98DA20038FAED /* ContentCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58A084E42105F2A500221339 /* TapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGestureRecognizer.swift; sourceTree = "<group>"; };
 		58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivityCardTableViewCell.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -2565,6 +2570,7 @@
 				58DECE6F20EB148D00A4CDA4 /* CardImageLayout.swift */,
 				ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */,
 				580F888C20FD8867009148CC /* GIFImageMake.swift */,
+				58A084E42105F2A500221339 /* TapGestureRecognizer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3337,6 +3343,7 @@
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				58A084E52105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330E20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				AC972517209ABD09009FB966 /* StoryTextController.swift in Sources */,
@@ -3627,6 +3634,7 @@
 				ACA9CC4020C6734300873643 /* StoryMessageCell.swift in Sources */,
 				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
+				58A084E72105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
@@ -4054,6 +4062,7 @@
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
+				58A084E82105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				5872A85220D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				ACA9CC4B20C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58155E382091D53E00ADEFFB /* WebViewController.swift in Sources */,
@@ -4291,6 +4300,7 @@
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				58A084E62105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
 				AC972518209ABD09009FB966 /* StoryTextController.swift in Sources */,

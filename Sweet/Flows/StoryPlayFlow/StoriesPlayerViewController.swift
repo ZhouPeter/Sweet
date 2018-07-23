@@ -460,18 +460,6 @@ extension StoriesPlayerViewController {
     }
 }
 
-class TapGestureRecognizer: UITapGestureRecognizer {
-    var path : CGPath?
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-        super.touchesBegan(touches, with: event)
-        let loction = location(in: view)
-        if let path = path, !path.contains(loction) {
-            state = .failed
-        }
-    }
-}
-
 // MARK: - Actions
 extension StoriesPlayerViewController {
     
