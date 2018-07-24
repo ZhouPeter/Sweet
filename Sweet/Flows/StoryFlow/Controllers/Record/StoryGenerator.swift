@@ -70,12 +70,14 @@ final class StoryGenerator {
         let transformFilter = GPUImageTransformFilter()
         var scaleX: CGFloat = 1
         var scaleY: CGFloat = 1
-        if videoSize.width / videoSize.height > renderSize.width / renderSize.height {
-            scaleY = videoSize.height / renderSize.height
-        } else {
-            scaleX = videoSize.width / renderSize.width
+        let videoRatio = videoSize.width / videoSize.height
+        let renderRatio = renderSize.width / renderSize.height
+        if videoRatio > renderRatio {
+            scaleY = videoSize.height / renderSize.height * (renderSize.width / videoSize.width)
+        } else if (videoRatio < renderRatio) {
+            scaleX = videoSize.width / renderSize.width * (renderSize.height / videoSize.height)
         }
-        transformFilter.ignoreAspectRatio = false
+        logger.debug(videoSize, renderSize, scaleX, scaleY, videoRatio, renderRatio)
         transformFilter.affineTransform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
         movie?.addTarget(transformFilter)
         transformFilter.addTarget(filter)

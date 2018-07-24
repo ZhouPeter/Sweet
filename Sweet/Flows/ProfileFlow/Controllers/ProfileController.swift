@@ -189,6 +189,7 @@ class ProfileController: BaseViewController, ProfileView {
     }
 
     override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
         if parent == nil {
             finished?()
         }

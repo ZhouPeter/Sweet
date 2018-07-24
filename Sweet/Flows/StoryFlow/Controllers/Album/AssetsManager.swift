@@ -87,7 +87,7 @@ class AssetManager {
         return images
     }
     
-    static func resolveAVAsset(_ asset: PHAsset, completion: @escaping (URL?) -> Void) {
+    static func resolveAVAsset(_ asset: PHAsset, completion: @escaping (URL?, TimeInterval?) -> Void) {
         let options: PHVideoRequestOptions = PHVideoRequestOptions()
         options.version = .original
         PHImageManager
@@ -95,20 +95,21 @@ class AssetManager {
             .requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, _, _) in
                 DispatchQueue.main.async {
                     if let urlAsset = avAsset as? AVURLAsset {
+                        let duration = urlAsset.duration.seconds
                         let url = URL.videoCacheURL(withName: urlAsset.url.lastPathComponent)
                         if FileManager.default.fileExists(atPath: url.path) {
-                            completion(url)
+                            completion(url, duration)
                             return
                         }
                         do {
                             try FileManager.default.copyItem(at: urlAsset.url, to: url)
-                            completion(url)
+                            completion(url, duration)
                         } catch {
                             logger.error(error)
-                            completion(nil)
+                            completion(nil, nil)
                         }
                     } else {
-                        completion(nil)
+                        completion(nil, nil)
                     }
                 }
             })

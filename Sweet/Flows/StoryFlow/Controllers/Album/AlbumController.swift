@@ -39,10 +39,6 @@ final class AlbumController: UIViewController, AlbumView {
         return view
     } ()
     
-    deinit {
-        logger.debug()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "所有照片"
@@ -63,12 +59,8 @@ final class AlbumController: UIViewController, AlbumView {
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             onCancelled?()
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
     }
     
     // MARK: - Private
@@ -134,49 +126,20 @@ extension AlbumController: UICollectionViewDelegate {
             return
         }
         if asset.mediaType == .video {
-            AssetManager.resolveAVAsset(asset) { [weak self] (url) in
-                guard let `self` = self, let url = url else { return }
-                logger.debug(url)
-                let controller = UIVideoEditorController()
-                controller.view.tintColor = .black
-                controller.videoPath = url.path
-                controller.videoMaximumDuration = 10
-                controller.delegate = self
-                controller.videoQuality = .typeHigh
-                self.isTrimmed = false
-                self.present(controller, animated: true, completion: nil)
+            AssetManager.resolveAVAsset(asset) { [weak self] (url, duration) in
+                guard let `self` = self, let url = url, let duration = duration else { return }
+                logger.debug(url, duration)
+                if duration > 10 {
+                    let controller = VideoTrimmerViewController(fileURL: url)
+                    controller.onFinished = { outputURL in
+                        self.onFinished?(outputURL, false)
+                    }
+                    self.navigationController?.pushViewController(controller, animated: true)
+                } else {
+                    self.onFinished?(url, false)
+                }
             }
             return
-        }
-    }
-}
-
-extension AlbumController: UIVideoEditorControllerDelegate, UINavigationControllerDelegate {
-    func videoEditorControllerDidCancel(_ editor: UIVideoEditorController) {
-        logger.debug()
-        editor.dismiss(animated: true, completion: nil)
-    }
-    
-    func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: Error) {
-        logger.error(error)
-        editor.dismiss(animated: true, completion: nil)
-    }
-    
-    func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
-        logger.debug(editedVideoPath)
-        guard isTrimmed == false else { return }
-        isTrimmed = true
-        editor.dismiss(animated: false, completion: nil)
-        let editedVideoURL = URL(string: editedVideoPath)!
-        do {
-            let target = URL.videoCacheURL(withName: editedVideoURL.lastPathComponent)
-            if FileManager.default.fileExists(atPath: target.path) {
-                try? FileManager.default.removeItem(atPath: target.path)
-            }
-            try FileManager.default.copyItem(atPath: editedVideoURL.path, toPath: target.path)
-            self.onFinished?(target, false)
-        } catch {
-            logger.error(error)
         }
     }
 }
