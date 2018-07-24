@@ -63,7 +63,7 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     
     private func showAlertSheet(photoBrowser: PhotoBrowser, image: UIImage, url: String) {
         let alert = UIAlertController()
-        let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { [weak self] (_) in
+        let shareAction = UIAlertAction.makeAlertAction(title: "分享", style: .default) { [weak self] (_) in
             guard let `self` = self else { return }
             let controller = ShareCardController(shareText: self.shareText)
             controller.sendCallback = { (text, userIds) in

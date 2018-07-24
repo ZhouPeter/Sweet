@@ -83,6 +83,7 @@ class ContactTableViewCell: UITableViewCell {
             buttonCallBack(phone)
         }
     }
+    private var infoRightConstaint: NSLayoutConstraint?
     private func setupUI() {
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
@@ -99,8 +100,7 @@ class ContactTableViewCell: UITableViewCell {
         contentView.addSubview(infoLabel)
         infoLabel.align(.left, to: nameLabel)
         infoLabel.align(.bottom, to: avatarImageView)
-        infoLabel.align(.right, to: contentView, inset: 16)
-//        infoLabel.pin(.left, to: statusButton, spacing: 10)
+        infoRightConstaint = infoLabel.align(.right, to: contentView, inset: 16)
         contentView.addSubview(statusButton)
         statusButton.constrain(width: 62, height: 28)
         statusButton.centerY(to: contentView)
@@ -118,6 +118,7 @@ class ContactTableViewCell: UITableViewCell {
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
+        infoRightConstaint?.constant = viewModel.isHiddenButton ? -16 : -(10 + 62)
         statusButton.isHidden = viewModel.isHiddenButton
         selectButton.isHidden = viewModel.isHiddeenSelectButton
         if !viewModel.isHiddenButton {

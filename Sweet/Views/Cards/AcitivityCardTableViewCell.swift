@@ -104,10 +104,8 @@ class AcitivityCardTableViewCell: UITableViewCell {
         sameImageView.setViewRounded()
         contentView.addSubview(titleLabel)
         titleLabel.centerY(to: avatarImageView)
+        titleLabel.pin(.right, to: avatarImageView, spacing: 8, priority: UILayoutPriority.init(999))
         titleLabel.pin(.right, to: sameImageView, spacing: 8)
-        let constraint = titleLabel.leftAnchor.constraint(equalTo: sameImageView.rightAnchor, constant: 8)
-        constraint.priority = .defaultHigh
-        constraint.isActive = true
         contentView.addSubview(subtitleLabel)
         subtitleLabel.centerY(to: avatarImageView)
         subtitleLabel.pin(.right, to: titleLabel, spacing: 4)
@@ -140,7 +138,17 @@ class AcitivityCardTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         avatarImageView.kf.setImage(with: viewModel.avatarURL)
         sameImageView.kf.setImage(with: viewModel.sameAvatarURL)
-        sameImageView.isHidden = viewModel.sameAvatarURL == nil
+        if viewModel.sameAvatarURL == nil {
+            sameImageView.removeFromSuperview()
+        } else {
+            if sameImageView.superview == nil {
+                contentView.addSubview(sameImageView)
+                sameImageView.align(.left, inset: 20)
+                sameImageView.centerY(to: avatarImageView)
+                sameImageView.constrain(width: 20, height: 20)
+                titleLabel.pin(.right, to: sameImageView, spacing: 8)
+            }
+        }
         titleLabel.text = viewModel.titleString
         subtitleLabel.text = viewModel.subtitleString
         commentLabel.text = viewModel.commentString

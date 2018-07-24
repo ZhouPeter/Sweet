@@ -180,6 +180,12 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     }
 
     private func loadMoreStoriesGroup() {
+        if storiesGroup[0][0].userId == user.userId {
+            if currentIndex == storiesGroup.count - 1 {
+                self.dismiss(animated: true, completion: nil)
+            }
+            return
+        }
         if isLoading { return }
         web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { [weak self] (result) in
             guard let `self` = self else { return }

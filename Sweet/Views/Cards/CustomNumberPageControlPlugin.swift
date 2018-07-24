@@ -43,8 +43,8 @@ class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
     /// 字颜色
     var textColor = UIColor.white
     
-    /// 中心点Y坐标
-    var centerY: CGFloat = UIScreen.main.bounds.height - 28
+    /// 中心点距离底部坐标
+    var centerBottomY: CGFloat = 28
     
     /// 数字指示
     lazy var numberLabel: UILabel = {
@@ -94,6 +94,6 @@ class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
             offsetY = superView.safeAreaInsets.bottom
         }
         numberLabel.center = CGPoint(x: superView.bounds.midX,
-                                     y: superView.bounds.minY + (centerY + offsetY))
+                                     y: superView.bounds.maxY - (centerBottomY + offsetY))
     }
 }
