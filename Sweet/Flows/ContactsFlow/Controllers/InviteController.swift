@@ -49,6 +49,7 @@ class InviteController: BaseViewController, InviteView {
         searchController.searchBar.barTintColor = .white
         searchController.searchBar.setCancelText(text: "返回", textColor: .black)
         searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
+        searchController.searchBar.setBorderColor(borderColor: UIColor(hex: 0xF2F2F2))
         return searchController
     }()
     
