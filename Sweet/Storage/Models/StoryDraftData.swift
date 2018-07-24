@@ -13,7 +13,7 @@ class StoryDraftData: Object {
     @objc dynamic var storyType = 0
     @objc dynamic var topic: String?
     @objc dynamic var pokeCenter: String?
-    @objc dynamic var touchPoints: [String]?
+    let touchPoints = List<String>()
     @objc dynamic var date = Date()
     @objc dynamic var generatedFilename: String?
     @objc dynamic var overlayFilename: String?
@@ -29,7 +29,7 @@ class StoryDraftData: Object {
         data.storyType = Int(draft.storyType.rawValue)
         data.topic = draft.topic
         data.pokeCenter = draft.pokeCenter?.rawValue
-        data.touchPoints = draft.touchPoints?.flatMap { $0.rawValue }
+        draft.touchPoints?.forEach { data.touchPoints.append($0.rawValue) }
         data.date = draft.date
         data.filterFilename = draft.filterFilename
         data.generatedFilename = draft.generatedFilename

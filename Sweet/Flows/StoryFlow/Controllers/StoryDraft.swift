@@ -43,8 +43,8 @@ struct StoryDraft {
         storyType = type
         topic = data.topic
         date = data.date
-        if let points = data.touchPoints {
-            touchPoints = points.compactMap { CGPoint(rawValue: $0) }
+        if !data.touchPoints.isEmpty {
+            touchPoints = data.touchPoints.compactMap { CGPoint(rawValue: $0) }
         }
         if let poke = data.pokeCenter {
             pokeCenter = CGPoint(rawValue: poke)
