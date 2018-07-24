@@ -15,11 +15,11 @@ class AssetManager {
         guard PHPhotoLibrary.authorizationStatus() == .authorized else { return }
         
         DispatchQueue.global(qos: .background).async {
-            let fetchResult = PHAsset.fetchAssets(with: .image, options: PHFetchOptions())
+            let fetchResult = PHAsset.fetchAssets(with: self.makeFetchOptions())
             if fetchResult.count > 0 {
                 var assets = [PHAsset]()
                 fetchResult.enumerateObjects({ object, _, _ in
-                    assets.insert(object, at: 0)
+                    assets.append(object)
                 })
                 DispatchQueue.main.async {
                     completion(assets)
@@ -28,11 +28,21 @@ class AssetManager {
         }
     }
     
+    private static func makeFetchOptions() -> PHFetchOptions {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchOptions.predicate = NSPredicate(
+            format: "mediaType == %d || (mediaType == %d && duration >= %f)",
+            PHAssetMediaType.image.rawValue,
+            PHAssetMediaType.video.rawValue,
+            1.0
+        )
+        return fetchOptions
+    }
+    
     static func fetch() -> PHFetchResult<PHAsset>? {
         guard PHPhotoLibrary.authorizationStatus() == .authorized else { return nil }
-        let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        let result = PHAsset.fetchAssets(with: .image, options: options)
+        let result = PHAsset.fetchAssets(with: self.makeFetchOptions())
         return result
     }
     
@@ -57,7 +67,7 @@ class AssetManager {
         }
     }
     
-    open static func resolveAssets(_ assets: [PHAsset], size: CGSize = CGSize(width: 720, height: 1280)) -> [UIImage] {
+    static func resolveAssets(_ assets: [PHAsset], size: CGSize = CGSize(width: 720, height: 1280)) -> [UIImage] {
         let imageManager = PHImageManager.default()
         let requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = true
@@ -75,5 +85,33 @@ class AssetManager {
             }
         }
         return images
+    }
+    
+    static func resolveAVAsset(_ asset: PHAsset, completion: @escaping (URL?, TimeInterval?) -> Void) {
+        let options: PHVideoRequestOptions = PHVideoRequestOptions()
+        options.version = .original
+        PHImageManager
+            .default()
+            .requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, _, _) in
+                DispatchQueue.main.async {
+                    if let urlAsset = avAsset as? AVURLAsset {
+                        let duration = urlAsset.duration.seconds
+                        let url = URL.videoCacheURL(withName: urlAsset.url.lastPathComponent)
+                        if FileManager.default.fileExists(atPath: url.path) {
+                            completion(url, duration)
+                            return
+                        }
+                        do {
+                            try FileManager.default.copyItem(at: urlAsset.url, to: url)
+                            completion(url, duration)
+                        } catch {
+                            logger.error(error)
+                            completion(nil, nil)
+                        }
+                    } else {
+                        completion(nil, nil)
+                    }
+                }
+            })
     }
 }

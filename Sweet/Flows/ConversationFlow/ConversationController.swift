@@ -79,6 +79,7 @@ final class ConversationController: MessagesViewController, ConversationView {
     }
     
     override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
         guard parent == nil else { return }
         delegate?.conversationDidFinish()
     }

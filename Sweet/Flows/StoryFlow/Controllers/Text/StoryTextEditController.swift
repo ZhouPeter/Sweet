@@ -479,10 +479,6 @@ extension StoryTextEditController: UITextViewDelegate {
         updateTextEditTransform(animated: true)
     }
     
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        logger.debug(textView.selectedTextRange ?? "-")
-    }
-    
     private func adjustTextStorageFontSize() {
         let layoutManager = textView.layoutManager
         let range = NSRange(location: 0, length: layoutManager.numberOfGlyphs)

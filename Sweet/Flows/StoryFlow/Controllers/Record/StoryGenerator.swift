@@ -53,13 +53,35 @@ final class StoryGenerator {
     
     func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
         logger.debug(fileURL)
+        guard let track = AVAsset(url: fileURL).tracks(withMediaType: .video).first else {
+            callback(nil)
+            return
+        }
+        let videoSize = track.naturalSize.applying(track.preferredTransform)
         movie = GPUImageMovie(url: fileURL)
+        
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
-        writer = GPUImageMovieWriter(movieURL: url, size: StoryConfg.videoSize)
+        let renderSize = StoryConfg.videoSize
+        writer = GPUImageMovieWriter(movieURL: url, size: renderSize)
         writer?.shouldPassthroughAudio = true
         movie?.audioEncodingTarget = writer
         movie?.enableSynchronizedEncoding(using: writer)
-        movie?.addTarget(filter)
+        
+        let transformFilter = GPUImageTransformFilter()
+        var scaleX: CGFloat = 1
+        var scaleY: CGFloat = 1
+        let videoRatio = videoSize.width / videoSize.height
+        let renderRatio = renderSize.width / renderSize.height
+        if videoRatio > renderRatio {
+            scaleY = videoSize.height / renderSize.height * (renderSize.width / videoSize.width)
+        } else if (videoRatio < renderRatio) {
+            scaleX = videoSize.width / renderSize.width * (renderSize.height / videoSize.height)
+        }
+        logger.debug(videoSize, renderSize, scaleX, scaleY, videoRatio, renderRatio)
+        transformFilter.affineTransform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
+        movie?.addTarget(transformFilter)
+        transformFilter.addTarget(filter)
+        
         let imageView = UIImageView(image: overlay)
         let uiElement = GPUImageUIElement(view: imageView)
         filter.frameProcessingCompletionBlock = { _, time in uiElement?.update(withTimestamp: time) }

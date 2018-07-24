@@ -88,8 +88,13 @@ ProfileFlowFactory {
         return StoryRecordController(user: user)
     }
     
-    func makeStoryEditView(user: User, fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
-        return StoryEditController(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+    func makeStoryEditView(
+        user: User,
+        fileURL: URL,
+        isPhoto: Bool,
+        source: StoryMediaSource,
+        topic: String?) -> StoryEditView {
+        return StoryEditController(user: user, fileURL: fileURL, isPhoto: isPhoto, source: source, topic: topic)
     }
     
     func makeDismissableStoryRecordView(user: User, topic: String?) -> StoryRecordView {
@@ -114,10 +119,6 @@ ProfileFlowFactory {
     
     func makeAlbumView() -> AlbumView {
         return AlbumController()
-    }
-    
-    func makePhotoCropView(with photo: UIImage) -> PhotoCropView {
-        return PhotoCropController(with: photo)
     }
 }
 extension FlowFactoryImp: StoryPlayerFlowFactory {
