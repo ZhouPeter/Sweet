@@ -40,11 +40,6 @@ struct StoryCellViewModel {
         } else {
             imageURL = URL(string: model.content)
         }
-//        var selfModel = model
-//        selfModel.touchArea = [TouchPoint(x: 0.25, y: 0.25),
-//                               TouchPoint(x: 0.75, y: 0.25),
-//                               TouchPoint(x: 0.25, y: 0.75),
-//                               TouchPoint(x: 0.75, y: 0.75)]
         if model.touchArea.count > 2 {
             let path = CGMutablePath()
             for (index, touchPoint) in model.touchArea.enumerated() {

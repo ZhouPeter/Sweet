@@ -299,6 +299,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
             draft.topic = topic
             draft.overlayFilename = overlayFilename
             draft.filterFilename = filterName
+            draft.touchPoints = textController.makeTouchArea()
             finish(with: draft)
         } else {
             var pokeCenter: CGPoint?

@@ -291,7 +291,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
                 parameters["y"] = center.y
             }
             if let points = points {
-                parameters["touch-area"] = points.map { ["x": $0.x, "y": $0.y] }
+                parameters["touchArea"] = points.map { ["x": $0.x, "y": $0.y] }
             }
         case let .commentCard(cardId, emoji):
             parameters = ["cardId": cardId, "emoji": emoji]
