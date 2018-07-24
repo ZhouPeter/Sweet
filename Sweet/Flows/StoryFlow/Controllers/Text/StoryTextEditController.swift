@@ -224,7 +224,11 @@ final class StoryTextEditController: UIViewController {
         path.addLine(to: topLeft)
         path.close()
 //        debugAreaLayer.path = path.cgPath
-        return [topLeft, topRight, bottomRight, bottomLeft]
+        let width = view.bounds.width
+        let height = view.bounds.height
+        let scaled: (CGPoint) -> CGPoint = { return CGPoint(x: $0.x / width, y: $0.y / height) }
+        
+        return [scaled(topLeft), scaled(topRight), scaled(bottomRight), scaled(bottomLeft)]
     }
     
     // MARK: - Private
