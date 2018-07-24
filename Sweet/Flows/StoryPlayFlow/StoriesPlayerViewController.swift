@@ -36,7 +36,7 @@ class AVPlayerView: UIView {
 class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
-    var runProfileFlow: ((User, UInt64) -> Void)?
+    var runProfileFlow: ((UInt64) -> Void)?
     
     var isVisual = true
     var user: User
@@ -496,7 +496,7 @@ extension StoriesPlayerViewController {
 extension StoriesPlayerViewController {
     
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
-        runProfileFlow?(user, stories[currentIndex].userId)
+        runProfileFlow?(stories[currentIndex].userId)
     }
     
     @objc private func didPressTag(_ tap: UITapGestureRecognizer) {

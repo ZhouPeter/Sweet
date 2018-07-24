@@ -15,31 +15,45 @@ import SwiftyUserDefaults
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func delStory(storyId: UInt64)
     func updateStory(story: StoryCellViewModel, postion: (Int, Int))
+    func willDisAppper(index: Int)
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
     func delStory(storyId: UInt64) {}
     func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {}
+    func willDisAppper(index: Int) {}
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
-    var runProfileFlow: ((User, UInt64) -> Void)?
+    var runProfileFlow: ((UInt64) -> Void)?
     
     var runStoryFlow: ((String) -> Void)?
 
     var onFinish: (() -> Void)?
     
-    func pause() {
-        for cell in collectionView.visibleCells {
-            storiesPlayerControllerMap[cell]?.pause()
+    
+    var currentPlayController: StoriesPlayerViewController? {
+        if let cell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) {
+            return storiesPlayerControllerMap[cell]
         }
+        return nil
+    }
+    
+    
+    func pause() {
+        currentPlayController?.pause()
+//        for cell in collectionView.visibleCells {
+//            storiesPlayerControllerMap[cell]?.pause()
+//        }
     }
     
     func play() {
-        for cell in collectionView.visibleCells {
-            storiesPlayerControllerMap[cell]?.play()
-        }
+        currentPlayController?.play()
+
+//        for cell in collectionView.visibleCells {
+//            storiesPlayerControllerMap[cell]?.play()
+//        }
     }
     
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
@@ -71,7 +85,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     }()
     
     private var storiesPlayerControllerMap = [UICollectionViewCell: StoriesPlayerViewController]()
-    
+    private var isHasMoreStories = true
     init(user: User,
          storiesGroup: [[StoryCellViewModel]],
          currentIndex: Int,
@@ -89,6 +103,12 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
     deinit {
         logger.debug()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let index = storiesGroup[0..<currentIndex].reduce(0) { $0 + $1.count } + currentPlayController!.currentIndex
+        delegate?.willDisAppper(index: index)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -130,7 +150,8 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            dismiss(animated: true, completion: nil)
+            onFinish?()
+//            dismiss(animated: true, completion: nil)
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
@@ -181,9 +202,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 
     private func loadMoreStoriesGroup() {
         if storiesGroup[0][0].userId == user.userId {
-            if currentIndex == storiesGroup.count - 1 {
-                self.dismiss(animated: true, completion: nil)
-            }
+            isHasMoreStories = false
             return
         }
         if isLoading { return }
@@ -197,7 +216,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
                     self.appendGroup(storyCellViewModels: storyCellViewModels)
                 })
                 if response.list.count == 0 && self.currentIndex == self.storiesGroup.count - 1 {
-                    self.dismiss(animated: true, completion: nil)
+                    self.isHasMoreStories = false
                 }
             case let .failure(error):
                 logger.error(error)

@@ -18,17 +18,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.layer.cornerRadius = 2
         label.layer.masksToBounds = true
+        label.numberOfLines = 2
+
         return label
     }()
-    private var token: NSKeyValueObservation?
     
     lazy var storyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        token = imageView.observe(\.isAnimating, options: [.new], changeHandler: { (object, change) in
-            print(change.newValue ?? "")
-        })
         imageView.isHighlighted = false
         return imageView
     }()
@@ -69,7 +67,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(timeLabel)
         timeLabel.align(.left, inset: 5)
         timeLabel.align(.top, inset: 5)
-        timeLabel.constrain(width: 48, height: 24)
+        timeLabel.constrain(width: 40, height: 40)
         contentView.addSubview(recoveryImageView)
         recoveryImageView.align(.left, to: contentView, inset: 10)
         recoveryImageView.align(.bottom, to: contentView, inset: 10)
@@ -101,7 +99,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
         if viewModel.timestampString == ""  {
             timeLabel.isHidden = true
         } else {
-            timeLabel.text = viewModel.timestampString
+            let attributedString = NSMutableAttributedString(string: viewModel.timestampString)
+            attributedString.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)],
+                                           range: NSRange(location: 0, length: 2))
+            let monthLength = attributedString.length - 3
+            attributedString.addAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 10)],
+                                           range: NSRange(location: 3, length: monthLength))
+            timeLabel.attributedText = attributedString
             timeLabel.isHidden = false
         }
         if viewModel.created/1000 + 72 * 3600 < Int(Date().timeIntervalSince1970) {

@@ -186,6 +186,7 @@ class ProfileController: BaseViewController, ProfileView {
     
     @objc private func returnAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+        finished?()
     }
 
     override func willMove(toParentViewController parent: UIViewController?) {
@@ -411,16 +412,16 @@ extension ProfileController {
 
 
 extension ProfileController: ActionsControllerDelegate {
-    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView) {
-//        let contentHeight = scrollView.contentSize.height
-//        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
-//            return
-//        } else {
-//            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
-//                                 244 - UIScreen.navBarHeight())
-//            tableView.contentOffset.y = newOffsetY
-//            scrollView.contentOffset.y = contentHeight - scrollView.frame.height
-//        }
+    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
+        let contentHeight = scrollView.contentSize.height
+        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
+            return
+        } else {
+            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
+                                 244 - UIScreen.navBarHeight())
+            tableView.contentOffset.y = newOffsetY
+            scrollView.contentOffset.y = ((UIScreen.mainHeight() - 6) / 3 + 3) * CGFloat(ceil(CGFloat(index) / 3.0) + 1) - scrollView.frame.height
+        }
     }
     
     func actionsScrollViewDidScroll(scrollView: UIScrollView) {

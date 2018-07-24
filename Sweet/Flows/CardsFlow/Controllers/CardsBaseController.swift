@@ -53,7 +53,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             options: [.new, .old],
             changeHandler: { (object, change) in
             if change.newValue == change.oldValue { return }
-            if ceil(object.contentOffset.y + cardOffset)  == ceil(CGFloat(self.index) * cardCellHeight) {
+            if floor(object.contentOffset.y + cardOffset)  == floor(CGFloat(self.index) * cardCellHeight) {
                 if self.lastIndex == self.index { return }
                 self.changeCurrentCell()
                 self.lastIndex = self.index
