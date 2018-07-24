@@ -137,11 +137,8 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
             user: user,
             navigation: navigation,
-            current: 0,
-            currentStart: 0,
-            isGroup: false,
-            fromCardId: nil,
             storiesGroup: storiesGroup,
+            isCanOpenEdit: false,
             delegate: nil)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)

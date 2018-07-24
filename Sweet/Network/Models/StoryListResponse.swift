@@ -47,7 +47,7 @@ struct StoryResponse: Codable {
     let userId: UInt64
     let centerX: CGFloat?
     let centerY: CGFloat?
-    var touchArea: TouchArea?
+    var touchArea: [TouchPoint]
     let uvNum: UInt
     enum CodingKeys: String, CodingKey {
         case avatar
@@ -69,16 +69,16 @@ struct StoryResponse: Codable {
         case uvNum
     }
 }
-struct TouchArea: Codable {
-    let height: CGFloat
-    let width: CGFloat
+struct TouchPoint: Codable {
     let originX: CGFloat
     let originY: CGFloat
     enum CodingKeys: String, CodingKey {
-        case height
-        case width
         case originX = "x"
         case originY = "y"
+    }
+    init(x: CGFloat, y: CGFloat) {
+        originX = x
+        originY = y
     }
 }
 struct StoryGetResponse: Codable {

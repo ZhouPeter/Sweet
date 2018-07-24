@@ -12,6 +12,17 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     func makeStoryPlayerCoordinator(
         user: User,
         navigation: UINavigationController?,
+        storiesGroup: [[StoryCellViewModel]],
+        isCanOpenEdit: Bool,
+        delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
+        return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
+                                      coordinatorFactory: CoordinatorFactoryImp(), storiesGroup: storiesGroup,
+                                      delegate: delegate, isCanOpenEdit: isCanOpenEdit)
+    }
+    
+    func makeStoryPlayerCoordinator(
+        user: User,
+        navigation: UINavigationController?,
         fromMessageId: String?,
         storiesGroup: [[StoryCellViewModel]]) -> Coordinator & StoryPlayerCoordinatorOutput {
         return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
@@ -29,7 +40,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
                                       coordinatorFactory: CoordinatorFactoryImp(), storiesGroup: storiesGroup,
                                       current: 0, currentStart: currentStart, delegate: delegate,
-                                      isGroup: false, fromCardId: nil, fromUserId: fromUserId)
+                                      fromCardId: nil, fromUserId: fromUserId)
     }
 
     func makeStoryPlayerCoordinator(
@@ -37,14 +48,13 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         navigation: UINavigationController?,
         current: Int,
         currentStart: Int,
-        isGroup: Bool,
         fromCardId: String?,
         storiesGroup: [[StoryCellViewModel]],
         delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput {
         return StoryPlayerCoordinator(user: user, router: makeRouter(with: navigation), factory: FlowFactoryImp(),
                                       coordinatorFactory: CoordinatorFactoryImp(), storiesGroup: storiesGroup,
                                       current: current, currentStart: currentStart,
-                                      delegate: delegate, isGroup: isGroup, fromCardId: fromCardId)
+                                      delegate: delegate, fromCardId: fromCardId)
     }
     
     func makeProfileCoordinator(user: User, userID: UInt64,

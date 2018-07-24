@@ -115,6 +115,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         return menuButton
     }()
     
+    private lazy var touchAreaView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private lazy var progressView: StoryPlayProgressView = {
         let progressView = StoryPlayProgressView(count: stories.count, index: currentIndex)
         return progressView
@@ -143,18 +148,10 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         view.isHidden = true
         return view
     }()
-    
-    private lazy var tagButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.isHidden = true
-        button.addTarget(self, action: #selector(didPressTag(_:)), for: .touchUpInside)
-        return button
-    }()
 
     private var pokeLongPress: UILongPressGestureRecognizer!
     private var upPan: CustomPanGestureRecognizer!
-
+    private var touchTagTap: TapGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -186,17 +183,19 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         view.addGestureRecognizer(pokeLongPress)
         upPan = CustomPanGestureRecognizer(orientation: .up, target: self, action: #selector(upPanAction(_:)))
         view.addGestureRecognizer(upPan)
+        touchTagTap = TapGestureRecognizer(target: self, action: #selector(didPressTag(_:)))
+        view.addGestureRecognizer(touchTagTap)
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
                                                                   width: UIScreen.mainWidth(),
                                                                   height: UIScreen.mainHeight()))
+        storiesScrollView.scrollViewTap.require(toFail: touchTagTap)
         view.addSubview(storiesScrollView)
         storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
-        view.addSubview(tagButton)
         setTopUI()
         setBottmUI()
         update()
@@ -306,11 +305,12 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.isHidden = true
             pokeLongPress.isEnabled = false
         }
-        if let touchArea = stories[currentIndex].touchArea {
-            tagButton.isHidden = false
-            tagButton.frame = touchArea
+
+        if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
+            touchTagTap.isEnabled = true
+            touchTagTap.path = path
         } else {
-            tagButton.isHidden = true
+            touchTagTap.isEnabled = false
         }
     }
     
@@ -499,7 +499,7 @@ extension StoriesPlayerViewController {
         runProfileFlow?(user, stories[currentIndex].userId)
     }
     
-    @objc private func didPressTag(_ sender: UIButton) {
+    @objc private func didPressTag(_ tap: UITapGestureRecognizer) {
         let topic = stories[currentIndex].tag
         runStoryFlow?(topic)
     }

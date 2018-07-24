@@ -112,7 +112,7 @@ class StoryPublishTask: AsynchronousOperation {
                     type: self.draft.storyType,
                     topic: self.draft.topic,
                     pokeCenter: self.draft.pokeCenter,
-                    contentRect: self.draft.contentRect
+                    touchPoints: self.draft.touchPoints
                 ),
                 completion: { (result) in
                     logger.debug(result)
