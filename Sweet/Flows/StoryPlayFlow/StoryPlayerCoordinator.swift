@@ -81,9 +81,9 @@ extension StoryPlayerCoordinator {
                 })
             }
         }
-        storiesGroupView.runProfileFlow = { [weak self, weak storiesGroupView] (user, buddyID) in
+        storiesGroupView.runProfileFlow = { [weak self, weak storiesGroupView] (buddyID) in
             storiesGroupView?.pause()
-            self?.runProfileFlow(user: user, buddyID: buddyID, finishBlock: {
+            self?.runProfileFlow(buddyID: buddyID, finishBlock: {
                 storiesGroupView?.play()
             })
         }
@@ -103,8 +103,8 @@ extension StoryPlayerCoordinator {
         coordinator.start()
     }
     
-    private func runProfileFlow(user: User, buddyID: UInt64, finishBlock: (() -> Void)?) {
-        if buddyID == fromUserId {
+    private func runProfileFlow(buddyID: UInt64, finishBlock: (() -> Void)?) {
+        if buddyID == user.userId {
             self.router.dismissFlow()
             self.finishFlow?()
             return

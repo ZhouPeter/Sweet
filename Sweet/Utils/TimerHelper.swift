@@ -83,7 +83,7 @@ class TimerHelper {
     
     class func timeToMonthDay(timeInterval: TimeInterval) -> String {
         let formatter =  DateFormatter()
-        formatter.dateFormat = "MM/dd"
+        formatter.dateFormat = "dd\nM月"
         var timeInterval = Int(timeInterval)
         if String(timeInterval).count == 13 {
             timeInterval /= 1000

@@ -16,7 +16,7 @@ protocol PageChildrenProtocol {
 
 protocol ActionsControllerDelegate: NSObjectProtocol {
     func actionsScrollViewDidScroll(scrollView: UIScrollView)
-    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView)
+    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int)
 }
 class ActionsController: PageboyViewController {
     var showStoriesPlayerView: (
@@ -69,8 +69,8 @@ class ActionsController: PageboyViewController {
 
 }
 extension ActionsController: ActivitiesControllerDelegate, StoriesControllerDelegate {
-    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView) {
-        actionsDelegate?.actionsSrollViewDidScrollToBottom(scrollView: scrollView)
+    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
+        actionsDelegate?.actionsSrollViewDidScrollToBottom(scrollView: scrollView, index: index)
     }
     
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView) {

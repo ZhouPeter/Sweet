@@ -89,7 +89,7 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 protocol StoriesControllerDelegate: NSObjectProtocol {
     func storiesScrollViewDidScroll(scrollView: UIScrollView)
-    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView)
+    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int)
 }
 class StoriesController: UIViewController, PageChildrenProtocol {
     
@@ -175,9 +175,9 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                     self.reviewViewModels()
                     self.collectionView.contentOffset = .zero
                     self.collectionView.reloadData()
-                    self.collectionView.performBatchUpdates(nil, completion: { (_) in
-                        self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView)
-                    })
+//                    self.collectionView.performBatchUpdates(nil, completion: { (_) in
+//                        self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView, index: storyViewModels.count - 1)
+//                    })
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -265,5 +265,8 @@ extension StoriesController: StoriesPlayerGroupViewControllerDelegate {
         guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
         storyViewModels.remove(at: index)
         collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+    }
+    func willDisAppper(index: Int) {
+        delegate?.storiesScrollViewDidScrollToBottom(scrollView: collectionView, index: index)
     }
 }

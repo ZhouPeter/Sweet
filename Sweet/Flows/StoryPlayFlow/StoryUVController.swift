@@ -11,7 +11,7 @@ protocol StoryUVControllerDelegate: NSObjectProtocol {
     func closeStoryUV()
 }
 class StoryUVController: BaseViewController {
-    var runProfileFlow: ((User, UInt64) -> Void)?
+    var runProfileFlow: ((UInt64) -> Void)?
     weak var delegate: StoryUVControllerDelegate?
     var user: User
     private let storyId: UInt64
@@ -132,6 +132,6 @@ extension StoryUVController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        runProfileFlow?(user, storyUvList!.list[indexPath.row].userId)
+        runProfileFlow?(storyUvList!.list[indexPath.row].userId)
     }
 }
