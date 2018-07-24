@@ -77,7 +77,6 @@ final class StoryGenerator {
         } else if (videoRatio < renderRatio) {
             scaleX = videoSize.width / renderSize.width * (renderSize.height / videoSize.height)
         }
-        logger.debug(videoSize, renderSize, scaleX, scaleY, videoRatio, renderRatio)
         transformFilter.affineTransform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
         movie?.addTarget(transformFilter)
         transformFilter.addTarget(filter)
