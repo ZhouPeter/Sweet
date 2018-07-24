@@ -92,31 +92,43 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
         var storiesGroup = [[StoryCellViewModel]]()
-        var beforeDay: String = ""
-        var storiesByDay = [StoryCellViewModel]()
         var newCurrent = 0
         var newCurrentStart = 0
-        var sumCount = 0
-        for story in stories {
-            let day = TimerHelper.storyTime(timeInterval: TimeInterval(story.created)).day
-            if day == beforeDay {
-                storiesByDay.append(story)
-            } else {
-                if storiesByDay.count > 0 {
-                    storiesGroup.append(storiesByDay)
-                    storiesByDay.removeAll()
+        if self.user.userId == buddyID {
+            var beforeDay: String = ""
+            var storiesByDay = [StoryCellViewModel]()
+            var sumCount = 0
+            for (index,story) in stories.enumerated() {
+                let day = TimerHelper.storyTime(timeInterval: TimeInterval(story.created)).day
+                if day == beforeDay {
+                    storiesByDay.append(story)
+                    if index == stories.count - 1 {
+                        storiesGroup.append(storiesByDay)
+                    }
+                } else {
+                    if storiesByDay.count > 0 {
+                        storiesGroup.append(storiesByDay)
+                        storiesByDay.removeAll()
+                    }
+                    storiesByDay.append(story)
+                    if index == stories.count - 1 {
+                        storiesGroup.append(storiesByDay)
+                    }
                 }
-                storiesByDay.append(story)
+                beforeDay = day
             }
-            beforeDay = day
-        }
-        for (index, stories) in storiesGroup.enumerated() {
-            sumCount += stories.count
-            if sumCount > current {
-                newCurrent = index
-                newCurrentStart = sumCount - current - stories.count
-                break
+            for (index, stories) in storiesGroup.enumerated() {
+                sumCount += stories.count
+                if sumCount > current {
+                    newCurrent = index
+                    newCurrentStart = stories.count - (sumCount - (current + 1)) - 1
+                    break
+                }
             }
+        } else {
+            newCurrentStart = current
+            newCurrent = 0
+            storiesGroup = [stories]
         }
         
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
@@ -124,7 +136,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
             navigation: navigation,
             current: newCurrent,
             currentStart: newCurrentStart,
-            isGroup: true,
             fromCardId: nil,
             storiesGroup: storiesGroup,
             delegate: delegate)

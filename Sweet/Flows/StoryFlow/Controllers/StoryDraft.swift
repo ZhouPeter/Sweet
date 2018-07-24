@@ -13,7 +13,7 @@ struct StoryDraft {
     let storyType: StoryType
     var topic: String?
     var pokeCenter: CGPoint?
-    var contentRect: CGRect?
+    var touchPoints: [CGPoint]?
     let date: Date
     var fileURL: URL {
         var name: String
@@ -43,8 +43,8 @@ struct StoryDraft {
         storyType = type
         topic = data.topic
         date = data.date
-        if let content = data.contentRect {
-            contentRect = CGRect(rawValue: content)
+        if !data.touchPoints.isEmpty {
+            touchPoints = data.touchPoints.compactMap { CGPoint(rawValue: $0) }
         }
         if let poke = data.pokeCenter {
             pokeCenter = CGPoint(rawValue: poke)

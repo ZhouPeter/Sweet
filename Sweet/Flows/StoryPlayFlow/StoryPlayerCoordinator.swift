@@ -21,12 +21,12 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
     private let storiesGroup: [[StoryCellViewModel]]
     private let current: Int
     private let currentStart: Int
-    private let isGroup: Bool
     private weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     private weak var playerDelegate: StoriesPlayerViewControllerDelegate?
     private let fromCardId: String?
     private let fromUserId: UInt64?
     private let fromMessageId: String?
+    private let isCanOpenEdit: Bool
     init(user: User,
          router: Router,
          factory: StoryPlayerFlowFactory,
@@ -35,10 +35,10 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
          current: Int = 0,
          currentStart: Int = 0,
          delegate: StoriesPlayerGroupViewControllerDelegate? = nil,
-         isGroup: Bool = false,
          fromCardId: String? = nil,
          fromUserId: UInt64? = nil,
-         fromMessageId: String? = nil) {
+         fromMessageId: String? = nil,
+         isCanOpenEdit: Bool = true) {
         self.user = user
         self.router = router
         self.factory = factory
@@ -46,19 +46,15 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
         self.storiesGroup = storiesGroup
         self.current = current
         self.currentStart = currentStart
-        self.isGroup = isGroup
         self.delegate = delegate
         self.fromCardId = fromCardId
         self.fromUserId = fromUserId
         self.fromMessageId = fromMessageId
+        self.isCanOpenEdit = isCanOpenEdit
     }
     
     override func start() {
-        if isGroup {
-            showStoriesGroupView()
-        } else {
-            showStoriesGroupView()
-        }
+        showStoriesGroupView()
     }
     
 }
@@ -77,11 +73,13 @@ extension StoryPlayerCoordinator {
             self?.router.dismissFlow()
             self?.finishFlow?()
         }
-        storiesGroupView.runStoryFlow = { [weak self, weak storiesGroupView] topic in
-            storiesGroupView?.pause()
-            self?.runStoryFlow(topic: topic, finishBlock: {
-                storiesGroupView?.play()
-            })
+        if isCanOpenEdit {
+            storiesGroupView.runStoryFlow = { [weak self, weak storiesGroupView] topic in
+                storiesGroupView?.pause()
+                self?.runStoryFlow(topic: topic, finishBlock: {
+                    storiesGroupView?.play()
+                })
+            }
         }
         storiesGroupView.runProfileFlow = { [weak self, weak storiesGroupView] (user, buddyID) in
             storiesGroupView?.pause()
@@ -90,33 +88,6 @@ extension StoryPlayerCoordinator {
             })
         }
         router.setRootFlow(storiesGroupView)
-    }
-    
-    private func showStoriesPlayerView() {
-        let storiesPlayerView = factory.makeStoriesPlayerView(
-            user: user,
-            stories: storiesGroup[0],
-            current: current,
-            delegate: playerDelegate)
-        storiesPlayerView.onFinish = { [weak self] in
-            self?.router.popFlow()
-            self?.finishFlow?()
-        }
-        storiesPlayerView.runStoryFlow = { [weak self, weak storiesPlayerView] topic in
-            storiesPlayerView?.pause()
-            self?.runStoryFlow(topic: topic, finishBlock: {
-                storiesPlayerView?.play()
-            })
-        }
-        storiesPlayerView.runProfileFlow = { [weak self, weak storiesPlayerView] (user, buddyID) in
-            storiesPlayerView?.pause()
-            self?.runProfileFlow(user: user, buddyID: buddyID, finishBlock: {
-                storiesPlayerView?.play()
-            })
-        }
-        _ = storiesPlayerView.toPresent()?.view
-        storiesPlayerView.reloadPlayer()
-        router.setRootFlow(storiesPlayerView)
     }
     
     private func runStoryFlow(topic: String, finishBlock: (() -> Void)?){
