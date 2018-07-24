@@ -28,9 +28,14 @@ protocol CoordinatorFactory {
         navigation: UINavigationController?,
         current: Int,
         currentStart: Int,
-        isGroup: Bool,
         fromCardId: String?,
         storiesGroup: [[StoryCellViewModel]],
+        delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput
+    func makeStoryPlayerCoordinator(
+        user: User,
+        navigation: UINavigationController?,
+        storiesGroup: [[StoryCellViewModel]],
+        isCanOpenEdit: Bool,
         delegate: StoriesPlayerGroupViewControllerDelegate?) -> Coordinator & StoryPlayerCoordinatorOutput
     func makeStoryPlayerCoordinator(
         user: User,

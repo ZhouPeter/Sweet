@@ -301,7 +301,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.isHidden = true
             pokeLongPress.isEnabled = false
         }
-        if let path = stories[currentIndex].touchPath {
+        if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
         } else {
