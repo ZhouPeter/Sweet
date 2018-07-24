@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 import AVKit
 import VolumeBar
 import Contacts
+import Kingfisher
 var allowRotation = false
 
 @UIApplicationMain
@@ -49,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         uploadContacts()
         addObservers()
+        KingfisherManager.shared.cache.maxMemoryCost = 100 * 1024 * 1024
         return true
     }
     

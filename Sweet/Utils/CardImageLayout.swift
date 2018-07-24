@@ -78,7 +78,7 @@ extension ContentCardCollectionViewCell {
             let y = contentImageView.bounds.height - containerSize.height
             container.frame = CGRect(origin: CGPoint(x: 0, y: y),size: containerSize)
         }
-        setImage(url: urls[0], index: 0)
+        setImage(url: urls[0], index: 0, isAutoAnimating: true)
     }
     
     func two(urls: [URL]) {
@@ -511,14 +511,14 @@ extension ContentCardCollectionViewCell {
         }
     }
 
-    func setImage(url : URL?, index: Int) {
+    func setImage(url : URL?, index: Int, isAutoAnimating: Bool = false) {
         let imageView = imageViews[index]
         let imageIcon = imageIcons[index]
         customContent.layoutIfNeeded()
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
             if info.format == "gif" {
-                imageIcon.isHidden = false
+                imageIcon.isHidden = isAutoAnimating
                 imageIcon.setTitle("GIF", for: .normal)
             } else {
                 if CGFloat(info.height) / CGFloat(info.width) > 1.95 {
@@ -532,6 +532,7 @@ extension ContentCardCollectionViewCell {
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
         imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
             guard image != nil else { return }
+            if !isAutoAnimating { imageView.stopAnimating() }
             UIView.animate(withDuration: 0.25, animations: {
                 imageView.alpha = 1
             })

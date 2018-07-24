@@ -91,12 +91,43 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        current: Int,
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
-        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: self.user,
-                                                                        navigation: navigation,
-                                                                        currentStart: current,
-                                                                        fromUserId: buddyID,
-                                                                        storiesGroup: [stories],
-                                                                        delegate: delegate)
+        var storiesGroup = [[StoryCellViewModel]]()
+        var beforeDay: String = ""
+        var storiesByDay = [StoryCellViewModel]()
+        var newCurrent = 0
+        var newCurrentStart = 0
+        var sumCount = 0
+        for story in stories {
+            let day = TimerHelper.storyTime(timeInterval: TimeInterval(story.created)).day
+            if day == beforeDay {
+                storiesByDay.append(story)
+            } else {
+                if storiesByDay.count > 0 {
+                    storiesGroup.append(storiesByDay)
+                    storiesByDay.removeAll()
+                }
+                storiesByDay.append(story)
+            }
+            beforeDay = day
+        }
+        for (index, stories) in storiesGroup.enumerated() {
+            sumCount += stories.count
+            if sumCount > current {
+                newCurrent = index
+                newCurrentStart = sumCount - current - stories.count
+                break
+            }
+        }
+        
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
+            user: user,
+            navigation: navigation,
+            current: newCurrent,
+            currentStart: newCurrentStart,
+            isGroup: true,
+            fromCardId: nil,
+            storiesGroup: storiesGroup,
+            delegate: delegate)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

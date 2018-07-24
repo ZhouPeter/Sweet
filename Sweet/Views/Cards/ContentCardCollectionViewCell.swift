@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func contentCardComment(cardId: String, emoji: Int)
@@ -34,7 +35,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return imageView
     } ()
     
-    var imageViews = [UIImageView]()
+    var imageViews = [AnimatedImageView]()
     var imageViewContainers = [UIView]()
     var imageIcons = [UIButton]()
     lazy var emojiView: EmojiControlView = {
@@ -104,7 +105,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageIcon.titleLabel?.font = UIFont.systemFont(ofSize: 12)
             imageIcon.titleLabel?.textColor = .white
             imageIcons.append(imageIcon)
-            let imageView = UIImageView()
+            let imageView = AnimatedImageView()
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
             imageView.tag = index
