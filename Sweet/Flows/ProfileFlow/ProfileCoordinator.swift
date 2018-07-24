@@ -121,7 +121,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                 sumCount += stories.count
                 if sumCount > current {
                     newCurrent = index
-                    newCurrentStart = sumCount - current - stories.count
+                    newCurrentStart = stories.count - (sumCount - (current + 1)) - 1
                     break
                 }
             }
