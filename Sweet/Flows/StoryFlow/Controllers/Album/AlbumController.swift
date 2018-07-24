@@ -142,7 +142,7 @@ extension AlbumController: UICollectionViewDelegate {
                 controller.videoPath = url.path
                 controller.videoMaximumDuration = 10
                 controller.delegate = self
-                controller.videoQuality = .typeMedium
+                controller.videoQuality = .typeHigh
                 self.isTrimmed = false
                 self.present(controller, animated: true, completion: nil)
             }

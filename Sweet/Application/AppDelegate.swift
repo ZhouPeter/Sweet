@@ -35,6 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        #if DEBUG
+        try? FileManager.default.removeItem(at: URL.cachesURL())
+        #endif
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()

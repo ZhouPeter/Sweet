@@ -105,6 +105,7 @@ class StoryPublishTask: AsynchronousOperation {
                 completion(false)
                 return
             }
+            logger.debug(token.urlString)
             web.request(
                 .publishStory(
                     url: token.urlString,
