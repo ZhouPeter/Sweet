@@ -183,25 +183,25 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 }
         }
     }
-    
-    func loadMoreRequest() {
-        if loadFinish { return }
-        page += 1
-        web.request(
-            .storyList(page: page, userId: user.userId),
-            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case let .success(response):
-                    self.loadFinish = response.list.count < 20
-                    self.storyViewModels.append(contentsOf: response.list.map({ return StoryCellViewModel(model: $0)}))
-                    self.reviewViewModels()
-                    self.collectionView.reloadData()
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
-    }
+//
+//    func loadMoreRequest() {
+//        if loadFinish { return }
+//        page += 1
+//        web.request(
+//            .storyList(page: page, userId: user.userId),
+//            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
+//                guard let `self` = self else { return }
+//                switch result {
+//                case let .success(response):
+//                    self.loadFinish = response.list.count < 20
+//                    self.storyViewModels.append(contentsOf: response.list.map({ return StoryCellViewModel(model: $0)}))
+//                    self.reviewViewModels()
+//                    self.collectionView.reloadData()
+//                case let .failure(error):
+//                    logger.error(error)
+//                }
+//        }
+//    }
     
     private func reviewViewModels() {
         for index in 0..<storyViewModels.count {
@@ -250,13 +250,13 @@ extension StoriesController: UICollectionViewDelegate {
         showStoriesPlayerView?(user, storyViewModels, indexPath.item, self)
     
     }
-    func collectionView(_ collectionView: UICollectionView,
-                        willDisplay cell: UICollectionViewCell,
-                        forItemAt indexPath: IndexPath) {
-        if indexPath.row == storyViewModels.count - 1 {
-            loadMoreRequest()
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView,
+//                        willDisplay cell: UICollectionViewCell,
+//                        forItemAt indexPath: IndexPath) {
+//        if indexPath.row == storyViewModels.count - 1 {
+//            loadMoreRequest()
+//        }
+//    }
 }
 
 extension StoriesController: StoriesPlayerGroupViewControllerDelegate {

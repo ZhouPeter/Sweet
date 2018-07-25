@@ -118,6 +118,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         controller.resource = playerView.resource
         self.playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
+        isVideoMuted = false
+        playerView.isHasVolume = !isVideoMuted
     }
     
     init(user: User) {
@@ -314,7 +316,7 @@ extension CardsBaseController {
             weak var weakCell = cell
             if let resource = playerView.resource,
                 resource.indexPath == indexPath,
-               resource.definitions[0].url == configurator.viewModel.videoURL {
+                resource.definitions[0].url == configurator.viewModel.videoURL {
                 playerView.isHasVolume = !isVideoMuted
                 playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                     playerView?.play()

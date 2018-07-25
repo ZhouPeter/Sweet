@@ -420,7 +420,9 @@ extension ProfileController: ActionsControllerDelegate {
             let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
                                  244 - UIScreen.navBarHeight())
             tableView.contentOffset.y = newOffsetY
-            scrollView.contentOffset.y = ((UIScreen.mainHeight() - 6) / 3 + 3) * CGFloat(ceil(CGFloat(index) / 3.0) + 1) - scrollView.frame.height
+            let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
+            let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
+            scrollView.contentOffset.y = cellHeight * lineCount - scrollView.frame.height
         }
     }
     
@@ -469,6 +471,11 @@ extension ProfileController: UITableViewDelegate {
                     scrollView.contentOffset.y = -UIScreen.navBarHeight()
                 }
             }
+        }
+        if  scrollView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+            navigationItem.titleView = avatarView
+        } else {
+            navigationItem.titleView = nil
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

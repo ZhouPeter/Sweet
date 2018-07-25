@@ -234,7 +234,6 @@ extension CardsBaseController {
             let imageView = cell.imageViews[originPageIndex]
             imageView.startAnimating()
             imageIcon.isHidden = true
-            return
         }
         let imageURLs = configurator.viewModel.imageURLList!
         let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)

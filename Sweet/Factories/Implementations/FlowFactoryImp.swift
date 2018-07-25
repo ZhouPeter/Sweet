@@ -154,16 +154,16 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
 }
 
 extension FlowFactoryImp: IMFlowFactory {
-    func makeContactSearchOutput() -> ContactSearchView {
-        return ContactSearchController()
-    }
-    
     func makeIMView() -> IMView {
         return IMController()
     }
 }
 
 extension FlowFactoryImp: ContactsFlowFactory {
+    func makeSearchOutput() -> ContactSearchView {
+        return ContactSearchController()
+    }
+    
     func makeContactsView() -> ContactsView {
         return ContactsController()
     }

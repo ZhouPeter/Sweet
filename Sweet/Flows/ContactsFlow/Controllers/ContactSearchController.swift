@@ -9,12 +9,10 @@
 import UIKit
 
 protocol ContactSearchView: BaseView {
-    var back:(() -> Void)? { get set }
     var showProfile: ((UInt64) -> Void)? { get set }
 }
 
 class ContactSearchController: BaseViewController, ContactSearchView {
-    var back: (() -> Void)?
     var showProfile: ((UInt64) -> Void)?
     var contactViewModels = [ContactViewModel]()
     var subscriptionsViewModels = [ContactViewModel]()
@@ -62,14 +60,20 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         navigationItem.hidesBackButton = true
         navigationItem.titleView = searchBar
         view.addSubview(tableView)
-        tableView.fill(in: view)
+//        tableView.fill(in: view)
+        tableView.align(.left)
+        tableView.align(.right)
+        tableView.align(.bottom)
+        tableView.align(.top)
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         if #available(iOS 11.0, *) {
-            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
         }
     }
     
