@@ -56,14 +56,6 @@ extension IMCoordinator: IMViewDelegate {
         updateAvatar()
     }
     
-    func imViewDidPressSearchButton() {
-        let searchView = factory.makeContactSearchOutput()
-        searchView.showProfile = { [weak self] userId in
-            self?.showProfile(userID: userId)
-        }
-        router.push(searchView)
-    }
-    
     func imViewDidPressAvatarButton() {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
                                                                          userID: user.userId,

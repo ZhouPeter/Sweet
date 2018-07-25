@@ -36,6 +36,12 @@ final class ContactsCoordinator: BaseCoordinator {
 }
 
 extension ContactsCoordinator: ContactsViewDelegate {
+    func contactsShowSearch(searchView: ContactSearchView) {
+        searchView.showProfile = { [weak self] userId in
+            self?.addProfileCoordinator(userID: userId)
+        }
+    }
+    
     func contactsShowSubscription() {
         let subscriptionView = factory.makeSubscriptionOutput()
         subscriptionView.showProfile = { [weak self] userId in
@@ -50,25 +56,25 @@ extension ContactsCoordinator: ContactsViewDelegate {
         router.push(inviteView)
     }
     
-    func contactsShowBlock() {
-        let blockView = factory.makeBlockOutput()
-        blockView.showProfile = { [weak self] userId in
-            self?.addProfileCoordinator(userID: userId)
-        }
-        router.push(blockView)
-    }
+//    func contactsShowBlock() {
+//        let blockView = factory.makeBlockOutput()
+//        blockView.showProfile = { [weak self] userId in
+//            self?.addProfileCoordinator(userID: userId)
+//        }
+//        router.push(blockView)
+//    }
     
     func contactsShowProfile(userID: UInt64) {
         addProfileCoordinator(userID: userID)
     }
     
-    func contactsShowBlack() {
-        let blackView = factory.makeBlackOutput()
-        blackView.showProfile = { [weak self] userId in
-            self?.addProfileCoordinator(userID: userId)
-        }
-        router.push(blackView)
-    }
+//    func contactsShowBlack() {
+//        let blackView = factory.makeBlackOutput()
+//        blackView.showProfile = { [weak self] userId in
+//            self?.addProfileCoordinator(userID: userId)
+//        }
+//        router.push(blackView)
+//    }
     
     private func addProfileCoordinator(userID: UInt64) {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userID, router: router)

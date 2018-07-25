@@ -14,4 +14,5 @@ protocol ContactsFlowFactory {
     func makeBlackOutput() -> BlackView
     func makeBlockOutput() -> BlockView
     func makeSubscriptionOutput() -> SubscriptionView
+    func makeSearchOutput() -> ContactSearchView
 }

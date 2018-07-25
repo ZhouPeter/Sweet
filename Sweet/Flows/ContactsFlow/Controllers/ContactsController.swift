@@ -55,6 +55,7 @@ class ContactsController: BaseViewController, ContactsView {
         searchController.searchBar.setCancelText(text: "返回", textColor: .black)
         searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
         searchController.searchBar.setBorderColor(borderColor: UIColor(hex: 0xF2F2F2))
+        searchController.searchBar.delegate = self
         return searchController
     }()
     // MARK: - Private
@@ -145,15 +146,19 @@ class ContactsController: BaseViewController, ContactsView {
             switch result {
             case .success:
                 self.loadContacts()
-//                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
-//                self.allViewModels[index].callBack = nil
-//                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-//                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
-//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
             case let .failure(error):
                 logger.error(error)
             }
         }
+    }
+}
+extension ContactsController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        if let searchView = searchController.searchResultsController as? ContactSearchView {
+            delegate?.contactsShowSearch(searchView: searchView)
+        }
+        return true
+        
     }
 }
 
@@ -163,6 +168,7 @@ extension ContactsController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 { return nil }
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerView") as? SweetHeaderView
         view?.update(title: section == 0 ? "" : titles[section - 1])
         return view
