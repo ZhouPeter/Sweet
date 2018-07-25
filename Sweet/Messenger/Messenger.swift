@@ -149,6 +149,7 @@ final class Messenger {
         var request = ActiveSyncReq()
         request.status = UIApplication.shared.applicationState == .background ? .background : .foreground
         send(request, responseType: ActiveSyncResp.self, callback: nil)
+        connect()
     }
     
     // MARK: - Messages
@@ -602,4 +603,3 @@ final class Messenger {
         UIApplication.shared.applicationIconBadgeNumber = count
     }
 }
-
