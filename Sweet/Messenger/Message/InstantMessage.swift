@@ -112,7 +112,7 @@ extension InstantMessage {
         sentDate = data.sentDate
         isSent = data.isSent
         isRead = data.isRead
-        isFailed = data.isFailed
+        isFailed = !data.isSent
         extra = data.extra
         parseContent()
     }
