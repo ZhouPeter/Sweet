@@ -451,10 +451,15 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        guard let section = messages.firstIndex(where: { $0.localID == message.localID }) else  { return }
-        let indexPath = IndexPath(row: 0, section: section)
-        messages[indexPath.section] = message
-        messagesCollectionView.reloadSections([section])
+        if let section = messages.firstIndex(where: { $0.localID == message.localID }) {
+            let indexPath = IndexPath(row: 0, section: section)
+            messages[indexPath.section] = message
+            messagesCollectionView.reloadSections([section])
+        } else {
+            messages.append(message)
+            messagesCollectionView.insertSections([messages.count - 1])
+            messagesCollectionView.scrollToBottom(animated: true)
+        }
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {
