@@ -203,6 +203,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         }, completion: nil)
         shootButton.resetProgress()
         avatarCircle.isHidden = true
+        chooseCameraRecord()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -249,6 +250,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     
     func chooseCameraRecord() {
+        guard current != .record else { return }
         bottomView.selectBottomButton(at: 1, animated: false)
         switchStoryType(.record, animated: false)
     }
