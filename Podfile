@@ -5,6 +5,7 @@ target 'Sweet' do
   use_frameworks!
 
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
   pod 'Moya', '~> 11.0'
   pod 'UMCPush'
   pod 'RealmSwift'

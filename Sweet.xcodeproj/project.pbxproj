@@ -943,6 +943,10 @@
 		AC742DC72106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC742DC52106CFFA00B18DED /* VideoTrimmerViewController.swift */; };
 		AC742DC82106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC742DC52106CFFA00B18DED /* VideoTrimmerViewController.swift */; };
 		AC742DC92106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC742DC52106CFFA00B18DED /* VideoTrimmerViewController.swift */; };
+		AC744E562109AD1900E6D131 /* DebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC744E552109AD1900E6D131 /* DebugWindow.swift */; };
+		AC744E572109AD1900E6D131 /* DebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC744E552109AD1900E6D131 /* DebugWindow.swift */; };
+		AC744E582109AD1900E6D131 /* DebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC744E552109AD1900E6D131 /* DebugWindow.swift */; };
+		AC744E592109AD1900E6D131 /* DebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC744E552109AD1900E6D131 /* DebugWindow.swift */; };
 		AC7C8E5420E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */; };
 		AC7C8E5520E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */; };
 		AC7C8E5620E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */; };
@@ -1692,6 +1696,7 @@
 		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
 		AC6C1D8D20A993F500F45F82 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		AC742DC52106CFFA00B18DED /* VideoTrimmerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTrimmerViewController.swift; sourceTree = "<group>"; };
+		AC744E552109AD1900E6D131 /* DebugWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugWindow.swift; sourceTree = "<group>"; };
 		AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationControllerDelegate.swift; sourceTree = "<group>"; };
 		AC84120D20887C800086891C /* UIDevice+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceType.swift"; sourceTree = "<group>"; };
 		AC841212208881A40086891C /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
@@ -2471,6 +2476,7 @@
 				ACA323492087497900BDC92E /* AppDelegate.swift */,
 				ACA3234E2087498900BDC92E /* ApplicationCoordinator.swift */,
 				ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */,
+				AC744E552109AD1900E6D131 /* DebugWindow.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -2981,6 +2987,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
@@ -3011,6 +3018,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
@@ -3143,6 +3151,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/Gemini/Gemini.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
@@ -3173,6 +3182,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gemini.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
@@ -3475,6 +3485,7 @@
 				58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
+				AC744E562109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				58BD52B9208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -3863,6 +3874,7 @@
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				58CE1ED720A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9B20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
+				AC744E582109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
 				AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
@@ -4034,6 +4046,7 @@
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
+				AC744E592109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				AC84FE7420E21B5D008FC795 /* DashView.swift in Sources */,
 				AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
@@ -4459,6 +4472,7 @@
 				58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
+				AC744E572109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				58BD52BA208882EC00F7C3E1 /* SignUpEnrollmentView.swift in Sources */,
 				ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,

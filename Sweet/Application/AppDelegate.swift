@@ -38,10 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         #if DEBUG
-        try? FileManager.default.removeItem(at: URL.cachesURL())
+            window = DebugWindow(frame: UIScreen.main.bounds)
+        #else
+            window = UIWindow(frame: UIScreen.main.bounds)
         #endif
         
-        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
         setupVolumeBar()
