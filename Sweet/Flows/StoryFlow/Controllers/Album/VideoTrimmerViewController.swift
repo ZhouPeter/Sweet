@@ -45,8 +45,10 @@ class VideoTrimmerViewController: UIViewController {
         title = "裁剪视频"
         rightBarButtonItem.isEnabled = false
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        trimmerView.handleColor = .white
-        trimmerView.mainColor = UIColor(hex: 0x36C6FD)
+        trimmerView.backgroundColor = UIColor(hex: 0x252525)
+        trimmerView.handleColor = UIColor(hex: 0xa0a0a0)
+        trimmerView.positionBarColor = UIColor(hex: 0x36C6FD)
+        trimmerView.mainColor = .white
         playerView.backgroundColor = .black
         view.addSubview(playerView)
         playerView.align(.left)
