@@ -98,7 +98,9 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                 }, callback: { (_) in
                     Messenger.shared.loadConversations()
                 })
-                PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: nil)
+                PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: {
+                    controller.didUnblock()
+                })
             }
         }
     }

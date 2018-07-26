@@ -95,6 +95,10 @@ final class ConversationController: MessagesViewController, ConversationView {
         present(controller, animated: true, completion: nil)
     }
     
+    func didUnblock() {
+        buddy.isBlacklisted = false
+    }
+    
     // MARK: - Private
     
     private func setupCollectionView() {
