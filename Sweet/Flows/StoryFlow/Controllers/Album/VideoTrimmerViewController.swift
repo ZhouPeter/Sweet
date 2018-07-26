@@ -29,6 +29,13 @@ class VideoTrimmerViewController: UIViewController {
     private var session: AVAssetExportSession?
     private lazy var rightBarButtonItem =
         UIBarButtonItem(title: "继续", style: .plain, target: self, action: #selector(didPressRightBarButtonItem))
+    private let durationLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .white
+        return label
+    } ()
     
     init(fileURL: URL) {
         self.fileURL = fileURL
@@ -60,6 +67,20 @@ class VideoTrimmerViewController: UIViewController {
         trimmerView.align(.left)
         trimmerView.align(.right)
         trimmerView.align(.bottom, to: view, inset: 60)
+        view.addSubview(durationLabel)
+        durationLabel.pin(.top, to: trimmerView, spacing: 10)
+        durationLabel.align(.left, to: view, inset: 5)
+        durationLabel.constrain(width: 150)
+        let tipsLabel = UILabel()
+        tipsLabel.textAlignment = .right
+        tipsLabel.font = UIFont.systemFont(ofSize: 13)
+        tipsLabel.textColor = UIColor(hex: 0x727272)
+        tipsLabel.text = "上传视频时长需小于 10 秒"
+        view.addSubview(tipsLabel)
+        tipsLabel.align(.bottom, to: durationLabel)
+        tipsLabel.align(.right, to: view, inset: 5)
+        tipsLabel.constrain(width: 160)
+        
         DispatchQueue.main.async { self.loadAsset(AVAsset(url: self.fileURL)) }
     }
     
@@ -90,6 +111,7 @@ class VideoTrimmerViewController: UIViewController {
     private func checkDuration() {
         let duration = (trimmerView.endTime! - trimmerView.startTime!).seconds
         logger.debug(duration)
+        durationLabel.text = String(format: "已选取 %.1f 秒", duration)
         if duration >= 1 && duration <= 10 {
             rightBarButtonItem.isEnabled = true
         } else {
