@@ -15,6 +15,7 @@ enum WebAPI {
     case sendCode(phone: String, type: SendSMSCodeType)
     case logout
     case update(updateParameters: [String: Any])
+    case updateRemain
     case phoneChange(phone: String, code: String)
     case uploadContacts(contacts: [[String: Any]])
     case getUserProfile(userId: UInt64)
@@ -46,13 +47,13 @@ enum WebAPI {
     case subscriptionCards(cardId: String?, direction: Direction?)
     case evaluateCard(cardId: String, index: Int)
     case choiceCard(cardId: String, index: Int)
-    case commentCard(cardId: String, comment: String, emoji: Int)
+    case commentCard(cardId: String, emoji: Int)
     case activityCardLike(cardId: String?, activityId: String, comment: String)
     case storyDetailsUvlist(storyId: UInt64)
     case storyRead(storyId: UInt64, fromCardId: String?)
     case storyTopics
     case searchTopic(topic: String)
-    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, contentRect: CGRect?)
+    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?)
     case delStory(storyId: UInt64)
     case socketAddress
     case removeRecentMessage(userID: UInt64)
@@ -72,6 +73,7 @@ enum WebAPI {
     case getVersion
     case reportUser(userID: UInt64)
     case feedback(comment: String, type: Int)
+    case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -87,6 +89,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/logout"
         case .update:
             return "/user/update"
+        case .updateRemain:
+            return "/user/update/remain/get"
         case .phoneChange:
             return "/user/phone/change"
         case .uploadContacts:
@@ -201,6 +205,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/report"
         case .feedback:
             return "/user/feedback"
+        case .cardActionLog:
+            return "/card/action/log"
         }
     }
     
@@ -275,7 +281,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
              let .delStory(storyId),
              let .reportStory(storyId):
             parameters = ["storyId": storyId]
-        case let .publishStory(url, type, topic, center, rect):
+        case let .publishStory(url, type, topic, center, points):
             parameters = ["content": url, "type": type.rawValue]
             if let topic = topic {
                 parameters["tag"] = topic
@@ -284,11 +290,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
                 parameters["x"] = center.x
                 parameters["y"] = center.y
             }
-            if let rect = rect {
-                parameters["touchArea"] = ["x": rect.minX, "y": rect.minY, "width": rect.width, "height": rect.height]
+            if let points = points {
+                parameters["touchArea"] = points.map { ["x": $0.x, "y": $0.y] }
             }
-        case let .commentCard(cardId, comment, emoji):
-            parameters = ["cardId": cardId, "comment": comment, "emoji": emoji]
+        case let .commentCard(cardId, emoji):
+            parameters = ["cardId": cardId, "emoji": emoji]
         case let .removeRecentMessage(userID):
             parameters = ["userId": userID]
         case let .activityCardLike(cardId, activityId, comment):
@@ -324,6 +330,11 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["userId": userID]
         case .feedback(let comment, let type):
             parameters = ["comment": comment, "type": type]
+        case let .cardActionLog(action, cardId, sectionId, contentId, preferenceId):
+            parameters = ["action" : action, "cardId": cardId]
+            parameters["sectionId"] = sectionId
+            parameters["contentId"] = contentId
+            parameters["preferenceId"] = preferenceId
         default:
             break
         }

@@ -15,7 +15,6 @@ struct StoryCollectionViewCellModel {
     var imageURL: URL?
     var videoURL: URL?
     var isRead: Bool
-    let timestampString: String
     let sourceUserId: UInt64
     var created: Int?
     let storyId: UInt64
@@ -36,7 +35,6 @@ struct StoryCollectionViewCellModel {
             videoURL = URL(string: model.content)
         }
         isRead = model.read
-        timestampString = TimerHelper.timeBeforeInfo(timeInterval: TimeInterval(model.created))
         created = model.created
         sourceUserId = model.userId
         storyId = model.storyId

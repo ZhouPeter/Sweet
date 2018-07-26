@@ -54,7 +54,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         }
         recordView = controller
         controller.onRecorded = { [weak self] url, isPhoto, topic in
-            self?.showStoryEditView(with: url, isPhoto: isPhoto, topic: topic)
+            self?.showStoryEditView(with: url, isPhoto: isPhoto, source: .shoot, topic: topic)
         }
         controller.onTextChoosed = { [weak self] topic in
             self?.showStoryTextView(with: topic)
@@ -70,12 +70,12 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
                 self?.dismiss()
             }
         }
-        controller.prepare()
         router.setRootFlow(controller)
     }
     
-    private func showStoryEditView(with fileURL: URL, isPhoto: Bool, topic: String?) {
-        let controller = factory.makeStoryEditView(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+    private func showStoryEditView(with fileURL: URL, isPhoto: Bool, source: StoryMediaSource, topic: String?) {
+        let controller =
+            factory.makeStoryEditView(user: user, fileURL: fileURL, isPhoto: isPhoto, source: source, topic: topic)
         controller.onCancelled = { [weak self] in
             self?.router.popFlow(animated: true)
         }
@@ -109,16 +109,8 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     
     private func showAlbumView(with topic: String?) {
         let controller = factory.makeAlbumView()
-        controller.onFinished = { [weak self] image in
-            self?.showPhotoCropView(with: image, topic: topic)
-        }
-        router.push(controller)
-    }
-    
-    private func showPhotoCropView(with image: UIImage, topic: String?) {
-        let controller = factory.makePhotoCropView(with: image)
-        controller.onFinished = { [weak self] url in
-            self?.showStoryEditView(with: url, isPhoto: true, topic: topic)
+        controller.onFinished = { [weak self] url, isPhoto in
+            self?.showStoryEditView(with: url, isPhoto: isPhoto, source: .album, topic: topic)
         }
         router.push(controller)
     }
@@ -145,11 +137,8 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
             user: user,
             navigation: navigation,
-            current: 0,
-            currentStart: 0,
-            isGroup: false,
-            fromCardId: nil,
             storiesGroup: storiesGroup,
+            isCanOpenEdit: false,
             delegate: nil)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)

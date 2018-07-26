@@ -13,49 +13,57 @@ import Kingfisher
 import SwiftyUserDefaults
 
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int)
     func delStory(storyId: UInt64)
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int))
+    func willDisAppper(index: Int)
 }
 
 extension StoriesPlayerGroupViewControllerDelegate {
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {}
     func delStory(storyId: UInt64) {}
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {}
+    func willDisAppper(index: Int) {}
 }
 
 class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
-    var runProfileFlow: ((User, UInt64) -> Void)?
+    var runProfileFlow: ((UInt64) -> Void)?
     
     var runStoryFlow: ((String) -> Void)?
 
     var onFinish: (() -> Void)?
     
-    func pause() {
-        for cell in collectionView.visibleCells {
-            storiesPlayerControllerMap[cell]?.pause()
+    
+    var currentPlayController: StoriesPlayerViewController? {
+        if let cell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) {
+            return storiesPlayerControllerMap[cell]
         }
+        return nil
+    }
+    
+    
+    func pause() {
+        currentPlayController?.pause()
+//        for cell in collectionView.visibleCells {
+//            storiesPlayerControllerMap[cell]?.pause()
+//        }
     }
     
     func play() {
-        for cell in collectionView.visibleCells {
-            storiesPlayerControllerMap[cell]?.play()
-        }
+        currentPlayController?.play()
+
+//        for cell in collectionView.visibleCells {
+//            storiesPlayerControllerMap[cell]?.play()
+//        }
     }
     
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
     var user: User
-    var currentIndex: Int {
-        didSet {
-            delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                                fromCardId: fromCardId,
-                                storyGroupIndex: currentIndex)
-        }
-    }
+    var currentIndex: Int
     var storiesGroup: [[StoryCellViewModel]]
     var currentStart = 0
     var fromCardId: String?
     var fromMessageId: String?
-    private var loctionMap = [IndexPath: Int]()
+    static private var loctionMap = [String: Int]()
     private var isLoading = false
     private lazy var collectionView: GeminiCollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -77,7 +85,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     }()
     
     private var storiesPlayerControllerMap = [UICollectionViewCell: StoriesPlayerViewController]()
-    
+    private var isHasMoreStories = true
     init(user: User,
          storiesGroup: [[StoryCellViewModel]],
          currentIndex: Int,
@@ -95,6 +103,24 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
     deinit {
         logger.debug()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let index = storiesGroup[0..<currentIndex].reduce(0) { $0 + $1.count } + currentPlayController!.currentIndex
+        delegate?.willDisAppper(index: index)
+        for cell in collectionView.visibleCells {
+            savePlayerControllerLoction(cell: cell)
+        }
+        if fromCardId == nil {
+            var newLocionMap = [String: Int]()
+            StoriesPlayerGroupViewController.loctionMap.forEach { (key, value) in
+                if key.count > 10 {
+                    newLocionMap[key] = value
+                }
+            }
+            StoriesPlayerGroupViewController.loctionMap = newLocionMap
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -121,11 +147,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         collectionView.setContentOffset(CGPoint(x: UIScreen.mainWidth() * CGFloat(currentIndex),
                                                 y: 0),
                                         animated: true)
-        delegate?.readGroup(storyId: storiesGroup[currentIndex][0].storyId,
-                            fromCardId: fromCardId,
-                            storyGroupIndex: currentIndex)
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if Defaults[.isStoryPlayGuideShown] == false {
@@ -139,7 +161,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            dismiss(animated: true, completion: nil)
+            onFinish?()
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
@@ -178,17 +200,23 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     
     private func savePlayerControllerLoction(cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
-            loctionMap[indexPath] = storiesPlayerControllerMap[cell]?.currentIndex
+            let keyValue = (fromCardId ?? "") + "#\(storiesGroup[indexPath.row][0].userId)" + "#\(indexPath.row)"
+            StoriesPlayerGroupViewController.loctionMap[keyValue] = storiesPlayerControllerMap[cell]?.currentIndex
         }
     }
     
     private func readPlayerControllerLoction(cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
-            storiesPlayerControllerMap[cell]?.currentIndex = loctionMap[indexPath] ?? 0
+            let keyValue = (fromCardId ?? "") + "#\(storiesGroup[indexPath.row][0].userId)" + "#\(indexPath.row)"
+            storiesPlayerControllerMap[cell]?.currentIndex = StoriesPlayerGroupViewController.loctionMap[keyValue] ?? 0
         }
     }
 
     private func loadMoreStoriesGroup() {
+        if storiesGroup[0][0].userId == user.userId {
+            isHasMoreStories = false
+            return
+        }
         if isLoading { return }
         web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { [weak self] (result) in
             guard let `self` = self else { return }
@@ -199,16 +227,20 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
                     let storyCellViewModels = $0.map { StoryCellViewModel(model: $0) }
                     self.appendGroup(storyCellViewModels: storyCellViewModels)
                 })
+                if response.list.count == 0 && self.currentIndex == self.storiesGroup.count - 1 {
+                    self.isHasMoreStories = false
+                }
             case let .failure(error):
                 logger.error(error)
             }
         }
     }
 }
-
+// MARK: - StoriesPlayerViewControllerDelegate
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
         storiesGroup[position.0][position.1] = story
+        if position.0 < 4 { delegate?.updateStory(story: story, postion: position) }
     }
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
@@ -266,8 +298,12 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
         let playerController = getChildViewController(cell: cell)
         playerController.stories = storiesGroup[indexPath.row]
         playerController.groupIndex = indexPath.row
-        playerController.currentIndex = loctionMap[indexPath] ?? 0
-        if currentIndex == indexPath.row { playerController.currentIndex = currentStart }
+        let keyValue = (fromCardId ?? "") + "#\(storiesGroup[currentIndex][0].userId)" + "#\(indexPath.row)"
+        playerController.currentIndex = StoriesPlayerGroupViewController.loctionMap[keyValue] ?? 0
+        if currentIndex == indexPath.row {
+            let keyValue = (fromCardId ?? "") + "#\(storiesGroup[currentIndex][0].userId)" + "#\(indexPath.row)"
+            playerController.currentIndex = StoriesPlayerGroupViewController.loctionMap[keyValue] ?? currentStart
+        }
         cell.setPlaceholderContentView(view: playerController.view)
         playerController.update()
         if currentIndex == indexPath.row { playerController.initPlayer() }

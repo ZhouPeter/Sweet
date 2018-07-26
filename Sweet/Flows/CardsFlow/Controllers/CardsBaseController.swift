@@ -20,7 +20,7 @@ enum CardRequest {
     case sub(cardId: String?, direction: Direction?)
 }
 let preloadingCount = 5
-
+var isVideoMuted = true
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
@@ -53,7 +53,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             options: [.new, .old],
             changeHandler: { (object, change) in
             if change.newValue == change.oldValue { return }
-            if object.contentOffset.y + cardOffset  == CGFloat(self.index) * cardCellHeight {
+            if floor(object.contentOffset.y + cardOffset)  == floor(CGFloat(self.index) * cardCellHeight) {
                 if self.lastIndex == self.index { return }
                 self.changeCurrentCell()
                 self.lastIndex = self.index
@@ -97,6 +97,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private var isFetchLoadCards = false
+    
     private var avPlayer: AVPlayer?
  
     lazy var inputTextView: InputTextView = {
@@ -117,6 +118,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         controller.resource = playerView.resource
         self.playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
+        isVideoMuted = false
+        playerView.isHasVolume = !isVideoMuted
     }
     
     init(user: User) {
@@ -160,6 +163,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         if isShow {
             if emptyView.superview != nil { return }
             collectionView.addSubview(emptyView)
+            if self is CardsAllController {
+                if isFetchLoadCards {
+                    emptyView.update(image: #imageLiteral(resourceName: "CardLoading"), title: "加载中")
+                } else  {
+                    emptyView.update(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
+                }
+            }
             emptyView.frame = CGRect(x: 0,
                                      y: -10,
                                      width: collectionView.bounds.width,
@@ -305,8 +315,9 @@ extension CardsBaseController {
             weak var weakSelf = self
             weak var weakCell = cell
             if let resource = playerView.resource,
-               resource.definitions[0].url == configurator.viewModel.videoURL {
-                playerView.isHasVolume = configurator.viewModel.isMuted
+                resource.indexPath == indexPath,
+                resource.definitions[0].url == configurator.viewModel.videoURL {
+                playerView.isHasVolume = !isVideoMuted
                 playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                     playerView?.play()
                 }
@@ -317,7 +328,7 @@ extension CardsBaseController {
             resource.scrollView = weakSelf?.collectionView
             resource.fatherViewTag = weakCell?.contentImageView.tag
             playerView.setVideo(resource: resource)
-            playerView.isHasVolume = configurator.viewModel.isMuted
+            playerView.isHasVolume = !isVideoMuted
             playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
                 playerView?.play()
             }
@@ -383,6 +394,21 @@ extension CardsBaseController {
             self?.shareCard(cardId: card.cardId)
         }
         navigationController?.pushViewController(preview, animated: true)
+        CardAction.clickUrl.actionLog(card: card)
+        CardTimerHelper.countDown(time: 10, countDownBlock: { time in
+            guard let last = self.navigationController?.viewControllers.last,
+                  let webController = last as? WebViewController,
+                  webController.urlString == card.url else {
+                CardTimerHelper.cancelTimer()
+                return
+            }
+        }) {
+            if let last = self.navigationController?.viewControllers.last,
+                let webController = last as? WebViewController,
+                webController.urlString == card.url {
+                CardAction.clickUrlBack.actionLog(card: card)
+            }
+        }
     }
 }
 // MARK: - UICollectionViewDataSource

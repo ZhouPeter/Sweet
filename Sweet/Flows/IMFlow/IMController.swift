@@ -25,14 +25,6 @@ class IMController: BaseViewController, IMView {
         return imageView
     } ()
     
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "SearchWhite"), for: .normal)
-        button.addTarget(self, action: #selector(didPressRightBarButton), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        return button
-    } ()
-    
     private lazy var titleView: CustomSegmentedControl = {
         let control = CustomSegmentedControl(items: ["消息", "联系人"])
         control.selectedSegmentIndex = 0
@@ -42,8 +34,9 @@ class IMController: BaseViewController, IMView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        definesPresentationContext = true
         navigationItem.titleView = titleView
-        automaticallyAdjustsScrollViewInsets = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
         setupControllers()
         delegate?.imViewDidLoad()
         showInbox(true)
@@ -59,6 +52,7 @@ class IMController: BaseViewController, IMView {
         let colors = [UIColor(hex: 0xDD9AFD), UIColor(hex: 0xB861FB)]
         navigationController?.navigationBar.setBackgroundGradientImage(colors: colors)
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.shadowImage = UIImage(named: "Separator")
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         if isInboxShown {
             delegate?.imViewDidShowInbox(inboxView)
@@ -74,12 +68,8 @@ class IMController: BaseViewController, IMView {
     // MARK: - Private
     
     private func setupLeftBarButton() {
-        var image = #imageLiteral(resourceName: "RightArrow")
-        if let cgImage = image.cgImage {
-            image = UIImage(cgImage: cgImage, scale: image.scale, orientation: .upMirrored)
-        }
         let button = UIButton(type: .custom)
-        button.setImage(image, for: .normal)
+        button.setImage(UIImage(named: "LeftArrow"), for: .normal)
         button.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
         button.addTarget(self, action: #selector(didPressLeftBarButtonItem), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
@@ -97,11 +87,7 @@ class IMController: BaseViewController, IMView {
     }
     
     @objc private func didPressRightBarButton() {
-        if isInboxShown {
-            delegate?.imViewDidPressAvatarButton()
-        } else {
-            delegate?.imViewDidPressSearchButton()
-        }
+        delegate?.imViewDidPressAvatarButton()
     }
     
     @objc func didPressLeftBarButtonItem() {
@@ -113,10 +99,8 @@ class IMController: BaseViewController, IMView {
         inboxView.view.alpha = isInboxShown ? 1 : 0
         if isInboxShown {
             delegate?.imViewDidShowInbox(inboxView)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: avatarImageView)
         } else {
             delegate?.imViewDidShowContacts(contactsView)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
         }
     }
     

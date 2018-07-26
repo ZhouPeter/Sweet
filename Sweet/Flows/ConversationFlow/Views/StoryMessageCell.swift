@@ -24,8 +24,11 @@ final class StoryMessageCell: MediaMessageCell {
         at indexPath: IndexPath,
         and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        messageContainerView.backgroundColor = .clear
+        mediaContainerView.backgroundColor = .black
         guard case let .custom(value) = message.kind, let content = value as? StoryMessageContent else { return }
         thumbnailImageView.kf.setImage(with: content.thumbnailURL()) { [weak self] (_, _, _, _) in
+            self?.mediaContainerView.backgroundColor = .clear
             self?.showLoading(false)
         }
         if content.storyType == .video || content.storyType == .poke {

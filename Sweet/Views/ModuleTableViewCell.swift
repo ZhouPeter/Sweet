@@ -33,7 +33,7 @@ class ModuleTableViewCell: UITableViewCell {
     
     private func setupUI() {
         contentView.addSubview(moduleImageView)
-        moduleImageView.align(.left, inset: 10)
+        moduleImageView.align(.left, inset: 16)
         moduleImageView.centerY(to: contentView)
         moduleImageView.constrain(width: 40, height: 40)
         contentView.addSubview(moduleTitleLabel)

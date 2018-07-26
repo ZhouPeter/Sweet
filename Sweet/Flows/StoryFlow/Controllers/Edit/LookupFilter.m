@@ -20,6 +20,7 @@
     if (self = [super init]) {
         self.lookupImageSource = [[GPUImagePicture alloc] initWithImage:image];
         GPUImageLookupFilter *filter = [GPUImageLookupFilter new];
+        filter.intensity = 0.75;
         [self addFilter:filter];
         
         [self.lookupImageSource addTarget:filter atTextureLocation:1];
@@ -32,7 +33,7 @@
 }
 
 + (instancetype)defaultFilter {
-    return [[LookupFilter alloc] initWithLookupImage:[UIImage imageNamed:@"NA"]];
+    return [[LookupFilter alloc] initWithLookupImage:[UIImage imageNamed:@"1"]];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func contentCardComment(cardId: String, emoji: Int)
@@ -34,7 +35,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return imageView
     } ()
     
-    var imageViews = [UIImageView]()
+    var imageViews = [AnimatedImageView]()
     var imageViewContainers = [UIView]()
     var imageIcons = [UIButton]()
     lazy var emojiView: EmojiControlView = {
@@ -49,6 +50,12 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
         button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
         return button
+    }()
+
+    lazy var sourceInfoView: SourceInfoView = {
+        let  view = SourceInfoView()
+        view.layer.cornerRadius = 5
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -69,16 +76,22 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
-        
+        customContent.addSubview(sourceInfoView)
+        sourceInfoView.align(.left, inset: 10)
+        sourceInfoView.align(.right, inset: 10)
+        sourceInfoView.constrain(height: 80)
+        sourceInfoView.align(.bottom, inset: 50)
+        sourceInfoView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
-        emojiView.align(.left, inset: 50)
+        emojiView.align(.left)
         emojiView.pin(.bottom, to: contentImageView)
         emojiView.align(.bottom)
         customContent.addSubview(shareButton)
         shareButton.constrain(width: 24, height: 24)
         shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
+        
 
     }
     
@@ -92,7 +105,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageIcon.titleLabel?.font = UIFont.systemFont(ofSize: 12)
             imageIcon.titleLabel?.textColor = .white
             imageIcons.append(imageIcon)
-            let imageView = UIImageView()
+            let imageView = AnimatedImageView()
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
             imageView.tag = index
@@ -125,8 +138,13 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         self.viewModel = viewModel
         self.cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
-        contentLabel.attributedText = viewModel.contentTextAttributed
-        contentLabel.lineBreakMode = .byTruncatingTail
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                self.contentLabel.attributedText = viewModel.contentTextAttributed
+                self.contentLabel.lineBreakMode = .byTruncatingTail
+            }
+        }
+        update(with: viewModel.thumbnailURL, title: viewModel.sourceTitle, brief: viewModel.sourceBrief)
         update(with: viewModel.imageURLList)
         resetEmojiView()
     }
@@ -146,6 +164,15 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     }
     private func update(with imageURLs: [URL]?) {
         layout(urls: imageURLs)
+    }
+    
+    private func update(with thumbnailURL: URL?, title: String?, brief: String?) {
+        if let title = title {
+            sourceInfoView.isHidden = false
+            sourceInfoView.update(thumbnailURL: thumbnailURL, title: title, brief: brief)
+        } else {
+            sourceInfoView.isHidden = true
+        }
     }
     
     private func update(with images: [[ContentImage]]?) {

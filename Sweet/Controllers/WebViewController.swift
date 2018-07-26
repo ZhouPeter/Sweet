@@ -14,7 +14,9 @@ class WebViewController: BaseViewController {
     var urlString: String
     private let shareCallback: (() -> Void)?
     private lazy var webView: WKWebView = {
-        let webView = WKWebView()
+        let config = WKWebViewConfiguration()
+        config.allowsInlineMediaPlayback = true
+        let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         return webView
     }()
@@ -55,6 +57,7 @@ class WebViewController: BaseViewController {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         if shareCallback != nil { navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)}
+        automaticallyAdjustsScrollViewInsets = false
         view.addSubview(webView)
         webView.fill(in: view, top: UIScreen.navBarHeight())
         view.addSubview(progressView)

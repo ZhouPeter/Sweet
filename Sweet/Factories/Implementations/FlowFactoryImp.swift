@@ -17,15 +17,13 @@ final class FlowFactoryImp:
     PowerFlowFactory,
 ProfileFlowFactory {
     
-    func makeProfileUpdateOutput(user: UserResponse) -> UpdateView {
-        let viewController = UpdateController()
-        viewController.user = user
+    func makeProfileUpdateOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> UpdateView {
+        let viewController = UpdateController(user: user, updateRemain: updateRemain)
         return viewController
     }
     
-    func makeProfileAboutOutput(user: UserResponse) -> AboutView {
-        let viewController = AboutController()
-        viewController.user = user
+    func makeProfileAboutOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> AboutView {
+        let viewController = AboutController(user: user, updateRemain: updateRemain)
         return viewController
     }
 
@@ -90,8 +88,13 @@ ProfileFlowFactory {
         return StoryRecordController(user: user)
     }
     
-    func makeStoryEditView(user: User, fileURL: URL, isPhoto: Bool, topic: String?) -> StoryEditView {
-        return StoryEditController(user: user, fileURL: fileURL, isPhoto: isPhoto, topic: topic)
+    func makeStoryEditView(
+        user: User,
+        fileURL: URL,
+        isPhoto: Bool,
+        source: StoryMediaSource,
+        topic: String?) -> StoryEditView {
+        return StoryEditController(user: user, fileURL: fileURL, isPhoto: isPhoto, source: source, topic: topic)
     }
     
     func makeDismissableStoryRecordView(user: User, topic: String?) -> StoryRecordView {
@@ -116,10 +119,6 @@ ProfileFlowFactory {
     
     func makeAlbumView() -> AlbumView {
         return AlbumController()
-    }
-    
-    func makePhotoCropView(with photo: UIImage) -> PhotoCropView {
-        return PhotoCropController(with: photo)
     }
 }
 extension FlowFactoryImp: StoryPlayerFlowFactory {
@@ -155,16 +154,16 @@ extension FlowFactoryImp: StoryPlayerFlowFactory {
 }
 
 extension FlowFactoryImp: IMFlowFactory {
-    func makeContactSearchOutput() -> ContactSearchView {
-        return ContactSearchController()
-    }
-    
     func makeIMView() -> IMView {
         return IMController()
     }
 }
 
 extension FlowFactoryImp: ContactsFlowFactory {
+    func makeSearchOutput() -> ContactSearchView {
+        return ContactSearchController()
+    }
+    
     func makeContactsView() -> ContactsView {
         return ContactsController()
     }

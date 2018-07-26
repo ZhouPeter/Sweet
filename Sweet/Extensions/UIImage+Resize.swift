@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIImage {
-    
     func fixOrientation() -> UIImage? {
         if imageOrientation == .up {
             return self
@@ -135,7 +134,7 @@ extension UIImage {
         }
     }
     
-    func reSize(newSize: CGSize) -> UIImage {
+    func resize(newSize: CGSize) -> UIImage {
         UIGraphicsBeginImageContext(newSize)
         draw(in: CGRect(origin: .zero, size: newSize))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -143,7 +142,7 @@ extension UIImage {
         return newImage!
     }
     
-    func reSize(newSize: CGSize, interpolationQuality quality: CGInterpolationQuality) -> UIImage {
+    func resize(newSize: CGSize, interpolationQuality quality: CGInterpolationQuality) -> UIImage {
         var drawTransposed = false
         switch imageOrientation {
         case .left, .leftMirrored, .right, .rightMirrored:
@@ -152,13 +151,13 @@ extension UIImage {
             drawTransposed = false
         }
         let transform = transformforOrientation(newSize: newSize)
-        return reSize(newSize: newSize,
+        return resize(newSize: newSize,
                       transform: transform,
                       drawTransposed: drawTransposed,
                       interpolationQuality: quality)
     }
     
-    private func reSize(newSize: CGSize,
+    private func resize(newSize: CGSize,
                         transform: CGAffineTransform,
                         drawTransposed transpose: Bool,
                         interpolationQuality quality: CGInterpolationQuality) -> UIImage {
@@ -182,5 +181,39 @@ extension UIImage {
         let newImage = UIImage(cgImage: newCgImage!, scale: scale, orientation: .up)
         return newImage
     }
-
+    
+    func scaleAndCropImage(toSize size: CGSize) -> UIImage {
+        guard !self.size.equalTo(size) else { return self }
+        
+        let widthFactor = size.width / self.size.width
+        let heightFactor = size.height / self.size.height
+        var scaleFactor: CGFloat = 0.0
+        
+        scaleFactor = heightFactor
+        if widthFactor > heightFactor {
+            scaleFactor = widthFactor
+        }
+        
+        var targetOrigin = CGPoint.zero
+        let scaledWidth  = self.size.width * scaleFactor
+        let scaledHeight = self.size.height * scaleFactor
+        
+        if widthFactor > heightFactor {
+            targetOrigin.y = (size.height - scaledHeight) / 2.0
+        } else if widthFactor < heightFactor {
+            targetOrigin.x = (size.width - scaledWidth) / 2.0
+        }
+        
+        var targetRect = CGRect.zero
+        targetRect.origin = targetOrigin
+        targetRect.size.width  = scaledWidth
+        targetRect.size.height = scaledHeight
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        draw(in: targetRect)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
 }

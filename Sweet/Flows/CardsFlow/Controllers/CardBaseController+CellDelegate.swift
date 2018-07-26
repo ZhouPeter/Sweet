@@ -31,6 +31,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                     self.cellConfigurators[index] = configurator
                     self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     self.vibrateFeedback()
+                    CardAction.clickPreference.actionLog(card: self.cards[index])
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -67,7 +68,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
             switch result {
             case .success:
                 guard let index = self.cards.index(where: { $0.cardId == cardId }),
-                    self.cards[index].type == .evaluation else { return }
+                    self.cards[index].cardEnumType == .evaluation else { return }
                 self.cards[index].result = SelectResult(contactUserList: [SelectResult.UserAvatar](),
                                                         index: selectedIndex,
                                                         percent: 0,
@@ -95,30 +96,31 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
-        if let index = self.cards.index(where: { $0.cardId == cardId }) {
-            let text = self.cards[index].content! + self.cards[index].url! + "\n" + "\n"
-                + "讲真APP，你的同学都在玩：" + "\n"
-                + "[机智]http://t.cn/RrXTSg5"
+        if let index = cards.index(where: { $0.cardId == cardId }) {
+            let text = cards[index].makeShareText()
             let controller = ShareCardController(shareText: text)
             controller.sendCallback = { (text, userIds) in
-                self.sendMessge(cardId: cardId, text: text, userIds: userIds)
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else {fatalError()}
+                let card  = self.cards[index]
+                CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
             }
-            self.present(controller, animated: true, completion: nil)
+            present(controller, animated: true, completion: nil)
         }
     }
     
     func contentCardComment(cardId: String, emoji: Int) {
         web.request(
-            .commentCard(cardId: cardId, comment: "", emoji: emoji),
+            .commentCard(cardId: cardId, emoji: emoji),
             responseType: Response<SelectResult>.self) { (result) in
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                 switch result {
                 case let .success(response):
-                    guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                     self.cards[index].result = response
                     self.reloadContentCell(index: index)
                     self.vibrateFeedback()
+                    CardAction.clickComment.actionLog(card: self.cards[index])
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
-                        let rect = CGRect(x: 20 + 32 + 8 + 1 + 8 - 4,
+                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - 40,
                                           y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
                                           width: CGFloat(response.contactUserList.count) * 40,
                                           height: 40)
@@ -126,6 +128,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                         Defaults[.isSameCardChoiceGuideShown] = true
                     }
                 case let .failure(error):
+                    self.reloadContentCell(index: index)
                     logger.error(error)
                 }
         }
@@ -144,7 +147,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {
         guard  let index = cards.index(where: { $0.cardId == cardId }) else { return }
-        let cardType = cards[index].type
+        let cardType = cards[index].cardEnumType
         if cardType == .activity {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .destructive) { (_) in
@@ -168,14 +171,24 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
                             self.present(alert, animated: true, completion: nil)
                         case let .failure(error):
                             logger.error(error)
-                        }
+                    }
         }
     }
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate
 extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {
+        guard self.cards[index].cardEnumType == .story else { return }
+        guard var configurator = cellConfigurators[index] as? CellConfigurator<StoriesCardCollectionViewCell> else {
+            return
+        }
+        configurator.viewModel.updateStory(story: story, postion: postion)
+        cellConfigurators[index] = configurator
+        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+    }
+    
     func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
-        if self.cards[index].type == .story {
+        if self.cards[index].cardEnumType == .story {
             web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
                 guard let `self` = self else { return }
                 switch result {
@@ -216,18 +229,29 @@ extension CardsBaseController {
             else { return }
         guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
             as? ContentCardCollectionViewCell else { return  }
+        let imageIcon = cell.imageIcons[originPageIndex]
+        if  imageIcon.titleLabel?.text == "GIF", imageIcon.isHidden == false {
+            let imageView = cell.imageViews[originPageIndex]
+            imageView.startAnimating()
+            imageIcon.isHidden = true
+        }
         let imageURLs = configurator.viewModel.imageURLList!
-        self.photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews, highImageViewURLs: imageURLs)
-        let browser = PhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
+        let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
+        photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
+                                          highImageViewURLs: imageURLs,
+                                          shareText: shareText)
+        let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
+        browser.plugins.append(CustomChangeBrowerPlugin(card: cards[index]))
         browser.show()
+        CardAction.clickImg.actionLog(card: cards[index])
     }
 }
 
 extension CardsBaseController {
     private func showCellEmojiView(emojiDisplayType: EmojiViewDisplay, index: Int) {
-        if cards[index].type == .content  {
+        if cards[index].cardEnumType == .content  {
             if var configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> {
                 configurator.viewModel.emojiDisplayType = emojiDisplayType
                 cellConfigurators[index] = configurator
@@ -241,20 +265,18 @@ extension CardsBaseController {
 }
 
 extension CardsBaseController: SweetPlayerViewDelegate {
-    func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
-        if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
-                if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
-                    configurator.viewModel.isMuted = isMuted
-                    cellConfigurators[indexPath.row] = configurator
-                }
-            }
+    func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
+        if state == .playedToTheEnd {
+            CardAction.playEnd.actionLog(card: cards[index])
         }
+    }
+    func sweetPlayer(player: SweetPlayerView, isMuted: Bool) {
+       isVideoMuted = isMuted
     }
     
     func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {
         if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].type == .content, cards[indexPath.row].video != nil {
+            if cards[indexPath.row].cardEnumType == .content, cards[indexPath.row].video != nil {
                 if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
                     configurator.viewModel.currentTime = currentTime
                     cellConfigurators[indexPath.row] = configurator

@@ -42,15 +42,7 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         control.addTarget(self, action: #selector(switchView(_:)), for: .valueChanged)
         return control
     }()
-    private lazy var leftBadgeView: BadgeView = {
-        let view = BadgeView(cornerRadius: 15)
-        view.isHidden = true
-        view.dotCenterX?.constant = 12
-        view.dotCenterY?.constant = -12
-        view.clipsToBounds = false
-        view.isUserInteractionEnabled = false
-        return view
-    }()
+
     private lazy var rightBadgeView: BadgeView = {
         let view = BadgeView(cornerRadius: 15)
         view.isHidden = true
@@ -64,9 +56,6 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         button.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(self, action: #selector(leftAction(sender:)), for: .touchUpInside)
-        button.addSubview(leftBadgeView)
-        leftBadgeView.align(.left)
-        leftBadgeView.centerY(to: button)
         return button
     }()
     
@@ -100,13 +89,6 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.setBackgroundGradientImage(colors: [UIColor(hex:0x66E5FF), UIColor(hex: 0x36C6FD)])
-       
-        if Defaults[.isPersonalStoryChecked] {
-            leftBadgeView.isHidden = true
-        } else {
-            leftBadgeView.isHidden = false
-            leftBadgeView.text = nil
-        }
     }
     
     // MARK: - Private
@@ -160,13 +142,13 @@ extension CardsManagerController: MessengerDelegate {
             if messageType == .card {
                 JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
-                JDStatusBarNotification.show(withStatus: "赞评成功", dismissAfter: 2)
+                JDStatusBarNotification.show(withStatus: "消息发送成功", dismissAfter: 2)
             }
         } else {
             if messageType == .card {
                 JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
-                JDStatusBarNotification.show(withStatus: "赞评失败", dismissAfter: 2)
+                JDStatusBarNotification.show(withStatus: "消息发送失败", dismissAfter: 2)
             }
         }
         waitingIMNotifications.remove(at: messageIndex)

@@ -13,6 +13,7 @@ struct ContentVideoCardViewModel {
     let contentHeight: CGFloat
     let contentTextAttributed: NSAttributedString?
     var videoURL: URL
+    var videoPicURL: URL?
     let cardId: String
     var resultImageName: String?
     var resultAvatarURLs: [URL]?
@@ -21,12 +22,12 @@ struct ContentVideoCardViewModel {
     let defaultEmojiList: [Int]
     var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
-    var isMuted: Bool = false
     var currentTime: TimeInterval = 0.0
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
-                                                                    textColor: .black)
+                                                                    textColor: .black,
+                                                                    lineSpacing: 5)
         let rect = attributedText?.boundingRect(
             with: CGSize(width: UIScreen.mainWidth() - 40, height: CGFloat.greatestFiniteMagnitude),
             options: [.usesLineFragmentOrigin, .usesFontLeading],
@@ -36,6 +37,7 @@ struct ContentVideoCardViewModel {
         cardId = model.cardId
         contentId = model.contentId
         videoURL = URL(string: model.video!)!
+        videoPicURL = URL(string: model.videoPic ?? "")
         if let emoji = model.result?.emoji, emoji != 0 {
             resultImageName = "ResultEmoji\(emoji)"
             resultAvatarURLs = model.result?.contactUserList.compactMap({ URL(string: $0.avatar) })

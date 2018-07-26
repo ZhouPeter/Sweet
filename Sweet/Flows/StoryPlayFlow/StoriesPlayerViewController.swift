@@ -36,8 +36,8 @@ class AVPlayerView: UIView {
 class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
-    var runProfileFlow: ((User, UInt64) -> Void)?
-    var pan: UIPanGestureRecognizer?
+    var runProfileFlow: ((UInt64) -> Void)?
+    
     var isVisual = true
     var user: User
     var player: AVPlayer?
@@ -72,6 +72,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     private var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
+    private var uvViewController: StoryUVController!
     private lazy var topContentView: UIView = {
         let view = UIView()
         return view
@@ -114,6 +115,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         return menuButton
     }()
     
+    private lazy var touchAreaView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private lazy var progressView: StoryPlayProgressView = {
         let progressView = StoryPlayProgressView(count: stories.count, index: currentIndex)
         return progressView
@@ -121,11 +127,14 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private lazy var bottomButton: UIButton = {
         let bottomButton = UIButton()
+        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        bottomButton.setTitleColor(.black, for: .normal)
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         if isSelf {
-            bottomButton.setImage(#imageLiteral(resourceName: "History"), for: .normal)
-            bottomButton.addTarget(self, action: #selector(openStoryHistory(sender:)), for: .touchUpInside)
+            bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+            bottomButton.setImage(#imageLiteral(resourceName: "UvOpen"), for: .selected)
+            bottomButton.addTarget(self, action: #selector(showStoryHistory(sender:)), for: .touchUpInside)
         } else {
             bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             bottomButton.setImage(#imageLiteral(resourceName: "StoryLike"), for: .disabled)
@@ -139,16 +148,10 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         view.isHidden = true
         return view
     }()
-    
-    private lazy var tagButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.isHidden = true
-        button.addTarget(self, action: #selector(didPressTag(_:)), for: .touchUpInside)
-        return button
-    }()
 
     private var pokeLongPress: UILongPressGestureRecognizer!
+    private var upPan: CustomPanGestureRecognizer!
+    private var touchTagTap: TapGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -178,17 +181,21 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         super.viewDidLoad()
         pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
         view.addGestureRecognizer(pokeLongPress)
+        upPan = CustomPanGestureRecognizer(orientation: .up, target: self, action: #selector(upPanAction(_:)))
+        view.addGestureRecognizer(upPan)
+        touchTagTap = TapGestureRecognizer(target: self, action: #selector(didPressTag(_:)))
+        view.addGestureRecognizer(touchTagTap)
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
                                                                   width: UIScreen.mainWidth(),
                                                                   height: UIScreen.mainHeight()))
+        storiesScrollView.scrollViewTap.require(toFail: touchTagTap)
         view.addSubview(storiesScrollView)
         storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
-        view.addSubview(tagButton)
         setTopUI()
         setBottmUI()
         update()
@@ -283,7 +290,11 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
         setUserData()
-        bottomButton.isEnabled = !stories[currentIndex].like
+        if isSelf {
+            bottomButton.isSelected = false
+        } else {
+            bottomButton.isEnabled = !stories[currentIndex].like
+        }
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
@@ -294,14 +305,12 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             pokeView.isHidden = true
             pokeLongPress.isEnabled = false
         }
-        if let touchArea = stories[currentIndex].touchArea {
-            tagButton.isHidden = false
-            tagButton.frame = touchArea
-            if stories[currentIndex].userId == user.userId {
-                tagButton.isHidden = true
-            }
+
+        if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
+            touchTagTap.isEnabled = true
+            touchTagTap.path = path
         } else {
-            tagButton.isHidden = true
+            touchTagTap.isEnabled = false
         }
     }
     
@@ -423,7 +432,7 @@ extension StoriesPlayerViewController {
         timerNumber = 0
         imageTimer?.invalidate()
     }
-
+   
 }
 
 // MARK: - Privates
@@ -437,9 +446,36 @@ extension StoriesPlayerViewController {
         currentIndex += 1
         reloadPlayer()
     }
-    
+    private func sendMessage() {
+        pause()
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.startEditing(isStarted: true)
+    }
+    private func showStoryHistory() {
+        pause()
+        topContentView.isHidden = true
+        bottomButton.isSelected = true
+        let storyId = stories[currentIndex].storyId
+        uvViewController = StoryUVController(storyId: storyId, user: user)
+        uvViewController.runProfileFlow = runProfileFlow
+        uvViewController.delegate = self
+        add(childViewController: uvViewController)
+        view.tag = 100
+    }
     func play() {
-        web.request(.storyRead(storyId: stories[currentIndex].storyId, fromCardId: nil)) { (_) in }
+        let storyId = stories[currentIndex].storyId
+        web.request(.storyRead(storyId: storyId, fromCardId: nil)) { (result) in
+            switch result {
+            case .success:
+                if let index = self.stories.index(where: {$0.storyId == storyId}) {
+                    self.stories[index].read = true
+                    self.delegate?.updateStory(story: self.stories[index], position: (self.groupIndex, self.currentIndex))
+                }
+            case .failure: break
+            }
+        }
         if stories[currentIndex].videoURL != nil && stories[currentIndex].type != .poke {
             player?.play()
         } else if stories[currentIndex].imageURL != nil {
@@ -460,14 +496,12 @@ extension StoriesPlayerViewController {
 extension StoriesPlayerViewController {
     
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
-        runProfileFlow?(user, stories[currentIndex].userId)
+        runProfileFlow?(stories[currentIndex].userId)
     }
     
-    @objc private func didPressTag(_ sender: UIButton) {
-        if stories[currentIndex].userId != user.userId {
-            let topic = stories[currentIndex].tag
-            runStoryFlow?(topic)
-        }
+    @objc private func didPressTag(_ tap: UITapGestureRecognizer) {
+        let topic = stories[currentIndex].tag
+        runStoryFlow?(topic)
     }
     
     @objc private func pokeAction(longTap: UILongPressGestureRecognizer) {
@@ -482,31 +516,33 @@ extension StoriesPlayerViewController {
         }
     }
     
+    @objc private func upPanAction(_ gesture: CustomPanGestureRecognizer) {
+        let translation = gesture.translation(in: nil)
+        let progress = translation.y / view.bounds.height
+        switch gesture.state {
+        case .began: break
+        case .changed: break
+        default:
+            if progress + gesture.velocity(in: nil).y / view.bounds.height < -0.3 {
+                if isSelf {
+                    showStoryHistory()
+                } else {
+                    sendMessage()
+                }
+            }
+        }
+    }
+    
     @objc private func dismissAction(sender: UIButton) {
         dismiss()
     }
     
-    @objc private func openStoryHistory(sender: UIButton) {
-        pause()
-        topContentView.isHidden = true
-        let storyId = stories[currentIndex].storyId
-        let uvViewController = StoryUVController(storyId: storyId, user: user)
-        uvViewController.runProfileFlow = runProfileFlow
-        uvViewController.delegate = self
-        addChildViewController(uvViewController)
-        uvViewController.didMove(toParentViewController: self)
-        guard let childView = uvViewController.view else { return }
-        view.tag = 100
-        view.addSubview(childView)
-        uvViewController.view.frame = view.bounds
+    @objc private func showStoryHistory(sender: UIButton) {
+       showStoryHistory()
     }
     
     @objc private func sendMessage(sender: UIButton) {
-        pause()
-        let window = UIApplication.shared.keyWindow!
-        window.addSubview(inputTextView)
-        inputTextView.fill(in: window)
-        inputTextView.startEditing(isStarted: true)
+        sendMessage()
     }
     
     @objc private func presentSelfMenuAlertController(sender: UIButton) {
@@ -665,6 +701,7 @@ extension StoriesPlayerViewController {
                     completion: { result in
                         switch result {
                         case .success:
+                            self.vibrateFeedback()
                             self.bottomButton.isEnabled = false
                             self.stories[self.currentIndex].like = true
                             self.delegate?.updateStory(story: self.stories[self.currentIndex],
@@ -831,6 +868,7 @@ extension StoriesPlayerViewController {
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
         topContentView.isHidden = false
+        bottomButton.isSelected = false
         play()
     }
 }

@@ -7,7 +7,33 @@
 //
 
 import Foundation
-
+class CardTimerHelper {
+    static var timer: DispatchSourceTimer?
+    class func countDown(time: Int, countDownBlock: ((Int) -> Void)?, endBlock: (() -> Void)? ) {
+        let queue = DispatchQueue.global()
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        var timeout = time
+        timer?.schedule(wallDeadline: .now(), repeating: 1)
+        timer?.setEventHandler {
+            if timeout <= 0 {
+                timer?.cancel()
+                DispatchQueue.main.async {
+                    endBlock?()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    timeout -= 1
+                    countDownBlock?(timeout)
+                }
+            }
+        }
+        timer?.resume()
+    }
+    class func cancelTimer() {
+        timer?.cancel()
+        timer = nil
+    }
+}
 class TimerHelper {
     class func countDown(time: Int, countDownBlock: ((Int) -> Void)?, endBlock: (() -> Void)? ) {
         var timeout = time
@@ -15,7 +41,7 @@ class TimerHelper {
         let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.schedule(wallDeadline: .now(), repeating: 1)
         timer.setEventHandler {
-            if timeout < 0 {
+            if timeout <= 0 {
                 timer.cancel()
                 DispatchQueue.main.async {
                     endBlock?()
@@ -53,6 +79,17 @@ class TimerHelper {
         } else {
             return "\(second)s"
         }
+    }
+    
+    class func timeToMonthDay(timeInterval: TimeInterval) -> String {
+        let formatter =  DateFormatter()
+        formatter.dateFormat = "dd\nM月"
+        var timeInterval = Int(timeInterval)
+        if String(timeInterval).count == 13 {
+            timeInterval /= 1000
+        }
+        let date = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+        return formatter.string(from: date)
     }
     
     class func storyTime(timeInterval: TimeInterval) -> (day: String, time: String) {

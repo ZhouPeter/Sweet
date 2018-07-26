@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 import AVKit
 import VolumeBar
 import Contacts
+import Kingfisher
 var allowRotation = false
 
 @UIApplicationMain
@@ -35,6 +36,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        #if DEBUG
+        try? FileManager.default.removeItem(at: URL.cachesURL())
+        #endif
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
@@ -49,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         uploadContacts()
         addObservers()
+        KingfisherManager.shared.cache.maxMemoryCost = 100 * 1024 * 1024
         return true
     }
     

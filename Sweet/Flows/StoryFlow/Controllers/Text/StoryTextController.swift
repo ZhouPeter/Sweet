@@ -126,6 +126,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     @objc private func didPressFinishButton() {
         finishButton.alpha = 0
         closeButton.alpha = 0
+        editButton.alpha = 0
         var filename: String?
         let image = view.screenshot(afterScreenUpdates: true)
         if let snap = image {
@@ -137,9 +138,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         }
         var draft = StoryDraft(filename: name, storyType: .text, date: Date())
         draft.topic = topic
-        if editController.hasText || editController.topic != nil {
-            draft.contentRect = editController.boundingRect
-        }
+        draft.touchPoints = editController.makeTouchArea()
         TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
         Defaults[.isPersonalStoryChecked] = false
         view.hero.id = "avatar"

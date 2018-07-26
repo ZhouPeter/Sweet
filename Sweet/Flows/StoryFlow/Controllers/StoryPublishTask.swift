@@ -53,12 +53,12 @@ class StoryPublishTask: AsynchronousOperation {
         if let name = draft.filterFilename, let image = UIImage(named: name) {
             filter = LookupFilter(lookupImage: image)
         } else {
-            filter = LookupFilter(lookupImage: UIImage(named: "NA")!)
+            filter = LookupFilter(lookupImage: UIImage(named: "1")!)
         }
         self.filter = filter
         let handleOutput: ((URL?) -> Void) = { [weak self] url in
             guard let url = url, let `self` = self else { return }
-            logger.debug(url)
+            logger.debug(self.draft.fileURL, url)
             self.draft.generatedFilename = url.lastPathComponent
             self.storage.write({ (realm) in
                 realm.add(StoryDraftData.data(with: self.draft), update: true)
@@ -112,7 +112,7 @@ class StoryPublishTask: AsynchronousOperation {
                     type: self.draft.storyType,
                     topic: self.draft.topic,
                     pokeCenter: self.draft.pokeCenter,
-                    contentRect: self.draft.contentRect
+                    touchPoints: self.draft.touchPoints
                 ),
                 completion: { (result) in
                     logger.debug(result)

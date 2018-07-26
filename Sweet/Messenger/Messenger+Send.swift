@@ -12,7 +12,7 @@ extension Messenger {
     @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: .text, extra: extra)
         message.rawContent = text
-        send(message)
+        DispatchQueue.main.async { self.send(message) }
         return message
     }
     
@@ -50,6 +50,10 @@ extension Messenger {
         return sendMessage(type: .like, from: from, to: to, extra: extra)
     }
     
+    @discardableResult func sendImage(with url: String, from: UInt64, to: UInt64) -> InstantMessage {
+        return sendMessage(with: ImageMessageContent(url: url), type: .image, from: from, to: to, extra: nil)
+    }
+    
     @discardableResult func sendMessage(
         with content: MessageContent? = nil,
         type: IMType,
@@ -58,7 +62,7 @@ extension Messenger {
         extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: type, extra: extra)
         message.content = content
-        send(message)
+        DispatchQueue.main.async { self.send(message) }
         return message
     }
 }

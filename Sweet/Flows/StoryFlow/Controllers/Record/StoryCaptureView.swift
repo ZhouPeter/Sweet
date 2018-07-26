@@ -14,7 +14,8 @@ final class StoryCaptureView: GPUImageView {
     var isStarted: Bool {
         return camera?.isRunning ?? false
     }
-    private var filter = BeautyFilter()
+    private var beautyFilter = BeautyFilter()
+    private var filter = GPUImageFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
     private var queue = DispatchQueue.global()
@@ -50,6 +51,15 @@ final class StoryCaptureView: GPUImageView {
     func rotateCamera(callback: (() -> Void)? = nil) {
         queue.async {
             self.camera?.rotateCamera()
+            if self.camera?.cameraPosition() == .front {
+                self.camera?.removeTarget(self.filter)
+                self.camera?.addTarget(self.beautyFilter)
+                self.beautyFilter.addTarget(self.filter)
+            } else {
+                self.camera?.removeTarget(self.beautyFilter)
+                self.beautyFilter.removeTarget(self.filter)
+                self.camera?.addTarget(self.filter)
+            }
             DispatchQueue.main.async { callback?() }
         }
     }

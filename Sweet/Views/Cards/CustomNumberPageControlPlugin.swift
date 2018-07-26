@@ -7,8 +7,34 @@
 
 import Foundation
 import JXPhotoBrowser
-extension PhotoBrowserPlugin {
 
+var lookedPhotoMap: [String: [Int]] = [String: [Int]]()
+var actionLogPhotoMap: [String: [Int]] = [String: [Int]]()
+class CustomChangeBrowerPlugin: PhotoBrowserPlugin {
+    let card: CardResponse
+    init(card: CardResponse) {
+        self.card = card
+    }
+    func photoBrowser(_ photoBrowser: PhotoBrowser, didChangedPageIndex index: Int) {
+        var lookedIndexs = lookedPhotoMap[card.cardId] ?? [Int]()
+        if !lookedIndexs.contains(index) { lookedIndexs.append(index) }
+        lookedPhotoMap[card.cardId] = lookedIndexs
+    }
+    
+    func photoBrowser(_ photoBrowser: PhotoBrowser, viewDidDisappear view: UIView) {
+        if let total = photoBrowser.photoBrowserDelegate?.numberOfPhotos(in: photoBrowser) {
+            if actionLogPhotoMap[card.cardId] != nil { return }
+            let lookedIndexs = lookedPhotoMap[card.cardId] ?? [Int]()
+            if total == lookedIndexs.count {
+                CardAction.clickAll.actionLog(card: card) { (isSuccess) in
+                    if isSuccess {
+                        lookedPhotoMap[self.card.cardId] = nil
+                        actionLogPhotoMap[self.card.cardId] = lookedIndexs
+                    }
+                }
+            }
+        }
+    }
 }
 class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
     /// 字体
@@ -17,8 +43,8 @@ class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
     /// 字颜色
     var textColor = UIColor.white
     
-    /// 中心点Y坐标
-    var centerY: CGFloat = UIScreen.main.bounds.height - 28
+    /// 中心点距离底部坐标
+    var centerBottomY: CGFloat = 28
     
     /// 数字指示
     lazy var numberLabel: UILabel = {
@@ -68,6 +94,6 @@ class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
             offsetY = superView.safeAreaInsets.bottom
         }
         numberLabel.center = CGPoint(x: superView.bounds.midX,
-                                     y: superView.bounds.minY + (centerY + offsetY))
+                                     y: superView.bounds.maxY - (centerBottomY + offsetY))
     }
 }

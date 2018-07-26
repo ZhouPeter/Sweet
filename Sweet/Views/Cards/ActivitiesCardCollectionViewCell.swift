@@ -22,6 +22,7 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "activityCell")
+        tableView.separatorColor = UIColor(hex: 0xf2f2f2)
         return tableView
     }()
     

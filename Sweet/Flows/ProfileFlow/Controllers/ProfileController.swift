@@ -8,8 +8,9 @@
 
 import UIKit
 import SwiftyUserDefaults
+import JXPhotoBrowser
 protocol ProfileView: BaseView {
-    var showAbout: ((UserResponse) -> Void)? { get set }
+    var delegate: ProfileViewDelegate? { get set }
     var showStoriesPlayerView: (
         (
         User,
@@ -21,11 +22,18 @@ protocol ProfileView: BaseView {
     var finished: (() -> Void)? { get set }
     var user: User { get set }
     var userId: UInt64 { get set }
-    var showConversation: ((User, User) -> Void)? { get set }
+    var showStory: (() -> Void)? { get set }
+}
+
+protocol ProfileViewDelegate: class {
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse)
+    func showConversation(user: User, buddy: User)
 }
 
 class ProfileController: BaseViewController, ProfileView {
-    var showConversation: ((User, User) -> Void)?
+    weak var delegate: ProfileViewDelegate?
+    
+    var showStory: (() -> Void)?
     var showStoriesPlayerView: (
         (
         User,
@@ -37,21 +45,27 @@ class ProfileController: BaseViewController, ProfileView {
     var user: User
     var userId: UInt64
     let setTop: SetTop?
-    var showAbout: ((UserResponse) -> Void)?
     var finished: (() -> Void)?
     var userResponse: UserResponse? {
         willSet {
             if let newValue = newValue {
-                if newValue.userId == UInt64(Defaults[.userID] ?? "0") {
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
-                    navigationItem.title = "个人主页"
-                } else {
-                    navigationItem.title = "个人主页"
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuButton)
+                DispatchQueue.main.async {
+                    if  let IDString = Defaults[.userID],
+                        let userID = UInt64(IDString),
+                        newValue.userId == userID {
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.moreButton)
+                        self.navigationItem.title = "个人主页"
+                    } else {
+                        self.navigationItem.title = "个人主页"
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.menuButton)
+                    }
                 }
             }
         }
     }
+    
+    private var updateRemain: UpdateRemainResponse?
+    private var photoBrowserImp: AvatarPhotoBrowserImp?
     private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
     private var isFirstLoad = true
@@ -92,6 +106,20 @@ class ProfileController: BaseViewController, ProfileView {
         return button
     }()
     
+    private lazy var avatarView: UIView = {
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let imageView = UIImageView()
+        imageView.kf.setImage(with: URL(string: userResponse!.avatar))
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        view.addSubview(imageView)
+        view.layer.cornerRadius = 15
+        view.clipsToBounds = true
+        return view
+    }()
+    
     init(user: User, userId: UInt64, setTop: SetTop? = nil) {
         self.user = user
         self.userId = userId
@@ -109,6 +137,26 @@ class ProfileController: BaseViewController, ProfileView {
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
+        loadAll()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
+        if !isFirstLoad { readLocalData() }
+        if isFirstLoad { isFirstLoad = false }
+//        if userResponse == nil || !isFirstLoad {
+//            loadAll()
+//        } else {
+//            updateViewModel()
+//            tableView.reloadData()
+//            loadAll(isLoadUser: false)
+//        }
+//        if isFirstLoad { isFirstLoad = false }
     }
     
     func readLocalData() {
@@ -123,31 +171,13 @@ class ProfileController: BaseViewController, ProfileView {
     func saveUserData() {
         storage?.write({ [weak self] (realm) in
             guard let `self` = self, let userResponse = self.userResponse else { return }
-           realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
+            realm.create(UserData.self, value: UserData.data(with: userResponse), update: true)
         }) { (success) in
             if success {
                 logger.debug("用户数据保存成功")
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.tintColor = .black
-        if userResponse == nil || !isFirstLoad {
-            loadAll()
-        } else {
-            updateViewModel()
-            tableView.reloadData()
-            loadAll(isLoadUser: false)
-        }
-        if isFirstLoad { isFirstLoad = false }
-    }
-    
     private func setBackButton() {
         if navigationController?.viewControllers.count == 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
@@ -156,9 +186,11 @@ class ProfileController: BaseViewController, ProfileView {
     
     @objc private func returnAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+        finished?()
     }
 
     override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
         if parent == nil {
             finished?()
         }
@@ -169,8 +201,8 @@ class ProfileController: BaseViewController, ProfileView {
 
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
-        guard let user = userResponse else { return }
-        self.showAbout?(user)
+        guard let user = userResponse, let updateRemain = updateRemain else { return }
+        delegate?.showAbout(user: user, updateRemain: updateRemain)
     }
     
     @objc private func menuAction(sender: UIButton) {
@@ -231,8 +263,9 @@ extension ProfileController {
             self.actionsController = ActionsController(user: User(self.userResponse!),
                                                        mine: self.user,
                                                        setTop: self.setTop)
-            self.actionsController?.actionsDelegate = self
+            self.actionsController!.actionsDelegate = self
             self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
+            self.actionsController!.showStory = self.showStory
             self.add(childViewController: self.actionsController!, addView: false)
         }
         self.saveUserData()
@@ -254,6 +287,14 @@ extension ProfileController {
         } else {
             userSuccess = true
         }
+        if user.userId == userId {
+            group.enter()
+            queue.async {
+                self.loadUpdateRemain(completion: { (isSuccess) in
+                    group.leave()
+                })
+            }
+        }
         group.notify(queue: DispatchQueue.main) {
             if userSuccess {
                self.loadTableView()
@@ -261,6 +302,18 @@ extension ProfileController {
         }
     }
     
+    private func loadUpdateRemain(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
+        web.request(.updateRemain, responseType: Response<UpdateRemainResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                self.updateRemain = response
+                completion?(true)
+            case let .failure(error):
+                completion?(false)
+                logger.error(error)
+            }
+        }
+    }
     private func loadUserData(completion: ((_ isSuccess: Bool) -> Void)? = nil) {
         web.request(.getUserProfile(userId: self.userId), responseType: Response<ProfileResponse>.self) { (result) in
             switch result {
@@ -281,7 +334,7 @@ extension ProfileController {
     
     private func sendMessage() {
         if let buddy = userResponse {
-            showConversation?(user, User(buddy))
+            delegate?.showConversation(user: user, buddy: User(buddy))
         }
     }
 
@@ -359,26 +412,72 @@ extension ProfileController {
 
 
 extension ProfileController: ActionsControllerDelegate {
-    func actionsScrollViewDidScoll(scrollView: UIScrollView) {
-        if tableView.contentOffset.y < 224 - UIScreen.navBarHeight() {
-            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
-                                     -UIScreen.navBarHeight()),
-                                 224 - UIScreen.navBarHeight())
+    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
+        let contentHeight = scrollView.contentSize.height
+        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
+            return
+        } else {
+            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
+                                 244 - UIScreen.navBarHeight())
             tableView.contentOffset.y = newOffsetY
-            scrollView.contentOffset.y = 0
-        } else if tableView.contentOffset.y == 224 - UIScreen.navBarHeight() && scrollView.contentOffset.y < 0 {
-            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
-                                     -UIScreen.navBarHeight()),
-                                 224 - UIScreen.navBarHeight())
-            tableView.contentOffset.y = newOffsetY
-            scrollView.contentOffset.y = 0
+            let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
+            let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
+            scrollView.contentOffset.y = cellHeight * lineCount - scrollView.frame.height
         }
-        
+    }
+    
+    func actionsScrollViewDidScroll(scrollView: UIScrollView) {
+        navigationItem.titleView = nil
+        if tableView.contentOffset.y < 244 - UIScreen.navBarHeight() {
+            let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
+                                     -UIScreen.navBarHeight()),
+                                 244 - UIScreen.navBarHeight())
+            tableView.contentOffset.y = newOffsetY
+            scrollView.contentOffset.y = 0
+            let point = scrollView.panGestureRecognizer.translation(in: nil)
+            if point.y > 0 && tableView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
+
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self.tableView.contentOffset.y = -UIScreen.navBarHeight()
+                }, completion: nil)
+            }
+        } else if tableView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+            if scrollView.contentOffset.y < 0 {
+                let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
+                                         -UIScreen.navBarHeight()),
+                                     244 - UIScreen.navBarHeight())
+                tableView.contentOffset.y = newOffsetY
+                scrollView.contentOffset.y = 0
+            }
+            navigationItem.titleView = avatarView
+        }
     }
 }
 // MARK: - UITableViewDelegate
 
 extension ProfileController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let point = scrollView.panGestureRecognizer.translation(in: nil)
+        if point.y < 0 {
+            if let actionsController = actionsController {
+                var isEnableScroll = false
+                for controller in actionsController.pageControllers {
+                    if controller.cellNumber > 0 {
+                        isEnableScroll = true
+                        break
+                    }
+                }
+                if !isEnableScroll {
+                    scrollView.contentOffset.y = -UIScreen.navBarHeight()
+                }
+            }
+        }
+        if  scrollView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+            navigationItem.titleView = avatarView
+        } else {
+            navigationItem.titleView = nil
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard  let viewModel = baseInfoViewModel else { return 0 }
         if indexPath.row == 0 {
@@ -401,6 +500,7 @@ extension ProfileController: UITableViewDataSource {
            guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "userInfoCell",
                 for: indexPath) as? UserInfoTableViewCell else { fatalError() }
+            cell.delegate = self
             if let viewModel = baseInfoViewModel {
                 cell.updateWith(viewModel)
             }
@@ -415,6 +515,26 @@ extension ProfileController: UITableViewDataSource {
             }
            return cell
         }
+    }
+}
+
+extension ProfileController: UserInfoTableViewCellDelegate {
+    func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
+        if user.userId == userId {
+            let controller = UpdateAvatarController(avatar: highURL.absoluteString)
+            navigationController?.pushViewController(controller, animated: true)
+        } else {
+            photoBrowserImp = AvatarPhotoBrowserImp(thumbnaiImageViews: [imageView], highImageViewURLs: [highURL])
+            let browser = CustomPhotoBrowser(delegate: photoBrowserImp!, originPageIndex: 0)
+            browser.animationType = .scale
+            browser.plugins.append(CustomNumberPageControlPlugin())
+            browser.show()
+        }
+    }
+    
+    func editSignature() {
+        let controller = UpdateSignatureController(signature: userResponse!.signature)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 

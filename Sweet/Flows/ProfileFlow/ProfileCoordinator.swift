@@ -53,9 +53,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     // MARK: - Private
     private func showProfile(isPresent: Bool = false) {
         let profile = factory.makeProfileView(user: user, userId: buddyID, setTop: setTop)
-        profile.showAbout = { [weak self] (user) in
-            self?.showAbout(user: user)
-        }
+        profile.delegate = self
         profile.finished = { [weak self] in
             self?.finishFlow?()
         }
@@ -66,8 +64,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                         delegate: delegate)
             
         }
-        profile.showConversation = { [weak self] (user, buddy) in
-            self?.showConversation(user: user, buddy: buddy)
+        profile.showStory = { [weak self] in
+            self?.showStory()
         }
         if isPresent {
             router.setRootFlow(profile)
@@ -75,31 +73,72 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
             router.push(profile)
         }
     }
-    
-    private func showConversation(user: User, buddy: User) {
-        let coordinator = ConversationCoordinator(
-            user: user,
-            buddy: buddy,
-            router: router,
-            coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in
+    private func showStory() {
+        let navigation = UINavigationController()
+        let coordinator = coordinatorFactory
+            .makeDismissableStoryCoordinator(user: user, topic: nil, navigation: navigation)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
+        router.present(navigation, animated: true)
         coordinator.start()
     }
+   
     
     private func showStoriesPlayerView(user: User,
                                        stories: [StoryCellViewModel],
                                        current: Int,
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
         let navigation = UINavigationController()
-        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: self.user,
-                                                                        navigation: navigation,
-                                                                        currentStart: current,
-                                                                        fromUserId: buddyID,
-                                                                        storiesGroup: [stories],
-                                                                        delegate: delegate)
+        var storiesGroup = [[StoryCellViewModel]]()
+        var newCurrent = 0
+        var newCurrentStart = 0
+        if self.user.userId == buddyID {
+            var beforeDay: String = ""
+            var storiesByDay = [StoryCellViewModel]()
+            var sumCount = 0
+            for (index,story) in stories.enumerated() {
+                let day = TimerHelper.storyTime(timeInterval: TimeInterval(story.created)).day
+                if day == beforeDay {
+                    storiesByDay.append(story)
+                    if index == stories.count - 1 {
+                        storiesGroup.append(storiesByDay)
+                    }
+                } else {
+                    if storiesByDay.count > 0 {
+                        storiesGroup.append(storiesByDay)
+                        storiesByDay.removeAll()
+                    }
+                    storiesByDay.append(story)
+                    if index == stories.count - 1 {
+                        storiesGroup.append(storiesByDay)
+                    }
+                }
+                beforeDay = day
+            }
+            for (index, stories) in storiesGroup.enumerated() {
+                sumCount += stories.count
+                if sumCount > current {
+                    newCurrent = index
+                    newCurrentStart = stories.count - (sumCount - (current + 1)) - 1
+                    break
+                }
+            }
+        } else {
+            newCurrentStart = current
+            newCurrent = 0
+            storiesGroup = [stories]
+        }
+        
+        let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
+            user: user,
+            navigation: navigation,
+            current: newCurrent,
+            currentStart: newCurrentStart,
+            fromCardId: nil,
+            storiesGroup: storiesGroup,
+            delegate: delegate)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }
@@ -108,24 +147,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         coordinator.start()
     }
     
-    private func showAbout(user: UserResponse) {
-        let aboutOutput  = factory.makeProfileAboutOutput(user: user)
-        aboutOutput.showWebView = { [weak self] (title, urlString) in
-            self?.showWebView(title: title, urlString: urlString)
-        }
-        
-        aboutOutput.showFeedback = { [weak self] in
-            self?.showFeedback()
-        }
-        
-        aboutOutput.showUpdate = { [weak self] (user) in
-            self?.showUpdate(user: user)
-        }
-        router.push(aboutOutput)
-    }
-    
-    private func showUpdate(user: UserResponse) {
-        let updateOutput = factory.makeProfileUpdateOutput(user: user)
+    private func showUpdate(user: UserResponse, updateRemain: UpdateRemainResponse) {
+        let updateOutput = factory.makeProfileUpdateOutput(user: user, updateRemain: updateRemain)
         router.push(updateOutput)
     }
     
@@ -137,5 +160,37 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private func showFeedback() {
         let feedback = FeedbackController()
         router.push(feedback)
+    }
+}
+
+
+extension ProfileCoordinator: ProfileViewDelegate {
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse) {
+        let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain)
+        aboutOutput.showWebView = { [weak self] (title, urlString) in
+            self?.showWebView(title: title, urlString: urlString)
+        }
+        
+        aboutOutput.showFeedback = { [weak self] in
+            self?.showFeedback()
+        }
+        
+        aboutOutput.showUpdate = { [weak self] (user, updateRemain) in
+            self?.showUpdate(user: user, updateRemain: updateRemain)
+        }
+        router.push(aboutOutput)
+    }
+
+    func showConversation(user: User, buddy: User) {
+        let coordinator = ConversationCoordinator(
+            user: user,
+            buddy: buddy,
+            router: router,
+            coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

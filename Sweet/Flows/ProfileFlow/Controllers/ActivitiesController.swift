@@ -12,6 +12,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
+    var cellNumber: Int = 0
     var user: User
     var avatar: String
     let setTop: SetTop?
@@ -27,7 +28,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     private var activityList = [ActivityResponse]()
-    private var viewModels = [ActivityCardViewModel]()
+    private var viewModels = [ActivityCardViewModel]() {
+        didSet {
+            cellNumber = viewModels.count
+        }
+    }
     private var page = 0
     private var loadFinish = false
     private lazy var tableView: UITableView = {
@@ -141,9 +146,9 @@ extension ActivitiesController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.type == .content, let content = content as? ContentCardContent {
+                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
                             Messenger.shared.sendContentCard(content, from: from, to: toUserId)
-                        } else if resultCard.type == .choice, let content = content as? OptionCardContent {
+                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId)
                         }
                     } else {
@@ -204,8 +209,28 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
-            let controller = WebViewController(urlString: url)
+            let controller = WebViewController(urlString: url) {
+                self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
+            }
             navigationController?.pushViewController(controller, animated: true)
         }
     }
 }
+extension ActivitiesController {
+    func shareCard(cardId: String) {
+        web.request(WebAPI.getCard(cardID: cardId), responseType: Response<CardGetResponse>.self) { (result) in
+            switch result {
+            case let .success(response):
+                let text = response.card.makeShareText()
+                let controller = ShareCardController(shareText: text)
+                controller.sendCallback = { (text, userIds) in
+                    CardMessageManager.shard.sendMessage(card: response.card, text: text, userIds: userIds)
+                }
+                self.present(controller, animated: true, completion: nil)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+}
+

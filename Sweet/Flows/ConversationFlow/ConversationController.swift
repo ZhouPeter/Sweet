@@ -10,6 +10,7 @@ import UIKit
 import MessageKit
 import Kingfisher
 import STPopupPreview
+import JXPhotoBrowser
 
 protocol ConversationView: BaseView {
     var delegate: ConversationControllerDelegate? { get set }
@@ -17,7 +18,7 @@ protocol ConversationView: BaseView {
 
 final class ConversationController: MessagesViewController, ConversationView {
     weak var delegate: ConversationControllerDelegate?
-    
+    private var photoBrowserDelegate: PhotoBrowserImp?
     private let user: User
     private var buddy: User
     private let refreshControl = UIRefreshControl()
@@ -54,6 +55,9 @@ final class ConversationController: MessagesViewController, ConversationView {
         layout.emojiMessageSizeCalculator.outgoingAvatarPosition = avatarPosition
         layout.sizeCalculator.incomingAvatarPosition = avatarPosition
         layout.sizeCalculator.outgoingAvatarPosition = avatarPosition
+        let accessoryViewSize = CGSize(width: 35, height: 35)
+        layout.setMessageIncomingAccessoryViewSize(accessoryViewSize)
+        layout.setMessageOutgoingAccessoryViewSize(accessoryViewSize)
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: layout)
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
@@ -75,12 +79,9 @@ final class ConversationController: MessagesViewController, ConversationView {
     }
     
     override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
         guard parent == nil else { return }
         delegate?.conversationDidFinish()
-    }
-    
-    deinit {
-        logger.debug()
     }
     
     func didBlock() {
@@ -102,6 +103,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messagesCollectionView.register(OptionCardMessageCell.self)
         messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.register(SweetTextMessageCell.self)
+        messagesCollectionView.register(ImageMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -120,6 +122,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButton"), for: .normal)
         messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButtonDisabled"), for: .disabled)
         messageInputBar.sendButton.setTitle(nil, for: .normal)
+        messageInputBar.padding.right = 2
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.placeholder = "说点什么"
@@ -180,6 +183,11 @@ final class ConversationController: MessagesViewController, ConversationView {
         }
         if value is ContentCardContent {
             let cell = messagesCollectionView.dequeueReusableCell(ContentCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+        if value is ImageMessageContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ImageMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
@@ -293,6 +301,71 @@ extension ConversationController: MessagesDisplayDelegate {
         in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 32, height: 32)
     }
+    
+    func configureAccessoryView(
+        _ accessoryView: UIView,
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView) {
+        let imMessage = messages[indexPath.section]
+        let resendButton = addAccessoryResendButtonIfNeeds(accessoryView)
+        resendButton.isHidden = true
+        resendButton.indexPath = indexPath
+        let indicator = addAccessoryIndicatorIfNeeds(accessoryView)
+        indicator.stopAnimating()
+        if imMessage.from == user.userId, imMessage.isSent == false {
+            if imMessage.isFailed {
+                resendButton.isHidden = false
+            } else {
+                indicator.isHidden = false
+                indicator.startAnimating()
+            }
+        }
+    }
+    
+    @discardableResult private func addAccessoryIndicatorIfNeeds(_ accessoryView: UIView) -> UIActivityIndicatorView {
+        let tag = 2
+        if let indicator = accessoryView.viewWithTag(tag) as? UIActivityIndicatorView {
+            return indicator
+        }
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        accessoryView.addSubview(indicator)
+        indicator.align(.left)
+        indicator.align(.right)
+        indicator.align(.bottom)
+        indicator.align(.top, to: accessoryView, inset: 10, priority: .defaultHigh)
+        indicator.tag = tag
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        return indicator
+    }
+    
+    @discardableResult private func addAccessoryResendButtonIfNeeds(_ accessoryView: UIView) -> IndexPathButton {
+        let tag = 1
+        if let button = accessoryView.viewWithTag(tag) as? IndexPathButton {
+            return button
+        }
+        let button = IndexPathButton()
+        button.tag = tag
+        button.setImage(UIImage(named: "Failed"), for: .normal)
+        accessoryView.addSubview(button)
+        button.align(.left)
+        button.align(.right)
+        button.align(.bottom)
+        button.align(.top, to: accessoryView, inset: 10, priority: .defaultHigh)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(didPressResendButton(button:)), for: .touchUpInside)
+        return button
+    }
+    
+    @objc private func didPressResendButton(button: IndexPathButton) {
+        guard let indexPath = button.indexPath else { return }
+        var message = messages[indexPath.section]
+        message.isFailed = false
+        messages[indexPath.section] = message
+        messagesCollectionView.reloadSections([indexPath.section])
+        Messenger.shared.send(message)
+    }
 }
 
 extension ConversationController: MessagesLayoutDelegate {}
@@ -301,6 +374,17 @@ extension ConversationController: MessageCellDelegate {
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
         let message = messages[indexPath.section]
+        if let content = message.content as? ImageMessageContent,
+            let cell = cell as? ImageMessageCell, message.type == .image {
+            let browserDelegate =
+                PhotoBrowserImp(thumbnaiImageViews: [cell.imageView], highImageViewURLs: [URL(string: content.url)!])
+            photoBrowserDelegate = browserDelegate
+            let browser = CustomPhotoBrowser(delegate: browserDelegate, originPageIndex: 0)
+            browser.animationType = .scale
+            browser.plugins.append(CustomNumberPageControlPlugin())
+            browser.show()
+            return
+        }
         guard message.type == .card || message.type == .story else { return }
         if let content = message.content as? OptionCardContent {
             let preview = OptionCardPreviewController(content: content)
@@ -367,7 +451,15 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        
+        if let section = messages.firstIndex(where: { $0.localID == message.localID }) {
+            let indexPath = IndexPath(row: 0, section: section)
+            messages[indexPath.section] = message
+            messagesCollectionView.reloadSections([section])
+        } else {
+            messages.append(message)
+            messagesCollectionView.insertSections([messages.count - 1])
+            messagesCollectionView.scrollToBottom(animated: true)
+        }
     }
     
     func messengerDidReceiveMessage(_ message: InstantMessage) {

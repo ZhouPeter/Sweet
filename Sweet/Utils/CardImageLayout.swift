@@ -21,7 +21,10 @@ extension ContentCardCollectionViewCell {
         imageViewContainers.forEach { view in
             view.isHidden = true
         }
-        guard let urls = urls, urls.isNotEmpty else { return }
+        guard let urls = urls, urls.isNotEmpty else {
+            zero()
+            return
+        }
   
         switch urls.count {
         case 1:
@@ -44,12 +47,17 @@ extension ContentCardCollectionViewCell {
             break
         }
     }
+    func zero() {
+        titleLabel.layoutIfNeeded()
+        let contentHeight = viewModel!.contentHeight
+        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height - (sourceInfoView.isHidden ? 0 : 80)
+        contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+    }
     
     func one(urls: [URL]) {
         let margin: CGFloat = 0
         let spacing: CGFloat = 3
         let width = contentImageView.bounds.width - margin * 2
-        let imageView = imageViews[0]
         let container = imageViewContainers[0]
         container.isHidden = false
         let containerMinSize = CGSize(width: (width - 2 * spacing) / 3 , height: (width - 2 * spacing) / 3)
@@ -70,7 +78,7 @@ extension ContentCardCollectionViewCell {
             let y = contentImageView.bounds.height - containerSize.height
             container.frame = CGRect(origin: CGPoint(x: 0, y: y),size: containerSize)
         }
-        setImage(url: urls[0], index: 0)
+        setImage(url: urls[0], index: 0, isAutoAnimating: true)
     }
     
     func two(urls: [URL]) {
@@ -232,7 +240,6 @@ extension ContentCardCollectionViewCell {
                 let containerSize = CGSize(width: (width - spacing) / 2, height: scaleHeight)
                 y = contentImageView.bounds.height - containerSize.height - bottomHeight - spacing
                 urls.forEach { (url) in
-                    let imageView = imageViews[viewIndex]
                     let container = imageViewContainers[viewIndex]
                     container.isHidden = false
                     if viewIndex <= 1 {
@@ -395,7 +402,6 @@ extension ContentCardCollectionViewCell {
             y = contentImageView.bounds.height - bottomHeight * 3 - spacing * 2
             urls.forEach { (url) in
                 let container = imageViewContainers[viewIndex]
-                let imageIcon = imageIcons[viewIndex]
                 container.isHidden = false
                 if viewIndex <= 1 {
                     container.frame = CGRect(origin: CGPoint(x: x, y: y), size: containerMinSize)
@@ -505,17 +511,17 @@ extension ContentCardCollectionViewCell {
         }
     }
 
-    func setImage(url : URL?, index: Int) {
+    func setImage(url : URL?, index: Int, isAutoAnimating: Bool = false) {
         let imageView = imageViews[index]
         let imageIcon = imageIcons[index]
         customContent.layoutIfNeeded()
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
             if info.format == "gif" {
-                imageIcon.isHidden = false
+                imageIcon.isHidden = isAutoAnimating
                 imageIcon.setTitle("GIF", for: .normal)
             } else {
-                if CGFloat(info.height) / CGFloat(info.width) > UIScreen.mainHeight() / UIScreen.mainWidth() {
+                if CGFloat(info.height) / CGFloat(info.width) > 1.95 {
                     imageIcon.isHidden = false
                     imageIcon.setTitle("长图", for: .normal)
                 } else {
@@ -526,6 +532,7 @@ extension ContentCardCollectionViewCell {
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
         imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
             guard image != nil else { return }
+            if !isAutoAnimating { imageView.stopAnimating() }
             UIView.animate(withDuration: 0.25, animations: {
                 imageView.alpha = 1
             })

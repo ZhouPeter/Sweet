@@ -78,6 +78,7 @@ struct ActivityCardViewModel {
     var showProfile: ((UInt64, SetTop?) -> Void)?
     let setTop: SetTop?
     let url: String?
+    let fromCardId: String
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
         actor = model.actor
         activityId = model.activityId
@@ -86,7 +87,8 @@ struct ActivityCardViewModel {
         subtitleString = model.subtitle
         commentString = model.body.comment
         contentAttributedString = model.body.content.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 12),
-                                                                             textColor: UIColor(white: 0, alpha: 0.5))
+                                                                             textColor: UIColor(white: 0, alpha: 0.5),
+                                                                             lineSpacing: 0)
         if model.body.emoji.rawValue > 0 {
             emojiImage = UIImage(named: "Emoji\(model.body.emoji.rawValue)")
         } else {
@@ -99,5 +101,6 @@ struct ActivityCardViewModel {
         }
         setTop = SetTop(contentId: model.contentId, preferenceId: model.preferenceId)
         url = model.url
+        fromCardId = model.fromCardId
     }
 }

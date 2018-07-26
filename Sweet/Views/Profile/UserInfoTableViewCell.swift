@@ -7,14 +7,19 @@
 //
 
 import UIKit
-
+protocol UserInfoTableViewCellDelegate: class {
+    func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL)
+    func editSignature()
+}
 class UserInfoTableViewCell: UITableViewCell {
-    
+    weak var delegate: UserInfoTableViewCellDelegate?
     private var viewModel: BaseInfoCellViewModel?
-
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
+        imageView.addGestureRecognizer(tap)
         return imageView
     }()
     private lazy var nicknameLabel: UILabel = {
@@ -51,6 +56,14 @@ class UserInfoTableViewCell: UITableViewCell {
         label.textColor = UIColor.black.withAlphaComponent(0.65)
         return label
     }()
+    private lazy var editButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "Edit"), for: .normal)
+        button.contentHorizontalAlignment = .right
+        button.addTarget(self, action: #selector(didPressEdit(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var bottomMaskView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xf2f2f2)
@@ -71,7 +84,7 @@ class UserInfoTableViewCell: UITableViewCell {
         contentView.addSubview(avatarImageView)
         avatarImageView.centerX(to: contentView)
         avatarImageView.align(.top, inset: 15)
-        avatarImageView.constrain(width: 60, height: 60)
+        avatarImageView.constrain(width: 80, height: 80)
         avatarImageView.setViewRounded()
         contentView.addSubview(nicknameLabel)
         nicknameLabel.centerX(to: avatarImageView)
@@ -94,6 +107,8 @@ class UserInfoTableViewCell: UITableViewCell {
         contentView.addSubview(signatureLabel)
         signatureLabel.centerX(to: avatarImageView)
         signatureLabel.pin(.bottom, to: collegeInfoLabel, spacing: 10)
+        contentView.addSubview(editButton)
+        editButton.fill(in: signatureLabel, right: -18)
         contentView.addSubview(bottomMaskView)
         bottomMaskView.align(.left)
         bottomMaskView.align(.right)
@@ -108,5 +123,14 @@ class UserInfoTableViewCell: UITableViewCell {
         starContactLabel.text = viewModel.starContactString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
+        editButton.isHidden = viewModel.isHiddenEdit
+    }
+    
+    @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
+        delegate?.didPressAvatarImageView(avatarImageView, highURL: viewModel!.avatarImageURL)
+    }
+    
+    @objc private func didPressEdit(_ sender: UIButton) {
+        delegate?.editSignature()
     }
 }

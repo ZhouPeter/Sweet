@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdateEnrollmentController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var selectedYear: Int
     private lazy var years: [Int] = {
@@ -71,10 +71,16 @@ extension UpdateEnrollmentController: SweetPickerViewDelegate {
                                        "type": UpdateUserType.enrollment.rawValue])) { [weak self] (result) in
             guard let `self` = self else { return }
             switch result {
-            case .success:
-                self.saveCompletion?("\(self.years[index])")
+            case let .success(response):
+                let remain = response["remain"] as? Int
+                self.saveCompletion?("\(self.years[index])", remain)
                 self.navigationController?.popViewController(animated: true)
             case let .failure(error):
+                if error.code == WebErrorCode.updateLimit.rawValue {
+                    self.toast(message: "修改次数已用完")
+                } else {
+                    self.toast(message: "修改失败")
+                }
                 logger.error(error)
             }
             

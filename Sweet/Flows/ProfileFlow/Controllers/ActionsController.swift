@@ -10,11 +10,13 @@ import UIKit
 import Pageboy
 protocol PageChildrenProtocol {
     var user: User { get set }
+    var cellNumber: Int { get set }
     func loadRequest()
 }
 
 protocol ActionsControllerDelegate: NSObjectProtocol {
-    func actionsScrollViewDidScoll(scrollView: UIScrollView)
+    func actionsScrollViewDidScroll(scrollView: UIScrollView)
+    func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int)
 }
 class ActionsController: PageboyViewController {
     var showStoriesPlayerView: (
@@ -31,6 +33,7 @@ class ActionsController: PageboyViewController {
             }
         }
     }
+    var showStory: (() -> Void)?
     var mine: User
     let setTop: SetTop?
     weak var actionsDelegate: ActionsControllerDelegate?
@@ -40,16 +43,16 @@ class ActionsController: PageboyViewController {
         self.setTop = setTop
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
+    lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
         feedsController.delegate = self
         let storysController = StoriesController(user: user)
         storysController.delegate = self
+        storysController.showStory = showStory
         storysController.showStoriesPlayerView = showStoriesPlayerView
         viewControllers.append(feedsController)
         viewControllers.append(storysController)
@@ -63,14 +66,20 @@ class ActionsController: PageboyViewController {
         delegate = self
         pageControllers[0].loadRequest()
     }
+
 }
 extension ActionsController: ActivitiesControllerDelegate, StoriesControllerDelegate {
+    func storiesScrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
+        actionsDelegate?.actionsSrollViewDidScrollToBottom(scrollView: scrollView, index: index)
+    }
+    
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView) {
-        actionsDelegate?.actionsScrollViewDidScoll(scrollView: scrollView)
+        actionsDelegate?.actionsScrollViewDidScroll(scrollView: scrollView)
     }
     func storiesScrollViewDidScroll(scrollView: UIScrollView) {
-        actionsDelegate?.actionsScrollViewDidScoll(scrollView: scrollView)
+        actionsDelegate?.actionsScrollViewDidScroll(scrollView: scrollView)
     }
+
 }
 
 extension ActionsController: PageboyViewControllerDataSource {

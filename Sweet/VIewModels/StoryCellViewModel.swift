@@ -22,8 +22,10 @@ struct StoryCellViewModel {
     let userId: UInt64
     let type: StoryType
     var pokeCenter: CGPoint = CGPoint(x: 0, y: 0)
-    var touchArea: CGRect?
+    var touchPath: CGPath?
     var visualText: String = ""
+    var uvNum: UInt
+    var timestampString: String
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
@@ -38,12 +40,19 @@ struct StoryCellViewModel {
         } else {
             imageURL = URL(string: model.content)
         }
-        if let touchArea = model.touchArea {
-            let touchArea = CGRect(origin: CGPoint(x: UIScreen.mainWidth() * touchArea.originX,
-                                                   y: UIScreen.mainHeight() * touchArea.originY),
-                                   size: CGSize(width: UIScreen.mainWidth() * touchArea.width,
-                                                height: UIScreen.mainHeight() * touchArea.height))
-            self.touchArea = touchArea
+        if model.touchArea.count > 2 {
+            let path = CGMutablePath()
+            for (index, touchPoint) in model.touchArea.enumerated() {
+                let point = CGPoint(x: UIScreen.mainWidth() * touchPoint.originX,
+                                    y: UIScreen.mainHeight() * touchPoint.originY)
+                if index == 0 {
+                    path.move(to: point)
+                } else {
+                    path.addLine(to: point)
+                }
+            }
+            path.closeSubpath()
+            touchPath = path
         }
         read = model.read
         like = model.like
@@ -52,5 +61,7 @@ struct StoryCellViewModel {
         userId = model.userId
         let storyTime = TimerHelper.storyTime(timeInterval: TimeInterval(model.created))
         subtitle = storyTime.day + storyTime.time
+        uvNum = model.uvNum
+        timestampString = ""
     }
 }

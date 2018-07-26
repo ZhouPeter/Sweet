@@ -11,7 +11,7 @@ protocol StoryUVControllerDelegate: NSObjectProtocol {
     func closeStoryUV()
 }
 class StoryUVController: BaseViewController {
-    var runProfileFlow: ((User, UInt64) -> Void)?
+    var runProfileFlow: ((UInt64) -> Void)?
     weak var delegate: StoryUVControllerDelegate?
     var user: User
     private let storyId: UInt64
@@ -25,6 +25,12 @@ class StoryUVController: BaseViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+        button.addTarget(self, action: #selector(didPressClose(sender:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var bottomClearButton: UIButton = {
+        let button = UIButton()
         button.addTarget(self, action: #selector(didPressClose(sender:)), for: .touchUpInside)
         return button
     }()
@@ -44,6 +50,7 @@ class StoryUVController: BaseViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.register(StoryUVTableViewCell.self, forCellReuseIdentifier: "storyUVCell")
+        
         return tableView
     }()
     
@@ -81,14 +88,18 @@ class StoryUVController: BaseViewController {
         view.backgroundColor = .clear
         view.addSubview(likeCountLabel)
         likeCountLabel.align(.left, to: view, inset: 20)
-        likeCountLabel.align(.top, to: view, inset: UIScreen.isIphoneX() ? 64 : 20)
+        likeCountLabel.align(.top, to: view, inset: 20 + UIScreen.safeTopMargin())
         likeCountLabel.constrain(height: 30)
         view.addSubview(closeButton)
         closeButton.align(.right, to: view, inset: 10)
         closeButton.centerY(to: likeCountLabel)
         closeButton.constrain(width: 30, height: 30)
         view.addSubview(tableView)
-        tableView.fill(in: view, top: UIScreen.isIphoneX() ? 64 + 40 : 20 + 40 )
+        tableView.fill(in: view, top: 60 + UIScreen.safeTopMargin(), bottom: 50 + 35 + 25 + UIScreen.safeBottomMargin())
+        view.addSubview(bottomClearButton)
+        bottomClearButton.constrain(width: 50, height: 50)
+        bottomClearButton.centerX(to: view)
+        bottomClearButton.align(.bottom, inset: 25 + UIScreen.safeBottomMargin())
     }
     
     @objc private func didPressClose(sender: UIButton) {
@@ -120,9 +131,7 @@ extension StoryUVController: UITableViewDelegate {
         return 70
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let profileController = ProfileController(user: user, userId: storyUvList!.list[indexPath.row].userId)
-//        let navigationController = UINavigationController(rootViewController: profileController)
-//        self.present(navigationController, animated: true, completion: nil)
-        runProfileFlow?(user, storyUvList!.list[indexPath.row].userId)
+
+        runProfileFlow?(storyUvList!.list[indexPath.row].userId)
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class UpdateUniversityController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var universityName: String
     private var universitys = [University]() {

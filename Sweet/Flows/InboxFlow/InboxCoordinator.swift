@@ -76,15 +76,18 @@ extension InboxCoordinator: MessengerDelegate {
             isOffline = false
             Messenger.shared.loadConversations()
         }
+        self.inboxView?.didUpdateUserOnlineState(isUserOnline: true)
     }
     
     func messengerDidLogout(user: User) {
         logger.debug(user.nickname)
         isOffline = true
+        self.inboxView?.didUpdateUserOnlineState(isUserOnline: false)
     }
     
     func messengerDidUpdateState(_ state: MessengerState) {
         logger.debug(state)
+        self.inboxView?.didUpdateUserOnlineState(isUserOnline: state == .online)
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {

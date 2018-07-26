@@ -17,7 +17,16 @@ enum EmojiType: UInt, Codable {
     case happy
     case smile
 }
-
+enum SourceType: UInt, Codable {
+    case `default`
+    case weibo
+    case weixin
+    case douyin
+    case toutiaohao
+    case zhihu
+    case bilibili
+    case xiaohongshu
+}
 struct CardListResponse: Codable {
     let list: [CardResponse]
 }
@@ -33,11 +42,22 @@ struct CardResponse: Codable {
     let imageList: [String]?
     let contentImages: [[ContentImage]]?
     let video: String?
+    let videoPic: String?
     var storyList: [[StoryResponse]]?
     var result: SelectResult?
-    let type: CardType
+    let type: UInt
+    var cardEnumType: CardType {
+        return CardType(rawValue: type) ?? .unknown
+    }
     let name: String?
     let url: String?
+    let thumbnail: String?
+    let title: String?
+    let brief: String?
+    let sourceType: UInt
+    var sourceEnumType: SourceType? {
+        return SourceType(rawValue: sourceType)
+    }
     enum CardType: UInt, Codable {
         case unknown
         case content
@@ -45,6 +65,20 @@ struct CardResponse: Codable {
         case activity
         case story
         case evaluation
+    }
+    
+    func makeShareText() -> String? {
+        let text: String?
+        if let url = url {
+            if let source = sourceEnumType, source == .douyin {
+                text = "我正在看「\(name!)」的抖音视频 \(url)"
+            } else {
+                text = String.getShareText(content: content, url: url)
+            }
+        } else {
+            text = nil
+        }
+        return text
     }
 }
 

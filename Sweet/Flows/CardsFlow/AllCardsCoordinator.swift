@@ -39,7 +39,6 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
                                                                         navigation: navigation,
                                                                         current: currentIndex,
                                                                         currentStart: 0,
-                                                                        isGroup: true,
                                                                         fromCardId: fromCardId,
                                                                         storiesGroup: storiesGroup,
                                                                         delegate: delegate)

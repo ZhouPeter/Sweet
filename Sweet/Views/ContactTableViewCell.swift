@@ -56,8 +56,8 @@ class ContactTableViewCell: UITableViewCell {
     
     lazy var selectButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "StoryConfirm"), for: .selected)
-        button.setBackgroundImage(#imageLiteral(resourceName: "UnChecked"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "ContactSelected"), for: .selected)
+        button.setBackgroundImage(#imageLiteral(resourceName: "ContactUnSelected"), for: .normal)
         button.isHidden = true
         return button
     }()
@@ -83,22 +83,24 @@ class ContactTableViewCell: UITableViewCell {
             buttonCallBack(phone)
         }
     }
+    private var infoRightConstaint: NSLayoutConstraint?
     private func setupUI() {
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 40, height: 40)
         avatarImageView.centerY(to: contentView)
-        avatarImageView.align(.left, to: contentView, inset: 10)
+        avatarImageView.align(.left, to: contentView, inset: 16)
         avatarImageViewMaskLayer = avatarImageView.setViewRounded().maskLayer
         avatarImageView.addSubview(avatarLabel)
         avatarLabel.fill(in: avatarImageView)
         contentView.addSubview(nameLabel)
-        nameLabel.pin(.right, to: avatarImageView, spacing: 10)
+        nameLabel.align(.left, to: contentView, inset: 66)
         nameCenterYConstraints = nameLabel.centerYAnchor.constraint(
             equalTo: avatarImageView.centerYAnchor, constant: -10)
         nameCenterYConstraints?.isActive = true
         contentView.addSubview(infoLabel)
-        infoLabel.pin(.right, to: avatarImageView, spacing: 10)
+        infoLabel.align(.left, to: nameLabel)
         infoLabel.align(.bottom, to: avatarImageView)
+        infoRightConstaint = infoLabel.align(.right, to: contentView, inset: 16)
         contentView.addSubview(statusButton)
         statusButton.constrain(width: 62, height: 28)
         statusButton.centerY(to: contentView)
@@ -107,7 +109,6 @@ class ContactTableViewCell: UITableViewCell {
         selectButton.constrain(width: 22, height: 22)
         selectButton.centerY(to: contentView)
         selectButton.align(.right, inset: 12)
-        
     }
     
     func update(viewModel: ContactViewModel) {
@@ -117,6 +118,7 @@ class ContactTableViewCell: UITableViewCell {
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
+        infoRightConstaint?.constant = viewModel.isHiddenButton ? -16 : -(10 + 62)
         statusButton.isHidden = viewModel.isHiddenButton
         selectButton.isHidden = viewModel.isHiddeenSelectButton
         if !viewModel.isHiddenButton {

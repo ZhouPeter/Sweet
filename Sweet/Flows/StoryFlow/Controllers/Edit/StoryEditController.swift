@@ -19,7 +19,9 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     private let fileURL: URL
     private let isPhoto: Bool
     private var topic: String?
-    private lazy var previewController = StoryFilterPreviewController(fileURL: self.fileURL, isPhoto: self.isPhoto)
+    private let source: StoryMediaSource
+    private lazy var previewController =
+        StoryFilterPreviewController(fileURL: self.fileURL, isPhoto: self.isPhoto, isScaleFilled: self.source == .shoot)
     private var textController = StoryTextEditController()
     
     private lazy var closeButton: UIButton = {
@@ -82,11 +84,12 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     } ()
     private let user: User
     
-    init(user: User, fileURL: URL, isPhoto: Bool, topic: String?) {
+    init(user: User, fileURL: URL, isPhoto: Bool, source: StoryMediaSource, topic: String?) {
         self.user = user
         self.fileURL = fileURL
         self.isPhoto = isPhoto
         self.topic = topic
+        self.source = source
         textController.topic = topic
         super.init(nibName: nil, bundle: nil)
     }
@@ -290,7 +293,8 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     @objc private func didPressFinishButton() {
         previewController.stopPreview()
-        let image = editContainerView.screenshot()
+        let size = CGSize(width: 720, height: 1280)
+        let image = editContainerView.screenshot()?.scaleAndCropImage(toSize: size)
         let filterName = previewController.currentFilterName()
         let overlayFilename = image?.writeToCache(withAlpha: true)?.lastPathComponent
         if isPhoto {
@@ -298,14 +302,11 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
             draft.topic = topic
             draft.overlayFilename = overlayFilename
             draft.filterFilename = filterName
+            draft.touchPoints = textController.makeTouchArea()
             finish(with: draft)
         } else {
             var pokeCenter: CGPoint?
             let type: StoryType
-            var contentRect: CGRect?
-            if self.textController.hasText || self.textController.topic != nil {
-                contentRect = self.textController.boundingRect
-            }
             if !self.pokeView.isHidden {
                 type = .poke
                 let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / self.view.bounds.width
@@ -316,12 +317,11 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
                 )
             } else {
                 type = .video
-
             }
             var draft = StoryDraft(filename: fileURL.lastPathComponent, storyType: type, date: Date())
             draft.topic = topic
             draft.pokeCenter = pokeCenter
-            draft.contentRect = contentRect
+            draft.touchPoints = textController.makeTouchArea()
             draft.overlayFilename = overlayFilename
             draft.filterFilename = filterName
             finish(with: draft)
@@ -389,7 +389,7 @@ extension StoryEditController: StoryTextEditControllerDelegate {
             self.textController.view.alpha = 1
         })
     }
-
+    
     func storyTextEditControllerDidBeginChooseTopic() {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.finishButton.alpha = 0
@@ -401,6 +401,7 @@ extension StoryEditController: StoryTextEditControllerDelegate {
     }
     
     func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {
+        self.topic = topic
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.finishButton.alpha = 1
             self.closeButton.alpha = 1

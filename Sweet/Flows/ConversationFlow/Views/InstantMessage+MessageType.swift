@@ -20,7 +20,7 @@ extension InstantMessage: MessageType {
     
     var kind: MessageKind {
         switch type {
-        case .story, .card:
+        case .story, .card, .image:
             if let content = content {
                 return .custom(content)
             }

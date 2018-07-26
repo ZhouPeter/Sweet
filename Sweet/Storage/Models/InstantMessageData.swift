@@ -21,6 +21,7 @@ class InstantMessageData: Object {
     @objc dynamic var sentDate = Date()
     @objc dynamic var isSent = false
     @objc dynamic var isRead = false
+    @objc dynamic var isFailed = false
     @objc dynamic var extra: String?
     
     override static func primaryKey() -> String? {
@@ -43,6 +44,7 @@ class InstantMessageData: Object {
         data.fromName = message.fromName
         data.isSent = message.isSent
         data.isRead = message.isRead
+        data.isFailed = message.isFailed
         data.extra = message.extra
         return data
     }

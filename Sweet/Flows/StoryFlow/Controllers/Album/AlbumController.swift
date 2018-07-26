@@ -11,13 +11,14 @@ import Photos
 
 protocol AlbumView: BaseView {
     var onCancelled: (() -> Void)? { get set }
-    var onFinished: ((UIImage) -> Void)? { get set }
+    var onFinished: ((URL, Bool) -> Void)? { get set }
 }
 
 final class AlbumController: UIViewController, AlbumView {
-    var onFinished: ((UIImage) -> Void)?
+    var onFinished: ((URL, Bool) -> Void)?
     var onCancelled: (() -> Void)?
     
+    private var isTrimmed = false
     private var fetchResult: PHFetchResult<PHAsset>?
     
     private lazy var itemSize: CGSize = {
@@ -38,21 +39,9 @@ final class AlbumController: UIViewController, AlbumView {
         return view
     } ()
     
-    private lazy var rightBarButton =
-        UIBarButtonItem(title: "继续", style: .plain, target: self, action: #selector(didPressRightBarButton))
-    
-    private var selectedIndexPath: IndexPath? {
-        didSet {
-            rightBarButton.isEnabled = selectedIndexPath != nil
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "所有照片"
-        navigationItem.rightBarButtonItem = rightBarButton
-        rightBarButton.isEnabled = false
-        
         view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.fill(in: view)
@@ -70,12 +59,8 @@ final class AlbumController: UIViewController, AlbumView {
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             onCancelled?()
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
     }
     
     // MARK: - Private
@@ -99,14 +84,6 @@ final class AlbumController: UIViewController, AlbumView {
         fetchResult = AssetManager.fetch()
         collectionView.reloadData()
     }
-
-    @objc private func didPressRightBarButton() {
-        guard let indexPath = selectedIndexPath, let result = fetchResult else { return }
-        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-            guard let image = image else { return }
-            self?.onFinished?(image)
-        }
-    }
 }
 
 extension AlbumController: UICollectionViewDataSource {
@@ -126,7 +103,11 @@ extension AlbumController: UICollectionViewDataSource {
         let asset = result[indexPath.row]
         AssetManager.resolveAsset(asset, size: itemSize) { image in
             if let image = image {
-                cell.configureCell(image)
+                var duration: TimeInterval?
+                if asset.mediaType == .video {
+                    duration = asset.duration
+                }
+                cell.configureCell(image, duration: duration)
             }
         }
         return cell
@@ -136,9 +117,29 @@ extension AlbumController: UICollectionViewDataSource {
 extension AlbumController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let result = fetchResult else { return }
-        AssetManager.resolveAsset(result[indexPath.row]) { [weak self] (image) in
-            guard let image = image else { return }
-            self?.onFinished?(image)
+        let asset = result[indexPath.row]
+        if asset.mediaType == .image {
+            AssetManager.resolveAsset(asset) { [weak self] (image) in
+                guard let url = image?.writeToCache(withAlpha: false) else { return }
+                self?.onFinished?(url, true)
+            }
+            return
+        }
+        if asset.mediaType == .video {
+            AssetManager.resolveAVAsset(asset) { [weak self] (url, duration) in
+                guard let `self` = self, let url = url, let duration = duration else { return }
+                logger.debug(url, duration)
+                if duration > 10 {
+                    let controller = VideoTrimmerViewController(fileURL: url)
+                    controller.onFinished = { outputURL in
+                        self.onFinished?(outputURL, false)
+                    }
+                    self.navigationController?.pushViewController(controller, animated: true)
+                } else {
+                    self.onFinished?(url, false)
+                }
+            }
+            return
         }
     }
 }

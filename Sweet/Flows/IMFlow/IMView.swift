@@ -18,5 +18,4 @@ protocol IMViewDelegate: class {
     func imViewDidShowInbox(_ view: InboxView)
     func imViewDidShowContacts(_ view: ContactsView)
     func imViewDidPressAvatarButton()
-    func imViewDidPressSearchButton()
 }

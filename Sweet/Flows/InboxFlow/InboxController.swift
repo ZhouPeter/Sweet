@@ -13,15 +13,17 @@ import SwipeCellKit
 final class InboxController: BaseViewController, InboxView {
     weak var delegate: InboxViewDelegate?
     private var conversations = [Conversation]()
+    private let headerView = WarningHeaderView()
     
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.dataSource = self
         view.delegate = self
         view.register(cellType: ConversationCell.self)
-        view.separatorInset.left = 0
-        view.sectionHeaderHeight = 8
-        view.backgroundColor = UIColor(hex: 0xF2F2F2)
+        view.sectionHeaderHeight = 0.1
+        view.backgroundColor = .clear
+        view.separatorColor = UIColor(hex: 0xF2F2F2)
+        view.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 0)
         return view
     } ()
     
@@ -37,6 +39,7 @@ final class InboxController: BaseViewController, InboxView {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 40)
     }
     
     func didUpdateConversations(_ conversations: [Conversation]) {
@@ -58,6 +61,20 @@ final class InboxController: BaseViewController, InboxView {
             return $0.user.nickname > $1.user.nickname
         })
         tableView.reloadData()
+    }
+    
+    func didUpdateUserOnlineState(isUserOnline: Bool) {
+        let insets: UIEdgeInsets
+        if isUserOnline {
+            tableView.tableHeaderView = nil
+            insets = UIEdgeInsets(top: -headerView.bounds.height + 5, left: 0, bottom: 0, right: 0)
+        } else {
+            tableView.tableHeaderView = headerView
+            insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
+            self.tableView.contentInset = insets
+        }, completion: nil)
     }
 }
 
@@ -122,11 +139,11 @@ extension InboxController: SwipeTableViewCellDelegate {
         for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
         options.expansionStyle = SwipeExpansionStyle(
-            target: .percentage(1),
+            target: .percentage(0.5),
             elasticOverscroll: false,
             completionAnimation: .bounce
         )
-        options.transitionStyle = .border
+        options.transitionStyle = .drag
         return options
     }
     
@@ -151,7 +168,7 @@ extension InboxController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
+        return 0.1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

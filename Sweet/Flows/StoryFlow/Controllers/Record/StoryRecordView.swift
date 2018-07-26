@@ -16,6 +16,5 @@ protocol StoryRecordView: BaseView {
     var onAvatarButtonPressed: (() -> Void)? { get set }
     var isAvatarCircleAnamtionEnabled: Bool { get set }
     
-    func prepare()
     func chooseCameraRecord()
 }

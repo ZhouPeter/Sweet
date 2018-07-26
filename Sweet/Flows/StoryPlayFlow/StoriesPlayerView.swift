@@ -10,7 +10,7 @@ import Foundation
 
 protocol StoriesPlayerView: BaseView {
     var runStoryFlow: ((_ topic: String) -> Void)? { get set }
-    var runProfileFlow: ((_ user: User, _ buddyID: UInt64) -> Void)? { get set }
+    var runProfileFlow: ((_ buddyID: UInt64) -> Void)? { get set }
     var onFinish: (() -> Void)? { get set }
     func reloadPlayer()
     func pause()

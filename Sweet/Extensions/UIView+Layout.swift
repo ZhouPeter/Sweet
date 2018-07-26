@@ -135,7 +135,8 @@ extension UIView {
     @discardableResult public func align(
         _ align: Align,
         to view: UIView? = nil,
-        inset: CGFloat = 0) -> NSLayoutConstraint {
+        inset: CGFloat = 0,
+        priority: UILayoutPriority = .required ) -> NSLayoutConstraint {
         let anchorView = view ?? superview!
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
@@ -149,6 +150,7 @@ extension UIView {
         case .bottom:
             constraint = bottomAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: -inset)
         }
+        constraint.priority = priority
         constraint.isActive = true
         return constraint
     }
@@ -156,7 +158,8 @@ extension UIView {
     @discardableResult public func pin(
         _ edge: Edge,
         to anchorView: UIView,
-        spacing: CGFloat = 0) -> NSLayoutConstraint {
+        spacing: CGFloat = 0,
+        priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
         let constraint: NSLayoutConstraint
         switch edge {
@@ -169,6 +172,7 @@ extension UIView {
         case .bottom:
             constraint = topAnchor.constraint(equalTo: anchorView.bottomAnchor, constant: spacing)
         }
+        constraint.priority = priority
         constraint.isActive = true
         return constraint
     }

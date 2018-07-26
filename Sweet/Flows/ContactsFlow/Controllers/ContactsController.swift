@@ -14,8 +14,7 @@ private let buttonSpace: CGFloat = 50
 
 class ContactsController: BaseViewController, ContactsView {
     weak var delegate: ContactsViewDelegate?
-    
-    private var between72hViewModels = [ContactViewModel]()
+    private var blacklistViewModel = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
     private var titles = [String]()
     private var emptyView = EmptyEmojiView()
@@ -32,28 +31,38 @@ class ContactsController: BaseViewController, ContactsView {
     private var viewModelsGroup = [[ContactViewModel]]() {
         didSet { showEmptyView(isShow: viewModelsGroup.count == 0) }
     }
-    
-    private var tableViewFooterView =
-        ContactsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainWidth(), height: 45))
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.separatorInset.left = 0
+        tableView.separatorInset.left = 60
         tableView.delegate = self
         tableView.dataSource = self
         tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
-        tableView.tableFooterView = tableViewFooterView
-        tableView.backgroundColor = UIColor(hex: 0xF2F2F2)
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.backgroundColor = UIColor(hex: 0xf7f7f7)
+        tableView.separatorColor = UIColor(hex: 0xF2F2F2)
         return tableView
     } ()
-    
+    private lazy var searchController: UISearchController = {
+        let resultController = ContactSearchController()
+        let searchController = UISearchController(searchResultsController: resultController)
+        searchController.searchResultsUpdater = resultController
+        searchController.searchBar.setImage(#imageLiteral(resourceName: "SearchSmall"), for: .search, state: .normal)
+        searchController.searchBar.placeholder = "搜索人名、手机号"
+        searchController.searchBar.barTintColor = .white
+        searchController.searchBar.setCancelText(text: "返回", textColor: .black)
+        searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
+        searchController.searchBar.setBorderColor(borderColor: UIColor(hex: 0xF2F2F2))
+        searchController.searchBar.delegate = self
+        return searchController
+    }()
     // MARK: - Private
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.xpGray()
+        view.backgroundColor = UIColor(hex: 0xf7f7f7)
         view.addSubview(tableView)
         tableView.fill(in: view, bottom: UIScreen.safeBottomMargin())
         if #available(iOS 11.0, *) {
@@ -86,7 +95,7 @@ class ContactsController: BaseViewController, ContactsView {
     
     private func removeData() {
         allViewModels.removeAll()
-        between72hViewModels.removeAll()
+        blacklistViewModel.removeAll()
         viewModelsGroup.removeAll()
         titles.removeAll()
     }
@@ -101,13 +110,10 @@ class ContactsController: BaseViewController, ContactsView {
                 models.forEach({ (model) in
                     let viewModel = ContactViewModel(model: model)
                     self.allViewModels.append(viewModel)
-                    if model.lastTime > Int(Date().timeIntervalSince1970 * 1000 - 3600 * 72) {
-                        self.between72hViewModels.append(viewModel)
-                    }
                 })
                 let blacklistModels = response.blacklist
                 blacklistModels.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    var viewModel = ContactViewModel(model: model)
                     viewModel.callBack = { [weak self] userId in
                         web.request(.delBlacklist(userId: UInt64(userId)!), completion: { (result) in
                             switch result {
@@ -118,21 +124,16 @@ class ContactsController: BaseViewController, ContactsView {
                             }
                         })
                     }
-                    self.allViewModels.append(viewModel)
+                    self.blacklistViewModel.append(viewModel)
                 })
-                self.between72hViewModels.sort {
-                     return $0.lastTime > $1.lastTime
-                }
-                if self.between72hViewModels.count > 0 {
-                    self.viewModelsGroup.append(self.between72hViewModels)
-                    self.titles.append("最近联系")
-                }
                 if self.allViewModels.count > 0 {
                     self.viewModelsGroup.append(self.allViewModels)
-                    self.titles.append("全部")
+                    self.titles.append("联系人")
                 }
-                let countTitle = "\(self.allViewModels.count)位联系人"
-                self.tableViewFooterView.update(title: countTitle)
+                if self.blacklistViewModel.count > 0 {
+                    self.viewModelsGroup.append(self.blacklistViewModel)
+                    self.titles.append("黑名单")
+                }
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
@@ -144,38 +145,20 @@ class ContactsController: BaseViewController, ContactsView {
         web.request(.delBlacklist(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
-                self.allViewModels[index].buttonStyle = .backgroundColorGray
-                self.allViewModels[index].buttonTitle = "拉黑"
-                self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlacklist(userId: UInt64(userId)!)
-                }
-                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.loadContacts()
             case let .failure(error):
                 logger.error(error)
             }
         }
     }
-    
-    private func addBlacklist(userId: UInt64) {
-        web.request(.addBlacklist(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.allViewModels.index(where: { $0.userId == userId }) else { return }
-                self.allViewModels[index].buttonStyle = .borderGray
-                self.allViewModels[index].buttonTitle = "恢复"
-                self.allViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlacklist(userId: UInt64(userId)!)
-                }
-                let indexPath = IndexPath(row: index, section: self.tableView.numberOfSections - 1)
-                self.viewModelsGroup[indexPath.section - 1][index] = self.allViewModels[index]
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
+}
+extension ContactsController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        if let searchView = searchController.searchResultsController as? ContactSearchView {
+            delegate?.contactsShowSearch(searchView: searchView)
         }
+        return true
+        
     }
 }
 
@@ -185,6 +168,7 @@ extension ContactsController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 { return nil }
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerView") as? SweetHeaderView
         view?.update(title: section == 0 ? "" : titles[section - 1])
         return view
@@ -198,7 +182,7 @@ extension ContactsController: UITableViewDelegate {
  
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 8
+            return CGFloat.leastNormalMagnitude
         } else {
             return 25
         }
@@ -212,8 +196,20 @@ extension ContactsController: UITableViewDelegate {
                 delegate?.contactsShowSubscription()
             }
         } else {
-            let userID = viewModelsGroup[indexPath.section - 1][indexPath.row].userId
-            delegate?.contactsShowProfile(userID: userID)
+            let viewModel = viewModelsGroup[indexPath.section - 1][indexPath.row]
+            let userID = viewModel.userId
+            if titles[indexPath.section - 1] == "黑名单" {
+                let alertSheet = UIAlertController()
+                alertSheet.addAction(UIAlertAction.makeAlertAction(title: "移出黑名单",
+                                                                   style: .default,
+                                                                   handler: { (_) in
+                    self.delBlacklist(userId: userID)
+                }))
+                alertSheet.addAction(UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil))
+                self.present(alertSheet, animated: true, completion: nil)
+            } else {
+                delegate?.contactsShowProfile(userID: userID)
+            }
         }
     }
 }
@@ -232,8 +228,10 @@ extension ContactsController: UITableViewDataSource {
             withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
         if indexPath.section == 0 {
             cell.updateCategroy(viewModel: categoryViewModels[indexPath.row])
+            cell.accessoryType = .disclosureIndicator
         } else {
             cell.update(viewModel: viewModelsGroup[indexPath.section - 1][indexPath.row])
+            cell.accessoryType = .none
         }
         return cell
     }

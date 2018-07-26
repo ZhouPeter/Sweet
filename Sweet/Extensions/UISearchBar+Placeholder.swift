@@ -9,14 +9,6 @@
 import UIKit
 
 extension UISearchBar {
-    func setPlaceholderLeft(placeholder: String) {
-        self.placeholder = placeholder
-        let centerSelector = NSSelectorFromString("setCenterPlaceholder:")
-        if responds(to: centerSelector) {
-//            let centeredPlaceholder = false
-//            let signature = UISearchBar.self.instanceMethod(for: centerSelector)
-        }
-    }
     
     func setCancelText(text: String, textColor: UIColor) {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "返回"
@@ -34,6 +26,15 @@ extension UISearchBar {
                 textField.backgroundColor = color
                 textField.layer.cornerRadius = cornerRadius
                 textField.layer.masksToBounds = true
+            }
+        }
+    }
+    
+    func setBorderColor(borderColor: UIColor) {
+        for subView in self.subviews  {
+            for subsubView in subView.subviews  {
+                subsubView.layer.borderColor = borderColor.cgColor
+                subsubView.layer.borderWidth = 0.5
             }
         }
     }

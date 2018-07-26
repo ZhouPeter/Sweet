@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import SwiftyUserDefaults
 class UpdateAvatarController: BaseViewController, UpdateProtocol {
-    var saveCompletion: ((String) -> Void)?
+    var saveCompletion: ((String, Int?) -> Void)?
     
     var avatar: String
     private lazy var avatarImageView: UIImageView = {
@@ -28,15 +28,6 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
         return button
     }()
     
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Back").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        button.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     init(avatar: String) {
         self.avatar = avatar
         super.init(nibName: nil, bundle: nil)
@@ -48,10 +39,13 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .white
         view.backgroundColor = .black
         navigationItem.title = "修改头像"
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         view.addSubview(avatarImageView)
         avatarImageView.constrain(width: UIScreen.mainWidth(), height: UIScreen.mainWidth())
         avatarImageView.centerX(to: view)
@@ -118,11 +112,18 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
                                                "type": UpdateUserType.avatar.rawValue]),
                             completion: { (result) in
                                 switch result {
-                                case .success:
+                                case let .success(response):
                                     self.avatarImageView.kf.setImage(with: localURL)
-                                    self.saveCompletion?(url)
+                                    let remain = response["remain"] as? Int
+                                    self.saveCompletion?(url, remain)
+                                    self.toast(message: "头像修改成功", duration: 2)
+
                                 case let .failure(error):
-                                    self.toast(message: "修改头像失败", duration: 2)
+                                    if error.code == WebErrorCode.updateLimit.rawValue {
+                                        self.toast(message: "修改次数已用完")
+                                    } else {
+                                        self.toast(message: "头像修改失败")
+                                    }
                                     logger.error(error)
                                 }
                 })

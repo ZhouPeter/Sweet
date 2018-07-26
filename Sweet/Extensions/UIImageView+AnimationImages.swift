@@ -36,12 +36,38 @@ extension UIImageView {
                     }
                 }
             }
+         
             group.notify(queue: DispatchQueue.main) {
+//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
+//                self.kf.setImage(with: url)
                 self.stopAnimating()
                 self.animationImages = images
                 self.animationDuration = animationDuration
                 self.startAnimating()
+//                self.playAnimation(images: images)
             }
         }
+    }
+}
+extension UIImageView {
+    func playAnimation(images: [UIImage]) {
+        var cgImages = [CGImage]()
+        images.forEach { cgImages.append( $0.cgImage! ) }
+        let animation = CAKeyframeAnimation(keyPath: "contents")
+        animation.calculationMode = kCAAnimationDiscrete
+        animation.keyTimes = [1.0 / 3, 2.0 / 3, 1] as [NSNumber]
+        animation.duration = 0.5
+        animation.values = cgImages
+        animation.repeatCount = Float.greatestFiniteMagnitude
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        animation.delegate = self
+        self.layer.add(animation, forKey: "animation")
+    }
+}
+
+extension UIImageView: CAAnimationDelegate {
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        logger.debug(flag)
     }
 }
