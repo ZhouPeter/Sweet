@@ -120,6 +120,8 @@ final class Messenger {
     
     func logout() {
         guard let user = self.user else { return }
+        deliverQueues.values.forEach({ $0.cancelAllOperations() })
+        isLogining = false
         self.user = nil
         storage = nil
         token = nil
@@ -511,13 +513,20 @@ final class Messenger {
         }
     }
     
+    private var isLogining = false
+    
     private func login(_ callback: @escaping (Date?) -> Void) {
         logger.debug()
+        guard isLogining == false else {
+            logger.debug("isLogining")
+            return
+        }
         guard let user = self.user, let token = self.token else {
             logger.debug("User is nil")
             callback(nil)
             return
         }
+        isLogining = true
         var message = LoginReq()
         message.userID = user.userId
         let timestamp = Date().timestamp()
@@ -527,6 +536,7 @@ final class Messenger {
         message.type = .ios
         message.state = .online
         send(message, responseType: LoginResp.self) { (response) in
+            self.isLogining = false
             if let response = response {
                 callback(Date(timeIntervalSince1970: Double(response.serverTime) / 1000))
             } else {
@@ -547,6 +557,8 @@ final class Messenger {
             completion()
         }, onClosed: {
             logger.debug("Service closed")
+            self.isLogining = false
+            self.deliverQueues.values.forEach({ $0.cancelAllOperations() })
             self.state = .offline
         })
     }

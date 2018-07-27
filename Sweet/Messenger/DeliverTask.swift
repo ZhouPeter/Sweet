@@ -42,7 +42,6 @@ class DeliverTask<Response>: AsynchronousOperation where Response: Message {
                 self.state = .finished
                 self.callback?(0, message)
         }))
-        
         service.send(package, moduleId: module, commandId: command) { [weak self] (code) in
             guard let `self` = self else { return }
             if code.rawValue != 0 {

@@ -24,7 +24,6 @@ class Contacts {
             let familyName = contact.familyName
             let name = familyName + givenName
             contactMap["name"] = name
-            logger.debug(name)
             var phone: String?
             for labelValue in contact.phoneNumbers {
                 let number = labelValue.value
@@ -35,7 +34,6 @@ class Contacts {
                 }
                 let number1 = number.stringValue.replacingOccurrences(of: "-", with: "")
                 let number2 = number1.replacingOccurrences(of: " ", with: "")
-                logger.debug(number2)
                 if number2.checkPhone() {
                     phone = number.stringValue
                     break

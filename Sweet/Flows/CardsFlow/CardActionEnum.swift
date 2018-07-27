@@ -32,10 +32,8 @@ enum CardAction: String {
             switch result {
             case .success:
                 completion?(true)
-                logger.debug(self.rawValue, "actionLog success")
             case let .failure(error):
                 completion?(false)
-                logger.debug(error, self.rawValue + "actionLog failure")
             }
         }
     }
