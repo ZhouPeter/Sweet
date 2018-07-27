@@ -134,6 +134,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        if #available(iOS 10, *) { collectionView.prefetchDataSource = self }
         collectionView.backgroundColor = UIColor.xpGray()
         collectionView.register(StoryCollectionViewCell.self,
                                 forCellWithReuseIdentifier: "storyCell")
@@ -151,11 +152,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        for cell in collectionView.visibleCells {
-//            if let cell = cell as? StoryCollectionViewCell {
-//                cell.storyImageView.startAnimating()
-//            }
-//        }
         self.collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -240,8 +236,18 @@ extension StoriesController: UICollectionViewDataSource {
     }
     
 }
+extension StoriesController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
+    }
+}
 
 extension StoriesController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? StoryCollectionViewCell {
+            cell.storyImageView.stopAnimating()
+        }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.storiesScrollViewDidScroll(scrollView: scrollView)

@@ -146,9 +146,13 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
                                                 y: 0),
                                         animated: true)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         if Defaults[.isStoryPlayGuideShown] == false {
             Guide.showStoryPlayTip()
             Defaults[.isStoryPlayGuideShown] = true

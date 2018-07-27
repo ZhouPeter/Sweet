@@ -29,21 +29,20 @@ extension UIImageView {
         urls.forEach { (url) in
             group.enter()
             queue.async {
-                ImageDownloader.default.downloadImage(with: url) { (image, _, _, _) in
+                KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
                     group.leave()
                     if let image = image {
                         images.append(image)
                     }
-                }
+                })
             }
-         
             group.notify(queue: DispatchQueue.main) {
-//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
-//                self.kf.setImage(with: url)
                 self.stopAnimating()
                 self.animationImages = images
                 self.animationDuration = animationDuration
                 self.startAnimating()
+//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
+//                self.kf.setImage(with: url)
 //                self.playAnimation(images: images)
             }
         }
