@@ -108,6 +108,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.register(SweetTextMessageCell.self)
         messagesCollectionView.register(ImageMessageCell.self)
+        messagesCollectionView.register(ArticleMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -192,6 +193,11 @@ final class ConversationController: MessagesViewController, ConversationView {
         }
         if value is ImageMessageContent {
             let cell = messagesCollectionView.dequeueReusableCell(ImageMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+        if value is ArticleMessageContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ArticleMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
@@ -389,13 +395,16 @@ extension ConversationController: MessageCellDelegate {
             browser.show()
             return
         }
-        guard message.type == .card || message.type == .story else { return }
+        
         if let content = message.content as? OptionCardContent {
             let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         } else if let content = message.content as? ContentCardContent {
             let preview = WebViewController(urlString: content.url)
+            navigationController?.pushViewController(preview, animated: true)
+        } else if let content = message.content as? ArticleMessageContent {
+            let preview = WebViewController(urlString: content.articleURL)
             navigationController?.pushViewController(preview, animated: true)
         } else if let content = message.content as? StoryMessageContent {
             web.request(

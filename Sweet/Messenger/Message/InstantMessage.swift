@@ -126,12 +126,15 @@ extension InstantMessage {
         }
         if type == .image {
             parseContent(ImageMessageContent.self, data: data)
-            return
-        }
-        guard type == .story || type == .card, let contentType = json?["type"] as? Int else { return }
-        if type == .story {
+        } else if type == .article {
+            parseContent(ArticleMessageContent.self, data: data)
+        } else if type == .story {
             parseContent(StoryMessageContent.self, data: data)
-        } else if type == .card, let cardType = CardType(rawValue: contentType) {
+        } else if type == .card {
+            guard let contentType = json?["type"] as? Int, let cardType = CardType(rawValue: contentType) else {
+                logger.error("Parse faild: \(rawContent)")
+                return
+            }
             switch cardType {
             case .content:
                 parseContent(ContentCardContent.self, data: data)
@@ -140,8 +143,6 @@ extension InstantMessage {
             default:
                 logger.error("unsupported card type: \(cardType)")
             }
-        } else {
-            logger.error("Parse faild: \(rawContent)")
         }
     }
     

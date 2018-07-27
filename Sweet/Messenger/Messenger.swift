@@ -76,7 +76,7 @@ final class Messenger {
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(updateActiveStatus),
+            selector: #selector(willEnterForeground),
             name: .UIApplicationWillEnterForeground,
             object: nil
         )
@@ -86,7 +86,11 @@ final class Messenger {
             name: .UIApplicationDidEnterBackground,
             object: nil
         )
-        
+    }
+    
+    @objc private func willEnterForeground() {
+        updateActiveStatus()
+        connect()
     }
     
     // MARK: - Public
@@ -146,10 +150,10 @@ final class Messenger {
     }
     
     @objc func updateActiveStatus() {
+        guard state == .online else { return }
         var request = ActiveSyncReq()
         request.status = UIApplication.shared.applicationState == .background ? .background : .foreground
         send(request, responseType: ActiveSyncResp.self, callback: nil)
-        connect()
     }
     
     // MARK: - Messages
@@ -470,7 +474,7 @@ final class Messenger {
         reachabilityManager?.startListening()
     }
     
-    private func connect() {
+    @objc private func connect() {
         guard state != .online else {
             logger.debug("User is already Online")
             return
@@ -533,6 +537,11 @@ final class Messenger {
     
     private func connect(with address: SocketAddress, completion: @escaping () -> Void) {
         logger.debug()
+        if service.isConnected {
+            logger.debug("Service already connected")
+            completion()
+            return
+        }
         service.start(address.host, port: address.port, onConnected: {
             logger.debug("Service connected")
             completion()

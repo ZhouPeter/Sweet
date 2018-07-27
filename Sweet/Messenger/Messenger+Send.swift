@@ -54,6 +54,10 @@ extension Messenger {
         return sendMessage(with: ImageMessageContent(url: url), type: .image, from: from, to: to, extra: nil)
     }
     
+    @discardableResult func sendArtice(_ content:ArticleMessageContent, from: UInt64, to: UInt64) -> InstantMessage {
+        return sendMessage(with: content, type: .article, from: from, to: to, extra: nil)
+    }
+    
     @discardableResult func sendMessage(
         with content: MessageContent? = nil,
         type: IMType,

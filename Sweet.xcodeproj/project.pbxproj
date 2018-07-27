@@ -931,6 +931,14 @@
 		AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
 		AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
 		AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
+		AC6A0BC1210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
+		AC6A0BC2210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
+		AC6A0BC3210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
+		AC6A0BC4210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
+		AC6A0BC8210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */; };
+		AC6A0BC9210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */; };
+		AC6A0BCA210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */; };
+		AC6A0BCB210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */; };
 		AC6C1D8920A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
 		AC6C1D8A20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
 		AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */; };
@@ -1693,6 +1701,8 @@
 		AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardContent.swift; sourceTree = "<group>"; };
 		AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMessageContent.swift; sourceTree = "<group>"; };
 		AC64646520E266E6001CF936 /* ConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCoordinator.swift; sourceTree = "<group>"; };
+		AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleMessageContent.swift; sourceTree = "<group>"; };
+		AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticelMessageCell.swift; sourceTree = "<group>"; };
 		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
 		AC6C1D8D20A993F500F45F82 /* TopicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		AC742DC52106CFFA00B18DED /* VideoTrimmerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTrimmerViewController.swift; sourceTree = "<group>"; };
@@ -2285,6 +2295,7 @@
 				AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */,
 				AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */,
 				AC52FDC520F7278D00267913 /* ImageMessageContent.swift */,
+				AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */,
 				583BC77820CE198900C4494E /* MessageContentHelper.swift */,
 			);
 			path = Message;
@@ -2312,6 +2323,7 @@
 				ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */,
 				ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */,
 				ACDD0AFA20C7DBF500B7400A /* ContentCardMessageCell.swift */,
+				AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */,
 				ACDD0B0620C7FEE800B7400A /* OptionCardPreviewController.swift */,
 				AC52FDCC20F72B9F00267913 /* ImageMessageCell.swift */,
 				AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */,
@@ -3247,6 +3259,7 @@
 				ACF2DEAF2089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0D20916D0E00ADEFFB /* ActionsController.swift in Sources */,
 				AC616F8E20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
+				AC6A0BC1210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
 				5803575320AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				AC2A259720BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972542209B2728009FB966 /* KeyboardListener.swift in Sources */,
@@ -3365,6 +3378,7 @@
 				587D18CA20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				AC86A93220C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58DECE7020EB148D00A4CDA4 /* CardImageLayout.swift in Sources */,
+				AC6A0BC8210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				58BD53592090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D72089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
@@ -3635,6 +3649,7 @@
 				AC58388F20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				58BD53562090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
+				AC6A0BC3210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
 				AC972514209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				5863A84120ABDB7C0016B089 /* InputTextView.swift in Sources */,
@@ -3874,6 +3889,7 @@
 				58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */,
 				58CE1ED720A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9B20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
+				AC6A0BCA210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				AC744E582109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				ACA3237A20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */,
@@ -4121,6 +4137,7 @@
 				5803573320AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208220AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				AC6A0BCB210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
@@ -4184,6 +4201,7 @@
 				AC52FDC920F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
+				AC6A0BC4210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
@@ -4234,6 +4252,7 @@
 				ACF2DEB02089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58155E0E20916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				AC616F8F20C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
+				AC6A0BC2210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
 				5803575420AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				AC2A259820BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */,
@@ -4352,6 +4371,7 @@
 				587D18CB20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				AC86A93320C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58DECE7120EB148D00A4CDA4 /* CardImageLayout.swift in Sources */,
+				AC6A0BC9210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				58BD52F2208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
 				58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
