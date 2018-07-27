@@ -10,6 +10,7 @@ import Foundation
 
 enum CardAction: String {
     case clickImg = "click_img"
+    case clickVideo = "click_video"
     case clickUrl = "click_url"
     case clickAll = "click_all"
     case playEnd = "play_end"

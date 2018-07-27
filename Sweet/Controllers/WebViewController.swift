@@ -69,10 +69,17 @@ class WebViewController: BaseViewController {
         webView.load(request)
         webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     deinit {
         webView.removeObserver(self, forKeyPath: "title")
         displayLink?.invalidate()
+    }
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
     
     override func observeValue(

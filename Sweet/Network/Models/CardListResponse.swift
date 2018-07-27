@@ -80,6 +80,54 @@ struct CardResponse: Codable {
         }
         return text
     }
+    
+    func makeStoryDraft() -> StoryDraft? {
+        if cardEnumType == .content {
+            if let video = video {
+//                let asset = (SweetPlayerManager.shared.cacheManeger.playerItem(with: URL(string: video))!.asset as? AVURLAsset)!
+                let asset = AVURLAsset(url: URL(string: video)!)
+                let assetGen =  AVAssetImageGenerator(asset: asset)
+                assetGen.appliesPreferredTrackTransform = true
+                let time = CMTimeMakeWithSeconds(0.0, 600)
+                var actualTime = CMTimeMake(0,0)
+                do {
+                    let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
+                    let image = UIImage(cgImage: imageRef)
+                    guard let url = image.writeToCache(withAlpha: false) else { return nil }
+                    let storyDraft = StoryDraft(filename: url.lastPathComponent,
+                                                storyType: .share,
+                                                date: Date(),
+                                                comment: nil,
+                                                desc: String(content!.htmlStringReplaceTag()!.prefix(100)),
+                                                url: self.url)
+                    return storyDraft
+                } catch {
+                    logger.error(error)
+                    return nil
+                }
+            } else if let imageList = imageList {
+                let imageUrl = imageList[0]
+                let cfUrl = URL(string: imageUrl)! as CFURL
+                let gifSource  = CGImageSourceCreateWithURL(cfUrl, nil)
+                let imageCount = CGImageSourceGetCount(gifSource!) 
+                guard imageCount > 0 else { return nil }
+                guard let imageRef = CGImageSourceCreateImageAtIndex(gifSource!, 0, nil) else { return nil }
+                let image = UIImage(cgImage: imageRef)
+                guard let url = image.writeToCache(withAlpha: false) else { return nil }
+                let storyDraft = StoryDraft(filename: url.lastPathComponent,
+                                            storyType: .share,
+                                            date: Date(),
+                                            comment: nil,
+                                            desc: String(content!.htmlStringReplaceTag()!.prefix(100)),
+                                            url: self.url)
+                return storyDraft
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
 }
 
 struct ContentImage: Codable {

@@ -315,17 +315,13 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
 extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         collectionView.animateVisibleCells()
-        for cell in collectionView.visibleCells {
-            storiesPlayerControllerMap[cell]?.pause()
-        }
+        currentPlayController?.pause()
         let count = storiesGroup.count
         let index = Int(scrollView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }
         if CGFloat(index) * UIScreen.mainWidth() == scrollView.contentOffset.x {
             if index == currentIndex {
-                for cell in collectionView.visibleCells {
-                    storiesPlayerControllerMap[cell]?.play()
-                }
+                currentPlayController?.play()
                 loadMoreStoriesGroup()
                 return
             }

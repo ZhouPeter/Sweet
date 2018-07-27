@@ -24,8 +24,10 @@ struct StoryCellViewModel {
     var pokeCenter: CGPoint = CGPoint(x: 0, y: 0)
     var touchPath: CGPath?
     var visualText: String = ""
-    var uvNum: UInt
     var timestampString: String
+    let descString: String?
+    let commentString: String?
+    let urlString: String?
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
@@ -61,7 +63,9 @@ struct StoryCellViewModel {
         userId = model.userId
         let storyTime = TimerHelper.storyTime(timeInterval: TimeInterval(model.created))
         subtitle = storyTime.day + storyTime.time
-        uvNum = model.uvNum
         timestampString = ""
+        descString = model.desc
+        commentString = model.comment
+        urlString = model.url
     }
 }

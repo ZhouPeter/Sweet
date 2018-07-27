@@ -100,11 +100,6 @@ extension PhotoBrowserImp {
             let fileManager = FileManager.default
             guard fileManager.fileExists(atPath: fileURL.path) else { return }
             guard let data = try? Data(contentsOf: fileURL) else { return }
-            //            let tempPath = NSTemporaryDirectory().appending("TempImageToSaveToPhoto.jpg")
-            //            let tempUrl = URL(fileURLWithPath: tempPath)
-            //            try? data.write(to: tempUrl)
-            //            PHAssetCreationRequest.forAsset().addResource(with: .photo, fileURL: tempUrl, options: nil)
-            
             PHAssetCreationRequest.forAsset().addResource(with: .photo, data: data, options: nil)
         }, completionHandler: { (success, error) in
             DispatchQueue.main.async {

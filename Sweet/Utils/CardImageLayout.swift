@@ -518,6 +518,7 @@ extension ContentCardCollectionViewCell {
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
             if info.format == "gif" {
+                imageView.autoPlayAnimatedImage = isAutoAnimating
                 imageIcon.isHidden = isAutoAnimating
                 imageIcon.setTitle("GIF", for: .normal)
             } else {
@@ -532,7 +533,6 @@ extension ContentCardCollectionViewCell {
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
         imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
             guard image != nil else { return }
-            if !isAutoAnimating { imageView.stopAnimating() }
             UIView.animate(withDuration: 0.25, animations: {
                 imageView.alpha = 1
             })

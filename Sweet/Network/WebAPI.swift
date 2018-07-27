@@ -53,7 +53,7 @@ enum WebAPI {
     case storyRead(storyId: UInt64, fromCardId: String?)
     case storyTopics
     case searchTopic(topic: String)
-    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?)
+    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?, comment: String?, desc: String?, rawUrl: String?)
     case delStory(storyId: UInt64)
     case socketAddress
     case removeRecentMessage(userID: UInt64)
@@ -281,7 +281,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
              let .delStory(storyId),
              let .reportStory(storyId):
             parameters = ["storyId": storyId]
-        case let .publishStory(url, type, topic, center, points):
+        case let .publishStory(url, type, topic, center, points, comment, desc, rawUrl):
             parameters = ["content": url, "type": type.rawValue]
             if let topic = topic {
                 parameters["tag"] = topic
@@ -292,6 +292,15 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
             if let points = points {
                 parameters["touchArea"] = points.map { ["x": $0.x, "y": $0.y] }
+            }
+            if let comment = comment {
+                parameters["comment"] = comment
+            }
+            if let desc = desc {
+                parameters["desc"] = desc
+            }
+            if let rawUrl = rawUrl {
+                parameters["url"] = rawUrl
             }
         case let .commentCard(cardId, emoji):
             parameters = ["cardId": cardId, "emoji": emoji]

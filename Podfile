@@ -28,7 +28,7 @@ target 'Sweet' do
   pod 'VolumeBar', '~> 3.0.3'
   pod 'JDStatusBarNotification'
   pod 'ReachabilitySwift'
-  
+  pod 'KingfisherWebP'
   target 'Sweet Dev' do
   end
   
