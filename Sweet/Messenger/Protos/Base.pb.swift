@@ -54,6 +54,17 @@ enum IMType: SwiftProtobuf.Enum {
   ///"image_url": "http://"
   ///}
   case image // = 5
+
+  ///
+  ///长文消息
+  ///{
+  ///"id": "cardId"
+  ///"thumbnail": "缩略图",
+  ///"url": "链接",
+  ///"title": "标题",
+  ///"text": "正文"
+  ///}
+  case article // = 6
   case UNRECOGNIZED(Int)
 
   init() {
@@ -68,6 +79,7 @@ enum IMType: SwiftProtobuf.Enum {
     case 3: self = .story
     case 4: self = .card
     case 5: self = .image
+    case 6: self = .article
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -80,6 +92,7 @@ enum IMType: SwiftProtobuf.Enum {
     case .story: return 3
     case .card: return 4
     case .image: return 5
+    case .article: return 6
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -220,6 +233,7 @@ extension IMType: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "STORY"),
     4: .same(proto: "CARD"),
     5: .same(proto: "IMAGE"),
+    6: .same(proto: "ARTICLE"),
   ]
 }
 
