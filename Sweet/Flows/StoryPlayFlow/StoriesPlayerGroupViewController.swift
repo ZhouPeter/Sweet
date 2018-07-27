@@ -32,14 +32,12 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
 
     var onFinish: (() -> Void)?
     
-    
     var currentPlayController: StoriesPlayerViewController? {
         if let cell = collectionView.cellForItem(at: IndexPath(row: currentIndex, section: 0)) {
             return storiesPlayerControllerMap[cell]
         }
         return nil
     }
-    
     
     func pause() {
         currentPlayController?.pause()
@@ -150,6 +148,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.navigationBar.isHidden = true
         if Defaults[.isStoryPlayGuideShown] == false {
             Guide.showStoryPlayTip()
             Defaults[.isStoryPlayGuideShown] = true
@@ -174,7 +173,7 @@ class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
             }
         }
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }

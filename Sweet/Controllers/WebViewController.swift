@@ -51,6 +51,7 @@ class WebViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white

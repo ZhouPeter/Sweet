@@ -224,7 +224,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
     }
     
@@ -526,7 +525,7 @@ extension StoriesPlayerViewController {
     }
     func play() {
         let storyId = stories[currentIndex].storyId
-        web.request(.storyRead(storyId: storyId, fromCardId: nil)) { (result) in
+        web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
             switch result {
             case .success:
                 if let index = self.stories.index(where: {$0.storyId == storyId}) {
