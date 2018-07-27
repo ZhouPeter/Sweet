@@ -120,6 +120,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false
         playerView.isHasVolume = !isVideoMuted
+        CardAction.clickVideo.actionLog(card: cards[index])
     }
     
     init(user: User) {

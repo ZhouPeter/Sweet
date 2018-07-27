@@ -14,6 +14,7 @@ enum StoryType: UInt, Codable {
     case video
     case text
     case poke
+    case share
     
     var isVideoFile: Bool {
         if self == .video || self == .poke {
@@ -48,7 +49,9 @@ struct StoryResponse: Codable {
     let centerX: CGFloat?
     let centerY: CGFloat?
     var touchArea: [TouchPoint]
-    let uvNum: UInt
+    let comment: String?
+    let desc: String?
+    let url: String?
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -66,7 +69,9 @@ struct StoryResponse: Codable {
         case centerX = "x"
         case centerY = "y"
         case touchArea
-        case uvNum
+        case comment
+        case desc
+        case url
     }
 }
 struct TouchPoint: Codable {

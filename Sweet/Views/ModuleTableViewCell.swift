@@ -21,6 +21,14 @@ class ModuleTableViewCell: UITableViewCell {
         return label
     }()
     
+    lazy var selectButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "ContactSelected"), for: .selected)
+        button.setBackgroundImage(#imageLiteral(resourceName: "ContactUnSelected"), for: .normal)
+        button.isHidden = true
+        return button
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -39,10 +47,15 @@ class ModuleTableViewCell: UITableViewCell {
         contentView.addSubview(moduleTitleLabel)
         moduleTitleLabel.pin(.right, to: moduleImageView, spacing: 10)
         moduleTitleLabel.centerY(to: moduleImageView)
+        contentView.addSubview(selectButton)
+        selectButton.constrain(width: 22, height: 22)
+        selectButton.centerY(to: contentView)
+        selectButton.align(.right, inset: 12)
     }
     
-    func update(image: UIImage, text: String) {
+    func update(image: UIImage, text: String, isCanSelected: Bool = false) {
         moduleImageView.image = image
         moduleTitleLabel.text = text
+        selectButton.isHidden = !isCanSelected
     }
 }

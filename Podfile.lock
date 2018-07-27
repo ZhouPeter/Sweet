@@ -7,12 +7,39 @@ PODS:
   - Gemini (1.3.0)
   - Hero (1.2.0)
   - JDStatusBarNotification (1.5.6)
-  - JXPhotoBrowser (1.1.1):
+  - JXPhotoBrowser (1.3.2):
     - Kingfisher
   - Kingfisher (4.8.0)
+  - KingfisherWebP (0.4.1):
+    - Kingfisher (~> 4.0)
+    - libwebp (>= 0.5.0)
   - KMNavigationBarTransition (1.1.5)
   - libimcloud (0.2.7):
     - CocoaAsyncSocket (~> 7.5.1)
+  - libwebp (0.6.1):
+    - libwebp/core (= 0.6.1)
+    - libwebp/dec (= 0.6.1)
+    - libwebp/demux (= 0.6.1)
+    - libwebp/dsp (= 0.6.1)
+    - libwebp/enc (= 0.6.1)
+    - libwebp/mux (= 0.6.1)
+    - libwebp/utils (= 0.6.1)
+    - libwebp/webp (= 0.6.1)
+  - libwebp/core (0.6.1):
+    - libwebp/webp
+  - libwebp/dec (0.6.1):
+    - libwebp/core
+  - libwebp/demux (0.6.1):
+    - libwebp/core
+  - libwebp/dsp (0.6.1):
+    - libwebp/core
+  - libwebp/enc (0.6.1):
+    - libwebp/core
+  - libwebp/mux (0.6.1):
+    - libwebp/core
+  - libwebp/utils (0.6.1):
+    - libwebp/core
+  - libwebp/webp (0.6.1)
   - MessageKit (1.0.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
@@ -39,7 +66,7 @@ PODS:
   - SwiftyUserDefaults (3.0.1)
   - SwipeCellKit (2.3.2)
   - TapticEngine (1.1.0)
-  - UMCCommon (1.5.0)
+  - UMCCommon (1.5.1)
   - UMCPush (3.2.1):
     - UMCCommon
   - VIMediaCache (0.4)
@@ -53,6 +80,7 @@ DEPENDENCIES:
   - JDStatusBarNotification
   - JXPhotoBrowser
   - Kingfisher
+  - KingfisherWebP
   - KMNavigationBarTransition
   - libimcloud (from `https://gitee.com/miaobo/iOS.LIBIMCLOUD.git`, branch `master`)
   - MessageKit (from `https://github.com/MessageKit/MessageKit.git`, branch `development`)
@@ -83,7 +111,9 @@ SPEC REPOS:
     - JDStatusBarNotification
     - JXPhotoBrowser
     - Kingfisher
+    - KingfisherWebP
     - KMNavigationBarTransition
+    - libwebp
     - Moya
     - NVActivityIndicatorView
     - Pageboy
@@ -128,10 +158,12 @@ SPEC CHECKSUMS:
   Gemini: 1a932868fa70579457162c3a93cd844ad5df3455
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JDStatusBarNotification: d5829a8f2f291b23b8a54b87fac8bf2549945a2f
-  JXPhotoBrowser: f1758dd7a74c2047da0a8aab52318a9314929826
+  JXPhotoBrowser: bd7438c901bbc1c0b0c2236c231b186377cb12b8
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  KingfisherWebP: 3cf59fe4c258efc2084fda65eaae950487048259
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   libimcloud: 13cf95770c1179d7e0b3c10e7829e5475e830433
+  libwebp: 38b601da310fe7c329c638d0c0d10aed006a54fe
   MessageKit: 16160036b16476b04bd0e9f2c7ce67e662e503e4
   Moya: a725035953bc1c0eb1be505ab903984501d82440
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
@@ -148,12 +180,12 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   SwipeCellKit: 52b160ea820245eb972b2eca270cb3a6f68e33af
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
-  UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
+  UMCCommon: 16b674e9de0616d3a6128c551348a686d869c3c7
   UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 7d38316d82e5c988c68576101aae2423d7453448
+PODFILE CHECKSUM: ac4742a88aa1dad66fd842e32ede3009ac004acd
 
 COCOAPODS: 1.5.3

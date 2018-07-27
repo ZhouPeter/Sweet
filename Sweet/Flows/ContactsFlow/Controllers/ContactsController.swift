@@ -55,7 +55,9 @@ class ContactsController: BaseViewController, ContactsView {
         searchController.searchBar.setCancelText(text: "返回", textColor: .black)
         searchController.searchBar.setTextFieldBackgroudColor(color: UIColor.xpGray(), cornerRadius: 3)
         searchController.searchBar.setBorderColor(borderColor: UIColor(hex: 0xF2F2F2))
+        searchController.searchBar.backgroundColor = .white
         searchController.searchBar.delegate = self
+        searchController.delegate = self
         return searchController
     }()
     // MARK: - Private
@@ -152,13 +154,18 @@ class ContactsController: BaseViewController, ContactsView {
         }
     }
 }
+
+extension ContactsController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.sizeToFit()
+    }
+}
 extension ContactsController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         if let searchView = searchController.searchResultsController as? ContactSearchView {
             delegate?.contactsShowSearch(searchView: searchView)
         }
         return true
-        
     }
 }
 

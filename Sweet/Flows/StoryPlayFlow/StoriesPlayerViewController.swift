@@ -37,7 +37,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
     var runProfileFlow: ((UInt64) -> Void)?
-    
     var isVisual = true
     var user: User
     var player: AVPlayer?
@@ -58,7 +57,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         }
     }
     
-    private var isSelf = true
     var currentIndex: Int = 0 {
         willSet {
             if let storiesScrollView = storiesScrollView {
@@ -69,15 +67,12 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     var groupIndex: Int = 0
     var fromCardId: String?
     weak var delegate: StoriesPlayerViewControllerDelegate?
+    private var isSelf = true
     private var downloadBack: ((Bool) -> Void)?
     private var inputTextViewBottom: NSLayoutConstraint?
     private var inputTextViewHeight: NSLayoutConstraint?
     private var uvViewController: StoryUVController!
-    private lazy var topContentView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
+    private lazy var topContentView = UIView()
     private lazy var dismissButton: UIButton = {
         let dismissButton = UIButton()
         dismissButton.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
@@ -115,14 +110,44 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         return menuButton
     }()
     
-    private lazy var touchAreaView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
     private lazy var progressView: StoryPlayProgressView = {
         let progressView = StoryPlayProgressView(count: stories.count, index: currentIndex)
         return progressView
+    }()
+    
+    private lazy var commentLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        label.textAlignment = .center
+        label.numberOfLines = 5
+        label.isHidden = true
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        return label
+    }()
+    
+    private lazy var descLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.isUserInteractionEnabled = true
+        label.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 20)
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        label.numberOfLines = 3
+        label.isHidden = true
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        let arrowView = UIImageView(image: UIImage(named: "StoryRightArrow"))
+        label.addSubview(arrowView)
+        arrowView.constrain(width: 16, height: 16)
+        arrowView.align(.right)
+        arrowView.centerY(to: label)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
+        label.addGestureRecognizer(tap)
+        return label
     }()
     
     private lazy var bottomButton: UIButton = {
@@ -179,12 +204,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
-        view.addGestureRecognizer(pokeLongPress)
-        upPan = CustomPanGestureRecognizer(orientation: .up, target: self, action: #selector(upPanAction(_:)))
-        view.addGestureRecognizer(upPan)
-        touchTagTap = TapGestureRecognizer(target: self, action: #selector(didPressTag(_:)))
-        view.addGestureRecognizer(touchTagTap)
+        setGesture()
         view.clipsToBounds = true
         storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
                                                                   y: 0,
@@ -204,7 +224,6 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
     }
     
@@ -213,16 +232,24 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         NotificationCenter.default.post(name: Notification.Name.StatusBarNoHidden, object: nil)
 
     }
-    
-    func update() {
-        updateForStories(stories: stories, currentIndex: currentIndex)
-        progressView.reset(count: stories.count, index: currentIndex)
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
+    private func setGesture() {
+        pokeLongPress = UILongPressGestureRecognizer(target: self, action: #selector(pokeAction(longTap:)))
+        view.addGestureRecognizer(pokeLongPress)
+        upPan = CustomPanGestureRecognizer(orientation: .up, target: self, action: #selector(upPanAction(_:)))
+        view.addGestureRecognizer(upPan)
+        touchTagTap = TapGestureRecognizer(target: self, action: #selector(didPressTag(_:)))
+        view.addGestureRecognizer(touchTagTap)
+    }
+    
+    func update() {
+        updateForStories()
+        progressView.reset(count: stories.count, index: currentIndex)
+    }
+
     private func setTopUI() {
         view.addSubview(topContentView)
         topContentView.align(.left)
@@ -258,17 +285,29 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         bottomButton.centerX(to: view)
         bottomButton.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 25 + 34 : 25)
         bottomButton.constrain(width: 50, height: 50)
-        bottomButton.layoutIfNeeded()
         bottomButton.setViewRounded()
+        view.addSubview(descLabel)
+        descLabel.align(.left, inset: 10)
+        descLabel.align(.right, inset: 10)
+        descLabel.pin(.top, to: bottomButton, spacing: 25)
+        view.addSubview(commentLabel)
+        commentLabel.align(.left, inset: 10)
+        commentLabel.align(.right, inset: 10)
+        commentLabel.pin(.top, to: descLabel, spacing: 4)
     }
     
-    private func setUserData() {
+    private func updateUserData() {
         if let stories = stories {
             let avatarURL = stories[currentIndex].avatarURL
             avatarImageView.kf.setImage(with: avatarURL)
             let name = stories[currentIndex].nickname
             let subtitle = stories[currentIndex].subtitle
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)
+            if isSelf {
+                bottomButton.isSelected = false
+            } else {
+                bottomButton.isEnabled = !stories[currentIndex].like
+            }
         }
     }
     
@@ -288,24 +327,38 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
         storyInfoLabel.attributedText = attributeString
     }
     
-    private func updateForStories(stories: [StoryCellViewModel], currentIndex: Int) {
-        setUserData()
-        if isSelf {
-            bottomButton.isSelected = false
-        } else {
-            bottomButton.isEnabled = !stories[currentIndex].like
-        }
+    private func updateForStories() {
+        updateUserData()
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
+        updatePokeView()
+        updateTouchTag()
+        updateShareConcentUI()
+    }
+    
+    private func updateShareConcentUI() {
+        if stories[currentIndex].type == .share {
+            let descString = stories[currentIndex].descString
+            let commentString = stories[currentIndex].commentString
+            descLabel.attributedText = descString?.getAttributedString(lineSpacing: 4)
+            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10)
+            descLabel.isHidden = descString == nil || descString == ""
+            commentLabel.isHidden = commentString == nil || commentString == ""
+            
+        }
+    }
+    private func updatePokeView() {
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
-            pokeView.center = CGPoint(x: view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width,
-                                      y: view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height)
+            let centerX = view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width
+            let centerY = view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height
+            pokeView.center = CGPoint(x: centerX, y: centerY)
             pokeLongPress.isEnabled = true
         } else {
             pokeView.isHidden = true
             pokeLongPress.isEnabled = false
         }
-
+    }
+    private func updateTouchTag() {
         if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
@@ -339,7 +392,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
 
     func reloadPlayer() {
         closePlayer()
-        updateForStories(stories: stories, currentIndex: currentIndex)
+        updateForStories()
         initPlayer()
     }
     
@@ -386,11 +439,15 @@ extension StoriesPlayerViewController: InputTextViewDelegate {
 }
 extension Timer {
     fileprivate class func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
-       return  self.scheduledTimer(timeInterval: timeInterval,
-                            target: self,
-                            selector: #selector(blcokInvoke(timer:)),
-                            userInfo: block,
-                            repeats: repeats)
+        if #available(iOS 10.0, *) {
+            return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: repeats, block: block)
+        } else {
+            return Timer.scheduledTimer(timeInterval: timeInterval,
+                                        target: self,
+                                        selector: #selector(blcokInvoke(timer:)),
+                                        userInfo: block,
+                                        repeats: repeats)
+        }
     }
     @objc private class func blcokInvoke(timer: Timer) {
         if let block = timer.userInfo as? (Timer) -> Void {
@@ -419,6 +476,7 @@ extension StoriesPlayerViewController {
     
     private func imagePause() {
         imageTimer?.invalidate()
+        imageTimer = nil
     }
     
     private func imagePlay() {
@@ -431,6 +489,7 @@ extension StoriesPlayerViewController {
     private func imageReset() {
         timerNumber = 0
         imageTimer?.invalidate()
+        imageTimer = nil
     }
    
 }
@@ -466,7 +525,7 @@ extension StoriesPlayerViewController {
     }
     func play() {
         let storyId = stories[currentIndex].storyId
-        web.request(.storyRead(storyId: storyId, fromCardId: nil)) { (result) in
+        web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
             switch result {
             case .success:
                 if let index = self.stories.index(where: {$0.storyId == storyId}) {
@@ -494,7 +553,13 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
-    
+    @objc private func showWebView(_ tap: UITapGestureRecognizer) {
+        if let url = stories[currentIndex].urlString {
+            pause()
+            let webController = WebViewController(urlString: url)
+            navigationController?.pushViewController(webController, animated: true)
+        }
+    }
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
         runProfileFlow?(stories[currentIndex].userId)
     }

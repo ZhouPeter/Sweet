@@ -94,7 +94,7 @@ class StoryPublishTask: AsynchronousOperation {
     private func publish(completion: @escaping (Bool) -> Void) {
         let uploadType: UploadType
         switch draft.storyType {
-        case .text, .image:
+        case .text, .image, .share:
             uploadType = .storyImage
         default:
             uploadType = .storyVideo
@@ -112,7 +112,10 @@ class StoryPublishTask: AsynchronousOperation {
                     type: self.draft.storyType,
                     topic: self.draft.topic,
                     pokeCenter: self.draft.pokeCenter,
-                    touchPoints: self.draft.touchPoints
+                    touchPoints: self.draft.touchPoints,
+                    comment: self.draft.comment,
+                    desc: self.draft.desc,
+                    rawUrl: self.draft.url
                 ),
                 completion: { (result) in
                     logger.debug(result)

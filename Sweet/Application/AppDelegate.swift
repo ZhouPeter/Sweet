@@ -12,6 +12,7 @@ import AVKit
 import VolumeBar
 import Contacts
 import Kingfisher
+import KingfisherWebP
 var allowRotation = false
 
 @UIApplicationMain
@@ -57,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         uploadContacts()
         addObservers()
         KingfisherManager.shared.cache.maxMemoryCost = 100 * 1024 * 1024
+        KingfisherManager.shared.defaultOptions = [.processor(WebPProcessor.default), .cacheSerializer(WebPSerializer.default)]
         return true
     }
     

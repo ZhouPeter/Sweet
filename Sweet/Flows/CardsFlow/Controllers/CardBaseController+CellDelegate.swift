@@ -98,7 +98,8 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
             let text = cards[index].makeShareText()
-            let controller = ShareCardController(shareText: text)
+            let storyDraft = cards[index].makeStoryDraft()
+            let controller = ShareCardController(shareText: text, storyDraft: storyDraft)
             controller.sendCallback = { (text, userIds) in
                 guard let index = self.cards.index(where: { $0.cardId == cardId }) else {fatalError()}
                 let card  = self.cards[index]

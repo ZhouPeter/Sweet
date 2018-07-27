@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension String {
     func getHtmlAttributedString(font: UIFont, textColor: UIColor, lineSpacing: CGFloat) -> NSAttributedString? {
         let addHeaderString = "<head><style>img{width:\(font.pointSize)px ;height: \(font.pointSize)px}</style></head>" + self
@@ -22,6 +21,15 @@ extension String {
                                         NSAttributedStringKey.font: font,
                                         NSAttributedStringKey.foregroundColor: textColor],
                                       range: NSRange(location: 0, length: attributedText!.length))
+        return attributedText
+    }
+    
+    func getAttributedString(lineSpacing: CGFloat) -> NSAttributedString {
+        let attributedText = NSMutableAttributedString(string: self)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        attributedText.addAttributes([ NSAttributedStringKey.paragraphStyle: paragraphStyle ],
+                                        range: NSRange(location: 0, length: attributedText.length))
         return attributedText
     }
     

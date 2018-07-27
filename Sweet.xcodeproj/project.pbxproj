@@ -286,6 +286,14 @@
 		5863A84020ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
 		5863A84120ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
 		5863A84220ABDB7C0016B089 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5863A83E20ABDB7C0016B089 /* InputTextView.swift */; };
+		586603452108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586603442108A2F9008C4448 /* UISearchBar+Frame.swift */; };
+		586603462108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586603442108A2F9008C4448 /* UISearchBar+Frame.swift */; };
+		586603472108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586603442108A2F9008C4448 /* UISearchBar+Frame.swift */; };
+		586603482108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586603442108A2F9008C4448 /* UISearchBar+Frame.swift */; };
+		58660354210AE460008C4448 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58660353210AE460008C4448 /* InsetLabel.swift */; };
+		58660355210AE460008C4448 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58660353210AE460008C4448 /* InsetLabel.swift */; };
+		58660356210AE460008C4448 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58660353210AE460008C4448 /* InsetLabel.swift */; };
+		58660357210AE460008C4448 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58660353210AE460008C4448 /* InsetLabel.swift */; };
 		5866330220BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
 		5866330320BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
 		5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */; };
@@ -1509,6 +1517,8 @@
 		585B68D020B1211E00E734BC /* PlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayController.swift; sourceTree = "<group>"; };
 		5863A83920ABCE6F0016B089 /* StoryUvList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUvList.swift; sourceTree = "<group>"; };
 		5863A83E20ABDB7C0016B089 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		586603442108A2F9008C4448 /* UISearchBar+Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Frame.swift"; sourceTree = "<group>"; };
+		58660353210AE460008C4448 /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryHeaderView.swift; sourceTree = "<group>"; };
 		5866330D20BC154B0018680C /* EmptyEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEmojiView.swift; sourceTree = "<group>"; };
@@ -1993,6 +2003,7 @@
 				ACCD27EB20C54155002E96AB /* BadgeView.swift */,
 				58816D1220C67D1A0032D103 /* ModuleTableViewCell.swift */,
 				587D18C920DA310300D53708 /* CustomSegmentedControl.swift */,
+				58660353210AE460008C4448 /* InsetLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2546,6 +2557,7 @@
 				AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */,
 				AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */,
 				580F886720F4D6CA009148CC /* String+HTMlL.swift */,
+				586603442108A2F9008C4448 /* UISearchBar+Frame.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3006,6 +3018,7 @@
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/KingfisherWebP/KingfisherWebP.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -3025,6 +3038,7 @@
 				"${BUILT_PRODUCTS_DIR}/VIMediaCache/VIMediaCache.framework",
 				"${BUILT_PRODUCTS_DIR}/VolumeBar/VolumeBar.framework",
 				"${BUILT_PRODUCTS_DIR}/libimcloud/libimcloud.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -3037,6 +3051,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KingfisherWebP.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -3056,6 +3071,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VIMediaCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VolumeBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libimcloud.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3170,6 +3186,7 @@
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/KingfisherWebP/KingfisherWebP.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -3189,6 +3206,7 @@
 				"${BUILT_PRODUCTS_DIR}/VIMediaCache/VIMediaCache.framework",
 				"${BUILT_PRODUCTS_DIR}/VolumeBar/VolumeBar.framework",
 				"${BUILT_PRODUCTS_DIR}/libimcloud/libimcloud.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -3201,6 +3219,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KingfisherWebP.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -3220,6 +3239,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VIMediaCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VolumeBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libimcloud.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3237,6 +3257,7 @@
 				AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				5811E396210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACEFA0CE2106D51D0098631F /* VideoScrollView.swift in Sources */,
+				586603452108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
 				AC616F9520C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3D209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -3454,6 +3475,7 @@
 				AC525AB7208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				5803572620AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift in Sources */,
 				58BD52982088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
+				58660354210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
@@ -3851,6 +3873,7 @@
 				AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58CAB38A20AD581A007230AA /* CardsBaseController.swift in Sources */,
 				ACEC5C3120EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
+				58660356210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */,
@@ -3883,6 +3906,7 @@
 				5803575520AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,
 				ACDFD27920E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
+				586603472108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
 				5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
@@ -4104,6 +4128,7 @@
 				AC05F44220DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				AC86A94120C4DC3F00334D4A /* User.swift in Sources */,
+				586603482108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
 				5811E399210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				AC557CA120B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
@@ -4196,6 +4221,7 @@
 				5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				AC557CA620B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EC020A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
+				58660357210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
 				ACF29FF520ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				AC52FDC920F7278D00267913 /* ImageMessageContent.swift in Sources */,
@@ -4230,6 +4256,7 @@
 				AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				5811E397210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACEFA0CF2106D51D0098631F /* VideoScrollView.swift in Sources */,
+				586603462108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
 				AC616F9620C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3E209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -4447,6 +4474,7 @@
 				AC525AB8208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				5803572720AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift in Sources */,
 				58BD52992088581A00F7C3E1 /* UIView+Animation.swift in Sources */,
+				58660355210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
