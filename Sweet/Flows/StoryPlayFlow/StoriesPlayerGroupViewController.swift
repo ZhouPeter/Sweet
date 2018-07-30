@@ -63,6 +63,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     var fromMessageId: String?
     static private var loctionMap = [String: Int]()
     private var isLoading = false
+    private var contentOffset: CGPoint?
     private lazy var collectionView: GeminiCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainHeight())
@@ -296,6 +297,11 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
         collectionView.animateVisibleCells()
         currentPlayController?.pause()
         let count = storiesGroup.count
+        if currentIndex == count - 1, let contentOffset = contentOffset {
+            if (scrollView.contentOffset.x - contentOffset.x) / UIScreen.mainWidth() > 0.15 {
+                onFinish?()
+            }
+        }
         let index = Int(scrollView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }
         if CGFloat(index) * UIScreen.mainWidth() == scrollView.contentOffset.x {
@@ -311,5 +317,12 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
                 }
             }
         }
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        contentOffset = scrollView.contentOffset
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        contentOffset = scrollView.contentOffset
     }
 }

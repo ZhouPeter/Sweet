@@ -515,6 +515,7 @@ extension ContentCardCollectionViewCell {
         let imageView = imageViews[index]
         let imageIcon = imageIcons[index]
         customContent.layoutIfNeeded()
+        if !isAutoAnimating { imageView.stopAnimating() }
         imageView.autoPlayAnimatedImage = isAutoAnimating
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
