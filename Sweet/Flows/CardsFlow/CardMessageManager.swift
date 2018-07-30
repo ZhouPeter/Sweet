@@ -14,14 +14,25 @@ class CardMessageManager {
         let cardId  = card.cardId
         let from = UInt64(Defaults[.userID]!)!
         if let content = MessageContentHelper.getContentCardContent(resultCard: card) {
-            if card.cardEnumType == .content, let content = content as? ContentCardContent {
-                userIds.forEach {
-                    waitingIMNotifications.append(
-                        Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
-                    )
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
-                    web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+            if card.cardEnumType == .content {
+                if let content = content as? ContentCardContent {
+                    userIds.forEach {
+                        waitingIMNotifications.append(
+                            Messenger.shared.sendContentCard(content, from: from, to: $0, extra: cardId)
+                        )
+                        if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
+                        web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+                    }
+                } else if let content = content as? ArticleMessageContent {
+                    userIds.forEach {
+                        waitingIMNotifications.append(
+                            Messenger.shared.sendArtice(content, from: from, to: $0, extra: cardId)
+                        )
+                        if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: cardId) }
+                        web.request(.shareCard(cardId: cardId, comment: text, userId: $0), completion: {_ in })
+                    }
                 }
+              
             } else if card.cardEnumType == .choice, let content = content as? OptionCardContent {
                 userIds.forEach {
                     waitingIMNotifications.append(

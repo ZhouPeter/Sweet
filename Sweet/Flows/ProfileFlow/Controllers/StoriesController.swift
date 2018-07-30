@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import Kingfisher
 protocol StoriesView: BaseView {
     
 }
@@ -51,10 +52,7 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private lazy var showView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xf2f2f2)
-        view.frame = CGRect(x: 0,
-                            y: 0,
-                            width: width,
-                            height: height)
+        view.frame = CGRect(x: 0, y: 0, width: width, height: height)
         let imageView = UIImageView(image: UIImage(named: "CameraProfile"))
         imageView.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         imageView.center = view.center
@@ -65,12 +63,14 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }()
     private func creatAttrs() {
         attrsList.removeAll()
-        guard let count = collectionView?.numberOfItems(inSection: 0) else { return }
-        if selfIndex < count {
-            if showView.superview == nil {
-                collectionView?.addSubview(showView)
-            }
+        showView.frame = CGRect(x: CGFloat(selfIndex % 3) * (width + 3),
+                                y: CGFloat(selfIndex / 3) * (height + 3) ,
+                                width: width,
+                                height: height)
+        if showView.superview == nil {
+            collectionView?.addSubview(showView)
         }
+        guard let count = collectionView?.numberOfItems(inSection: 0) else { return }
         for index in 0 ..< count {
             let indexPath = IndexPath(item: index, section: 0)
             if let attrs = layoutAttributesForItem(at: indexPath) {
@@ -79,7 +79,8 @@ class StoriesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: 0, height: attrsList.last?.frame.maxY ?? 0)
+        let showHeight = attrsList.count % 3 == 0 ? height : 0
+        return CGSize(width: 0, height: (attrsList.last?.frame.maxY ?? 0) + showHeight)
     }
     
     @objc private func showStory(_ tap: UITapGestureRecognizer) {
@@ -118,6 +119,8 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             cellNumber = storyViewModels.count
         }
     }
+    
+    private var collectionViewLayout: UICollectionViewFlowLayout?
 
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout
@@ -126,8 +129,8 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         } else {
             layout = UICollectionViewFlowLayout()
         }
-        layout.itemSize = CGSize(width: (UIScreen.mainWidth() - 6) / 3,
-                                 height: (UIScreen.mainHeight() - 6) / 3)
+        collectionViewLayout = layout
+        layout.itemSize = CGSize(width: (UIScreen.mainWidth() - 6) / 3, height: (UIScreen.mainHeight() - 6) / 3)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -136,8 +139,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         collectionView.dataSource = self
         if #available(iOS 10, *) { collectionView.prefetchDataSource = self }
         collectionView.backgroundColor = UIColor.xpGray()
-        collectionView.register(StoryCollectionViewCell.self,
-                                forCellWithReuseIdentifier: "storyCell")
+        collectionView.register(StoryCollectionViewCell.self, forCellWithReuseIdentifier: "storyCell")
         return collectionView
 
     }()
@@ -171,9 +173,16 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                     self.reviewViewModels()
                     self.collectionView.contentOffset = .zero
                     self.collectionView.reloadData()
-//                    self.collectionView.performBatchUpdates(nil, completion: { (_) in
-//                        self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView, index: storyViewModels.count - 1)
-//                    })
+                    self.collectionView.performBatchUpdates(nil, completion: { (_) in
+                        var index = self.storyViewModels.count - 1
+                        for (offset, viewModel) in self.storyViewModels.enumerated() {
+                            if viewModel.read == false {
+                                index = offset
+                                break
+                            }
+                        }
+                        self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView, index: index)
+                    })
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -216,6 +225,9 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             }
             storyViewModels[index].timestampString = timestampString
         }
+        if let layout = collectionViewLayout as? StoriesCollectionViewFlowLayout {
+            layout.selfIndex = storyViewModels.count
+        }
     }
 }
 
@@ -238,7 +250,24 @@ extension StoriesController: UICollectionViewDataSource {
 }
 extension StoriesController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
+        var urls = [URL]()
+        for indexPath in indexPaths {
+            let viewModel = storyViewModels[indexPath.row]
+            guard let itemSize = collectionViewLayout?.itemSize else { return }
+            if let url = viewModel.videoURL {
+                for index in 0 ..< 3 {
+                    let time = 0.5 / Double(3) * Double(index + 1)
+                    let width = Int(itemSize.width)
+                    let height = Int(itemSize.height)
+                    let urlString = url.absoluteString + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
+                    let url = URL(string: urlString)!
+                    urls.append(url)
+                }
+            } else if let url = viewModel.imageURL {
+                urls.append(url.videoThumbnail(size: itemSize)!)
+            }
+        }
+        ImagePrefetcher(urls: urls).start()
     }
 }
 
@@ -256,13 +285,6 @@ extension StoriesController: UICollectionViewDelegate {
         showStoriesPlayerView?(user, storyViewModels, indexPath.item, self)
     
     }
-//    func collectionView(_ collectionView: UICollectionView,
-//                        willDisplay cell: UICollectionViewCell,
-//                        forItemAt indexPath: IndexPath) {
-//        if indexPath.row == storyViewModels.count - 1 {
-//            loadMoreRequest()
-//        }
-//    }
 }
 
 extension StoriesController: StoriesPlayerGroupViewControllerDelegate {

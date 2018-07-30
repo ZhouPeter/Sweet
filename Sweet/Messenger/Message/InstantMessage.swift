@@ -40,7 +40,7 @@ struct InstantMessage {
             return rawContent
         case .story:
             return  "[小故事]"
-        case .card:
+        case .card, .article :
             return  "[分享]"
         case .like:
             return "[赞]"

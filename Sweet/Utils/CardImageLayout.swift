@@ -515,10 +515,10 @@ extension ContentCardCollectionViewCell {
         let imageView = imageViews[index]
         let imageIcon = imageIcons[index]
         customContent.layoutIfNeeded()
+        imageView.autoPlayAnimatedImage = isAutoAnimating
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
             if info.format == "gif" {
-                imageView.autoPlayAnimatedImage = isAutoAnimating
                 imageIcon.isHidden = isAutoAnimating
                 imageIcon.setTitle("GIF", for: .normal)
             } else {
@@ -537,17 +537,6 @@ extension ContentCardCollectionViewCell {
                 imageView.alpha = 1
             })
         })
-//        ImageDownloader.default.downloadImage(with: url) { (image, _, url, data) in
-//            guard  image != nil else { return }
-//            if let format = data?.imageFormat {
-//                print(format)
-//            }
-//
-//            imageView.kf.setImage(with: url)
-//            UIView.animate(withDuration: 0.25, animations: {
-//                imageView.alpha = 1
-//            })
-//        }
     }
 }
 

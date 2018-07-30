@@ -60,7 +60,7 @@ extension CardsBaseController {
             let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
                 web.request(.cardReport(cardId: cardId), completion: {
                     switch $0 {
-                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈，将减少相关推送", dismissAfter: 2)
+                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
                     case .failure: break
                     }
                 })
@@ -186,8 +186,12 @@ extension CardsBaseController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
-                            Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
+                        if resultCard.cardEnumType == .content {
+                            if let content = content as? ContentCardContent {
+                                Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
+                            } else if let content = content as? ArticleMessageContent {
+                                Messenger.shared.sendArtice(content, from: from, to: toUserId, extra: activityId)
+                            }
                         } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
                         }

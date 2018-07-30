@@ -24,7 +24,7 @@ extension StoriesPlayerGroupViewControllerDelegate {
     func willDisAppper(index: Int) {}
 }
 
-class StoriesPlayerGroupViewController: BaseViewController, StoriesGroupView {
+class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     
     var runProfileFlow: ((UInt64) -> Void)?
     

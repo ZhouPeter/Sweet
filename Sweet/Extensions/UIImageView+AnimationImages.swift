@@ -10,15 +10,14 @@ import Foundation
 import Kingfisher
 
 extension UIImageView {
-    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int) {
+    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
         var urls = [URL]()
         let urlString = url.absoluteString
         for index in 0 ..< count {
             let time = 0.5 / Double(count) * Double(index + 1)
-            let width = Int(UIScreen.mainWidth() / 3)
-            let height = Int(UIScreen.mainHeight() / 3)
-            let urlString = urlString
-                + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
+            let width = Int(size.width)
+            let height = Int(size.height)
+            let urlString = urlString + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
             let url = URL(string: urlString)!
             urls.append(url)
         }
@@ -29,11 +28,15 @@ extension UIImageView {
         urls.forEach { (url) in
             group.enter()
             queue.async {
-                KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-                    group.leave()
-                    if let image = image {
-                        images.append(image)
-                    }
+                KingfisherManager.shared.retrieveImage(
+                    with: url,
+                    options: nil,
+                    progressBlock: nil,
+                    completionHandler: { (image, _, _, _) in
+                        group.leave()
+                        if let image = image {
+                            images.append(image)
+                        }
                 })
             }
             group.notify(queue: DispatchQueue.main) {
@@ -41,13 +44,48 @@ extension UIImageView {
                 self.animationImages = images
                 self.animationDuration = animationDuration
                 self.startAnimating()
-//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
-//                self.kf.setImage(with: url)
-//                self.playAnimation(images: images)
             }
         }
     }
 }
+
+//extension UIImageView {
+//    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
+//        var urls = [URL]()
+//        let urlString = url.absoluteString
+//        for index in 0 ..< count {
+//            let time = 0.5 / Double(count) * Double(index + 1)
+//            let width = Int(size.width)
+//            let height = Int(size.height)
+//            let urlString = urlString + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
+//            let url = URL(string: urlString)!
+//            urls.append(url)
+//        }
+//        self.image = nil
+//        self.animationDuration = animationDuration
+//        for (index, url) in urls.enumerated() {
+//            KingfisherManager.shared.retrieveImage(
+//                with: url,
+//                options: nil,
+//                progressBlock: nil,
+//                completionHandler: { (image, _, _, _) in
+//                    DispatchQueue.main.async {
+//                        self.stopAnimating()
+//                        guard let image = image else { return }
+//                        var currentImages = self.animationImages ?? [UIImage]()
+//                        while currentImages.count < index {
+//                            currentImages.append(image)
+//                        }
+//                        currentImages[index] = image
+//                        self.animationImages = currentImages
+//                        self.layoutIfNeeded()
+//                        self.startAnimating()
+//                    }
+//            })
+//        }
+//    }
+//}
+
 extension UIImageView {
     func playAnimation(images: [UIImage]) {
         var cgImages = [CGImage]()

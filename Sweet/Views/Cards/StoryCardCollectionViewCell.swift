@@ -25,7 +25,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
                 pokeViewCenterXConstraint?.constant = centerX
                 pokeViewCenterYConstraint?.constant = centerY
             } else {
-                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: coverImageView.frame.size)
                 pokeView.isHidden = true
             }
         } else {
