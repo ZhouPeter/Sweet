@@ -517,6 +517,8 @@
 		58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
 		58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
 		58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58C0EFB7210EC3E20038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
+		58C0EFBA210EC3E30038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
 		58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
@@ -3697,6 +3699,7 @@
 				AC0BA70820EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */,
 				580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				AC86A93420C3F2C000334D4A /* InstantMessageData.swift in Sources */,
+				58C0EFB7210EC3E20038EB2F /* UIScreen+Metrics.swift in Sources */,
 				58447B29209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70E20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AD2099834000CE2564 /* StoryEditController.swift in Sources */,
@@ -4215,6 +4218,7 @@
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */,
+				58C0EFBA210EC3E30038EB2F /* UIScreen+Metrics.swift in Sources */,
 				589E6BDE20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				ACDB24C920BEB3100039368E /* ContactsView.swift in Sources */,
 				5803575620AAFBC200B2C94F /* StoriesCardViewModel.swift in Sources */,

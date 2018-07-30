@@ -24,10 +24,11 @@ extension String {
         return attributedText
     }
     
-    func getAttributedString(lineSpacing: CGFloat) -> NSAttributedString {
+    func getAttributedString(lineSpacing: CGFloat, textAlignment: NSTextAlignment = .left) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: self)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = textAlignment
         attributedText.addAttributes([ NSAttributedStringKey.paragraphStyle: paragraphStyle ],
                                         range: NSRange(location: 0, length: attributedText.length))
         return attributedText

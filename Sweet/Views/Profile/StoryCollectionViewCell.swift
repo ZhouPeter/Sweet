@@ -86,7 +86,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .video {
-                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: storyImageView.frame.size)
             } else if viewModel.type == .poke {
                 storyImageView.kf.setImage(with: videoURL.videoThumbnail(size: storyImageView.frame.size))
                 pokeView.center = CGPoint(x: frame.width / 2 + viewModel.pokeCenter.x * frame.width,

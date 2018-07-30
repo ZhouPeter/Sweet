@@ -13,6 +13,7 @@ class WebViewController: BaseViewController {
     
     var urlString: String
     private let shareCallback: (() -> Void)?
+    var finish: (() -> Void)?
     private lazy var webView: WKWebView = {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
@@ -78,6 +79,7 @@ class WebViewController: BaseViewController {
     deinit {
         webView.removeObserver(self, forKeyPath: "title")
         displayLink?.invalidate()
+        finish?()
     }
     override var prefersStatusBarHidden: Bool {
         return false

@@ -138,7 +138,8 @@ class ShareCardController: BaseViewController {
     }
     @objc private func sendAction(_ sender: UIButton) {
         sendCallback?(shareTextField.text!, userIds)
-        if let IDString = Defaults[.userID], let userID = UInt64(IDString), let draft = storyDraft {
+        if let IDString = Defaults[.userID], let userID = UInt64(IDString), var draft = storyDraft {
+            draft.comment = shareTextField.text
             TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: userID), draft: draft))
         }
     }

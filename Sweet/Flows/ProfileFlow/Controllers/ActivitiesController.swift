@@ -146,8 +146,12 @@ extension ActivitiesController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
-                            Messenger.shared.sendContentCard(content, from: from, to: toUserId)
+                        if resultCard.cardEnumType == .content {
+                            if let content = content as? ContentCardContent {
+                                Messenger.shared.sendContentCard(content, from: from, to: toUserId)
+                            } else if let content = content as? ArticleMessageContent {
+                                Messenger.shared.sendArtice(content, from: from, to: toUserId)
+                            }
                         } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId)
                         }
