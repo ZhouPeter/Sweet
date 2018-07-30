@@ -33,7 +33,7 @@ class AVPlayerView: UIView {
         return AVPlayerLayer.self
     }
 }
-class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
+class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     var onFinish: (() -> Void)?
     var runStoryFlow: ((String) -> Void)?
     var runProfileFlow: ((UInt64) -> Void)?
@@ -340,7 +340,7 @@ class StoriesPlayerViewController: BaseViewController, StoriesPlayerView {
             let descString = stories[currentIndex].descString
             let commentString = stories[currentIndex].commentString
             descLabel.attributedText = descString?.getAttributedString(lineSpacing: 4)
-            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10)
+            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             descLabel.isHidden = descString == nil || descString == ""
             commentLabel.isHidden = commentString == nil || commentString == ""
             
@@ -557,6 +557,9 @@ extension StoriesPlayerViewController {
         if let url = stories[currentIndex].urlString {
             pause()
             let webController = WebViewController(urlString: url)
+            webController.finish = { [weak self] in
+                self?.play()
+            }
             navigationController?.pushViewController(webController, animated: true)
         }
     }

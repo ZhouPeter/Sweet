@@ -188,9 +188,9 @@ class ProfileController: BaseViewController, ProfileView {
         dismiss(animated: true, completion: nil)
         finished?()
     }
-
-    override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
+    
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.didMove(toParentViewController: parent)
         if parent == nil {
             finished?()
         }
@@ -414,15 +414,18 @@ extension ProfileController {
 extension ProfileController: ActionsControllerDelegate {
     func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
         let contentHeight = scrollView.contentSize.height
-        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
+        let contentVisibleHeight = UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50
+        if contentHeight <= contentVisibleHeight {
             return
         } else {
-            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
-                                 244 - UIScreen.navBarHeight())
-            tableView.contentOffset.y = newOffsetY
+            let tableViewOffsetY = min(max(contentHeight - contentVisibleHeight, 0), 244)
+            tableView.bounds.origin = CGPoint(x: 0, y: -UIScreen.navBarHeight())
+            tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
             let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
             let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
-            scrollView.contentOffset.y = cellHeight * lineCount - scrollView.frame.height
+            let scrollViewOffsetY = cellHeight * lineCount - scrollView.frame.height
+            scrollView.bounds.origin = .zero
+            scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
         }
     }
     
