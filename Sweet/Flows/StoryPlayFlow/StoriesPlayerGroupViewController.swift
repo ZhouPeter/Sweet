@@ -214,36 +214,12 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
             storiesPlayerControllerMap[cell]?.currentIndex = StoriesPlayerGroupViewController.loctionMap[keyValue] ?? 0
         }
     }
-
-    private func loadMoreStoriesGroup() {
-        if storiesGroup[0][0].userId == user.userId {
-            isHasMoreStories = false
-            return
-        }
-        if isLoading { return }
-        web.request(.storySortList, responseType: Response<StoriesGroupResponse>.self) { [weak self] (result) in
-            guard let `self` = self else { return }
-            self.isLoading = false
-            switch result {
-            case let .success(response):
-                response.list.forEach({
-                    let storyCellViewModels = $0.map { StoryCellViewModel(model: $0) }
-                    self.appendGroup(storyCellViewModels: storyCellViewModels)
-                })
-                if response.list.count == 0 && self.currentIndex == self.storiesGroup.count - 1 {
-                    self.isHasMoreStories = false
-                }
-            case let .failure(error):
-                logger.error(error)
-            }
-        }
-    }
 }
 // MARK: - StoriesPlayerViewControllerDelegate
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
         storiesGroup[position.0][position.1] = story
-        if position.0 < 4 { delegate?.updateStory(story: story, postion: position) }
+        delegate?.updateStory(story: story, postion: position)
     }
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
@@ -323,14 +299,6 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
         let index = Int(scrollView.contentOffset.x / UIScreen.mainWidth())
         if index < 0 || index >= count { return }
         if CGFloat(index) * UIScreen.mainWidth() == scrollView.contentOffset.x {
-            if index == currentIndex {
-                currentPlayController?.play()
-                loadMoreStoriesGroup()
-                return
-            }
-            if currentIndex >= storiesGroup.count - 2 {
-                loadMoreStoriesGroup()
-            }
             currentIndex = index
             for cell in collectionView.visibleCells {
                 if let indexPath = collectionView.indexPath(for: cell), indexPath.row != currentIndex {
