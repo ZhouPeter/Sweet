@@ -254,7 +254,15 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         bottomView.selectBottomButton(at: 1, animated: false)
         switchStoryType(.record, animated: false)
     }
-        
+
+    func prepare() {
+        guard TLAuthorizedManager.checkAuthorization(with: .camera) else { return }
+        captureView.setupCamera {
+            guard TLAuthorizedManager.checkAuthorization(with: .mic) else { return }
+            self.captureView.enableAudio()
+        }
+    }
+    
     // MARK: - Delay camera close
     
     private let cameraDelayQueue = DispatchQueue.global()

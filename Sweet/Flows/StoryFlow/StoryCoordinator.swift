@@ -51,6 +51,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
             controller = factory.makeDismissableStoryRecordView(user: user, topic: topic)
         } else {
             controller = factory.makeStoryRecordView(user: user)
+            controller.prepare()
         }
         recordView = controller
         controller.onRecorded = { [weak self] url, isPhoto, topic in
