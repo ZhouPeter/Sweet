@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        logger.debug(userInfo)
         UMessage.didReceiveRemoteNotification(userInfo)
     }
     

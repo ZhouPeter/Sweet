@@ -15,6 +15,8 @@ protocol MainView: BaseView {
     var onViewDidLoad: ((UINavigationController) -> Void)? { get set }
     var onCardsFlowSelect: ((UINavigationController) -> Void)? { get set }
     var onIMFlowSelect: ((UINavigationController) -> Void)? { get set }
+    
+    func selectIMFlow()
 }
 
 final class MainCoordinator: BaseCoordinator {

@@ -100,7 +100,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
         return AuthCoordinator(with: FlowFactoryImp(), router: router)
     }
     
-    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?) {
+    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: MainView) {
         let controller = MainController()
         let coordinator = MainCoordinator(
             user: user,

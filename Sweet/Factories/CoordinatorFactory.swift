@@ -12,7 +12,7 @@ protocol CoordinatorFactory {
     func makeOnboardingCoordinator(router: Router) -> Coordinator & OnboardingCoordinatorOutput
     func makeAuthCoordinator(router: Router) -> Coordinator & AuthCoordinatorOutput
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
-    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: Presentable?)
+    func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: MainView)
     func makeProfileCoordinator(user: User,
                                 userID: UInt64,
                                 router: Router) -> Coordinator & ProfileCoordinatorOutput
