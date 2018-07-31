@@ -214,9 +214,13 @@ extension CardsBaseController {
                 guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                 guard let item = self.cards[index].activityList!.index(
                     where: { $0.activityId == activityId }) else { return }
+                guard var configurator = self.cellConfigurators[index] as? CellConfigurator<ActivitiesCardCollectionViewCell> else {
+                    return
+                }
                 self.cards[index].activityList![item].like = true
-                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
-                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+//                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
+//                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+                configurator.viewModel.activityViewModels[item].like = true
                 self.cellConfigurators[index] = configurator
                 if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
                     let acCell = cell as? ActivitiesCardCollectionViewCell {
