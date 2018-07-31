@@ -362,10 +362,10 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
-            if Defaults[.isStoryTagGuideShown] == false {
+//            if Defaults[.isStoryTagGuideShown] == false {
                 Guide.showPlayTagTip(with: path)
                 Defaults[.isStoryTagGuideShown] = true
-            }
+//            }
         } else {
             touchTagTap.isEnabled = false
         }
