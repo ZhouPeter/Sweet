@@ -39,7 +39,7 @@ extension Guide {
         rightTip.centerY(to: view)
     }
     
-    private class func makeTapGestureTip(_ tip: String) -> UIImageView {
+    class func makeTapGestureTip(_ tip: String) -> UIImageView {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "TapGesture"))
         let label = UILabel()
         label.textAlignment = .center

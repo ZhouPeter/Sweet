@@ -142,6 +142,41 @@ extension UIImage {
         return newImage!
     }
     
+    func strechedToSize(toSize size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        let path = UIBezierPath(rect: CGRect(origin: .zero, size: size))
+        UIColor.black.setFill()
+        path.fill()
+        let backgroudImage = UIGraphicsGetImageFromCurrentImageContext()
+        let widthFactor = size.width / self.size.width
+        let heightFactor = size.height / self.size.height
+        var scaleFactor: CGFloat = 0.0
+        if widthFactor < heightFactor {
+            scaleFactor = widthFactor
+        } else {
+            scaleFactor = heightFactor
+        }
+        var targetOrigin = CGPoint.zero
+        let scaledWidth  = self.size.width * scaleFactor
+        let scaledHeight = self.size.height * scaleFactor
+        
+        if widthFactor < heightFactor {
+            targetOrigin.y = (size.height - scaledHeight) / 2.0
+        } else if widthFactor < heightFactor {
+            targetOrigin.x = (size.width - scaledWidth) / 2.0
+        }
+        var targetRect = CGRect.zero
+        targetRect.origin = targetOrigin
+        targetRect.size.width  = scaledWidth
+        targetRect.size.height = scaledHeight
+        backgroudImage?.draw(in: CGRect(origin: .zero, size: size))
+        draw(in: targetRect)
+        let strechedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return strechedImage
+
+    }
+    
     func resize(newSize: CGSize, interpolationQuality quality: CGInterpolationQuality) -> UIImage {
         var drawTransposed = false
         switch imageOrientation {
@@ -213,7 +248,6 @@ extension UIImage {
         draw(in: targetRect)
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
         return scaledImage
     }
 }

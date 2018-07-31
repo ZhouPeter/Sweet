@@ -96,7 +96,8 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
 extension PhotoBrowserImp {
     func saveImage(url: String) {
         PHPhotoLibrary.shared().performChanges({
-            let  fileURL = URL(fileURLWithPath: ImageCache.default.cachePath(forKey: url))
+            let  fileURL = URL(fileURLWithPath:
+                KingfisherManager.shared.cache.cachePath(forKey: url, processorIdentifier: "com.yeatse.WebPProcessor"))
             let fileManager = FileManager.default
             guard fileManager.fileExists(atPath: fileURL.path) else { return }
             guard let data = try? Data(contentsOf: fileURL) else { return }

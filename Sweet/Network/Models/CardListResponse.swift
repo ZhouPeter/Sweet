@@ -6,7 +6,7 @@
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum EmojiType: UInt, Codable {
     case unknown
@@ -84,7 +84,6 @@ struct CardResponse: Codable {
     func makeStoryDraft() -> StoryDraft? {
         if cardEnumType == .content {
             if let video = video {
-//                let asset = (SweetPlayerManager.shared.cacheManeger.playerItem(with: URL(string: video))!.asset as? AVURLAsset)!
                 let asset = AVURLAsset(url: URL(string: video)!)
                 let assetGen =  AVAssetImageGenerator(asset: asset)
                 assetGen.appliesPreferredTrackTransform = true
@@ -92,7 +91,8 @@ struct CardResponse: Codable {
                 var actualTime = CMTimeMake(0,0)
                 do {
                     let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
-                    let image = UIImage(cgImage: imageRef)
+                    
+                    let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
                     guard let url = image.writeToCache(withAlpha: false) else { return nil }
                     let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                                 storyType: .share,
@@ -112,7 +112,7 @@ struct CardResponse: Codable {
                 let imageCount = CGImageSourceGetCount(gifSource!) 
                 guard imageCount > 0 else { return nil }
                 guard let imageRef = CGImageSourceCreateImageAtIndex(gifSource!, 0, nil) else { return nil }
-                let image = UIImage(cgImage: imageRef)
+                let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
                 guard let url = image.writeToCache(withAlpha: false) else { return nil }
                 let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                             storyType: .share,

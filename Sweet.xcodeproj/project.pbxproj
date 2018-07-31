@@ -519,6 +519,10 @@
 		58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
 		58C0EFB7210EC3E20038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
 		58C0EFBA210EC3E30038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
+		58C0EFBF211001960038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
+		58C0EFC2211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
+		58C0EFC3211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
+		58C0EFC42110019A0038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
 		58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
@@ -1602,6 +1606,7 @@
 		58BD534D2090A19500F7C3E1 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowFactory.swift; sourceTree = "<group>"; };
+		58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+ShowPlayTagTip.swift"; sourceTree = "<group>"; };
 		58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEnrollmentController.swift; sourceTree = "<group>"; };
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
 		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
@@ -2351,6 +2356,7 @@
 			children = (
 				AC87BC6520E1FD7D002BA32C /* Guide.swift */,
 				AC84FE7020E21B5D008FC795 /* DashView.swift */,
+				58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */,
 				AC84FE7C20E21BA4008FC795 /* Guide+SwipeTip.swift */,
 				AC84FE7720E21B83008FC795 /* Guide+StoryRecordTip.swift */,
 				AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */,
@@ -3317,6 +3323,7 @@
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				58C0EFBF211001960038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				AC58388620E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37920AC0405007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
@@ -3781,6 +3788,7 @@
 				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				AC616FAC20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
+				58C0EFC3211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				ACA9CC4020C6734300873643 /* StoryMessageCell.swift in Sources */,
 				5803C1242099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				ACEFA0C42106D51D0098631F /* AVAssetTimeSelector.swift in Sources */,
@@ -4071,6 +4079,7 @@
 				584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC616FA320C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				585B68C520AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
+				58C0EFC42110019A0038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				58CE1EE220A5652700781EBF /* StoryUVController.swift in Sources */,
 				58C75C1B2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
@@ -4318,6 +4327,7 @@
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
+				58C0EFC2211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC58388720E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
