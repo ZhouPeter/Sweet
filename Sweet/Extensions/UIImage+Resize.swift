@@ -162,7 +162,7 @@ extension UIImage {
         
         if widthFactor < heightFactor {
             targetOrigin.y = (size.height - scaledHeight) / 2.0
-        } else {
+        } else if widthFactor < heightFactor {
             targetOrigin.x = (size.width - scaledWidth) / 2.0
         }
         var targetRect = CGRect.zero
