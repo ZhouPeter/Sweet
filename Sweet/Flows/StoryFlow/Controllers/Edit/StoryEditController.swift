@@ -26,7 +26,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "StoryClose"), for: .normal)
         button.addTarget(self, action: #selector(didPressCloseButton), for: .touchUpInside)
         button.enableShadow()
         return button
@@ -100,14 +100,25 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .black
+        view.hero.modifiers = [.backgroundColor(.black)]
         add(childViewController: previewController)
         view.addSubview(editContainerView)
-        editContainerView.fill(in: view)
+        if UIScreen.isIphoneX() {
+            editContainerView.align(.top, to: view, inset: UIScreen.safeTopMargin())
+            editContainerView.centerX(to: view)
+            editContainerView.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
+            editContainerView.clipsToBounds = true
+            editContainerView.layer.cornerRadius = 7
+            previewController.view.clipsToBounds = true
+            previewController.view.layer.cornerRadius = 7
+        } else {
+            editContainerView.fill(in: view)
+        }
         add(childViewController: textController, addView: false)
         editContainerView.addSubview(textController.view)
-        previewController.view.fill(in: view)
-        textController.view.fill(in: view)
+        previewController.view.fill(in: editContainerView)
+        textController.view.fill(in: editContainerView)
         textController.delegate = self
         setupPokeView()
         setupControlButtons()
@@ -132,17 +143,20 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     private func setupControlButtons() {
         view.addSubview(closeButton)
-        closeButton.constrain(width: 40, height: 40)
-        closeButton.align(.right, to: view, inset: 10)
-        closeButton.align(.top, to: view, inset: 10)
+        closeButton.constrain(width: 50, height: 50)
+        closeButton.align(.right, to: editContainerView, inset: 10)
+        closeButton.align(.top, to: editContainerView, inset: 10)
         view.addSubview(editButton)
         editButton.constrain(width: 50, height: 50)
         editButton.align(.left, to: view, inset: 10)
-        editButton.align(.bottom, to: view, inset: 25)
+        if UIScreen.isIphoneX() {
+            editButton.pin(.bottom, to: editContainerView, spacing: 10)
+        } else {
+            editButton.align(.bottom, to: view, inset: 25)
+        }
         view.addSubview(pokeButton)
         pokeButton.equal(.size, to: editButton)
         pokeButton.centerY(to: editButton)
-        pokeButton.align(.bottom, to: editButton)
         pokeButton.pin(.right, to: editButton, spacing: 15)
         view.addSubview(finishButton)
         finishButton.constrain(width: 50, height: 50)
@@ -150,7 +164,11 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         finishButton.align(.right, to: view, inset: 10)
         view.addSubview(deleteButton)
         deleteButton.constrain(width: 84, height: 84)
-        deleteButton.align(.bottom, to: view, inset: 15)
+        if UIScreen.isIphoneX() {
+            deleteButton.align(.bottom, to: editContainerView, inset: 10)
+        } else {
+            deleteButton.centerY(to: editButton)
+        }
         deleteButton.centerX(to: view)
         deleteButton.alpha = 0
     }
@@ -164,10 +182,10 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     }
     
     private func setupPokeView() {
-        view.addSubview(pokeView)
+        editContainerView.addSubview(pokeView)
         pokeView.constrain(width: 120, height: 120)
-        pokeCenterX = pokeView.centerX(to: view)
-        pokeCenterY = pokeView.centerY(to: view)
+        pokeCenterX = pokeView.centerX(to: editContainerView)
+        pokeCenterY = pokeView.centerY(to: editContainerView)
         pokeView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
         pokeView.isHidden = true
     }
@@ -293,8 +311,9 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     
     @objc private func didPressFinishButton() {
         previewController.stopPreview()
-        let size = CGSize(width: 720, height: 1280)
-        let image = editContainerView.screenshot()?.scaleAndCropImage(toSize: size)
+        editContainerView.clipsToBounds = false
+        let image = editContainerView.screenshot(afterScreenUpdates: true)
+        editContainerView.clipsToBounds = true
         let filterName = previewController.currentFilterName()
         let overlayFilename = image?.writeToCache(withAlpha: true)?.lastPathComponent
         if isPhoto {

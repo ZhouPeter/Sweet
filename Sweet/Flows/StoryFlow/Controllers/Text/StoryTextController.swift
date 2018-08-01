@@ -71,9 +71,19 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGradientView()
+        view.backgroundColor = .black
+        view.hero.modifiers = [.backgroundColor(.black)]
         view.addSubview(editContainer)
-        editContainer.fill(in: view)
+        if UIScreen.isIphoneX() {
+            editContainer.align(.top, to: view, inset: UIScreen.safeTopMargin())
+            editContainer.centerX(to: view)
+            editContainer.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
+            editContainer.clipsToBounds = true
+            editContainer.layer.cornerRadius = 7
+        } else {
+            editContainer.fill(in: view)
+        }
+        setupGradientView()
         setupEditController()
         setupEditControls()
         finishButton.alpha = 0
@@ -88,8 +98,8 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     // MARK: - Private
     
     private func setupGradientView() {
-        view.addSubview(gradientView)
-        gradientView.fill(in: view)
+        editContainer.addSubview(gradientView)
+        gradientView.fill(in: editContainer)
         gradientView.changeColors([UIColor(hex: 0x8FE1FF), UIColor(hex: 0x56BFFE)])
         gradientView.changeMode(.linearWithPoints(
             start: CGPoint(x: 0, y: 0),
@@ -107,18 +117,23 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
     }
     
     private func setupEditControls() {
-        editContainer.addSubview(editButton)
+        view.addSubview(editButton)
+        view.addSubview(finishButton)
         editButton.constrain(width: 50, height: 50)
         editButton.align(.left, to: view, inset: 10)
-        editButton.align(.bottom, to: view, inset: 25)
-        editContainer.addSubview(finishButton)
         finishButton.constrain(width: 50, height: 50)
-        finishButton.align(.bottom, to: view, inset: 25)
         finishButton.align(.right, to: view, inset: 10)
-        editContainer.addSubview(closeButton)
+        if UIScreen.isIphoneX() {
+            editButton.pin(.bottom, to: editContainer, spacing: 10)
+            finishButton.pin(.bottom, to: editContainer, spacing: 10)
+        } else {
+            editButton.align(.bottom, to: view, inset: 25)
+            finishButton.align(.bottom, to: view, inset: 25)
+        }
+        view.addSubview(closeButton)
         closeButton.constrain(width: 50, height: 50)
-        closeButton.align(.right, to: view, inset: 10)
-        closeButton.align(.top, to: view, inset: 10)
+        closeButton.align(.right, to: editContainer, inset: 10)
+        closeButton.align(.top, to: editContainer, inset: 10)
     }
     
     // MARK: - Actions
@@ -127,8 +142,10 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         finishButton.alpha = 0
         closeButton.alpha = 0
         editButton.alpha = 0
+        editContainer.clipsToBounds = false
         var filename: String?
-        let image = view.screenshot(afterScreenUpdates: true)
+        let image = editContainer.screenshot(afterScreenUpdates: true)
+        editContainer.clipsToBounds = true
         if let snap = image {
             filename = snap.writeToCache(withAlpha: true)?.lastPathComponent
         }

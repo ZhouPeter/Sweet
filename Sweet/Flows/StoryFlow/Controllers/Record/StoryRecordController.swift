@@ -24,7 +24,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     var onAvatarButtonPressed: (() -> Void)?
     var isAvatarCircleAnamtionEnabled: Bool = false
     
-    override var prefersStatusBarHidden: Bool { return true }
+    override var prefersStatusBarHidden: Bool {
+        if UIScreen.isIphoneX() {
+            return false
+        }
+        return true
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     private let recordContainer = UIView()
     private let bottomView = StoryRecordBottomView()
@@ -160,10 +165,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        
+        view.hero.modifiers = [.backgroundColor(.black)]
         view.addSubview(recordContainer)
         recordContainer.backgroundColor = .clear
-        recordContainer.fill(in: view)
+        if UIScreen.isIphoneX() {
+            recordContainer.align(.top, to: view, inset: UIScreen.safeTopMargin())
+            recordContainer.centerX(to: view)
+            recordContainer.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
+            recordContainer.clipsToBounds = true
+            recordContainer.layer.cornerRadius = 7
+        } else {
+            recordContainer.fill(in: view)
+        }
         updateTopicButton()
         setupCaptureView()
         setupTopView()
@@ -188,6 +201,9 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if UIScreen.isIphoneX() {
+            NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
+        }
         setupNavigation()
         cancelDelayCameraClose()
         if blurCoverView.isHidden == false {
@@ -433,18 +449,28 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupBottomView() {
         view.addSubview(bottomView)
-        bottomView.align(.bottom, to: view)
+        if UIScreen.isIphoneX() {
+            bottomView.pin(.bottom, to: recordContainer)
+            bottomView.constrain(height: 40)
+            bottomView.isIndicatorHidden = true
+        } else {
+            bottomView.align(.bottom, to: view)
+            bottomView.constrain(height: 64)
+        }
         bottomView.align(.left, to: view)
         bottomView.align(.right, to: view)
-        bottomView.constrain(height: 64)
         bottomView.delegate = self
     }
     
     private func setupShootButton() {
         recordContainer.addSubview(shootButton)
         shootButton.centerX(to: recordContainer)
-        shootButton.constrain(width: 90, height: 90)
-        shootButton.align(.bottom, to: view, inset: 64)
+        shootButton.constrain(width: 76, height: 76)
+        if UIScreen.isIphoneX() {
+            shootButton.align(.bottom, to: recordContainer, inset: 30)
+        } else {
+            shootButton.align(.bottom, to: view, inset: 64)
+        }
         shootButton.trackingDidStart = { [weak self] in self?.shootDidBegin() }
         shootButton.trackingDidEnd = { [weak self] interval in self?.shootDidEnd(with: interval) }
         
@@ -624,7 +650,13 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
                 addChildViewController(textGradientController)
                 textGradientController.didMove(toParentViewController: self)
                 view.insertSubview(textGradientController.view, belowSubview: bottomView)
-                textGradientController.view.fill(in: view)
+                if UIScreen.isIphoneX() {
+                    textGradientController.view.fill(in: recordContainer)
+                    textGradientController.view.clipsToBounds = true
+                    textGradientController.view.layer.cornerRadius = 7
+                } else {
+                    textGradientController.view.fill(in: view)
+                }
             }
             showTextGradient(true)
             captureView.pauseCamera()
