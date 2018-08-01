@@ -133,7 +133,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         view.backgroundColor = .clear
         collectionView.addGestureRecognizer(pan)
         collectionView.hero.isEnabled = true
-        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)" + (fromCardId ?? "") + (fromMessageId ?? "")
+        collectionView.hero.id = "\(storiesGroup[currentIndex][0].userId)\((fromCardId ?? ""))\((fromMessageId ?? ""))"
         collectionView.isScrollEnabled = storiesGroup.count > 1
         view.addSubview(collectionView)
         collectionView.fill(in: view)
@@ -143,9 +143,10 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
             automaticallyAdjustsScrollViewInsets = false
         }
         collectionView.layoutIfNeeded()
-        collectionView.setContentOffset(CGPoint(x: UIScreen.mainWidth() * CGFloat(currentIndex),
-                                                y: 0),
-                                        animated: true)
+        collectionView.setContentOffset(
+            CGPoint(x: UIScreen.mainWidth() * CGFloat(currentIndex), y: 0),
+            animated: true
+        )
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

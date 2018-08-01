@@ -312,8 +312,12 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     @objc private func didPressFinishButton() {
         previewController.stopPreview()
         editContainerView.clipsToBounds = false
+        let isPokeHidden = pokeView.isHidden
+        pokeView.isHidden = true
         let image = editContainerView.screenshot(afterScreenUpdates: true)
+        pokeView.isHidden = isPokeHidden
         editContainerView.clipsToBounds = true
+        
         let filterName = previewController.currentFilterName()
         let overlayFilename = image?.writeToCache(withAlpha: true)?.lastPathComponent
         if isPhoto {

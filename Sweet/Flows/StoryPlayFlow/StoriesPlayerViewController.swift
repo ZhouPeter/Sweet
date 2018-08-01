@@ -352,9 +352,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             pokeView.isHidden = false
             let width = view.frame.width
             let height = width * 16 / 9
-            let centerX = width / 2 + stories[currentIndex].pokeCenter.x * width
-            let centerY = height / 2 + stories[currentIndex].pokeCenter.y * height + UIScreen.safeTopMargin()
-            pokeView.center = CGPoint(x: centerX, y: centerY)
+            let center = stories[currentIndex].pokeCenter
+            pokeView.center = CGPoint(
+                x: width * (0.5 + center.x),
+                y: height * ( 0.5 + center.y) + UIScreen.safeTopMargin()
+            )
             pokeLongPress.isEnabled = true
         } else {
             pokeView.isHidden = true

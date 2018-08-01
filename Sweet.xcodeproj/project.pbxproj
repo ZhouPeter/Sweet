@@ -1217,6 +1217,10 @@
 		ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5322088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
 		ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A52F2088731C00B78CFD /* String+MD5.swift */; };
+		ACDA67622111B076000B0587 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDA67612111B076000B0587 /* Comparable+Clamp.swift */; };
+		ACDA67632111B076000B0587 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDA67612111B076000B0587 /* Comparable+Clamp.swift */; };
+		ACDA67642111B076000B0587 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDA67612111B076000B0587 /* Comparable+Clamp.swift */; };
+		ACDA67652111B076000B0587 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDA67612111B076000B0587 /* Comparable+Clamp.swift */; };
 		ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
 		ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
 		ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB24AD20BD74E00039368E /* InstantMessage.swift */; };
@@ -1804,6 +1808,7 @@
 		ACD5A5352088737A00B78CFD /* Sweet Dev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sweet Dev-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5362088737A00B78CFD /* SweetTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD5A5372088737A00B78CFD /* SweetUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SweetUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACDA67612111B076000B0587 /* Comparable+Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamp.swift"; sourceTree = "<group>"; };
 		ACDB24AD20BD74E00039368E /* InstantMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantMessage.swift; sourceTree = "<group>"; };
 		ACDB24C520BEB3100039368E /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		ACDB24DD20BECFD50039368E /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
@@ -2566,6 +2571,7 @@
 				AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */,
 				580F886720F4D6CA009148CC /* String+HTMlL.swift */,
 				586603442108A2F9008C4448 /* UISearchBar+Frame.swift */,
+				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3453,6 +3459,7 @@
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC86A93E20C4DC3F00334D4A /* User.swift in Sources */,
 				AC742DC62106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */,
+				ACDA67622111B076000B0587 /* Comparable+Clamp.swift in Sources */,
 				58BD52FE208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				58EA104A20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC32089E58D00660425 /* Errors.swift in Sources */,
@@ -3900,6 +3907,7 @@
 				AC8EA9E920ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACEFA0CC2106D51D0098631F /* VideoCropView.swift in Sources */,
+				ACDA67642111B076000B0587 /* Comparable+Clamp.swift in Sources */,
 				AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
@@ -4200,6 +4208,7 @@
 				58CAB38B20AD581A007230AA /* CardsBaseController.swift in Sources */,
 				58447B34209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
 				58D578E62093198600AE5D38 /* UpdateController.swift in Sources */,
+				ACDA67652111B076000B0587 /* Comparable+Clamp.swift in Sources */,
 				589E6BCF20A983850038FAED /* CardsAllController.swift in Sources */,
 				ACE560A920997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
@@ -4457,6 +4466,7 @@
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC86A93F20C4DC3F00334D4A /* User.swift in Sources */,
 				AC742DC72106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */,
+				ACDA67632111B076000B0587 /* Comparable+Clamp.swift in Sources */,
 				58BD52FF208DFFAA00F7C3E1 /* PowerCoordinator.swift in Sources */,
 				58EA104B20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				ACF2DEC42089E58D00660425 /* Errors.swift in Sources */,

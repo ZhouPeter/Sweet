@@ -344,9 +344,19 @@ extension CardsBaseController {
         }
         var direction = Direction.unknown
         let targetY = point.y + velocityY
-        if  start.y - targetY > cardCellHeight * 0.3 {
+        let offset = start.y - targetY
+        let threshold = cardCellHeight * 0.3
+        if offset < -threshold {
+            if index == 0 {
+                self.scrollTo(row: index)
+            } else {
+                self.index -=  1
+                self.scrollTo(row: index)
+            }
+        } else if offset > threshold {
             direction = .down
-            if index == collectionView.numberOfItems(inSection: 0) - 1 {
+            let maxIndex = collectionView.numberOfItems(inSection: 0) - 1
+            if index == maxIndex {
                 let cardId = cards[index].cardId
                 let request: CardRequest = self is CardsAllController ?
                     .all(cardId: cardId, direction: direction) :
@@ -355,24 +365,15 @@ extension CardsBaseController {
                     if let cards = cards, cards.count > 0, success { self.index += 1 }
                     self.scrollTo(row: self.index)
                 }
-            } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
+            } else if index < maxIndex {
                 self.preloadingCard()
                 index += 1
                 self.scrollTo(row: index)
-            } else if index > collectionView.numberOfItems(inSection: 0) - 1 {
-                index = collectionView.numberOfItems(inSection: 0) - 1 >= 0 ? collectionView.numberOfItems(inSection: 0) - 1 : 0
+            } else if index > maxIndex {
+                index = max(maxIndex, 0)
                 self.scrollTo(row: index)
             }
-        } else if start.y - targetY >= 0 {
-            self.scrollTo(row: index)
-        } else if start.y - targetY < -cardCellHeight * 0.3 {
-            if index == 0 {
-                self.scrollTo(row: index)
-            } else {
-                self.index -=  1
-                self.scrollTo(row: index)
-            }
-        } else if start.y - targetY < 0 {
+        } else {
             self.scrollTo(row: index)
         }
     }

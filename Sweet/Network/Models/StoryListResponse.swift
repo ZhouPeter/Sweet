@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 enum StoryType: UInt, Codable {
     case unknown
@@ -74,18 +75,12 @@ struct StoryResponse: Codable {
         case url
     }
 }
+
 struct TouchPoint: Codable {
-    let originX: CGFloat
-    let originY: CGFloat
-    enum CodingKeys: String, CodingKey {
-        case originX = "x"
-        case originY = "y"
-    }
-    init(x: CGFloat, y: CGFloat) {
-        originX = x
-        originY = y
-    }
+    let x: CGFloat
+    let y: CGFloat
 }
+
 struct StoryGetResponse: Codable {
     let story: StoryResponse
 }
