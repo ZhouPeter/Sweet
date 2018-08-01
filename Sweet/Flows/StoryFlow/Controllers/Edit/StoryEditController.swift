@@ -328,8 +328,10 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
             let type: StoryType
             if !self.pokeView.isHidden {
                 type = .poke
-                let centerX = (self.pokeView.center.x - self.view.bounds.width / 2) / self.view.bounds.width
-                let centerY = (self.pokeView.center.y - self.view.bounds.height / 2) / self.view.bounds.height
+                let editWidth = self.editContainerView.bounds.width
+                let editHeight = self.editContainerView.bounds.height
+                let centerX = (self.pokeView.center.x - editWidth / 2) / editWidth
+                let centerY = (self.pokeView.center.y - editHeight / 2) / editHeight
                 pokeCenter = CGPoint(
                     x: min(max(centerX, -0.5), 0.5),
                     y: min(max(centerY, -0.5), 0.5)

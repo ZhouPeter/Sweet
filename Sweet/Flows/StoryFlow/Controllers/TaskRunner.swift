@@ -31,6 +31,9 @@ final class TaskRunner {
     }
     
     func run(_ operation: Operation) {
+        operation.completionBlock = {
+            logger.debug("completed")
+        }
         queue.addOperation(operation)
     }
     
