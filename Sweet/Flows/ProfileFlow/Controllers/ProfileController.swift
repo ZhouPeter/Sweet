@@ -418,14 +418,21 @@ extension ProfileController: ActionsControllerDelegate {
         if contentHeight <= contentVisibleHeight {
             return
         } else {
-            let tableViewOffsetY = min(max(contentHeight - contentVisibleHeight, 0), 244)
-            tableView.bounds.origin = CGPoint(x: 0, y: -UIScreen.navBarHeight())
-            tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
-            let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
+            let cellHeight = (UIScreen.mainHeight() - 6) / 3
             let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
-            let scrollViewOffsetY = cellHeight * lineCount - scrollView.frame.height
-            scrollView.bounds.origin = .zero
-            scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
+            let scrollViewOffsetY = cellHeight * lineCount + 3 * (lineCount - 1) - scrollView.frame.height
+            if scrollView.bounds.origin.y != scrollViewOffsetY {
+                scrollView.bounds = CGRect(origin: .zero, size: scrollView.bounds.size)
+                scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
+                
+            }
+            let tableViewOffsetY = min(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 244)
+            if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
+                tableView.bounds = CGRect(origin: CGPoint(x: 0, y: -UIScreen.navBarHeight()),
+                                          size: tableView.bounds.size)
+                tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
+            }
+           
         }
     }
     

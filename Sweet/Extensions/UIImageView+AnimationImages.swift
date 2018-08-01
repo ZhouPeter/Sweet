@@ -48,7 +48,6 @@ import Kingfisher
 //        }
 //    }
 //}
-
 extension UIImageView {
     func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
         var urls = [URL]()
@@ -61,16 +60,21 @@ extension UIImageView {
             let url = URL(string: urlString)!
             urls.append(url)
         }
-        self.image = nil
+        kf.setImage(with: urls[0])
         self.animationDuration = animationDuration
         for (index, url) in urls.enumerated() {
             KingfisherManager.shared.retrieveImage(
                 with: url,
                 options: nil,
                 progressBlock: nil,
-                completionHandler: { (image, _, _, _) in
+                completionHandler: { (image, _, _, imageURL) in
                     DispatchQueue.main.async {
                         self.stopAnimating()
+                        if let webURL = self.kf.webURL, webURL != urls[0] {
+                            self.animationImages = nil
+                            self.layoutIfNeeded()
+                            return
+                        }
                         guard let image = image else { return }
                         var currentImages = self.animationImages ?? [UIImage]()
                         while currentImages.count <= index {

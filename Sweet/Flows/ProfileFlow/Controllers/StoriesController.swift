@@ -144,12 +144,12 @@ class StoriesController: UIViewController, PageChildrenProtocol {
 
     }()
     private var page = 0
-    private var loadFinish = false
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green
         view.addSubview(collectionView)
         collectionView.fill(in: view)
+        loadRequest()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -161,6 +161,19 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     }
     
     func loadRequest() {
+        if storyViewModels.count > 0 {
+            self.collectionView.performBatchUpdates(nil, completion: { (_) in
+                var index = self.storyViewModels.count - 1
+                for (offset, viewModel) in self.storyViewModels.enumerated() {
+                    if viewModel.read == false {
+                        index = offset
+                        break
+                    }
+                }
+                self.delegate?.storiesScrollViewDidScrollToBottom(scrollView: self.collectionView, index: index)
+            })
+            return
+        }
         page = 0
         web.request(
             .storyList(page: 0, userId: user.userId),
@@ -168,7 +181,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 guard let `self` = self else { return }
                 switch result {
                 case let .success(response):
-                    self.loadFinish = response.list.count < 20
                     self.storyViewModels = response.list.map({return StoryCellViewModel(model: $0)})
                     self.reviewViewModels()
                     self.collectionView.contentOffset = .zero

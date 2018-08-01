@@ -219,7 +219,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setTopUI()
         setBottmUI()
-        update()
+//        update()
         
     }
     
@@ -344,7 +344,9 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             descLabel.isHidden = descString == nil || descString == ""
             commentLabel.isHidden = commentString == nil || commentString == ""
-            
+        } else {
+            descLabel.isHidden = true
+            commentLabel.isHidden = true
         }
     }
     private func updatePokeView() {
@@ -367,10 +369,16 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
-//            if Defaults[.isStoryTagGuideShown] == false {
-                Guide.showPlayTagTip(with: path)
+            if Defaults[.isStoryTagGuideShown] == false {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    let guide = Guide.showPlayTagTip(with: path)
+                    guide.removeClosure = {
+                        self.play()
+                    }
+                    self.pause()
+                }
                 Defaults[.isStoryTagGuideShown] = true
-//            }
+            }
         } else {
             touchTagTap.isEnabled = false
         }

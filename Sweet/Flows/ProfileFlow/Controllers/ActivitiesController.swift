@@ -12,6 +12,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
+
     var cellNumber: Int = 0
     var user: User
     var avatar: String
@@ -55,9 +56,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         super.viewDidLoad()
         view.addSubview(tableView)
         tableView.fill(in: view)
+        loadRequest()
     }
     
     func loadRequest() {
+        if viewModels.count > 0 { return }
         page = 0
         web.request(
             .activityList(page: 0, userId: user.userId,
