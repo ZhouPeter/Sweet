@@ -419,13 +419,15 @@ extension ProfileController: ActionsControllerDelegate {
             return
         } else {
             let tableViewOffsetY = min(max(contentHeight - contentVisibleHeight, 0), 244)
-            tableView.bounds.origin = CGPoint(x: 0, y: -UIScreen.navBarHeight())
-            tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
-            let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
+            if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
+                tableView.bounds.origin.y = tableViewOffsetY - UIScreen.navBarHeight()
+            }
+            let cellHeight = (UIScreen.mainHeight() - 6) / 3
             let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
-            let scrollViewOffsetY = cellHeight * lineCount - scrollView.frame.height
-            scrollView.bounds.origin = .zero
-            scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
+            let scrollViewOffsetY = cellHeight * lineCount + 3 * (lineCount - 1) - scrollView.frame.height
+            if scrollView.bounds.origin.y != scrollViewOffsetY {
+                scrollView.bounds.origin.y = scrollViewOffsetY
+            }
         }
     }
     
