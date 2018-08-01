@@ -70,6 +70,11 @@ extension UIImageView {
                 completionHandler: { (image, _, _, imageURL) in
                     DispatchQueue.main.async {
                         self.stopAnimating()
+                        if let webURL = self.kf.webURL, webURL != urls[0] {
+                            self.animationImages = nil
+                            self.layoutIfNeeded()
+                            return
+                        }
                         guard let image = image else { return }
                         var currentImages = self.animationImages ?? [UIImage]()
                         while currentImages.count <= index {

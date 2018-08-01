@@ -112,14 +112,14 @@ class TimerHelper {
         let beforZeroData = calendar.date(byAdding: .day, value: -1, to: zeroDate)!
         if timeInterval >= Int(beforZeroData.timeIntervalSince1970) {
             if timeInterval >= Int(zeroDate.timeIntervalSince1970) {
-                return ("今天", hourTo12h(hour: hour) + ":" + "\(minute)")
+                return ("今天 ", hourTo12h(hour: hour) + ":" + placeholderMinuteZero(minute: "\(minute)"))
             } else {
-                return ("昨天", hourTo12h(hour: hour) + ":" + "\(minute)")
+                return ("昨天 ", hourTo12h(hour: hour) + ":" + placeholderMinuteZero(minute: "\(minute)"))
             }
         } else if timeInterval + 7 * 3600 * 24 >= nowTimeInterval {
-            return (getWeakString(weak: weak), hourTo12h(hour: hour) + ":" + "\(minute)")
+            return (getWeakString(weak: weak), hourTo12h(hour: hour) + ":" + placeholderMinuteZero(minute: "\(minute)"))
         } else {
-            return ("\(month)月\(day)日", hourTo12h(hour: hour) + ":" + "\(minute)")
+            return ("\(month)月\(day)日", hourTo12h(hour: hour) + ":" + placeholderMinuteZero(minute: "\(minute)"))
         }
     }
     
@@ -143,7 +143,7 @@ class TimerHelper {
         let beforZeroData = calendar.date(byAdding: .day, value: -1, to: zeroDate)!
         if timeInterval >= Int(beforZeroData.timeIntervalSince1970) {
             if timeInterval >= Int(zeroDate.timeIntervalSince1970) {
-                return hourTo12h(hour: hour) + ":" + "\(minute)"
+                return hourTo12h(hour: hour) + ":" + placeholderMinuteZero(minute: "\(minute)")
             } else {
                 return "昨天"
             }
@@ -153,14 +153,32 @@ class TimerHelper {
             return "\(month)月\(day)日"
         }
     }
+    class func placeholderHourZero(hour: String) -> String {
+        if hour.count == 1 {
+            if hour == "0" {
+                return hour
+            } else {
+                return "0\(hour)"
+            }
+        } else {
+            return hour
+        }
+    }
     
+    class func placeholderMinuteZero(minute: String) -> String {
+        if minute.count == 1 {
+            return "0\(minute)"
+        } else {
+            return minute
+        }
+    }
     class func hourTo12h(hour: Int) -> String {
         if hour == 12 {
-            return "下午 \(hour)"
+            return "下午 \(placeholderHourZero(hour: "\(hour)"))"
         } else if hour > 12 {
-            return "下午 \(hour - 12)"
+            return "下午 \(placeholderHourZero(hour: "\(hour - 12)"))"
         } else {
-            return "上午 \(hour)"
+            return "上午 \(placeholderHourZero(hour: "\(hour)"))"
         }
     }
     
