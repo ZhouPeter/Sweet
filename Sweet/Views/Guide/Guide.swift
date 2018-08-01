@@ -12,7 +12,7 @@ class Guide {
     let rootView: UIView
     private let window: UIWindow
     private var retainClosure: (() -> Void)?
-    
+    var removeClosure: (() -> Void)?
     init() {
         window = UIWindow(frame: UIScreen.main.bounds)
         rootView = UIView(frame: window.bounds)
@@ -27,6 +27,7 @@ class Guide {
     
     @objc private func tapped() {
         window.resignKey()
+        removeClosure?()
         retainClosure = nil
     }
 }

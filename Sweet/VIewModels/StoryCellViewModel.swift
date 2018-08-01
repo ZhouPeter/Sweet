@@ -45,8 +45,10 @@ struct StoryCellViewModel {
         if model.touchArea.count > 2 {
             let path = CGMutablePath()
             for (index, touchPoint) in model.touchArea.enumerated() {
-                let point = CGPoint(x: UIScreen.mainWidth() * touchPoint.originX,
-                                    y: UIScreen.mainHeight() * touchPoint.originY)
+                let height = UIScreen.mainWidth() * 16.0 / 9.0
+                let width = UIScreen.mainWidth()
+                let point = CGPoint(x: width * touchPoint.originX,
+                                    y: height * touchPoint.originY +  UIScreen.safeTopMargin())
                 if index == 0 {
                     path.move(to: point)
                 } else {

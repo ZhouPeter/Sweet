@@ -268,6 +268,9 @@ extension MainController: PageboyViewControllerDelegate {
     }
     
     private func updateStatusBar(at index: Int) {
+        if UIScreen.isIphoneX() {
+            return
+        }
         if index == 0 {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
         } else {

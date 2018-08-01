@@ -206,19 +206,20 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         super.viewDidLoad()
         setGesture()
         view.clipsToBounds = true
-        storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
-                                                                  y: 0,
-                                                                  width: UIScreen.mainWidth(),
-                                                                  height: UIScreen.mainHeight()))
+        let frame = CGRect(x: 0,
+                           y: UIScreen.safeTopMargin(),
+                           width: view.bounds.width,
+                           height: view.bounds.width * 16 / 9)
+        storiesScrollView = StoriesPlayerScrollView(frame: frame)
         storiesScrollView.scrollViewTap.require(toFail: touchTagTap)
         view.addSubview(storiesScrollView)
-        storiesScrollView.fill(in: view)
+//        storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setTopUI()
         setBottmUI()
-        update()
+//        update()
         
     }
     
@@ -343,14 +344,18 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             descLabel.isHidden = descString == nil || descString == ""
             commentLabel.isHidden = commentString == nil || commentString == ""
-            
+        } else {
+            descLabel.isHidden = true
+            commentLabel.isHidden = true
         }
     }
     private func updatePokeView() {
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
-            let centerX = view.frame.width / 2 + stories[currentIndex].pokeCenter.x * view.frame.width
-            let centerY = view.frame.height / 2 + stories[currentIndex].pokeCenter.y * view.frame.height
+            let width = view.frame.width
+            let height = width * 16 / 9
+            let centerX = width / 2 + stories[currentIndex].pokeCenter.x * width
+            let centerY = height / 2 + stories[currentIndex].pokeCenter.y * height + UIScreen.safeTopMargin()
             pokeView.center = CGPoint(x: centerX, y: centerY)
             pokeLongPress.isEnabled = true
         } else {
@@ -363,7 +368,13 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
             if Defaults[.isStoryTagGuideShown] == false {
-                Guide.showPlayTagTip(with: path)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    let guide = Guide.showPlayTagTip(with: path)
+                    guide.removeClosure = {
+                        self.play()
+                    }
+                    self.pause()
+                }
                 Defaults[.isStoryTagGuideShown] = true
             }
         } else {
@@ -381,7 +392,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                 player?.automaticallyWaitsToMinimizeStalling = false
             }
             player?.actionAtItemEnd = .none
-            playerView = AVPlayerView(frame: view.bounds)
+            let frame = CGRect(x: 0,
+                               y: UIScreen.safeTopMargin(),
+                               width: view.bounds.width,
+                               height: view.bounds.width * 16 / 9)
+            playerView = AVPlayerView(frame: frame)
             playerView.backgroundColor = .black
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
