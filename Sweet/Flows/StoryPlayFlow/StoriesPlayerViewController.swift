@@ -206,13 +206,14 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         super.viewDidLoad()
         setGesture()
         view.clipsToBounds = true
-        storiesScrollView = StoriesPlayerScrollView(frame: CGRect(x: 0,
-                                                                  y: 0,
-                                                                  width: UIScreen.mainWidth(),
-                                                                  height: UIScreen.mainHeight()))
+        let frame = CGRect(x: 0,
+                           y: UIScreen.safeTopMargin(),
+                           width: view.bounds.width,
+                           height: view.bounds.width * 16 / 9)
+        storiesScrollView = StoriesPlayerScrollView(frame: frame)
         storiesScrollView.scrollViewTap.require(toFail: touchTagTap)
         view.addSubview(storiesScrollView)
-        storiesScrollView.fill(in: view)
+//        storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
@@ -362,10 +363,10 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
             touchTagTap.path = path
-            if Defaults[.isStoryTagGuideShown] == false {
+//            if Defaults[.isStoryTagGuideShown] == false {
                 Guide.showPlayTagTip(with: path)
                 Defaults[.isStoryTagGuideShown] = true
-            }
+//            }
         } else {
             touchTagTap.isEnabled = false
         }
@@ -381,7 +382,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                 player?.automaticallyWaitsToMinimizeStalling = false
             }
             player?.actionAtItemEnd = .none
-            playerView = AVPlayerView(frame: view.bounds)
+            let frame = CGRect(x: 0,
+                               y: UIScreen.safeTopMargin(),
+                               width: view.bounds.width,
+                               height: view.bounds.width * 16 / 9)
+            playerView = AVPlayerView(frame: frame)
             playerView.backgroundColor = .black
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
