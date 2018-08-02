@@ -17,14 +17,15 @@ struct ImageInfo: Codable {
 extension URL {
     func imageView2(size: CGSize) -> URL? {
         let scale = UIScreen.main.scale
-        if absoluteString.contains("?imageView2") {
+        let isGIF = lastPathComponent.hasSuffix(".gif")
+        if absoluteString.contains("?imageView2") || isGIF {
             return self
         } else {
             if size.width <= 1 || size.height <= 1 {
                 return self
             }
-            return URL(string: absoluteString +
-                    "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))")
+            let suffix = "?imageView2/1/w/\(Int(size.width * scale))/h/\(Int(size.height * scale))"
+            return URL(string: absoluteString + suffix)
         }
     }
     

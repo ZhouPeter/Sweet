@@ -82,11 +82,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         }
         controller.onFinished = { [weak self] in
             self?.recordView?.isAvatarCircleAnamtionEnabled = true
-            if self?.isDismissable == true {
-                self?.dismiss()
-            } else {
-                self?.router.popFlow(animated: true)
-            }
+            self?.router.popFlow(animated: true)
         }
         router.setAsSecondFlow(controller)
     }

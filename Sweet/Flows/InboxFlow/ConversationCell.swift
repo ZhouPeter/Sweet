@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Kingfisher
 import SwipeCellKit
+import SDWebImage
 
 final class ConversationCell: SwipeTableViewCell, CellReusable {
     private let avatarImageView: UIImageView = {
@@ -54,8 +54,14 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
+    private var avatarURL: URL?
+    
     func updateWith(_ conversation: Conversation) {
-        avatarImageView.kf.setImage(with: URL(string: conversation.user.avatar))
+        let url = URL(string: conversation.user.avatar)
+        if avatarURL != url {
+            avatarImageView.sd_setImage(with: url)
+            avatarURL = url
+        }
         nameLabel.text = conversation.user.nickname
         contentLabel.text = conversation.lastMessage?.displayText(buddy: conversation.user)
         timeLabel.text = TimerHelper.coversationTimeText(with: conversation.date)

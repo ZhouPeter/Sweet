@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
-import Kingfisher
+import SDWebImage
 protocol StoriesView: BaseView {
     
 }
@@ -151,15 +151,10 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         collectionView.fill(in: view)
         loadRequest()
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.collectionView.reloadData()
+        collectionView.reloadData()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     func loadRequest() {
         if storyViewModels.count > 0 {
             self.collectionView.performBatchUpdates(nil, completion: { (_) in
@@ -200,26 +195,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
                 }
         }
     }
-//
-//    func loadMoreRequest() {
-//        if loadFinish { return }
-//        page += 1
-//        web.request(
-//            .storyList(page: page, userId: user.userId),
-//            responseType: Response<StoryListResponse>.self) { [weak self] (result) in
-//                guard let `self` = self else { return }
-//                switch result {
-//                case let .success(response):
-//                    self.loadFinish = response.list.count < 20
-//                    self.storyViewModels.append(contentsOf: response.list.map({ return StoryCellViewModel(model: $0)}))
-//                    self.reviewViewModels()
-//                    self.collectionView.reloadData()
-//                case let .failure(error):
-//                    logger.error(error)
-//                }
-//        }
-//    }
-    
+
     private func reviewViewModels() {
         for index in 0..<storyViewModels.count {
             if storyViewModels[index].created/1000 + 72 * 3600 < Int(Date().timeIntervalSince1970) {
@@ -279,7 +255,7 @@ extension StoriesController: UICollectionViewDataSourcePrefetching {
                 urls.append(url.videoThumbnail(size: itemSize)!)
             }
         }
-        ImagePrefetcher(urls: urls).start()
+        SDWebImagePrefetcher().prefetchURLs(urls)
     }
 }
 

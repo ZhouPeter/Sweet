@@ -10,7 +10,7 @@
 import UIKit
 import Hero
 import SwiftyUserDefaults
-import Kingfisher
+import SDWebImage
 
 extension Notification.Name {
     static let avatarFakeImageUpdate = Notification.Name(rawValue: "AvatarFakeImageUpdate")
@@ -81,7 +81,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(didPressAvatarButton), for: .touchUpInside)
-        button.kf.setImage(with: URL(string: self.user.avatar), for: .normal)
+        button.sd_setImage(with: URL(string: self.user.avatar), for: .normal)
         return button
     } ()
     
@@ -303,7 +303,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     // MARK: - Private
     
     private func updateTopicButton() {
-        if let topic = topic {
+        if let topic = topic, topic.isEmpty == false {
             topicButton.updateTopic(topic)
         } else {
             topicButton.updateTopic("添加标签", withHashTag: false)

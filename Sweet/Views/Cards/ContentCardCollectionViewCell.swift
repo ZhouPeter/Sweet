@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import SDWebImage
 protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func contentCardComment(cardId: String, emoji: Int)
@@ -35,7 +35,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return imageView
     } ()
     
-    var imageViews = [AnimatedImageView]()
+    var imageViews = [FLAnimatedImageView]()
     var imageViewContainers = [UIView]()
     var imageIcons = [UIButton]()
     lazy var emojiView: EmojiControlView = {
@@ -105,7 +105,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageIcon.titleLabel?.font = UIFont.systemFont(ofSize: 12)
             imageIcon.titleLabel?.textColor = .white
             imageIcons.append(imageIcon)
-            let imageView = AnimatedImageView()
+            let imageView = FLAnimatedImageView()
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
             imageView.tag = index
@@ -206,7 +206,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
                 container.isHidden = false
                 container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
                 let url = URL(string: image.url)?.imageView2(size: imageView.bounds.size)
-                imageView.kf.setImage(with: url, completionHandler: { (image, _, _, _) in
+                imageView.sd_setImage(with: url, completed: { (image, _, _, _) in
                     guard image != nil else { return }
                     UIView.animate(withDuration: 0.25, animations: {
                         imageView.alpha = 1

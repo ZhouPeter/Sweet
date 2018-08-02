@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import SwiftyUserDefaults
-import Kingfisher
 enum Direction: Int {
     case unknown = 0
     case down = 2

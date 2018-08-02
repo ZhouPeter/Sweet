@@ -9,9 +9,8 @@
 import UIKit
 import Gemini
 import Hero
-import Kingfisher
 import SwiftyUserDefaults
-
+import SDWebImage
 protocol StoriesPlayerGroupViewControllerDelegate: NSObjectProtocol {
     func delStory(storyId: UInt64)
     func updateStory(story: StoryCellViewModel, postion: (Int, Int))
@@ -41,17 +40,11 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     
     func pause() {
         currentPlayController?.pause()
-//        for cell in collectionView.visibleCells {
-//            storiesPlayerControllerMap[cell]?.pause()
-//        }
+
     }
     
     func play() {
         currentPlayController?.play()
-
-//        for cell in collectionView.visibleCells {
-//            storiesPlayerControllerMap[cell]?.play()
-//        }
     }
     
     weak var delegate: StoriesPlayerGroupViewControllerDelegate?
@@ -260,8 +253,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
             return urls
         }
         urlsGroup.forEach({
-            logger.debug($0)
-            ImagePrefetcher(urls: $0).start()
+            SDWebImagePrefetcher().prefetchURLs($0)
         })
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Kingfisher
+import SDWebImage
 
 extension ContentCardCollectionViewCell {
     func layout(urls: [URL]?) {
@@ -515,8 +515,6 @@ extension ContentCardCollectionViewCell {
         let imageView = imageViews[index]
         let imageIcon = imageIcons[index]
         customContent.layoutIfNeeded()
-        if !isAutoAnimating { imageView.stopAnimating() }
-        imageView.autoPlayAnimatedImage = isAutoAnimating
         url?.imageInfoSize { (info, isSuccess) in
             guard isSuccess, let info = info else { return }
             if info.format == "gif" {
@@ -532,12 +530,23 @@ extension ContentCardCollectionViewCell {
             }
         }
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
-        imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
-            guard image != nil else { return }
-            UIView.animate(withDuration: 0.25, animations: {
-                imageView.alpha = 1
-            })
-        })
+        if isAutoAnimating {
+            imageView.sd_setImage(with: url) { (image, error, _, _) in
+                guard image != nil else { return }
+                UIView.animate(withDuration: 0.25, animations: {
+                    imageView.alpha = 1
+                })
+            }
+        } else {
+            SDWebImageManager.shared().loadImage(with: url, options: [], progress: nil) { (image, data, _, _, _, _) in
+                guard image != nil else { return }
+                imageView.image = image
+                UIView.animate(withDuration: 0.25, animations: {
+                    imageView.alpha = 1
+                })
+            }
+        }
+       
     }
 }
 

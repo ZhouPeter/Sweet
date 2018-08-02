@@ -54,9 +54,7 @@ class ProfileController: BaseViewController, ProfileView {
                         let userID = UInt64(IDString),
                         newValue.userId == userID {
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.moreButton)
-                        self.navigationItem.title = "个人主页"
                     } else {
-                        self.navigationItem.title = "个人主页"
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.menuButton)
                     }
                 }
@@ -134,6 +132,7 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "个人主页"
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()

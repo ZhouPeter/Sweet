@@ -8,7 +8,6 @@
 
 import Foundation
 import MessageKit
-import Kingfisher
 
 final class ArticleMessageCell: MediaMessageCell {
     private let titleLabel: UILabel = {
@@ -45,8 +44,7 @@ final class ArticleMessageCell: MediaMessageCell {
         guard case let .custom(value) = message.kind, let content = value as? ArticleMessageContent else { return }
         titleLabel.text = content.title
         contentTextView.text = content.content
-        imageView.kf
-            .setImage(with: URL(string: content.thumbnailURL)?.imageView2(size: imageView.bounds.size))
+        imageView.sd_setImage(with: URL(string: content.thumbnailURL)?.imageView2(size: imageView.bounds.size))
         showLoading(false)
     }
     

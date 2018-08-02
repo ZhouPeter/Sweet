@@ -7,47 +7,7 @@
 //
 
 import Foundation
-import Kingfisher
-
-//extension UIImageView {
-//    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
-//        var urls = [URL]()
-//        let urlString = url.absoluteString
-//        for index in 0 ..< count {
-//            let time = 0.5 / Double(count) * Double(index + 1)
-//            let width = Int(size.width)
-//            let height = Int(size.height)
-//            let urlString = urlString + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
-//            let url = URL(string: urlString)!
-//            urls.append(url)
-//        }
-//        self.image = nil
-//        var images = [UIImage]()
-//        let queue = DispatchQueue.global()
-//        let group = DispatchGroup()
-//        urls.forEach { (url) in
-//            group.enter()
-//            queue.async {
-//                KingfisherManager.shared.retrieveImage(
-//                    with: url,
-//                    options: nil,
-//                    progressBlock: nil,
-//                    completionHandler: { (image, _, _, _) in
-//                        group.leave()
-//                        if let image = image {
-//                            images.append(image)
-//                        }
-//                })
-//            }
-//            group.notify(queue: DispatchQueue.main) {
-//                self.stopAnimating()
-//                self.animationImages = images
-//                self.animationDuration = animationDuration
-//                self.startAnimating()
-//            }
-//        }
-//    }
-//}
+import SDWebImage
 extension UIImageView {
     func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
         var urls = [URL]()
@@ -60,33 +20,10 @@ extension UIImageView {
             let url = URL(string: urlString)!
             urls.append(url)
         }
-        kf.setImage(with: urls[0])
+        sd_setImage(with: urls[0])
         self.animationDuration = animationDuration
-        for (index, url) in urls.enumerated() {
-            KingfisherManager.shared.retrieveImage(
-                with: url,
-                options: nil,
-                progressBlock: nil,
-                completionHandler: { (image, _, _, imageURL) in
-                    DispatchQueue.main.async {
-                        self.stopAnimating()
-                        if let webURL = self.kf.webURL, webURL != urls[0] {
-                            self.animationImages = nil
-                            self.layoutIfNeeded()
-                            return
-                        }
-                        guard let image = image else { return }
-                        var currentImages = self.animationImages ?? [UIImage]()
-                        while currentImages.count <= index {
-                            currentImages.append(image)
-                        }
-                        currentImages[index] = image
-                        self.animationImages = currentImages
-                        self.layoutIfNeeded()
-                        self.startAnimating()
-                    }
-            })
-        }
+        sd_setAnimationImages(with: urls)
+
     }
 }
 
