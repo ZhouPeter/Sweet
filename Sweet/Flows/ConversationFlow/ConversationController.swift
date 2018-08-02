@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageKit
-import Kingfisher
+import SDWebImage
 import STPopupPreview
 import JXPhotoBrowser
 
@@ -255,7 +255,12 @@ extension ConversationController: MessagesDataSource {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
         let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
-        avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
+        avatarView.sd_setImage(
+            with: URL(string: avatarURLString),
+            placeholderImage: #imageLiteral(resourceName: "Logo"),
+            options: SDWebImageOptions(rawValue: 0),
+            completed: nil
+        )
     }
 }
 

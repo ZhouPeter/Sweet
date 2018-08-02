@@ -59,7 +59,7 @@ final class ContentCardMessageCell: MediaMessageCell {
         super.prepareForReuse()
         label.text = nil
         imageView.image = nil
-        imageView.kf.cancelDownloadTask()
+        imageView.sd_cancelCurrentImageLoad()
         showLoading(true)
     }
 }
