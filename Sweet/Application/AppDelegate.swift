@@ -94,6 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         logger.debug(deviceTokenString)
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return WXApi.handleOpen(url, delegate: WXApiManager.shared)
+    }
+    
 }
 
 // MARK: - Privates

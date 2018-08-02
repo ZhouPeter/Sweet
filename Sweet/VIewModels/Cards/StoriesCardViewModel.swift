@@ -34,6 +34,7 @@ struct StoriesCardViewModel {
     mutating func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {
         storiesGroup[postion.0][postion.1].read = story.read
         storiesCellModels[postion.0][postion.1].isRead = story.read
+        storiesGroup[postion.0][postion.1].like = story.like
         storyCellModels = storiesCellModels.map {
             var storiesCellModel = $0
             var isRead = true

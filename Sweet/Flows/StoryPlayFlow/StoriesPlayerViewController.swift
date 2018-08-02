@@ -400,6 +400,10 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                                height: view.bounds.width * 16 / 9)
             playerView = AVPlayerView(frame: frame)
             playerView.backgroundColor = .black
+            if UIScreen.isIphoneX() {
+                playerView.layer.cornerRadius = 7
+                playerView.clipsToBounds = true
+            }
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
             playerView.isUserInteractionEnabled = false
@@ -774,7 +778,7 @@ extension StoriesPlayerViewController {
         var url: String = ""
         if storyType == .video || storyType == .poke {
             url = stories[currentIndex].videoURL!.absoluteString
-        } else if storyType == .text || storyType == .image {
+        } else if storyType == .text || storyType == .image || storyType == .share {
             url = stories[currentIndex].imageURL!.absoluteString
         } else {
             return
@@ -782,7 +786,7 @@ extension StoriesPlayerViewController {
         let content = StoryMessageContent(identifier: storyId, storyType: storyType, url: url)
         userIds.forEach {
             Messenger.shared.sendStory(content, from: from, to: $0, extra: fromCardId)
-            if like { Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId)}
+            if like { waitingIMNotifications.append(Messenger.shared.sendLike(from: from, to: $0, extra: fromCardId))  }
             if text != "" { Messenger.shared.sendText(text, from: from, to: $0, extra: fromCardId) }
             if like {
                 web.request(
@@ -790,7 +794,6 @@ extension StoriesPlayerViewController {
                     completion: { result in
                         switch result {
                         case .success:
-                            self.vibrateFeedback()
                             self.bottomButton.isEnabled = false
                             self.stories[self.currentIndex].like = true
                             self.delegate?.updateStory(story: self.stories[self.currentIndex],

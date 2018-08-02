@@ -58,4 +58,24 @@ class ModuleTableViewCell: UITableViewCell {
         moduleTitleLabel.text = text
         selectButton.isHidden = !isCanSelected
     }
+    
+    func addDateOnImage() {
+        let date = Date()
+        let timestampString = TimerHelper.timeToMonthDay(timeInterval: date.timeIntervalSince1970)
+        let attributedString = NSMutableAttributedString(string: timestampString)
+        attributedString.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)],
+                                       range: NSRange(location: 0, length: 2))
+        let monthLength = attributedString.length - 3
+        attributedString.addAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 8)],
+                                       range: NSRange(location: 3, length: monthLength))
+        let timeLabel = UILabel()
+        timeLabel.backgroundColor = .white
+        timeLabel.textAlignment = .center
+        timeLabel.layer.cornerRadius = 2
+        timeLabel.layer.masksToBounds = true
+        timeLabel.numberOfLines = 2
+        timeLabel.attributedText = attributedString
+        moduleImageView.addSubview(timeLabel)
+        timeLabel.fill(in: moduleImageView, left: 4, right: 4, top: 4, bottom: 4)
+    }
 }

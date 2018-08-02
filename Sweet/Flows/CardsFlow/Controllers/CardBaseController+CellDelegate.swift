@@ -95,6 +95,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
             let text = cards[index].makeShareText()
@@ -104,6 +105,13 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                 guard let index = self.cards.index(where: { $0.cardId == cardId }) else {fatalError()}
                 let card  = self.cards[index]
                 CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
+            }
+            controller.shareCallback = { draft in
+                let task = StoryPublishTask(storage: Storage(userID: self.user.userId), draft: draft)
+                task.finishBlock = { isSuccess in
+                    self.toast(message: isSuccess ? "分享成功" : "分享失败")
+                }
+                TaskRunner.shared.run(task)
             }
             present(controller, animated: true, completion: nil)
         }

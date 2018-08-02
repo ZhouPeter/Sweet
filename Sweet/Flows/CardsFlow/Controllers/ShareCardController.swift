@@ -17,8 +17,15 @@ enum ShareSection {
     case story(length: Int)
     case contact(length: Int)
 }
+
+extension ShareCardController: WXApiManagerDelegate {
+    func managerDidRecvMessageResponse(response: SendMessageToWXResp) {
+        toast(message: "分享成功")
+    }
+}
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
+    var shareCallback: ((_ draft: StoryDraft) -> Void)?
     private var userIds = [UInt64]() {
         didSet {
             sendButton.backgroundColor = (isShareToStory || userIds.count > 0) ?  UIColor.xpBlue() : UIColor(hex: 0xf2f2f2)
@@ -123,10 +130,12 @@ class ShareCardController: BaseViewController {
                                                selector: #selector(disMissNoti(_:)),
                                                name: .dismissShareCard,
                                                object: nil)
+        WXApiManager.shared.delegate = self
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .dismissShareCard, object: nil)
+        WXApiManager.shared.delegate = nil
     }
     
     @objc private func disMissNoti(_ noti: Notification) {
@@ -136,11 +145,12 @@ class ShareCardController: BaseViewController {
     @objc private func returnAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    private var storyPublishToken: NSKeyValueObservation?
     @objc private func sendAction(_ sender: UIButton) {
         sendCallback?(shareTextField.text!, userIds)
-        if let IDString = Defaults[.userID], let userID = UInt64(IDString), var draft = storyDraft {
+        if var draft = storyDraft, isShareToStory {
             draft.comment = shareTextField.text
-            TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: userID), draft: draft))
+            shareCallback?(draft)
         }
     }
     
@@ -288,7 +298,8 @@ extension ShareCardController: UITableViewDataSource {
         case .story:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
-            cell.update(image: #imageLiteral(resourceName: "Story"), text: "分享到小故事", isCanSelected: true)
+            cell.update(image: #imageLiteral(resourceName: "StoryCover"), text: "分享到小故事", isCanSelected: true)
+            cell.addDateOnImage()
             return cell
         case .contact:
             guard let cell = tableView.dequeueReusableCell(

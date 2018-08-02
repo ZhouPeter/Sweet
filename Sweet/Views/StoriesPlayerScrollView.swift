@@ -75,6 +75,10 @@ class StoriesPlayerScrollView: UIScrollView {
         middleImageView.contentMode = .scaleAspectFit
 //        middleImageView.clipsToBounds = true
         middleImageView.isUserInteractionEnabled = true
+        if UIScreen.isIphoneX() {
+            middleImageView.layer.cornerRadius = 7
+            middleImageView.clipsToBounds = true
+        }
         addSubview(middleImageView)
     }
 }

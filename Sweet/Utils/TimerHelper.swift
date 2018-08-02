@@ -153,17 +153,6 @@ class TimerHelper {
             return "\(month)月\(day)日"
         }
     }
-    class func placeholderHourZero(hour: String) -> String {
-        if hour.count == 1 {
-            if hour == "0" {
-                return hour
-            } else {
-                return "0\(hour)"
-            }
-        } else {
-            return hour
-        }
-    }
     
     class func placeholderMinuteZero(minute: String) -> String {
         if minute.count == 1 {
@@ -174,11 +163,11 @@ class TimerHelper {
     }
     class func hourTo12h(hour: Int) -> String {
         if hour == 12 {
-            return "下午 \(placeholderHourZero(hour: "\(hour)"))"
+            return "下午 \(hour)"
         } else if hour > 12 {
-            return "下午 \(placeholderHourZero(hour: "\(hour - 12)"))"
+            return "下午 \(hour - 12)"
         } else {
-            return "上午 \(placeholderHourZero(hour: "\(hour)"))"
+            return "上午 \(hour)"
         }
     }
     

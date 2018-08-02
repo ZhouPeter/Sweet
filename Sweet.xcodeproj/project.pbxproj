@@ -52,6 +52,14 @@
 		5803C1282099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
 		5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
 		5803C12A2099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */; };
+		5808D3F22111F76300821A2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
+		5808D3F32111F76300821A2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
+		5808D3F42111F76400821A2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
+		5808D3F52111F76500821A2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
+		5808D3F72112DD6700821A2C /* WXApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5808D3F62112DD6700821A2C /* WXApiManager.swift */; };
+		5808D3F82112DD6700821A2C /* WXApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5808D3F62112DD6700821A2C /* WXApiManager.swift */; };
+		5808D3F92112DD6700821A2C /* WXApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5808D3F62112DD6700821A2C /* WXApiManager.swift */; };
+		5808D3FA2112DD6700821A2C /* WXApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5808D3F62112DD6700821A2C /* WXApiManager.swift */; };
 		580907BA20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
 		580907BB20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
 		580907BC20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */; };
@@ -128,8 +136,6 @@
 		5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
 		5833DD2C20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
 		5833DD2D20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5833DD2920EF6027009AE471 /* SweetPlayerCellControlView.swift */; };
-		5834FDB820F351F7009E6B82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
-		5834FDBB20F351F7009E6B82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		583BC77920CE198900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
 		583BC77C20CE1A1800C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
 		583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583BC77820CE198900C4494E /* MessageContentHelper.swift */; };
@@ -1085,12 +1091,10 @@
 		AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
 		AC9EF78A208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
 		AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */; };
-		ACA322F52087410200BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
 		ACA323032087410200BDC92E /* SweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323022087410200BDC92E /* SweetTests.swift */; };
 		ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3230D2087410200BDC92E /* SweetUITests.swift */; };
 		ACA323212087411B00BDC92E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F62087410200BDC92E /* LaunchScreen.storyboard */; };
-		ACA323222087411B00BDC92E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA322F42087410200BDC92E /* Assets.xcassets */; };
 		ACA3234A2087497900BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323492087497900BDC92E /* AppDelegate.swift */; };
 		ACA3234B2087497900BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323492087497900BDC92E /* AppDelegate.swift */; };
 		ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323492087497900BDC92E /* AppDelegate.swift */; };
@@ -1468,6 +1472,7 @@
 		5803575220AAFBC200B2C94F /* StoriesCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesCardViewModel.swift; sourceTree = "<group>"; };
 		5803C1212099CAD3007C3D1C /* UpdateUniversityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUniversityController.swift; sourceTree = "<group>"; };
 		5803C1262099CBFB007C3D1C /* UpdateCollegeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCollegeController.swift; sourceTree = "<group>"; };
+		5808D3F62112DD6700821A2C /* WXApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WXApiManager.swift; sourceTree = "<group>"; };
 		580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumberPageControlPlugin.swift; sourceTree = "<group>"; };
 		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
 		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
@@ -2513,6 +2518,7 @@
 				ACA3234E2087498900BDC92E /* ApplicationCoordinator.swift */,
 				ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */,
 				AC744E552109AD1900E6D131 /* DebugWindow.swift */,
+				5808D3F62112DD6700821A2C /* WXApiManager.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -2947,8 +2953,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5808D3F22111F76300821A2C /* Assets.xcassets in Resources */,
 				ACA322F82087410200BDC92E /* LaunchScreen.storyboard in Resources */,
-				ACA322F52087410200BDC92E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2956,7 +2962,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5834FDB820F351F7009E6B82 /* Assets.xcassets in Resources */,
+				5808D3F42111F76400821A2C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2964,7 +2970,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5834FDBB20F351F7009E6B82 /* Assets.xcassets in Resources */,
+				5808D3F52111F76500821A2C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2972,8 +2978,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5808D3F32111F76300821A2C /* Assets.xcassets in Resources */,
 				ACA323212087411B00BDC92E /* LaunchScreen.storyboard in Resources */,
-				ACA323222087411B00BDC92E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3420,6 +3426,7 @@
 				58BD529B20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				AC557CA320B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58BD53542090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
+				5808D3F72112DD6700821A2C /* WXApiManager.swift in Sources */,
 				5866330920BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				5863A83A20ABCE6F0016B089 /* StoryUvList.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
@@ -3916,6 +3923,7 @@
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
+				5808D3F92112DD6700821A2C /* WXApiManager.swift in Sources */,
 				584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
@@ -4247,6 +4255,7 @@
 				58CE1EBA20A422D800781EBF /* SearchContactResponse.swift in Sources */,
 				ACF29FF520ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				AC52FDC920F7278D00267913 /* ImageMessageContent.swift in Sources */,
+				5808D3FA2112DD6700821A2C /* WXApiManager.swift in Sources */,
 				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				AC6A0BC4210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
@@ -4427,6 +4436,7 @@
 				58BD52D82089BFE000F7C3E1 /* String+Length.swift in Sources */,
 				58BD529C20885D7000F7C3E1 /* SignUpUniversityController.swift in Sources */,
 				AC557CA420B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
+				5808D3F82112DD6700821A2C /* WXApiManager.swift in Sources */,
 				5866330A20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,

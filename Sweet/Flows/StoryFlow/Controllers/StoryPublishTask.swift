@@ -13,7 +13,7 @@ class StoryPublishTask: AsynchronousOperation {
     private let storage: Storage
     private let generator = StoryGenerator()
     private var filter: LookupFilter?
-    
+    var finishBlock: ((Bool) -> Void)?
     init(storage: Storage, draft: StoryDraft) {
         self.draft = draft
         self.storage = storage
@@ -31,13 +31,16 @@ class StoryPublishTask: AsynchronousOperation {
         
         generate { [weak self] in
             guard let `self` = self else { return }
+            var isSuccess = false
             self.publish(completion: { (result) in
                 self.storage.write({ (realm) in
                     guard result else { return }
                     if let data = realm.object(ofType: StoryDraftData.self, forPrimaryKey: self.draft.filename) {
                         realm.delete(data)
+                        isSuccess = true
                     }
                 }) { (_) in
+                    self.finishBlock?(isSuccess)
                     self.state = .finished
                 }
             })

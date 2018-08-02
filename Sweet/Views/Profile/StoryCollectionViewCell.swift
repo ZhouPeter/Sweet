@@ -13,7 +13,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(white: 0.15, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 14)
         label.backgroundColor = .white
         label.textAlignment = .center
         label.layer.cornerRadius = 2
