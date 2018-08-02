@@ -303,7 +303,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     // MARK: - Private
     
     private func updateTopicButton() {
-        if let topic = topic {
+        if let topic = topic, topic.isEmpty == false {
             topicButton.updateTopic(topic)
         } else {
             topicButton.updateTopic("添加标签", withHashTag: false)
