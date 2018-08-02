@@ -30,6 +30,7 @@ target 'Sweet' do
   pod 'JDStatusBarNotification'
   pod 'ReachabilitySwift'
   pod 'KingfisherWebP'
+  pod 'SDWebImage', '~> 4.0'
   target 'Sweet Dev' do
   end
   

@@ -59,6 +59,9 @@ PODS:
     - Realm (= 3.7.4)
   - Result (3.2.4)
   - Reveal-SDK (15)
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
   - STPopup (1.8.3)
   - STPopupPreview (1.0.3):
     - STPopup (~> 1.7)
@@ -91,6 +94,7 @@ DEPENDENCIES:
   - ReachabilitySwift
   - RealmSwift
   - Reveal-SDK
+  - SDWebImage (~> 4.0)
   - STPopupPreview
   - SwiftProtobuf
   - SwiftyUserDefaults
@@ -123,6 +127,7 @@ SPEC REPOS:
     - RealmSwift
     - Result
     - Reveal-SDK
+    - SDWebImage
     - STPopup
     - STPopupPreview
     - SwiftProtobuf
@@ -174,6 +179,7 @@ SPEC CHECKSUMS:
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Reveal-SDK: 25e21896c478b60b948f876043f91570d368d23d
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   STPopup: da1167250a01584af7bcccb898653185f223ec46
   STPopupPreview: b337976411c4bc3324731f9d6cd056ac8f8b421c
   SwiftProtobuf: 5ccc0e4054e37c75800e5744acb2aa80bb72b39c
@@ -186,6 +192,6 @@ SPEC CHECKSUMS:
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: ac4742a88aa1dad66fd842e32ede3009ac004acd
+PODFILE CHECKSUM: 257cf32d15fa1ecd035898e6135fec2589c78e76
 
 COCOAPODS: 1.5.3
