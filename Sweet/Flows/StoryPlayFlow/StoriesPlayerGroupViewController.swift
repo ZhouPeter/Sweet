@@ -264,7 +264,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
             }
             .flatMap({ $0 })
         logger.debug(indexPaths.count, prefetchURLs.count)
-        SDWebImagePrefetcher.shared().prefetchURLs(prefetchURLs)
+        SDWebImagePrefetcher.shared.prefetchURLs(prefetchURLs)
     }
 }
 
