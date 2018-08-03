@@ -109,7 +109,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
             controller.shareCallback = { draft in
                 let task = StoryPublishTask(storage: Storage(userID: self.user.userId), draft: draft)
                 task.finishBlock = { isSuccess in
-                    self.toast(message: isSuccess ? "分享成功" : "分享失败")
+                    JDStatusBarNotification.show(withStatus: isSuccess ? "转发成功" : "转发失败", dismissAfter: 2)
                 }
                 TaskRunner.shared.run(task)
             }

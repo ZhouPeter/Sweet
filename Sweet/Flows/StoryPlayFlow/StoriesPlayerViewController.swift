@@ -394,20 +394,23 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                 player?.automaticallyWaitsToMinimizeStalling = false
             }
             player?.actionAtItemEnd = .none
-            let frame = CGRect(x: 0,
-                               y: UIScreen.safeTopMargin(),
-                               width: view.bounds.width,
-                               height: view.bounds.width * 16 / 9)
-            playerView = AVPlayerView(frame: frame)
-            playerView.backgroundColor = .black
-            if UIScreen.isIphoneX() {
-                playerView.layer.cornerRadius = 7
-                playerView.clipsToBounds = true
+            if playerView == nil {
+                let frame = CGRect(x: 0,
+                                   y: UIScreen.safeTopMargin(),
+                                   width: view.bounds.width,
+                                   height: view.bounds.width * 16 / 9)
+                playerView = AVPlayerView(frame: frame)
+                playerView.backgroundColor = .black
+                if UIScreen.isIphoneX() {
+                    playerView.layer.cornerRadius = 7
+                    playerView.clipsToBounds = true
+                }
+                playerView.isUserInteractionEnabled = false
+                view.insertSubview(playerView, belowSubview: pokeView)
             }
+            playerView.isHidden = false
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
-            playerView.isUserInteractionEnabled = false
-            view.insertSubview(playerView, belowSubview: pokeView)
             addVideoObservers()
             addKVOObservers()
         }
@@ -429,10 +432,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             player?.currentItem?.cancelPendingSeeks()
             player?.currentItem?.asset.cancelLoading()
             player?.replaceCurrentItem(with: nil)
-            playerView.removeFromSuperview()
+//            playerView.removeFromSuperview()
             playerItem = nil
-            playerView = nil
+//            playerView = nil
             player = nil
+            playerView.isHidden = true
         } else {
             imageReset()
         }

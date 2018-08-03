@@ -143,14 +143,12 @@ extension CardsManagerController: MessengerDelegate {
                 JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论成功")
-//                JDStatusBarNotification.show(withStatus: "消息发送成功", dismissAfter: 2)
             }
         } else {
             if messageType == .card {
                 JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论失败")
-//                JDStatusBarNotification.show(withStatus: "消息发送失败", dismissAfter: 2)
             }
         }
         waitingIMNotifications.remove(at: messageIndex)
