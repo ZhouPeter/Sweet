@@ -239,22 +239,21 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
 
 extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let urlsGroup = indexPaths.compactMap { (indexPath) -> [URL]? in
-            let stories = storiesGroup[indexPath.row]
-            let urls = stories.compactMap { (story) -> URL? in
-                if story.type == .video || story.type == .poke, let videoURL = story.videoURL {
-                    return videoURL.videoThumbnail()
-                } else if let imageURL = story.imageURL {
-                    return imageURL.imageView2(size: view.bounds.size)
-                } else {
+        let prefetchURLs = indexPaths
+            .compactMap { (indexPath) -> [URL]? in
+                return storiesGroup[indexPath.row].compactMap { (story) -> URL? in
+                    if let imageURL = story.imageURL {
+                        return imageURL.imageView2(size: view.bounds.size)
+                    }
+                    if let videoURL = story.videoURL, story.type == .video || story.type == .poke {
+                        return videoURL.videoThumbnail()
+                    }
                     return nil
                 }
             }
-            return urls
-        }
-        urlsGroup.forEach({
-            SDWebImagePrefetcher().prefetchURLs($0)
-        })
+            .flatMap({ $0 })
+        logger.debug(indexPaths.count, prefetchURLs.count)
+        SDWebImagePrefetcher.shared().prefetchURLs(prefetchURLs)
     }
 }
 
@@ -265,6 +264,7 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        logger.debug(indexPath.row)
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "placeholderCell",
             for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}
