@@ -12,12 +12,14 @@ import SwiftyUserDefaults
 import Alamofire
 import VIMediaCache
 import Hero
+import JDStatusBarNotification
 protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     func playToBack()
     func playToNext()
     func dismissController()
     func delStory(storyId: UInt64)
     func updateStory(story: StoryCellViewModel, position: (Int, Int))
+    func changeStatusBarHidden(isHidden: Bool, becomeAfter: Double)
 }
 
 extension StoriesPlayerViewControllerDelegate{
@@ -26,6 +28,8 @@ extension StoriesPlayerViewControllerDelegate{
     func dismissController() {}
     func delStory(storyId: UInt64) {}
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {}
+    func changeStatusBarHidden(isHidden: Bool, becomeAfter: Double) {}
+
 }
 
 class AVPlayerView: UIView {
@@ -52,7 +56,9 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             if stories.count == 0 {
                 delegate?.dismissController()
             } else {
-                self.isSelf = stories[0].userId == UInt64(Defaults[.userID] ?? "0")
+                if let IDString = Defaults[.userID], let userID = UInt64(IDString) {
+                    self.isSelf = stories[0].userId == userID
+                }
             }
         }
     }
@@ -234,7 +240,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
 
     }
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     
     private func setGesture() {
@@ -394,20 +400,23 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                 player?.automaticallyWaitsToMinimizeStalling = false
             }
             player?.actionAtItemEnd = .none
-            let frame = CGRect(x: 0,
-                               y: UIScreen.safeTopMargin(),
-                               width: view.bounds.width,
-                               height: view.bounds.width * 16 / 9)
-            playerView = AVPlayerView(frame: frame)
-            playerView.backgroundColor = .black
-            if UIScreen.isIphoneX() {
-                playerView.layer.cornerRadius = 7
-                playerView.clipsToBounds = true
+            if playerView == nil {
+                let frame = CGRect(x: 0,
+                                   y: UIScreen.safeTopMargin(),
+                                   width: view.bounds.width,
+                                   height: view.bounds.width * 16 / 9)
+                playerView = AVPlayerView(frame: frame)
+                playerView.backgroundColor = .black
+                if UIScreen.isIphoneX() {
+                    playerView.layer.cornerRadius = 7
+                    playerView.clipsToBounds = true
+                }
+                playerView.isUserInteractionEnabled = false
+                view.insertSubview(playerView, belowSubview: pokeView)
             }
+            playerView.isHidden = false
             view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
-            playerView.isUserInteractionEnabled = false
-            view.insertSubview(playerView, belowSubview: pokeView)
             addVideoObservers()
             addKVOObservers()
         }
@@ -429,10 +438,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             player?.currentItem?.cancelPendingSeeks()
             player?.currentItem?.asset.cancelLoading()
             player?.replaceCurrentItem(with: nil)
-            playerView.removeFromSuperview()
+//            playerView.removeFromSuperview()
             playerItem = nil
-            playerView = nil
+//            playerView = nil
             player = nil
+            playerView.isHidden = true
         } else {
             imageReset()
         }
@@ -705,9 +715,25 @@ extension StoriesPlayerViewController {
                     style: .default,
                     handler: { (_) in
                         if response.subscription {
-                            web.request(.delUserSubscription(userId: userId), completion: { (_) in })
+                            web.request(.delUserSubscription(userId: userId), completion: { (result) in
+                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
+                                switch result {
+                                case .success:
+                                    JDStatusBarNotification.show(withStatus: "取消订阅成功", dismissAfter: 2)
+                                case .failure:
+                                    JDStatusBarNotification.show(withStatus: "取消订阅失败，请稍后重试。", dismissAfter: 2)
+                                }
+                            })
                         } else {
-                            web.request(.addUserSubscription(userId: userId), completion: { (_) in })
+                            web.request(.addUserSubscription(userId: userId), completion: { (result) in
+                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
+                                switch result {
+                                case .success:
+                                    JDStatusBarNotification.show(withStatus: "订阅成功", dismissAfter: 2)
+                                case .failure:
+                                    JDStatusBarNotification.show(withStatus: "订阅失败，请稍后重试。", dismissAfter: 2)
+                                }
+                            })
                         }
                 }))
                 let blockAction = UIAlertAction.makeAlertAction(
@@ -715,14 +741,38 @@ extension StoriesPlayerViewController {
                     style: .default,
                     handler: { (_) in
                         if response.block {
-                            web.request(.delBlock(userId: userId), completion: { (_) in })
+                            web.request(.delBlock(userId: userId), completion: { (result) in
+                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
+                                switch result {
+                                case .success:
+                                    JDStatusBarNotification.show(withStatus: "取消屏蔽成功", dismissAfter: 2)
+                                case .failure:
+                                    JDStatusBarNotification.show(withStatus: "取消屏蔽失败，请稍后重试。", dismissAfter: 2)
+                                }
+                            })
                         } else {
-                            web.request(.addBlock(userId: userId), completion: { (_) in })
+                            web.request(.addBlock(userId: userId), completion: { (result) in
+                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
+                                switch result {
+                                case .success:
+                                    JDStatusBarNotification.show(withStatus: "屏蔽成功", dismissAfter: 2)
+                                case .failure:
+                                    JDStatusBarNotification.show(withStatus: "屏蔽失败，请稍后重试。", dismissAfter: 2)
+                                }
+                            })
                         }
                 })
                 alertController.addAction(blockAction)
                 let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .default, handler: { (_) in
-                    web.request(.reportStory(storyId: storyId), completion: { (_) in })
+                    web.request(.reportStory(storyId: storyId), completion: { (result) in
+                        self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
+                        switch result {
+                        case .success:
+                            JDStatusBarNotification.show(withStatus: "投诉成功", dismissAfter: 2)
+                        case .failure:
+                            JDStatusBarNotification.show(withStatus: "投诉失败，请稍后重试。", dismissAfter: 2)
+                        }
+                    })
                 })
                 alertController.addAction(reportAction)
                 alertController.addAction(

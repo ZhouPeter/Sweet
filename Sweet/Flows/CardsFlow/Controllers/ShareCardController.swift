@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyUserDefaults
+import JDStatusBarNotification
 extension Notification.Name {
     static let dismissShareCard = Notification.Name(rawValue: "dismissShareCard")
 
@@ -20,7 +21,7 @@ enum ShareSection {
 
 extension ShareCardController: WXApiManagerDelegate {
     func managerDidRecvMessageResponse(response: SendMessageToWXResp) {
-        toast(message: "分享成功")
+        JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
     }
 }
 class ShareCardController: BaseViewController {
@@ -293,12 +294,12 @@ extension ShareCardController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
             cell.accessoryType = .disclosureIndicator
-            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "分享到微信好友")
+            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "转发到微信好友")
             return cell
         case .story:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
-            cell.update(image: #imageLiteral(resourceName: "StoryCover"), text: "分享到小故事", isCanSelected: true)
+            cell.update(image: #imageLiteral(resourceName: "StoryCover"), text: "转发到小故事", isCanSelected: true)
             cell.addDateOnImage()
             return cell
         case .contact:

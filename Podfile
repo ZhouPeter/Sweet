@@ -30,9 +30,11 @@ target 'Sweet' do
   pod 'JDStatusBarNotification'
   pod 'ReachabilitySwift'
   pod 'KingfisherWebP'
-  pod 'SDWebImage', '~> 4.0'
-  pod 'SDWebImage/WebP'
-  pod 'SDWebImage/GIF'
+#  pod 'SDWebImage'
+#  pod 'SDWebImage/WebP'
+#  pod 'SDWebImage/GIF'
+  pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
+  pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   target 'Sweet Dev' do
   end
   

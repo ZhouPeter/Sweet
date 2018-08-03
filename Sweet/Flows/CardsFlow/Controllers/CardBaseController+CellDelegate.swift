@@ -109,7 +109,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
             controller.shareCallback = { draft in
                 let task = StoryPublishTask(storage: Storage(userID: self.user.userId), draft: draft)
                 task.finishBlock = { isSuccess in
-                    self.toast(message: isSuccess ? "分享成功" : "分享失败")
+                    JDStatusBarNotification.show(withStatus: isSuccess ? "转发成功" : "转发失败", dismissAfter: 2)
                 }
                 TaskRunner.shared.run(task)
             }
@@ -242,14 +242,16 @@ extension CardsBaseController {
         let imageURLs = configurator.viewModel.imageURLList!
         if  imageIcon.titleLabel?.text == "GIF", imageIcon.isHidden == false {
             let imageView = cell.imageViews[originPageIndex]
-            imageView.sd_setImage(with: imageURLs[originPageIndex])
             imageIcon.isHidden = true
+            imageView.sd_setImage(with: imageURLs[originPageIndex])
         }
         let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
                                           highImageViewURLs: imageURLs,
                                           shareText: shareText)
-        let browser = CustomPhotoBrowser(delegate: photoBrowserImp, originPageIndex: originPageIndex)
+        let browser = CustomPhotoBrowser(delegate: photoBrowserImp,
+                                         photoLoader: SDWebImagePhotoLoader(),
+                                         originPageIndex: originPageIndex)
         browser.animationType = .scale
         browser.plugins.append(CustomNumberPageControlPlugin())
         browser.plugins.append(CustomChangeBrowerPlugin(card: cards[index]))

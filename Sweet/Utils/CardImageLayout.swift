@@ -530,23 +530,36 @@ extension ContentCardCollectionViewCell {
             }
         }
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
-        if isAutoAnimating {
-            imageView.sd_setImage(with: url) { (image, error, _, _) in
-                guard image != nil else { return }
+        SDWebImageManager.shared.loadImage(
+               with: url,
+               options: [],
+               progress: nil) { (image, data, _, _, _, _) in
+                guard let image = image else { return }
+                if isAutoAnimating {
+                    imageView.image = image
+                } else {
+                    if let images = image.images {
+                        imageView.image = nil
+                        imageView.image = images[0]
+                    } else {
+                        imageView.image = image
+                    }
+                }
                 UIView.animate(withDuration: 0.25, animations: {
                     imageView.alpha = 1
                 })
-            }
-        } else {
-            SDWebImageManager.shared().loadImage(with: url, options: [], progress: nil) { (image, data, _, _, _, _) in
-                guard image != nil else { return }
-                imageView.image = image
-                UIView.animate(withDuration: 0.25, animations: {
-                    imageView.alpha = 1
-                })
-            }
         }
-       
+//        imageView.sd_setImage(with: url) { (image, _, _, _) in
+//            guard let image = image else { return }
+//            if isAutoAnimating == false {
+//                if let animateImage = image.images {
+//                    imageView.image = animateImage[0]
+//                }
+//            }
+//            UIView.animate(withDuration: 0.25, animations: {
+//                imageView.alpha = 1
+//            })
+//        }
     }
 }
 

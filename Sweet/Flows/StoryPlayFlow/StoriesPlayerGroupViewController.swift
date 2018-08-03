@@ -56,6 +56,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     var fromMessageId: String?
     static private var loctionMap = [String: Int]()
     private var isLoading = false
+    private var statusBarHidden = true
     private var contentOffset: CGPoint?
     private lazy var collectionView: GeminiCollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -174,7 +175,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return statusBarHidden
     }
     
     private func getChildViewController(cell: UICollectionViewCell) -> StoriesPlayerViewController {
@@ -212,6 +213,16 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
 }
 // MARK: - StoriesPlayerViewControllerDelegate
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
+    
+    func changeStatusBarHidden(isHidden: Bool, becomeAfter: Double) {
+        let oldStatusBarHidden = statusBarHidden
+        statusBarHidden = isHidden
+        setNeedsStatusBarAppearanceUpdate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + becomeAfter, execute: {
+            self.statusBarHidden = oldStatusBarHidden
+            self.setNeedsStatusBarAppearanceUpdate()
+        })
+    }
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
         storiesGroup[position.0][position.1] = story
         delegate?.updateStory(story: story, postion: position)
