@@ -11,8 +11,8 @@ import JXPhotoBrowser
 import PKHUD
 import SwiftyUserDefaults
 import Photos
-import Kingfisher
 import MobileCoreServices
+import SDWebImage
 class CustomPhotoBrowser: PhotoBrowser {
     private var backButton: UIButton = {
         let button = UIButton()
@@ -96,8 +96,9 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
 extension PhotoBrowserImp {
     func saveImage(url: String) {
         PHPhotoLibrary.shared().performChanges({
-            let  fileURL = URL(fileURLWithPath:
-                KingfisherManager.shared.cache.cachePath(forKey: url, processorIdentifier: "com.yeatse.WebPProcessor"))
+            let cacheKey = SDWebImageManager.shared.cacheKey(for: URL(string: url))
+            guard let cachePath = SDImageCache.shared.cachePath(forKey: cacheKey) else { return }
+            let fileURL = URL(fileURLWithPath: cachePath)
             let fileManager = FileManager.default
             guard fileManager.fileExists(atPath: fileURL.path) else { return }
             guard let data = try? Data(contentsOf: fileURL) else { return }

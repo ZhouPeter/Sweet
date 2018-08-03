@@ -35,7 +35,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         return imageView
     } ()
     
-    var imageViews = [FLAnimatedImageView]()
+    var imageViews = [SDAnimatedImageView]()
     var imageViewContainers = [UIView]()
     var imageIcons = [UIButton]()
     lazy var emojiView: EmojiControlView = {
@@ -105,7 +105,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             imageIcon.titleLabel?.font = UIFont.systemFont(ofSize: 12)
             imageIcon.titleLabel?.textColor = .white
             imageIcons.append(imageIcon)
-            let imageView = FLAnimatedImageView()
+            let imageView = SDAnimatedImageView()
             imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFill
             imageView.tag = index
