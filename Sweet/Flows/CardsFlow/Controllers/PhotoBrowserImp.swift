@@ -46,6 +46,7 @@ class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
     }
 
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {
+        thumbnaiImageViews[index].startAnimating()
         return thumbnaiImageViews[index]
     }
     

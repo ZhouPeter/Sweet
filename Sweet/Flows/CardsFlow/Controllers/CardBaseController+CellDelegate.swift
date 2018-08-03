@@ -239,12 +239,12 @@ extension CardsBaseController {
         guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
             as? ContentCardCollectionViewCell else { return  }
         let imageIcon = cell.imageIcons[originPageIndex]
+        let imageURLs = configurator.viewModel.imageURLList!
         if  imageIcon.titleLabel?.text == "GIF", imageIcon.isHidden == false {
             let imageView = cell.imageViews[originPageIndex]
-            imageView.startAnimating()
             imageIcon.isHidden = true
+            imageView.sd_setImage(with: imageURLs[originPageIndex])
         }
-        let imageURLs = configurator.viewModel.imageURLList!
         let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
                                           highImageViewURLs: imageURLs,
