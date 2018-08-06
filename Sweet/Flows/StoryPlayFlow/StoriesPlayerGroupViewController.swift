@@ -263,7 +263,6 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSourcePrefetchin
                 }
             }
             .flatMap({ $0 })
-        logger.debug(indexPaths.count, prefetchURLs.count)
         SDWebImagePrefetcher.shared.prefetchURLs(prefetchURLs)
     }
 }
@@ -275,7 +274,6 @@ extension StoriesPlayerGroupViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        logger.debug(indexPath.row)
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "placeholderCell",
             for: indexPath) as? StoryPlayCollectionViewCell else {fatalError()}

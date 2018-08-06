@@ -83,6 +83,10 @@ struct CardResponse: Codable {
     
     func makeStoryDraft() -> StoryDraft? {
         if cardEnumType == .content {
+            var text = ""
+            if let content = content, let result = try? content.htmlStringReplaceTag().removedURLLinks() {
+                text = result
+            }
             if let video = video {
                 let asset = AVURLAsset(url: URL(string: video)!)
                 let assetGen =  AVAssetImageGenerator(asset: asset)
@@ -91,14 +95,14 @@ struct CardResponse: Codable {
                 var actualTime = CMTimeMake(0,0)
                 do {
                     let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
-                    
+                    let text = (try content?.htmlStringReplaceTag()) ?? ""
                     let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
                     guard let url = image.writeToCache(withAlpha: false) else { return nil }
                     let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                                 storyType: .share,
                                                 date: Date(),
                                                 comment: nil,
-                                                desc: String(content!.htmlStringReplaceTag()!.prefix(100)),
+                                                desc: String(text.prefix(100)),
                                                 url: self.url)
                     return storyDraft
                 } catch {
@@ -118,7 +122,7 @@ struct CardResponse: Codable {
                                             storyType: .share,
                                             date: Date(),
                                             comment: nil,
-                                            desc: String(content!.htmlStringReplaceTag()!.prefix(100)),
+                                            desc: String(text.prefix(100)),
                                             url: self.url)
                 return storyDraft
             } else {

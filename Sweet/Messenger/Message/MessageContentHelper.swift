@@ -11,50 +11,56 @@ import Foundation
 class MessageContentHelper {
     
     class func getContentCardContent(resultCard: CardResponse) -> MessageContent? {
+        var text = ""
+        if let content = resultCard.content, let result = try? content.htmlStringReplaceTag() {
+            text = result
+        }
         if resultCard.cardEnumType == .content {
-            let url: String
             if let videoUrl = resultCard.video {
-                url = videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667"
-                let content = ContentCardContent(identifier: resultCard.cardId,
-                                                 cardType: InstantMessage.CardType.content,
-                                                 text: resultCard.content!.htmlStringReplaceTag()!,
-                                                 imageURLString: url,
-                                                 url: resultCard.url!)
-                return content
+                return ContentCardContent(
+                    identifier: resultCard.cardId,
+                    cardType: InstantMessage.CardType.content,
+                    text: text,
+                    imageURLString: videoUrl + "?vframe/jpg/offset/0.0/w/375/h/667",
+                    url: resultCard.url!
+                )
             } else if let imageURL = resultCard.contentImages?.first?.first?.url {
-                url = imageURL
-                let content = ContentCardContent(identifier: resultCard.cardId,
-                                                 cardType: InstantMessage.CardType.content,
-                                                 text: resultCard.content!.htmlStringReplaceTag()!,
-                                                 imageURLString: url,
-                                                 url: resultCard.url!)
-                return content
+                return ContentCardContent(
+                    identifier: resultCard.cardId,
+                    cardType: InstantMessage.CardType.content,
+                    text: text,
+                    imageURLString: imageURL,
+                    url: resultCard.url!
+                )
             } else if let thumbnailUrl = resultCard.thumbnail {
-                let content = ArticleMessageContent(identifier: resultCard.cardId,
-                                                    thumbnailURL: thumbnailUrl,
-                                                    title: resultCard.title!,
-                                                    content: String(resultCard.content!.htmlStringReplaceTag()!.prefix(200)),
-                                                    articleURL: resultCard.url!)
-                return content
+                return ArticleMessageContent(
+                    identifier: resultCard.cardId,
+                    thumbnailURL: thumbnailUrl,
+                    title: resultCard.title!,
+                    content: String(text.prefix(200)),
+                    articleURL: resultCard.url!
+                )
             }
         } else if resultCard.cardEnumType == .choice {
             let result = resultCard.result == nil ? -1 : resultCard.result!.index!
-            let content = OptionCardContent(identifier: resultCard.cardId,
-                                            cardType: InstantMessage.CardType.preference,
-                                            text: resultCard.content!.htmlStringReplaceTag()!,
-                                            leftImageURLString: resultCard.imageList![0],
-                                            rightImageURLString: resultCard.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            return content
+            return OptionCardContent(
+                identifier: resultCard.cardId,
+                cardType: InstantMessage.CardType.preference,
+                text: text,
+                leftImageURLString: resultCard.imageList![0],
+                rightImageURLString: resultCard.imageList![1],
+                result: OptionCardContent.Result(rawValue: result)!
+            )
         } else if resultCard.cardEnumType == .evaluation {
             let result = resultCard.result == nil ? -1 : resultCard.result!.index!
-            let content = OptionCardContent(identifier: resultCard.cardId,
-                                            cardType: InstantMessage.CardType.evaluation,
-                                            text: resultCard.content!.htmlStringReplaceTag()!,
-                                            leftImageURLString: resultCard.imageList![0],
-                                            rightImageURLString: resultCard.imageList![1],
-                                            result: OptionCardContent.Result(rawValue: result)!)
-            return content
+            return OptionCardContent(
+                identifier: resultCard.cardId,
+                cardType: InstantMessage.CardType.evaluation,
+                text: text,
+                leftImageURLString: resultCard.imageList![0],
+                rightImageURLString: resultCard.imageList![1],
+                result: OptionCardContent.Result(rawValue: result)!
+            )
         }
         return nil
     }

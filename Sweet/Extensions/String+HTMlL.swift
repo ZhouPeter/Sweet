@@ -37,7 +37,7 @@ extension String {
     static func getShareText(content: String?, url: String?) -> String? {
         let text: String?
         if let content = content, let url = url {
-            if let string = content.htmlStringReplaceTag() {
+            if let string = try? content.htmlStringReplaceTag() {
                 let substring = string.prefix(50)
                 text = substring + url + "\n" + "\n"
                     + "讲真APP，你的同学都在玩：" + "\n"
@@ -51,36 +51,45 @@ extension String {
         return text
     }
     
-    func htmlStringReplaceTag() -> String? {
-        do {
-            let imgRegular = try NSRegularExpression(pattern: "<img[^>]*>", options: [])
-            let spritImgRegular = try NSRegularExpression(pattern: "</img[^>]*>", options: [])
-            let brRegular = try NSRegularExpression(pattern: "<br[^>]*>", options: [])
-            let spritBrRegular = try NSRegularExpression(pattern: "</br[^>]*>", options: [])
-            var string = self
-            string = imgRegular.stringByReplacingMatches(
-                in: string,
-                options: .reportProgress,
-                range: NSRange(location: 0, length: string.utf16.count),
-                withTemplate: "")
-            string = spritImgRegular.stringByReplacingMatches(
-                in: string,
-                options: .reportProgress,
-                range: NSRange(location: 0, length: string.utf16.count),
-                withTemplate: "")
-            string = brRegular.stringByReplacingMatches(
-                in: string,
-                options: .reportProgress,
-                range: NSRange(location: 0, length: string.utf16.count),
-                withTemplate: "\n")
-            string = spritBrRegular.stringByReplacingMatches(
-                in: string,
-                options: .reportProgress,
-                range: NSRange(location: 0, length: string.utf16.count),
-                withTemplate: "")
-            return string
-        } catch {
-            return nil
-        }
+    func htmlStringReplaceTag() throws -> String {
+        let imgRegular = try NSRegularExpression(pattern: "<img[^>]*>", options: [])
+        let spritImgRegular = try NSRegularExpression(pattern: "</img[^>]*>", options: [])
+        let brRegular = try NSRegularExpression(pattern: "<br[^>]*>", options: [])
+        let spritBrRegular = try NSRegularExpression(pattern: "</br[^>]*>", options: [])
+        var string = self
+        string = imgRegular.stringByReplacingMatches(
+            in: string,
+            options: .reportProgress,
+            range: NSRange(location: 0, length: string.utf16.count),
+            withTemplate: "")
+        string = spritImgRegular.stringByReplacingMatches(
+            in: string,
+            options: .reportProgress,
+            range: NSRange(location: 0, length: string.utf16.count),
+            withTemplate: "")
+        string = brRegular.stringByReplacingMatches(
+            in: string,
+            options: .reportProgress,
+            range: NSRange(location: 0, length: string.utf16.count),
+            withTemplate: "\n")
+        string = spritBrRegular.stringByReplacingMatches(
+            in: string,
+            options: .reportProgress,
+            range: NSRange(location: 0, length: string.utf16.count),
+            withTemplate: "")
+        return string
+    }
+    
+    func removedURLLinks() throws ->  String {
+        let regx = try NSRegularExpression(
+            pattern: "https?://(www.)?[-a-zA-Z0-9@:%._+~#=]{2,256}.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)",
+            options: []
+        )
+        var string = self
+        return regx.stringByReplacingMatches(
+            in: string,
+            options: [],
+            range: NSRange(location: 0, length: string.utf16.count),
+            withTemplate: "[链接]")
     }
 }
