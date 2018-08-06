@@ -38,13 +38,11 @@ class RoundedTopView: UIView {
 }
 
 class AboutBottomView: UIView {
-    var clickCallBack: (() -> Void)?
+    var clickCallBack: ((Int) -> Void)?
     private lazy var roundedTopView: RoundedTopView = {
         let view = RoundedTopView()
         view.fillColor = .white
         view.cornerRadius = 8
-        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
-        view.addGestureRecognizer(tap)
         return view
     }()
     private lazy var versionLabel: UILabel = {
@@ -61,6 +59,22 @@ class AboutBottomView: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor.xpTextGray()
         label.text = "《讲真用户协议》"
+        label.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private lazy var complainLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.textColor = UIColor.xpTextGray()
+        label.text = "《侵权投诉指引》"
+        label.tag = 2
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
         return label
     }()
     private lazy var countryLabel: UILabel = {
@@ -81,7 +95,9 @@ class AboutBottomView: UIView {
     }
     
     @objc func showWebView(_ tap: UITapGestureRecognizer) {
-        clickCallBack?()
+        if let tapView = tap.view {
+            clickCallBack?(tapView.tag)
+        }
     }
     
     private func setupUI() {
@@ -94,8 +110,11 @@ class AboutBottomView: UIView {
         roundedTopView.align(.right, to: self)
         roundedTopView.align(.bottom, to: self)
         addSubview(messageLabel)
-        messageLabel.centerX(to: self)
+        messageLabel.centerX(to: self, offset: -70)
         messageLabel.align(.top, to: roundedTopView, inset: 10)
+        addSubview(complainLabel)
+        complainLabel.centerX(to: self, offset: 70)
+        complainLabel.align(.top, to: roundedTopView, inset: 10)
         addSubview(countryLabel)
         countryLabel.centerX(to: self)
         countryLabel.align(.bottom, to: self, inset: 10)
@@ -157,7 +176,7 @@ class AboutController: BaseViewController, AboutView {
             let urlString = "http://mx.miaobo.me/faq.html"
             self?.showWebView?(title, urlString)
         }
-        let feedbackRectView = AboutRectView(title: "意见反馈")
+        let feedbackRectView = AboutRectView(title: "用户反馈")
         view.addSubview(feedbackRectView)
         feedbackRectView.equal(.size, to: updateRectView)
         feedbackRectView.centerX(to: updateRectView)
@@ -175,8 +194,13 @@ class AboutController: BaseViewController, AboutView {
         }
         
         let bottomView = AboutBottomView()
-        bottomView.clickCallBack = {
-            let url = URL(string: "http://mx.miaobo.me/privacy.html")!
+        bottomView.clickCallBack = { tag in
+            let url: URL
+            if tag == 1 {
+                url = URL(string: "http://mx.miaobo.me/privacy.html")!
+            } else {
+                url = URL(string: "https://www.baidu.com")!
+            }
             if UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -205,7 +229,7 @@ extension AboutController {
                     WebProvider.logout()
                 case let .failure(error):
                     logger.error(error)
-                    self.toast(message: "登出失败", duration: 2)
+                    self.toast(message: "登出失败")
                 }
             })
         }

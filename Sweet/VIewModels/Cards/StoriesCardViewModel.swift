@@ -35,7 +35,7 @@ struct StoriesCardViewModel {
         storiesGroup[postion.0][postion.1].read = story.read
         storiesCellModels[postion.0][postion.1].isRead = story.read
         storiesGroup[postion.0][postion.1].like = story.like
-        storyCellModels = storiesCellModels.map {
+        var storyCellModels: [StoryCollectionViewCellModel] = storiesCellModels.map {
             var storiesCellModel = $0
             var isRead = true
             storiesCellModel.forEach({ if $0.isRead == false {isRead = false} })
@@ -43,5 +43,9 @@ struct StoriesCardViewModel {
             storyCellModel.isRead = isRead
             return storyCellModel
         }
+        for index in 0..<storyCellModels.count {
+            storyCellModels[index].callback = self.storyCellModels[index].callback
+        }
+        self.storyCellModels = storyCellModels
     }
 }

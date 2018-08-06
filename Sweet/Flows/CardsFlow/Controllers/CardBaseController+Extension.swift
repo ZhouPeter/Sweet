@@ -124,6 +124,20 @@ extension CardsBaseController {
         }
     }
     
+    func updateContentCellEmoji(index: Int) {
+        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
+            guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: configurator.viewModel)
+            }
+        } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
+            guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: configurator.viewModel)
+            }
+        }
+    }
+    
     func reloadContentCell(index: Int) {
         if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
             let viewModel = ContentCardViewModel(model: self.cards[index])
@@ -218,8 +232,6 @@ extension CardsBaseController {
                     return
                 }
                 self.cards[index].activityList![item].like = true
-//                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
-//                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
                 configurator.viewModel.activityViewModels[item].like = true
                 self.cellConfigurators[index] = configurator
                 if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),

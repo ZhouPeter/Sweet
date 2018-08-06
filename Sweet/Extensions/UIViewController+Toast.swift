@@ -46,13 +46,13 @@ class PKHUDCustomTextView: PKHUDWideBaseView {
 }
 
 extension UIViewController {
-    func toast(message: String, duration: Double = 2, completion: (() -> Void)? = nil) {
+    func toast(message: String, duration: Double = 1, completion: (() -> Void)? = nil) {
         PKHUD.toast(message: message, duration: duration, completion: completion)
     }
 }
 
 extension PKHUD {
-    class func toast(message: String, duration: Double = 2, completion: (() -> Void)? = nil) {
+    class func toast(message: String, duration: Double = 1, completion: (() -> Void)? = nil) {
         PKHUD.sharedHUD.contentView = PKHUDCustomTextView(text: message)
         PKHUD.sharedHUD.effect = UIBlurEffect(style: .dark)
         PKHUD.sharedHUD.show()
