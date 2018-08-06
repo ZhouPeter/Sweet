@@ -290,7 +290,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private func setBottmUI() {
         view.addSubview(bottomButton)
         bottomButton.centerX(to: view)
-        bottomButton.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 25 + 34 : 25)
+        bottomButton.align(.bottom, to: view, inset: 25)
         bottomButton.constrain(width: 50, height: 50)
         bottomButton.setViewRounded()
         view.addSubview(descLabel)

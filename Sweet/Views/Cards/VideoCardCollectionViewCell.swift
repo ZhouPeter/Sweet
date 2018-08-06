@@ -20,7 +20,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         return label
     }()
     
-    var contentImageView: UIImageView = {
+    lazy var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
@@ -29,6 +29,12 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    lazy var playerView: SweetPlayerView = {
+        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
+        view.isHidden = true
+        return view
     }()
         
     lazy var emojiView: EmojiControlView = {
@@ -62,6 +68,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
         contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
+        customContent.addSubview(playerView)
+        playerView.fill(in: contentImageView)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
         emojiView.align(.left)
