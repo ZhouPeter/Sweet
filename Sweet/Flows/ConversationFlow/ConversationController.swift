@@ -33,6 +33,8 @@ final class ConversationController: MessagesViewController, ConversationView {
     } ()
     private var incommingBubbleMaskCache = [UIView: UIImageView]()
     private var outgoingBubbleMaskCache = [UIView: UIImageView]()
+    private var contentInsetBottom: CGFloat?
+    private var contentOffset: CGPoint?
     
     init(user: User, buddy: User) {
         self.user = user
@@ -76,6 +78,19 @@ final class ConversationController: MessagesViewController, ConversationView {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let bottom = contentInsetBottom {
+            messagesCollectionView.contentInset.bottom = bottom
+            messagesCollectionView.scrollIndicatorInsets.bottom = bottom
+            if let offset = contentOffset {
+                messagesCollectionView.contentOffset = offset
+                contentOffset = nil
+            }
+            contentInsetBottom = nil
+        }
     }
     
     override func willMove(toParentViewController parent: UIViewController?) {
@@ -421,6 +436,8 @@ extension ConversationController: MessageCellDelegate {
                 case .failure(let error):
                     logger.error(error)
                 case .success(let response):
+                    self.contentInsetBottom = self.messagesCollectionView.contentInset.bottom
+                    self.contentOffset = self.messagesCollectionView.contentOffset
                     self.delegate?.conversationControllerShowsStory(
                         StoryCellViewModel(model: response.story),
                         user: message.from == self.user.userId ? self.user : self.buddy,
