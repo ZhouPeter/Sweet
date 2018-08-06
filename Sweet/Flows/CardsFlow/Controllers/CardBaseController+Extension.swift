@@ -232,7 +232,6 @@ extension CardsBaseController {
                     return
                 }
                 self.cards[index].activityList![item].like = true
-
                 configurator.viewModel.activityViewModels[item].like = true
                 self.cellConfigurators[index] = configurator
                 if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),

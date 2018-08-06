@@ -200,12 +200,6 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
             return
         }
         configurator.viewModel.updateStory(story: story, postion: postion)
-        for (offset, var cellModel) in configurator.viewModel.storyCellModels.enumerated() {
-            cellModel.callback = { [weak self] userId in
-                self?.showProfile(userId: userId)
-            }
-            configurator.viewModel.storyCellModels[offset] = cellModel
-        }
         cellConfigurators[index] = configurator
         self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
