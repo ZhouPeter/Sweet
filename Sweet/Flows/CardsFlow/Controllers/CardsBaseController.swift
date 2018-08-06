@@ -391,9 +391,19 @@ extension CardsBaseController {
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
-        let preview = WebViewController(urlString: url) { [weak self] in
+        let preview = ShareWebViewController(urlString: url, cardId: card.cardId) { [weak self] in
             self?.shareCard(cardId: card.cardId)
         }
+        if card.cardEnumType == .content  {
+            if let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<ContentCardCollectionViewCell> {
+                preview.emojiDisplay = configurator.viewModel.emojiDisplayType
+            }
+            if let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
+                preview.emojiDisplay = configurator.viewModel.emojiDisplayType
+            }
+        }
+        preview.navigationBarColors = [UIColor(hex:0x66E5FF), UIColor(hex: 0x36C6FD)]
+        preview.delegate = self
         navigationController?.pushViewController(preview, animated: true)
         CardAction.clickUrl.actionLog(card: card)
         CardTimerHelper.countDown(time: 10, countDownBlock: { time in

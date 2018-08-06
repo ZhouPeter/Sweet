@@ -205,7 +205,7 @@ extension AboutController {
                     WebProvider.logout()
                 case let .failure(error):
                     logger.error(error)
-                    self.toast(message: "登出失败", duration: 2)
+                    self.toast(message: "登出失败")
                 }
             })
         }

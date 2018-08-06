@@ -80,7 +80,7 @@ class ShareCardController: BaseViewController {
     }()
     private lazy var shareTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "分享的话..."
+        textField.placeholder = "转发的话..."
         textField.font = UIFont.systemFont(ofSize: 14)
         textField.textColor = .black
         textField.backgroundColor = .white

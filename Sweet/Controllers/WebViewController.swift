@@ -12,7 +12,6 @@ import WebKit
 class WebViewController: BaseViewController {
     
     var urlString: String
-    private let shareCallback: (() -> Void)?
     var finish: (() -> Void)?
     private lazy var webView: WKWebView = {
         let config = WKWebViewConfiguration()
@@ -30,26 +29,17 @@ class WebViewController: BaseViewController {
         return view
     } ()
     
-    private lazy var shareButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "ShareItem"), for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        button.addTarget(self, action: #selector(shareAction(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     private var displayLink: CADisplayLink?
     
-    init(urlString: String, shareCallback: (() -> Void)? = nil) {
+    init(urlString: String) {
         self.urlString = urlString
-        self.shareCallback = shareCallback
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    var webViewTopConstraint: NSLayoutConstraint?
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -58,13 +48,15 @@ class WebViewController: BaseViewController {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
-        if shareCallback != nil { navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)}
         automaticallyAdjustsScrollViewInsets = false
         view.addSubview(webView)
-        webView.fill(in: view, top: UIScreen.navBarHeight())
+        webView.align(.left)
+        webView.align(.right)
+        webView.align(.bottom)
+        webViewTopConstraint = webView.align(.top, inset: UIScreen.navBarHeight())
         view.addSubview(progressView)
         progressView.constrain(height: 2)
-        progressView.align(.top, to: view, inset: UIScreen.navBarHeight())
+        progressView.align(.top, to: webView)
         progressView.align(.left)
         progressView.align(.right)
         let request = URLRequest(url: URL(string: urlString)!)
@@ -81,6 +73,7 @@ class WebViewController: BaseViewController {
         displayLink?.invalidate()
         finish?()
     }
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -95,10 +88,6 @@ class WebViewController: BaseViewController {
                 navigationItem.title = title
             }
         }
-    }
-    
-    @objc private func shareAction(_ sender: UIButton) {
-        shareCallback?()
     }
 }
 
@@ -137,3 +126,4 @@ extension WebViewController: WKNavigationDelegate {
         progressView.setProgress(progressView.progress + 0.0025, animated: true)
     }
 }
+

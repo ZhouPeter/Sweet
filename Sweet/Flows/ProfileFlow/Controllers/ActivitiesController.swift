@@ -216,8 +216,10 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
-            let controller = WebViewController(urlString: url) {
-                self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
+            let controller = ShareWebViewController(
+                urlString: url,
+                cardId: viewModels[indexPath.row].fromCardId) {
+                    self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
             }
             navigationController?.pushViewController(controller, animated: true)
         }

@@ -92,7 +92,7 @@ extension SignUpAvatarController: UINavigationControllerDelegate, UIImagePickerC
             Upload.uploadFileToQiniu(localURL: localURL, type: .userAvatar) { (response, error) in
                 guard let response = response, error == nil else {
                     logger.debug(error ?? "")
-                    self.toast(message: "头像上传失败", duration: 2)
+                    self.toast(message: "头像上传失败")
                     return
                 }
                 self.cameraButton.setImage(newImage, for: .normal)
@@ -101,7 +101,7 @@ extension SignUpAvatarController: UINavigationControllerDelegate, UIImagePickerC
             }
         } catch {
             logger.debug(error)
-            self.toast(message: "头像上传失败", duration: 2)
+            self.toast(message: "头像上传失败")
         }
     }
 }

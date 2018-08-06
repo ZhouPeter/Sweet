@@ -146,6 +146,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func openEmojis(cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         showCellEmojiView(emojiDisplayType: .allShow, index: index)
+    
     }
     
     func showImageBrowser(selectedIndex: Int) {
@@ -160,7 +161,14 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
         if cardType == .activity {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .destructive) { (_) in
-                web.request(.cardReport(cardId: cardId), completion: { (_) in })
+                web.request(.cardReport(cardId: cardId), completion: { (result) in
+                    switch result {
+                    case .success:
+                        JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
+                    case .failure:
+                        JDStatusBarNotification.show(withStatus: "反馈失败，请稍后重试。", dismissAfter: 2)
+                    }
+                })
             }
             let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
             alert.addAction(reportAction)
@@ -192,35 +200,14 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
             return
         }
         configurator.viewModel.updateStory(story: story, postion: postion)
+        for (offset, var cellModel) in configurator.viewModel.storyCellModels.enumerated() {
+            cellModel.callback = { [weak self] userId in
+                self?.showProfile(userId: userId)
+            }
+            configurator.viewModel.storyCellModels[offset] = cellModel
+        }
         cellConfigurators[index] = configurator
         self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-    }
-    
-    func readGroup(storyId: UInt64, fromCardId: String?, storyGroupIndex: Int) {
-        if self.cards[index].cardEnumType == .story {
-            web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { [weak self] (result) in
-                guard let `self` = self else { return }
-                switch result {
-                case .success:
-                    if storyGroupIndex > 3 { return }
-                    guard let index = self.cards.index(where: { $0.cardId == fromCardId }) else { return }
-                    let storys = self.cards[index].storyList![storyGroupIndex]
-                    var newStorys = [StoryResponse]()
-                    for var story in storys {
-                        story.read = true
-                        newStorys.append(story)
-                    }
-                    self.cards[index].storyList![storyGroupIndex] = newStorys
-                    var viewModel = StoriesCardViewModel(model: self.cards[index])
-                    viewModel.storyCellModels[storyGroupIndex].isRead = true
-                    let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
-                    self.cellConfigurators[index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-                case let .failure(error):
-                    logger.error(error)
-                }
-            }
-        }
     }
     
 }
@@ -293,6 +280,37 @@ extension CardsBaseController: SweetPlayerViewDelegate {
                     cellConfigurators[indexPath.row] = configurator
                 }
             }
+        }
+    }
+}
+
+extension CardsBaseController: ShareWebViewControllerDelegate {
+    func showProfile(userId: UInt64, webView: ShareWebViewController) {
+        showProfile(userId: userId)
+    }
+    
+    func showAllEmoji(cardId: String) {
+        openEmojis(cardId: cardId)
+        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+        self.updateContentCellEmoji(index: index)
+    }
+    
+    func selectEmoji(emoji: Int, cardId: String, webView: ShareWebViewController) {
+        web.request(
+            .commentCard(cardId: cardId, emoji: emoji),
+            responseType: Response<SelectResult>.self) { (result) in
+                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                switch result {
+                case let .success(response):
+                    self.cards[index].result = response
+                    webView.updateEmojiView(card: self.cards[index])
+                    self.reloadContentCell(index: index)
+                    self.vibrateFeedback()
+                    CardAction.clickComment.actionLog(card: self.cards[index])
+                case let .failure(error):
+                    self.reloadContentCell(index: index)
+                    logger.error(error)
+                }
         }
     }
 }

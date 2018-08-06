@@ -627,9 +627,7 @@ extension StoriesPlayerViewController {
         case .changed: break
         default:
             if progress + gesture.velocity(in: nil).y / view.bounds.height < -0.3 {
-                if isSelf {
-                    showStoryHistory()
-                } else {
+                if isSelf == false {
                     sendMessage()
                 }
             }
@@ -664,7 +662,7 @@ extension StoriesPlayerViewController {
             guard let `self` = self else { return }
             self.play()
             self.downloadStory(downloadBack: { (isSuccess) in
-                self.toast(message: isSuccess ? "保存成功" : "保存失败", duration: 2)
+                self.toast(message: isSuccess ? "保存成功" : "保存失败")
             })
         }
         alertController.addAction(downloadAction)

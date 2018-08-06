@@ -76,7 +76,7 @@ class SignUpNameController: BaseViewController, SignUpNameView {
     
     @objc private func nextAction(_ sender: ShrinkButton) {
         if nicknameTextField.text == "" {
-            toast(message: "名字不能为空", duration: 2)
+            toast(message: "名字不能为空")
             return
         }
         loginRequestBody.nickname = nicknameTextField.text
