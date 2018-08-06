@@ -27,7 +27,7 @@ class SweetPlayerControlView: UIView {
     var totalDuration: TimeInterval = 0
     var delayItem: DispatchWorkItem?
     var playerLastState: SweetPlayerState = .notSetURL
-    var isHasVolume: Bool = true
+    var isVideoMuted: Bool = true
     lazy var bottomMaskView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)

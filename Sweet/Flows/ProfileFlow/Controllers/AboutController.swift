@@ -199,7 +199,7 @@ class AboutController: BaseViewController, AboutView {
             if tag == 1 {
                 url = URL(string: "http://mx.miaobo.me/privacy.html")!
             } else {
-                url = URL(string: "https://www.baidu.com")!
+                url = URL(string: "http://mx.miaobo.me/complain.html")!
             }
             if UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10.0, *) {

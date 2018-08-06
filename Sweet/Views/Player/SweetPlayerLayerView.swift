@@ -83,13 +83,9 @@ class SweetPlayerLayerView: UIView {
             }
         }
     }
-    var isHasVolume: Bool = true {
+    var isVideoMuted: Bool = true {
         didSet {
-            if !isHasVolume {
-                self.player?.isMuted = true
-            } else {
-                self.player?.isMuted = false
-            }
+            self.player?.isMuted = isVideoMuted
         }
     }
     
@@ -159,11 +155,7 @@ class SweetPlayerLayerView: UIView {
     open func play() {
         if let player = player {
             player.play()
-            if !isHasVolume {
-                player.isMuted = true
-            } else {
-                player.isMuted = false
-            }
+            player.isMuted = isVideoMuted
             setupTimer()
             isPlaying = true
         }

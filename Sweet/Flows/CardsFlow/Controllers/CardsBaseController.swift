@@ -105,7 +105,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             cell.playerView.playerLayer?.playerToNil()
             self.present(controller, animated: true, completion: nil)
             isVideoMuted = false
-            cell.playerView.isHasVolume = !isVideoMuted
+            cell.playerView.isVideoMuted = isVideoMuted
             CardAction.clickVideo.actionLog(card: cards[index])
         }
      
@@ -312,21 +312,27 @@ extension CardsBaseController {
             cell.playerView.panGesture.require(toFail: pan)
             cell.playerView.backgroundColor = .black
             cell.playerView.isUserInteractionEnabled = true
+            if let gestures = cell.playerView.controlView.gestureRecognizers {
+                for gesture in gestures {
+                    cell.playerView.controlView.removeGestureRecognizer(gesture)
+                }
+            }
             let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController(_:)))
             cell.playerView.controlView.addGestureRecognizer(tap)
             if let resource = cell.playerView.resource,
                 resource.indexPath == indexPath,
                 resource.definitions[0].url == configurator.viewModel.videoURL {
-                cell.playerView.isHasVolume = !isVideoMuted
+                cell.playerView.isVideoMuted = isVideoMuted
                 cell.playerView.seek(configurator.viewModel.currentTime) {
                     cell.playerView.play()
                 }
+                avPlayer = cell.playerView.avPlayer
                 return
             }
             let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
             resource.indexPath = indexPath
             cell.playerView.setVideo(resource: resource)
-            cell.playerView.isHasVolume = !isVideoMuted
+            cell.playerView.isVideoMuted = isVideoMuted
             cell.playerView.seek(configurator.viewModel.currentTime) {
                 cell.playerView.play()
             }

@@ -23,7 +23,7 @@ class PlayController: UIViewController {
     lazy var playView: SweetPlayerView = {
         let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
         playView.delegate = self
-        playView.isHasVolume = true
+        playView.isVideoMuted = true
         return playView
     }()
     
