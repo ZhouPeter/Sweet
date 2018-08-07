@@ -23,7 +23,7 @@ struct StoryMessageContent: MessageContent {
 extension StoryMessageContent {
     func thumbnailURL() -> URL? {
         guard storyType != .unknown else { return nil }
-        if storyType == .text || storyType == .image {
+        if storyType == .text || storyType == .image || storyType == .share {
             return URL(string: url)
         }
         return URL(string: url + "?vframe/jpg/offset/0.5")
