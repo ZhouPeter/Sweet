@@ -20,10 +20,10 @@ class PlayController: UIViewController {
         return button
     }()
     
-    lazy var playView: SweetPlayerView = {
+    private lazy var playerView: SweetPlayerView = {
         let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
         playView.delegate = self
-        playView.isVideoMuted = true
+        playView.isVideoMuted = false
         return playView
     } ()
     
@@ -32,14 +32,14 @@ class PlayController: UIViewController {
         view.backgroundColor = .black
         setupUI()
         if let player = avPlayer, let resource = resource {
-            playView.resource = resource
-            playView.setAVPlayer(player: player)
+            playerView.resource = resource
+            playerView.setAVPlayer(player: player)
             loadItemValues()
         }
         view.hero.isEnabled = true
         view.hero.id = resource?.definitions[0].url.absoluteString
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
-        pan.require(toFail: playView.panGesture)
+        pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
     }
     
@@ -64,7 +64,10 @@ class PlayController: UIViewController {
     }
     
     private func loadItemValues() {
-        if let resource = resource {
+        if let asset = avPlayer?.currentItem?.asset, asset.isPlayable {
+            loadedResourceForPlay(asset: asset)
+
+        } else if let resource = resource {
             let asset = resource.definitions[0].avURLAsset
             asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
                 DispatchQueue.main.async {
@@ -84,20 +87,20 @@ class PlayController: UIViewController {
         if scaleX > scaleY {
             videoSize = CGSize(width: UIScreen.mainWidth(),
                                height: UIScreen.mainWidth() * naturalSize.height / naturalSize.width)
-            playView.frame = CGRect(origin: .zero, size: videoSize)
-            playView.center = view.center
+            playerView.frame = CGRect(origin: .zero, size: videoSize)
+            playerView.center = view.center
         } else {
             videoSize = CGSize(width: UIScreen.mainHeight() * naturalSize.width / naturalSize.height,
                                height: UIScreen.mainHeight())
-            playView.frame = CGRect(origin: .zero, size: videoSize)
-            playView.center = view.center
+            playerView.frame = CGRect(origin: .zero, size: videoSize)
+            playerView.center = view.center
         }
     }
     
     private func setupUI() {
-        view.addSubview(playView)
-        playView.frame = CGRect(origin: .zero, size: videoSize)
-        playView.center = view.center
+        view.addSubview(playerView)
+        playerView.frame = CGRect(origin: .zero, size: videoSize)
+        playerView.center = view.center
         view.addSubview(backButton)
         backButton.align(.left, to: view, inset: 10)
         backButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 54 : 20)
@@ -106,7 +109,7 @@ class PlayController: UIViewController {
     }
     
     func updatePlayView(player: AVPlayer) {
-        playView.avPlayer = player
+        playerView.avPlayer = player
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -137,11 +140,11 @@ extension PlayController: SweetPlayerViewDelegate {
     }
     func sweetPlayer(player: SweetPlayerView, playerOrientChanged isFullscreen: Bool) {
         if isFullscreen {
-            playView.frame = self.view.bounds
+            playerView.frame = self.view.bounds
             backButton.isHidden = true
         } else {
-            playView.frame = CGRect(origin: .zero, size: videoSize)
-            playView.center = view.center
+            playerView.frame = CGRect(origin: .zero, size: videoSize)
+            playerView.center = view.center
             backButton.isHidden = false
         }
     }

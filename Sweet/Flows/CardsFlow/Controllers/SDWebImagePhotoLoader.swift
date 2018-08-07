@@ -30,7 +30,6 @@ class SDWebImagePhotoLoader: PhotoLoader {
                               progress: { (receivedSize, totalSize, _) in
             progressBlock(Int64(receivedSize), Int64(totalSize))
         }) { (_, _, _, _) in
-            imageView.startAnimating()
             completionHandler()
         }
     }

@@ -310,8 +310,6 @@ extension CardsBaseController {
             cell.playerView.delegate = self
             cell.playerView.panGesture.isEnabled = false
             cell.playerView.panGesture.require(toFail: pan)
-            cell.playerView.backgroundColor = .black
-            cell.playerView.isUserInteractionEnabled = true
             if let gestures = cell.playerView.controlView.gestureRecognizers {
                 for gesture in gestures {
                     cell.playerView.controlView.removeGestureRecognizer(gesture)
@@ -336,7 +334,6 @@ extension CardsBaseController {
             cell.playerView.seek(configurator.viewModel.currentTime) {
                 cell.playerView.play()
             }
-            cell.playerView.isHidden = false
             avPlayer = cell.playerView.avPlayer
         }
     }
