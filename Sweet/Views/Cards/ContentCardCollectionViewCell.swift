@@ -174,52 +174,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             sourceInfoView.isHidden = true
         }
     }
-    
-    private func update(with images: [[ContentImage]]?) {
-        imageViews.forEach { view in
-            view.alpha = 0
-            view.kf.cancelDownloadTask()
-        }
-        imageIcons.forEach { (view) in
-            view.isHidden = true
-        }
-        imageViewContainers.forEach { view in
-            view.isHidden = true
-        }
-        guard let rowImages = images, rowImages.isNotEmpty else { return }
-        let margin: CGFloat = 0
-        let spacing: CGFloat = 3
-        let width = contentImageView.bounds.width - margin * 2
-        let height = contentImageView.bounds.height - margin * 2
-        let rows = CGFloat(rowImages.count)
-        let factorH = (height - spacing * (rows - 1)) / rowImages.reduce(CGFloat(0), { $0 + ($1.first?.height ?? 0) })
-        var viewIndex = 0
-        var x = margin
-        var y = margin
-        rowImages.forEach { (columnImages) in
-            let columns = CGFloat(columnImages.count)
-            let factorW = (width - spacing * (columns - 1)) / columnImages.reduce(CGFloat(0), { $0 + $1.width })
-            var rowHeight: CGFloat = 0
-            columnImages.forEach { image in
-                let imageView = imageViews[viewIndex]
-                let container = imageViewContainers[viewIndex]
-                container.isHidden = false
-                container.frame = CGRect(x: x, y: y, width: image.width * factorW, height: image.height * factorH)
-                let url = URL(string: image.url)?.imageView2(size: imageView.bounds.size)
-                imageView.sd_setImage(with: url, completed: { (image, _, _, _) in
-                    guard image != nil else { return }
-                    UIView.animate(withDuration: 0.25, animations: {
-                        imageView.alpha = 1
-                    })
-                })
-                viewIndex += 1
-                x += container.bounds.width + spacing
-                rowHeight = container.bounds.height
-            }
-            x = margin
-            y += rowHeight + spacing
-        }
-    }
 }
 
 // MARK: - Actions

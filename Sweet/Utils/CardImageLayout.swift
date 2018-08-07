@@ -109,8 +109,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight
             let textSpacing = cardCellHeight - contentHeight - 110 - titleLabel.frame.height - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 one(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -229,8 +228,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomHeight + spacing
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 threeOrFour(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -296,8 +294,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomHeight + spacing
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 five(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -427,8 +424,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomWidth * 2 + spacing * 2
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count  {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 seven(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -530,6 +526,7 @@ extension ContentCardCollectionViewCell {
             }
         }
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
+
         SDWebImageManager.shared.loadImage(
                with: url,
                options: [],
