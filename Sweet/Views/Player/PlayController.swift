@@ -25,11 +25,7 @@ class PlayController: UIViewController {
         playView.delegate = self
         playView.isVideoMuted = true
         return playView
-    }()
-    
-    deinit {
-        logger.debug("释放播放器")
-    }
+    } ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,22 +77,20 @@ class PlayController: UIViewController {
     }
     
     private func loadedResourceForPlay(asset: AVAsset) {
-        let tracks = asset.tracks
-        for track in tracks where track.mediaType  == .video {
-            let naturalSize = track.naturalSize
-            let scaleX = naturalSize.width / UIScreen.mainWidth()
-            let scaleY = naturalSize.height / UIScreen.mainHeight()
-            if scaleX > scaleY {
-                videoSize = CGSize(width: UIScreen.mainWidth(),
-                                   height: UIScreen.mainWidth() * naturalSize.height / naturalSize.width)
-                playView.frame = CGRect(origin: .zero, size: videoSize)
-                playView.center = view.center
-            } else {
-                videoSize = CGSize(width: UIScreen.mainHeight() * naturalSize.width / naturalSize.height,
-                                   height: UIScreen.mainHeight())
-                playView.frame = CGRect(origin: .zero, size: videoSize)
-                playView.center = view.center
-            }
+        guard let track = asset.tracks(withMediaType: .video).first else { return }
+        let naturalSize = track.naturalSize
+        let scaleX = naturalSize.width / UIScreen.mainWidth()
+        let scaleY = naturalSize.height / UIScreen.mainHeight()
+        if scaleX > scaleY {
+            videoSize = CGSize(width: UIScreen.mainWidth(),
+                               height: UIScreen.mainWidth() * naturalSize.height / naturalSize.width)
+            playView.frame = CGRect(origin: .zero, size: videoSize)
+            playView.center = view.center
+        } else {
+            videoSize = CGSize(width: UIScreen.mainHeight() * naturalSize.width / naturalSize.height,
+                               height: UIScreen.mainHeight())
+            playView.frame = CGRect(origin: .zero, size: videoSize)
+            playView.center = view.center
         }
     }
     
