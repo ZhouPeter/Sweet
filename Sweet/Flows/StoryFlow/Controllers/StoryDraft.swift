@@ -14,6 +14,9 @@ struct StoryDraft {
     var topic: String?
     var pokeCenter: CGPoint?
     var touchPoints: [CGPoint]?
+    var comment: String?
+    var desc: String?
+    var url: String?
     let date: Date
     var fileURL: URL {
         var name: String
@@ -35,6 +38,13 @@ struct StoryDraft {
         self.filename = filename
         self.storyType = storyType
         self.date = date
+    }
+    
+    init(filename: String, storyType: StoryType, date: Date, comment: String?, desc: String?, url: String?) {
+        self.init(filename: filename, storyType: storyType, date: date)
+        self.comment = comment
+        self.desc = desc
+        self.url = url
     }
     
     init?(data: StoryDraftData) {

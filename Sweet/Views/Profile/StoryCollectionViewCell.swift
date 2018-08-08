@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import Kingfisher
+import SDWebImage
 class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var pokeView = StorySmallPokeView()
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(white: 0.15, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 14)
         label.backgroundColor = .white
         label.textAlignment = .center
         label.layer.cornerRadius = 2
@@ -86,15 +85,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .video {
-                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: storyImageView.frame.size)
             } else if viewModel.type == .poke {
-                storyImageView.kf.setImage(with: videoURL.videoThumbnail(size: storyImageView.frame.size))
+                storyImageView.sd_setImage(with: videoURL.videoThumbnail(size: storyImageView.frame.size))
                 pokeView.center = CGPoint(x: frame.width / 2 + viewModel.pokeCenter.x * frame.width,
                                           y: frame.height / 2 + viewModel.pokeCenter.y * frame.height)
                 pokeView.isHidden = false
             }
         } else if let imageURL = viewModel.imageURL {
-            storyImageView.kf.setImage(with: imageURL)
+            storyImageView.sd_setImage(with: imageURL)
         }
         if viewModel.timestampString == ""  {
             timeLabel.isHidden = true

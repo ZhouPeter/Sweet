@@ -51,6 +51,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
             controller = factory.makeDismissableStoryRecordView(user: user, topic: topic)
         } else {
             controller = factory.makeStoryRecordView(user: user)
+            controller.prepare()
         }
         recordView = controller
         controller.onRecorded = { [weak self] url, isPhoto, topic in
@@ -81,11 +82,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
         }
         controller.onFinished = { [weak self] in
             self?.recordView?.isAvatarCircleAnamtionEnabled = true
-            if self?.isDismissable == true {
-                self?.dismiss()
-            } else {
-                self?.router.popFlow(animated: true)
-            }
+            self?.router.popFlow(animated: true)
         }
         router.setAsSecondFlow(controller)
     }
@@ -150,7 +147,9 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
 
     private func dismiss() {
         router.dismissFlow(animated: true, completion: {
-            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+            if UIScreen.isIphoneX() == false {
+                UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+            }
             NotificationCenter.default.post(name: .EnablePageScroll, object: nil)
         })
         finishFlow?()

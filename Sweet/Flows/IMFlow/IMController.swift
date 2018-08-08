@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class IMController: BaseViewController, IMView {
     weak var delegate: IMViewDelegate?
@@ -62,7 +63,7 @@ class IMController: BaseViewController, IMView {
     }
     
     func updateAvatarImage(withURLString urlString: String) {
-        avatarImageView.kf.setImage(with: URL(string: urlString))
+        avatarImageView.sd_setImage(with: URL(string: urlString))
     }
     
     // MARK: - Private

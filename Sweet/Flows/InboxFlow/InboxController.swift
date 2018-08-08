@@ -20,7 +20,6 @@ final class InboxController: BaseViewController, InboxView {
         view.dataSource = self
         view.delegate = self
         view.register(cellType: ConversationCell.self)
-        view.sectionHeaderHeight = 0.1
         view.backgroundColor = .clear
         view.separatorColor = UIColor(hex: 0xF2F2F2)
         view.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 0)
@@ -40,6 +39,7 @@ final class InboxController: BaseViewController, InboxView {
             automaticallyAdjustsScrollViewInsets = false
         }
         headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 40)
+        tableView.tableHeaderView = headerView
     }
     
     func didUpdateConversations(_ conversations: [Conversation]) {
@@ -64,17 +64,14 @@ final class InboxController: BaseViewController, InboxView {
     }
     
     func didUpdateUserOnlineState(isUserOnline: Bool) {
-        let insets: UIEdgeInsets
         if isUserOnline {
-            tableView.tableHeaderView = nil
-            insets = UIEdgeInsets(top: -headerView.bounds.height + 5, left: 0, bottom: 0, right: 0)
+            headerView.frame.size.height = 0.01
+            headerView.isHidden = true
         } else {
-            tableView.tableHeaderView = headerView
-            insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            headerView.frame.size.height = 40
+            headerView.isHidden = false
         }
-        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
-            self.tableView.contentInset = insets
-        }, completion: nil)
+        tableView.tableHeaderView = headerView
     }
 }
 
@@ -168,7 +165,11 @@ extension InboxController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.1
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

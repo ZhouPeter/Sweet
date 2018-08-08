@@ -72,8 +72,6 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         navigationController?.navigationBar.tintColor = .black
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
         }
     }
     
@@ -119,7 +117,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     viewModel.callBack = { [weak self] userId in
                         self?.delBlacklist(userId: UInt64(userId)!)
                     }
-                    self.contactViewModels.append(viewModel)
+                    self.blacklistViewModels.append(viewModel)
                 })
                 
                 response.subscriptions.forEach({ (model) in
@@ -147,6 +145,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 })
             
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
+                 if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }
                 if self.subscriptionsViewModels.count > 0 { self.titles.append("订阅") }
                 if self.phoneContactViewModels.count > 0 { self.titles.append("通讯录") }
 
@@ -292,6 +291,8 @@ extension ContactSearchController: UITableViewDataSource {
         switch titles[section] {
         case "联系人":
             return contactViewModels.count
+        case "黑名单":
+            return blacklistViewModels.count
         case "订阅":
             return subscriptionsViewModels.count
         case "通讯录":
@@ -307,6 +308,8 @@ extension ContactSearchController: UITableViewDataSource {
         switch titles[indexPath.section] {
         case "联系人":
             cell.update(viewModel: contactViewModels[indexPath.row])
+        case "黑名单":
+            cell.update(viewModel: blacklistViewModels[indexPath.row])
         case "订阅":
             cell.update(viewModel: subscriptionsViewModels[indexPath.row])
         case "通讯录":
@@ -334,7 +337,9 @@ extension ContactSearchController: UITableViewDelegate {
         switch titles[indexPath.section] {
         case "联系人":
             showProfile?(contactViewModels[indexPath.row].userId)
-        case "我的订阅":
+        case "黑名单":
+            showProfile?(blacklistViewModels[indexPath.row].userId)
+        case "订阅":
             showProfile?(subscriptionsViewModels[indexPath.row].userId)
         case "通讯录":
             if let userId = phoneContactViewModels[indexPath.row].userId {

@@ -50,7 +50,9 @@ final class AlbumController: UIViewController, AlbumView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+        if UIScreen.isIphoneX() == false {
+            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
+        }
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.tintColor = .black
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
@@ -59,7 +61,9 @@ final class AlbumController: UIViewController, AlbumView {
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             onCancelled?()
-            UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
+            if UIScreen.isIphoneX() == false {
+                UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
+            }
         }
     }
     

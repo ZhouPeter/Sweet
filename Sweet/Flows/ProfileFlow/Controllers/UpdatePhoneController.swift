@@ -172,7 +172,7 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
             web.request(.sendCode(phone: phone, type: .changeNumber)) { [weak self] (result) in
                 switch result {
                 case .success:
-                    self?.toast(message: "发送成功", duration: 2)
+                    self?.toast(message: "发送成功")
                     TimerHelper.countDown(time: 60, countDownBlock: { (timeout) in
                         sender.setTitle("剩余\(timeout)秒", for: .normal)
                     }, endBlock: {
@@ -180,13 +180,13 @@ class UpdatePhoneController: BaseViewController, UpdateProtocol {
                         sender.isEnabled = true
                     })
                 case let .failure(error):
-                    self?.toast(message: "发送失败", duration: 2)
+                    self?.toast(message: "发送失败")
                     sender.isEnabled = true
                     logger.error(error)
                 }
             }
         } else {
-            self.toast(message: "你的手机号码不正确", duration: 2)
+            self.toast(message: "你的手机号码不正确")
         }
     }
     @objc private func textFieldEditChanged(_ textField: UITextField) {

@@ -7,48 +7,26 @@
 //
 
 import Foundation
-import Kingfisher
-
+import SDWebImage
 extension UIImageView {
-    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int) {
+    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
         var urls = [URL]()
         let urlString = url.absoluteString
         for index in 0 ..< count {
             let time = 0.5 / Double(count) * Double(index + 1)
-            let width = Int(UIScreen.mainWidth() / 3)
-            let height = Int(UIScreen.mainHeight() / 3)
-            let urlString = urlString
-                + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
+            let width = Int(size.width)
+            let height = Int(size.height)
+            let urlString = urlString + "?vframe/jpg/offset/\(time)/w/\(width)/h/\(height)"
             let url = URL(string: urlString)!
             urls.append(url)
         }
-        self.image = nil
-        var images = [UIImage]()
-        let queue = DispatchQueue.global()
-        let group = DispatchGroup()
-        urls.forEach { (url) in
-            group.enter()
-            queue.async {
-                ImageDownloader.default.downloadImage(with: url) { (image, _, _, _) in
-                    group.leave()
-                    if let image = image {
-                        images.append(image)
-                    }
-                }
-            }
-         
-            group.notify(queue: DispatchQueue.main) {
-//                let url = GIFImageMake.makeSaveGIF(gifName: url.lastPathComponent, images: images)
-//                self.kf.setImage(with: url)
-                self.stopAnimating()
-                self.animationImages = images
-                self.animationDuration = animationDuration
-                self.startAnimating()
-//                self.playAnimation(images: images)
-            }
-        }
+        sd_setImage(with: urls[0])
+        self.animationDuration = animationDuration
+        sd_setAnimationImages(with: urls)
+
     }
 }
+
 extension UIImageView {
     func playAnimation(images: [UIImage]) {
         var cgImages = [CGImage]()

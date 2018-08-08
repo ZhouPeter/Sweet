@@ -21,7 +21,7 @@ class StoryPlayProgressView: UIView {
     private var ratio: CGFloat = 0
     
     private var layout: UICollectionViewFlowLayout!
-    private let itemSpace: CGFloat = 0.5
+    private let itemSpace: CGFloat = 1
 
     private lazy var collectionView: UICollectionView = {
         layout = UICollectionViewFlowLayout()
@@ -49,12 +49,14 @@ class StoryPlayProgressView: UIView {
         self.count = count
         self.index = index
         self.ratio = 0
-        for cell in collectionView.visibleCells {
-            if let cell  = cell as? ProgressCollectionViewCell {
-                cell.setProgressView(ratio: 0)
-            }
-        }
         collectionView.reloadData()
+//        collectionView.performBatchUpdates(nil) { (_) in
+//            for cell in self.collectionView.visibleCells {
+//                if let cell  = cell as? ProgressCollectionViewCell {
+//                    cell.setProgressView(ratio: 0)
+//                }
+//            }
+//        }
     }
     
     private func setupUI() {

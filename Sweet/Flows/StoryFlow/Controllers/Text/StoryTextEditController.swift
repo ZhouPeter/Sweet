@@ -76,7 +76,7 @@ final class StoryTextEditController: UIViewController {
     
     private lazy var textViewContainer: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor(red: 0.1, green: 0.2, blue: 0.1, alpha: 0.2)
+        view.backgroundColor = .clear
         self.pinch.delegate = self
         view.addGestureRecognizer(pinch)
         self.rotation.delegate = self
@@ -101,7 +101,12 @@ final class StoryTextEditController: UIViewController {
         return style
     } ()
     
-    private var textContainerHeight: CGFloat { return view.bounds.height - keyboardHeight }
+    private var textContainerHeight: CGFloat {
+        if UIScreen.isIphoneX() {
+            return UIScreen.mainHeight() - UIScreen.safeTopMargin() - keyboardHeight
+        }
+        return view.bounds.height - keyboardHeight
+    }
     
     private var safeTextHeight: CGFloat {
         let height = textView.hasText ? textView.contentSize.height : 100
@@ -235,7 +240,7 @@ final class StoryTextEditController: UIViewController {
     
     private func layoutTopicButton() {
         if textView.hasText {
-            topicButtonCenterX?.constant = -(firstLineUsedRect.size.width - topicButton.bounds.width) * 0.5
+            topicButtonCenterX?.constant = (topicButton.bounds.width - firstLineUsedRect.size.width) * 0.5
         } else {
             topicButtonCenterX?.constant = 0
         }
@@ -244,8 +249,11 @@ final class StoryTextEditController: UIViewController {
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
-            keyboardHeight = UIScreen.main.bounds.height - event.keyboardFrameEnd.origin.y
-            keyboardControlBottom?.constant = -keyboardHeight
+            let screenHeight = UIScreen.main.bounds.height
+            keyboardHeight = screenHeight - event.keyboardFrameEnd.origin.y
+            let frame = view.convert(view.frame, to: UIApplication.shared.keyWindow!)
+            logger.debug(frame)
+            keyboardControlBottom?.constant = -(keyboardHeight - (screenHeight - frame.maxY))
             UIView.animate(withDuration: event.duration, delay: 0.0, options: [event.options], animations: {
                 if event.type == .willShow {
                     self.keyboardControl.alpha = 1

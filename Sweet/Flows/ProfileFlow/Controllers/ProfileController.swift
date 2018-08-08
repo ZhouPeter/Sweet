@@ -54,9 +54,7 @@ class ProfileController: BaseViewController, ProfileView {
                         let userID = UInt64(IDString),
                         newValue.userId == userID {
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.moreButton)
-                        self.navigationItem.title = "个人主页"
                     } else {
-                        self.navigationItem.title = "个人主页"
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.menuButton)
                     }
                 }
@@ -134,6 +132,7 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "个人主页"
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
@@ -188,9 +187,9 @@ class ProfileController: BaseViewController, ProfileView {
         dismiss(animated: true, completion: nil)
         finished?()
     }
-
-    override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
+    
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.didMove(toParentViewController: parent)
         if parent == nil {
             finished?()
         }
@@ -414,15 +413,25 @@ extension ProfileController {
 extension ProfileController: ActionsControllerDelegate {
     func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
         let contentHeight = scrollView.contentSize.height
-        if contentHeight <= UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50 {
+        let contentVisibleHeight = UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50
+        if contentHeight <= contentVisibleHeight {
             return
         } else {
-            let newOffsetY = min(max(contentHeight - scrollView.frame.height, -UIScreen.navBarHeight()),
-                                 244 - UIScreen.navBarHeight())
-            tableView.contentOffset.y = newOffsetY
-            let cellHeight = (UIScreen.mainHeight() - 6) / 3 + 3
+            let cellHeight = (UIScreen.mainHeight() - 6) / 3
             let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
-            scrollView.contentOffset.y = cellHeight * lineCount - scrollView.frame.height
+            let scrollViewOffsetY = cellHeight * lineCount + 3 * (lineCount - 1) - scrollView.frame.height
+            if scrollView.bounds.origin.y != scrollViewOffsetY {
+                scrollView.bounds = CGRect(origin: .zero, size: scrollView.bounds.size)
+                scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
+                
+            }
+            let tableViewOffsetY = min(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 244)
+            if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
+                tableView.bounds = CGRect(origin: CGPoint(x: 0, y: -UIScreen.navBarHeight()),
+                                          size: tableView.bounds.size)
+                tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
+            }
+           
         }
     }
     

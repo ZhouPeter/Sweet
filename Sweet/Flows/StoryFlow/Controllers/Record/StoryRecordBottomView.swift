@@ -23,7 +23,11 @@ protocol StoryRecordBottomViewDelegate: class {
 
 final class StoryRecordBottomView: UIView {
     weak var delegate: StoryRecordBottomViewDelegate?
-    
+    var isIndicatorHidden = false {
+        didSet {
+            indicator.isHidden = isIndicatorHidden
+        }
+    }
     private var buttons = [UIButton]()
     private let indicator = UIImageView(image: #imageLiteral(resourceName: "ArrowIndicator"))
     private var indicatorCenterX: NSLayoutConstraint?

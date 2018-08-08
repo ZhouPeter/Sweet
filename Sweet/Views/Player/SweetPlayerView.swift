@@ -85,10 +85,10 @@ class SweetPlayerView: UIView {
 
         }
     }
-    var isHasVolume = true {
+    var isVideoMuted = true {
         didSet {
-            playerLayer?.isHasVolume = isHasVolume
-            controlView.isHasVolume = isHasVolume
+            playerLayer?.isVideoMuted = isVideoMuted
+            controlView.isVideoMuted = isVideoMuted
         }
     }
     weak var avPlayer: AVPlayer? {
@@ -425,8 +425,8 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 seek(0)
                 play()
             case .mute:
-                isHasVolume = !isHasVolume
-                delegate?.sweetPlayer(player: self, isMuted: !isHasVolume)
+                isVideoMuted = !isVideoMuted
+                delegate?.sweetPlayer(player: self, isMuted: isVideoMuted)
             default:
                 logger.error("unhandled Actions")
             }

@@ -10,12 +10,12 @@ import UIKit
 
 class SweetPlayerCellControlView: SweetPlayerControlView {
 
-    override var isHasVolume: Bool {
+    override var isVideoMuted: Bool {
         didSet {
-            if isHasVolume {
-                voiceButton.setImage(#imageLiteral(resourceName: "Voice"), for: .normal)
-            } else {
+            if isVideoMuted {
                 voiceButton.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
+            } else {
+                voiceButton.setImage(#imageLiteral(resourceName: "Voice"), for: .normal)
             }
         }
     }

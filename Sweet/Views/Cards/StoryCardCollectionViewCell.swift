@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import SDWebImage
 class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = StoryCollectionViewCellModel
     private var viewModel: ViewModelType?
@@ -18,34 +18,25 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .poke {
-                coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
+//                coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
+                coverImageView.sd_setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
                 let centerX = viewModel.pokeCenter.x * contentView.bounds.width
                 let centerY = viewModel.pokeCenter.y * contentView.bounds.height
                 pokeViewCenterXConstraint?.constant = centerX
                 pokeViewCenterYConstraint?.constant = centerY
             } else {
-                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3)
+                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: coverImageView.frame.size)
                 pokeView.isHidden = true
             }
         } else {
-            coverImageView.kf.setImage(with: viewModel.imageURL)
+            coverImageView.sd_setImage(with: viewModel.imageURL)
             pokeView.isHidden = true
         }
-        avatarImageView.kf.setImage(with: viewModel.avatarImageURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarImageURL)
         nameLabel.text = viewModel.name
         avatarCirCleImageView.image = viewModel.isRead ? #imageLiteral(resourceName: "StoryRead") : #imageLiteral(resourceName: "StoryUnread")
     }
-    
-//    override var isSelected: Bool {
-//        set {}
-//        get { return super.isSelected }
-//    }
-//    
-//    override var isHighlighted: Bool {
-//        set {}
-//        get { return super.isHighlighted }
-//    }
     
     private lazy var coverMaskView: UIView = {
         let view = UIView()

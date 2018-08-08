@@ -32,3 +32,27 @@ class FocusView: UIView {
         path.fill()
     }
 }
+
+class FocusTagView: UIView {
+    let focusPath: CGPath
+    
+    init(focusPath: CGPath) {
+        self.focusPath = focusPath
+        super.init(frame: .zero)
+        backgroundColor = .clear
+        alpha = 0.6
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        let path = UIBezierPath(rect: rect)
+        let hole = UIBezierPath(cgPath: focusPath)
+        path.append(hole)
+        path.usesEvenOddFillRule = true
+        UIColor.black.setFill()
+        path.fill()
+    }
+}

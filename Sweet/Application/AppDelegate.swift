@@ -11,7 +11,7 @@ import SwiftyUserDefaults
 import AVKit
 import VolumeBar
 import Contacts
-import Kingfisher
+
 var allowRotation = false
 
 @UIApplicationMain
@@ -38,10 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         #if DEBUG
-        try? FileManager.default.removeItem(at: URL.cachesURL())
+            window = DebugWindow(frame: UIScreen.main.bounds)
+        #else
+            window = UIWindow(frame: UIScreen.main.bounds)
         #endif
         
-        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
         setupVolumeBar()
@@ -55,12 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         uploadContacts()
         addObservers()
-        KingfisherManager.shared.cache.maxMemoryCost = 100 * 1024 * 1024
         return true
     }
     
     func application(_ application: UIApplication,
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        logger.debug(userInfo)
         UMessage.didReceiveRemoteNotification(userInfo)
     }
     
@@ -88,6 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         logger.debug(deviceTokenString)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return WXApi.handleOpen(url, delegate: WXApiManager.shared)
     }
     
 }

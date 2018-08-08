@@ -68,8 +68,16 @@ class FeedbackController: BaseViewController, FeedbackView {
     }()
     
     private lazy var feedbackView: SubmitTypeView = {
-        let view = SubmitTypeView(title: "意见反馈", isSelected: true)
+        let view = SubmitTypeView(title: "意见建议", isSelected: true)
         view.tag = 1
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
+        view.addGestureRecognizer(tap)
+        return view
+    }()
+    
+    private lazy var complainView: SubmitTypeView = {
+        let view = SubmitTypeView(title: "侵权投诉")
+        view.tag = 2
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
         view.addGestureRecognizer(tap)
         return view
@@ -77,7 +85,7 @@ class FeedbackController: BaseViewController, FeedbackView {
     
     private lazy var appealView: SubmitTypeView = {
         let view = SubmitTypeView(title: "封禁申诉")
-        view.tag = 2
+        view.tag = 3
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressTypeView(_:)))
         view.addGestureRecognizer(tap)
         return view
@@ -126,7 +134,7 @@ class FeedbackController: BaseViewController, FeedbackView {
     private var feedbackType: Int = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "意见反馈"
+        navigationItem.title = "用户反馈"
         view.backgroundColor = UIColor.xpGray()
         setupUI()
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressView(_:)))
@@ -151,12 +159,19 @@ class FeedbackController: BaseViewController, FeedbackView {
         if let view = tap.view {
             if view.tag == 1 {
                 feedbackView.selectedImageView.isHidden = false
+                complainView.selectedImageView.isHidden = true
                 appealView.selectedImageView.isHidden = true
                 feedbackType = 1
             } else if view.tag == 2 {
                 feedbackView.selectedImageView.isHidden = true
-                appealView.selectedImageView.isHidden = false
+                complainView.selectedImageView.isHidden = false
+                appealView.selectedImageView.isHidden = true
                 feedbackType = 2
+            } else if view.tag == 3 {
+                feedbackView.selectedImageView.isHidden = true
+                complainView.selectedImageView.isHidden = true
+                appealView.selectedImageView.isHidden = false
+                feedbackType = 3
             }
         }
     }
@@ -182,20 +197,25 @@ class FeedbackController: BaseViewController, FeedbackView {
         firstLineView.align(.right)
         firstLineView.pin(.bottom, to: feedbackView)
         firstLineView.constrain(height: 0.5)
-        view.addSubview(appealView)
-        appealView.align(.left)
-        appealView.align(.right)
-        appealView.pin(.bottom, to: firstLineView)
-        appealView.constrain(height: 45)
+        view.addSubview(complainView)
+        complainView.align(.left)
+        complainView.align(.right)
+        complainView.pin(.bottom, to: firstLineView)
+        complainView.constrain(height: 45)
         view.addSubview(sencondLineView)
         sencondLineView.align(.left)
         sencondLineView.align(.right)
-        sencondLineView.pin(.bottom, to: appealView)
+        sencondLineView.pin(.bottom, to: complainView)
         sencondLineView.constrain(height: 0.5)
+        view.addSubview(appealView)
+        appealView.align(.left)
+        appealView.align(.right)
+        appealView.pin(.bottom, to: sencondLineView)
+        appealView.constrain(height: 45)
         view.addSubview(contentSectionLabel)
         contentSectionLabel.align(.left, inset: 10)
         contentSectionLabel.align(.right)
-        contentSectionLabel.pin(.bottom, to: sencondLineView)
+        contentSectionLabel.pin(.bottom, to: appealView)
         contentSectionLabel.constrain(height: 25)
         view.addSubview(textView)
         textView.align(.left)

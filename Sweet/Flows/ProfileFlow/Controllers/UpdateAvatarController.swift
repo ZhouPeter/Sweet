@@ -103,7 +103,7 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
             Upload.uploadFileToQiniu(localURL: localURL, type: .userAvatar) { (response, error) in
                 guard let response = response, error == nil else {
                     logger.debug(error ?? "")
-                    self.toast(message: "头像上传失败", duration: 2)
+                    self.toast(message: "头像上传失败")
                     return
                 }
                 let url = response.host + response.key
@@ -116,7 +116,7 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
                                     self.avatarImageView.kf.setImage(with: localURL)
                                     let remain = response["remain"] as? Int
                                     self.saveCompletion?(url, remain)
-                                    self.toast(message: "头像修改成功", duration: 2)
+                                    self.toast(message: "头像修改成功")
 
                                 case let .failure(error):
                                     if error.code == WebErrorCode.updateLimit.rawValue {
@@ -130,7 +130,7 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
             }
         } catch {
             logger.debug(error)
-            self.toast(message: "头像上传失败", duration: 2)
+            self.toast(message: "头像上传失败")
         }
     }
 }

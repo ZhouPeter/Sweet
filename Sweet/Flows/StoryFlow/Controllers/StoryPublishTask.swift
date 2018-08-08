@@ -13,7 +13,7 @@ class StoryPublishTask: AsynchronousOperation {
     private let storage: Storage
     private let generator = StoryGenerator()
     private var filter: LookupFilter?
-    
+    var finishBlock: ((Bool) -> Void)?
     init(storage: Storage, draft: StoryDraft) {
         self.draft = draft
         self.storage = storage
@@ -31,13 +31,16 @@ class StoryPublishTask: AsynchronousOperation {
         
         generate { [weak self] in
             guard let `self` = self else { return }
+            var isSuccess = false
             self.publish(completion: { (result) in
                 self.storage.write({ (realm) in
                     guard result else { return }
                     if let data = realm.object(ofType: StoryDraftData.self, forPrimaryKey: self.draft.filename) {
                         realm.delete(data)
+                        isSuccess = true
                     }
                 }) { (_) in
+                    self.finishBlock?(isSuccess)
                     self.state = .finished
                 }
             })
@@ -94,7 +97,7 @@ class StoryPublishTask: AsynchronousOperation {
     private func publish(completion: @escaping (Bool) -> Void) {
         let uploadType: UploadType
         switch draft.storyType {
-        case .text, .image:
+        case .text, .image, .share:
             uploadType = .storyImage
         default:
             uploadType = .storyVideo
@@ -112,7 +115,10 @@ class StoryPublishTask: AsynchronousOperation {
                     type: self.draft.storyType,
                     topic: self.draft.topic,
                     pokeCenter: self.draft.pokeCenter,
-                    touchPoints: self.draft.touchPoints
+                    touchPoints: self.draft.touchPoints,
+                    comment: self.draft.comment,
+                    desc: self.draft.desc,
+                    rawUrl: self.draft.url
                 ),
                 completion: { (result) in
                     logger.debug(result)

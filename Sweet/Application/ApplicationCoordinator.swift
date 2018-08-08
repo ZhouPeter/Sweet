@@ -38,6 +38,12 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runAuthFlow()
             case .power:
                 runPowerFlow()
+            case .message:
+                if case let .main(user, token) = instructor {
+                    runMainFlow(user: user, token: token, isIMFlowSelected: true)
+                } else {
+                    runAuthFlow()
+                }
             default:
                 childCoordinators.forEach { $0.start(with: option) }
             }
@@ -90,12 +96,15 @@ final class ApplicationCoordinator: BaseCoordinator {
         coordinator.start()
     }
     
-    private func runMainFlow(user: User, token: String) {
+    private func runMainFlow(user: User, token: String, isIMFlowSelected: Bool = false) {
         logger.debug()
         let (coordinator, flow) = coordinatorFactory.makeMainCoordinator(user: user, token: token)
         addDependency(coordinator)
         router.setRootFlow(flow)
         coordinator.start()
+        if isIMFlowSelected {
+            flow.selectIMFlow()
+        }
     }
 }
 

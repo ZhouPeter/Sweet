@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageKit
-import Kingfisher
+import SDWebImage
 
 final class OptionCardMessageCell: MediaMessageCell {
     private let label: UILabel = {
@@ -55,10 +55,12 @@ final class OptionCardMessageCell: MediaMessageCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? OptionCardContent else { return }
         label.text = content.text
-        leftOptionImageView.kf
-            .setImage(with: URL(string: content.leftImageURLString)?.imageView2(size: leftOptionImageView.bounds.size))
-        rightOptionImageView.kf
-            .setImage(with: URL(string: content.rightImageURLString)?.imageView2(size: leftOptionImageView.bounds.size))
+        leftOptionImageView.sd_setImage(
+            with: URL(string: content.leftImageURLString)?.imageView2(size: leftOptionImageView.bounds.size)
+        )
+        rightOptionImageView.sd_setImage(
+            with: URL(string: content.rightImageURLString)?.imageView2(size: leftOptionImageView.bounds.size)
+        )
         leftResultView.isHidden = content.result != .left
         rightResultView.isHidden = content.result != .right
         showLoading(false)
@@ -95,8 +97,8 @@ final class OptionCardMessageCell: MediaMessageCell {
         label.text = nil
         leftOptionImageView.image = nil
         rightOptionImageView.image = nil
-        leftOptionImageView.kf.cancelDownloadTask()
-        rightOptionImageView.kf.cancelDownloadTask()
+        leftOptionImageView.sd_cancelCurrentImageLoad()
+        rightOptionImageView.sd_cancelCurrentImageLoad()
         showLoading(true)
     }
 }

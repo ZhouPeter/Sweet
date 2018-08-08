@@ -12,6 +12,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
+
     var cellNumber: Int = 0
     var user: User
     var avatar: String
@@ -55,9 +56,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         super.viewDidLoad()
         view.addSubview(tableView)
         tableView.fill(in: view)
+        loadRequest()
     }
     
     func loadRequest() {
+        if viewModels.count > 0 { return }
         page = 0
         web.request(
             .activityList(page: 0, userId: user.userId,
@@ -146,8 +149,12 @@ extension ActivitiesController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
-                            Messenger.shared.sendContentCard(content, from: from, to: toUserId)
+                        if resultCard.cardEnumType == .content {
+                            if let content = content as? ContentCardContent {
+                                Messenger.shared.sendContentCard(content, from: from, to: toUserId)
+                            } else if let content = content as? ArticleMessageContent {
+                                Messenger.shared.sendArtice(content, from: from, to: toUserId)
+                            }
                         } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId)
                         }
@@ -209,8 +216,10 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
-            let controller = WebViewController(urlString: url) {
-                self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
+            let controller = ShareWebViewController(
+                urlString: url,
+                cardId: viewModels[indexPath.row].fromCardId) {
+                    self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
             }
             navigationController?.pushViewController(controller, animated: true)
         }
@@ -233,4 +242,3 @@ extension ActivitiesController {
         }
     }
 }
-

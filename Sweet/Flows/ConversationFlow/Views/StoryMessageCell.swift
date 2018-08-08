@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageKit
-import Kingfisher
+import SDWebImage
 
 final class StoryMessageCell: MediaMessageCell {
     lazy var thumbnailImageView: UIImageView = {
@@ -27,7 +27,7 @@ final class StoryMessageCell: MediaMessageCell {
         messageContainerView.backgroundColor = .clear
         mediaContainerView.backgroundColor = .black
         guard case let .custom(value) = message.kind, let content = value as? StoryMessageContent else { return }
-        thumbnailImageView.kf.setImage(with: content.thumbnailURL()) { [weak self] (_, _, _, _) in
+        thumbnailImageView.sd_setImage(with: content.thumbnailURL()) { [weak self] (_, _, _, _) in
             self?.mediaContainerView.backgroundColor = .clear
             self?.showLoading(false)
         }
@@ -60,6 +60,6 @@ final class StoryMessageCell: MediaMessageCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         thumbnailImageView.image = nil
-        thumbnailImageView.kf.cancelDownloadTask()
+        thumbnailImageView.sd_cancelCurrentImageLoad()
     }
 }

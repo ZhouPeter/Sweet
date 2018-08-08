@@ -10,8 +10,8 @@ import Foundation
 
 extension UIView {
     func screenshot(afterScreenUpdates: Bool = false) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(UIScreen.main.bounds.size, false, UIScreen.main.scale)
-        drawHierarchy(in: UIScreen.main.bounds, afterScreenUpdates: afterScreenUpdates)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in: bounds, afterScreenUpdates: afterScreenUpdates)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image

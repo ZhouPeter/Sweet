@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageKit
-import Kingfisher
+import SDWebImage
 import STPopupPreview
 import JXPhotoBrowser
 
@@ -33,6 +33,8 @@ final class ConversationController: MessagesViewController, ConversationView {
     } ()
     private var incommingBubbleMaskCache = [UIView: UIImageView]()
     private var outgoingBubbleMaskCache = [UIView: UIImageView]()
+    private var contentInsetBottom: CGFloat?
+    private var contentOffset: CGPoint?
     
     init(user: User, buddy: User) {
         self.user = user
@@ -78,6 +80,19 @@ final class ConversationController: MessagesViewController, ConversationView {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let bottom = contentInsetBottom {
+            messagesCollectionView.contentInset.bottom = bottom
+            messagesCollectionView.scrollIndicatorInsets.bottom = bottom
+            if let offset = contentOffset {
+                messagesCollectionView.contentOffset = offset
+                contentOffset = nil
+            }
+            contentInsetBottom = nil
+        }
+    }
+    
     override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
         guard parent == nil else { return }
@@ -95,6 +110,10 @@ final class ConversationController: MessagesViewController, ConversationView {
         present(controller, animated: true, completion: nil)
     }
     
+    func didUnblock() {
+        buddy.isBlacklisted = false
+    }
+    
     // MARK: - Private
     
     private func setupCollectionView() {
@@ -104,6 +123,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messagesCollectionView.register(ContentCardMessageCell.self)
         messagesCollectionView.register(SweetTextMessageCell.self)
         messagesCollectionView.register(ImageMessageCell.self)
+        messagesCollectionView.register(ArticleMessageCell.self)
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         messagesCollectionView.backgroundColor = .clear
@@ -191,6 +211,11 @@ final class ConversationController: MessagesViewController, ConversationView {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
+        if value is ArticleMessageContent {
+            let cell = messagesCollectionView.dequeueReusableCell(ArticleMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
     
@@ -245,7 +270,12 @@ extension ConversationController: MessagesDataSource {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
         let avatarURLString = message.sender.id == "\(user.userId)" ? user.avatar : buddy.avatar
-        avatarView.kf.setImage(with: URL(string: avatarURLString), placeholder: #imageLiteral(resourceName: "Logo"))
+        avatarView.sd_setImage(
+            with: URL(string: avatarURLString),
+            placeholderImage: #imageLiteral(resourceName: "Logo"),
+            options: SDWebImageOptions(rawValue: 0),
+            completed: nil
+        )
     }
 }
 
@@ -385,13 +415,16 @@ extension ConversationController: MessageCellDelegate {
             browser.show()
             return
         }
-        guard message.type == .card || message.type == .story else { return }
+        
         if let content = message.content as? OptionCardContent {
             let preview = OptionCardPreviewController(content: content)
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         } else if let content = message.content as? ContentCardContent {
             let preview = WebViewController(urlString: content.url)
+            navigationController?.pushViewController(preview, animated: true)
+        } else if let content = message.content as? ArticleMessageContent {
+            let preview = WebViewController(urlString: content.articleURL)
             navigationController?.pushViewController(preview, animated: true)
         } else if let content = message.content as? StoryMessageContent {
             web.request(
@@ -403,6 +436,8 @@ extension ConversationController: MessageCellDelegate {
                 case .failure(let error):
                     logger.error(error)
                 case .success(let response):
+                    self.contentInsetBottom = self.messagesCollectionView.contentInset.bottom
+                    self.contentOffset = self.messagesCollectionView.contentOffset
                     self.delegate?.conversationControllerShowsStory(
                         StoryCellViewModel(model: response.story),
                         user: message.from == self.user.userId ? self.user : self.buddy,

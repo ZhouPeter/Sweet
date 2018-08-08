@@ -20,7 +20,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         return label
     }()
     
-    var contentImageView: UIImageView = {
+    lazy var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
@@ -29,6 +29,13 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    lazy var playerView: SweetPlayerView = {
+        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
+        view.backgroundColor = .black
+        view.isUserInteractionEnabled = true
+        return view
     }()
         
     lazy var emojiView: EmojiControlView = {
@@ -62,6 +69,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentImageView.align(.right, to: customContent, inset: 5)
         contentImageView.align(.bottom, to: customContent, inset: 50)
         contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
+        customContent.addSubview(playerView)
+        playerView.fill(in: contentImageView)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
         emojiView.align(.left)
@@ -107,91 +116,57 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     
     private func loadItemValues() {
-        let resource = SweetPlayerResource(url: viewModel!.videoURL)
-        let asset = resource.definitions[0].avURLAsset
-        asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
-            DispatchQueue.main.async {
-                if asset.isPlayable {
-//                    self.loadedResourceForPlay(asset: asset)
-                    self.loadedResourceForPlay2(asset: asset)
-                }
-            }
-        }
-    }
-    
-    private func loadedResourceForPlay2(asset: AVAsset) {
-        guard  let viewModel = viewModel else { return }
-        let tracks = asset.tracks
-        let videoWidth = contentImageView.bounds.width
-        let contentHeight = viewModel.contentHeight
-        let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
-        let contentMaxHeight = videoContentSumHeight - videoWidth
-        for track in tracks where track.mediaType  == .video {
-             let naturalSize = track.naturalSize
-            if naturalSize.width < naturalSize.height {
-                var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
-                if contentLabel.text == "" || contentLabel.text == nil {
-                    videoHeight += 10 + contentHeight
-                }
-                if videoHeight > videoWidth {
-                    if videoHeight / videoWidth > naturalSize.height / naturalSize.width {
-                        videoHeight = videoWidth * (naturalSize.height / naturalSize.width)
+        if let asset = playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
+            loadedResourceForPlay(asset: asset)
+        } else {
+            let resource = SweetPlayerResource(url: viewModel!.videoURL)
+            let asset = resource.definitions[0].avURLAsset
+            asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
+                DispatchQueue.main.async {
+                    if asset.isPlayable {
+                        self.loadedResourceForPlay(asset: asset)
                     }
-                } else {
-                    videoHeight = videoWidth
-                }
-                contentViewHeight?.constant = videoHeight
-                contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
-            } else {
-                let videoHeight = videoWidth
-                let contentMaxHeight = videoContentSumHeight - videoHeight
-                let contentHeight = viewModel.contentHeight
-                contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
-                contentViewHeight?.constant = videoHeight
-            }
-            for subview in contentImageView.subviews {
-                if let subview = subview as? SweetPlayerView {
-                    customContent.layoutIfNeeded()
-                    subview.frame = contentImageView.bounds
                 }
             }
         }
     }
     
     private func loadedResourceForPlay(asset: AVAsset) {
-        let tracks = asset.tracks
+        guard  let viewModel = viewModel else { return }
+        guard let track = asset.tracks(withMediaType: .video).first else { return }
         let videoWidth = contentImageView.bounds.width
-        for track in tracks where track.mediaType  == .video {
-            let naturalSize = track.naturalSize
-            let contentMinHeight =
-                (contentLabel.text == "" || contentLabel.text == nil) ? 0 : contentLabel.font.lineHeight
-            var videoMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - contentMinHeight
-            if contentMinHeight == 0 { videoMaxHeight += 10 }
-            if naturalSize.width < naturalSize.height {
-                if videoMaxHeight / videoWidth > naturalSize.height / naturalSize.width {
-                    let scaleHeight = videoWidth * (naturalSize.height / naturalSize.width)
-                    contentViewHeight?.constant = scaleHeight
-                    contentLabelHeight?.constant = contentMinHeight + videoMaxHeight - scaleHeight
-                } else {
-                    contentViewHeight?.constant = videoMaxHeight
-                    contentLabelHeight?.constant = contentMinHeight
-                }
-                for subview in contentImageView.subviews {
-                    if let subview = subview as? SweetPlayerView {
-                        customContent.layoutIfNeeded()
-                        subview.frame = contentImageView.bounds
-                    }
+        let contentHeight = viewModel.contentHeight
+        let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
+        let contentMaxHeight = videoContentSumHeight - videoWidth
+        let naturalSize = track.naturalSize
+        if naturalSize.width < naturalSize.height {
+            var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
+            if contentLabel.text == "" || contentLabel.text == nil {
+                videoHeight += 10 + contentHeight
+            }
+            if videoHeight > videoWidth {
+                if videoHeight / videoWidth > naturalSize.height / naturalSize.width {
+                    videoHeight = videoWidth * (naturalSize.height / naturalSize.width)
                 }
             } else {
-                let videoHeight = videoWidth
-                let contentMaxHeight = cardCellHeight - 110 - titleLabel.font.lineHeight - videoHeight
-                let contentHeight = viewModel!.contentHeight
-                contentLabelHeight?.constant = contentHeight > contentMaxHeight ? contentMaxHeight : contentHeight
-                contentViewHeight?.constant = videoHeight
+                videoHeight = videoWidth
+            }
+            contentViewHeight?.constant = videoHeight
+            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
+        } else {
+            let videoHeight = videoWidth
+            let contentMaxHeight = videoContentSumHeight - videoHeight
+            let contentHeight = viewModel.contentHeight
+            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
+            contentViewHeight?.constant = videoHeight
+        }
+        for subview in contentImageView.subviews {
+            if let subview = subview as? SweetPlayerView {
+                customContent.layoutIfNeeded()
+                subview.frame = contentImageView.bounds
             }
         }
     }
-
 }
 // MARK: - Actions
 extension VideoCardCollectionViewCell {

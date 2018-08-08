@@ -60,7 +60,7 @@ extension CardsBaseController {
             let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
                 web.request(.cardReport(cardId: cardId), completion: {
                     switch $0 {
-                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈，将减少相关推送", dismissAfter: 2)
+                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
                     case .failure: break
                     }
                 })
@@ -121,6 +121,20 @@ extension CardsBaseController {
             cellConfigurators.append(configurator)
             cards.append(card)
         default: break
+        }
+    }
+    
+    func updateContentCellEmoji(index: Int) {
+        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
+            guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: configurator.viewModel)
+            }
+        } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
+            guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: configurator.viewModel)
+            }
         }
     }
     
@@ -186,8 +200,12 @@ extension CardsBaseController {
                 case let .success(response):
                     let resultCard = response.card
                     if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content, let content = content as? ContentCardContent {
-                            Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
+                        if resultCard.cardEnumType == .content {
+                            if let content = content as? ContentCardContent {
+                                Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
+                            } else if let content = content as? ArticleMessageContent {
+                                Messenger.shared.sendArtice(content, from: from, to: toUserId, extra: activityId)
+                            }
                         } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
                             Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
                         }
@@ -210,9 +228,11 @@ extension CardsBaseController {
                 guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
                 guard let item = self.cards[index].activityList!.index(
                     where: { $0.activityId == activityId }) else { return }
+                guard var configurator = self.cellConfigurators[index] as? CellConfigurator<ActivitiesCardCollectionViewCell> else {
+                    return
+                }
                 self.cards[index].activityList![item].like = true
-                let viewModel = ActivitiesCardViewModel(model: self.cards[index])
-                let configurator = CellConfigurator<ActivitiesCardCollectionViewCell>(viewModel: viewModel)
+                configurator.viewModel.activityViewModels[item].like = true
                 self.cellConfigurators[index] = configurator
                 if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
                     let acCell = cell as? ActivitiesCardCollectionViewCell {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Kingfisher
+import SDWebImage
 
 extension ContentCardCollectionViewCell {
     func layout(urls: [URL]?) {
@@ -109,8 +109,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight
             let textSpacing = cardCellHeight - contentHeight - 110 - titleLabel.frame.height - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 one(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -229,8 +228,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomHeight + spacing
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 threeOrFour(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -296,8 +294,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomHeight + spacing
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 five(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -427,8 +424,7 @@ extension ContentCardCollectionViewCell {
             let containerSumHeight = containerMaxHeight + bottomWidth * 2 + spacing * 2
             let textSpacing = cardCellHeight - 110 - titleLabel.frame.height - contentHeight - containerSumHeight
             if textSpacing > 40 && urls.count == viewModel!.imageURLList!.count  {
-                var newUrls = urls
-                newUrls.removeLast()
+                let newUrls = Array<URL>(urls[0..<urls.count - 1])
                 seven(urls: newUrls)
             } else {
                 contentLabelHeight?.constant = contentHeight
@@ -530,20 +526,33 @@ extension ContentCardCollectionViewCell {
             }
         }
         guard let url = url?.imageView2(size: imageView.bounds.size) else { return }
-        imageView.kf.setImage(with: url, completionHandler: { (image, error, _, _) in
-            guard image != nil else { return }
-            if !isAutoAnimating { imageView.stopAnimating() }
-            UIView.animate(withDuration: 0.25, animations: {
-                imageView.alpha = 1
-            })
-        })
-//        ImageDownloader.default.downloadImage(with: url) { (image, _, url, data) in
-//            guard  image != nil else { return }
-//            if let format = data?.imageFormat {
-//                print(format)
+
+        SDWebImageManager.shared.loadImage(
+               with: url,
+               options: [],
+               progress: nil) { (image, data, _, _, _, _) in
+                guard let image = image else { return }
+                if isAutoAnimating {
+                    imageView.image = image
+                } else {
+                    if let images = image.images {
+                        imageView.image = nil
+                        imageView.image = images[0]
+                    } else {
+                        imageView.image = image
+                    }
+                }
+                UIView.animate(withDuration: 0.25, animations: {
+                    imageView.alpha = 1
+                })
+        }
+//        imageView.sd_setImage(with: url) { (image, _, _, _) in
+//            guard let image = image else { return }
+//            if isAutoAnimating == false {
+//                if let animateImage = image.images {
+//                    imageView.image = animateImage[0]
+//                }
 //            }
-//
-//            imageView.kf.setImage(with: url)
 //            UIView.animate(withDuration: 0.25, animations: {
 //                imageView.alpha = 1
 //            })

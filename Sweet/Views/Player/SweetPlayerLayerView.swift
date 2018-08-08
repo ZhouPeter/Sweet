@@ -83,13 +83,9 @@ class SweetPlayerLayerView: UIView {
             }
         }
     }
-    var isHasVolume: Bool = true {
+    var isVideoMuted: Bool = true {
         didSet {
-            if !isHasVolume {
-                self.player?.isMuted = true
-            } else {
-                self.player?.isMuted = false
-            }
+            self.player?.isMuted = isVideoMuted
         }
     }
     
@@ -159,11 +155,7 @@ class SweetPlayerLayerView: UIView {
     open func play() {
         if let player = player {
             player.play()
-            if !isHasVolume {
-                player.isMuted = true
-            } else {
-                player.isMuted = false
-            }
+            player.isMuted = isVideoMuted
             setupTimer()
             isPlaying = true
         }
@@ -341,7 +333,7 @@ class SweetPlayerLayerView: UIView {
                 }
             })
             // 缓冲区空了，需要等待数据
-            bufferEmptyToken = item.observe(\.playbackBufferEmpty, options: .new, changeHandler: { (_, _) in
+            bufferEmptyToken = item.observe(\.isPlaybackBufferEmpty, options: .new, changeHandler: { (_, _) in
                 // 当缓冲是空的时候
                 if self.playerItem!.isPlaybackBufferEmpty {
                     self.state = .buffering
@@ -349,7 +341,7 @@ class SweetPlayerLayerView: UIView {
                 }
             })
             // 缓冲区有足够数据可以播放了
-            keepUpToken = item.observe(\.playbackLikelyToKeepUp, options: .new, changeHandler: { (_, _) in
+            keepUpToken = item.observe(\.isPlaybackLikelyToKeepUp, options: .new, changeHandler: { (_, _) in
                 if item.isPlaybackBufferEmpty {
                     if self.state != .bufferFinished && self.hasReadyToPlay {
                         self.state = .bufferFinished

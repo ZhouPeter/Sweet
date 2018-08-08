@@ -7,7 +7,6 @@
 //
 
 import MessageKit
-import Kingfisher
 
 final class ImageMessageCell: MediaMessageCell {
     let imageView: UIImageView = {
@@ -30,9 +29,8 @@ final class ImageMessageCell: MediaMessageCell {
         mediaContainerView.backgroundColor = .black
         messageContainerView.backgroundColor = .clear
         guard case let .custom(value) = message.kind, let content = value as? ImageMessageContent else { return }
-        imageView.kf
-            .setImage(
-                with: URL(string: content.url)?.imageView2(size: imageView.bounds.size)
+        imageView
+            .sd_setImage(with: URL(string: content.url)?.imageView2(size: imageView.bounds.size)
             ) { [weak self] (_, _, _, _) in
                 self?.mediaContainerView.backgroundColor = .clear
                 self?.showLoading(false)

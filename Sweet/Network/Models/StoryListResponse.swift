@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 enum StoryType: UInt, Codable {
     case unknown
@@ -14,6 +15,7 @@ enum StoryType: UInt, Codable {
     case video
     case text
     case poke
+    case share
     
     var isVideoFile: Bool {
         if self == .video || self == .poke {
@@ -48,7 +50,9 @@ struct StoryResponse: Codable {
     let centerX: CGFloat?
     let centerY: CGFloat?
     var touchArea: [TouchPoint]
-    let uvNum: UInt
+    let comment: String?
+    let desc: String?
+    let url: String?
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -66,21 +70,17 @@ struct StoryResponse: Codable {
         case centerX = "x"
         case centerY = "y"
         case touchArea
-        case uvNum
+        case comment
+        case desc
+        case url
     }
 }
+
 struct TouchPoint: Codable {
-    let originX: CGFloat
-    let originY: CGFloat
-    enum CodingKeys: String, CodingKey {
-        case originX = "x"
-        case originY = "y"
-    }
-    init(x: CGFloat, y: CGFloat) {
-        originX = x
-        originY = y
-    }
+    let x: CGFloat
+    let y: CGFloat
 }
+
 struct StoryGetResponse: Codable {
     let story: StoryResponse
 }

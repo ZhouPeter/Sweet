@@ -46,6 +46,7 @@ final class MainController: PageboyViewController, MainView {
     private var statusBarStyle = UIStatusBarStyle.lightContent
     private var statusBarHidden: Bool = false
     private var reachability = Reachability()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -69,7 +70,10 @@ final class MainController: PageboyViewController, MainView {
         DispatchQueue.main.async {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
         }
-
+        if let page = pageToScroll {
+            scrollToPage(page, animated: false)
+            pageToScroll = nil
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -82,6 +86,16 @@ final class MainController: PageboyViewController, MainView {
     
     override var prefersStatusBarHidden: Bool {
         return statusBarHidden
+    }
+    
+    private var pageToScroll: PageboyViewController.Page?
+    
+    func selectIMFlow() {
+        if viewIfLoaded == nil {
+            pageToScroll = .at(index: 2)
+        } else {
+            scrollToPage(.at(index: 2), animated: false)
+        }
     }
     
     // MARK: - Private
@@ -148,6 +162,7 @@ final class MainController: PageboyViewController, MainView {
             object: reachability)
 
     }
+    
     @objc func reachabilityChanged(note: Notification) {
         let reachability = note.object as! Reachability
         switch reachability.connection {
@@ -157,6 +172,7 @@ final class MainController: PageboyViewController, MainView {
             JDStatusBarNotification.dismiss()
         }
     }
+    
     @objc func didReceivePageScrollDiableNote() {
         isScrollEnabled = false
     }
@@ -204,7 +220,6 @@ final class MainController: PageboyViewController, MainView {
         statusBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
     }
-    
 }
 
 extension MainController: PageboyViewControllerDataSource {
@@ -253,6 +268,9 @@ extension MainController: PageboyViewControllerDelegate {
     }
     
     private func updateStatusBar(at index: Int) {
+        if UIScreen.isIphoneX() {
+            return
+        }
         if index == 0 {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
         } else {

@@ -32,9 +32,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
     
     func setProgressView(ratio: CGFloat) {
-        var frame = contentView.bounds
+        layoutIfNeeded()
+        var frame = bounds
         frame.size.width = frame.width * ratio
         progressView.frame = frame
-
     }
 }

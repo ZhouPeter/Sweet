@@ -7,18 +7,40 @@
 //
 
 import UIKit
+import SwiftyUserDefaults
+import JDStatusBarNotification
 extension Notification.Name {
     static let dismissShareCard = Notification.Name(rawValue: "dismissShareCard")
 
 }
+enum ShareSection {
+    case wechat(length: Int)
+    case story(length: Int)
+    case contact(length: Int)
+}
+
+extension ShareCardController: WXApiManagerDelegate {
+    func managerDidRecvMessageResponse(response: SendMessageToWXResp) {
+        JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
+    }
+}
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
+    var shareCallback: ((_ draft: StoryDraft) -> Void)?
     private var userIds = [UInt64]() {
         didSet {
-            sendButton.backgroundColor = userIds.count == 0 ? UIColor(hex: 0xf2f2f2) : UIColor.xpBlue()
-            sendButton.isEnabled = userIds.count > 0
+            sendButton.backgroundColor = (isShareToStory || userIds.count > 0) ?  UIColor.xpBlue() : UIColor(hex: 0xf2f2f2)
+            sendButton.isEnabled = (isShareToStory || userIds.count > 0)
         }
     }
+    
+    private var isShareToStory = false {
+        didSet {
+            sendButton.backgroundColor = (isShareToStory || userIds.count > 0) ? UIColor.xpBlue() : UIColor(hex: 0xf2f2f2)
+            sendButton.isEnabled = (isShareToStory || userIds.count > 0)
+        }
+    }
+
     private lazy var topView = UIView()
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -58,11 +80,10 @@ class ShareCardController: BaseViewController {
     }()
     private lazy var shareTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "分享的话..."
+        textField.placeholder = "转发的话..."
         textField.font = UIFont.systemFont(ofSize: 14)
         textField.textColor = .black
         textField.backgroundColor = .white
-        textField.addTarget(self, action: #selector(textFieldEditChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -77,10 +98,20 @@ class ShareCardController: BaseViewController {
     }()
     private let keyboard = KeyboardObserver()
     private var sendButtonBottomConstraint: NSLayoutConstraint?
-    private let shareText: String?
-    
-    init(shareText: String? = nil) {
+    private var shareText: String?
+    private var storyDraft: StoryDraft?
+    private var sections = [ShareSection]()
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    init(shareText: String?) {
         self.shareText = shareText
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(shareText: String?, storyDraft: StoryDraft?) {
+        self.shareText = shareText
+        self.storyDraft = storyDraft
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -100,10 +131,12 @@ class ShareCardController: BaseViewController {
                                                selector: #selector(disMissNoti(_:)),
                                                name: .dismissShareCard,
                                                object: nil)
+        WXApiManager.shared.delegate = self
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .dismissShareCard, object: nil)
+        WXApiManager.shared.delegate = nil
     }
     
     @objc private func disMissNoti(_ noti: Notification) {
@@ -113,13 +146,27 @@ class ShareCardController: BaseViewController {
     @objc private func returnAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    private var storyPublishToken: NSKeyValueObservation?
     @objc private func sendAction(_ sender: UIButton) {
         sendCallback?(shareTextField.text!, userIds)
-    }
-    @objc private func textFieldEditChanged(_ textField: UITextField) {
-        
+        if var draft = storyDraft, isShareToStory {
+            draft.comment = shareTextField.text
+            shareCallback?(draft)
+        }
     }
     
+    private func updateSections() {
+        sections.removeAll()
+        if shareText != nil {
+            sections.append(.wechat(length: 1))
+        }
+        if storyDraft != nil {
+            sections.append(.story(length: 1))
+        }
+        if contactViewModels.count > 0 {
+            sections.append(.contact(length: contactViewModels.count))
+        }
+    }
     private func handleKeyboardEvent(_ event: KeyboardEvent) {
         switch event.type {
         case .willShow, .willHide, .willChangeFrame:
@@ -190,6 +237,7 @@ class ShareCardController: BaseViewController {
                     var viewModel = ContactViewModel(model: contact)
                     viewModel.isHiddeenSelectButton = false
                     self.contactViewModels.append(viewModel)
+                    self.updateSections()
                 })
                 self.tableView.reloadData()
             case let .failure(error):
@@ -207,6 +255,7 @@ class ShareCardController: BaseViewController {
                     var viewModel = ContactViewModel(model: contact)
                     viewModel.isHiddeenSelectButton = false
                     self.contactViewModels.append(viewModel)
+                    self.updateSections()
                 })
                 self.tableView.reloadData()
             case let .failure(error):
@@ -229,25 +278,31 @@ extension ShareCardController: UISearchBarDelegate {
 
 extension ShareCardController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return shareText == nil ? 1 : 2
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 && shareText != nil {
-            return 1
-        } else {
-            return contactViewModels.count
+        switch sections[section] {
+        case .wechat(let length), .story(let length), .contact(let length):
+            return length
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0  && shareText != nil {
+        switch sections[indexPath.section] {
+        case .wechat:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
             cell.accessoryType = .disclosureIndicator
-            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "分享给微信好友")
+            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "转发到微信好友")
             return cell
-        } else {
+        case .story:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
+            cell.update(image: #imageLiteral(resourceName: "StoryCover"), text: "转发到小故事", isCanSelected: true)
+            cell.addDateOnImage()
+            return cell
+        case .contact:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
             cell.update(viewModel: contactViewModels[indexPath.row])
@@ -257,14 +312,27 @@ extension ShareCardController: UITableViewDataSource {
 }
 
 extension ShareCardController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch sections[section] {
+        case .story, .contact:
+            return 8
+        case .wechat:
+            return 0
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 68
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && shareText != nil {
+        switch sections[indexPath.section] {
+        case .wechat:
             WXApi.sendText(text: shareText!, scene: .conversation)
-        } else {
+        case .story:
+            guard let cell = tableView.cellForRow(at: indexPath) as? ModuleTableViewCell else { fatalError() }
+            cell.selectButton.isSelected = !cell.selectButton.isSelected
+            isShareToStory = cell.selectButton.isSelected
+        case .contact:
             guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else { fatalError() }
             cell.selectButton.isSelected = !cell.selectButton.isSelected
             if cell.selectButton.isSelected {

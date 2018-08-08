@@ -5,6 +5,7 @@ target 'Sweet' do
   use_frameworks!
 
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
   pod 'Moya', '~> 11.0'
   pod 'UMCPush'
   pod 'RealmSwift'
@@ -28,7 +29,8 @@ target 'Sweet' do
   pod 'VolumeBar', '~> 3.0.3'
   pod 'JDStatusBarNotification'
   pod 'ReachabilitySwift'
-  
+  pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
+  pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   target 'Sweet Dev' do
   end
   

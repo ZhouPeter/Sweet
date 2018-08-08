@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import SwiftyUserDefaults
-import Kingfisher
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -83,19 +82,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         }
     }()
     
-    private lazy var playerView: SweetPlayerView = {
-        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
-        view.delegate = self
-        view.panGesture.isEnabled = false
-        view.panGesture.require(toFail: pan)
-        view.isHasVolume = false
-        view.backgroundColor = .black
-        view.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController))
-        view.controlView.addGestureRecognizer(tap)
-        return view
-    }()
-    
     private var isFetchLoadCards = false
     
     private var avPlayer: AVPlayer?
@@ -107,19 +93,22 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         return view
     }()
     
-    @objc private func showVideoPlayController() {
-        playerView.hero.isEnabled = true
-        playerView.hero.id = cards[index].video
-        playerView.hero.modifiers = [.arc]
-        let controller = PlayController()
-        controller.hero.isEnabled = true
-        controller.avPlayer = avPlayer
-        playerView.resource.scrollView = nil
-        controller.resource = playerView.resource
-        self.playerView.playerLayer?.playerToNil()
-        self.present(controller, animated: true, completion: nil)
-        isVideoMuted = false
-        playerView.isHasVolume = !isVideoMuted
+    @objc private func showVideoPlayController(_ tap: UITapGestureRecognizer) {
+        if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+            cell.playerView.hero.isEnabled = true
+            cell.playerView.hero.id = cards[index].video
+            cell.playerView.hero.modifiers = [.arc]
+            let controller = PlayController()
+            controller.hero.isEnabled = true
+            controller.avPlayer = avPlayer
+            controller.resource = cell.playerView.resource
+            cell.playerView.playerLayer?.playerToNil()
+            self.present(controller, animated: true, completion: nil)
+            isVideoMuted = false
+            cell.playerView.isVideoMuted = isVideoMuted
+            CardAction.clickVideo.actionLog(card: cards[index])
+        }
+     
     }
     
     init(user: User) {
@@ -150,13 +139,16 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let avPlayer = avPlayer {
-            self.playerView.resource.scrollView = collectionView
-            self.playerView.setAVPlayer(player: avPlayer)
+            if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+                cell.playerView.setAVPlayer(player: avPlayer)
+            }
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.playerView.pause()
+        if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+            cell.playerView.pause()
+        }
     }
     
     private func showEmptyView(isShow: Bool) {
@@ -304,35 +296,45 @@ extension CardsBaseController {
     
     func changeCurrentCell() {
         self.saveLastId()
-        self.playerView.isHasVolume = false
-        self.playerView.pause()
+        for cell in collectionView.visibleCells {
+            if let cell = cell as? VideoCardCollectionViewCell {
+                cell.playerView.pause()
+            }
+        }
         if self.cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: self.index, section: 0)
         let configurator = self.cellConfigurators[self.index]
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         if let cell = cell as? VideoCardCollectionViewCell,
-                let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
-            weak var weakSelf = self
-            weak var weakCell = cell
-            if let resource = playerView.resource,
+            let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
+            cell.playerView.delegate = self
+            cell.playerView.panGesture.isEnabled = false
+            cell.playerView.panGesture.require(toFail: pan)
+            if let gestures = cell.playerView.controlView.gestureRecognizers {
+                for gesture in gestures {
+                    cell.playerView.controlView.removeGestureRecognizer(gesture)
+                }
+            }
+            let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController(_:)))
+            cell.playerView.controlView.addGestureRecognizer(tap)
+            if let resource = cell.playerView.resource,
                 resource.indexPath == indexPath,
                 resource.definitions[0].url == configurator.viewModel.videoURL {
-                playerView.isHasVolume = !isVideoMuted
-                playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
-                    playerView?.play()
+                cell.playerView.isVideoMuted = isVideoMuted
+                cell.playerView.seek(configurator.viewModel.currentTime) {
+                    cell.playerView.play()
                 }
+                avPlayer = cell.playerView.avPlayer
                 return
             }
             let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
             resource.indexPath = indexPath
-            resource.scrollView = weakSelf?.collectionView
-            resource.fatherViewTag = weakCell?.contentImageView.tag
-            playerView.setVideo(resource: resource)
-            playerView.isHasVolume = !isVideoMuted
-            playerView.seek(configurator.viewModel.currentTime) { [weak playerView] in
-                playerView?.play()
+            cell.playerView.setVideo(resource: resource)
+            cell.playerView.isVideoMuted = isVideoMuted
+            cell.playerView.seek(configurator.viewModel.currentTime) {
+                cell.playerView.play()
             }
-            avPlayer = playerView.avPlayer
+            avPlayer = cell.playerView.avPlayer
         }
     }
 
@@ -343,9 +345,19 @@ extension CardsBaseController {
         }
         var direction = Direction.unknown
         let targetY = point.y + velocityY
-        if  start.y - targetY > cardCellHeight * 0.3 {
+        let offset = start.y - targetY
+        let threshold = cardCellHeight * 0.3
+        if offset < -threshold {
+            if index == 0 {
+                self.scrollTo(row: index)
+            } else {
+                self.index -=  1
+                self.scrollTo(row: index)
+            }
+        } else if offset > threshold {
             direction = .down
-            if index == collectionView.numberOfItems(inSection: 0) - 1 {
+            let maxIndex = collectionView.numberOfItems(inSection: 0) - 1
+            if index == maxIndex {
                 let cardId = cards[index].cardId
                 let request: CardRequest = self is CardsAllController ?
                     .all(cardId: cardId, direction: direction) :
@@ -354,24 +366,15 @@ extension CardsBaseController {
                     if let cards = cards, cards.count > 0, success { self.index += 1 }
                     self.scrollTo(row: self.index)
                 }
-            } else if index < collectionView.numberOfItems(inSection: 0) - 1 {
+            } else if index < maxIndex {
                 self.preloadingCard()
                 index += 1
                 self.scrollTo(row: index)
-            } else if index > collectionView.numberOfItems(inSection: 0) - 1 {
-                index = collectionView.numberOfItems(inSection: 0) - 1 >= 0 ? collectionView.numberOfItems(inSection: 0) - 1 : 0
+            } else if index > maxIndex {
+                index = max(maxIndex, 0)
                 self.scrollTo(row: index)
             }
-        } else if start.y - targetY >= 0 {
-            self.scrollTo(row: index)
-        } else if start.y - targetY < -cardCellHeight * 0.3 {
-            if index == 0 {
-                self.scrollTo(row: index)
-            } else {
-                self.index -=  1
-                self.scrollTo(row: index)
-            }
-        } else if start.y - targetY < 0 {
+        } else {
             self.scrollTo(row: index)
         }
     }
@@ -390,9 +393,19 @@ extension CardsBaseController {
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
-        let preview = WebViewController(urlString: url) { [weak self] in
+        let preview = ShareWebViewController(urlString: url, cardId: card.cardId) { [weak self] in
             self?.shareCard(cardId: card.cardId)
         }
+        if card.cardEnumType == .content  {
+            if let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<ContentCardCollectionViewCell> {
+                preview.emojiDisplay = configurator.viewModel.emojiDisplayType
+            }
+            if let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
+                preview.emojiDisplay = configurator.viewModel.emojiDisplayType
+            }
+        }
+        preview.navigationBarColors = [UIColor(hex:0x66E5FF), UIColor(hex: 0x36C6FD)]
+        preview.delegate = self
         navigationController?.pushViewController(preview, animated: true)
         CardAction.clickUrl.actionLog(card: card)
         CardTimerHelper.countDown(time: 10, countDownBlock: { time in
@@ -425,11 +438,6 @@ extension CardsBaseController: UICollectionViewDataSource {
         configurator.configure(cell)
         if let cell = cell as? BaseCardCollectionViewCell {
             cell.delegate = self
-        }
-        if cell is VideoCardCollectionViewCell {
-            if let playerIndex = playerView.resource?.indexPath, playerIndex == indexPath {
-                playerView.updatePlayViewToCell(cell: cell)
-            }
         }
         return cell
     }
