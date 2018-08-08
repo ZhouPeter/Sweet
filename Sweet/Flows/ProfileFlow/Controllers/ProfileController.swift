@@ -425,7 +425,7 @@ extension ProfileController: ActionsControllerDelegate {
                 scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
                 
             }
-            let tableViewOffsetY = min(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 244)
+            let tableViewOffsetY = min(max(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 0), 244)
             if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
                 tableView.bounds = CGRect(origin: CGPoint(x: 0, y: -UIScreen.navBarHeight()),
                                           size: tableView.bounds.size)

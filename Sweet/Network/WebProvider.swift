@@ -102,6 +102,7 @@ extension WebProvider {
         Defaults.remove(.token)
         Defaults.remove(.userID)
         web.tokenSource.token = nil
+        Messenger.shared.logout()
         NotificationCenter.default.post(name: NSNotification.Name(logoutNotiName), object: nil)
     }
 }

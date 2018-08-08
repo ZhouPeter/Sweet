@@ -139,13 +139,13 @@ extension CardsManagerController: MessengerDelegate {
     
     func showStatusBarNotification(messageType: IMType, success: Bool, messageIndex: Int) {
         if success {
-            if messageType == .card {
+            if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论成功")
             }
         } else {
-            if messageType == .card {
+            if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论失败")

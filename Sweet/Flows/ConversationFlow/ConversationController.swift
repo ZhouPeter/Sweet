@@ -421,11 +421,9 @@ extension ConversationController: MessageCellDelegate {
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         } else if let content = message.content as? ContentCardContent {
-            let preview = WebViewController(urlString: content.url)
-            navigationController?.pushViewController(preview, animated: true)
+            delegate?.conversationControllerShowsShareWebView(url: content.url, cardId: content.identifier)
         } else if let content = message.content as? ArticleMessageContent {
-            let preview = WebViewController(urlString: content.articleURL)
-            navigationController?.pushViewController(preview, animated: true)
+            delegate?.conversationControllerShowsShareWebView(url: content.articleURL, cardId: content.identifier)
         } else if let content = message.content as? StoryMessageContent {
             web.request(
                 .getStory(storyID: content.identifier),

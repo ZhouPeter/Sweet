@@ -98,22 +98,8 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
 
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
-            let text = cards[index].makeShareText()
-            let storyDraft = cards[index].makeStoryDraft()
-            let controller = ShareCardController(shareText: text, storyDraft: storyDraft)
-            controller.sendCallback = { (text, userIds) in
-                guard let index = self.cards.index(where: { $0.cardId == cardId }) else {fatalError()}
-                let card  = self.cards[index]
-                CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
-            }
-            controller.shareCallback = { draft in
-                let task = StoryPublishTask(storage: Storage(userID: self.user.userId), draft: draft)
-                task.finishBlock = { isSuccess in
-                    JDStatusBarNotification.show(withStatus: isSuccess ? "转发成功" : "转发失败", dismissAfter: 2)
-                }
-                TaskRunner.shared.run(task)
-            }
-            present(controller, animated: true, completion: nil)
+            let card  = self.cards[index]
+            shareCard(card: card)
         }
     }
     
@@ -288,23 +274,9 @@ extension CardsBaseController: ShareWebViewControllerDelegate {
         guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
         self.updateContentCellEmoji(index: index)
     }
-    
-    func selectEmoji(emoji: Int, cardId: String, webView: ShareWebViewController) {
-        web.request(
-            .commentCard(cardId: cardId, emoji: emoji),
-            responseType: Response<SelectResult>.self) { (result) in
-                guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-                switch result {
-                case let .success(response):
-                    self.cards[index].result = response
-                    webView.updateEmojiView(card: self.cards[index])
-                    self.reloadContentCell(index: index)
-                    self.vibrateFeedback()
-                    CardAction.clickComment.actionLog(card: self.cards[index])
-                case let .failure(error):
-                    self.reloadContentCell(index: index)
-                    logger.error(error)
-                }
-        }
+    func reloadContentEmoji(card: CardResponse) {
+        guard let index = self.cards.index(where: { $0.cardId == card.cardId }) else { return }
+        self.cards[index] = card
+        self.reloadContentCell(index: index)
     }
 }

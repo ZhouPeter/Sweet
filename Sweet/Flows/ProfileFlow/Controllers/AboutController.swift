@@ -173,7 +173,7 @@ class AboutController: BaseViewController, AboutView {
         questionRectView.pin(.bottom, to: updateRectView, spacing: 20)
         questionRectView.clickCallBack = { [weak self] in
             let title = "常见问题"
-            let urlString = "http://mx.miaobo.me/faq.html"
+            let urlString = "https://mx.miaobo.me/faq.html"
             self?.showWebView?(title, urlString)
         }
         let feedbackRectView = AboutRectView(title: "用户反馈")
@@ -197,9 +197,9 @@ class AboutController: BaseViewController, AboutView {
         bottomView.clickCallBack = { tag in
             let url: URL
             if tag == 1 {
-                url = URL(string: "http://mx.miaobo.me/privacy.html")!
+                url = URL(string: "https://mx.miaobo.me/privacy.html")!
             } else {
-                url = URL(string: "http://mx.miaobo.me/complain.html")!
+                url = URL(string: "https://mx.miaobo.me/complain.html")!
             }
             if UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10.0, *) {

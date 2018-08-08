@@ -187,7 +187,6 @@ extension CardsBaseController: InputTextViewDelegate {
 extension CardsBaseController {
     func sendActivityMessages(text: String) {
         let card = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
         guard let cardId = activityCardId, let activityId = activityId else { return }
         guard card.cardEnumType == .activity, card.cardId == cardId else { return }
         guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
@@ -199,21 +198,7 @@ extension CardsBaseController {
                 switch result {
                 case let .success(response):
                     let resultCard = response.card
-                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content {
-                            if let content = content as? ContentCardContent {
-                                Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
-                            } else if let content = content as? ArticleMessageContent {
-                                Messenger.shared.sendArtice(content, from: from, to: toUserId, extra: activityId)
-                            }
-                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
-                            Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
-                        }
-                    } else {
-                        return
-                    }
-                    waitingIMNotifications.append(Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId))
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
+                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
                 case let .failure(error):
                     logger.error(error)

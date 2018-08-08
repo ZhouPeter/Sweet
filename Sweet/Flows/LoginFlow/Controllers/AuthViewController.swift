@@ -74,7 +74,7 @@ class AuthViewController: BaseViewController, AuthView {
     }
     
     @objc private func showUserWebView(_ tap: UITapGestureRecognizer) {
-        let url = URL(string: "http://mx.miaobo.me/privacy.html")!
+        let url = URL(string: "https://mx.miaobo.me/privacy.html")!
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {

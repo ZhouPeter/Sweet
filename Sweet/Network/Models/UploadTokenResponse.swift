@@ -12,10 +12,10 @@ enum UploadType: UInt, Codable {
     case userAvatar = 1
     case storyImage = 11
     case storyVideo = 12
-    
+    case imImage = 21
     func mimeTypeString() -> String {
         switch self {
-        case .userAvatar, .storyImage:
+        case .userAvatar, .storyImage, .imImage:
             return "image/jpeg"
         case .storyVideo:
             return "video/mp4"
