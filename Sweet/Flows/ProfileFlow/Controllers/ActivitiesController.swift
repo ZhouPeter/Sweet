@@ -43,6 +43,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
         return tableView
     }()
