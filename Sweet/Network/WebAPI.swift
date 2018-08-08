@@ -19,7 +19,7 @@ enum WebAPI {
     case phoneChange(phone: String, code: String)
     case uploadContacts(contacts: [[String: Any]])
     case getUserProfile(userId: UInt64)
-    case storyList(page: Int, userId: UInt64)
+    case storyList(userId: UInt64)
     case evaluationList(page: Int, userId: UInt64)
     case activityList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case searchUniversity(name: String)
@@ -225,8 +225,9 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["phone": phone, "code": code]
         case let .uploadContacts(contacts):
             parameters = ["contacts": contacts]
-        case let .storyList(page, userId),
-             let .evaluationList(page, userId):
+        case let .storyList(userId):
+            parameters = ["userId": userId]
+        case let .evaluationList(page, userId):
             parameters = ["page": page, "userId": userId]
         case let .activityList(page, userId, contentId, preferenceId):
             parameters = ["page": page, "userId": userId]
