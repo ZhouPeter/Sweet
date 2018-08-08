@@ -50,13 +50,14 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         cotentOffsetToken = collectionView.observe(
             \.contentOffset,
             options: [.new, .old],
-            changeHandler: { (object, change) in
-            if change.newValue == change.oldValue { return }
-            if floor(object.contentOffset.y + cardOffset)  == floor(CGFloat(self.index) * cardCellHeight) {
-                if self.lastIndex == self.index { return }
-                self.changeCurrentCell()
-                self.lastIndex = self.index
-            }
+            changeHandler: { [weak self] (object, change) in
+                guard let `self` = self else { return }
+                if change.newValue == change.oldValue { return }
+                if floor(object.contentOffset.y + cardOffset)  == floor(CGFloat(self.index) * cardCellHeight) {
+                    if self.lastIndex == self.index { return }
+                    self.changeCurrentCell()
+                    self.lastIndex = self.index
+                }
         })
         return collectionView
     }()
@@ -149,6 +150,10 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
             cell.playerView.pause()
         }
+    }
+    deinit {
+        cotentOffsetToken?.invalidate()
+        logger.debug("首页释放")
     }
     
     private func showEmptyView(isShow: Bool) {

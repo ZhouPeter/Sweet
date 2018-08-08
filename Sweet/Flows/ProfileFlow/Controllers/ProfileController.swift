@@ -148,14 +148,10 @@ class ProfileController: BaseViewController, ProfileView {
         navigationController?.navigationBar.tintColor = .black
         if !isFirstLoad { readLocalData() }
         if isFirstLoad { isFirstLoad = false }
-//        if userResponse == nil || !isFirstLoad {
-//            loadAll()
-//        } else {
-//            updateViewModel()
-//            tableView.reloadData()
-//            loadAll(isLoadUser: false)
-//        }
-//        if isFirstLoad { isFirstLoad = false }
+    }
+    
+    deinit {
+        logger.debug("个人页释放")
     }
     
     func readLocalData() {
