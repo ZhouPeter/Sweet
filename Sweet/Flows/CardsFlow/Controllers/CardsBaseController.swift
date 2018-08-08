@@ -77,7 +77,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             let view = EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
             return view
         } else {
-            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页订阅有趣的内容")
+            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页发现有趣的内容")
             return view
         }
     }()
@@ -320,6 +320,10 @@ extension CardsBaseController {
             if let resource = cell.playerView.resource,
                 resource.indexPath == indexPath,
                 resource.definitions[0].url == configurator.viewModel.videoURL {
+                if let asset = cell.playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
+                } else {
+                    cell.playerView.setVideo(resource: resource)
+                }
                 cell.playerView.isVideoMuted = isVideoMuted
                 cell.playerView.seek(configurator.viewModel.currentTime) {
                     cell.playerView.play()
@@ -393,9 +397,7 @@ extension CardsBaseController {
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
-        let preview = ShareWebViewController(urlString: url, cardId: card.cardId) { [weak self] in
-            self?.shareCard(cardId: card.cardId)
-        }
+        let preview = ShareWebViewController(urlString: url, card: card)
         if card.cardEnumType == .content  {
             if let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<ContentCardCollectionViewCell> {
                 preview.emojiDisplay = configurator.viewModel.emojiDisplayType

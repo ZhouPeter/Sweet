@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JDStatusBarNotification
 import SwiftyUserDefaults
 protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
@@ -42,6 +43,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
         return tableView
     }()
@@ -137,7 +139,6 @@ extension ActivitiesController: InputTextViewDelegate {
 
 extension ActivitiesController {
     func sendActivityMessages(text: String) {
-        let from = UInt64(Defaults[.userID]!)!
         guard let activityId = activityId else { return }
         guard let index = activityList.index(where: { $0.activityId == activityId }) else {fatalError()}
         let toUserId = activityList[index].actor
@@ -148,23 +149,7 @@ extension ActivitiesController {
                 switch result {
                 case let .success(response):
                     let resultCard = response.card
-                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content {
-                            if let content = content as? ContentCardContent {
-                                Messenger.shared.sendContentCard(content, from: from, to: toUserId)
-                            } else if let content = content as? ArticleMessageContent {
-                                Messenger.shared.sendArtice(content, from: from, to: toUserId)
-                            }
-                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
-                            Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId)
-                        }
-                    } else {
-                        return
-                    }
-                    waitingIMNotifications.append(
-                        Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId)
-                    )
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
+                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityLike(activityId: activityId, comment: text)
                 case let .failure(error):
                     logger.error(error)
@@ -216,29 +201,8 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let url = viewModels[indexPath.row].url {
-            let controller = ShareWebViewController(
-                urlString: url,
-                cardId: viewModels[indexPath.row].fromCardId) {
-                    self.shareCard(cardId: self.viewModels[indexPath.row].fromCardId)
-            }
+            let controller = ShareWebViewController(urlString: url, cardId: viewModels[indexPath.row].fromCardId)
             navigationController?.pushViewController(controller, animated: true)
-        }
-    }
-}
-extension ActivitiesController {
-    func shareCard(cardId: String) {
-        web.request(WebAPI.getCard(cardID: cardId), responseType: Response<CardGetResponse>.self) { (result) in
-            switch result {
-            case let .success(response):
-                let text = response.card.makeShareText()
-                let controller = ShareCardController(shareText: text)
-                controller.sendCallback = { (text, userIds) in
-                    CardMessageManager.shard.sendMessage(card: response.card, text: text, userIds: userIds)
-                }
-                self.present(controller, animated: true, completion: nil)
-            case let .failure(error):
-                logger.error(error)
-            }
         }
     }
 }

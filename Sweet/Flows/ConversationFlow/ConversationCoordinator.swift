@@ -40,6 +40,12 @@ final class ConversationCoordinator: BaseCoordinator, ConversationCoordinatorOup
 }
 
 extension ConversationCoordinator: ConversationControllerDelegate {
+    func conversationControllerShowsShareWebView(url: String, cardId: String) {
+        let webView = ShareWebViewController(urlString: url, cardId: cardId)
+        webView.delegate = self
+        router.push(webView)
+    }
+    
     func conversationControllerShowsProfile(buddy: User) {
         let coordinator = self.coordinatorFactory
             .makeProfileCoordinator(user: user, userID: buddy.userId, router: router)
@@ -124,5 +130,15 @@ extension ConversationCoordinator: ConversationControllerDelegate {
     func conversationDidFinish() {
         Messenger.shared.endConversation(userID: buddy.userId)
         finishFlow?()
+    }
+}
+
+extension ConversationCoordinator: ShareWebViewControllerDelegate {
+    func showProfile(userId: UInt64, webView: ShareWebViewController) {
+        let coordinator = self.coordinatorFactory
+            .makeProfileCoordinator(user: user, userID: userId, router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

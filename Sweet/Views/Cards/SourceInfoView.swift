@@ -74,6 +74,8 @@ class SourceInfoView: UIView {
         briefLabel.text = brief ?? ""
         if briefLabel.text == "" {
             titleLabel.numberOfLines = 2
+        } else {
+            titleLabel.numberOfLines = 1
         }
     }
 }

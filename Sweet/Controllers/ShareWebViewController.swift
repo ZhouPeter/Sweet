@@ -7,15 +7,24 @@
 //
 
 import UIKit
-protocol ShareWebViewControllerDelegate: NSObjectProtocol {
+protocol ShareWebViewControllerDelegate: class {
     func showAllEmoji(cardId: String)
-    func selectEmoji(emoji: Int, cardId: String, webView: ShareWebViewController)
+    func reloadContentEmoji(card: CardResponse)
     func showProfile(userId: UInt64, webView: ShareWebViewController)
 }
 
-class ShareWebViewController: WebViewController {
+extension ShareWebViewControllerDelegate {
+    func showAllEmoji(cardId: String) {}
+    func reloadContentEmoji(card: CardResponse) {}
+}
+
+protocol ShareWebView: BaseView {
+    var delegate: ShareWebViewControllerDelegate? { get set }
+}
+
+class ShareWebViewController: WebViewController, ShareWebView {
     weak var delegate: ShareWebViewControllerDelegate?
-    private var shareCallback: (() -> Void)?
+    
     private var cardId: String?
     var card: CardResponse?
     var emojiDisplay: EmojiViewDisplay = .show
@@ -33,15 +42,15 @@ class ShareWebViewController: WebViewController {
         button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
         return button
     }()
-    init(urlString: String, shareCallback: (() -> Void)?) {
+    
+    init(urlString: String, cardId: String) {
+        self.cardId = cardId
         super.init(urlString: urlString)
-        self.shareCallback = shareCallback
     }
     
-    convenience init(urlString: String, cardId: String, shareCallback: (() -> Void)?) {
-        self.init(urlString: urlString, shareCallback: shareCallback)
-        self.cardId = cardId
-        
+    init(urlString: String, card: CardResponse) {
+        self.card = card
+        super.init(urlString: urlString)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,9 +64,7 @@ class ShareWebViewController: WebViewController {
             setNavigationBackgroundImage()
         }
     }
-    
-    
-    
+
     func updateEmojiView(card: CardResponse) {
         self.card = card
         resetEmojiView()
@@ -72,18 +79,23 @@ class ShareWebViewController: WebViewController {
     }
     
     private func requestFromCard() {
-        if let cardId = cardId {
-            web.request(WebAPI.getCard(cardID: cardId), responseType: Response<CardGetResponse>.self) { (result) in
-                switch result {
-                case let .success(response):
-                    self.card  = response.card
-                    self.setBottomView()
-                case let .failure(error):
-                    logger.debug(error)
-                }
+        if card == nil, let cardId = cardId {
+            web.request(
+                 WebAPI.getCard(cardID: cardId),
+                 responseType: Response<CardGetResponse>.self) { (result) in
+                    switch result {
+                    case let .success(response):
+                        self.card = response.card
+                        self.setBottomView()
+                    case let .failure(error):
+                        logger.error(error)
+                    }
             }
+        } else {
+            setBottomView()
         }
     }
+    
     private func setBottomView() {
         let bottomView = UIView()
         bottomView.backgroundColor = .white
@@ -96,11 +108,11 @@ class ShareWebViewController: WebViewController {
         bottomView.align(.left)
         bottomView.align(.right)
         bottomView.align(.bottom)
-        bottomView.constrain(height: 50)
+        bottomView.constrain(height: 50 + UIScreen.safeBottomMargin())
         bottomView.addSubview(emojiView)
         emojiView.align(.right)
         emojiView.align(.left)
-        emojiView.align(.bottom)
+        emojiView.align(.bottom, inset: UIScreen.safeBottomMargin())
         emojiView.align(.top)
         bottomView.addSubview(shareButton)
         shareButton.constrain(width: 24, height: 24)
@@ -131,7 +143,9 @@ class ShareWebViewController: WebViewController {
     }
     
     @objc private func didPressShare(_ sender: UIButton) {
-        shareCallback?()
+        if let card = card {
+            shareCard(card: card)
+        }
     }
  
 }
@@ -144,8 +158,21 @@ extension ShareWebViewController: EmojiControlViewDelegate {
         }
     }
     func selectEmoji(emoji: Int) {
-        if let cardId = card?.cardId {
-            delegate?.selectEmoji(emoji: emoji, cardId: cardId, webView: self)
+        if let card = card {
+            web.request(
+                .commentCard(cardId: card.cardId, emoji: emoji),
+                responseType: Response<SelectResult>.self) { (result) in
+                    switch result {
+                    case let .success(response):
+                        self.card!.result = response
+                        self.updateEmojiView(card: self.card!)
+                        self.vibrateFeedback()
+                        CardAction.clickComment.actionLog(card: self.card!)
+                        self.delegate?.reloadContentEmoji(card: self.card!)
+                    case let .failure(error):
+                        logger.error(error)
+                    }
+            }
         }
     }
     

@@ -59,6 +59,7 @@ class ContactTableViewCell: UITableViewCell {
         button.setBackgroundImage(#imageLiteral(resourceName: "ContactSelected"), for: .selected)
         button.setBackgroundImage(#imageLiteral(resourceName: "ContactUnSelected"), for: .normal)
         button.isHidden = true
+        button.isUserInteractionEnabled = false
         return button
     }()
     
