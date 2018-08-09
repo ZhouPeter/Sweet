@@ -72,7 +72,7 @@ class SweetPlayerView: UIView {
     fileprivate var isPlayToTheEnd  = false
     fileprivate var isURLSet        = false
     fileprivate var isCellVideo     = false
-    fileprivate var viewDisappear   = false
+    fileprivate var isRemove        = false
     fileprivate var scrollToken: NSKeyValueObservation?
     fileprivate var scrollView: UIScrollView? {
         didSet {
@@ -132,10 +132,7 @@ class SweetPlayerView: UIView {
     deinit {
         scrollToken?.invalidate()
         playerLayer?.prepareToDeinit()
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation,
-            object: nil)
+        removeUIData()
     }
     
     private func initUI() {
@@ -146,13 +143,6 @@ class SweetPlayerView: UIView {
         controlView.player = self
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDirection(_:)))
         self.addGestureRecognizer(panGesture)
-    }
-    
-    private func initUIData() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onOrientationChanged),
-                                               name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation,
-                                               object: nil)
     }
     
     @objc open func onOrientationChanged() {
@@ -227,6 +217,48 @@ class SweetPlayerView: UIView {
             isURLSet = true
             playerLayer?.playAVPlayer(player: player)
         }
+    }
+    
+    fileprivate func initUIData() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onOrientationChanged),
+            name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationWillEnterForeground),
+            name: .UIApplicationWillEnterForeground,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidEnterBackground),
+            name: .UIApplicationDidEnterBackground,
+            object: nil)
+    }
+    
+    fileprivate func removeUIData() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation,
+            object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .UIApplicationWillEnterForeground,
+            object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .UIApplicationDidEnterBackground,
+            object: nil)
+    }
+    
+    @objc private func applicationWillEnterForeground() {
+        if !isRemove {
+            play()
+        }
+    }
+    @objc private func applicationDidEnterBackground() {
+        pause()
     }
 }
 // MARK: - Actions
@@ -348,6 +380,8 @@ extension SweetPlayerView {
             isURLSet = true
         }
         playerLayer?.play()
+        isPauseByUser = false
+        isRemove = false
     }
 
     func autoPlay() {
@@ -355,9 +389,18 @@ extension SweetPlayerView {
             play()
         }
     }
-    func pause() {
+    
+    func pause(allowAutoPlay allow: Bool = false) {
         playerLayer?.pause()
+        isPauseByUser = !allow
     }
+    
+    func pauseWithRemove(isRemove: Bool) {
+        pause()
+        self.isRemove = isRemove
+        
+    }
+    
     func seek(_ toSecond: TimeInterval, completion: (() -> Void)? = nil) {
         playerLayer?.seek(to: toSecond, completion: completion)
     }
@@ -367,7 +410,7 @@ extension SweetPlayerView: SweetPlayerLayerViewDelegate {
         controlView.playerStateDidChange(state: state)
 //        panGesture.isEnabled = state != .playedToTheEnd
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
-        if state == .playedToTheEnd {
+        if state == . playedToTheEnd {
             seek(0) {
                 self.play()
             }
