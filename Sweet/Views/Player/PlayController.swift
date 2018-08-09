@@ -32,7 +32,7 @@ class PlayController: UIViewController {
         view.backgroundColor = .black
         setupUI()
         if let player = avPlayer, let resource = resource {
-            sweetPlayerConf.shouldAutoPlay = true
+//            sweetPlayerConf.shouldAutoPlay = true
             playerView.resource = resource
             playerView.setAVPlayer(player: player)
             loadItemValues()

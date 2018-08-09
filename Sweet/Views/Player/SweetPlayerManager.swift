@@ -27,7 +27,7 @@ open class SweetPlayerManager {
     /// Loader
     var loaderType  = NVActivityIndicatorType.ballRotateChase
     /// should auto play
-    var shouldAutoPlay = false
+    var shouldAutoPlay = true
     var topBarShowInCase = SweetPlayerTopBarShowCase.always
     var animateDelayTimeInterval = TimeInterval(5)
     /// should show log
