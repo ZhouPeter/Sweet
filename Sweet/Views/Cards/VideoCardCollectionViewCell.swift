@@ -36,6 +36,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     lazy var playerView: SweetPlayerView = {
         let controlView = SweetPlayerCellControlView()
         let view = SweetPlayerView(controlView: controlView)
+        view.panGesture.isEnabled = false
         let tap = UITapGestureRecognizer(target: self, action: #selector(didPressVideo(_:)))
         controlView.addGestureRecognizer(tap)
         view.backgroundColor = .black
@@ -103,10 +104,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         }
         contentImageView.kf.setImage(with:  viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail() )
         resetEmojiView()
-        let resource = SweetPlayerResource(url: viewModel.videoURL)
-        sweetPlayerConf.shouldAutoPlay = false
-        playerView.setVideo(resource: resource)
-        playerView.isVideoMuted = isVideoMuted
         loadItemValues()
 
     }

@@ -121,9 +121,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let avPlayer = avPlayer {
+        if let avPlayer = avPlayer, view.alpha != 0 {
             if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
-                sweetPlayerConf.shouldAutoPlay = true
                 cell.playerView.setAVPlayer(player: avPlayer)
             }
         }
@@ -134,6 +133,27 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             cell.playerView.pause()
         }
     }
+    
+    
+    func setViewHidden(isHidden: Bool) {
+        if isHidden {
+            for cell in collectionView.visibleCells {
+                if let cell = cell as? VideoCardCollectionViewCell {
+                    cell.playerView.pause()
+                }
+            }
+        } else {
+            for cell in collectionView.visibleCells {
+                if let cell = cell as? VideoCardCollectionViewCell,
+                    let indexPath = collectionView.indexPath(for: cell),
+                    indexPath.item == index {
+                    cell.playerView.isVideoMuted = isVideoMuted
+                    cell.playerView.play()
+                }
+            }
+        }
+    }
+
     deinit {
         cotentOffsetToken?.invalidate()
         logger.debug("首页释放")
@@ -226,7 +246,6 @@ extension CardsBaseController {
                     self.isFetchLoadCards = false
                     if let direction = direction {
                         if direction == Direction.down {
-                            logger.debug("请求完毕")
                             self.downLoadCards(cards: response.list, callback: callback)
                             return
                         } else if direction == Direction.recover {
@@ -285,6 +304,10 @@ extension CardsBaseController {
     }
     
     func changeCurrentCell() {
+
+        if self.cellConfigurators.count == 0 { return }
+        let indexPath = IndexPath(item: index, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         self.saveLastId()
         for cell in collectionView.visibleCells {
             if let cell = cell as? VideoCardCollectionViewCell,
@@ -293,19 +316,26 @@ extension CardsBaseController {
                 cell.playerView.pauseWithRemove(isRemove: isRemove)
             }
         }
-        if self.cellConfigurators.count == 0 { return }
-        let indexPath = IndexPath(item: self.index, section: 0)
-        let configurator = self.cellConfigurators[self.index]
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        let configurator = self.cellConfigurators[index]
         if let cell = cell as? VideoCardCollectionViewCell,
             let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             cell.playerView.delegate = self
-            cell.playerView.panGesture.isEnabled = false
-            cell.playerView.panGesture.require(toFail: pan)
-            cell.playerView.resource.indexPath = indexPath
-            cell.playerView.seek(configurator.viewModel.currentTime)
-            cell.playerView.play()
+            if let resource = cell.playerView.resource,
+                resource.indexPath == indexPath,
+                resource.definitions[0].url == configurator.viewModel.videoURL {
+                if let asset = cell.playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
+                } else {
+                    cell.playerView.setVideo(resource: resource)
+                }
+            } else {
+                let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
+                resource.indexPath = indexPath
+                cell.playerView.setVideo(resource: resource)
+            }
             cell.playerView.isVideoMuted = isVideoMuted
+            cell.playerView.seek(configurator.viewModel.currentTime) {
+                cell.playerView.play()
+            }
             avPlayer = cell.playerView.avPlayer
         }
     }
@@ -334,10 +364,12 @@ extension CardsBaseController {
                 let request: CardRequest = self is CardsAllController ?
                     .all(cardId: cardId, direction: direction) :
                     .sub(cardId: cardId, direction: direction)
-                self.startLoadCards(cardRequest: request) { (success, cards) in
-                    if let cards = cards, cards.count > 0, success { self.index += 1 }
-                    self.scrollTo(row: self.index)
-                }
+//                self.startLoadCards(cardRequest: request) { (success, cards) in
+//                    if let cards = cards, cards.count > 0, success { self.index += 1 }
+//                    self.scrollTo(row: self.index)
+//                }
+                self.startLoadCards(cardRequest: request)
+                self.scrollTo(row: index)
             } else if index < maxIndex {
                 self.preloadingCard()
                 index += 1
