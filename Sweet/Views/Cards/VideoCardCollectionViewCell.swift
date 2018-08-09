@@ -104,6 +104,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         contentImageView.kf.setImage(with:  viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail() )
         resetEmojiView()
         let resource = SweetPlayerResource(url: viewModel.videoURL)
+        sweetPlayerConf.shouldAutoPlay = false
         playerView.setVideo(resource: resource)
         playerView.isVideoMuted = isVideoMuted
         loadItemValues()
