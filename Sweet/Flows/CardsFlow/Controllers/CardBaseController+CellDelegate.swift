@@ -242,6 +242,26 @@ extension CardsBaseController {
     }
 }
 
+extension CardsBaseController: VideoCardCollectionViewCellDelegate {
+    func showVideoPlayerController(playerView: SweetPlayerView, cardId: String) {
+        guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
+        guard index == self.index else { return }
+        guard  let avPlayer = playerView.avPlayer else { return }
+        playerView.hero.isEnabled = true
+        playerView.hero.id = cards[index].video
+        playerView.hero.modifiers = [.arc]
+        let controller = PlayController()
+        controller.hero.isEnabled = true
+        controller.avPlayer = avPlayer
+        controller.resource = playerView.resource
+        playerView.playerLayer?.playerToNil()
+        self.present(controller, animated: true, completion: nil)
+        isVideoMuted = false
+        playerView.isVideoMuted = isVideoMuted
+        CardAction.clickVideo.actionLog(card: cards[index])
+    }
+}
+
 extension CardsBaseController: SweetPlayerViewDelegate {
     func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
         if state == .playedToTheEnd {

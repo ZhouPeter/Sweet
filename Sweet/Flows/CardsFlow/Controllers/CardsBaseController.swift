@@ -94,24 +94,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         return view
     }()
     
-    @objc private func showVideoPlayController(_ tap: UITapGestureRecognizer) {
-        if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
-            cell.playerView.hero.isEnabled = true
-            cell.playerView.hero.id = cards[index].video
-            cell.playerView.hero.modifiers = [.arc]
-            let controller = PlayController()
-            controller.hero.isEnabled = true
-            controller.avPlayer = avPlayer
-            controller.resource = cell.playerView.resource
-            cell.playerView.playerLayer?.playerToNil()
-            self.present(controller, animated: true, completion: nil)
-            isVideoMuted = false
-            cell.playerView.isVideoMuted = isVideoMuted
-            CardAction.clickVideo.actionLog(card: cards[index])
-        }
-     
-    }
-    
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -233,6 +215,7 @@ extension CardsBaseController {
             api = .subscriptionCards(cardId: cardId, direction: requestDirection)
             direction = requestDirection
         }
+        logger.debug("请求card")
         web.request(
             api,
             responseType: Response<CardListResponse>.self) { [weak self] (result) in
@@ -242,6 +225,7 @@ extension CardsBaseController {
                     self.isFetchLoadCards = false
                     if let direction = direction {
                         if direction == Direction.down {
+                            logger.debug("请求完毕")
                             self.downLoadCards(cards: response.list, callback: callback)
                             return
                         } else if direction == Direction.recover {
@@ -302,8 +286,10 @@ extension CardsBaseController {
     func changeCurrentCell() {
         self.saveLastId()
         for cell in collectionView.visibleCells {
-            if let cell = cell as? VideoCardCollectionViewCell {
-                cell.playerView.pause()
+            if let cell = cell as? VideoCardCollectionViewCell,
+                let indexPath = collectionView.indexPath(for: cell) {
+                let isRemove = indexPath.item != index
+                cell.playerView.pauseWithRemove(isRemove: isRemove)
             }
         }
         if self.cellConfigurators.count == 0 { return }
@@ -315,34 +301,9 @@ extension CardsBaseController {
             cell.playerView.delegate = self
             cell.playerView.panGesture.isEnabled = false
             cell.playerView.panGesture.require(toFail: pan)
-            if let gestures = cell.playerView.controlView.gestureRecognizers {
-                for gesture in gestures {
-                    cell.playerView.controlView.removeGestureRecognizer(gesture)
-                }
-            }
-            let tap = UITapGestureRecognizer(target: self, action: #selector(showVideoPlayController(_:)))
-            cell.playerView.controlView.addGestureRecognizer(tap)
-            if let resource = cell.playerView.resource,
-                resource.indexPath == indexPath,
-                resource.definitions[0].url == configurator.viewModel.videoURL {
-                if let asset = cell.playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
-                } else {
-                    cell.playerView.setVideo(resource: resource)
-                }
-                cell.playerView.isVideoMuted = isVideoMuted
-                cell.playerView.seek(configurator.viewModel.currentTime) {
-                    cell.playerView.play()
-                }
-                avPlayer = cell.playerView.avPlayer
-                return
-            }
-            let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
-            resource.indexPath = indexPath
-            cell.playerView.setVideo(resource: resource)
-            cell.playerView.isVideoMuted = isVideoMuted
-            cell.playerView.seek(configurator.viewModel.currentTime) {
-                cell.playerView.play()
-            }
+            cell.playerView.resource.indexPath = indexPath
+            cell.playerView.seek(configurator.viewModel.currentTime)
+            cell.playerView.play()
             avPlayer = cell.playerView.avPlayer
         }
     }

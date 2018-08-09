@@ -260,29 +260,11 @@ class SweetPlayerLayerView: UIView {
             selector: #selector(moviePlayDidEnd(_:)),
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationWillEnterForeground),
-            name: .UIApplicationWillEnterForeground,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationDidEnterBackground),
-            name: .UIApplicationDidEnterBackground,
-            object: nil)
+     
     }
     
     fileprivate func removePlayerNotifations() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
-    }
-    
-    @objc private func applicationWillEnterForeground() {
-        play()
-    }
-    @objc private func applicationDidEnterBackground() {
-        pause()
     }
     
     fileprivate func onPlayerItemChange() {
