@@ -123,6 +123,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         super.viewWillAppear(animated)
         if let avPlayer = avPlayer {
             if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+                sweetPlayerConf.shouldAutoPlay = true
                 cell.playerView.setAVPlayer(player: avPlayer)
             }
         }
@@ -304,6 +305,7 @@ extension CardsBaseController {
             cell.playerView.resource.indexPath = indexPath
             cell.playerView.seek(configurator.viewModel.currentTime)
             cell.playerView.play()
+            cell.playerView.isVideoMuted = isVideoMuted
             avPlayer = cell.playerView.avPlayer
         }
     }
