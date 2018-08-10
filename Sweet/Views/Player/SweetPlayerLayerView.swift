@@ -250,6 +250,7 @@ class SweetPlayerLayerView: UIView {
     }
     // MARK: - 设置视频URL
     fileprivate func onSetVideoAsset() {
+        logger.debug("onSetVideoAsset")
         repeatToPlay = false
         playDidEnd   = false
         configPlayer()
@@ -340,6 +341,15 @@ class SweetPlayerLayerView: UIView {
     private var keepUpToken: NSKeyValueObservation?
     private var rateToken: NSKeyValueObservation?
     fileprivate func configPlayer() {
+        if player != nil {
+            replacePlayer()
+        } else {
+            initPlayer()
+        }
+    }
+    
+    fileprivate func initPlayer() {
+        logger.debug("init player")
         rateToken?.invalidate()
         playerItem = AVPlayerItem(asset: urlAsset!)
         player     = AVPlayer(playerItem: playerItem!)
@@ -352,6 +362,13 @@ class SweetPlayerLayerView: UIView {
         layer.addSublayer(playerLayer!)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    fileprivate func replacePlayer() {
+        logger.debug("replace player")
+        playerItem = AVPlayerItem(asset: urlAsset!)
+        player?.replaceCurrentItem(with: playerItem)
+        playerLayer?.player = player
     }
     fileprivate func configPlayerNoAsset() {
         rateToken?.invalidate()

@@ -205,8 +205,8 @@ class SweetPlayerView: UIView {
         controlView.prepareUI(for: resource)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
-            let asset = resource.definitions[currentDefinition]
-            playerLayer?.playAsset(asset: asset.avURLAsset)
+            let asset = resource.definitions[currentDefinition].avURLAsset
+            playerLayer?.playAsset(asset: asset)
         }
     }
     
