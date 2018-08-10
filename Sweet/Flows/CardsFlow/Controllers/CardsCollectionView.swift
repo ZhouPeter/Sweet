@@ -33,6 +33,7 @@ class CardsCollectionView: UICollectionView {
         register(cellType: EvaluationCardCollectionViewCell.self)
         register(cellType: ActivitiesCardCollectionViewCell.self)
         register(cellType: StoriesCardCollectionViewCell.self)
+        register(cellType: LongTextCardCollectionViewCell.self)
     }
     
     required init?(coder aDecoder: NSCoder) {

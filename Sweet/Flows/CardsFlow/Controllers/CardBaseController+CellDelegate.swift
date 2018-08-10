@@ -238,6 +238,10 @@ extension CardsBaseController {
                 configurator.viewModel.emojiDisplayType = emojiDisplayType
                 cellConfigurators[index] = configurator
             }
+            if var configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> {
+                configurator.viewModel.emojiDisplayType = emojiDisplayType
+                cellConfigurators[index] = configurator
+            }
         }
     }
 }

@@ -236,7 +236,6 @@ extension CardsBaseController {
             api = .subscriptionCards(cardId: cardId, direction: requestDirection)
             direction = requestDirection
         }
-        logger.debug("请求card")
         web.request(
             api,
             responseType: Response<CardListResponse>.self) { [weak self] (result) in

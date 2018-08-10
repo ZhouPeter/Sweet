@@ -131,11 +131,9 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             let resource = SweetPlayerResource(url: viewModel!.videoURL)
             let asset = resource.definitions[0].avURLAsset
             asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
-                DispatchQueue.global().async {
-                    DispatchQueue.main.async {
-                        if asset.isPlayable {
-                            self.loadedResourceForPlay(asset: asset)
-                        }
+                DispatchQueue.main.async {
+                    if asset.isPlayable {
+                        self.loadedResourceForPlay(asset: asset)
                     }
                 }
             }
