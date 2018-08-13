@@ -30,6 +30,7 @@ target 'Sweet' do
   pod 'ReachabilitySwift'
   pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
+  pod 'Bugly'
   
   target 'Sweet Dev' do
   end

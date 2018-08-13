@@ -11,3 +11,4 @@
 #import "InputBottomView.h"
 #import "WXApi.h"
 #import "WXApiObject.h"
+#import <Bugly/Bugly.h>

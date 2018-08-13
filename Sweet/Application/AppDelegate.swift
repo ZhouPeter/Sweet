@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
         WXApi.registerApp("wx819697effecdb6f5")
+        Bugly.start(withAppId: "2f2e136406")
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)

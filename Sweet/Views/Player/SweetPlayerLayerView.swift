@@ -316,7 +316,7 @@ class SweetPlayerLayerView: UIView {
                 }
             })
             // 缓冲区空了，需要等待数据
-            bufferEmptyToken = item.observe(\.isPlaybackBufferEmpty, options: .new, changeHandler: { (_, _) in
+            bufferEmptyToken = item.observe(\.playbackBufferEmpty, options: .new, changeHandler: { (_, _) in
                 // 当缓冲是空的时候
                 if self.playerItem!.isPlaybackBufferEmpty {
                     self.state = .buffering
