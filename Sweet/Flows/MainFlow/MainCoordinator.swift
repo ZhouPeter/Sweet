@@ -38,6 +38,9 @@ final class MainCoordinator: BaseCoordinator {
         mainView.onCardsFlowSelect = runCardsFlow()
         mainView.onStoryFlowSelect = runStoryFlow()
     }
+    deinit {
+        logger.debug("main coordinator 释放")
+    }
     
     // MARK: - Private
  
@@ -51,8 +54,8 @@ final class MainCoordinator: BaseCoordinator {
     }
     
     private func runStoryFlow() -> ((UINavigationController) -> Void) {
-        return { nav in
-            guard nav.viewControllers.isEmpty else { return }
+        return { [weak self] nav in
+            guard let `self` = self, nav.viewControllers.isEmpty else { return }
             let coordinator = self.coordinatorFactory.makeStoryCoordinator(user: self.user, navigation: nav)
             coordinator.start()
             self.addDependency(coordinator)
@@ -60,8 +63,8 @@ final class MainCoordinator: BaseCoordinator {
     }
     
     private func runIMFlow() -> ((UINavigationController) -> Void) {
-        return { nav in
-            guard nav.viewControllers.isEmpty else { return }
+        return { [weak self] nav in
+            guard let `self` = self, nav.viewControllers.isEmpty else { return }
             let coordinator = self.coordinatorFactory
                 .makeIMCoordinator(user: self.user, token: self.token, navigation: nav)
             coordinator.start()

@@ -27,10 +27,11 @@ class RoundedTopView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let roundedBezier = UIBezierPath(roundedRect: bounds,
-                                         byRoundingCorners: [.topLeft, .topRight],
-                                         cornerRadii: CGSize(width: cornerRadius,
-                                                             height: cornerRadius))
+        let roundedBezier = UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: [.topLeft, .topRight],
+            cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)
+        )
         roundedLayer.path = roundedBezier.cgPath
         roundedLayer.fillColor = fillColor.cgColor
     }
@@ -39,21 +40,26 @@ class RoundedTopView: UIView {
 
 class AboutBottomView: UIView {
     var clickCallBack: ((Int) -> Void)?
-    private lazy var roundedTopView: RoundedTopView = {
+    
+    private var roundedTopView: RoundedTopView = {
         let view = RoundedTopView()
         view.fillColor = .white
         view.cornerRadius = 8
         return view
-    }()
-    private lazy var versionLabel: UILabel = {
+    } ()
+    
+    private var versionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.xpTextGray()
-        let info = Bundle.main.infoDictionary
-        let version = info!["CFBundleShortVersionString"]!
-        label.text = "v\(version)"
+        if let info = Bundle.main.infoDictionary,
+            let build = info["CFBundleVersion"],
+            let version = info["CFBundleShortVersionString"] {
+            label.text = "v\(version) (\(build))"
+        }
         return label
-    }()
+    } ()
+    
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 13)
@@ -64,9 +70,9 @@ class AboutBottomView: UIView {
         label.addGestureRecognizer(tap)
         label.isUserInteractionEnabled = true
         return label
-    }()
+    } ()
     
-    private lazy var complainLabel: UILabel = {
+    private var complainLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor.xpTextGray()
@@ -76,14 +82,15 @@ class AboutBottomView: UIView {
         label.addGestureRecognizer(tap)
         label.isUserInteractionEnabled = true
         return label
-    }()
-    private lazy var countryLabel: UILabel = {
+    } ()
+    
+    private var countryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
         label.text = "© 2018 杭州秒赞科技有限公司"
         label.textColor = UIColor.xpTextGray()
         return label
-    }()
+    } ()
     
     init() {
         super.init(frame: .zero)
@@ -128,6 +135,7 @@ protocol AboutView: BaseView {
     var showFeedback: (() -> Void)? { get set }
 
 }
+
 class AboutController: BaseViewController, AboutView {
     
     var showUpdate: ((UserResponse, UpdateRemainResponse) -> Void)?
@@ -173,7 +181,7 @@ class AboutController: BaseViewController, AboutView {
         questionRectView.pin(.bottom, to: updateRectView, spacing: 20)
         questionRectView.clickCallBack = { [weak self] in
             let title = "常见问题"
-            let urlString = "http://mx.miaobo.me/faq.html"
+            let urlString = "https://mx.miaobo.me/faq.html"
             self?.showWebView?(title, urlString)
         }
         let feedbackRectView = AboutRectView(title: "用户反馈")
@@ -197,9 +205,9 @@ class AboutController: BaseViewController, AboutView {
         bottomView.clickCallBack = { tag in
             let url: URL
             if tag == 1 {
-                url = URL(string: "http://mx.miaobo.me/privacy.html")!
+                url = URL(string: "https://mx.miaobo.me/privacy.html")!
             } else {
-                url = URL(string: "http://mx.miaobo.me/complain.html")!
+                url = URL(string: "https://mx.miaobo.me/complain.html")!
             }
             if UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10.0, *) {

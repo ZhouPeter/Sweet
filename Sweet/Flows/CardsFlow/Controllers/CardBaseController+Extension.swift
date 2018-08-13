@@ -79,9 +79,14 @@ extension CardsBaseController {
                 let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
                 cellConfigurators.append(configurator)
                 cards.append(card)
-            } else {
+            } else if let count = card.imageList?.count, count > 0 {
                 let viewModel = ContentCardViewModel(model: card)
                 let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators.append(configurator)
+                cards.append(card)
+            } else if card.thumbnail != nil {
+                let viewModel = LongTextCardViewModel(model: card)
+                let configurator = CellConfigurator<LongTextCardCollectionViewCell>(viewModel: viewModel)
                 cellConfigurators.append(configurator)
                 cards.append(card)
             }
@@ -125,7 +130,7 @@ extension CardsBaseController {
     }
     
     func updateContentCellEmoji(index: Int) {
-        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
+        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil, self.cards[index].imageList?.count ?? 0 > 0 {
             guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: configurator.viewModel)
@@ -135,11 +140,16 @@ extension CardsBaseController {
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: configurator.viewModel)
             }
+        } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
+            guard let configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> else { return }
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: configurator.viewModel)
+            }
         }
     }
     
     func reloadContentCell(index: Int) {
-        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil {
+        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil, self.cards[index].imageList?.count ?? 0 > 0 {
             let viewModel = ContentCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
@@ -151,6 +161,13 @@ extension CardsBaseController {
             let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                cell.updateEmojiView(viewModel: viewModel)
+            }
+        } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
+            let viewModel = LongTextCardViewModel(model: self.cards[index])
+            let configurator = CellConfigurator<LongTextCardCollectionViewCell>(viewModel: viewModel)
+            self.cellConfigurators[index] = configurator
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: viewModel)
             }
         }
@@ -187,7 +204,6 @@ extension CardsBaseController: InputTextViewDelegate {
 extension CardsBaseController {
     func sendActivityMessages(text: String) {
         let card = cards[index]
-        let from = UInt64(Defaults[.userID]!)!
         guard let cardId = activityCardId, let activityId = activityId else { return }
         guard card.cardEnumType == .activity, card.cardId == cardId else { return }
         guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
@@ -199,21 +215,7 @@ extension CardsBaseController {
                 switch result {
                 case let .success(response):
                     let resultCard = response.card
-                    if let content = MessageContentHelper.getContentCardContent(resultCard: resultCard) {
-                        if resultCard.cardEnumType == .content {
-                            if let content = content as? ContentCardContent {
-                                Messenger.shared.sendContentCard(content, from: from, to: toUserId, extra: activityId)
-                            } else if let content = content as? ArticleMessageContent {
-                                Messenger.shared.sendArtice(content, from: from, to: toUserId, extra: activityId)
-                            }
-                        } else if resultCard.cardEnumType == .choice, let content = content as? OptionCardContent {
-                            Messenger.shared.sendPreferenceCard(content, from: from, to: toUserId, extra: activityId)
-                        }
-                    } else {
-                        return
-                    }
-                    waitingIMNotifications.append(Messenger.shared.sendLike(from: from, to: toUserId, extra: activityId))
-                    if text != "" { Messenger.shared.sendText(text, from: from, to: toUserId, extra: activityId) }
+                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
                 case let .failure(error):
                     logger.error(error)

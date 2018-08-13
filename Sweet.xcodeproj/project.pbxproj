@@ -527,6 +527,18 @@
 		58BD535A2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
 		58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
 		58BD535C2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */; };
+		58C03E41211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */; };
+		58C03E42211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */; };
+		58C03E43211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */; };
+		58C03E44211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */; };
+		58C03E48211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */; };
+		58C03E49211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */; };
+		58C03E4A211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */; };
+		58C03E4B211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */; };
+		58C03E4D211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */; };
+		58C03E4E211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */; };
+		58C03E4F211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */; };
+		58C03E50211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */; };
 		58C0EFB7210EC3E20038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
 		58C0EFBA210EC3E30038EB2F /* UIScreen+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */; };
 		58C0EFBF211001960038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
@@ -662,6 +674,10 @@
 		58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
 		58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */; };
+		58D85113211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
+		58D85114211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
+		58D85115211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
+		58D85116211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
 		58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
@@ -1624,6 +1640,9 @@
 		58BD534D2090A19500F7C3E1 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		58BD53532090A40A00F7C3E1 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		58BD53582090A46400F7C3E1 /* ProfileFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowFactory.swift; sourceTree = "<group>"; };
+		58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseContentCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextCardViewModel.swift; sourceTree = "<group>"; };
 		58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+ShowPlayTagTip.swift"; sourceTree = "<group>"; };
 		58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEnrollmentController.swift; sourceTree = "<group>"; };
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
@@ -1657,6 +1676,7 @@
 		58D578FB20942D4A00AE5D38 /* BorderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderContentView.swift; sourceTree = "<group>"; };
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
+		58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShareCard.swift"; sourceTree = "<group>"; };
 		58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardBaseController+CellDelegate.swift"; sourceTree = "<group>"; };
 		58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributeString+Size.swift"; sourceTree = "<group>"; };
 		58DECE6F20EB148D00A4CDA4 /* CardImageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageLayout.swift; sourceTree = "<group>"; };
@@ -1948,6 +1968,8 @@
 				58EA104920B7FEDE001DD77C /* InputBottomView.h */,
 				58EA104820B7FEDD001DD77C /* InputBottomView.m */,
 				580F887120F5FDD9009148CC /* SourceInfoView.swift */,
+				58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */,
+				58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1961,6 +1983,7 @@
 				5803572F20AABEA900B2C94F /* ActivitiesCardViewModel.swift */,
 				5803575220AAFBC200B2C94F /* StoriesCardViewModel.swift */,
 				583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */,
+				58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -2590,6 +2613,7 @@
 				580F886720F4D6CA009148CC /* String+HTMlL.swift */,
 				586603442108A2F9008C4448 /* UISearchBar+Frame.swift */,
 				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
+				58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3059,7 +3083,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-17/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework",
 				"${BUILT_PRODUCTS_DIR}/STPopupPreview/STPopupPreview.framework",
@@ -3227,7 +3251,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-17/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/STPopup/STPopup.framework",
 				"${BUILT_PRODUCTS_DIR}/STPopupPreview/STPopupPreview.framework",
@@ -3334,6 +3358,7 @@
 				AC84FE7820E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F4208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				58C03E4D211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				580F887220F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
@@ -3379,6 +3404,7 @@
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
 				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */,
+				58D85113211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				58CE1ED520A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC2A254020BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				58BD52E2208DA51500F7C3E1 /* SearchUniversityResponse.swift in Sources */,
@@ -3387,6 +3413,7 @@
 				58D578D92093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
 				58E870B620CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				AC525AB2208DD714001070B2 /* InboxController.swift in Sources */,
+				58C03E41211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				ACA323A22087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
@@ -3518,6 +3545,7 @@
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				58C03E48211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E52105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330E20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
@@ -3756,6 +3784,7 @@
 				58155E322091BE1300ADEFFB /* AboutRectView.swift in Sources */,
 				585B68CE20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
 				5843DA5220A0261D005C8AD2 /* InviteController.swift in Sources */,
+				58D85115211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				5803571820AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				58CE1EC820A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC0E829B20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
@@ -3836,6 +3865,7 @@
 				58447B49209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
 				58447B2E209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
+				58C03E43211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				587D18D320DA465E00D53708 /* FeedbackController.swift in Sources */,
@@ -3864,6 +3894,7 @@
 				AC616F9C20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				AC8EA9F320AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				AC51D93820FDE964004A52BA /* WarningHeaderView.swift in Sources */,
+				58C03E4A211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58CE1EE620A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */,
 				ACB5794020F336FE006D597E /* BeautyFilter.m in Sources */,
@@ -3950,6 +3981,7 @@
 				ACDFD27920E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				5803C1292099CBFB007C3D1C /* UpdateCollegeController.swift in Sources */,
 				586603472108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
+				58C03E4F211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				AC557CA520B7EDEE0068F1B3 /* AssetsManager.swift in Sources */,
 				58CE1EBF20A53D5E00781EBF /* StoriesPlayerViewController.swift in Sources */,
@@ -4095,6 +4127,7 @@
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
+				58C03E44211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				AC616F9820C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
@@ -4110,6 +4143,7 @@
 				ACA3238020875E0F00BDC92E /* OnboardingFlowFactory.swift in Sources */,
 				584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC616FA320C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
+				58C03E50211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				585B68C520AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				58C0EFC42110019A0038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				AC2A258020BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
@@ -4141,6 +4175,7 @@
 				ACF7A8C720B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
 				583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
+				58C03E4B211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				AC87BC6920E1FD7D002BA32C /* Guide.swift in Sources */,
@@ -4259,6 +4294,7 @@
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				580F888920FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
+				58D85116211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */,
 				58C0EFBA210EC3E30038EB2F /* UIScreen+Metrics.swift in Sources */,
@@ -4350,6 +4386,7 @@
 				AC84FE7920E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
 				58BD52F5208DDC3800F7C3E1 /* Upload.swift in Sources */,
+				58C03E4E211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
@@ -4395,6 +4432,7 @@
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
 				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,
+				58D85114211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				AC2A254120BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				58CE1ED620A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
@@ -4403,6 +4441,7 @@
 				ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58E870B720CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				58D578DA2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
+				58C03E42211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				AC525AB3208DD714001070B2 /* InboxController.swift in Sources */,
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
@@ -4534,6 +4573,7 @@
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				58C03E49211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E62105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
 				5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */,
@@ -4838,7 +4878,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4860,7 +4903,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miaozan.XPro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4881,7 +4927,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4902,7 +4952,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -4921,7 +4975,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4941,7 +4999,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -4967,7 +5029,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -4994,7 +5059,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

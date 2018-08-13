@@ -101,12 +101,17 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     private func showAll(_ isAllShown: Bool) {
         self.isAllShown = isAllShown
         allView.view.alpha = isAllShown ? 1 : 0
+        subscriptionView.view.alpha = isAllShown ? 0 : 1
         if isAllShown {
             delegate?.showAll(view: allView)
             allView.loadCards()
+            allView.setViewHidden(isHidden: false)
+            subscriptionView.setViewHidden(isHidden: true)
         } else {
             delegate?.showSubscription(view: subscriptionView)
             subscriptionView.loadCards()
+            allView.setViewHidden(isHidden: true)
+            subscriptionView.setViewHidden(isHidden: false)
         }
     }
     
@@ -139,13 +144,13 @@ extension CardsManagerController: MessengerDelegate {
     
     func showStatusBarNotification(messageType: IMType, success: Bool, messageIndex: Int) {
         if success {
-            if messageType == .card {
+            if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论成功")
             }
         } else {
-            if messageType == .card {
+            if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
             } else if messageType == .like || messageType == .text {
                 toast(message: "评论失败")

@@ -92,7 +92,6 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
         
-
     }
     
     private func setupImageViews() {

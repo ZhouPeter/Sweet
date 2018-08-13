@@ -96,6 +96,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
         customContent.addSubview(titleLabel)
         titleLabel.align(.left, to: customContent, inset: 10)
         titleLabel.align(.top, to: customContent, inset: 15)
+        titleLabel.constrain(height: 20)
         customContent.addSubview(menuButton)
         menuButton.centerY(to: titleLabel)
         menuButton.align(.right, to: customContent, inset: 10)

@@ -10,7 +10,6 @@ target 'Sweet' do
   pod 'UMCPush'
   pod 'RealmSwift'
   pod 'SwiftyUserDefaults'
-  pod 'Kingfisher'
   pod 'Pageboy', '~> 2.0'
   pod 'Hero', '~> 1.2.0'
   pod 'TapticEngine'
@@ -31,6 +30,7 @@ target 'Sweet' do
   pod 'ReachabilitySwift'
   pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
+  
   target 'Sweet Dev' do
   end
   

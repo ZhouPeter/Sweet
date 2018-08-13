@@ -250,6 +250,7 @@ class SweetPlayerLayerView: UIView {
     }
     // MARK: - 设置视频URL
     fileprivate func onSetVideoAsset() {
+        logger.debug("onSetVideoAsset")
         repeatToPlay = false
         playDidEnd   = false
         configPlayer()
@@ -260,29 +261,11 @@ class SweetPlayerLayerView: UIView {
             selector: #selector(moviePlayDidEnd(_:)),
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationWillEnterForeground),
-            name: .UIApplicationWillEnterForeground,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationDidEnterBackground),
-            name: .UIApplicationDidEnterBackground,
-            object: nil)
+     
     }
     
     fileprivate func removePlayerNotifations() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidEnterBackground, object: nil)
-    }
-    
-    @objc private func applicationWillEnterForeground() {
-        play()
-    }
-    @objc private func applicationDidEnterBackground() {
-        pause()
     }
     
     fileprivate func onPlayerItemChange() {
@@ -358,6 +341,15 @@ class SweetPlayerLayerView: UIView {
     private var keepUpToken: NSKeyValueObservation?
     private var rateToken: NSKeyValueObservation?
     fileprivate func configPlayer() {
+        if player != nil {
+            replacePlayer()
+        } else {
+            initPlayer()
+        }
+    }
+    
+    fileprivate func initPlayer() {
+        logger.debug("init player")
         rateToken?.invalidate()
         playerItem = AVPlayerItem(asset: urlAsset!)
         player     = AVPlayer(playerItem: playerItem!)
@@ -370,6 +362,13 @@ class SweetPlayerLayerView: UIView {
         layer.addSublayer(playerLayer!)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    fileprivate func replacePlayer() {
+        logger.debug("replace player")
+        playerItem = AVPlayerItem(asset: urlAsset!)
+        player?.replaceCurrentItem(with: playerItem)
+        playerLayer?.player = player
     }
     fileprivate func configPlayerNoAsset() {
         rateToken?.invalidate()

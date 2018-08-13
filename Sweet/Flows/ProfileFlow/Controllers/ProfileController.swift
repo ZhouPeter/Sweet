@@ -148,14 +148,10 @@ class ProfileController: BaseViewController, ProfileView {
         navigationController?.navigationBar.tintColor = .black
         if !isFirstLoad { readLocalData() }
         if isFirstLoad { isFirstLoad = false }
-//        if userResponse == nil || !isFirstLoad {
-//            loadAll()
-//        } else {
-//            updateViewModel()
-//            tableView.reloadData()
-//            loadAll(isLoadUser: false)
-//        }
-//        if isFirstLoad { isFirstLoad = false }
+    }
+    
+    deinit {
+        logger.debug("个人页释放")
     }
     
     func readLocalData() {
@@ -425,7 +421,7 @@ extension ProfileController: ActionsControllerDelegate {
                 scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
                 
             }
-            let tableViewOffsetY = min(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 244)
+            let tableViewOffsetY = min(max(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 0), 244)
             if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
                 tableView.bounds = CGRect(origin: CGPoint(x: 0, y: -UIScreen.navBarHeight()),
                                           size: tableView.bounds.size)
@@ -445,7 +441,6 @@ extension ProfileController: ActionsControllerDelegate {
             scrollView.contentOffset.y = 0
             let point = scrollView.panGestureRecognizer.translation(in: nil)
             if point.y > 0 && tableView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
-
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
                     self.tableView.contentOffset.y = -UIScreen.navBarHeight()
                 }, completion: nil)
@@ -480,8 +475,15 @@ extension ProfileController: UITableViewDelegate {
                     scrollView.contentOffset.y = -UIScreen.navBarHeight()
                 }
             }
+        } else if point.y > 0 && scrollView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                scrollView.contentOffset.y = -UIScreen.navBarHeight()
+            }, completion: nil)
         }
         if  scrollView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+            navigationItem.titleView = avatarView
+        } else if scrollView.contentOffset.y > 244 - UIScreen.navBarHeight() {
+            scrollView.contentOffset.y = 244 - UIScreen.navBarHeight()
             navigationItem.titleView = avatarView
         } else {
             navigationItem.titleView = nil

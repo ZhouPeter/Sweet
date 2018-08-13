@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.2)
+  - Alamofire (4.7.3)
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
@@ -7,9 +7,13 @@ PODS:
   - Gemini (1.3.0)
   - Hero (1.2.0)
   - JDStatusBarNotification (1.5.6)
-  - JXPhotoBrowser (1.3.2):
+  - JXPhotoBrowser (1.4.0):
+    - JXPhotoBrowser/Kingfisher (= 1.4.0)
+  - JXPhotoBrowser/Core (1.4.0)
+  - JXPhotoBrowser/Kingfisher (1.4.0):
+    - JXPhotoBrowser/Core
     - Kingfisher
-  - Kingfisher (4.8.0)
+  - Kingfisher (4.8.1)
   - KMNavigationBarTransition (1.1.5)
   - libimcloud (0.2.7):
     - CocoaAsyncSocket (~> 7.5.1)
@@ -43,19 +47,19 @@ PODS:
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - NVActivityIndicatorView (4.2.1):
-    - NVActivityIndicatorView/Presenter (= 4.2.1)
-  - NVActivityIndicatorView/Presenter (4.2.1)
-  - Pageboy (2.5.1)
-  - PKHUD (5.0.0)
+  - NVActivityIndicatorView (4.3.0):
+    - NVActivityIndicatorView/Presenter (= 4.3.0)
+  - NVActivityIndicatorView/Presenter (4.3.0)
+  - Pageboy (2.5.4)
+  - PKHUD (5.1.0)
   - ReachabilitySwift (4.1.0)
-  - Realm (3.7.4):
-    - Realm/Headers (= 3.7.4)
-  - Realm/Headers (3.7.4)
-  - RealmSwift (3.7.4):
-    - Realm (= 3.7.4)
+  - Realm (3.7.6):
+    - Realm/Headers (= 3.7.6)
+  - Realm/Headers (3.7.6)
+  - RealmSwift (3.7.6):
+    - Realm (= 3.7.6)
   - Result (3.2.4)
-  - Reveal-SDK (15)
+  - Reveal-SDK (17)
   - SDWebImage (5.0.0-beta2):
     - SDWebImage/Core (= 5.0.0-beta2)
   - SDWebImage/Core (5.0.0-beta2)
@@ -65,12 +69,12 @@ PODS:
   - STPopup (1.8.3)
   - STPopupPreview (1.0.3):
     - STPopup (~> 1.7)
-  - SwiftProtobuf (1.0.3)
+  - SwiftProtobuf (1.1.0)
   - SwiftyUserDefaults (3.0.1)
   - SwipeCellKit (2.3.2)
   - TapticEngine (1.1.0)
-  - UMCCommon (1.5.1)
-  - UMCPush (3.2.1):
+  - UMCCommon (1.5.2)
+  - UMCPush (3.2.2):
     - UMCCommon
   - VIMediaCache (0.4)
   - VolumeBar (3.0.3)
@@ -82,7 +86,6 @@ DEPENDENCIES:
   - Hero (~> 1.2.0)
   - JDStatusBarNotification
   - JXPhotoBrowser
-  - Kingfisher
   - KMNavigationBarTransition
   - libimcloud (from `https://gitee.com/miaobo/iOS.LIBIMCLOUD.git`, branch `master`)
   - MessageKit (from `https://github.com/MessageKit/MessageKit.git`, branch `development`)
@@ -154,47 +157,47 @@ CHECKOUT OPTIONS:
     :commit: ff6cddbcee9ea5b703b72686a4291d73209ee450
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
   MessageKit:
-    :commit: 5e5c80f5de1ce3810ee9fa5d5b81fe885695d856
+    :commit: f8894874ccf47416c81d5c4a7030bc77ec0e6532
     :git: https://github.com/MessageKit/MessageKit.git
   SDWebImage:
-    :commit: d1d43aad5b2ce7cbbfd61ea00160f4ace964fe0e
+    :commit: 802e19b23dc039841204baa6e0212cb8215638bf
     :git: https://github.com/rs/SDWebImage.git
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Gemini: 1a932868fa70579457162c3a93cd844ad5df3455
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JDStatusBarNotification: d5829a8f2f291b23b8a54b87fac8bf2549945a2f
-  JXPhotoBrowser: bd7438c901bbc1c0b0c2236c231b186377cb12b8
-  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  JXPhotoBrowser: b014aef984f69b4d52e846c5bc682cad4ff4d156
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   libimcloud: 13cf95770c1179d7e0b3c10e7829e5475e830433
   libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
   MessageKit: 16160036b16476b04bd0e9f2c7ce67e662e503e4
   Moya: a725035953bc1c0eb1be505ab903984501d82440
-  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
-  Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
-  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
+  NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
+  Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
+  PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
-  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
-  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
+  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
+  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Reveal-SDK: 25e21896c478b60b948f876043f91570d368d23d
+  Reveal-SDK: a6df49f47319bd19a110c960c498af32df72c0af
   SDWebImage: 8e4aaf5805e954ad426702adf5a8c012a7f581d1
   STPopup: da1167250a01584af7bcccb898653185f223ec46
   STPopupPreview: b337976411c4bc3324731f9d6cd056ac8f8b421c
-  SwiftProtobuf: 5ccc0e4054e37c75800e5744acb2aa80bb72b39c
+  SwiftProtobuf: f72e7c8b02f709da8c1a5661804ee1604ca504ae
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   SwipeCellKit: 52b160ea820245eb972b2eca270cb3a6f68e33af
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
-  UMCCommon: 16b674e9de0616d3a6128c551348a686d869c3c7
-  UMCPush: 6a56ca259e934043a491283a88b1699596ea1a18
+  UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
+  UMCPush: 5ab89bdbcc1fe90b1c669ff79213b44dc4821ec5
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: b2c95231229d1b53a517392a214c63ffc2f583f5
+PODFILE CHECKSUM: a2da764e6d3251c6a0c7d080899a75b0dd06dcae
 
 COCOAPODS: 1.5.3

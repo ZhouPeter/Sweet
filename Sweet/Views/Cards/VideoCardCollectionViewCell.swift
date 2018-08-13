@@ -8,7 +8,9 @@
 
 import UIKit
 import AVFoundation
-
+protocol VideoCardCollectionViewCellDelegate: NSObjectProtocol {
+    func showVideoPlayerController(playerView: SweetPlayerView, cardId: String)
+}
 class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentVideoCardViewModel
     private var viewModel: ViewModelType?
@@ -32,7 +34,11 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }()
     
     lazy var playerView: SweetPlayerView = {
-        let view = SweetPlayerView(controlView: SweetPlayerCellControlView())
+        let controlView = SweetPlayerCellControlView()
+        let view = SweetPlayerView(controlView: controlView)
+        view.panGesture.isEnabled = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressVideo(_:)))
+        controlView.addGestureRecognizer(tap)
         view.backgroundColor = .black
         view.isUserInteractionEnabled = true
         return view
@@ -116,7 +122,10 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     
     private func loadItemValues() {
-        if let asset = playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
+        
+        if let asset = playerView.avPlayer?.currentItem?.asset, asset.isPlayable,
+            let urlAsset = asset as? AVURLAsset,
+            urlAsset.url == viewModel!.videoURL {
             loadedResourceForPlay(asset: asset)
         } else {
             let resource = SweetPlayerResource(url: viewModel!.videoURL)
@@ -170,15 +179,16 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
 }
 // MARK: - Actions
 extension VideoCardCollectionViewCell {
-    @objc private func didPressImage(_ tap: UITapGestureRecognizer) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showImageBrowser(selectedIndex: view.tag)
-        }
-    }
 
     @objc private func didPressShare(_ sender: UIButton) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.shareCard(cardId: cardId!)
+        }
+    }
+    
+    @objc private func didPressVideo(_ tap: UITapGestureRecognizer) {
+        if let delegate = delegate as? VideoCardCollectionViewCellDelegate {
+            delegate.showVideoPlayerController(playerView: playerView, cardId: viewModel!.cardId)
         }
     }
 }

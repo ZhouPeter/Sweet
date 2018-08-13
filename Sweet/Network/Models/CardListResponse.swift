@@ -26,6 +26,18 @@ enum SourceType: UInt, Codable {
     case zhihu
     case bilibili
     case xiaohongshu
+    func getSourceText() -> String {
+        switch self {
+        case .weixin:
+            return "weixin.com"
+        case .zhihu:
+            return "zhihu.com"
+        case .toutiaohao:
+            return "toutiaohao.com"
+        default:
+            return ""
+        }
+    }
 }
 struct CardListResponse: Codable {
     let list: [CardResponse]

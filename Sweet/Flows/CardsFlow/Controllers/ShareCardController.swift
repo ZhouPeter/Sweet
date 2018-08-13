@@ -237,8 +237,8 @@ class ShareCardController: BaseViewController {
                     var viewModel = ContactViewModel(model: contact)
                     viewModel.isHiddeenSelectButton = false
                     self.contactViewModels.append(viewModel)
-                    self.updateSections()
                 })
+                self.updateSections()
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
