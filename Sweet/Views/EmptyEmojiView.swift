@@ -10,7 +10,7 @@ import UIKit
 
 class EmptyEmojiView: UIView {
 
-    private lazy var emojiImageView: UIImageView = {
+    lazy var emojiImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()

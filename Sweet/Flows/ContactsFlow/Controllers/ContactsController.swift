@@ -17,7 +17,13 @@ class ContactsController: BaseViewController, ContactsView {
     private var blacklistViewModel = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
     private var titles = [String]()
-    private var emptyView = EmptyEmojiView()
+    private lazy var emptyView: EmptyEmojiView = {
+        let view = EmptyEmojiView(image: nil, title: "聊过天的人会出现在这里")
+        view.emojiImageView.image = nil
+        view.titleLabel.font = UIFont.systemFont(ofSize: 14)
+        view.titleLabel.textColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
     
     private lazy var categoryViewModels: [ContactCategoryViewModel] = {
         var viewModels = [ContactCategoryViewModel]()

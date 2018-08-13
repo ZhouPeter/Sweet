@@ -137,7 +137,22 @@ struct CardResponse: Codable {
                                             desc: String(text.prefix(100)),
                                             url: self.url)
                 return storyDraft
-            } else {
+            } else if let thumbnail = thumbnail {
+                let cfUrl = URL(string: thumbnail)! as CFURL
+                let gifSource  = CGImageSourceCreateWithURL(cfUrl, nil)
+                let imageCount = CGImageSourceGetCount(gifSource!)
+                guard imageCount > 0 else { return nil }
+                guard let imageRef = CGImageSourceCreateImageAtIndex(gifSource!, 0, nil) else { return nil }
+                let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
+                guard let url = image.writeToCache(withAlpha: false) else { return nil }
+                let storyDraft = StoryDraft(filename: url.lastPathComponent,
+                                            storyType: .share,
+                                            date: Date(),
+                                            comment: nil,
+                                            desc: String(text.prefix(100)),
+                                            url: self.url)
+                return storyDraft
+            } else  {
                 return nil
             }
         } else {

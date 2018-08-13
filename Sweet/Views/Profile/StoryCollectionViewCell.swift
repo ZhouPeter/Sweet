@@ -88,12 +88,14 @@ class StoryCollectionViewCell: UICollectionViewCell {
                 storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: storyImageView.frame.size)
             } else if viewModel.type == .poke {
                 storyImageView.sd_setImage(with: videoURL.videoThumbnail(size: storyImageView.frame.size))
+                storyImageView.sd_setAnimationImages(with: [videoURL.videoThumbnail(size: storyImageView.frame.size)!])
                 pokeView.center = CGPoint(x: frame.width / 2 + viewModel.pokeCenter.x * frame.width,
                                           y: frame.height / 2 + viewModel.pokeCenter.y * frame.height)
                 pokeView.isHidden = false
             }
         } else if let imageURL = viewModel.imageURL {
             storyImageView.sd_setImage(with: imageURL)
+            storyImageView.sd_setAnimationImages(with: [imageURL])
         }
         if viewModel.timestampString == ""  {
             timeLabel.isHidden = true

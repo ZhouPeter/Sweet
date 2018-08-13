@@ -130,7 +130,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
-            cell.playerView.pause()
+            cell.playerView.pauseWithRemove(isRemove: true)
         }
     }
     
@@ -311,26 +311,18 @@ extension CardsBaseController {
         for cell in collectionView.visibleCells {
             if let cell = cell as? VideoCardCollectionViewCell,
                 let indexPath = collectionView.indexPath(for: cell) {
-                let isRemove = indexPath.item != index
-                cell.playerView.pauseWithRemove(isRemove: isRemove)
+                let isCurrent = indexPath.item != index
+                cell.playerView.pauseWithRemove(isRemove: isCurrent)
+                cell.playerView.playerLayer?.resetPlayer(isRemoveLayer: false)
             }
         }
         let configurator = self.cellConfigurators[index]
         if let cell = cell as? VideoCardCollectionViewCell,
             let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             cell.playerView.delegate = self
-            if let resource = cell.playerView.resource,
-                resource.indexPath == indexPath,
-                resource.definitions[0].url == configurator.viewModel.videoURL {
-                if let asset = cell.playerView.avPlayer?.currentItem?.asset, asset.isPlayable {
-                } else {
-                    cell.playerView.setVideo(resource: resource)
-                }
-            } else {
-                let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
-                resource.indexPath = indexPath
-                cell.playerView.setVideo(resource: resource)
-            }
+            let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
+            resource.indexPath = indexPath
+            cell.playerView.setVideo(resource: resource)
             cell.playerView.isVideoMuted = isVideoMuted
             cell.playerView.seek(configurator.viewModel.currentTime) {
                 cell.playerView.play()
@@ -363,10 +355,6 @@ extension CardsBaseController {
                 let request: CardRequest = self is CardsAllController ?
                     .all(cardId: cardId, direction: direction) :
                     .sub(cardId: cardId, direction: direction)
-//                self.startLoadCards(cardRequest: request) { (success, cards) in
-//                    if let cards = cards, cards.count > 0, success { self.index += 1 }
-//                    self.scrollTo(row: self.index)
-//                }
                 self.startLoadCards(cardRequest: request)
                 self.scrollTo(row: index)
             } else if index < maxIndex {
@@ -448,7 +436,11 @@ extension CardsBaseController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newIndex = indexPath.row
         if newIndex == index {
-            showWebView(indexPath: indexPath)
+            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                showVideoPlayerController(playerView: cell.playerView, cardId: cards[index].cardId)
+            } else {
+                showWebView(indexPath: indexPath)
+            }
         } else {
             index = newIndex
             scrollTo(row: index)

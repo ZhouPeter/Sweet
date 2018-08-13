@@ -32,7 +32,7 @@ protocol ProfileViewDelegate: class {
 
 class ProfileController: BaseViewController, ProfileView {
     weak var delegate: ProfileViewDelegate?
-    
+    private var userScrollFlag = false
     var showStory: (() -> Void)?
     var showStoriesPlayerView: (
         (
@@ -254,18 +254,23 @@ extension ProfileController {
         tableView.fill(in: view)
     }
     private func loadTableView() {
-        if self.actionsController == nil {
-            self.actionsController = ActionsController(user: User(self.userResponse!),
-                                                       mine: self.user,
-                                                       setTop: self.setTop)
-            self.actionsController!.actionsDelegate = self
-            self.actionsController!.showStoriesPlayerView = self.showStoriesPlayerView
-            self.actionsController!.showStory = self.showStory
-            self.add(childViewController: self.actionsController!, addView: false)
+        if actionsController == nil {
+            actionsController = ActionsController(user: User(userResponse!),
+                                                       mine: user,
+                                                       setTop: setTop)
+            actionsController!.actionsDelegate = self
+            actionsController!.showStoriesPlayerView = showStoriesPlayerView
+            actionsController!.showStory = showStory
+            add(childViewController: actionsController!, addView: false)
         }
-        self.saveUserData()
-        self.updateViewModel()
-        self.tableView.reloadData()
+        saveUserData()
+        updateViewModel()
+        tableView.reloadData()
+        let offsetY = tableView.contentOffset.y
+        DispatchQueue.main.async {
+            self.tableView.contentOffset.y = offsetY
+        }
+      
     }
     private func loadAll(isLoadUser: Bool = true) {
         let group = DispatchGroup()
@@ -415,19 +420,23 @@ extension ProfileController: ActionsControllerDelegate {
         } else {
             let cellHeight = (UIScreen.mainHeight() - 6) / 3
             let lineCount = CGFloat(ceil(CGFloat(index + 1) / 3.0))
-            let scrollViewOffsetY = cellHeight * lineCount + 3 * (lineCount - 1) - scrollView.frame.height
+            let contentMaxVisibleHeight = UIScreen.mainHeight() - UIScreen.navBarHeight() - 50
+            let cellSumHeight = cellHeight * lineCount + 3 * (lineCount - 1)
+            var scrollViewOffsetY = cellSumHeight - scrollView.frame.height
+            if cellSumHeight <= contentMaxVisibleHeight {
+                scrollViewOffsetY = max(0, scrollViewOffsetY)
+            }
             if scrollView.bounds.origin.y != scrollViewOffsetY {
-                scrollView.bounds = CGRect(origin: .zero, size: scrollView.bounds.size)
-                scrollView.bounds = scrollView.bounds.offsetBy(dx: 0, dy: scrollViewOffsetY)
-                
+                let point = CGPoint(x: 0, y: scrollViewOffsetY)
+                let bounds = CGRect(origin: point, size: scrollView.bounds.size)
+                scrollView.bounds = bounds
             }
-            let tableViewOffsetY = min(max(cellHeight * lineCount + 3 * (lineCount - 1) - contentVisibleHeight, 0), 244)
-            if tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
-                tableView.bounds = CGRect(origin: CGPoint(x: 0, y: -UIScreen.navBarHeight()),
-                                          size: tableView.bounds.size)
-                tableView.bounds = tableView.bounds.offsetBy(dx: 0, dy: tableViewOffsetY)
+            let tableViewOffsetY = min(max(cellSumHeight - contentVisibleHeight, 0), 244)
+            if self.tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
+                let point = CGPoint(x: 0, y: tableViewOffsetY - UIScreen.navBarHeight())
+                let bounds = CGRect(origin: point, size: tableView.bounds.size)
+                tableView.bounds = bounds
             }
-           
         }
     }
     
@@ -440,7 +449,8 @@ extension ProfileController: ActionsControllerDelegate {
             tableView.contentOffset.y = newOffsetY
             scrollView.contentOffset.y = 0
             let point = scrollView.panGestureRecognizer.translation(in: nil)
-            if point.y > 0 && tableView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
+            if point.y > 0
+                && tableView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
                     self.tableView.contentOffset.y = -UIScreen.navBarHeight()
                 }, completion: nil)
