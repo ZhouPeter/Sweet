@@ -32,7 +32,7 @@ struct LongTextCardViewModel {
         contentTextAttributed = attributedText
         
         let rect = model.title?.boundingSize(font: UIFont.boldSystemFont(ofSize: 18),
-                                             size: CGSize(width: UIScreen.mainWidth() - 40,
+                                             size: CGSize(width: UIScreen.mainWidth() - 40 - 8 * 2,
                                                           height: CGFloat.greatestFiniteMagnitude),
                                              lineSpacing: 5)
         sourceHeight = ceil(rect?.height ?? 0) +
