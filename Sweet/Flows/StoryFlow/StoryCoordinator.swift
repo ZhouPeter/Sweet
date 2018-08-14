@@ -114,7 +114,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     
     private func showRecentStories() {
         web.request(
-            .storyList(userId: user.userId),
+            .recentStoryList(userID: user.userId),
             responseType: Response<StoryListResponse>.self) { [weak self] (result) in
                 guard let `self` = self else { return }
                 switch result {
