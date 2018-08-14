@@ -81,7 +81,7 @@ class ShareWebViewController: WebViewController, ShareWebView {
     private func requestFromCard() {
         if card == nil, let cardId = cardId {
             web.request(
-                 WebAPI.getCard(cardID: cardId),
+                 WebAPI.reviewCard(cardID: cardId),
                  responseType: Response<CardGetResponse>.self) { (result) in
                     switch result {
                     case let .success(response):

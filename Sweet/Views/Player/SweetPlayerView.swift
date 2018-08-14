@@ -162,8 +162,8 @@ class SweetPlayerView: UIView {
         }
     }
     
-    func resetPlayer(isRemoveLayer: Bool = false) {
-        self.playerLayer?.resetPlayer(isRemoveLayer: isRemoveLayer)
+    func cleanPlayer() {
+        self.playerLayer?.cleanPlayer()
         self.avPlayer = nil
     }
     

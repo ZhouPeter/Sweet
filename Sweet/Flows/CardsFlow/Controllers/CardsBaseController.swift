@@ -313,7 +313,7 @@ extension CardsBaseController {
                 let indexPath = collectionView.indexPath(for: cell) {
                 let isCurrent = indexPath.item != index
                 cell.playerView.pauseWithRemove(isRemove: isCurrent)
-                cell.playerView.resetPlayer(isRemoveLayer: false)
+                cell.playerView.cleanPlayer()
             }
         }
         let configurator = self.cellConfigurators[index]

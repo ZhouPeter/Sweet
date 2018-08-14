@@ -202,11 +202,15 @@ class SweetPlayerLayerView: UIView {
         self.timer?.invalidate()
     }
     
+    open func cleanPlayer() {
+        player?.replaceCurrentItem(with: nil)
+        resetPlayer(isRemoveLayer: false)
+    }
+    
     open func resetPlayer(isRemoveLayer: Bool = true) {
         // 初始化状态变量
         self.playDidEnd = false
         self.playerItem = nil
-        self.player?.replaceCurrentItem(with: nil)
         self.seekTime   = 0
         self.timer?.invalidate()
         self.rateToken?.invalidate()
@@ -355,8 +359,7 @@ class SweetPlayerLayerView: UIView {
         if let player = player {
             if let asset = player.currentItem?.asset,
                 let urlAsset = asset as? AVURLAsset,
-                urlAsset.url.absoluteString == self.urlAsset?.url.absoluteString,
-                asset.isPlayable {
+                urlAsset.url.absoluteString == self.urlAsset?.url.absoluteString {
                 
             } else {
                 replacePlayer()
