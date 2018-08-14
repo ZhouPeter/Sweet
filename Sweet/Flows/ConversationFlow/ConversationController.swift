@@ -484,7 +484,7 @@ extension ConversationController: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        if let section = messages.firstIndex(where: { $0.localID == message.localID }) {
+        if let section = messages.index(where: { $0.localID == message.localID }) {
             let indexPath = IndexPath(row: 0, section: section)
             messages[indexPath.section] = message
             messagesCollectionView.reloadSections([section])
