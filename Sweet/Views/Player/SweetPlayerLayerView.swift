@@ -206,6 +206,7 @@ class SweetPlayerLayerView: UIView {
         // 初始化状态变量
         self.playDidEnd = false
         self.playerItem = nil
+        self.player?.replaceCurrentItem(with: nil)
         self.seekTime   = 0
         self.timer?.invalidate()
         self.rateToken?.invalidate()
