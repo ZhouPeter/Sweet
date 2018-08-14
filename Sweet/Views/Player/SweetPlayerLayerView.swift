@@ -224,7 +224,6 @@ class SweetPlayerLayerView: UIView {
             self.timer?.fireDate = Date.distantFuture
         }
     }
-    
     open func seek(to secounds: TimeInterval, completion:(() -> Void)?) {
         if secounds.isNaN {
             return
@@ -271,12 +270,13 @@ class SweetPlayerLayerView: UIView {
         if lastPlayerItem == playerItem {
             return
         }
-        if  lastPlayerItem != nil {
+        if lastPlayerItem != nil {
             removePlayerNotifations()
             statusToken?.invalidate()
             loadedToken?.invalidate()
             bufferEmptyToken?.invalidate()
             keepUpToken?.invalidate()
+            fullToken?.invalidate()
         }
         
         lastPlayerItem = playerItem
@@ -287,7 +287,7 @@ class SweetPlayerLayerView: UIView {
                 if self.player?.status == .readyToPlay {
                     self.state = .buffering
                     if self.shouldSeekTo != 0 {
-                        print("SweetPlayerLayer | Should seek to \(self.shouldSeekTo)")
+                        logger.debug("SweetPlayerLayer | Should seek to \(self.shouldSeekTo)")
                         self.seek(to: self.shouldSeekTo, completion: {
                             self.shouldSeekTo = 0
                             self.hasReadyToPlay = true
@@ -317,14 +317,23 @@ class SweetPlayerLayerView: UIView {
             // 缓冲区空了，需要等待数据
             bufferEmptyToken = item.observe(\.isPlaybackBufferEmpty, options: .new, changeHandler: { (_, _) in
                 // 当缓冲是空的时候
-                if self.playerItem!.isPlaybackBufferEmpty {
+                if item.isPlaybackBufferEmpty {
                     self.state = .buffering
                     self.bufferingSomeSecond()
                 }
             })
             // 缓冲区有足够数据可以播放了
-            keepUpToken = item.observe(\.isPlaybackLikelyToKeepUp, options: .new, changeHandler: { (_, _) in
-                if item.isPlaybackBufferEmpty {
+            keepUpToken = item.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: { (_, _) in
+                if item.isPlaybackLikelyToKeepUp {
+                    if self.state != .bufferFinished && self.hasReadyToPlay {
+                        self.state = .bufferFinished
+                        self.playDidEnd = true
+                    }
+                }
+            })
+            
+            keepUpToken = item.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: { (_, _) in
+                if item.isPlaybackBufferFull {
                     if self.state != .bufferFinished && self.hasReadyToPlay {
                         self.state = .bufferFinished
                         self.playDidEnd = true
@@ -339,11 +348,13 @@ class SweetPlayerLayerView: UIView {
     private var bufferEmptyToken: NSKeyValueObservation?
     private var keepUpToken: NSKeyValueObservation?
     private var rateToken: NSKeyValueObservation?
+    private var fullToken: NSKeyValueObservation?
+    
     fileprivate func configPlayer() {
         if let player = player {
             if let asset = player.currentItem?.asset,
                 let urlAsset = asset as? AVURLAsset,
-                urlAsset == self.urlAsset,
+                urlAsset.url.absoluteString == self.urlAsset?.url.absoluteString,
                 asset.isPlayable {
                 
             } else {
@@ -414,13 +425,15 @@ class SweetPlayerLayerView: UIView {
     
     fileprivate func updateStatus(inclodeLoading: Bool = false) {
         if let player = player {
-            if let playerItem = playerItem {
-                if inclodeLoading {
-                    if playerItem.isPlaybackLikelyToKeepUp || playerItem.isPlaybackBufferFull {
-                        self.state = .bufferFinished
-                    } else {
-                        self.state = .buffering
-                    }
+            if let playerItem = playerItem, inclodeLoading {
+                if playerItem.isPlaybackLikelyToKeepUp || playerItem.isPlaybackBufferFull {
+                    self.state = .bufferFinished
+                } else if  playerItem.status == .failed {
+                    self.state = .error
+                } else if playerItem.isPlaybackBufferEmpty {
+                    self.state = .buffering
+                } else {
+                    
                 }
             }
             if player.rate == 0.0 {
@@ -434,7 +447,11 @@ class SweetPlayerLayerView: UIView {
                         return
                     }
                     if currentItem.isPlaybackLikelyToKeepUp || currentItem.isPlaybackBufferFull {
-                        
+                        self.state = .bufferFinished
+                    } else if  currentItem.status == .failed {
+                        self.state = .error
+                    } else {
+                        self.state = .buffering
                     }
                 }
             }

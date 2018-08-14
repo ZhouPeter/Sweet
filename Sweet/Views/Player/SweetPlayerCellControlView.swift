@@ -56,9 +56,11 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         timeLabel.align(.bottom, inset: 6)
     }
     override func playTimeDidChange(currentTime: TimeInterval, totalTime: TimeInterval) {
-        let surplusText = SweetPlayerView.formatSecondsToString(totalTime - currentTime)
-        timeLabel.text = surplusText
-        progressView.progress = Float(currentTime / totalTime)
+        DispatchQueue.main.async {
+            let surplusText = SweetPlayerView.formatSecondsToString(totalTime - currentTime)
+            self.timeLabel.text = surplusText
+            self.progressView.progress = Float(currentTime / totalTime)
+        }
     }
 
 }

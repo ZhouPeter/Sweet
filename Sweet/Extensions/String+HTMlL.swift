@@ -41,7 +41,7 @@ extension String {
                 let substring = string.prefix(50)
                 text = substring + url + "\n" + "\n"
                     + "讲真APP，你的同学都在玩：" + "\n"
-                    + "[机智]http://t.cn/RrXTSg5"
+                    + "[机智]https://tome.fun/dl"
             } else {
                 text = nil
             }

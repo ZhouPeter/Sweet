@@ -25,7 +25,11 @@ enum SourceType: UInt, Codable {
     case toutiaohao
     case zhihu
     case bilibili
+    case pear
     case xiaohongshu
+    case huoshan
+    case kuaishou
+    case xigua
     func getSourceText() -> String {
         switch self {
         case .weixin:
@@ -34,6 +38,22 @@ enum SourceType: UInt, Codable {
             return "zhihu.com"
         case .toutiaohao:
             return "toutiaohao.com"
+        default:
+            return ""
+        }
+    }
+    func getVideoSourceContent(name: String) -> String {
+        switch self {
+        case .douyin:
+            return "我正在看「\(name)」的抖音视频"
+        case .xigua:
+            return "我正在看「\(name)」的西瓜视频"
+        case .pear:
+            return "我正在看「\(name)」的梨视频"
+        case .bilibili:
+            return "我正在看「\(name)」的bilibili视频"
+        case .weibo:
+            return "我正在看「\(name)」的微博视频"
         default:
             return ""
         }
@@ -82,11 +102,18 @@ struct CardResponse: Codable {
     func makeShareText() -> String? {
         let text: String?
         if let url = url {
-            if let source = sourceEnumType, source == .douyin {
-                text = "我正在看「\(name!)」的抖音视频 \(url)"
+            var content: String?
+            if let source = sourceEnumType,
+                (source == .douyin ||
+                source == .weibo ||
+                source == .pear ||
+                source == .bilibili ||
+                source == .xigua) {
+                content = source.getVideoSourceContent(name: name!)
             } else {
-                text = String.getShareText(content: content, url: url)
+                content = self.content
             }
+            text = String.getShareText(content: content, url: url)
         } else {
             text = nil
         }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import NVActivityIndicatorView
 protocol SweetPlayerControlViewDelegate: class {
 
     func controlView(controlView: SweetPlayerControlView, didPressButton button: UIButton)
@@ -19,6 +19,7 @@ protocol SweetPlayerControlViewDelegate: class {
 class SweetPlayerControlView: UIView {
     weak var delegate: SweetPlayerControlViewDelegate?
     weak var player: SweetPlayerView?
+    var loadingIndicator  = NVActivityIndicatorView(frame:  CGRect(x: 0, y: 0, width: 30, height: 30))
     var resource: SweetPlayerResource?
     var selectedIndex = 0
     var isFullscreen  = false
@@ -182,19 +183,32 @@ class SweetPlayerControlView: UIView {
         tapGesture = UITapGestureRecognizer(target: self,
                                             action: #selector(onTapGestureTapped(_:)))
         addGestureRecognizer(tapGesture)
+        
+        mainMaskView.addSubview(loadingIndicator)
+        loadingIndicator.center(to: mainMaskView)
+        loadingIndicator.constrain(width: 30, height: 30)
+        loadingIndicator.type  = sweetPlayerConf.loaderType
+        loadingIndicator.color = sweetPlayerConf.tintColor
     }
     func customizeUIComponents() {
         
     }
-
+    func showLoader() {
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoader() {
+        loadingIndicator.isHidden = true
+    }
     func playerStateDidChange(state: SweetPlayerState) {
         switch state {
         case .readyToPlay:
-            break
+            hideLoader()
         case .buffering:
-            break
+            showLoader()
         case .bufferFinished:
-            break
+            hideLoader()
         case .playedToTheEnd:
             break
         default:
