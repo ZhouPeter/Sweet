@@ -119,6 +119,7 @@ final class Messenger {
     }
     
     func logout() {
+        messagesUnreadCount = 0
         guard let user = self.user else { return }
         deliverQueues.values.forEach({ $0.cancelAllOperations() })
         isLogining = false
