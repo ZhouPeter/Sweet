@@ -25,14 +25,6 @@ final class TopicListController: UIViewController, TopicListView {
         return view
     } ()
     
-    private lazy var allButton: UIButton = {
-        let allButton = UIButton(type: .custom)
-        allButton.setTitle("标签", for: .normal)
-        allButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        allButton.setTitleColor(.white, for: .normal)
-        allButton.enableShadow()
-        return allButton
-    } ()
     private let keyboardObserver = KeyboardObserver()
     private weak var addTopicButton: UIButton?
     private weak var searchField: UITextField?
@@ -48,7 +40,7 @@ final class TopicListController: UIViewController, TopicListView {
         tableView.align(.right)
         tableView.align(.top)
         tableViewBottom = tableView.align(.bottom)
-        let inset: CGFloat = 56
+        let inset: CGFloat = 56 + UIScreen.safeTopMargin()
         tableView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: 0, right: 0)
         tableView.contentOffset = CGPoint(x: 0, y: -inset)
         
@@ -57,13 +49,9 @@ final class TopicListController: UIViewController, TopicListView {
         closeButton.addTarget(self, action: #selector(didPressCloseButton), for: .touchUpInside)
         closeButton.enableShadow()
         view.addSubview(closeButton)
-        closeButton.align(.top, to: view, inset: 10)
+        closeButton.align(.top, to: view, inset: 10 + UIScreen.safeTopMargin())
         closeButton.align(.right, to: view, inset: 10)
         closeButton.constrain(width: 30, height: 30)
-        
-        view.addSubview(allButton)
-        allButton.constrain(width: 50, height: 40)
-        allButton.align(.left, to: view, inset: 10)
         
         loadAllTopics()
         
