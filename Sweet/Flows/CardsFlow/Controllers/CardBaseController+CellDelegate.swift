@@ -250,9 +250,7 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         guard index == self.index else { return }
-        guard let avPlayer = playerView.avPlayer,
-            let asset = avPlayer.currentItem?.asset,
-            asset.isPlayable else { return }
+        guard let avPlayer = playerView.avPlayer, avPlayer.status == .readyToPlay else { return }
         playerView.hero.isEnabled = true
         playerView.hero.id = cards[index].video
         playerView.hero.modifiers = [.arc]
