@@ -260,7 +260,11 @@ final class Messenger {
                 self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], buddy: buddy) })
                 return
             }
-            let messages = response.msgList.map(InstantMessage.init(proto:))
+            let messages = response.msgList.map({ proto -> InstantMessage in
+                var message = InstantMessage(proto: proto)
+                message.isSent = true
+                return message
+            })
             self.saveMessages(messages, update: true, callback: {
                 self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, buddy: buddy)})
             })
@@ -275,7 +279,11 @@ final class Messenger {
         request.from = userID
         send(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response else { return }
-            self.saveMessages(response.msgList.map(InstantMessage.init(proto:)), update: false)
+            self.saveMessages(response.msgList.map({ proto -> InstantMessage in
+                var message = InstantMessage(proto: proto)
+                message.isSent = true
+                return message
+            }), update: false)
         }
     }
     
@@ -342,6 +350,7 @@ final class Messenger {
                 if let userID = self.conversationUserID, message.from == userID {
                     message.isRead = true
                 }
+                message.isSent = true
                 return message
             })
             self.storage?.write({ (realm) in
