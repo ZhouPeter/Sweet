@@ -202,7 +202,7 @@ class SweetPlayerLayerView: UIView {
         self.timer?.invalidate()
     }
     
-    open func resetPlayer() {
+    open func resetPlayer(isRemoveLayer: Bool = true) {
         // 初始化状态变量
         self.playDidEnd = false
         self.playerItem = nil
@@ -210,7 +210,7 @@ class SweetPlayerLayerView: UIView {
         self.timer?.invalidate()
         self.rateToken?.invalidate()
         // 移除原来的layer
-        self.playerLayer?.removeFromSuperlayer()
+        if isRemoveLayer { self.playerLayer?.removeFromSuperlayer() }
         // 把player置为nil
         self.player = nil
     }
@@ -250,7 +250,6 @@ class SweetPlayerLayerView: UIView {
     }
     // MARK: - 设置视频URL
     fileprivate func onSetVideoAsset() {
-        logger.debug("onSetVideoAsset")
         repeatToPlay = false
         playDidEnd   = false
         configPlayer()
@@ -341,15 +340,21 @@ class SweetPlayerLayerView: UIView {
     private var keepUpToken: NSKeyValueObservation?
     private var rateToken: NSKeyValueObservation?
     fileprivate func configPlayer() {
-        if player != nil {
-            replacePlayer()
+        if let player = player {
+            if let asset = player.currentItem?.asset,
+                let urlAsset = asset as? AVURLAsset,
+                urlAsset == self.urlAsset,
+                asset.isPlayable {
+                
+            } else {
+                replacePlayer()
+            }
         } else {
             initPlayer()
         }
     }
     
     fileprivate func initPlayer() {
-        logger.debug("init player")
         rateToken?.invalidate()
         playerItem = AVPlayerItem(asset: urlAsset!)
         player     = AVPlayer(playerItem: playerItem!)
@@ -365,7 +370,6 @@ class SweetPlayerLayerView: UIView {
     }
     
     fileprivate func replacePlayer() {
-        logger.debug("replace player")
         playerItem = AVPlayerItem(asset: urlAsset!)
         player?.replaceCurrentItem(with: playerItem)
         playerLayer?.player = player

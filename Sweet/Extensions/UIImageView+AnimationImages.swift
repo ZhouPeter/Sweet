@@ -9,7 +9,10 @@
 import Foundation
 import SDWebImage
 extension UIImageView {
-    func setAnimationImages(url: URL, animationDuration: TimeInterval, count: Int, size: CGSize) {
+    func setAnimationImages(url: URL,
+                            animationDuration: TimeInterval,
+                            count: Int,
+                            size: CGSize) {
         var urls = [URL]()
         let urlString = url.absoluteString
         for index in 0 ..< count {
@@ -23,7 +26,6 @@ extension UIImageView {
         sd_setImage(with: urls[0])
         self.animationDuration = animationDuration
         sd_setAnimationImages(with: urls)
-
     }
 }
 

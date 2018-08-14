@@ -154,6 +154,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         collectionView.reloadData()
+       
     }
     func loadRequest() {
         if storyViewModels.count > 0 {
