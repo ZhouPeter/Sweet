@@ -20,6 +20,7 @@ enum CardRequest {
 }
 let preloadingCount = 5
 var isVideoMuted = true
+
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
@@ -301,33 +302,34 @@ extension CardsBaseController {
             callback?(true, cards)
         })
     }
-    
     func changeCurrentCell() {
 
         if self.cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: index, section: 0)
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         self.saveLastId()
-        for cell in collectionView.visibleCells {
-            if let cell = cell as? VideoCardCollectionViewCell,
-                let indexPath = collectionView.indexPath(for: cell) {
-                let isCurrent = indexPath.item != index
-                cell.playerView.pauseWithRemove(isRemove: isCurrent)
-                cell.playerView.cleanPlayer()
-            }
-        }
         let configurator = self.cellConfigurators[index]
         if let cell = cell as? VideoCardCollectionViewCell,
             let configurator = configurator as? CellConfigurator<VideoCardCollectionViewCell> {
             cell.playerView.delegate = self
+            VideoCardPlayerManager.shared.play(with: configurator.viewModel.videoURL)
             let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
-            resource.indexPath = indexPath
-            cell.playerView.setVideo(resource: resource)
+            cell.playerView.resource = resource
+            cell.playerView.setAVPlayer(player: VideoCardPlayerManager.shared.player!)
             cell.playerView.isVideoMuted = isVideoMuted
             cell.playerView.seek(configurator.viewModel.currentTime) {
                 cell.playerView.play()
             }
             avPlayer = cell.playerView.avPlayer
+        } else {
+            for cell in collectionView.visibleCells {
+                if let cell = cell as? VideoCardCollectionViewCell,
+                    let indexPath = collectionView.indexPath(for: cell) {
+                    let isCurrent = indexPath.item != index
+                    cell.playerView.pauseWithRemove(isRemove: isCurrent)
+                }
+            }
+            VideoCardPlayerManager.shared.pause()
         }
     }
 

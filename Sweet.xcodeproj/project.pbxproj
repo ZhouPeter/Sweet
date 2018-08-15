@@ -316,6 +316,10 @@
 		5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		586954932122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954942122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954952122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954962122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
 		5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
 		5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
 		5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
@@ -1562,6 +1566,7 @@
 		5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryHeaderView.swift; sourceTree = "<group>"; };
 		5866330D20BC154B0018680C /* EmptyEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEmojiView.swift; sourceTree = "<group>"; };
+		586954922122F21000D48196 /* VideoCardPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCardPlayerManager.swift; sourceTree = "<group>"; };
 		5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionView.swift; sourceTree = "<group>"; };
 		5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserImp.swift; sourceTree = "<group>"; };
 		587D18C920DA310300D53708 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
@@ -2129,6 +2134,7 @@
 				58F4074520B271C40031630C /* SweetPlayerManager.swift */,
 				58F4074A20B272410031630C /* SweetPlayerItem.swift */,
 				585B68D020B1211E00E734BC /* PlayController.swift */,
+				586954922122F21000D48196 /* VideoCardPlayerManager.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -3598,6 +3604,7 @@
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
+				586954932122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACCD27EC20C54155002E96AB /* BadgeView.swift in Sources */,
@@ -3683,6 +3690,7 @@
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4520C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				5863A83C20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
+				586954952122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259520BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */,
@@ -4127,6 +4135,7 @@
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
+				586954962122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				58C03E44211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				AC616F9820C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
@@ -4626,6 +4635,7 @@
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,
+				586954942122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACCD27ED20C54155002E96AB /* BadgeView.swift in Sources */,
