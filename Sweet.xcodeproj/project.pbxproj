@@ -316,6 +316,24 @@
 		5866330F20BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331020BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
 		5866331120BC154B0018680C /* EmptyEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866330D20BC154B0018680C /* EmptyEmojiView.swift */; };
+		586954932122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954942122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954952122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954962122F21000D48196 /* VideoCardPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954922122F21000D48196 /* VideoCardPlayerManager.swift */; };
+		586954A421240E1300D48196 /* UIView+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52902088478B00F7C3E1 /* UIView+Round.swift */; };
+		586954A721240E1300D48196 /* UIView+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52902088478B00F7C3E1 /* UIView+Round.swift */; };
+		586954A921240E2C00D48196 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
+		586954AA21240E2C00D48196 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
+		586954AB21240E9700D48196 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52D0208991C100F7C3E1 /* UIViewController+Toast.swift */; };
+		586954AC21240E9700D48196 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52D0208991C100F7C3E1 /* UIViewController+Toast.swift */; };
+		586954AD2124252300D48196 /* String+Check.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52F9208DFB6300F7C3E1 /* String+Check.swift */; };
+		586954AE2124252300D48196 /* String+Check.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52F9208DFB6300F7C3E1 /* String+Check.swift */; };
+		586954AF21242C4A00D48196 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
+		586954B021242C4A00D48196 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5313208F22CD00F7C3E1 /* Contacts.swift */; };
+		586954B221242ED400D48196 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954B121242ED400D48196 /* NetworkHelper.swift */; };
+		586954B321242ED400D48196 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954B121242ED400D48196 /* NetworkHelper.swift */; };
+		586954B421242ED400D48196 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954B121242ED400D48196 /* NetworkHelper.swift */; };
+		586954B521242ED400D48196 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586954B121242ED400D48196 /* NetworkHelper.swift */; };
 		5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
 		5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
 		5872A84A20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */; };
@@ -1355,8 +1373,6 @@
 		ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEAE2089C5ED00660425 /* LoginRequestBody.swift */; };
 		ACF2DEB92089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		ACF2DEBA2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
-		ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
-		ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		ACF2DEBE2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
 		ACF2DEBF2089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
 		ACF2DEC02089E04F00660425 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEBD2089E04F00660425 /* Response.swift */; };
@@ -1562,6 +1578,8 @@
 		5866330120BBDFF60018680C /* ContactCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		5866330820BBE3C30018680C /* ContactCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCategoryHeaderView.swift; sourceTree = "<group>"; };
 		5866330D20BC154B0018680C /* EmptyEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyEmojiView.swift; sourceTree = "<group>"; };
+		586954922122F21000D48196 /* VideoCardPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCardPlayerManager.swift; sourceTree = "<group>"; };
+		586954B121242ED400D48196 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		5872A84720D39AE500B6DC8F /* CardsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionView.swift; sourceTree = "<group>"; };
 		5872A84E20D3B11600B6DC8F /* PhotoBrowserImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserImp.swift; sourceTree = "<group>"; };
 		587D18C920DA310300D53708 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
@@ -2129,6 +2147,7 @@
 				58F4074520B271C40031630C /* SweetPlayerManager.swift */,
 				58F4074A20B272410031630C /* SweetPlayerItem.swift */,
 				585B68D020B1211E00E734BC /* PlayController.swift */,
+				586954922122F21000D48196 /* VideoCardPlayerManager.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -2705,6 +2724,7 @@
 				ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */,
 				580F888C20FD8867009148CC /* GIFImageMake.swift */,
 				58A084E42105F2A500221339 /* TapGestureRecognizer.swift */,
+				586954B121242ED400D48196 /* NetworkHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3499,6 +3519,7 @@
 				58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388D20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
+				586954B221242ED400D48196 /* NetworkHelper.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				58EB21FF20DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
@@ -3598,6 +3619,7 @@
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
+				586954932122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				583DE8D520B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA3234F2087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACCD27EC20C54155002E96AB /* BadgeView.swift in Sources */,
@@ -3683,6 +3705,7 @@
 				AC9EF785208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4520C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				5863A83C20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
+				586954952122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				5843DA6120A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259520BD2B9F00A82E62 /* Base.pb.swift in Sources */,
 				589E6BC520A97BDD0038FAED /* CardListResponse.swift in Sources */,
@@ -3698,6 +3721,7 @@
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACF29FF420ECB89800959CE5 /* DeliverTask.swift in Sources */,
+				586954B421242ED400D48196 /* NetworkHelper.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
 				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
@@ -3830,7 +3854,7 @@
 				58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				5811E398210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACEFA0D02106D51D0098631F /* VideoScrollView.swift in Sources */,
-				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
+				586954AF21242C4A00D48196 /* Contacts.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
@@ -3840,7 +3864,6 @@
 				58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
-				ACF2DEBB2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACF7A8C620B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EE20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
@@ -3861,6 +3884,7 @@
 				AC86A93B20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC84FE8520E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				AC525A8C208D87CB001070B2 /* MainCoordinator.swift in Sources */,
+				586954AB21240E9700D48196 /* UIViewController+Toast.swift in Sources */,
 				58463DDD2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B49209C2E07004C2FFE /* ContactsController.swift in Sources */,
 				ACA3236820875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -3928,6 +3952,7 @@
 				58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */,
 				ACDB24E020BECFD50039368E /* InboxView.swift in Sources */,
 				AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
+				586954A421240E1300D48196 /* UIView+Round.swift in Sources */,
 				AC616F9020C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */,
@@ -3941,12 +3966,14 @@
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
+				586954AD2124252300D48196 /* String+Check.swift in Sources */,
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58CAB38A20AD581A007230AA /* CardsBaseController.swift in Sources */,
 				ACEC5C3120EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58660356210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
+				586954A921240E2C00D48196 /* UIColor+Hex.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */,
 				ACE560A820997AAA00CE2564 /* NSURL+Path.m in Sources */,
@@ -4015,6 +4042,7 @@
 				58DECE6720E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				ACC96E7520DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				5863A83D20ABCF3B0016B089 /* StoryUvList.swift in Sources */,
+				586954AC21240E9700D48196 /* UIViewController+Toast.swift in Sources */,
 				581D7BEC20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				5843DA6220A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
 				AC2A259620BD2B9F00A82E62 /* Base.pb.swift in Sources */,
@@ -4109,6 +4137,7 @@
 				5803572920AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift in Sources */,
 				589E6BD420A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
 				ACA3235820874A2900BDC92E /* Coordinator.swift in Sources */,
+				586954B021242C4A00D48196 /* Contacts.swift in Sources */,
 				5803571E20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift in Sources */,
 				AC4D090A20B7A80F007686EB /* TextColorButton.swift in Sources */,
 				ACFC208720AEA73700D696B9 /* UIView+Screenshot.swift in Sources */,
@@ -4127,6 +4156,7 @@
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
+				586954962122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				58C03E44211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
 				AC616F9820C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
@@ -4160,7 +4190,6 @@
 				AC21759220C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */,
 				AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
-				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
@@ -4171,7 +4200,6 @@
 				58816D0420C656860032D103 /* ActivityListResponse.swift in Sources */,
 				5843DA6720A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC97251A209ABD09009FB966 /* StoryTextController.swift in Sources */,
-				ACF2DEBC2089E02F00660425 /* LoginResponse.swift in Sources */,
 				ACF7A8C720B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
 				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
 				583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
@@ -4220,6 +4248,7 @@
 				AC1778D220BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACEFA0C12106D51D0098631F /* AssetVideoScrollView.swift in Sources */,
+				586954AE2124252300D48196 /* String+Check.swift in Sources */,
 				ACF7A8C020B3D78B00592BC9 /* StoryRecordBottomView.swift in Sources */,
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC616F9D20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
@@ -4252,6 +4281,7 @@
 				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC616F9120C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
 				AC84121120887C800086891C /* UIDevice+DeviceType.swift in Sources */,
+				586954A721240E1300D48196 /* UIView+Round.swift in Sources */,
 				AC6C1D8C20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				AC525AAF208DD705001070B2 /* IMCoordinator.swift in Sources */,
 				ACF2DEB22089C5ED00660425 /* LoginRequestBody.swift in Sources */,
@@ -4280,6 +4310,7 @@
 				587D18CD20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				ACEFA0CD2106D51D0098631F /* VideoCropView.swift in Sources */,
+				586954AA21240E2C00D48196 /* UIColor+Hex.swift in Sources */,
 				AC2A259E20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237420875C2E00BDC92E /* Presentable.swift in Sources */,
 				ACA83C0E20E5E5DB00908B35 /* RootViewController.swift in Sources */,
@@ -4309,6 +4340,7 @@
 				ACF29FF520ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				AC52FDC920F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				5808D3FA2112DD6700821A2C /* WXApiManager.swift in Sources */,
+				586954B521242ED400D48196 /* NetworkHelper.swift in Sources */,
 				58CE1ED820A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				AC6A0BC4210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
@@ -4527,6 +4559,7 @@
 				58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388E20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
+				586954B321242ED400D48196 /* NetworkHelper.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				58EB220020DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
@@ -4626,6 +4659,7 @@
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,
+				586954942122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */,
 				ACA323502087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				ACCD27ED20C54155002E96AB /* BadgeView.swift in Sources */,

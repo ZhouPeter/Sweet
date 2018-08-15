@@ -589,7 +589,7 @@ extension StoriesPlayerViewController {
 // MARK: - Actions
 extension StoriesPlayerViewController {
     @objc private func showWebView(_ tap: UITapGestureRecognizer) {
-        if let url = stories[currentIndex].urlString {
+        if let url = stories[currentIndex].urlString, Defaults[.review] == 0 {
             pause()
             let webController = WebViewController(urlString: url)
             webController.finish = { [weak self] in

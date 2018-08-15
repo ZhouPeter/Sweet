@@ -439,7 +439,7 @@ final class Messenger {
                 }
                 let conversationData: ConversationData
                 let unreadCount =
-                    messages.filter("isRead = false && from != \(myID) && type != \(IMType.like.rawValue)").count
+                    messages.filter("isRead = false && from != \(myID) && type == \(IMType.text.rawValue)").count
                 let likesCount =
                     messages.filter("isRead = false && from != \(myID) && type == \(IMType.like.rawValue)").count
                 if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
