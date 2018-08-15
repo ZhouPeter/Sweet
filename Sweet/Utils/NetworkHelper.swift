@@ -23,8 +23,7 @@ class NetworkHelper {
                                                         message:"您可以在\"设置\"中为此应用打开网络",
                                                         preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "设置", style: .default, handler: { (_) in
-                    if let bundleID = Bundle.main.infoDictionary?["CFBundleVersion"],
-                        let url = URL(string: "App-Prefs:root=\(bundleID)") {
+                    if let url = URL(string: UIApplicationOpenSettingsURLString) {
                         self.openURL(url: url)
                     }
                 }))
