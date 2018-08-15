@@ -212,6 +212,7 @@ extension StoryTextController: StoryTextEditControllerDelegate {
     }
     
     func storyTextEditControllerDidEndChooseTopic(_ topic: String?) {
+        self.topic = topic
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.closeButton.alpha = 1
             self.editButton.alpha = self.editController.hasText ? 0 : 1
