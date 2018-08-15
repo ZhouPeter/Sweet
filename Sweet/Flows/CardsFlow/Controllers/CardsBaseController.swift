@@ -314,6 +314,7 @@ extension CardsBaseController {
             cell.playerView.delegate = self
             VideoCardPlayerManager.shared.play(with: configurator.viewModel.videoURL)
             let resource = SweetPlayerResource(url: configurator.viewModel.videoURL)
+            resource.indexPath = indexPath
             cell.playerView.resource = resource
             cell.playerView.setAVPlayer(player: VideoCardPlayerManager.shared.player!)
             cell.playerView.isVideoMuted = isVideoMuted
