@@ -51,10 +51,13 @@ public class SweetPlayerResourceDefinition {
     
     /// An instance of NSDictionary that contains keys for specifying options for the initialization of the AVURLAsset. See AVURLAssetPreferPreciseDurationAndTimingKey and AVURLAssetReferenceRestrictionsKey above.
     public var options: [String: Any]?
-    var avURLAsset: AVURLAsset {
+    var avURLNoCacheAsset: AVURLAsset {
         return SweetPlayerManager.assetNoCache(for: url)
     }
     
+    var avURLAsset: AVURLAsset {
+        return SweetPlayerManager.asset(for: self)
+    }
     /**
      Video recource item with defination name and specifying options
      

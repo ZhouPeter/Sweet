@@ -41,6 +41,7 @@ class VideoCardPlayerManager: NSObject {
         guard let url = assetURL else { return }
         let asset = SweetPlayerManager.assetNoCache(for: url)
         let assetKeys = [
+            "tracks",
             "playable",
             "duration"
         ]
