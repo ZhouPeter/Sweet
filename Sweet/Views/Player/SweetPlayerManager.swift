@@ -42,6 +42,15 @@ open class SweetPlayerManager {
         let asset = SweetPlayerManager.shared.cacheManeger.playerItem(with: resouce.url)
         return (asset!.asset as? AVURLAsset)!
     }
+    internal static func asset(for url: URL) -> AVURLAsset {
+        let asset = SweetPlayerManager.shared.cacheManeger.playerItem(with: url)
+        return (asset!.asset as? AVURLAsset)!
+    }
+    
+    internal static func assetNoCache(for url: URL) -> AVURLAsset {
+        let asset = AVURLAsset(url: url)
+        return asset
+    }
     /**
      打印log
      

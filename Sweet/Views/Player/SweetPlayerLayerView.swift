@@ -66,8 +66,8 @@ class SweetPlayerLayerView: UIView {
     }
     /// 播放属性
     var player: AVPlayer? {
-        willSet {
-            self.playerLayer?.player = newValue
+        didSet {
+            onPlayerChange()
         }
     }
 
@@ -147,8 +147,7 @@ class SweetPlayerLayerView: UIView {
     }
     
     open func playAVPlayer(player: AVPlayer) {
-        self.player = player
-        onSetVideoAvPlayer()
+        onSetVideoAvPlayer(player: player)
         play()
     }
     
@@ -213,7 +212,7 @@ class SweetPlayerLayerView: UIView {
         self.playerItem = nil
         self.seekTime   = 0
         self.timer?.invalidate()
-        self.rateToken?.invalidate()
+//        self.rateToken?.invalidate()
         // 移除原来的layer
         if isRemoveLayer { self.playerLayer?.removeFromSuperlayer() }
         // 把player置为nil
@@ -247,10 +246,10 @@ class SweetPlayerLayerView: UIView {
         }
     }
     
-    fileprivate func onSetVideoAvPlayer() {
+    fileprivate func onSetVideoAvPlayer(player: AVPlayer) {
         repeatToPlay = false
         playDidEnd   = false
-        configPlayerNoAsset()
+        configPlayerNoAsset(player: player)
     }
     // MARK: - 设置视频URL
     fileprivate func onSetVideoAsset() {
@@ -269,6 +268,16 @@ class SweetPlayerLayerView: UIView {
     
     fileprivate func removePlayerNotifations() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
+    fileprivate func onPlayerChange() {
+        self.playerLayer?.player = player
+        rateToken?.invalidate()
+        if let player = player {
+            rateToken = player.observe(\.rate, options: .new, changeHandler: { (_, _) in
+                self.updateStatus()
+            })
+        }
     }
     
     fileprivate func onPlayerItemChange() {
@@ -370,12 +379,8 @@ class SweetPlayerLayerView: UIView {
     }
     
     fileprivate func initPlayer() {
-        rateToken?.invalidate()
         playerItem = AVPlayerItem(asset: urlAsset!)
         player     = AVPlayer(playerItem: playerItem!)
-        rateToken = player?.observe(\.rate, options: .new, changeHandler: { (_, _) in
-            self.updateStatus()
-        })
         playerLayer?.removeFromSuperlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer!.videoGravity = videoGravity
@@ -389,12 +394,28 @@ class SweetPlayerLayerView: UIView {
         player?.replaceCurrentItem(with: playerItem)
         playerLayer?.player = player
     }
-    fileprivate func configPlayerNoAsset() {
-        rateToken?.invalidate()
-        playerItem = player?.currentItem
-        rateToken = player?.observe(\.rate, options: .new, changeHandler: { (_, _) in
-            self.updateStatus()
-        })
+    
+    fileprivate func configPlayerNoAsset(player: AVPlayer) {
+        logger.debug()
+        if let oldPlayer = self.player {
+            if let oldAsset = oldPlayer.currentItem?.asset,
+                let oldUrlAsset = oldAsset as? AVURLAsset,
+                let newAsset = player.currentItem?.asset,
+                let newUrlAsset = newAsset as? AVURLAsset,
+                oldUrlAsset.url.absoluteString == newUrlAsset.url.absoluteString {
+            } else {
+                replacePlayerNoAsset(player: player)
+            }
+            logger.debug()
+        } else {
+            initPlayerNoAsset(player: player)
+        }
+
+    }
+    
+    fileprivate func initPlayerNoAsset(player: AVPlayer) {
+        self.player = player
+        playerItem = player.currentItem
         playerLayer?.removeFromSuperlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer?.videoGravity = videoGravity
@@ -402,6 +423,12 @@ class SweetPlayerLayerView: UIView {
         setNeedsLayout()
         layoutIfNeeded()
     }
+    
+    fileprivate func replacePlayerNoAsset(player: AVPlayer) {
+        self.player = player
+        playerItem = player.currentItem
+    }
+    
     
     func setupTimer() {
         timer?.invalidate()
