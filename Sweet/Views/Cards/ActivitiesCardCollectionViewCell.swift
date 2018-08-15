@@ -44,7 +44,7 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     func updateWith(_ viewModel: ActivitiesCardViewModel) {
         self.cardId = viewModel.cardId
         self.viewModel = viewModel
-        self.titleLabel.text = "好友动态"
+        self.titleLabel.text = viewModel.titleString
         tableView.reloadData()
     }
     

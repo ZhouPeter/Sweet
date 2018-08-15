@@ -12,8 +12,10 @@ struct ActivitiesCardViewModel {
     var cardId: String
     var activityViewModels: [ActivityCardViewModel]
     let cellHeight: CGFloat
+    let titleString: String
     init(model: CardResponse) {
         cardId = model.cardId
+        titleString = model.name!
         activityViewModels = model.activityList!.map({
             return ActivityCardViewModel(model: $0)
         })
