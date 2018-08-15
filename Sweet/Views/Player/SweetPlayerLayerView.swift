@@ -444,7 +444,8 @@ class SweetPlayerLayerView: UIView {
     @objc fileprivate func playerTimerAction() {
         if let playerItem = playerItem {
             if playerItem.duration.timescale != 0 {
-                let currentTime = CMTimeGetSeconds(self.player!.currentTime())
+//                let currentTime = CMTimeGetSeconds(self.player!.currentTime())
+                let currentTime = TimeInterval(playerItem.currentTime().value) / TimeInterval(playerItem.currentTime().timescale)
                 let totalTime   = TimeInterval(playerItem.duration.value) / TimeInterval(playerItem.duration.timescale)
                 delegate?.sweetPlayer(player: self,
                                       playTimeDidChange: currentTime,
