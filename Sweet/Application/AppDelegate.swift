@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)
+        NetworkHelper.networkCheck(viewController: rootController)
         uploadContacts()
         addObservers()
         return true
