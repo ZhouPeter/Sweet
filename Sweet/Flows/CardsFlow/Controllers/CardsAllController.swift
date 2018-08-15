@@ -38,6 +38,8 @@ class CardsAllController: CardsBaseController, CardsAllView {
                     })
                 }
             }
+        } else {
+            changeCurrentCell()
         }
     }
     

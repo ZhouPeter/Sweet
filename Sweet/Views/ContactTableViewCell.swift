@@ -119,7 +119,6 @@ class ContactTableViewCell: UITableViewCell {
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
-        infoRightConstaint?.constant = viewModel.isHiddenButton ? -16 : -(10 + 62)
         statusButton.isHidden = viewModel.isHiddenButton
         selectButton.isHidden = viewModel.isHiddeenSelectButton
         if !viewModel.isHiddenButton {
@@ -128,6 +127,7 @@ class ContactTableViewCell: UITableViewCell {
         }
         nameCenterYConstraints?.constant = -10
         buttonCallBack = viewModel.callBack
+        infoRightConstaint?.constant = statusButton.isHidden ? -16 : -(10 + 62)
     }
     
     func updateCategroy(viewModel: ContactCategoryViewModel) {
@@ -139,6 +139,7 @@ class ContactTableViewCell: UITableViewCell {
         statusButton.isHidden = true
         buttonCallBack = nil
         nameCenterYConstraints?.constant = 0
+        infoRightConstaint?.constant = statusButton.isHidden ? -16 : -(10 + 62)
     }
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
@@ -154,6 +155,7 @@ class ContactTableViewCell: UITableViewCell {
         statusButton.setButtonStyle(style: viewModel.buttonStyle)
         nameCenterYConstraints?.constant = viewModel.nameCenterYOffsetAvatar
         buttonCallBack = viewModel.callBack
+        infoRightConstaint?.constant = statusButton.isHidden ? -16 : -(10 + 62)
     }
     
     func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
@@ -167,5 +169,6 @@ class ContactTableViewCell: UITableViewCell {
         statusButton.setTitle(viewModel.buttonTitle, for: .normal)
         statusButton.setButtonStyle(style: viewModel.buttonStyle)
         buttonCallBack = viewModel.callBack
+        infoRightConstaint?.constant = statusButton.isHidden ? -16 : -(10 + 62)
     }
 }
