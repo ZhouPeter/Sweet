@@ -16,6 +16,7 @@ extension SweetPlayerControlView {
         case fullscreen = 105
         case replay     = 106
         case mute       = 107
+        case retry      = 108
     }
 }
 

@@ -33,7 +33,6 @@ class VideoCardPlayerManager: NSObject {
     
     
     func pause() {
-        logger.debug()
         player?.pause()
     }
     

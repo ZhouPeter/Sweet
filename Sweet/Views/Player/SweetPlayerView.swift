@@ -414,6 +414,10 @@ extension SweetPlayerView: SweetPlayerControlViewDelegate {
                 controlView.hidePlayToTheEndView()
                 seek(0)
                 play()
+            case .retry:
+                if let player = avPlayer {
+                    setAVPlayer(player: player)
+                }
             case .mute:
                 isVideoMuted = !isVideoMuted
                 delegate?.sweetPlayer(player: self, isMuted: isVideoMuted)

@@ -396,17 +396,18 @@ class SweetPlayerLayerView: UIView {
     }
     
     fileprivate func configPlayerNoAsset(player: AVPlayer) {
-        logger.debug()
         if let oldPlayer = self.player {
             if let oldAsset = oldPlayer.currentItem?.asset,
                 let oldUrlAsset = oldAsset as? AVURLAsset,
                 let newAsset = player.currentItem?.asset,
                 let newUrlAsset = newAsset as? AVURLAsset,
                 oldUrlAsset.url.absoluteString == newUrlAsset.url.absoluteString {
+                if oldPlayer.currentItem?.status != .readyToPlay {
+                     replacePlayerItemNoAsset(player: player)
+                }
             } else {
                 replacePlayerNoAsset(player: player)
             }
-            logger.debug()
         } else {
             initPlayerNoAsset(player: player)
         }
@@ -429,6 +430,14 @@ class SweetPlayerLayerView: UIView {
         playerItem = player.currentItem
     }
     
+    fileprivate func replacePlayerItemNoAsset(player: AVPlayer) {
+        if let urlAsset = player.currentItem!.asset as? AVURLAsset {
+            let item = AVPlayerItem(url: urlAsset.url)
+            playerItem = item
+            self.player?.replaceCurrentItem(with: playerItem)
+        }
+    }
+    
     
     func setupTimer() {
         timer?.invalidate()
@@ -444,7 +453,6 @@ class SweetPlayerLayerView: UIView {
     @objc fileprivate func playerTimerAction() {
         if let playerItem = playerItem {
             if playerItem.duration.timescale != 0 {
-//                let currentTime = CMTimeGetSeconds(self.player!.currentTime())
                 let currentTime = TimeInterval(playerItem.currentTime().value) / TimeInterval(playerItem.currentTime().timescale)
                 let totalTime   = TimeInterval(playerItem.duration.value) / TimeInterval(playerItem.duration.timescale)
                 delegate?.sweetPlayer(player: self,
@@ -479,11 +487,7 @@ class SweetPlayerLayerView: UIView {
                         return
                     }
                     if currentItem.isPlaybackLikelyToKeepUp || currentItem.isPlaybackBufferFull {
-                        self.state = .bufferFinished
-                    } else if  currentItem.status == .failed {
-                        self.state = .error
-                    } else {
-                        self.state = .buffering
+                        
                     }
                 }
             }

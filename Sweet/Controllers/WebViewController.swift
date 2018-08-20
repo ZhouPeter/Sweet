@@ -59,9 +59,11 @@ class WebViewController: BaseViewController {
         progressView.align(.top, to: webView)
         progressView.align(.left)
         progressView.align(.right)
-        let request = URLRequest(url: URL(string: urlString)!)
-        webView.load(request)
-        webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
+        if let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+            webView.addObserver(self, forKeyPath: "title", options: .new, context: nil)
+        }        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
