@@ -20,7 +20,7 @@ class VideoCardPlayerManager: NSObject {
     private var status = AVPlayerItemStatus.unknown
     
     func play(with url: URL) {
-        guard assetURL != url else {
+        if player != nil, assetURL == url {
             if status == .readyToPlay {
                 player?.play()
             }

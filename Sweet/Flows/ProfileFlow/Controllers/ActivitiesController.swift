@@ -200,9 +200,47 @@ extension ActivitiesController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let url = viewModels[indexPath.row].url {
-            let controller = ShareWebViewController(urlString: url, cardId: viewModels[indexPath.row].fromCardId)
-            navigationController?.pushViewController(controller, animated: true)
+        let viewModel = viewModels[indexPath.row]
+        web.request(
+            .reviewCard(cardID: viewModel.fromCardId),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let card = response.card
+                    if card.cardEnumType == .content, let video = card.video {
+                        let videoURL =  URL(string: video)!
+                        VideoCardPlayerManager.shared.play(with: videoURL)
+                        let controller = PlayController()
+                        controller.avPlayer = VideoCardPlayerManager.shared.player
+                        controller.resource = SweetPlayerResource(url: videoURL)
+                        VideoCardPlayerManager.shared.player = nil
+                        self.present(controller, animated: true, completion: nil)
+                    } else if card.cardEnumType == .choice {
+                        var text = ""
+                        if let content = card.content, let textString = try? content.htmlStringReplaceTag() {
+                            text = textString
+                        }
+                        let result = card.result == nil ? -1 : card.result!.index!
+                        let content = OptionCardContent(
+                            identifier: card.cardId,
+                            cardType: InstantMessage.CardType.preference,
+                            text: text,
+                            leftImageURLString: card.imageList![0],
+                            rightImageURLString: card.imageList![1],
+                            result: OptionCardContent.Result(rawValue: result)!
+                        )
+                        let preview = OptionCardPreviewController(content: content)
+                        let popup = PopupController(rootViewController: preview)
+                        popup.present(in: self)
+                    } else {
+                        if let url = viewModel.url {
+                            let controller = ShareWebViewController(urlString: url, cardId: viewModel.fromCardId)
+                            self.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    }
+                case let .failure(error):
+                    logger.error(error)
+                }
         }
     }
 }

@@ -532,11 +532,11 @@ extension ContentCardCollectionViewCell {
                options: [],
                progress: nil) { (image, data, _, _, _, _) in
                 guard let image = image else { return }
+                imageView.image = nil
                 if isAutoAnimating {
                     imageView.image = image
                 } else {
                     if let images = image.images {
-                        imageView.image = nil
                         imageView.image = images[0]
                     } else {
                         imageView.image = image
@@ -546,17 +546,6 @@ extension ContentCardCollectionViewCell {
                     imageView.alpha = 1
                 })
         }
-//        imageView.sd_setImage(with: url) { (image, _, _, _) in
-//            guard let image = image else { return }
-//            if isAutoAnimating == false {
-//                if let animateImage = image.images {
-//                    imageView.image = animateImage[0]
-//                }
-//            }
-//            UIView.animate(withDuration: 0.25, animations: {
-//                imageView.alpha = 1
-//            })
-//        }
     }
 }
 

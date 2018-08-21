@@ -317,7 +317,8 @@ class SweetPlayerLayerView: UIView {
                     }
                 } else if object.status == .failed {
                     if let error = object.error {
-                        if (error as NSError).code == -1100 {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102  {
                             self.state = .notFoundURL
                         } else{
                             self.state = .error
@@ -479,7 +480,8 @@ class SweetPlayerLayerView: UIView {
                     self.state = .bufferFinished
                 } else if  playerItem.status == .failed {
                     if let error = playerItem.error {
-                        if (error as NSError).code == -1100 {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102 {
                             self.state = .notFoundURL
                         } else{
                             self.state = .error
