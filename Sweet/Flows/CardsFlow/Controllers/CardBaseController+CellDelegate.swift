@@ -29,7 +29,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                     let viewModel = ChoiceCardViewModel(model: self.cards[index])
                     let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
                     self.cellConfigurators[index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    self.mainView.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     self.vibrateFeedback()
                     CardAction.clickPreference.actionLog(card: self.cards[index])
                 case let .failure(error):
@@ -47,7 +47,7 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
         if let index = cards.index(where: { $0.cardId == cardId}) {
             if index != self.index {
                 self.index = index
-                scrollTo(row: self.index)
+                mainView.scrollToIndex(index)
                 return
             }
         }
@@ -187,7 +187,7 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
         }
         configurator.viewModel.updateStory(story: story, postion: postion)
         cellConfigurators[index] = configurator
-        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+        self.mainView.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
     
 }
@@ -203,7 +203,7 @@ extension CardsBaseController {
     private func showBrower(index: Int, originPageIndex: Int) {
         guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell>
             else { return }
-        guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
+        guard let cell = mainView.collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
             as? ContentCardCollectionViewCell else { return  }
         let imageIcon = cell.imageIcons[originPageIndex]
         let imageURLs = configurator.viewModel.imageURLList!

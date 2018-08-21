@@ -132,17 +132,17 @@ extension CardsBaseController {
     func updateContentCellEmoji(index: Int) {
         if self.cards[index].cardEnumType == .content, self.cards[index].video == nil, self.cards[index].imageList?.count ?? 0 > 0 {
             guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: configurator.viewModel)
             }
         } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
             guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: configurator.viewModel)
             }
         } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
             guard let configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> else { return }
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: configurator.viewModel)
             }
         }
@@ -153,21 +153,21 @@ extension CardsBaseController {
             let viewModel = ContentCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: viewModel)
             }
         } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
             let viewModel = ContentVideoCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: viewModel)
             }
         } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
             let viewModel = LongTextCardViewModel(model: self.cards[index])
             let configurator = CellConfigurator<LongTextCardCollectionViewCell>(viewModel: viewModel)
             self.cellConfigurators[index] = configurator
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
                 cell.updateEmojiView(viewModel: viewModel)
             }
         }
@@ -236,7 +236,7 @@ extension CardsBaseController {
                 self.cards[index].activityList![item].like = true
                 configurator.viewModel.activityViewModels[item].like = true
                 self.cellConfigurators[index] = configurator
-                if let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
+                if let cell = self.mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
                     let acCell = cell as? ActivitiesCardCollectionViewCell {
                     acCell.updateItem(item: item, like: true)
                 }

@@ -33,7 +33,7 @@ enum CardAction: String {
             switch result {
             case .success:
                 completion?(true)
-            case let .failure(error):
+            case .failure:
                 completion?(false)
             }
         }

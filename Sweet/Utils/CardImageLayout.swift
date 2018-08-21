@@ -50,7 +50,7 @@ extension ContentCardCollectionViewCell {
     func zero() {
         titleLabel.layoutIfNeeded()
         let contentHeight = viewModel!.contentHeight
-        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height - (sourceInfoView.isHidden ? 0 : 80)
+        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height
         contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
     }
     

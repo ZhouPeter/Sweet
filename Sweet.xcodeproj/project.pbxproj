@@ -565,6 +565,10 @@
 		58C0EFC42110019A0038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
 		58C7574F21269A4600A5D408 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		58C7575221269A4700A5D408 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		58C75756212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */; };
+		58C75757212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */; };
+		58C75758212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */; };
+		58C75759212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */; };
 		58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
@@ -1664,6 +1668,7 @@
 		58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextCardViewModel.swift; sourceTree = "<group>"; };
 		58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+ShowPlayTagTip.swift"; sourceTree = "<group>"; };
+		58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPageCollectionView.swift; sourceTree = "<group>"; };
 		58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEnrollmentController.swift; sourceTree = "<group>"; };
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
 		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
@@ -2353,6 +2358,7 @@
 				58CF3F8A20E102BA00D0A887 /* CardBaseController+Extension.swift */,
 				58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */,
 				5808D40A2113F25D00821A2C /* SDWebImagePhotoLoader.swift */,
+				58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3390,6 +3396,7 @@
 				ACE560B0209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58A79FEB20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				ACF29FF220ECB89800959CE5 /* DeliverTask.swift in Sources */,
+				58C75756212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC0BA70620EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */,
 				5803572120AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
@@ -3983,6 +3990,7 @@
 				ACA3238F20875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */,
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
+				58C75758212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC05F43A20DCA49300EC6CAA /* TextEditView.swift in Sources */,
 				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CB20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -4280,6 +4288,7 @@
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
+				58C75759212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				ACDB24E120BECFD50039368E /* InboxView.swift in Sources */,
 				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
@@ -4432,6 +4441,7 @@
 				ACE560B1209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58A79FEC20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
 				ACF29FF320ECB89800959CE5 /* DeliverTask.swift in Sources */,
+				58C75757212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC0BA70720EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */,
 				5803572220AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
