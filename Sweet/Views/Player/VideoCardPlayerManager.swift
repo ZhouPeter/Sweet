@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 class VideoCardPlayerManager: NSObject {
     static let shared = VideoCardPlayerManager()
     private override init() {
