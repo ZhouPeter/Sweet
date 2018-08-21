@@ -563,6 +563,8 @@
 		58C0EFC2211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
 		58C0EFC3211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
 		58C0EFC42110019A0038EB2F /* Guide+ShowPlayTagTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0EFBE211001960038EB2F /* Guide+ShowPlayTagTip.swift */; };
+		58C7574F21269A4600A5D408 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
+		58C7575221269A4700A5D408 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2DEB82089E02F00660425 /* LoginResponse.swift */; };
 		58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
 		58C75C152099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C75C122099DE9B00DBD28C /* UpdateEnrollmentController.swift */; };
@@ -3868,6 +3870,7 @@
 				AC8EA9EE20AC03500033615D /* TextGradientController.swift in Sources */,
 				ACE560B2209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578EF2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
+				58C7574F21269A4600A5D408 /* LoginResponse.swift in Sources */,
 				AC616FAC20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				58C0EFC3211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
@@ -4161,6 +4164,7 @@
 				AC616F9820C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				AC84FE8B20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				AC525AA4208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
+				58C7575221269A4700A5D408 /* LoginResponse.swift in Sources */,
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				585B68BB20AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074920B271C40031630C /* SweetPlayerManager.swift in Sources */,

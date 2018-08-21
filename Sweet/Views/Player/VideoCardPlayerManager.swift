@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 class VideoCardPlayerManager: NSObject {
     static let shared = VideoCardPlayerManager()
     private override init() {
@@ -33,7 +35,6 @@ class VideoCardPlayerManager: NSObject {
     
     
     func pause() {
-        logger.debug()
         player?.pause()
     }
     

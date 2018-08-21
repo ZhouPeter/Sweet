@@ -111,6 +111,14 @@ class SweetPlayerControlView: UIView {
         return button
     }()
     
+    private lazy var retryButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitle("点击重试", for: .normal)
+        button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        button.tag = SweetPlayerControlView.ButtonType.retry.rawValue
+        return button
+    }()
     private lazy var nextLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -189,6 +197,9 @@ class SweetPlayerControlView: UIView {
         loadingIndicator.constrain(width: 30, height: 30)
         loadingIndicator.type  = sweetPlayerConf.loaderType
         loadingIndicator.color = sweetPlayerConf.tintColor
+        mainMaskView.addSubview(retryButton)
+        retryButton.center(to: mainMaskView)
+        retryButton.constrain(width: 80, height: 30)
     }
     func customizeUIComponents() {
         
@@ -196,11 +207,23 @@ class SweetPlayerControlView: UIView {
     func showLoader() {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
+        retryButton.isHidden = true
     }
     
     func hideLoader() {
         loadingIndicator.isHidden = true
+        retryButton.isHidden = true
     }
+    
+    func showRetry() {
+        loadingIndicator.isHidden = true
+        retryButton.isHidden = false
+    }
+    
+    func hideRetry() {
+        retryButton.isHidden = true
+    }
+    
     func playerStateDidChange(state: SweetPlayerState) {
         switch state {
         case .readyToPlay:
@@ -209,6 +232,8 @@ class SweetPlayerControlView: UIView {
             showLoader()
         case .bufferFinished:
             hideLoader()
+        case .error:
+            showRetry()
         case .playedToTheEnd:
             break
         default:
