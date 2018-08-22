@@ -38,13 +38,13 @@ class CardsPageCollectionView: UIView {
     func scrollToIndex(_ index: Int) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            let offset: CGFloat =  CGFloat(index) * cardCellHeight - cardInsetTop
+            let offset: CGFloat =  CGFloat(index) * cardCellHeight
             UIView.animate(
                 withDuration: 0.25,
                 delay: 0,
                 options: .curveEaseOut,
                 animations: {
-                    self.collectionView.contentOffset.y = offset
+                    self.pagingScrollView.contentOffset.y = offset
             }, completion: nil)
         }
     }
@@ -59,13 +59,17 @@ class CardsPageCollectionView: UIView {
         updatePageContentSize()
     }
     func updatePageContentSize() {
-        let count = collectionView.numberOfItems(inSection: 0)
-        let height = CGFloat(count) * itemSize.height
-        pagingScrollView.contentSize = CGSize(width: itemSize.width, height: height)
+        pagingScrollView.contentSize = collectionView.contentSize
     }
     private func setupCollectionView() {
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
+       
+        addSubview(pagingScrollView)
+        pagingScrollView.isPagingEnabled = true
+        pagingScrollView.delegate = self
+        pagingScrollView.scrollsToTop = true
+        
         addSubview(collectionView)
         collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         collectionView.contentInset.top = cardInsetTop
@@ -80,16 +84,12 @@ class CardsPageCollectionView: UIView {
         collectionView.register(cellType: LongTextCardCollectionViewCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
-        addSubview(pagingScrollView)
-        pagingScrollView.isHidden = true
-        pagingScrollView.isPagingEnabled = true
-        pagingScrollView.delegate = self
         collectionView.addGestureRecognizer(pagingScrollView.panGestureRecognizer)
         collectionView.panGestureRecognizer.isEnabled = false
+        collectionView.scrollsToTop = false
+        
     }
     
-    
-
 }
 
 extension CardsPageCollectionView: UICollectionViewDataSource {
@@ -126,32 +126,31 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == pagingScrollView else { return }
         var scrollViewOffset = scrollView.contentOffset
-        if scrollViewOffset.y >= 0 { scrollViewOffset.y -= cardInsetTop }
-        var pageIndex = Int((scrollViewOffset.y + cardInsetTop) / cardCellHeight + 0.5)
-        if pageIndex == collectionView.numberOfItems(inSection: 0) - 1 &&
-            scrollViewOffset.y > oldScrollViewOffset.y {
-            pageIndex += 1
+        let pageIndex = Int(scrollViewOffset.y / itemSize.height + 0.5)
+        if floor(scrollViewOffset.y) == floor(itemSize.height * CGFloat(pageIndex)) {
+            delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex)
         }
-        delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex)
+        if scrollViewOffset.y >= 0 { scrollViewOffset.y -= cardInsetTop }
         collectionView.contentOffset = scrollViewOffset
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView == pagingScrollView else { return }
+        if decelerate {
+            let dragToDragStop = scrollView.isTracking && !scrollView.isDragging && !scrollView.isDecelerating
+            if dragToDragStop { scrollViewDidEndScroll(scrollView) }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard scrollView == pagingScrollView else { return }
         let scrollToScrollStop = !scrollView.isTracking && !scrollView.isDragging && !scrollView.isDecelerating
         if scrollToScrollStop { scrollViewDidEndScroll(scrollView) }
 
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard scrollView == pagingScrollView else { return }
-        let dragToDragStop = scrollView.isTracking && !scrollView.isDragging && !scrollView.isDecelerating
-        if dragToDragStop { scrollViewDidEndScroll(scrollView) }
-
-    }
-    
     func scrollViewDidEndScroll(_ scrollView: UIScrollView) {
-        oldScrollViewOffset = scrollView.contentOffset
+        let scrollViewOffset = scrollView.contentOffset
+        oldScrollViewOffset = scrollViewOffset
     }
-
 }

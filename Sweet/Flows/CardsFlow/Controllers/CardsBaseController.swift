@@ -53,8 +53,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             changeHandler: { [weak self] (object, change) in
                 guard let `self` = self else { return }
                 if change.newValue == change.oldValue { return }
-                logger.debug(floor(object.contentOffset.y + cardInsetTop))
-                logger.debug(floor(CGFloat(self.index) * cardCellHeight))
                 if floor(object.contentOffset.y + cardInsetTop)  == floor(CGFloat(self.index) * cardCellHeight) {
                     if self.lastIndex == self.index { return }
                     self.changeCurrentCell()
@@ -185,7 +183,6 @@ extension CardsBaseController {
     func startLoadCards(cardRequest: CardRequest,
                         callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         if isFetchLoadCards {
-            mainView.scrollToIndex(index)
             return
         }
         isFetchLoadCards = true
@@ -280,13 +277,14 @@ extension CardsBaseController {
         }
     }
 
-    private func downScrollCard() {
+    private func downScrollCard(index: Int) {
         let maxIndex = mainView.collectionView.numberOfItems(inSection: 0) - 1
         if index <= maxIndex {
             preloadingCard()
+            self.index = index
         } else if index > maxIndex {
-            index = max(maxIndex, 0)
-            mainView.scrollToIndex(index)
+            self.index = maxIndex
+            mainView.scrollToIndex(self.index)
         }
     }
 
@@ -355,11 +353,14 @@ extension CardsBaseController: CardsPageCollectionViewDataSource {
 // MARK: - CardsPageCollectionViewDelegate
 extension CardsBaseController: CardsPageCollectionViewDelegate {
     func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int) {
-        if index > self.index {
-            downScrollCard()
+        if lastIndex == index { return }
+        if index >= self.index {
+            downScrollCard(index: index)
+        } else {
+            self.index = index
         }
-        self.index = index
     }
+    
     func cardsPageCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newIndex = indexPath.row
         if newIndex == index {
