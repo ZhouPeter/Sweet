@@ -214,6 +214,20 @@ public extension UIDevice {
     public var deviceType: DeviceType {
         return DeviceType.current
     }
+    
+    var hasLessThan2GBRAM: Bool {
+        let type = UIDevice.current.deviceType
+        switch type {
+        case .iPad, .iPad2, .iPad3, .iPad4, .iPadAir,
+             .iPadMini, .iPadMiniRetina, .iPadMini3,
+             .iPhone4, .iPhone4S,
+             .iPhone5, .iPhone5C, .iPhone5S,
+             .iPhone6, .iPhone6Plus:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 #if swift(>=4.2)

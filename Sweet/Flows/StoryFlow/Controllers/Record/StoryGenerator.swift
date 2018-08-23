@@ -8,10 +8,12 @@
 
 import UIKit
 import GPUImage
+import AVFoundation
 
 final class StoryGenerator {
     private var movie: GPUImageMovie?
     private var writer: GPUImageMovieWriter?
+    private var pictrue: GPUImagePicture?
     
     func generateImage(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
         logger.debug(fileURL)
@@ -20,15 +22,18 @@ final class StoryGenerator {
                 DispatchQueue.main.async { callback(nil) }
                 return
             }
-            let picture = GPUImagePicture(image: image)
-            picture?.addTarget(filter)
-            picture?.processImage()
+            let targetPicture = GPUImagePicture(image: image)
+            self.pictrue = targetPicture
+            targetPicture?.addTarget(filter)
+            targetPicture?.processImage()
             filter.useNextFrameForImageCapture()
             guard let result = filter.imageFromCurrentFramebuffer() else {
+                self.pictrue = nil
                 DispatchQueue.main.async { callback(nil) }
                 return
             }
-            picture?.removeAllTargets()
+            self.pictrue = nil
+            targetPicture?.removeAllTargets()
             var data: Data?
             if let overlay = overlay,
                 let newImage = result.merged(overlay, backgroundColor: .black, size: StoryConfg.photoSize) {
@@ -51,6 +56,9 @@ final class StoryGenerator {
         }
     }
     
+    private var blendFilter: GPUImageAlphaBlendFilter?
+    private var transformFilter: GPUImageTransformFilter?
+    
     func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
         logger.debug(fileURL)
         guard let track = AVAsset(url: fileURL).tracks(withMediaType: .video).first else {
@@ -64,10 +72,13 @@ final class StoryGenerator {
         let renderSize = StoryConfg.videoSize
         writer = GPUImageMovieWriter(movieURL: url, size: renderSize)
         writer?.shouldPassthroughAudio = true
-        movie?.audioEncodingTarget = writer
+        if AVAsset(url: url).tracks(withMediaType: .audio).count > 0 {
+            movie?.audioEncodingTarget = writer
+        }
         movie?.enableSynchronizedEncoding(using: writer)
         
-        let transformFilter = GPUImageTransformFilter()
+        let targetTransformFilter = GPUImageTransformFilter()
+        transformFilter = targetTransformFilter
         var scaleX: CGFloat = 1
         var scaleY: CGFloat = 1
         let videoRatio = videoSize.width / videoSize.height
@@ -77,25 +88,28 @@ final class StoryGenerator {
         } else if (videoRatio < renderRatio) {
             scaleX = videoSize.width / renderSize.width * (renderSize.height / videoSize.height)
         }
-        transformFilter.affineTransform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
-        movie?.addTarget(transformFilter)
-        transformFilter.addTarget(filter)
+        targetTransformFilter.affineTransform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
+        movie?.addTarget(targetTransformFilter)
+        targetTransformFilter.addTarget(filter)
         
         let imageView = UIImageView(image: overlay)
         let uiElement = GPUImageUIElement(view: imageView)
         filter.frameProcessingCompletionBlock = { _, time in uiElement?.update(withTimestamp: time) }
-        let blendFilter = GPUImageAlphaBlendFilter()
-        blendFilter.mix = 1
-        filter.addTarget(blendFilter)
-        uiElement?.addTarget(blendFilter)
-        blendFilter.addTarget(writer)
+        let targetBlendFilter = GPUImageAlphaBlendFilter()
+        targetBlendFilter.mix = 1
+        blendFilter = targetBlendFilter
+        filter.addTarget(targetBlendFilter)
+        uiElement?.addTarget(targetBlendFilter)
+        targetBlendFilter.addTarget(writer)
         writer?.startRecording()
         movie?.startProcessing()
         let clean: () -> Void = { [weak self] in
-            blendFilter.removeAllTargets()
+            targetBlendFilter.removeAllTargets()
             filter.removeAllTargets()
             uiElement?.removeAllTargets()
             self?.movie?.removeAllTargets()
+            self?.blendFilter = nil
+            self?.transformFilter = nil
             self?.movie?.audioEncodingTarget = nil
         }
         writer?.completionBlock = { [weak self] in

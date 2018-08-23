@@ -11,6 +11,7 @@
 import UIKit
 import TapticEngine
 import SwiftyUserDefaults
+import PKHUD
 
 final class StoryEditController: BaseViewController, StoryEditView, StoryEditCancellable {
     var onCancelled: (() -> Void)?
@@ -354,7 +355,21 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
     }
 
     private func finish(with draft: StoryDraft) {
-        TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
+        let task = StoryPublishTask(storage: Storage(userID: user.userId), draft: draft)
+        TaskRunner.shared.run(task)
+        
+        if UIDevice.current.hasLessThan2GBRAM {
+            HUD.show(.progress)
+            task.completionBlock = { [weak self] in
+                DispatchQueue.main.async { self?.complete() }
+            }
+        } else {
+            complete()
+        }
+    }
+    
+    private func complete() {
+        HUD.hide(animated: true)
         previewController.view.hero.id = "avatar"
         Defaults[.isPersonalStoryChecked] = false
         NotificationCenter.default.post(
