@@ -19,13 +19,21 @@ class PlayController: UIViewController {
         button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         return button
     }()
-    
+    private var isMaskShowingToken: NSKeyValueObservation?
     private lazy var playerView: SweetPlayerView = {
         let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
+        isMaskShowingToken = playView.controlView.bottomMaskView.observe(\.alpha,
+                                     options: [.new], changeHandler: { (_, _) in
+                self.backButton.alpha = playView.controlView.bottomMaskView.alpha
+                                        
+        })
         playView.delegate = self
         playView.isVideoMuted = false
         return playView
     } ()
+    deinit {
+        isMaskShowingToken?.invalidate()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +50,10 @@ class PlayController: UIViewController {
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
