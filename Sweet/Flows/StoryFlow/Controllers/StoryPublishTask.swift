@@ -52,13 +52,13 @@ class StoryPublishTask: AsynchronousOperation {
             callback()
             return
         }
-        let filter: LookupFilter
+        let targetFilter: LookupFilter
         if let name = draft.filterFilename, let image = UIImage(named: name) {
-            filter = LookupFilter(lookupImage: image)
+            targetFilter = LookupFilter(lookupImage: image)
         } else {
-            filter = LookupFilter(lookupImage: UIImage(named: "1")!)
+            targetFilter = LookupFilter(lookupImage: UIImage(named: "1")!)
         }
-        self.filter = filter
+        self.filter = targetFilter
         let handleOutput: ((URL?) -> Void) = { [weak self] url in
             guard let url = url, let `self` = self else { return }
             logger.debug(self.draft.fileURL, url)
@@ -75,7 +75,7 @@ class StoryPublishTask: AsynchronousOperation {
             DispatchQueue.main.async {
                 self.generator.generateVideo(
                     with: URL.videoCacheURL(withName: self.draft.filename),
-                    filter: filter,
+                    filter: targetFilter,
                     overlay: overlay,
                     callback: handleOutput
                 )
@@ -87,7 +87,7 @@ class StoryPublishTask: AsynchronousOperation {
             }
             generator.generateImage(
                 with: URL.photoCacheURL(withName: draft.filename),
-                filter: filter,
+                filter: targetFilter,
                 overlay: overlay,
                 callback: handleOutput
             )
