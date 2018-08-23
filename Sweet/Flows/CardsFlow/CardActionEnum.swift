@@ -17,18 +17,56 @@ enum CardAction: String {
     case clickUrlBack = "click_url_back"
     case clickComment = "click_comment"
     case clickPreference = "click_preference"
-    private func makeActionLogWebApi(card: CardResponse) -> WebAPI {
+    case likeStory = "like_story"
+    case likeActivity = "like_activity"
+    case clickAvatar = "click_avatar"
+    case clickStory = "click_story"
+    private func makeActionLogWebApi(card: CardResponse,
+                                     toUserId: String? = nil,
+                                     activityId: String? = nil,
+                                     storyId: String? = nil) -> WebAPI {
         let preferenceId: String? = card.preferenceId == nil ? nil : String(card.preferenceId!)
         let sectionId: String? = card.sectionId == nil ? nil : String(card.sectionId!)
         return WebAPI.cardActionLog(action: rawValue,
                                     cardId: card.cardId,
                                     sectionId: sectionId,
                                     contentId: card.contentId,
-                                    preferenceId: preferenceId)
+                                    preferenceId: preferenceId,
+                                    toUserId: toUserId,
+                                    activityId: activityId,
+                                    storyId: storyId)
     }
     
-    func actionLog(card: CardResponse, completion: ((_ isSuccess: Bool) -> Void)? = nil) {
-        let actionApi = makeActionLogWebApi(card: card)
+    private func makeActionLogWebApi(cardId: String,
+                                     toUserId: String? = nil,
+                                     activityId: String? = nil,
+                                     storyId: String? = nil) -> WebAPI {
+        return WebAPI.cardActionLog(action: rawValue,
+                                    cardId: cardId,
+                                    sectionId: nil,
+                                    contentId: nil,
+                                    preferenceId: nil,
+                                    toUserId: toUserId,
+                                    activityId: activityId,
+                                    storyId: storyId)
+        
+    }
+    
+    
+    func actionLog(card: CardResponse? = nil,
+                   cardId: String? = nil,
+                   toUserId: String? = nil,
+                   activityId: String? = nil,
+                   storyId: String? = nil,
+                   completion: ((_ isSuccess: Bool) -> Void)? = nil) {
+        let actionApi: WebAPI
+        if let card = card {
+            actionApi = makeActionLogWebApi(card: card, toUserId: toUserId, activityId: activityId, storyId: storyId)
+        } else if let cardId = cardId {
+            actionApi = makeActionLogWebApi(cardId: cardId, toUserId: toUserId, activityId: activityId, storyId: storyId)
+        } else {
+            return
+        }
         web.request(actionApi) { (result) in
             switch result {
             case .success:

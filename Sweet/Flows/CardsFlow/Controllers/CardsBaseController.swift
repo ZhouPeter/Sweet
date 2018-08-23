@@ -353,7 +353,6 @@ extension CardsBaseController: CardsPageCollectionViewDataSource {
 // MARK: - CardsPageCollectionViewDelegate
 extension CardsBaseController: CardsPageCollectionViewDelegate {
     func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int) {
-        if lastIndex == index { return }
         if index >= self.index {
             downScrollCard(index: index)
         } else {

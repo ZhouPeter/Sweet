@@ -7,7 +7,7 @@
 //
 
 import UIKit
-let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
+let cardCellHeight: CGFloat = floor(UIScreen.mainWidth() * 1.5)
 let cardInsetTop: CGFloat = 10
 class CardsCollectionView: UICollectionView {
 

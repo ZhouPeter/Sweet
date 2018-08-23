@@ -58,6 +58,7 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
             delegate: self,
             completion: {}
         )
+        CardAction.clickStory.actionLog(card: cards[index])
     }
 }
 // MARK: - EvaluationCardCollectionViewCellDelegate
@@ -258,7 +259,7 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
         controller.hero.isEnabled = true
         controller.avPlayer = avPlayer
         controller.resource = playerView.resource
-        playerView.playerLayer?.playerToNil()
+//        playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false
         playerView.isVideoMuted = isVideoMuted

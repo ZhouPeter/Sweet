@@ -52,7 +52,7 @@ class CardsPageCollectionView: UIView {
         super.layoutSubviews()
         collectionView.fill(in: self)
         let width = collectionView.bounds.width
-        let height = width * 1.5
+        let height = cardCellHeight
         itemSize = CGSize(width: width, height: height)
         pagingScrollView.frame = CGRect(x: 0, y: 0, width: collectionView.frame.width, height: itemSize.height)
         pagingScrollView.contentInset.top = cardInsetTop
@@ -73,7 +73,7 @@ class CardsPageCollectionView: UIView {
         addSubview(collectionView)
         collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         collectionView.contentInset.top = cardInsetTop
-        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardInsetTop - UIScreen.navBarHeight()
+//        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardInsetTop - UIScreen.navBarHeight()
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: ContentCardCollectionViewCell.self)
         collectionView.register(cellType: VideoCardCollectionViewCell.self)
@@ -127,7 +127,8 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
         guard scrollView == pagingScrollView else { return }
         var scrollViewOffset = scrollView.contentOffset
         let pageIndex = Int(scrollViewOffset.y / itemSize.height + 0.5)
-        if floor(scrollViewOffset.y) == floor(itemSize.height * CGFloat(pageIndex)) {
+        if (scrollViewOffset.y == itemSize.height * CGFloat(pageIndex) || scrollViewOffset.y == -cardInsetTop) &&
+            (scrollViewOffset.y != oldScrollViewOffset.y || pageIndex == collectionView.numberOfItems(inSection: 0) - 1) {
             delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex)
         }
         if scrollViewOffset.y >= 0 { scrollViewOffset.y -= cardInsetTop }
@@ -147,6 +148,11 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
         let scrollToScrollStop = !scrollView.isTracking && !scrollView.isDragging && !scrollView.isDecelerating
         if scrollToScrollStop { scrollViewDidEndScroll(scrollView) }
 
+    }
+
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        guard scrollView == pagingScrollView else { return }
+        scrollViewDidEndScroll(scrollView)
     }
     
     func scrollViewDidEndScroll(_ scrollView: UIScrollView) {

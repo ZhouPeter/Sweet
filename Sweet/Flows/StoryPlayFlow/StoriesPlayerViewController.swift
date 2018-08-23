@@ -846,6 +846,9 @@ extension StoriesPlayerViewController {
                             self.stories[self.currentIndex].like = true
                             self.delegate?.updateStory(story: self.stories[self.currentIndex],
                                                        position: (self.groupIndex, self.currentIndex))
+                            if let cardId = self.fromCardId {
+                                CardAction.likeStory.actionLog(cardId: cardId, storyId: String(storyId))
+                            }
                         case .failure: break
                         }
                 })

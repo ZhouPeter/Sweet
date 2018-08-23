@@ -80,6 +80,7 @@ PODS:
   - VIMediaCache (0.4)
   - VolumeBar (3.0.3)
   - WechatOpenSDK (1.8.2)
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - Bugly
@@ -109,6 +110,7 @@ DEPENDENCIES:
   - VIMediaCache
   - VolumeBar (~> 3.0.3)
   - WechatOpenSDK
+  - YYText
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -143,6 +145,7 @@ SPEC REPOS:
     - VIMediaCache
     - VolumeBar
     - WechatOpenSDK
+    - YYText
 
 EXTERNAL SOURCES:
   libimcloud:
@@ -201,7 +204,8 @@ SPEC CHECKSUMS:
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 57d88225197cc94dac5daed276789276ec421a6e
+PODFILE CHECKSUM: 2bd97c336313c6687c7944aa968bc0f534f61aff
 
 COCOAPODS: 1.5.3

@@ -44,6 +44,10 @@ class PlayController: UIViewController {
         view.addGestureRecognizer(pan)
     }
     
+    
+    deinit {
+        logger.debug()
+    }
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
         let progress = translation.y / view.bounds.height
@@ -115,11 +119,13 @@ class PlayController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         allowRotation = true
+        playerView.play()
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         allowRotation = false
+
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

@@ -107,6 +107,7 @@ extension CardsBaseController {
                     self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
                 }
                 activityViewModel.showProfile = { [weak self] (buddyID, setTop) in
+                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
                     self?.showProfile(userId: buddyID, setTop: setTop)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
@@ -118,6 +119,7 @@ extension CardsBaseController {
             var viewModel = StoriesCardViewModel(model: card)
             for (offset, var cellModel) in viewModel.storyCellModels.enumerated() {
                 cellModel.callback = { [weak self] userId in
+                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(userId))
                     self?.showProfile(userId: userId)
                 }
                 viewModel.storyCellModels[offset] = cellModel
@@ -240,6 +242,8 @@ extension CardsBaseController {
                     let acCell = cell as? ActivitiesCardCollectionViewCell {
                     acCell.updateItem(item: item, like: true)
                 }
+                CardAction.likeActivity.actionLog(card: self.cards[index],
+                                                  activityId: self.cards[index].activityList![item].activityId)
                 self.vibrateFeedback()
             case let  .failure(error):
                 logger.error(error)
