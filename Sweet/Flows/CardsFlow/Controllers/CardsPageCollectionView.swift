@@ -45,7 +45,9 @@ class CardsPageCollectionView: UIView {
                 options: .curveEaseOut,
                 animations: {
                     self.pagingScrollView.contentOffset.y = offset
-            }, completion: nil)
+            }, completion: { _ in
+                self.oldScrollViewOffset.y = offset
+            })
         }
     }
     override func layoutSubviews() {
@@ -55,7 +57,6 @@ class CardsPageCollectionView: UIView {
         let height = cardCellHeight
         itemSize = CGSize(width: width, height: height)
         pagingScrollView.frame = CGRect(x: 0, y: 0, width: collectionView.frame.width, height: itemSize.height)
-        pagingScrollView.contentInset.top = cardInsetTop
         updatePageContentSize()
     }
     func updatePageContentSize() {
@@ -73,7 +74,7 @@ class CardsPageCollectionView: UIView {
         addSubview(collectionView)
         collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         collectionView.contentInset.top = cardInsetTop
-//        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardInsetTop - UIScreen.navBarHeight()
+        collectionView.contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardInsetTop - UIScreen.navBarHeight()
         collectionView.backgroundColor = .clear
         collectionView.register(cellType: ContentCardCollectionViewCell.self)
         collectionView.register(cellType: VideoCardCollectionViewCell.self)
@@ -127,7 +128,7 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
         guard scrollView == pagingScrollView else { return }
         var scrollViewOffset = scrollView.contentOffset
         let pageIndex = Int(scrollViewOffset.y / itemSize.height + 0.5)
-        if (scrollViewOffset.y == itemSize.height * CGFloat(pageIndex) || scrollViewOffset.y == -cardInsetTop) &&
+        if scrollViewOffset.y == itemSize.height * CGFloat(pageIndex) &&
             (scrollViewOffset.y != oldScrollViewOffset.y || pageIndex == collectionView.numberOfItems(inSection: 0) - 1) {
             delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex)
         }
@@ -155,7 +156,13 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
         scrollViewDidEndScroll(scrollView)
     }
     
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        guard scrollView == pagingScrollView else { return }
+        scrollViewDidEndScroll(scrollView)
+    }
+    
     func scrollViewDidEndScroll(_ scrollView: UIScrollView) {
+        guard scrollView == pagingScrollView else { return }
         let scrollViewOffset = scrollView.contentOffset
         oldScrollViewOffset = scrollViewOffset
     }

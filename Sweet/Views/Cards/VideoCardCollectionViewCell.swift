@@ -62,6 +62,12 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         super.init(frame: frame)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        playerView.controlView.hideLoader()
+    }
+    
     private var contentViewHeight: NSLayoutConstraint?
     private var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
