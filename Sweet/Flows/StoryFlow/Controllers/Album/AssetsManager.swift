@@ -90,9 +90,10 @@ class AssetManager {
     static func resolveAVAsset(_ asset: PHAsset, completion: @escaping (URL?, TimeInterval?) -> Void) {
         let options: PHVideoRequestOptions = PHVideoRequestOptions()
         options.version = .original
+        options.isNetworkAccessAllowed = true
         PHImageManager
             .default()
-            .requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, _, _) in
+            .requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, _, info) in
                 DispatchQueue.main.async {
                     if let urlAsset = avAsset as? AVURLAsset {
                         let duration = urlAsset.duration.seconds

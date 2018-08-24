@@ -34,7 +34,7 @@ class StoryPublishTask: AsynchronousOperation {
             var isSuccess = false
             self.publish(completion: { (result) in
                 self.storage.write({ (realm) in
-                    guard result else { return }
+                    guard result == .success || result == .fileNotFound else { return }
                     if let data = realm.object(ofType: StoryDraftData.self, forPrimaryKey: self.draft.filename) {
                         realm.delete(data)
                         do {
@@ -44,7 +44,7 @@ class StoryPublishTask: AsynchronousOperation {
                         } catch {
                             logger.error(error)
                         }
-                        isSuccess = true
+                        isSuccess = result == .success
                     }
                 }) { (_) in
                     self.finishBlock?(isSuccess)
@@ -101,7 +101,7 @@ class StoryPublishTask: AsynchronousOperation {
         }
     }
     
-    private func publish(completion: @escaping (Bool) -> Void) {
+    private func publish(completion: @escaping (Result) -> Void) {
         let uploadType: UploadType
         switch draft.storyType {
         case .text, .image, .share:
@@ -109,10 +109,15 @@ class StoryPublishTask: AsynchronousOperation {
         default:
             uploadType = .storyVideo
         }
+        let fileURL = draft.fileURL
+        guard FileManager.default.fileExists(atPath: fileURL.path) else {
+            completion(.fileNotFound)
+            return
+        }
         Upload.uploadFileToQiniu(localURL: draft.fileURL, type: uploadType) { [weak self] (token, error) in
             guard let token = token, let `self` = self else {
                 logger.debug("upload failed \(error?.localizedDescription ?? "")")
-                completion(false)
+                completion(.uploadError)
                 return
             }
             logger.debug(token.urlString)
@@ -130,11 +135,18 @@ class StoryPublishTask: AsynchronousOperation {
                 completion: { (result) in
                     logger.debug(result)
                     if case .success = result {
-                        completion(true)
+                        completion(.success)
                     } else {
-                        completion(false)
+                        completion(.publishError)
                     }
             })
         }
+    }
+    
+    enum Result {
+        case uploadError
+        case publishError
+        case fileNotFound
+        case success
     }
 }
