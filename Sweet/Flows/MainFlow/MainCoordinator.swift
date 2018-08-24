@@ -24,12 +24,14 @@ final class MainCoordinator: BaseCoordinator {
     private let token: String
     private let mainView: MainView
     private let coordinatorFactory: CoordinatorFactory
+    private let storage: Storage
     
     init(user: User, token: String, mainView: MainView, coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.token = token
         self.mainView = mainView
         self.coordinatorFactory = coordinatorFactory
+        storage = Storage(userID: user.userId)
     }
     
     override func start() {
@@ -37,6 +39,7 @@ final class MainCoordinator: BaseCoordinator {
         mainView.onViewDidLoad = runCardsFlow()
         mainView.onCardsFlowSelect = runCardsFlow()
         mainView.onStoryFlowSelect = runStoryFlow()
+        TaskRunner.shared.runUnfinishedStoryTasks(in: storage)
     }
     deinit {
         logger.debug("main coordinator 释放")
