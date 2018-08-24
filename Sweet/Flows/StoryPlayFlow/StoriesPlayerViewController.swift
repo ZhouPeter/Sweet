@@ -54,7 +54,6 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     var stories: [StoryCellViewModel]! {
         didSet {
             if stories.count == 0 {
-                delegate?.dismissController()
             } else {
                 if let IDString = Defaults[.userID], let userID = UInt64(IDString) {
                     self.isSelf = stories[0].userId == userID
@@ -426,8 +425,12 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
 
     func reloadPlayer() {
         closePlayer()
-        updateForStories()
-        initPlayer()
+        if stories.count - 1 < currentIndex {
+            delegate?.playToNext()
+        } else {
+            updateForStories()
+            initPlayer()
+        }
     }
     
     func closePlayer() {
@@ -578,6 +581,7 @@ extension StoriesPlayerViewController {
     }
     
     func pause() {
+        if stories.count - 1 < currentIndex { return }
         if stories[currentIndex].videoURL != nil {
             player?.pause()
         } else if stories[currentIndex].imageURL != nil {
@@ -809,7 +813,7 @@ extension StoriesPlayerViewController {
                     self.delegate?.delStory(storyId: self.stories[self.currentIndex].storyId)
                     self.stories.remove(at: self.currentIndex)
                     if self.currentIndex > self.stories.count - 1 {
-                        self.currentIndex -= 1
+                        self.currentIndex = max(self.currentIndex - 1, 0)
                     }
                     self.progressView.reset(count: self.stories.count, index: self.currentIndex)
                     self.reloadPlayer()

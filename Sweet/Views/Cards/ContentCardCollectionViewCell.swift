@@ -56,6 +56,12 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         super.init(frame: frame)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageViews.forEach( { $0.image = nil })
+    }
+    
     var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
         customContent.addSubview(contentLabel)
