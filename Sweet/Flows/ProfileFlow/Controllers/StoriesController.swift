@@ -117,6 +117,9 @@ class StoriesController: UIViewController, PageChildrenProtocol {
     private var storyViewModels = [StoryCellViewModel]() {
         didSet {
             cellNumber = storyViewModels.count
+            if let layout = collectionViewLayout as? StoriesCollectionViewFlowLayout {
+                layout.selfIndex = storyViewModels.count
+            }
         }
     }
     
@@ -214,9 +217,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             }
             storyViewModels[index].timestampString = timestampString
         }
-        if let layout = collectionViewLayout as? StoriesCollectionViewFlowLayout {
-            layout.selfIndex = storyViewModels.count
-        }
+       
     }
 }
 
