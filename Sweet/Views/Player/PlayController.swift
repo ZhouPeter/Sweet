@@ -23,15 +23,15 @@ class PlayController: UIViewController {
     private lazy var playerView: SweetPlayerView = {
         let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
         isMaskShowingToken = playView.controlView.bottomMaskView.observe(\.alpha,
-                                     options: [.new], changeHandler: { (_, _) in
-                self.backButton.alpha = playView.controlView.bottomMaskView.alpha
-                                        
+                                     options: [.new], changeHandler: { [weak self] (_, _) in
+                self?.backButton.alpha = playView.controlView.bottomMaskView.alpha
         })
         playView.delegate = self
         playView.isVideoMuted = false
         return playView
     } ()
     deinit {
+        logger.debug("释放播放器")
         isMaskShowingToken?.invalidate()
     }
     
@@ -40,7 +40,6 @@ class PlayController: UIViewController {
         view.backgroundColor = .black
         setupUI()
         if let player = avPlayer, let resource = resource {
-//            sweetPlayerConf.shouldAutoPlay = true
             playerView.resource = resource
             playerView.setAVPlayer(player: player)
             loadItemValues()
