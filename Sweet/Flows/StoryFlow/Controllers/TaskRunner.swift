@@ -31,9 +31,6 @@ final class TaskRunner {
     }
     
     func run(_ operation: Operation) {
-        operation.completionBlock = {
-            logger.debug("completed")
-        }
         queue.addOperation(operation)
     }
     
@@ -45,3 +42,18 @@ final class TaskRunner {
         queue.isSuspended = false
     }
 }
+
+extension TaskRunner {
+    func runUnfinishedStoryTasks(in storage: Storage) {
+        var drafts = [StoryDraft]()
+        storage.read({ (realm) in
+            drafts.append(contentsOf: realm.objects(StoryDraftData.self).flatMap(StoryDraft.init(data:)))
+        }) {
+            logger.debug(drafts)
+            drafts.forEach({ (draft) in
+                self.run(StoryPublishTask(storage: storage, draft: draft))
+            })
+        }
+    }
+}
+
