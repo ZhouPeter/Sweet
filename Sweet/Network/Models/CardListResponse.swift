@@ -97,6 +97,7 @@ struct CardResponse: Codable {
         case activity
         case story
         case evaluation
+        case welcome
     }
     
     func makeShareText() -> String? {

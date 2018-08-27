@@ -213,6 +213,7 @@ extension CardsBaseController {
                     } else {
                         response.list.forEach({ self.appendConfigurator(card: $0) })
                     }
+
                     callback?(true, response.list)
                 case let .failure(error):
                     if error.code == WebErrorCode.noCard.rawValue && direction == Direction.down {
@@ -235,9 +236,11 @@ extension CardsBaseController {
             self.appendConfigurator(card: card)
         })
         let itemNumber = mainView.collectionView.numberOfItems(inSection: 0)
+        let addCount = self.cards.count - itemNumber
+        if addCount == 0 { return }
         mainView.collectionView.performBatchUpdates({
             var items = [IndexPath]()
-            for item in 0..<cards.count {
+            for item in 0..<addCount {
                 items.append(IndexPath(item: itemNumber + item, section: 0))
             }
             mainView.collectionView.insertItems(at: items)

@@ -127,7 +127,14 @@ extension CardsBaseController {
             let configurator = CellConfigurator<StoriesCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
-        default: break
+        case .welcome:
+            let viewModel = WelcomeCardViewModel(model: card, user: user)
+            let configurator = CellConfigurator<WelcomeCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
+        default:
+            logger.debug(card)
+            break
         }
     }
     
