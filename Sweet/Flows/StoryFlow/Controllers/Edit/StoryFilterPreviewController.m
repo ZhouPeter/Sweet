@@ -22,8 +22,8 @@
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (assign, nonatomic) NSUInteger filterIndex;
 @property (assign, nonatomic) BOOL isPhoto;
+@property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayer *audioPlayer;
-
 @property (strong, nonatomic) CAShapeLayer *maskLayer;
 @property (assign, nonatomic) CGFloat maskRatio;
 @property (strong, nonatomic) LookupFilter *backFilter;
@@ -44,11 +44,12 @@
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
         } else {
+            self.playerItem = [[AVPlayerItem alloc] initWithURL:url];
             XGPUImageMovie *movie = [[XGPUImageMovie alloc] initWithURL:url];
             movie.playAtActualSpeed = YES;
             movie.shouldRepeat = YES;
             self.output = movie;
-            self.audioPlayer = [[AVPlayer alloc] initWithURL:url];
+            self.audioPlayer = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
             __weak typeof(self) weakSelf = self;
             movie.startProcessingCallback = ^{
                 [weakSelf.audioPlayer seekToTime:kCMTimeZero];
@@ -120,6 +121,13 @@
     [path addLineToPoint:CGPointMake(self.forePreview.bounds.size.width, halfHeight)];
     self.maskLayer.path = path.CGPath;
     self.forePreview.layer.mask = self.maskLayer;
+    
+    if (!self.isPhoto) {
+        UIInterfaceOrientation orientation = [self orientationForTrack:self.playerItem.asset];
+        GPUImageRotationMode rotation = [self imageRotationModeFor:orientation];
+        [self.backPreview setInputRotation:rotation atIndex:0];
+        [self.forePreview setInputRotation:rotation atIndex:0];
+    }
 }
 
 - (void)setupFilters {
@@ -178,6 +186,38 @@
     if (self.isPhoto) {
         [(GPUImagePicture *)self.output processImage];
     }
+}
+
+- (GPUImageRotationMode)imageRotationModeFor:(UIInterfaceOrientation)orientation {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return kGPUImageRotate180;
+    }
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return kGPUImageNoRotation;
+    }
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return kGPUImageRotateRight;
+    }
+    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return kGPUImageRotateLeft;
+    }
+    return kGPUImageNoRotation;
+}
+
+- (UIInterfaceOrientation)orientationForTrack:(AVAsset *)asset {
+    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    CGSize size = [videoTrack naturalSize];
+    CGAffineTransform txf = [videoTrack preferredTransform];
+    if (size.width == txf.tx && size.height == txf.ty) {
+        return UIInterfaceOrientationLandscapeRight;
+    }
+    if (txf.tx == 0 && txf.ty == 0) {
+        return UIInterfaceOrientationLandscapeLeft;
+    }
+    if (txf.tx == 0 && txf.ty == size.width) {
+        return UIInterfaceOrientationPortraitUpsideDown;
+    }
+    return UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - Actions
