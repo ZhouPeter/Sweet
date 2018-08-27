@@ -30,6 +30,7 @@ class PlayController: UIViewController {
         playView.isVideoMuted = false
         return playView
     } ()
+    
     deinit {
         logger.debug("释放播放器")
         isMaskShowingToken?.invalidate()
@@ -126,11 +127,13 @@ class PlayController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         allowRotation = true
+        playerView.play()
     }
     
     override func  viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         allowRotation = false
+
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

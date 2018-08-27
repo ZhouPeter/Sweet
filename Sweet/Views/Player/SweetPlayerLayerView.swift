@@ -26,6 +26,7 @@ enum SweetPlayerState {
     case bufferFinished
     case playedToTheEnd
     case error
+    case notFoundURL
 }
 
 /**
@@ -297,8 +298,8 @@ class SweetPlayerLayerView: UIView {
         
         if let item = playerItem {
             addPlayerNotifications()
-            statusToken = item.observe(\.status, options: .new) { (_, _) in
-                if self.player?.status == .readyToPlay {
+            statusToken = item.observe(\.status, options: .new) { (object, _) in
+                if object.status == .readyToPlay {
                     self.state = .buffering
                     if self.shouldSeekTo != 0 {
                         logger.debug("SweetPlayerLayer | Should seek to \(self.shouldSeekTo)")
@@ -314,8 +315,17 @@ class SweetPlayerLayerView: UIView {
                         self.hasReadyToPlay = true
                         self.state = .readyToPlay
                     }
-                } else if self.player?.status == .failed {
-                    self.state = .error
+                } else if object.status == .failed {
+                    if let error = object.error {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102  {
+                            self.state = .notFoundURL
+                        } else{
+                            self.state = .error
+                        }
+                    } else {
+                        self.state = .error
+                    }
                 }
             }
             loadedToken = item.observe(\.loadedTimeRanges, options: .new, changeHandler: { (_, _) in
@@ -469,7 +479,16 @@ class SweetPlayerLayerView: UIView {
                 if playerItem.isPlaybackLikelyToKeepUp || playerItem.isPlaybackBufferFull {
                     self.state = .bufferFinished
                 } else if  playerItem.status == .failed {
-                    self.state = .error
+                    if let error = playerItem.error {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102 {
+                            self.state = .notFoundURL
+                        } else{
+                            self.state = .error
+                        }
+                    } else {
+                        self.state = .error
+                    }
                 } else if playerItem.isPlaybackBufferEmpty {
                     self.state = .buffering
                 } else {

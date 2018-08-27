@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import YYText
 class SourceTitleView: UIView {
     private lazy var sourceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -81,10 +81,10 @@ class LongTextCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReu
         view.clipsToBounds = true
         return view
     }()
-    private lazy var contentLabel: UILabel = {
-        let label = UILabel()
+    private lazy var contentLabel: YYLabel = {
+        let label = YYLabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
         return label
     }()
@@ -123,7 +123,20 @@ class LongTextCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReu
                                sourceText: viewModel.sourceText)
         DispatchQueue.global().async {
             DispatchQueue.main.async {
+                let allLabel = YYLabel()
+                let text = NSMutableAttributedString(string: "... [全文]")
+                text.yy_font = self.contentLabel.font
+                allLabel.attributedText = text
+                allLabel.sizeToFit()
+                allLabel.font = self.contentLabel.font
+                let truncationToken = NSMutableAttributedString.yy_attachmentString(
+                    withContent: allLabel,
+                    contentMode: .center,
+                    attachmentSize: allLabel.frame.size,
+                    alignTo: text.yy_font!,
+                    alignment: .center)
                 self.contentLabel.attributedText = viewModel.contentTextAttributed
+                self.contentLabel.truncationToken = truncationToken
                 self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }

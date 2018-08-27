@@ -32,8 +32,8 @@ class CardsAllController: CardsBaseController, CardsAllView {
             cardRequest: .all(cardId: allCardsLastID, direction: Direction.recover)) {
                 [weak self] (success, _) in
                 if success {
-                    self?.collectionView.reloadData()
-                    self?.collectionView.performBatchUpdates(nil, completion: { (_) in
+                    self?.mainView.collectionView.reloadData()
+                    self?.mainView.collectionView.performBatchUpdates(nil, completion: { (_) in
                         self?.changeCurrentCell()
                     })
                 }
@@ -42,5 +42,6 @@ class CardsAllController: CardsBaseController, CardsAllView {
             changeCurrentCell()
         }
     }
+    
     
 }
