@@ -276,6 +276,14 @@ extension CardsBaseController {
             VideoCardPlayerManager.shared.pause()
         }
     }
+    
+    func videoPauseAddRemove() {
+        for cell in mainView.collectionView.visibleCells {
+            if let cell = cell as? VideoCardCollectionViewCell {
+                cell.playerView.pauseWithRemove(isRemove: true)
+            }
+        }
+    }
 
     private func downScrollCard(index: Int) {
         let maxIndex = mainView.collectionView.numberOfItems(inSection: 0) - 1
@@ -368,6 +376,8 @@ extension CardsBaseController: CardsPageCollectionViewDelegate {
         if newIndex == index {
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
                 showVideoPlayerController(playerView: cell.playerView, cardId: cards[index].cardId)
+            } else if let _ = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                showImageBrowser(selectedIndex: 0)
             } else {
                 showWebView(indexPath: indexPath)
             }

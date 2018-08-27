@@ -105,9 +105,11 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         if isAllShown {
             delegate?.showAll(view: allView)
             allView.loadCards()
+            subscriptionView.videoPauseAddRemove()
         } else {
             delegate?.showSubscription(view: subscriptionView)
             subscriptionView.loadCards()
+            allView.videoPauseAddRemove()
         }
     }
     

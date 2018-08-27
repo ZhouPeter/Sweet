@@ -43,4 +43,5 @@ class CardsAllController: CardsBaseController, CardsAllView {
         }
     }
     
+    
 }

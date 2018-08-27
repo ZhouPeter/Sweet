@@ -40,7 +40,7 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
             }
         } else {
             changeCurrentCell()
-
         }
     }
+    
 }

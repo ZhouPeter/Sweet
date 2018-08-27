@@ -65,6 +65,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        contentImageView.image = nil
+        playerView.playerLayer?.resetPlayer()
         playerView.controlView.hideLoader()
     }
     
@@ -108,7 +110,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        contentImageView.kf.setImage(with:  viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail() )
+        contentImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
         resetEmojiView()
         loadItemValues()
 
@@ -167,13 +169,10 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 videoHeight = videoWidth
             }
             contentViewHeight?.constant = videoHeight
-            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
+            contentLabelHeight?.constant =  min(contentHeight, contentMaxHeight)
         } else {
-            let videoHeight = videoWidth
-            let contentMaxHeight = videoContentSumHeight - videoHeight
-            let contentHeight = viewModel.contentHeight
-            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
-            contentViewHeight?.constant = videoHeight
+            contentLabelHeight?.constant =  min(contentHeight, contentMaxHeight)
+            contentViewHeight?.constant = videoContentSumHeight - min(contentHeight, contentMaxHeight)
         }
         for subview in contentImageView.subviews {
             if let subview = subview as? SweetPlayerView {

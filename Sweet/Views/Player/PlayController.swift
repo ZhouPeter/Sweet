@@ -32,6 +32,7 @@ class PlayController: UIViewController {
         return playView
     } ()
     deinit {
+        logger.debug()
         isMaskShowingToken?.invalidate()
     }
     
@@ -40,7 +41,6 @@ class PlayController: UIViewController {
         view.backgroundColor = .black
         setupUI()
         if let player = avPlayer, let resource = resource {
-//            sweetPlayerConf.shouldAutoPlay = true
             playerView.resource = resource
             playerView.setAVPlayer(player: player)
             loadItemValues()
@@ -52,10 +52,6 @@ class PlayController: UIViewController {
         view.addGestureRecognizer(pan)
     }
     
-    
-    deinit {
-        logger.debug()
-    }
     override var prefersStatusBarHidden: Bool {
         return true
     }
