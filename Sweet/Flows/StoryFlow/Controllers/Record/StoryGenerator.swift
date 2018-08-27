@@ -61,7 +61,8 @@ final class StoryGenerator {
     
     func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
         logger.debug(fileURL)
-        guard let track = AVAsset(url: fileURL).tracks(withMediaType: .video).first else {
+        let asset = AVAsset(url: fileURL)
+        guard let track = asset.tracks(withMediaType: .video).first else {
             callback(nil)
             return
         }
@@ -72,7 +73,8 @@ final class StoryGenerator {
         let renderSize = StoryConfg.videoSize
         writer = GPUImageMovieWriter(movieURL: url, size: renderSize)
         writer?.shouldPassthroughAudio = true
-        if AVAsset(url: url).tracks(withMediaType: .audio).count > 0 {
+        let audioTracks = asset.tracks(withMediaType: .audio)
+        if audioTracks.count > 0 {
             movie?.audioEncodingTarget = writer
         }
         movie?.enableSynchronizedEncoding(using: writer)
@@ -101,7 +103,7 @@ final class StoryGenerator {
         filter.addTarget(targetBlendFilter)
         uiElement?.addTarget(targetBlendFilter)
         targetBlendFilter.addTarget(writer)
-        writer?.startRecording()
+        writer?.startRecording(inOrientation: track.preferredTransform)
         movie?.startProcessing()
         let clean: () -> Void = { [weak self] in
             targetBlendFilter.removeAllTargets()
