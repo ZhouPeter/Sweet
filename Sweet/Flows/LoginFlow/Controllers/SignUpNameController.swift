@@ -10,7 +10,7 @@ import UIKit
 
 class SignUpNameController: BaseViewController, SignUpNameView {
     var showSignUpAvatar: ((LoginRequestBody) -> Void)?
-    
+    var showSignUpPhone: ((LoginRequestBody) -> Void)?
     var loginRequestBody: LoginRequestBody!
     private lazy var nicknameTextField: UITextField = {
         let textField = UITextField()
@@ -87,7 +87,7 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         let cancelAction = UIAlertAction(title: "返回修改", style: .cancel, handler: nil)
         let doneAction = UIAlertAction(title: "确认无误", style: .default) { [weak self] (_) in
             if let `self` = self, let model = self.loginRequestBody {
-                self.showSignUpAvatar?(model)
+                self.showSignUpPhone?(model)
             }
         }
         alertController.addAction(cancelAction)

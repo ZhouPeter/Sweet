@@ -366,6 +366,14 @@
 		587D18ED20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D18EB20DB44D900D53708 /* StoryPlayerFlowFactory.swift */; };
 		587D18EE20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D18EB20DB44D900D53708 /* StoryPlayerFlowFactory.swift */; };
 		587D18EF20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D18EB20DB44D900D53708 /* StoryPlayerFlowFactory.swift */; };
+		587D1ED22133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */; };
+		587D1ED32133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */; };
+		587D1ED42133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */; };
+		587D1ED52133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */; };
+		587D1ED72133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */; };
+		587D1ED82133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */; };
+		587D1ED92133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */; };
+		587D1EDA2133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */; };
 		58816CF820C634C70032D103 /* EvaluationListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CF720C634C70032D103 /* EvaluationListResponse.swift */; };
 		58816CF920C634C70032D103 /* EvaluationListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CF720C634C70032D103 /* EvaluationListResponse.swift */; };
 		58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58816CF720C634C70032D103 /* EvaluationListResponse.swift */; };
@@ -1594,6 +1602,8 @@
 		587D18E120DB43D500D53708 /* StoriesGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesGroupView.swift; sourceTree = "<group>"; };
 		587D18E620DB442400D53708 /* StoryPlayerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayerCoordinator.swift; sourceTree = "<group>"; };
 		587D18EB20DB44D900D53708 /* StoryPlayerFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayerFlowFactory.swift; sourceTree = "<group>"; };
+		587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCardViewModel.swift; sourceTree = "<group>"; };
 		58816CF720C634C70032D103 /* EvaluationListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationListResponse.swift; sourceTree = "<group>"; };
 		58816D0020C656860032D103 /* ActivityListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityListResponse.swift; sourceTree = "<group>"; };
 		58816D0D20C671040032D103 /* WXApi+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WXApi+Message.swift"; sourceTree = "<group>"; };
@@ -1995,6 +2005,7 @@
 				580F887120F5FDD9009148CC /* SourceInfoView.swift */,
 				58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */,
 				58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */,
+				587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -2009,6 +2020,7 @@
 				5803575220AAFBC200B2C94F /* StoriesCardViewModel.swift */,
 				583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */,
 				58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */,
+				587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -3386,6 +3398,7 @@
 				58447B56209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AE20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAA20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
+				587D1ED72133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */,
 				587D18EC20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */,
 				AC84FE7820E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */,
@@ -3408,6 +3421,7 @@
 				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				58C0EFBF211001960038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
+				587D1ED22133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
 				AC58388620E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37920AC0405007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
@@ -3893,6 +3907,7 @@
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
+				587D1ED92133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */,
 				58CF3F9120E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				587D18EE20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */,
 				AC86A93B20C4051400334D4A /* ConversationData.swift in Sources */,
@@ -4044,6 +4059,7 @@
 				AC2D51F620EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
+				587D1ED42133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4126,6 +4142,7 @@
 				58BD532F2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				5872A84B20D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				ACEFA0DD2106D51D0098631F /* PryntTrimmerView.swift in Sources */,
+				587D1EDA2133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */,
 				AC45CD6F20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D72092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				AC2A259A20BD2B9F00A82E62 /* User.pb.swift in Sources */,
@@ -4261,6 +4278,7 @@
 				ACA3230E2087410200BDC92E /* SweetUITests.swift in Sources */,
 				ACDD0B0A20C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
 				5866330C20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
+				587D1ED52133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
 				AC1778D220BFC5C200D5330F /* ContactsCoordinator.swift in Sources */,
 				AC9EF78B208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
 				ACEFA0C12106D51D0098631F /* AssetVideoScrollView.swift in Sources */,
@@ -4431,6 +4449,7 @@
 				58447B57209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				ACDB24AF20BD74E00039368E /* InstantMessage.swift in Sources */,
 				AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
+				587D1ED82133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */,
 				587D18ED20DB44D900D53708 /* StoryPlayerFlowFactory.swift in Sources */,
 				AC84FE7920E21B83008FC795 /* Guide+StoryRecordTip.swift in Sources */,
 				58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */,
@@ -4453,6 +4472,7 @@
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58C0EFC2211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				587D1ED32133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
 				AC58388720E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,

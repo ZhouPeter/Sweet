@@ -10,4 +10,6 @@ import Foundation
 
 protocol SignUpNameView: BaseView {
     var showSignUpAvatar: ((LoginRequestBody) -> Void)? { get set }
+    var showSignUpPhone: ((LoginRequestBody) -> Void)? { get set }
+
 }

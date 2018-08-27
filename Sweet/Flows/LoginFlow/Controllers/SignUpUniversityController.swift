@@ -10,6 +10,7 @@ import UIKit
 
 class SignUpUniversityController: BaseViewController, SignUpUniversityView {
     var showSignUpCollege: ((LoginRequestBody) -> Void)?
+    var showSignUpSex: ((LoginRequestBody) -> Void)?
     var loginRequestBody: LoginRequestBody!
     
     override var prefersStatusBarHidden: Bool {
@@ -125,7 +126,8 @@ extension SignUpUniversityController: UITableViewDataSource {
 extension SignUpUniversityController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         loginRequestBody.universityName = universitys[indexPath.row].universityName
-        showSignUpCollege?(loginRequestBody)
+        showSignUpSex?(loginRequestBody)
+//        showSignUpCollege?(loginRequestBody)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
