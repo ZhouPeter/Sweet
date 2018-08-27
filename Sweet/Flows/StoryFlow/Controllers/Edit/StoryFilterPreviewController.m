@@ -22,7 +22,6 @@
 @property (readwrite, strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (assign, nonatomic) NSUInteger filterIndex;
 @property (assign, nonatomic) BOOL isPhoto;
-@property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayer *audioPlayer;
 @property (strong, nonatomic) CAShapeLayer *maskLayer;
 @property (assign, nonatomic) CGFloat maskRatio;
@@ -31,6 +30,7 @@
 @property (assign, nonatomic) BOOL isFilterSwitching;
 @property (strong, nonatomic) NSMutableArray <NSString *> *filterNames;
 @property (assign, nonatomic) BOOL isScaleFilled;
+@property (strong, nonatomic) NSURL *fileURL;
 
 @end
 
@@ -40,16 +40,16 @@
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.isPhoto = isPhoto;
         self.isScaleFilled = isScaleFilled;
+        self.fileURL = url;
         if (isPhoto) {
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
         } else {
-            self.playerItem = [[AVPlayerItem alloc] initWithURL:url];
             XGPUImageMovie *movie = [[XGPUImageMovie alloc] initWithURL:url];
             movie.playAtActualSpeed = YES;
             movie.shouldRepeat = YES;
             self.output = movie;
-            self.audioPlayer = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
+            self.audioPlayer = [[AVPlayer alloc] initWithURL:url];
             __weak typeof(self) weakSelf = self;
             movie.startProcessingCallback = ^{
                 [weakSelf.audioPlayer seekToTime:kCMTimeZero];
@@ -91,7 +91,7 @@
 #pragma mark - Private
 
 - (void)setupPreviews {
-    GPUImageFillModeType fillMode =
+    GPUImageFillModeType fillMode = 
     self.isScaleFilled ? kGPUImageFillModePreserveAspectRatioAndFill : kGPUImageFillModePreserveAspectRatio;
     
     self.backPreview = [[GPUImageView alloc] initWithFrame:self.view.bounds];
@@ -123,7 +123,8 @@
     self.forePreview.layer.mask = self.maskLayer;
     
     if (!self.isPhoto) {
-        UIInterfaceOrientation orientation = [self orientationForTrack:self.playerItem.asset];
+        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:self.fileURL];
+        UIInterfaceOrientation orientation = [self orientationForTrack:playerItem.asset];
         GPUImageRotationMode rotation = [self imageRotationModeFor:orientation];
         [self.backPreview setInputRotation:rotation atIndex:0];
         [self.forePreview setInputRotation:rotation atIndex:0];
@@ -206,15 +207,14 @@
 
 - (UIInterfaceOrientation)orientationForTrack:(AVAsset *)asset {
     AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-    CGSize size = [videoTrack naturalSize];
-    CGAffineTransform txf = [videoTrack preferredTransform];
-    if (size.width == txf.tx && size.height == txf.ty) {
+    CGAffineTransform transform = videoTrack.preferredTransform;
+    if (transform.a == -1 && transform.d == -1) {
         return UIInterfaceOrientationLandscapeRight;
     }
-    if (txf.tx == 0 && txf.ty == 0) {
+    if (transform.a == 1 && transform.d == 1) {
         return UIInterfaceOrientationLandscapeLeft;
     }
-    if (txf.tx == 0 && txf.ty == size.width) {
+    if (transform.b == -1 && transform.c == 1) {
         return UIInterfaceOrientationPortraitUpsideDown;
     }
     return UIInterfaceOrientationPortrait;

@@ -66,9 +66,8 @@ final class StoryGenerator {
             callback(nil)
             return
         }
-        let videoSize = track.naturalSize.applying(track.preferredTransform)
-        movie = GPUImageMovie(url: fileURL)
         
+        movie = GPUImageMovie(url: fileURL)
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
         let renderSize = StoryConfg.videoSize
         writer = GPUImageMovieWriter(movieURL: url, size: renderSize)
@@ -83,7 +82,14 @@ final class StoryGenerator {
         transformFilter = targetTransformFilter
         var scaleX: CGFloat = 1
         var scaleY: CGFloat = 1
-        let videoRatio = videoSize.width / videoSize.height
+        var videoSize = track.naturalSize
+        let orientation = self.orientation(videoTrack: track)
+        if orientation == .portrait || orientation == .portraitUpsideDown {
+            let size = videoSize
+            videoSize.width = size.height
+            videoSize.height = size.width
+        }
+        let videoRatio = abs(videoSize.width / videoSize.height)
         let renderRatio = renderSize.width / renderSize.height
         if videoRatio > renderRatio {
             scaleY = videoSize.height / renderSize.height * (renderSize.width / videoSize.width)
@@ -103,7 +109,8 @@ final class StoryGenerator {
         filter.addTarget(targetBlendFilter)
         uiElement?.addTarget(targetBlendFilter)
         targetBlendFilter.addTarget(writer)
-        writer?.startRecording(inOrientation: track.preferredTransform)
+        writer?.setInputRotation(imageRotationMode(forUIInterfaceOrientation: orientation), at: 0)
+        writer?.startRecording()
         movie?.startProcessing()
         let clean: () -> Void = { [weak self] in
             targetBlendFilter.removeAllTargets()
@@ -123,6 +130,34 @@ final class StoryGenerator {
             logger.error(error ?? "")
             clean()
             DispatchQueue.main.async { callback(nil) }
+        }
+    }
+    
+    private func imageRotationMode(forUIInterfaceOrientation: UIInterfaceOrientation) -> GPUImageRotationMode {
+        switch forUIInterfaceOrientation {
+        case .landscapeRight:
+            return GPUImageRotationMode.rotate180
+        case .landscapeLeft:
+            return GPUImageRotationMode.noRotation
+        case .portrait:
+            return GPUImageRotationMode.rotateRight
+        case .portraitUpsideDown:
+            return GPUImageRotationMode.rotateLeft
+        default:
+            return GPUImageRotationMode.noRotation
+        }
+    }
+    
+    private func orientation(videoTrack: AVAssetTrack) -> UIInterfaceOrientation {
+        let trackTransform = videoTrack.preferredTransform
+        if trackTransform.a == -1 && trackTransform.d == -1 {
+            return UIInterfaceOrientation.landscapeRight
+        } else if trackTransform.a == 1 && trackTransform.d == 1  {
+            return UIInterfaceOrientation.landscapeLeft
+        } else if trackTransform.b == -1 && trackTransform.c == 1 {
+            return UIInterfaceOrientation.portraitUpsideDown
+        } else {
+            return UIInterfaceOrientation.portrait
         }
     }
 }
