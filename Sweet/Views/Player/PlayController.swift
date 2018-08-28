@@ -68,10 +68,13 @@ class PlayController: UIViewController {
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
             Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
+            playerView.controlView.isHidden = true
         default:
             if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
                 Hero.shared.finish()
             } else {
+                loadItemValues()
+                playerView.controlView.isHidden = false
                 Hero.shared.cancel()
             }
         }
