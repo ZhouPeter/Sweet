@@ -47,6 +47,7 @@ class UserInfoTableViewCell: UITableViewCell {
     private lazy var collegeInfoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .center
         label.textColor = UIColor.black.withAlphaComponent(0.65)
         return label
     }()

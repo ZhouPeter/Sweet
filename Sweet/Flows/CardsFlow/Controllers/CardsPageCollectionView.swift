@@ -60,6 +60,9 @@ class CardsPageCollectionView: UIView {
         updatePageContentSize()
     }
     func updatePageContentSize() {
+        if collectionView.contentSize.height == itemSize.height {
+            collectionView.contentSize.height += 1
+        }
         pagingScrollView.contentSize = collectionView.contentSize
     }
     private func setupCollectionView() {

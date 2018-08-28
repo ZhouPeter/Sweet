@@ -24,7 +24,7 @@ protocol SweetPlayerViewDelegate: class {
                      playerOrientChanged isFullscreen: Bool)
     func sweetPlayer(player: SweetPlayerView,
                      isMuted: Bool)
-    func sweetPlayerSwipeDown()
+    func sweetPlayerSwipeDown(pan: UIPanGestureRecognizer)
 }
 
 extension SweetPlayerViewDelegate {
@@ -42,7 +42,7 @@ extension SweetPlayerViewDelegate {
                      playerOrientChanged isFullscreen: Bool) {}
     func sweetPlayer(player: SweetPlayerView,
                      isMuted: Bool) {}
-    func sweetPlayerSwipeDown() {}
+    func sweetPlayerSwipeDown(pan: UIPanGestureRecognizer) {}
 }
 
 enum PanDirection: Int {
@@ -120,6 +120,7 @@ class SweetPlayerView: UIView {
         controlView.delegate = self
         controlView.player = self
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDirection(_:)))
+        panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
     }
     
@@ -209,6 +210,18 @@ class SweetPlayerView: UIView {
         pause()
     }
 }
+
+extension SweetPlayerView: UIGestureRecognizerDelegate {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let velocityPoint = (gestureRecognizer as? UIPanGestureRecognizer)?.velocity(in: self) else { return true }
+        if velocityPoint.y > 0 {
+            return false
+        } else {
+            return true
+        }
+        
+    }
+}
 // MARK: - Actions
 extension SweetPlayerView {
     
@@ -271,7 +284,7 @@ extension SweetPlayerView {
                 if isFullScreen {
                     fullScreenButtonPressed()
                 } else if velocityPoint.y > 0 {
-                    delegate?.sweetPlayerSwipeDown()
+                    delegate?.sweetPlayerSwipeDown(pan: pan)
                 }
             }
         default:

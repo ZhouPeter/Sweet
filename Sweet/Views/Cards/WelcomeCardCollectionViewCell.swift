@@ -107,7 +107,7 @@ class WelcomeCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             .foregroundColor: UIColor.black ])
         attributedString.addAttribute(.font,
                                       value: UIFont.boldSystemFont(ofSize: 20),
-                                      range: NSRange(location: 0, length: viewModel.nicknameString.utf8.count))
+                                      range: NSRange(location: 0, length: viewModel.nicknameString.utf16.count))
         nameLabel.attributedText = attributedString
         for (index, label) in contentLabels.enumerated() {
             label.text = viewModel.contentStrings[index]

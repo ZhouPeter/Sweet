@@ -104,11 +104,11 @@ extension StoryPlayerCoordinator {
     }
     
     private func runProfileFlow(buddyID: UInt64, finishBlock: (() -> Void)?) {
-        if buddyID == user.userId {
-            self.router.dismissFlow()
-            self.finishFlow?()
-            return
-        }
+//        if buddyID == user.userId {
+//            self.router.dismissFlow()
+//            self.finishFlow?()
+//            return
+//        }
         let navigation = UINavigationController()
         let coordinator = coordinatorFactory.makeProfileCoordinator(
             user: user,

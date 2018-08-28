@@ -116,7 +116,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.vibrateFeedback()
                     CardAction.clickComment.actionLog(card: self.cards[index])
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
-                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - 40,
+                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - CGFloat(response.contactUserList.count) * 40,
                                           y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
                                           width: CGFloat(response.contactUserList.count) * 40,
                                           height: 40)
@@ -259,7 +259,6 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
         controller.hero.isEnabled = true
         controller.avPlayer = avPlayer
         controller.resource = playerView.resource
-//        playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false
         playerView.isVideoMuted = isVideoMuted
