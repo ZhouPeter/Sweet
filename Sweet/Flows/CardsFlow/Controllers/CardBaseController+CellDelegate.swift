@@ -268,6 +268,11 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
 
 extension CardsBaseController: SweetPlayerViewDelegate {
     func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
+        if let indexPath = player.resource.indexPath, state == .readyToPlay {
+            if let cell = mainView.collectionView.cellForItem(at: indexPath) as? VideoCardCollectionViewCell {
+               cell.contentImageView.image = nil
+            }
+        }
         if state == .playedToTheEnd {
             CardAction.playEnd.actionLog(card: cards[index])
         }
