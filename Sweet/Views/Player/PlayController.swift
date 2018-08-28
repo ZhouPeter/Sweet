@@ -45,8 +45,8 @@ class PlayController: UIViewController {
             playerView.setAVPlayer(player: player)
             loadItemValues()
         }
-        view.hero.isEnabled = true
-        view.hero.id = resource?.definitions[0].url.absoluteString
+        playerView.hero.isEnabled = true
+        playerView.hero.id = resource?.definitions[0].url.absoluteString
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
@@ -58,17 +58,17 @@ class PlayController: UIViewController {
     
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
-        let progress = translation.y / view.bounds.height
+        let progress = translation.y / playerView.bounds.height
         switch gesture.state {
         case .began:
             logger.debug()
             dismiss(animated: true, completion: nil)
         case .changed:
             Hero.shared.update(progress)
-            let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
-            Hero.shared.apply(modifiers: [.position(currentPos)], to: view)
+            let currentPos = CGPoint(x: translation.x + playerView.center.x, y: translation.y + playerView.center.y)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
         default:
-            if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
+            if progress + gesture.velocity(in: nil).y / playerView.bounds.height > 0.3 {
                 Hero.shared.finish()
             } else {
                 Hero.shared.cancel()
@@ -149,7 +149,7 @@ class PlayController: UIViewController {
 }
 
 extension PlayController: SweetPlayerViewDelegate {
-    func sweetPlayerSwipeDown() {
+    func sweetPlayerSwipeDown(pan: UIPanGestureRecognizer) {
         allowRotation = false
         self.dismiss(animated: true, completion: nil)
     }

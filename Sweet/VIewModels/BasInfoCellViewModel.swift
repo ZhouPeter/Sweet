@@ -32,7 +32,9 @@ struct BaseInfoCellViewModel {
         let userID = UInt64(Defaults[.userID] ?? "0")
         starContactString = "\(user.likeCount == 0 ? "暂无" : "\(user.likeCount)")获赞"
                             + (user.common == 0 ? "" : "·\(user.common)共同联系人")
-        collegeInfoString = user.universityName + "·" + user.collegeName + "·" + "\(user.enrollment)级"
+        collegeInfoString = user.universityName +
+                            (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
+                            (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
         isHiddenEdit = userID == user.userId ? user.signature != "" : true
         cellHeight = 244

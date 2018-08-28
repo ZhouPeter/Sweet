@@ -160,10 +160,12 @@ class UpdateController: BaseViewController, UpdateView {
             controller.saveCompletion = { (info, remain) in
                 let infos = info.split(separator: "#")
                 self.updateRemain.university = remain!
-                self.user.universityName = String(infos[0])
-                self.user.collegeName = String(infos[1])
-                self.viewModels[1][0].content = String(infos[0])
-                self.viewModels[1][1].content = String(infos[1])
+                let universityName = infos.count < 1 ? "" : String(infos[0])
+                let collegeName = infos.count < 2 ? "" : String(infos[1])
+                self.user.universityName = universityName
+                self.user.collegeName = collegeName
+                self.viewModels[1][0].content = universityName
+                self.viewModels[1][1].content = collegeName
                 self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1),
                                                IndexPath(row: 1, section: 1)],
                                           with: .automatic)
@@ -178,8 +180,9 @@ class UpdateController: BaseViewController, UpdateView {
             controller.saveCompletion = { (info, remain) in
                 let infos = info.split(separator: "#")
                 self.updateRemain.college = remain!
-                self.user.collegeName = String(infos[1])
-                self.viewModels[1][1].content = String(infos[1])
+                let collegeName = infos.count < 2 ? "" : String(infos[1])
+                self.user.collegeName = collegeName
+                self.viewModels[1][1].content = collegeName
                 self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
             }
             self.navigationController?.pushViewController(controller, animated: true)

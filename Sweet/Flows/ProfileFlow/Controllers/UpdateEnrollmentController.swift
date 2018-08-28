@@ -26,7 +26,7 @@ class UpdateEnrollmentController: BaseViewController, UpdateProtocol {
         let pickerView = SweetPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.selectedIndex = years.index(of: self.selectedYear)!
+        pickerView.selectedIndex = years.index(of: self.selectedYear) ?? years.count - 1
         return pickerView
     }()
     
