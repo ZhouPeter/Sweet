@@ -163,7 +163,7 @@ CHECKOUT OPTIONS:
     :commit: ff6cddbcee9ea5b703b72686a4291d73209ee450
     :git: https://gitee.com/miaobo/iOS.LIBIMCLOUD.git
   MessageKit:
-    :commit: f8894874ccf47416c81d5c4a7030bc77ec0e6532
+    :commit: ba9baace729e67b1debb4dec0b9f7a0ebbfa4e11
     :git: https://github.com/MessageKit/MessageKit.git
   SDWebImage:
     :commit: 802e19b23dc039841204baa6e0212cb8215638bf
