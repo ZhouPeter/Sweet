@@ -124,28 +124,9 @@ extension UpdateUniversityController: UITableViewDataSource {
 
 extension UpdateUniversityController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//         let controller = UpdateCollegeController(universityName: universitys[indexPath.row].universityName)
-//        controller.saveCompletion = self.saveCompletion
-//        self.navigationController?.pushViewController(controller, animated: true)
-        let universityName = universitys[indexPath.row].universityName
-        let parameters: [String: Any] = ["universityName": universityName,
-                                         "collegeName": "",
-                                         "type": UpdateUserType.university.rawValue]
-        web.request(.update(updateParameters: parameters)) { (result) in
-            switch result {
-            case let .success(response):
-                let remain = response["remain"] as? Int
-                self.saveCompletion?(universityName + "#" + "", remain)
-                self.navigationController?.popViewController(animated: true)
-            case let .failure(error):
-                if error.code == WebErrorCode.updateLimit.rawValue {
-                    self.toast(message: "修改次数已用完")
-                } else {
-                    self.toast(message: "修改失败")
-                }
-                logger.error(error)
-            }
-        }
+         let controller = UpdateCollegeController(universityName: universitys[indexPath.row].universityName)
+        controller.saveCompletion = self.saveCompletion
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -88,6 +88,23 @@ class UpdateController: BaseViewController, UpdateView {
             return true
         }
     }
+    private func showUpdateUniversity() {
+        let controller = UpdateUniversityController(universityName: self.user.universityName)
+        controller.saveCompletion = { (info, remain) in
+            let infos = info.split(separator: "#")
+            self.updateRemain.university = remain!
+            let universityName = infos.count < 1 ? "" : String(infos[0])
+            let collegeName = infos.count < 2 ? "" : String(infos[1])
+            self.user.universityName = universityName
+            self.user.collegeName = collegeName
+            self.viewModels[1][0].content = universityName
+            self.viewModels[1][1].content = collegeName
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1),
+                                           IndexPath(row: 1, section: 1)],
+                                      with: .automatic)
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
     
     // swiftlint:disable function_body_length
     private func setViewModels() {
@@ -156,21 +173,19 @@ class UpdateController: BaseViewController, UpdateView {
         let universityViewModel = UpdateCellViewModel(title: "学校", content: user.universityName) { [weak self] in
             guard let `self` = self else { return }
             guard self.isCanUpdate(updateRemainCount: self.updateRemain.university, title: "学校") else { return }
-            let controller = UpdateUniversityController(universityName: self.user.universityName)
-            controller.saveCompletion = { (info, remain) in
-                let infos = info.split(separator: "#")
-                self.updateRemain.university = remain!
-                let universityName = infos.count < 1 ? "" : String(infos[0])
-                let collegeName = infos.count < 2 ? "" : String(infos[1])
-                self.user.universityName = universityName
-                self.user.collegeName = collegeName
-                self.viewModels[1][0].content = universityName
-                self.viewModels[1][1].content = collegeName
-                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1),
-                                               IndexPath(row: 1, section: 1)],
-                                          with: .automatic)
+            if self.user.collegeName != "" {
+                let alert = UIAlertController(title: nil,
+                                              message: "修改学校信息将会重置学院信息，是否继续？",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "否", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "是", style: .default, handler: { (_) in
+                    self.showUpdateUniversity()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.showUpdateUniversity()
             }
-            self.navigationController?.pushViewController(controller, animated: true)
+            
         }
         schoolViewModels.append(universityViewModel)
         let collegeViewModel = UpdateCellViewModel(title: "学院", content: user.collegeName) { [weak self] in
