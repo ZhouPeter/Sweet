@@ -176,6 +176,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             contentLabelHeight?.constant =  min(contentHeight, contentMaxHeight)
             contentViewHeight?.constant = videoContentSumHeight - min(contentHeight, contentMaxHeight)
         }
+
         for subview in contentImageView.subviews {
             if let subview = subview as? SweetPlayerView {
                 customContent.layoutIfNeeded()

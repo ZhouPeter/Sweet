@@ -278,6 +278,13 @@ extension CardsBaseController {
             }
             VideoCardPlayerManager.shared.pause()
         }
+        
+        if cell is ChoiceCardCollectionViewCell  {
+            if Defaults[.isPreferenceGuideShown] == false {
+                Guide.showPreference()
+                Defaults[.isPreferenceGuideShown] = true
+            }
+        }
     }
     
     func videoPauseAddRemove() {

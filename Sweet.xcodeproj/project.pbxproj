@@ -268,6 +268,10 @@
 		584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		585B60E8213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
+		585B60E9213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
+		585B60EA213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
+		585B60EB213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
 		585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
 		585B68BA20AF182200E734BC /* SweetPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B68B720AF182200E734BC /* SweetPlayerControlView.swift */; };
@@ -1580,6 +1584,7 @@
 		584CDED420D0F8A400523406 /* CardsBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseView.swift; sourceTree = "<group>"; };
 		584CDED920D1032F00523406 /* SubCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCardsCoordinator.swift; sourceTree = "<group>"; };
 		584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayCollectionViewCell.swift; sourceTree = "<group>"; };
+		585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+ShowPreference.swift"; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
 		585B68BC20AF183E00E734BC /* SweetPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPlayerView.swift; sourceTree = "<group>"; };
 		585B68C120AF1D8E00E734BC /* SweetPlayerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerExtensions.swift; sourceTree = "<group>"; };
@@ -2444,6 +2449,7 @@
 				AC84FE7720E21B83008FC795 /* Guide+StoryRecordTip.swift */,
 				AC84FE8220E21BDB008FC795 /* Guide+StoryPlayTip.swift */,
 				AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */,
+				585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */,
 				AC84FE8C20E22876008FC795 /* FocusView.swift */,
 			);
 			path = Guide;
@@ -3719,6 +3725,7 @@
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
+				585B60E8213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				ACDD0B0E20C802E000B7400A /* PopupController.swift in Sources */,
 				585B68CC20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,
@@ -3847,6 +3854,7 @@
 				5833DD2C20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3238420875E4400BDC92E /* BaseView.swift in Sources */,
 				AC616F9720C6BCAA00AD9004 /* MessageContent.swift in Sources */,
+				585B60EA213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				AC525AA3208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
 				AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				AC2D51EF20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
@@ -4326,6 +4334,7 @@
 				58D578F520934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323522087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
 				AC84FE8620E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
+				585B60EB213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
@@ -4770,6 +4779,7 @@
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
+				585B60E9213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
 				ACDD0B0F20C802E000B7400A /* PopupController.swift in Sources */,
 				585B68CD20B1142600E734BC /* SweetPlayerLayerView.swift in Sources */,

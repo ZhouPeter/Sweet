@@ -104,7 +104,7 @@ class SweetPlayerLayerView: UIView {
     fileprivate var lastPlayerItem: AVPlayerItem?
     
     /// playerLayer
-    fileprivate var playerLayer: AVPlayerLayer?
+    var playerLayer: AVPlayerLayer?
 
     /// 播放器的几种状态
     fileprivate var state = SweetPlayerState.notSetURL {
@@ -421,6 +421,7 @@ class SweetPlayerLayerView: UIView {
         } else {
             initPlayerNoAsset(player: player)
         }
+
 
     }
     

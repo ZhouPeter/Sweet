@@ -45,14 +45,19 @@ class PlayController: UIViewController {
             playerView.setAVPlayer(player: player)
             loadItemValues()
         }
-        playerView.hero.isEnabled = true
-//        playerView.hero.isEnabledForSubviews = true
-        playerView.hero.id = resource?.definitions[0].url.absoluteString
-        playerView.hero.modifiers = [.useNoSnapshot]
-//        playerView.playerLayer?.hero.modifiers = [.useNormalSnapshot]
+        view.hero.isEnabled = true
+        view.hero.id = resource?.definitions[0].url.absoluteString
+        view.hero.modifiers = [.useNoSnapshot]
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+//        logger.debug(playerView.frame.size)
+//        playerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 16 * 9)
+//        playerView.center = view.center
+//        playerView.playerLayer?.layoutSubviews()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -69,7 +74,7 @@ class PlayController: UIViewController {
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
-            Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: view)
             playerView.controlView.isHidden = true
         default:
             if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
