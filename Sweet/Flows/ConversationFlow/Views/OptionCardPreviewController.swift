@@ -8,15 +8,16 @@
 
 import UIKit
 import STPopup
-
 final class OptionCardPreviewController: UIViewController {
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)?
     private let content: OptionCardContent
     private var contentCell: BaseCardCollectionViewCell?
     private var optionCell: ChoiceCardCollectionViewCell?
     private var cardResponse: CardResponse?
-    
-    init(content: OptionCardContent) {
+    private var user: User
+    init(content: OptionCardContent, user: User) {
         self.content = content
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,5 +85,9 @@ extension OptionCardPreviewController: ChoiceCardCollectionViewCellDelegate {
                 logger.error(error)
             }
         }
+    }
+    
+    func showProfile(userId: UInt64, setTop: SetTop?) {
+        showProfile?(userId, setTop, nil)
     }
 }

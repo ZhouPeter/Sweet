@@ -40,6 +40,16 @@ final class ConversationCoordinator: BaseCoordinator, ConversationCoordinatorOup
 }
 
 extension ConversationCoordinator: ConversationControllerDelegate {
+    func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?) {
+        let navigation = UINavigationController()
+        let coordinator = self.coordinatorFactory
+            .makeProfileCoordinator(user: user, buddyID: buddyID, setTop: setTop, navigation: navigation)
+        coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start(with: .present)
+    }
+    
     func conversationControllerShowsShareWebView(url: String, cardId: String) {
         let webView = ShareWebViewController(urlString: url, cardId: cardId)
         webView.delegate = self

@@ -67,12 +67,16 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         profile.showStory = { [weak self] in
             self?.showStory()
         }
+        profile.showProfile = { [weak self] (buddyID, setTop, finishBlock) in
+            self?.showProfile(buddyID: buddyID, setTop: setTop, finishBlock: finishBlock)
+        }
         if isPresent {
             router.setRootFlow(profile)
         } else {
             router.push(profile)
         }
     }
+    
     private func showStory() {
         let navigation = UINavigationController()
         let coordinator = coordinatorFactory
@@ -85,6 +89,21 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         coordinator.start()
     }
    
+    private func showProfile(buddyID: UInt64, setTop: SetTop?, finishBlock: (() -> Void)?) {
+        let navigation = UINavigationController()
+        let coordinator = coordinatorFactory.makeProfileCoordinator(
+            user: user,
+            buddyID: buddyID,
+            setTop: setTop,
+            navigation: navigation)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+            finishBlock?()
+        }
+        addDependency(coordinator)
+        router.present(navigation, animated: true)
+        coordinator.start(with: .present)
+    }
     
     private func showStoriesPlayerView(user: User,
                                        stories: [StoryCellViewModel],

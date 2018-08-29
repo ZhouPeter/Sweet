@@ -79,6 +79,7 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
     
     func makeProfileCoordinator(user: User,
                                 buddyID: UInt64,
+                                setTop: SetTop?,
                                 navigation: UINavigationController?) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
                 user: user,

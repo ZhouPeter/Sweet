@@ -69,8 +69,8 @@ class WelcomeCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
         nameLabel.centerY(to: avatarImageView)
         addContents()
         customContent.addSubview(bottomLabel)
-        bottomLabel.align(.left, inset: 80 * scale)
-        bottomLabel.align(.right, inset: 80 * scale)
+        bottomLabel.align(.left, inset: 40)
+        bottomLabel.align(.right, inset: 40)
         bottomLabel.align(.bottom, inset: 12 * scale)
         bottomLabel.constrain(height: 50 * scale)
     }

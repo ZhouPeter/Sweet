@@ -417,7 +417,10 @@ extension ConversationController: MessageCellDelegate {
         }
         
         if let content = message.content as? OptionCardContent {
-            let preview = OptionCardPreviewController(content: content)
+            let preview = OptionCardPreviewController(content: content, user: self.user)
+            preview.showProfile = { [weak self] (buddyID, setTop, finishBlock) in
+                self?.delegate?.conversationControllerShowsProfile(buddyID: buddyID, setTop: setTop)
+            }
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         } else if let content = message.content as? ContentCardContent {
@@ -520,7 +523,7 @@ extension ConversationController: STPopupPreviewRecognizerDelegate {
         }
         let message = messages[indexPath.section]
         if let content = message.content as? OptionCardContent {
-            return OptionCardPreviewController(content: content)
+            return OptionCardPreviewController(content: content, user: user)
         }
         return nil
     }

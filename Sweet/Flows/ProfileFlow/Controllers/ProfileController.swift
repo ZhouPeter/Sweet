@@ -23,6 +23,7 @@ protocol ProfileView: BaseView {
     var user: User { get set }
     var userId: UInt64 { get set }
     var showStory: (() -> Void)? { get set }
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)? { get set }
 }
 
 protocol ProfileViewDelegate: class {
@@ -34,6 +35,7 @@ class ProfileController: BaseViewController, ProfileView {
     weak var delegate: ProfileViewDelegate?
     private var userScrollFlag = false
     var showStory: (() -> Void)?
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)?
     var showStoriesPlayerView: (
         (
         User,
@@ -98,8 +100,10 @@ class ProfileController: BaseViewController, ProfileView {
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        button.setImage(#imageLiteral(resourceName: "Back"), for: .normal)
+        button.tintColor = .black
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -40, bottom: 0, right: 0)
+        button.setImage(#imageLiteral(resourceName: "LeftArrow").withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(returnAction(_:)), for: .touchUpInside)
         return button
     }()
@@ -108,7 +112,7 @@ class ProfileController: BaseViewController, ProfileView {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let imageView = UIImageView()
-        imageView.kf.setImage(with: URL(string: userResponse!.avatar))
+        imageView.sd_setImage(with: URL(string: userResponse!.avatar))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -133,6 +137,7 @@ class ProfileController: BaseViewController, ProfileView {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "个人主页"
+        contentSizeInPopup = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainHeight())
         storage = Storage(userID: user.userId)
         setTableView()
         setBackButton()
@@ -261,6 +266,7 @@ extension ProfileController {
             actionsController!.actionsDelegate = self
             actionsController!.showStoriesPlayerView = showStoriesPlayerView
             actionsController!.showStory = showStory
+            actionsController?.showProfile = showProfile
             add(childViewController: actionsController!, addView: false)
         }
         saveUserData()

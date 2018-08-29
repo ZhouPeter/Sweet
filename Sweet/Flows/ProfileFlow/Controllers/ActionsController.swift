@@ -34,6 +34,7 @@ class ActionsController: PageboyViewController {
         }
     }
     var showStory: (() -> Void)?
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)?
     var mine: User
     let setTop: SetTop?
     weak var actionsDelegate: ActionsControllerDelegate?
@@ -49,6 +50,7 @@ class ActionsController: PageboyViewController {
     lazy var pageControllers: [UIViewController & PageChildrenProtocol] = {
         var viewControllers = [UIViewController & PageChildrenProtocol]()
         let feedsController = ActivitiesController(user: user, avatar: mine.avatar, setTop: setTop)
+        feedsController.showProfile = showProfile
         feedsController.delegate = self
         let storysController = StoriesController(user: user)
         storysController.delegate = self

@@ -13,7 +13,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
-
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)?
     var cellNumber: Int = 0
     var user: User
     var avatar: String
@@ -229,7 +229,8 @@ extension ActivitiesController: UITableViewDelegate {
                             rightImageURLString: card.imageList![1],
                             result: OptionCardContent.Result(rawValue: result)!
                         )
-                        let preview = OptionCardPreviewController(content: content)
+                        let preview = OptionCardPreviewController(content: content, user: self.user)
+                        preview.showProfile = self.showProfile
                         let popup = PopupController(rootViewController: preview)
                         popup.present(in: self)
                     } else {

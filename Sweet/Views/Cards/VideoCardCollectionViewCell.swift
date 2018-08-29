@@ -156,6 +156,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
         let contentMaxHeight = videoContentSumHeight - videoWidth
         let naturalSize = track.naturalSize
+        logger.debug(viewModel.contentTextAttributed ?? "") 
+        logger.debug(naturalSize)
         if naturalSize.width < naturalSize.height {
             var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
             if contentLabel.text == "" || contentLabel.text == nil {

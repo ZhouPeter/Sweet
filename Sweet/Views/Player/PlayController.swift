@@ -46,8 +46,10 @@ class PlayController: UIViewController {
             loadItemValues()
         }
         playerView.hero.isEnabled = true
+//        playerView.hero.isEnabledForSubviews = true
         playerView.hero.id = resource?.definitions[0].url.absoluteString
         playerView.hero.modifiers = [.useNoSnapshot]
+//        playerView.playerLayer?.hero.modifiers = [.useNormalSnapshot]
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
@@ -63,7 +65,7 @@ class PlayController: UIViewController {
         switch gesture.state {
         case .began:
             logger.debug()
-            dismiss(animated: true, completion: nil)
+            hero.dismissViewController()
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
