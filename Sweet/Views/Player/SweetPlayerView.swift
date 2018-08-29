@@ -96,6 +96,7 @@ class SweetPlayerView: UIView {
             self.playerLayer?.videoGravity = videoGravity
         }
     }
+    
     init(controlView: SweetPlayerControlView = SweetPlayerControlView()) {
         super.init(frame: .zero)
         self.controlView = controlView
@@ -133,9 +134,12 @@ class SweetPlayerView: UIView {
         playerLayer = SweetPlayerLayerView()
         playerLayer!.videoGravity = videoGravity
         insertSubview(playerLayer!, at: 0)
-        playerLayer!.fill(in: self)
         playerLayer!.delegate = self
-        self.layoutIfNeeded()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer?.frame = bounds
     }
     
     func setVideo(url: URL, name: String) {

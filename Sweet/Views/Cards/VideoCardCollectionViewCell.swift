@@ -41,6 +41,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         controlView.addGestureRecognizer(tap)
         view.backgroundColor = .black
         view.isUserInteractionEnabled = true
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
         return view
     }()
         
