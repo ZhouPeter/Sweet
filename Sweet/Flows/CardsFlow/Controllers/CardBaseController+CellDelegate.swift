@@ -252,9 +252,8 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         guard index == self.index else { return }
         guard let avPlayer = playerView.avPlayer, avPlayer.status == .readyToPlay else { return }
-        playerView.hero.isEnabled = true
-        playerView.hero.id = cards[index].video
-        playerView.hero.modifiers = [.arc, .whenAppearing(.useNormalSnapshot)]
+        playerView.playerLayer?.hero.id = cards[index].video
+        playerView.playerLayer?.hero.modifiers = [.arc, .useScaleBasedSizeChange]
         let controller = PlayController()
         controller.hero.isEnabled = true
         controller.avPlayer = avPlayer

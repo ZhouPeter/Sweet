@@ -13,68 +13,78 @@ class PlayController: UIViewController {
     var avPlayer: AVPlayer?
     var resource: SweetPlayerResource?
     private var videoSize: CGSize = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainWidth() * 9 / 16)
+    private var isMaskShowingToken: NSKeyValueObservation?
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Return"), for: .normal)
         button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         return button
     }()
-    private var isMaskShowingToken: NSKeyValueObservation?
+    
+    private lazy var container: UIView = {
+        let view = UIView(frame: self.view.bounds)
+        view.backgroundColor = .green
+        return view
+    } ()
+    
     private lazy var playerView: SweetPlayerView = {
         let playView = SweetPlayerView.init(controlView: SweetPlayerControlView())
-        isMaskShowingToken = playView.controlView.bottomMaskView.observe(\.alpha,
-                                     options: [.new], changeHandler: { [weak self] (_, _) in
+        isMaskShowingToken =
+            playView.controlView.bottomMaskView.observe(\.alpha, options: [.new], changeHandler: { [weak self] (_, _) in
                 self?.backButton.alpha = playView.controlView.bottomMaskView.alpha
-        })
+            })
         playView.delegate = self
         playView.isVideoMuted = false
         return playView
     } ()
     
     deinit {
-        logger.debug("释放播放器")
+        logger.debug()
         isMaskShowingToken?.invalidate()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        
         setupUI()
         if let player = avPlayer, let resource = resource {
             playerView.resource = resource
             playerView.setAVPlayer(player: player)
             loadItemValues()
         }
-        view.hero.isEnabled = true
-        view.hero.id = resource?.definitions[0].url.absoluteString
-        view.hero.modifiers = [.useNoSnapshot]
+        
+        playerView.hero.id = resource?.definitions[0].url.absoluteString
+        playerView.hero.modifiers = [.useNoSnapshot, .useScaleBasedSizeChange]
+        
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
     }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-//        logger.debug(playerView.frame.size)
-//        playerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 16 * 9)
-//        playerView.center = view.center
-//        playerView.playerLayer?.layoutSubviews()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        allowRotation = true
+        playerView.play()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
+    override func  viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        allowRotation = false
     }
+    
+    override var prefersStatusBarHidden: Bool { return true }
     
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            logger.debug()
             hero.dismissViewController()
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
-            Hero.shared.apply(modifiers: [.position(currentPos)], to: view)
+            Hero.shared.apply(modifiers: [.position(currentPos)], to: playerView)
             playerView.controlView.isHidden = true
         default:
             if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
@@ -129,26 +139,13 @@ class PlayController: UIViewController {
         backButton.align(.left, to: view, inset: 10)
         backButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 54 : 20)
         backButton.constrain(width: 40, height: 40)
-
     }
     
     func updatePlayView(player: AVPlayer) {
         playerView.avPlayer = player
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        allowRotation = true
-        playerView.play()
-    }
     
-    override func  viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        allowRotation = false
-
-    }
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    
     @objc private func backAction() {
         allowRotation = false
         self.dismiss(animated: true, completion: nil)
