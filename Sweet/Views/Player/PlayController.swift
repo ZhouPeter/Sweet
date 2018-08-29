@@ -45,9 +45,9 @@ class PlayController: UIViewController {
             playerView.setAVPlayer(player: player)
             loadItemValues()
         }
-        view.hero.isEnabled = true
-        view.hero.id = resource?.definitions[0].url.absoluteString
-        view.hero.modifiers = [.useNoSnapshot]
+        playerView.hero.isEnabled = true
+        playerView.hero.id = resource?.definitions[0].url.absoluteString
+        playerView.hero.modifiers = [.useNoSnapshot]
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)

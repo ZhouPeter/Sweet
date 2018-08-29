@@ -116,6 +116,8 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
             container.backgroundColor = UIColor(hex: 0xf6f6f6)
             container.clipsToBounds = true
             container.layer.cornerRadius = 5
+            container.layer.borderColor = UIColor(hex: 0xf2f2f2).cgColor
+            container.layer.borderWidth = 0.5
             container.addSubview(imageView)
             imageView.fill(in: container)
             contentImageView.addSubview(container)
