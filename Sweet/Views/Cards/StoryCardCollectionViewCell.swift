@@ -18,7 +18,6 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
             if viewModel.type == .poke {
-//                coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 coverImageView.sd_setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
                 let centerX = viewModel.pokeCenter.x * contentView.bounds.width
@@ -83,6 +82,8 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         super.init(frame: frame)
         contentView.clipsToBounds = true
         coverMaskView.layer.cornerRadius = 5
+        coverMaskView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
+        coverMaskView.layer.borderWidth = 0.5
         coverImageView.layer.cornerRadius = 5
         avatarImageView.layer.cornerRadius = 24
         setupUI()
@@ -103,9 +104,6 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         pokeView.constrain(width: 50, height: 50)
         pokeViewCenterXConstraint = pokeView.centerX(to: contentView)
         pokeViewCenterYConstraint = pokeView.centerY(to: contentView)
-//        contentView.addSubview(infoLabel)
-//        infoLabel.centerX(to: contentView)
-//        infoLabel.align(.bottom, to: contentView, inset: 16)
         contentView.addSubview(nameLabel)
         nameLabel.centerX(to: contentView)
         nameLabel.align(.bottom, inset: 5)

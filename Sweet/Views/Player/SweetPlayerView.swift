@@ -58,6 +58,11 @@ class SweetPlayerView: UIView {
         return UIApplication.shared.statusBarOrientation.isLandscape
     }
     var controlView: SweetPlayerControlView!
+    lazy var placeholderImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     fileprivate var panDirection = PanDirection.horizontal
     fileprivate var sumTime: TimeInterval = 0
     fileprivate var totalDuration: TimeInterval = 0
@@ -115,6 +120,8 @@ class SweetPlayerView: UIView {
     }
     
     private func initUI() {
+        addSubview(placeholderImageView)
+        placeholderImageView.fill(in: self)
         addSubview(controlView)
         controlView.fill(in: self)
         controlView.updateUI(isFullScreen)
@@ -373,6 +380,7 @@ extension SweetPlayerView {
 extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     func sweetPlayer(player: SweetPlayerLayerView, playerStateDidChange state: SweetPlayerState) {
         controlView.playerStateDidChange(state: state)
+        if state == .readyToPlay { placeholderImageView.isHidden = true }
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
         if state == . playedToTheEnd {
             seek(0) {

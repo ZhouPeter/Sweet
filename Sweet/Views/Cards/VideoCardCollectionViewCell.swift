@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SDWebImage
 protocol VideoCardCollectionViewCellDelegate: NSObjectProtocol {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String)
 }
@@ -112,7 +113,31 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        contentImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
+        if let firstImage = SDImageCache.shared.imageFromCache(forKey: viewModel.videoURL.cacheKey) {
+            playerView.placeholderImageView.isHidden = false
+            playerView.placeholderImageView.image = firstImage
+        } else {
+            DispatchQueue.global().async {
+                let asset = AVURLAsset(url: viewModel.videoURL)
+                let assetGen =  AVAssetImageGenerator(asset: asset)
+                assetGen.appliesPreferredTrackTransform = true
+                let time = CMTimeMakeWithSeconds(5, 600)
+                var actualTime = CMTimeMake(0,0)
+                do {
+                    let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
+                    let image = UIImage(cgImage: imageRef)
+                    DispatchQueue.main.async {
+                        SDImageCache.shared.store(image, forKey: viewModel.videoURL.cacheKey, toDisk: true, completion: nil)
+                        self.playerView.placeholderImageView.isHidden = false
+                        self.playerView.placeholderImageView.image = image
+                    }
+                } catch {
+                    self.playerView.placeholderImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
+                    logger.debug(error)
+                }
+            }
+        }
+//        contentImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
         resetEmojiView()
         loadItemValues()
 
