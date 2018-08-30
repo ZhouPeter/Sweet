@@ -13,7 +13,7 @@ extension ContentCardCollectionViewCell {
     func layout(urls: [URL]?) {
         imageViews.forEach { view in
             view.alpha = 0
-            view.kf.cancelDownloadTask()
+            view.sd_cancelCurrentImageLoad()
         }
         imageIcons.forEach { (view) in
             view.isHidden = true

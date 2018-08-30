@@ -8,13 +8,7 @@ PODS:
   - Gemini (1.3.0)
   - Hero (1.2.0)
   - JDStatusBarNotification (1.5.6)
-  - JXPhotoBrowser (1.4.0):
-    - JXPhotoBrowser/Kingfisher (= 1.4.0)
-  - JXPhotoBrowser/Core (1.4.0)
-  - JXPhotoBrowser/Kingfisher (1.4.0):
-    - JXPhotoBrowser/Core
-    - Kingfisher
-  - Kingfisher (4.8.1)
+  - JXPhotoBrowser/Core (1.5.1)
   - KMNavigationBarTransition (1.1.5)
   - libimcloud (0.2.7):
     - CocoaAsyncSocket (~> 7.5.1)
@@ -88,7 +82,7 @@ DEPENDENCIES:
   - Gemini
   - Hero (~> 1.2.0)
   - JDStatusBarNotification
-  - JXPhotoBrowser
+  - JXPhotoBrowser/Core
   - KMNavigationBarTransition
   - libimcloud (from `https://gitee.com/miaobo/iOS.LIBIMCLOUD.git`, branch `master`)
   - MessageKit (from `https://github.com/MessageKit/MessageKit.git`, branch `development`)
@@ -122,7 +116,6 @@ SPEC REPOS:
     - Hero
     - JDStatusBarNotification
     - JXPhotoBrowser
-    - Kingfisher
     - KMNavigationBarTransition
     - libwebp
     - Moya
@@ -177,8 +170,7 @@ SPEC CHECKSUMS:
   Gemini: 1a932868fa70579457162c3a93cd844ad5df3455
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JDStatusBarNotification: d5829a8f2f291b23b8a54b87fac8bf2549945a2f
-  JXPhotoBrowser: b014aef984f69b4d52e846c5bc682cad4ff4d156
-  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  JXPhotoBrowser: 08d5e234e5742c3561b544d0824969d537d18a47
   KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
   libimcloud: 13cf95770c1179d7e0b3c10e7829e5475e830433
   libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
@@ -206,6 +198,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 2bd97c336313c6687c7944aa968bc0f534f61aff
+PODFILE CHECKSUM: 0f514d2aac24029ea8399c1d046bce6cbfa08012
 
 COCOAPODS: 1.5.3

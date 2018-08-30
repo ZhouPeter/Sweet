@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ActivityTableViewCell: UITableViewCell {
     private var viewModel: ActivityViewModel?
@@ -123,11 +124,11 @@ class ActivityTableViewCell: UITableViewCell {
     func update(_ viewModel: ActivityViewModel) {
         self.viewModel = viewModel
         if let leftAvatarURL = viewModel.leftAvatarURL, let rightAvatarURL = viewModel.rightAvatarURL {
-            leftAvatarImageView.kf.setImage(with: leftAvatarURL)
-            rightAvatarImageView.kf.setImage(with: rightAvatarURL)
+            leftAvatarImageView.sd_setImage(with: leftAvatarURL)
+            rightAvatarImageView.sd_setImage(with: rightAvatarURL)
             avatarImageView.image = nil
         } else {
-            avatarImageView.kf.setImage(with: viewModel.avatarURL)
+            avatarImageView.sd_setImage(with: viewModel.avatarURL)
             leftAvatarImageView.image = nil
             rightAvatarImageView.image = nil
         }

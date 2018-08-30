@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AcitivityCardTableViewCell: UITableViewCell {
 
@@ -136,8 +137,8 @@ class AcitivityCardTableViewCell: UITableViewCell {
     
     func update(_ viewModel: ActivityCardViewModel) {
         self.viewModel = viewModel
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
-        sameImageView.kf.setImage(with: viewModel.sameAvatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
+        sameImageView.sd_setImage(with: viewModel.sameAvatarURL)
         if viewModel.sameAvatarURL == nil {
             sameImageView.removeFromSuperview()
         } else {

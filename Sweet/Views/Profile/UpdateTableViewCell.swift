@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UpdateTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
@@ -71,7 +72,7 @@ class UpdateTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.title
         if viewModel.title == "头像" {
             avatarImageView.isHidden = false
-            avatarImageView.kf.setImage(with: URL(string: viewModel.content)!)
+            avatarImageView.sd_setImage(with: URL(string: viewModel.content)!)
         } else {
             avatarImageView.isHidden = true
             contentLabel.text = viewModel.content
