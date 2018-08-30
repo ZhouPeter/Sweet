@@ -92,7 +92,7 @@ extension ContentCardCollectionViewCell {
         var x = margin
         var y = margin
         let width = contentImageView.bounds.width - margin * 2
-        let imageWidth = (width - spacing * 2) / 2
+        let imageWidth = (width - spacing * 2) / 3
         let imageHeight = imageWidth
         let size = CGSize(width: imageWidth, height: imageHeight)
         titleLabel.layoutIfNeeded()
