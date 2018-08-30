@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyUserDefaults
+import SDWebImage
 
 /// 启动引导是否显示
 private var onboardingWasShown: Bool = {
@@ -27,6 +28,9 @@ final class ApplicationCoordinator: BaseCoordinator {
     init(router: Router, coordinatorFactory: CoordinatorFactory) {
         self.router = router
         self.coordinatorFactory = coordinatorFactory
+        
+        SDImageCache.shared.config.maxMemoryCost = 10 * 1024 * 1024
+        SDImageCache.shared.config.maxCacheSize = 1000 * 1024 * 1024
     }
     
     override func start(with option: DeepLinkOption?) {

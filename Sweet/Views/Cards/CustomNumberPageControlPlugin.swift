@@ -7,6 +7,7 @@
 
 import Foundation
 import JXPhotoBrowser
+import SDWebImage
 
 var lookedPhotoMap: [String: [Int]] = [String: [Int]]()
 var actionLogPhotoMap: [String: [Int]] = [String: [Int]]()
@@ -15,13 +16,16 @@ class CustomChangeBrowerPlugin: PhotoBrowserPlugin {
     init(card: CardResponse) {
         self.card = card
     }
+    
     func photoBrowser(_ photoBrowser: PhotoBrowser, didChangedPageIndex index: Int) {
         var lookedIndexs = lookedPhotoMap[card.cardId] ?? [Int]()
         if !lookedIndexs.contains(index) { lookedIndexs.append(index) }
         lookedPhotoMap[card.cardId] = lookedIndexs
+        SDImageCache.shared.clearMemory()
     }
     
     func photoBrowser(_ photoBrowser: PhotoBrowser, viewDidDisappear view: UIView) {
+        SDImageCache.shared.clearMemory()
         if let total = photoBrowser.photoBrowserDelegate?.numberOfPhotos(in: photoBrowser) {
             if actionLogPhotoMap[card.cardId] != nil { return }
             let lookedIndexs = lookedPhotoMap[card.cardId] ?? [Int]()
@@ -36,6 +40,7 @@ class CustomChangeBrowerPlugin: PhotoBrowserPlugin {
         }
     }
 }
+
 class CustomNumberPageControlPlugin: PhotoBrowserPlugin {
     /// 字体
     var font = UIFont.boldSystemFont(ofSize: 20)

@@ -631,7 +631,7 @@ extension ContentCardCollectionViewCell {
 
         SDWebImageManager.shared.loadImage(
                with: url,
-               options: [],
+               options: [.decodeFirstFrameOnly],
                progress: nil) { (image, data, _, _, _, _) in
                 guard let image = image else { return }
                 imageView.image = nil

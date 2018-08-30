@@ -166,7 +166,7 @@ CHECKOUT OPTIONS:
     :commit: ba9baace729e67b1debb4dec0b9f7a0ebbfa4e11
     :git: https://github.com/MessageKit/MessageKit.git
   SDWebImage:
-    :commit: 802e19b23dc039841204baa6e0212cb8215638bf
+    :commit: 2bb336bc12a5690dd11988c0bc8bef2c7318508d
     :git: https://github.com/rs/SDWebImage.git
 
 SPEC CHECKSUMS:

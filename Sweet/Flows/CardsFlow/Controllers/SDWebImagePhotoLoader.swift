@@ -9,14 +9,10 @@
 import Foundation
 import JXPhotoBrowser
 import SDWebImage
+
 class SDWebImagePhotoLoader: PhotoLoader {
     func isImageCached(on imageView: UIImageView, url: URL) -> Bool {
-        let cacheKey = SDWebImageManager.shared.cacheKey(for: url)
-        if SDImageCache.shared.imageFromCache(forKey: cacheKey) == nil {
-            return false
-        } else {
-            return true
-        }
+        return SDImageCache.shared.diskImageDataExists(withKey: SDWebImageManager.shared.cacheKey(for: url))
     }
     
     func setImage(on imageView: UIImageView,
@@ -26,7 +22,7 @@ class SDWebImagePhotoLoader: PhotoLoader {
                   completionHandler: @escaping () -> Void) {
         imageView.sd_setImage(with: url,
                               placeholderImage: placeholder,
-                              options: [],
+                              options: [.avoidDecodeImage],
                               progress: { (receivedSize, totalSize, _) in
             progressBlock(Int64(receivedSize), Int64(totalSize))
         }) { (_, _, _, _) in
