@@ -13,6 +13,7 @@ class Guide {
     private let window: UIWindow
     private var retainClosure: (() -> Void)?
     var removeClosure: (() -> Void)?
+    
     init() {
         window = UIWindow(frame: UIScreen.main.bounds)
         rootView = UIView(frame: window.bounds)
@@ -23,11 +24,19 @@ class Guide {
         rootView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
         window.windowLevel = UIWindowLevelAlert + 1
         window.makeKeyAndVisible()
+        rootView.alpha = 0
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+            self.rootView.alpha = 1
+        }, completion: nil)
     }
     
     @objc private func tapped() {
-        window.resignKey()
-        removeClosure?()
-        retainClosure = nil
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+            self.rootView.alpha = 0
+        }) { (_) in
+            self.window.resignKey()
+            self.removeClosure?()
+            self.retainClosure = nil
+        }
     }
 }
