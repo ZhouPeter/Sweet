@@ -10,18 +10,18 @@ import UIKit
 
 class Guide {
     let rootView: UIView
-    private let window: UIWindow
+    private let window: SweetWindow
     private var retainClosure: (() -> Void)?
     var removeClosure: (() -> Void)?
     
     init() {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = SweetWindow(frame: UIScreen.main.bounds)
         rootView = UIView(frame: window.bounds)
         rootView.backgroundColor = .clear
         window.addSubview(rootView)
         rootView.fill(in: window)
         retainClosure = { _ = self }
-        rootView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+        window.touched = { [weak self] in self?.dismiss() }
         window.windowLevel = UIWindowLevelAlert + 1
         window.makeKeyAndVisible()
         rootView.alpha = 0
@@ -30,7 +30,7 @@ class Guide {
         }, completion: nil)
     }
     
-    @objc private func tapped() {
+    private func dismiss() {
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.rootView.alpha = 0
         }) { (_) in
@@ -38,5 +38,16 @@ class Guide {
             self.removeClosure?()
             self.retainClosure = nil
         }
+    }
+}
+
+private class SweetWindow: UIWindow {
+    var touched: (() -> Void)?
+    
+    override func sendEvent(_ event: UIEvent) {
+        if event.type == .touches {
+            touched?()
+        }
+        super.sendEvent(event)
     }
 }
