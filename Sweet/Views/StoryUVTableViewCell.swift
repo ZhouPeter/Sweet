@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class StoryUVTableViewCell: UITableViewCell {
     static let marginX: CGFloat = 10
@@ -84,7 +85,7 @@ class StoryUVTableViewCell: UITableViewCell {
     }
     
     func update(_ model: StoryUvInfo) {
-        avatarImageView.kf.setImage(with: URL(string: model.avatar)!)
+        avatarImageView.sd_setImage(with: URL(string: model.avatar)!)
         nicknameLabel.text = model.nickname
         infoLabel.text = model.info
         likeImageView.isHidden = !model.like

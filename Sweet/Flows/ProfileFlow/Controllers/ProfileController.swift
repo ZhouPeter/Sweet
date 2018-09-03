@@ -552,7 +552,9 @@ extension ProfileController: UserInfoTableViewCellDelegate {
             navigationController?.pushViewController(controller, animated: true)
         } else {
             photoBrowserImp = AvatarPhotoBrowserImp(thumbnaiImageViews: [imageView], highImageViewURLs: [highURL])
-            let browser = CustomPhotoBrowser(delegate: photoBrowserImp!, originPageIndex: 0)
+            let browser = CustomPhotoBrowser(delegate: photoBrowserImp!,
+                                             photoLoader: SDWebImagePhotoLoader(),
+                                             originPageIndex: 0)
             browser.animationType = .scale
             browser.plugins.append(CustomNumberPageControlPlugin())
             browser.show()

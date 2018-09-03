@@ -409,7 +409,9 @@ extension ConversationController: MessageCellDelegate {
             let browserDelegate =
                 PhotoBrowserImp(thumbnaiImageViews: [cell.imageView], highImageViewURLs: [URL(string: content.url)!])
             photoBrowserDelegate = browserDelegate
-            let browser = CustomPhotoBrowser(delegate: browserDelegate, originPageIndex: 0)
+            let browser = CustomPhotoBrowser(delegate: browserDelegate,
+                                             photoLoader: SDWebImagePhotoLoader(),
+                                             originPageIndex: 0)
             browser.animationType = .scale
             browser.plugins.append(CustomNumberPageControlPlugin())
             browser.show()

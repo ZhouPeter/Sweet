@@ -308,7 +308,6 @@ extension CardsBaseController {
 
     private func preloadingCard() {
         if mainView.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
-            logger.debug(cards[index].content ?? "" )
             let cardId = cards[index].cardId
             let direction = Direction.down
             let request: CardRequest = self is CardsAllController ?
@@ -373,10 +372,8 @@ extension CardsBaseController: CardsPageCollectionViewDataSource {
 extension CardsBaseController: CardsPageCollectionViewDelegate {
     func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int) {
         if index >= self.index {
-            logger.debug("下一页" + (index == self.index ? "最后一页" : ""))
             downScrollCard(index: index)
         } else {
-            logger.debug("上一页") 
             self.index = index
         }
     }
@@ -397,4 +394,3 @@ extension CardsBaseController: CardsPageCollectionViewDelegate {
         }
     }
 }
-

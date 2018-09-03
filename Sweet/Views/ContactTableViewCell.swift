@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ContactTableViewCell: UITableViewCell {
 
@@ -114,7 +115,7 @@ class ContactTableViewCell: UITableViewCell {
     
     func update(viewModel: ContactViewModel) {
         userId = viewModel.userId
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
@@ -144,7 +145,7 @@ class ContactTableViewCell: UITableViewCell {
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
         phone = viewModel.phone
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = viewModel.firstNameString
         nameLabel.text = viewModel.nameString
@@ -160,7 +161,7 @@ class ContactTableViewCell: UITableViewCell {
     
     func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
         sectionId = viewModel.sectionId
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SDWebImage
 
 protocol StoriesPlayerScrollViewDelegate: NSObjectProtocol {
     func playScrollView(scrollView: StoriesPlayerScrollView, currentPlayerIndex: Int)
@@ -106,9 +106,10 @@ extension StoriesPlayerScrollView {
     private func prepare(imageView: UIImageView, withStory: StoryCellViewModel?) {
         if let story = withStory {
             if let videoURL = story.videoURL {
-                imageView.kf.setImage(with: videoURL.videoThumbnail())
+                imageView.sd_setImage(with: videoURL.videoThumbnail(), placeholderImage: nil, options: [.avoidDecodeImage])
             } else if let imageURL = story.imageURL {
-                imageView.kf.setImage(with: imageURL.imageView2(size: imageView.bounds.size))
+                let url = imageURL.imageView2(size: imageView.bounds.size)
+                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage])
             }
         } else {
             imageView.image = nil

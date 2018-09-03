@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SDWebImage
+
 class SourceInfoView: UIView {
     private lazy var sourceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -66,7 +68,7 @@ class SourceInfoView: UIView {
     func update(thumbnailURL: URL?, title: String, brief: String?) {
         if let thumbnailURL = thumbnailURL {
             sourceImageView.isHidden = false
-            sourceImageView.kf.setImage(with: thumbnailURL)
+            sourceImageView.sd_setImage(with: thumbnailURL)
         } else {
             sourceImageView.isHidden = true
         }

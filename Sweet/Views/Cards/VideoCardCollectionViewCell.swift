@@ -113,7 +113,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        if let firstImage = SDImageCache.shared.imageFromCache(forKey: viewModel.videoURL.cacheKey) {
+        let cacheKey = SDWebImageManager.shared.cacheKey(for: viewModel.videoURL)
+        if let firstImage = SDImageCache.shared.imageFromCache(forKey: cacheKey) {
             playerView.placeholderImageView.isHidden = false
             playerView.placeholderImageView.image = firstImage
         } else {
@@ -127,7 +128,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                     let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
                     let image = UIImage(cgImage: imageRef)
                     DispatchQueue.main.async {
-                        SDImageCache.shared.store(image, forKey: viewModel.videoURL.cacheKey, toDisk: true, completion: nil)
+                        SDImageCache.shared.store(image, forKey: cacheKey, toDisk: true, completion: nil)
                         self.playerView.placeholderImageView.isHidden = false
                         self.playerView.placeholderImageView.image = image
                     }
@@ -137,7 +138,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 }
             }
         }
-//        contentImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
         resetEmojiView()
         loadItemValues()
 
@@ -157,7 +157,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     
     private func loadItemValues() {
-        
         if let asset = playerView.avPlayer?.currentItem?.asset, asset.isPlayable,
             let urlAsset = asset as? AVURLAsset,
             urlAsset.url == viewModel!.videoURL {
@@ -183,8 +182,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
         let contentMaxHeight = videoContentSumHeight - videoWidth
         let naturalSize = track.naturalSize
-        logger.debug(viewModel.contentTextAttributed ?? "") 
-        logger.debug(naturalSize)
+//        logger.debug(viewModel.contentTextAttributed ?? "")
+//        logger.debug(naturalSize)
         if naturalSize.width < naturalSize.height {
             var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
             if contentLabel.text == "" || contentLabel.text == nil {

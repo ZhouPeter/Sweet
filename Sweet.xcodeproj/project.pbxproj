@@ -599,10 +599,6 @@
 		58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */; };
 		58CAB37B20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */; };
 		58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */; };
-		58CAB37E20AC1989007230AA /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */; };
-		58CAB37F20AC1989007230AA /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */; };
-		58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */; };
-		58CAB38120AC1989007230AA /* ActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */; };
 		58CAB38320AD14FA007230AA /* String+Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB38220AD14FA007230AA /* String+Rect.swift */; };
 		58CAB38420AD14FA007230AA /* String+Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB38220AD14FA007230AA /* String+Rect.swift */; };
 		58CAB38520AD14FA007230AA /* String+Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CAB38220AD14FA007230AA /* String+Rect.swift */; };
@@ -1688,7 +1684,6 @@
 		58C75C172099DF7D00DBD28C /* SweetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetPickerView.swift; sourceTree = "<group>"; };
 		58C75C1C209AA7B500DBD28C /* UpdatePhoneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneController.swift; sourceTree = "<group>"; };
 		58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesCardCollectionViewCell.swift; sourceTree = "<group>"; };
-		58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableViewCell.swift; sourceTree = "<group>"; };
 		58CAB38220AD14FA007230AA /* String+Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Rect.swift"; sourceTree = "<group>"; };
 		58CAB38720AD581A007230AA /* CardsBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseController.swift; sourceTree = "<group>"; };
 		58CBA6F02117FEB2002FCD54 /* ShareWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWebViewController.swift; sourceTree = "<group>"; };
@@ -1992,7 +1987,6 @@
 			isa = PBXGroup;
 			children = (
 				580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */,
-				58CAB37D20AC1989007230AA /* ActivityTableViewCell.swift */,
 				58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */,
 				58CAB37820AC0405007230AA /* ActivitiesCardCollectionViewCell.swift */,
 				589E6BDA20A9A9370038FAED /* BaseCardCollectionViewCell.swift */,
@@ -3119,7 +3113,6 @@
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -3153,7 +3146,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -3289,7 +3281,6 @@
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/KMNavigationBarTransition/KMNavigationBarTransition.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
@@ -3323,7 +3314,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMNavigationBarTransition.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -3548,7 +3538,6 @@
 				58816D0120C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578ED2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				580907BF20B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
-				58CAB37E20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388D20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
@@ -3774,7 +3763,6 @@
 				AC04E98A2099C87F004401AC /* LookupFilter.m in Sources */,
 				AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */,
 				58BD53292090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
-				58CAB38020AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				ACEC5C2520EB1A90006E0BAA /* StoryPublishTask.swift in Sources */,
 				AC2A258920BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */,
@@ -4114,7 +4102,6 @@
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				AC956BAB20C0246400B40D9A /* MessageTicket.swift in Sources */,
 				58BD532A2090308400F7C3E1 /* BasInfoCellViewModel.swift in Sources */,
-				58CAB38120AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				AC2A258A20BD2B9F00A82E62 /* Login.pb.swift in Sources */,
 				583BC79220CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				58D578DC2093012500AE5D38 /* StoryCellViewModel.swift in Sources */,
@@ -4602,7 +4589,6 @@
 				58816D0220C656860032D103 /* ActivityListResponse.swift in Sources */,
 				58D578EE2093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
-				58CAB37F20AC1989007230AA /* ActivityTableViewCell.swift in Sources */,
 				58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388E20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,

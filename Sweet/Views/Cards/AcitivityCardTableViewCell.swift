@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AcitivityCardTableViewCell: UITableViewCell {
 
@@ -28,7 +29,7 @@ class AcitivityCardTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.black.withAlphaComponent(0.5)
+        label.textColor = .black
         return label
     }()
     
@@ -42,14 +43,14 @@ class AcitivityCardTableViewCell: UITableViewCell {
     private lazy var resultTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .black
+        label.textColor = UIColor.black.withAlphaComponent(0.5)
         return label
     }()
     
     private lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.textColor = UIColor.black.withAlphaComponent(0.8)
         return label
     }()
     
@@ -60,8 +61,10 @@ class AcitivityCardTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.black.withAlphaComponent(0.5)
         label.numberOfLines = 2
+        label.baselineAdjustment = .alignCenters
         return label
-    }()
+    } ()
+    
     private lazy var contentBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xf2f2f2)
@@ -91,6 +94,8 @@ class AcitivityCardTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var titleLabelLeft: NSLayoutConstraint?
+    
     private func setupUI() {
         contentView.addSubview(avatarImageView)
         avatarImageView.align(.left, inset: 10)
@@ -104,50 +109,44 @@ class AcitivityCardTableViewCell: UITableViewCell {
         sameImageView.setViewRounded()
         contentView.addSubview(titleLabel)
         titleLabel.centerY(to: avatarImageView)
-        titleLabel.pin(.right, to: avatarImageView, spacing: 8, priority: UILayoutPriority.init(999))
-        titleLabel.pin(.right, to: sameImageView, spacing: 8)
+        titleLabelLeft = titleLabel.pin(.right, to: sameImageView, spacing: 8)
         contentView.addSubview(subtitleLabel)
         subtitleLabel.centerY(to: avatarImageView)
         subtitleLabel.pin(.right, to: titleLabel, spacing: 4)
+        subtitleLabel.align(.right, inset: 10)
         contentView.addSubview(contentBackgroundView)
         contentBackgroundView.align(.left, inset: 10)
         contentBackgroundView.align(.right, inset: 10)
-        contentBackgroundView.pin(.bottom, to: avatarImageView, spacing: 7)
+        contentBackgroundView.pin(.bottom, to: avatarImageView, spacing: 10)
         contentBackgroundView.constrain(height: 40)
         contentBackgroundView.addSubview(contentLabel)
-        contentLabel.align(.left, inset: 6)
-        contentLabel.align(.right, inset: 6)
-        contentLabel.align(.top, inset: 6)
+        contentLabel.fill(in: contentBackgroundView, left: 8, right: 6, top: 0, bottom: 0)
         contentView.addSubview(resultTitleLabel)
-        resultTitleLabel.align(.left, to: avatarImageView)
-        resultTitleLabel.pin(.bottom, to: contentBackgroundView, spacing: 7)
+        resultTitleLabel.align(.left, to: avatarImageView, inset: 3)
+        resultTitleLabel.pin(.bottom, to: contentBackgroundView, spacing: 14)
         contentView.addSubview(emojiImageView)
         emojiImageView.centerY(to: resultTitleLabel)
-        emojiImageView.constrain(width: 24, height: 24)
+        emojiImageView.constrain(width: 30, height: 30)
         emojiImageView.pin(.right, to: resultTitleLabel, spacing: 1)
         contentView.addSubview(commentLabel)
         commentLabel.centerY(to: resultTitleLabel)
-        commentLabel.pin(.right, to: resultTitleLabel, spacing: 6)
+        commentLabel.pin(.right, to: resultTitleLabel, spacing: 3)
         contentView.addSubview(likeButton)
-        likeButton.constrain(width: 30, height: 30)
-        likeButton.align(.right, inset: 10)
-        likeButton.pin(.bottom, to: contentBackgroundView)
+        likeButton.constrain(width: 28, height: 28)
+        likeButton.align(.right, inset: 12)
+        likeButton.centerY(to: resultTitleLabel)
     }
     
     func update(_ viewModel: ActivityCardViewModel) {
         self.viewModel = viewModel
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
-        sameImageView.kf.setImage(with: viewModel.sameAvatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         if viewModel.sameAvatarURL == nil {
-            sameImageView.removeFromSuperview()
+            sameImageView.isHidden = true
+            titleLabelLeft?.constant = -3
         } else {
-            if sameImageView.superview == nil {
-                contentView.addSubview(sameImageView)
-                sameImageView.align(.left, inset: 20)
-                sameImageView.centerY(to: avatarImageView)
-                sameImageView.constrain(width: 20, height: 20)
-                titleLabel.pin(.right, to: sameImageView, spacing: 8)
-            }
+            sameImageView.isHidden = false
+            sameImageView.sd_setImage(with: viewModel.avatarURL)
+            titleLabelLeft?.constant = 8
         }
         titleLabel.text = viewModel.titleString
         subtitleLabel.text = viewModel.subtitleString
@@ -163,7 +162,6 @@ class AcitivityCardTableViewCell: UITableViewCell {
         likeButton.isHidden = viewModel.isHiddenLikeButton
     }
 }
-
 
 extension AcitivityCardTableViewCell {
     @objc private func likeAction(_ sender: UIButton) {

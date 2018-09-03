@@ -9,7 +9,7 @@
 import Foundation
 import SDWebImage
 extension UIImageView {
-    func setAnimationImages(url: URL,
+    func setAnimationImages(withVideoURL url: URL,
                             animationDuration: TimeInterval,
                             count: Int,
                             size: CGSize) {
@@ -25,7 +25,13 @@ extension UIImageView {
         }
         sd_setImage(with: urls[0])
         self.animationDuration = animationDuration
-        sd_setAnimationImages(with: urls)
+        let prefetcher = SDWebImagePrefetcher.shared
+        prefetcher.prefetchURLs(urls, progress: nil) { [weak self] (noOfFinishedUrls, noOfSkippedUrls) in
+            guard noOfSkippedUrls == 0, let `self` = self else { return }
+            self.animationImages = urls.compactMap({
+                SDImageCache.shared.imageFromMemoryCache(forKey: prefetcher.manager.cacheKey(for: $0))
+            })
+        }
     }
 }
 

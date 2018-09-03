@@ -9,6 +9,8 @@
 import UIKit
 import Photos
 import SwiftyUserDefaults
+import SDWebImage
+
 class UpdateAvatarController: BaseViewController, UpdateProtocol {
     var saveCompletion: ((String, Int?) -> Void)?
     
@@ -16,7 +18,7 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.kf.setImage(with: URL(string: avatar)!)
+        imageView.sd_setImage(with: URL(string: avatar)!)
         return imageView
     }()
     
@@ -113,7 +115,7 @@ extension UpdateAvatarController: UIImagePickerControllerDelegate, UINavigationC
                             completion: { (result) in
                                 switch result {
                                 case let .success(response):
-                                    self.avatarImageView.kf.setImage(with: localURL)
+                                    self.avatarImageView.sd_setImage(with: localURL)
                                     let remain = response["remain"] as? Int
                                     self.saveCompletion?(url, remain)
                                     self.toast(message: "头像修改成功")

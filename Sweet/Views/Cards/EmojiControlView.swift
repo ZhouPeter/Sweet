@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import SDWebImage
 
 let emojiSpace: CGFloat = 8
 let emojiWidth: CGFloat = 32
 let emojiHeight: CGFloat = emojiWidth
+
 protocol EmojiControlViewDelegate: NSObjectProtocol {
     func openEmojis()
     func selectEmoji(emoji: Int)
@@ -118,7 +120,7 @@ class EmojiControlView: UIView {
             avatarImageViews[index].frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
             insetX -= emojiWidth + emojiSpace
             avatarImageViews[index].isHidden = false
-            avatarImageViews[index].kf.setImage(with: avatarURL)
+            avatarImageViews[index].sd_setImage(with: avatarURL)
         }
     }
     

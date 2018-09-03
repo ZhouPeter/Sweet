@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import SDWebImage
+
 protocol ChoiceCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
     func selectChoiceCard(cardId: String, selectedIndex: Int)
     func showProfile(userId: UInt64, setTop: SetTop?)
 }
+
 extension ChoiceCardCollectionViewCellDelegate {
     func showProfile(userId: UInt64, setTop: SetTop?) {}
 }
+
 class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
 
     typealias ViewModelType = ChoiceCardViewModel
@@ -203,8 +207,8 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         self.viewModel = viewModel
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        leftImageView.kf.setImage(with: viewModel.imageURL[0])
-        rightImageView.kf.setImage(with: viewModel.imageURL[1])
+        leftImageView.sd_setImage(with: viewModel.imageURL[0].imageView2(size: leftImageView.bounds.size))
+        rightImageView.sd_setImage(with: viewModel.imageURL[1].imageView2(size: leftImageView.bounds.size))
         if let selectedIndex = viewModel.selectedIndex,
            let urls = viewModel.avatarURLs,
            let percent = viewModel.percent {
@@ -218,7 +222,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                 }
                 for (offset, url) in urls.enumerated() {
                     leftImageViews[offset].isHidden = false
-                    leftImageViews[offset].kf.setImage(with: url)
+                    leftImageViews[offset].sd_setImage(with: url.imageView2(size: leftImageView.bounds.size))
                     let offsetCenterX: CGFloat = 40.0 / 2 + CGFloat(offset) * 50  - sumButtonWidth / 2
                     leftImageContraints[offset].constant = offsetCenterX
                 }
@@ -241,7 +245,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                 }
                 for (offset, url) in urls.enumerated() {
                     rightImageViews[offset].isHidden = false
-                    rightImageViews[offset].kf.setImage(with: url)
+                    rightImageViews[offset].sd_setImage(with: url.imageView2(size: rightImageView.bounds.size))
                     let offsetCenterX: CGFloat = 40.0 / 2 + CGFloat(offset) * 50  - sumButtonWidth / 2
                     rightImageContraints[offset].constant = offsetCenterX
                 }

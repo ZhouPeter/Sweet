@@ -13,6 +13,8 @@ import Alamofire
 import VIMediaCache
 import Hero
 import JDStatusBarNotification
+import SDWebImage
+
 protocol StoriesPlayerViewControllerDelegate: NSObjectProtocol {
     func playToBack()
     func playToNext()
@@ -305,7 +307,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private func updateUserData() {
         if let stories = stories {
             let avatarURL = stories[currentIndex].avatarURL
-            avatarImageView.kf.setImage(with: avatarURL)
+            avatarImageView.sd_setImage(with: avatarURL)
             let name = stories[currentIndex].nickname
             let subtitle = stories[currentIndex].subtitle
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)

@@ -13,7 +13,7 @@ extension ContentCardCollectionViewCell {
     func layout(urls: [URL]?) {
         imageViews.forEach { view in
             view.alpha = 0
-            view.kf.cancelDownloadTask()
+            view.sd_cancelCurrentImageLoad()
         }
         imageIcons.forEach { (view) in
             view.isHidden = true
@@ -92,7 +92,7 @@ extension ContentCardCollectionViewCell {
         var x = margin
         var y = margin
         let width = contentImageView.bounds.width - margin * 2
-        let imageWidth = (width - spacing * 2) / 2
+        let imageWidth = (width - spacing * 2) / 3
         let imageHeight = imageWidth
         let size = CGSize(width: imageWidth, height: imageHeight)
         titleLabel.layoutIfNeeded()
@@ -631,7 +631,7 @@ extension ContentCardCollectionViewCell {
 
         SDWebImageManager.shared.loadImage(
                with: url,
-               options: [],
+               options: [.decodeFirstFrameOnly],
                progress: nil) { (image, data, _, _, _, _) in
                 guard let image = image else { return }
                 imageView.image = nil

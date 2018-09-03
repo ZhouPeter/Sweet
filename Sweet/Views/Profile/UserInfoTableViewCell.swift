@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import SDWebImage
+
 protocol UserInfoTableViewCellDelegate: class {
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL)
     func editSignature()
 }
+
 class UserInfoTableViewCell: UITableViewCell {
     weak var delegate: UserInfoTableViewCellDelegate?
     private var viewModel: BaseInfoCellViewModel?
@@ -120,7 +123,7 @@ class UserInfoTableViewCell: UITableViewCell {
 
     func updateWith(_ viewModel: BaseInfoCellViewModel) {
         self.viewModel = viewModel
-        avatarImageView.kf.setImage(with: viewModel.avatarImageURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarImageURL)
         nicknameLabel.attributedText = viewModel.nicknameSexAttributedString
         starContactLabel.text = viewModel.starContactString
         collegeInfoLabel.text = viewModel.collegeInfoString
