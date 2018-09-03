@@ -183,6 +183,7 @@ extension CardsBaseController {
     func startLoadCards(cardRequest: CardRequest,
                         callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         if isFetchLoadCards {
+            callback?(false, nil)
             return
         }
         isFetchLoadCards = true
@@ -237,7 +238,10 @@ extension CardsBaseController {
         })
         let itemNumber = mainView.collectionView.numberOfItems(inSection: 0)
         let addCount = self.cards.count - itemNumber
-        if addCount == 0 { return }
+        if addCount == 0 {
+            callback?(true, nil)
+            return
+        }
         mainView.collectionView.performBatchUpdates({
             var items = [IndexPath]()
             for item in 0..<addCount {
@@ -313,7 +317,18 @@ extension CardsBaseController {
             let request: CardRequest = self is CardsAllController ?
                 .all(cardId: cardId, direction: direction) :
                 .sub(cardId: cardId, direction: direction)
-            startLoadCards(cardRequest: request)
+            let semaphore  = DispatchSemaphore(value: 0)
+            let count = preloadingCount - (mainView.collectionView.numberOfItems(inSection: 0) - 1 - index)
+            DispatchQueue.global().async {
+                for i in 0..<count {
+                    logger.debug(i)
+                    self.startLoadCards(cardRequest: request) { (_, _) in
+                        semaphore.signal()
+                    }
+                    semaphore.wait()
+                }
+            }
+
         }
     }
 

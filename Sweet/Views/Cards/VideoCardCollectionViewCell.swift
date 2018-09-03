@@ -69,6 +69,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     override func prepareForReuse() {
         super.prepareForReuse()
         contentImageView.image = nil
+        playerView.placeholderImageView.image = nil
         playerView.playerLayer?.resetPlayer()
         playerView.controlView.hideLoader()
     }
@@ -114,8 +115,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             }
         }
         let cacheKey = SDWebImageManager.shared.cacheKey(for: viewModel.videoURL)
+        playerView.placeholderImageView.isHidden = false
         if let firstImage = SDImageCache.shared.imageFromCache(forKey: cacheKey) {
-            playerView.placeholderImageView.isHidden = false
             playerView.placeholderImageView.image = firstImage
         } else {
             DispatchQueue.global().async {
@@ -129,7 +130,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                     let image = UIImage(cgImage: imageRef)
                     DispatchQueue.main.async {
                         SDImageCache.shared.store(image, forKey: cacheKey, toDisk: true, completion: nil)
-                        self.playerView.placeholderImageView.isHidden = false
                         self.playerView.placeholderImageView.image = image
                     }
                 } catch {
