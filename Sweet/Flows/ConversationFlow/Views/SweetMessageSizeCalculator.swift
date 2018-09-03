@@ -14,6 +14,9 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
         super.init(layout: layout)
         incomingMessagePadding = UIEdgeInsets(top: 10, left: 8, bottom: 0, right: 30)
         outgoingMessagePadding = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 8)
+        let size = CGSize(width: 35, height: 35)
+        incomingAccessoryViewSize = size
+        outgoingAccessoryViewSize = size
     }
     
     override func messageContainerSize(for message: MessageType) -> CGSize {
