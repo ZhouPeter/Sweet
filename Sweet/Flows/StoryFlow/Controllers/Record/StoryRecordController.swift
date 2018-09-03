@@ -553,20 +553,27 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func toggleMenu() {
         menuButton.isSelected = !menuButton.isSelected
-        var alpha: CGFloat = 0
+        var flashButtonAlpha: CGFloat = 0
+        var switchButtonAlpha: CGFloat = 0
+        let offset: CGFloat = 40
         if menuButton.isSelected {
-            alpha = 1
-            let offset: CGFloat = 40
-            flashButtonCenterY?.constant = offset
-            cameraSwitchCenterY?.constant = offset * 2
+            switchButtonAlpha = 1
+            if captureView.isBackCamera {
+                flashButtonCenterY?.constant = offset
+                cameraSwitchCenterY?.constant = offset * 2
+                flashButtonAlpha = 1
+            } else {
+                cameraSwitchCenterY?.constant = offset
+                flashButtonAlpha = 0
+            }
         } else {
             flashButtonCenterY?.constant = 0
             cameraSwitchCenterY?.constant = 0
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.view.layoutIfNeeded()
-            self.flashButton.alpha = alpha
-            self.cameraSwitchButton.alpha = alpha
+            self.flashButton.alpha = flashButtonAlpha
+            self.cameraSwitchButton.alpha = switchButtonAlpha
         }, completion: nil)
     }
     

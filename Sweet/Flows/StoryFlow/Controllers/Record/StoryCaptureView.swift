@@ -14,6 +14,9 @@ final class StoryCaptureView: GPUImageView {
     var isStarted: Bool {
         return camera?.isRunning ?? false
     }
+    var isBackCamera: Bool {
+        return camera?.cameraPosition() == .back
+    }
     private var beautyFilter = BeautyFilter()
     private var filter = GPUImageFilter()
     private var camera: GPUImageStillCamera?
