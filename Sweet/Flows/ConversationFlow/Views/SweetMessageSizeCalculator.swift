@@ -22,8 +22,10 @@ final class SweetMessageSizeCalculator: MessageSizeCalculator {
         }
         let maxWidth = 200
         if value is StoryMessageContent || value is OptionCardContent || value is ContentCardContent ||
-            value is ImageMessageContent || value is ArticleMessageContent {
+            value is ImageMessageContent {
             return CGSize(width: maxWidth, height: maxWidth)
+        } else if value is ArticleMessageContent {
+            return CGSize(width: maxWidth, height: 88)
         }
         return super.messageContainerSize(for: message)
     }

@@ -19,13 +19,12 @@ final class ArticleMessageCell: MediaMessageCell {
         return label
     } ()
     
-    private let contentTextView: UITextView = {
-        let textView = UITextView()
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.textColor = .black
-        textView.backgroundColor = UIColor(hex: 0xd8d8d8)
-        return textView
+    private let domainLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(hex: 0xcccccc)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "domain.com"
+        return label
     } ()
     
     private let imageView: UIImageView = {
@@ -33,6 +32,7 @@ final class ArticleMessageCell: MediaMessageCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 3
+        imageView.backgroundColor = UIColor(hex: 0xD8D8D8)
         return imageView
     } ()
     
@@ -43,7 +43,7 @@ final class ArticleMessageCell: MediaMessageCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ArticleMessageContent else { return }
         titleLabel.text = content.title
-        contentTextView.text = content.content
+        domainLabel.text = URL(string: content.articleURL)?.host ?? ""
         imageView.sd_setImage(with: URL(string: content.thumbnailURL)?.imageView2(size: imageView.bounds.size))
         showLoading(false)
     }
@@ -53,16 +53,22 @@ final class ArticleMessageCell: MediaMessageCell {
         mediaContainerView.backgroundColor = .white
         mediaContainerView.addSubview(imageView)
         mediaContainerView.addSubview(titleLabel)
-        mediaContainerView.addSubview(contentTextView)
-        imageView.constrain(width: 40, height: 40)
-        imageView.align(.left, to: mediaContainerView, inset: 10)
-        imageView.align(.top, to: mediaContainerView, inset: 10)
-        titleLabel.align(.top, to: imageView)
-        titleLabel.pin(.right, to: imageView, spacing: 10)
+        mediaContainerView.addSubview(domainLabel)
+        titleLabel.align(.left, to: mediaContainerView, inset: 10)
+        titleLabel.align(.top, to: mediaContainerView, inset: 10)
         titleLabel.align(.right, to: mediaContainerView, inset: 10)
-        contentTextView.align(.left)
-        contentTextView.align(.right)
-        contentTextView.align(.bottom)
-        contentTextView.pin(.bottom, to: imageView, spacing: 10)
+        titleLabel.constrain(height: 40)
+        imageView.constrain(width: 32, height: 32)
+        imageView.align(.bottom, to: mediaContainerView, inset: 5)
+        imageView.align(.right, to: mediaContainerView, inset: 5)
+        domainLabel.constrain(height: 15)
+        domainLabel.align(.left, to: titleLabel)
+        domainLabel.align(.right, to: imageView)
+        domainLabel.align(.top, to: imageView)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
 }
