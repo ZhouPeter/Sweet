@@ -119,12 +119,20 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             cellNumber = storyViewModels.count
             if let layout = collectionViewLayout as? StoriesCollectionViewFlowLayout {
                 layout.selfIndex = storyViewModels.count
+            } else {
+                showEmptyView(isShow: cellNumber == 0)
             }
         }
     }
     
     private var collectionViewLayout: UICollectionViewFlowLayout?
-
+    private lazy var emptyView: EmptyEmojiView = {
+        let view = EmptyEmojiView(image: nil, title: "最近三天没有小故事")
+        view.emojiImageView.image = nil
+        view.titleLabel.font = UIFont.systemFont(ofSize: 14)
+        view.titleLabel.textColor = UIColor.black.withAlphaComponent(0.5)
+        return view
+    }()
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout
         if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == user.userId {
@@ -158,6 +166,22 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         super.viewDidAppear(animated)
         collectionView.reloadData()
        
+    }
+    
+    private func showEmptyView(isShow: Bool) {
+        if isShow {
+            if emptyView.superview != nil { return }
+            collectionView.addSubview(emptyView)
+            emptyView.backgroundColor = .clear
+            emptyView.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: collectionView.bounds.width,
+                height: collectionView.bounds.height + 1
+            )
+        } else {
+            emptyView.removeFromSuperview()
+        }
     }
     func loadRequest() {
         if storyViewModels.count > 0 {
