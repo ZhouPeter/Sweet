@@ -143,6 +143,25 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.phoneContactViewModels.append(viewModel)
                 })
+                if self.contactViewModels.count == 0 &&
+                    self.blacklistViewModels.count == 0 &&
+                    self.subscriptionsViewModels.count == 0 &&
+                    self.phoneContactViewModels.count == 0 && name.checkPhone() {
+                    let model = PhoneContact(name: name,
+                                             phone: name,
+                                             status: .notInvited,
+                                             registerStatus: .unRegister,
+                                             avatar: nil,
+                                             info: nil,
+                                             nickname: nil,
+                                             userId: nil)
+                    var viewModel = PhoneContactViewModel(model: model)
+                    viewModel.callBack = { [weak self] phone in
+                        self?.invitePhoneContact(phone: String(phone))
+                    }
+                    viewModel.placeholderAvatar = #imageLiteral(resourceName: "Emoji1")
+                    self.phoneContactViewModels.append(viewModel)
+                }
             
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
                  if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }

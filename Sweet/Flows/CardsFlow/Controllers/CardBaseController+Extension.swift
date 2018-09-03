@@ -34,28 +34,31 @@ extension CardsBaseController {
                     })
                 }
         }
-        let blockAction = UIAlertAction.makeAlertAction(
-            title: status.block ? "取消屏蔽" : "屏蔽该栏目",
-            style: .default) { (_) in
-                if status.block {
-                    web.request(.delSectionBlock(sectionId: sectionId), completion: {
-                        switch $0 {
-                        case .success: JDStatusBarNotification.show(withStatus: "恢复推送该栏目的内容", dismissAfter: 2)
-                        case .failure: break
-                        }
-                    })
-                } else {
-                    web.request(.addSectionBlock(sectionId: sectionId), completion: {
-                        switch $0 {
-                        case .success: JDStatusBarNotification.show(withStatus: "不再推送该栏目的内容", dismissAfter: 2)
-                        case .failure: break
-                        }
-                    })
-                }
-        }
+       
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(subscriptionAction)
-        alertController.addAction(blockAction)
+        if cardType != .evaluation {
+            let blockAction = UIAlertAction.makeAlertAction(
+                title: status.block ? "取消屏蔽" : "屏蔽该栏目",
+                style: .default) { (_) in
+                    if status.block {
+                        web.request(.delSectionBlock(sectionId: sectionId), completion: {
+                            switch $0 {
+                            case .success: JDStatusBarNotification.show(withStatus: "恢复推送该栏目的内容", dismissAfter: 2)
+                            case .failure: break
+                            }
+                        })
+                    } else {
+                        web.request(.addSectionBlock(sectionId: sectionId), completion: {
+                            switch $0 {
+                            case .success: JDStatusBarNotification.show(withStatus: "不再推送该栏目的内容", dismissAfter: 2)
+                            case .failure: break
+                            }
+                        })
+                    }
+            }
+            alertController.addAction(blockAction)
+        }
         if cardType == .content {
             let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
                 web.request(.cardReport(cardId: cardId), completion: {

@@ -145,9 +145,13 @@ class ContactTableViewCell: UITableViewCell {
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
         phone = viewModel.phone
-        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
-        avatarLabel.text = viewModel.firstNameString
+        if let image = viewModel.placeholderAvatar {
+            avatarImageView.image = image
+            avatarLabel.text = ""
+        } else {
+            avatarLabel.text = viewModel.firstNameString
+        }
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
         statusButton.isHidden = viewModel.isHiddenButton
