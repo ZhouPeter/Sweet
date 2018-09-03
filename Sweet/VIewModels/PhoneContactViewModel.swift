@@ -21,6 +21,7 @@ struct PhoneContactViewModel {
     let nameCenterYOffsetAvatar: CGFloat
     var callBack: ((String) -> Void)?
     var userId: UInt64?
+    var placeholderAvatar: UIImage?
     init(model: PhoneContact) {
         self.phone = model.phone
         self.buttonIsEnabled = true
@@ -34,7 +35,7 @@ struct PhoneContactViewModel {
                 self.buttonTitle = "已邀请"
                 self.buttonStyle = .noBorderGray
             }
-            self.firstNameString = String(model.name.first ?? Character(""))
+            self.firstNameString = model.name.first == nil ? "" : String(model.name.first!)
             self.nameCenterYOffsetAvatar = 0
         } else {
             self.isHiddenButton = true

@@ -351,6 +351,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             descLabel.isHidden = descString == nil || descString == ""
             commentLabel.isHidden = commentString == nil || commentString == ""
+            
         } else {
             descLabel.isHidden = true
             commentLabel.isHidden = true

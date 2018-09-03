@@ -23,6 +23,12 @@ class StoriesPlayerScrollView: UIScrollView {
     private var middleStory: StoryCellViewModel!
     private var isEnabled = true
     weak var playerDelegate: StoriesPlayerScrollViewDelegate?
+    
+    private lazy var effectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        return effectView
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupScrollView(frame: frame)
@@ -73,13 +79,14 @@ class StoriesPlayerScrollView: UIScrollView {
         middleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         middleImageView.backgroundColor = .black
         middleImageView.contentMode = .scaleAspectFit
-//        middleImageView.clipsToBounds = true
         middleImageView.isUserInteractionEnabled = true
         if UIScreen.isIphoneX() {
             middleImageView.layer.cornerRadius = 7
             middleImageView.clipsToBounds = true
         }
         addSubview(middleImageView)
+        middleImageView.addSubview(effectView)
+        effectView.fill(in: middleImageView)
     }
 }
 
@@ -110,6 +117,11 @@ extension StoriesPlayerScrollView {
             } else if let imageURL = story.imageURL {
                 let url = imageURL.imageView2(size: imageView.bounds.size)
                 imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage])
+            }
+            if story.type == .share {
+                effectView.alpha = 0.95
+            } else {
+                effectView.alpha = 0
             }
         } else {
             imageView.image = nil

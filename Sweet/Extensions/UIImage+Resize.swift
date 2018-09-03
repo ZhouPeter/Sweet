@@ -73,7 +73,7 @@ extension UIImage {
         let originalSize = newImage.size
         if originalSize.width < size.width && originalSize.height < size.height {
             return newImage
-        } else if originalSize.width > size.width && originalSize.height > originalSize.height {
+        } else if originalSize.width > size.width && originalSize.height > size.height {
             guard let newCgImage = newImage.cgImage else { return nil }
             var rate: CGFloat = 1.0
             let widthRate = originalSize.width / size.width
@@ -111,9 +111,9 @@ extension UIImage {
             if originalSize.height > size.height {
                 image = newCgImage.cropping(
                     to: CGRect(x: 0,
-                            y: originalSize.height / 2 - size.height / 2,
-                            width: originalSize.width,
-                            height: size.height))
+                               y: originalSize.height / 2 - size.height / 2,
+                               width: originalSize.width,
+                               height: size.height))
             } else {
                 image = newCgImage.cropping(
                     to: CGRect(x: originalSize.width / 2 - size.width / 2,

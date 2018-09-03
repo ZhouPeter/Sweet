@@ -162,6 +162,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             leftIndex += 1
             let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
             imageView.isUserInteractionEnabled = true
+            imageView.contentMode = .scaleAspectFill
             imageView.addGestureRecognizer(tap)
             leftMaskView.addSubview(imageView)
             imageView.constrain(width: 40, height: 40)
@@ -178,6 +179,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
             rightIndex += 1
             let tap = UITapGestureRecognizer(target: self, action: #selector(didPressAvatar(_:)))
             imageView.isUserInteractionEnabled = true
+            imageView.contentMode = .scaleAspectFill
             imageView.addGestureRecognizer(tap)
             rightMaskView.addSubview(imageView)
             imageView.constrain(width: 40, height: 40)

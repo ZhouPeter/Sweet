@@ -611,6 +611,10 @@
 		58CBA6F22117FEB2002FCD54 /* ShareWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CBA6F02117FEB2002FCD54 /* ShareWebViewController.swift */; };
 		58CBA6F32117FEB2002FCD54 /* ShareWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CBA6F02117FEB2002FCD54 /* ShareWebViewController.swift */; };
 		58CBA6F42117FEB2002FCD54 /* ShareWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CBA6F02117FEB2002FCD54 /* ShareWebViewController.swift */; };
+		58CCD29C213D1D7F00D4C5F7 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52CD2088B93200F7C3E1 /* UIImage+Resize.swift */; };
+		58CCD29F213D1D8000D4C5F7 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52CD2088B93200F7C3E1 /* UIImage+Resize.swift */; };
+		58CCD2A0213D240100D4C5F7 /* URL+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52CA2088B01200F7C3E1 /* URL+Path.swift */; };
+		58CCD2A1213D240100D4C5F7 /* URL+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52CA2088B01200F7C3E1 /* URL+Path.swift */; };
 		58CE1EB720A4208600781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
 		58CE1EB820A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
 		58CE1EB920A422D700781EBF /* SearchContactResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CE1EB620A4208600781EBF /* SearchContactResponse.swift */; };
@@ -3794,6 +3798,7 @@
 				5803571320AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				AC557CAF20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC45CD8A20AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
+				58CCD2A0213D240100D4C5F7 /* URL+Path.swift in Sources */,
 				5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */,
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
@@ -3902,6 +3907,7 @@
 				58A084E72105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
+				58CCD29C213D1D7F00D4C5F7 /* UIImage+Resize.swift in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				587D1ED92133D3E3006281F4 /* WelcomeCardViewModel.swift in Sources */,
 				58CF3F9120E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */,
@@ -4283,6 +4289,7 @@
 				AC616F9D20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
 				ACDFD27A20E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
+				58CCD2A1213D240100D4C5F7 /* URL+Path.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
 				ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */,
 				58447B25209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
@@ -4307,6 +4314,7 @@
 				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58C75759212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				58D578D22092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
+				58CCD29F213D1D8000D4C5F7 /* UIImage+Resize.swift in Sources */,
 				ACDB24E120BECFD50039368E /* InboxView.swift in Sources */,
 				AC525AAA208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
 				AC616F9120C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,

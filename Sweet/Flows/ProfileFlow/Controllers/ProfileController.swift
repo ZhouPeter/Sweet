@@ -136,7 +136,7 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "个人主页"
+        navigationItem.title = "主页"
         contentSizeInPopup = CGSize(width: UIScreen.mainWidth(), height: UIScreen.mainHeight())
         storage = Storage(userID: user.userId)
         setTableView()
@@ -419,8 +419,10 @@ extension ProfileController {
 
 extension ProfileController: ActionsControllerDelegate {
     func actionsSrollViewDidScrollToBottom(scrollView: UIScrollView, index: Int) {
+        guard  let viewModel = baseInfoViewModel else { return }
+        let infoHeight = viewModel.cellHeight
         let contentHeight = scrollView.contentSize.height
-        let contentVisibleHeight = UIScreen.mainHeight() - UIScreen.navBarHeight() - 244 - 50
+        let contentVisibleHeight = UIScreen.mainHeight() - UIScreen.navBarHeight() - infoHeight - 50
         if contentHeight <= contentVisibleHeight {
             return
         } else {
@@ -437,7 +439,7 @@ extension ProfileController: ActionsControllerDelegate {
                 let bounds = CGRect(origin: point, size: scrollView.bounds.size)
                 scrollView.bounds = bounds
             }
-            let tableViewOffsetY = min(max(cellSumHeight - contentVisibleHeight, 0), 244)
+            let tableViewOffsetY = min(max(cellSumHeight - contentVisibleHeight, 0), infoHeight)
             if self.tableView.bounds.origin.y != tableViewOffsetY - UIScreen.navBarHeight() {
                 let point = CGPoint(x: 0, y: tableViewOffsetY - UIScreen.navBarHeight())
                 let bounds = CGRect(origin: point, size: tableView.bounds.size)
@@ -447,25 +449,27 @@ extension ProfileController: ActionsControllerDelegate {
     }
     
     func actionsScrollViewDidScroll(scrollView: UIScrollView) {
+        guard  let viewModel = baseInfoViewModel else { return }
+        let infoHeight = viewModel.cellHeight
         navigationItem.titleView = nil
-        if tableView.contentOffset.y < 244 - UIScreen.navBarHeight() {
+        if tableView.contentOffset.y < infoHeight - UIScreen.navBarHeight() {
             let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
                                      -UIScreen.navBarHeight()),
-                                 244 - UIScreen.navBarHeight())
+                                 infoHeight - UIScreen.navBarHeight())
             tableView.contentOffset.y = newOffsetY
             scrollView.contentOffset.y = 0
             let point = scrollView.panGestureRecognizer.translation(in: nil)
             if point.y > 0
-                && tableView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
+                && tableView.contentOffset.y > (infoHeight - UIScreen.navBarHeight()) / 4 {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
                     self.tableView.contentOffset.y = -UIScreen.navBarHeight()
                 }, completion: nil)
             }
-        } else if tableView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+        } else if tableView.contentOffset.y == infoHeight - UIScreen.navBarHeight() {
             if scrollView.contentOffset.y < 0 {
                 let newOffsetY = min(max(tableView.contentOffset.y + scrollView.contentOffset.y,
                                          -UIScreen.navBarHeight()),
-                                     244 - UIScreen.navBarHeight())
+                                     infoHeight - UIScreen.navBarHeight())
                 tableView.contentOffset.y = newOffsetY
                 scrollView.contentOffset.y = 0
             }
@@ -477,6 +481,8 @@ extension ProfileController: ActionsControllerDelegate {
 
 extension ProfileController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard  let viewModel = baseInfoViewModel else { return }
+        let infoHeight = viewModel.cellHeight
         let point = scrollView.panGestureRecognizer.translation(in: nil)
         if point.y < 0 {
             if let actionsController = actionsController {
@@ -491,15 +497,15 @@ extension ProfileController: UITableViewDelegate {
                     scrollView.contentOffset.y = -UIScreen.navBarHeight()
                 }
             }
-        } else if point.y > 0 && scrollView.contentOffset.y > (244 - UIScreen.navBarHeight()) / 4 {
+        } else if point.y > 0 && scrollView.contentOffset.y > (infoHeight - UIScreen.navBarHeight()) / 4 {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
                 scrollView.contentOffset.y = -UIScreen.navBarHeight()
             }, completion: nil)
         }
-        if  scrollView.contentOffset.y == 244 - UIScreen.navBarHeight() {
+        if  scrollView.contentOffset.y == infoHeight - UIScreen.navBarHeight() {
             navigationItem.titleView = avatarView
-        } else if scrollView.contentOffset.y > 244 - UIScreen.navBarHeight() {
-            scrollView.contentOffset.y = 244 - UIScreen.navBarHeight()
+        } else if scrollView.contentOffset.y > infoHeight - UIScreen.navBarHeight() {
+            scrollView.contentOffset.y = infoHeight - UIScreen.navBarHeight()
             navigationItem.titleView = avatarView
         } else {
             navigationItem.titleView = nil

@@ -156,6 +156,7 @@ class SweetPlayerView: UIView {
     
     func setVideo(resource: SweetPlayerResource) {
         isURLSet = false
+        isRemove = false
         self.resource = resource
         controlView.prepareUI(for: resource)
         if sweetPlayerConf.shouldAutoPlay {
@@ -167,6 +168,7 @@ class SweetPlayerView: UIView {
     
     func setAVPlayer(player: AVPlayer) {
         isURLSet = false
+        isRemove = false
         controlView.prepareUI(for: self.resource)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
