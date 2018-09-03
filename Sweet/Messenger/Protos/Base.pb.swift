@@ -62,7 +62,8 @@ enum IMType: SwiftProtobuf.Enum {
   ///"thumbnail": "缩略图",
   ///"url": "链接",
   ///"title": "标题",
-  ///"text": "正文"
+  ///"text": "正文",
+  ///"source": "domain.com", // 来源
   ///}
   case article // = 6
   case UNRECOGNIZED(Int)

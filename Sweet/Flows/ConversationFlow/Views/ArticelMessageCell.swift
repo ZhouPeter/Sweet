@@ -43,7 +43,7 @@ final class ArticleMessageCell: MediaMessageCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ArticleMessageContent else { return }
         titleLabel.text = content.title
-        domainLabel.text = URL(string: content.articleURL)?.host ?? ""
+        domainLabel.text = content.source
         imageView.sd_setImage(with: URL(string: content.thumbnailURL)?.imageView2(size: imageView.bounds.size))
         showLoading(false)
     }
@@ -54,9 +54,9 @@ final class ArticleMessageCell: MediaMessageCell {
         mediaContainerView.addSubview(imageView)
         mediaContainerView.addSubview(titleLabel)
         mediaContainerView.addSubview(domainLabel)
-        titleLabel.align(.left, to: mediaContainerView, inset: 10)
-        titleLabel.align(.top, to: mediaContainerView, inset: 10)
-        titleLabel.align(.right, to: mediaContainerView, inset: 10)
+        titleLabel.align(.left, to: mediaContainerView, inset: 7)
+        titleLabel.align(.top, to: mediaContainerView, inset: 5)
+        titleLabel.align(.right, to: mediaContainerView, inset: 7)
         titleLabel.constrain(height: 40)
         imageView.constrain(width: 32, height: 32)
         imageView.align(.bottom, to: mediaContainerView, inset: 5)

@@ -46,7 +46,8 @@ class MessageContentHelper {
                     thumbnailURL: thumbnailUrl,
                     title: resultCard.title!,
                     content: String(text.prefix(200)),
-                    articleURL: resultCard.url!
+                    articleURL: resultCard.url!,
+                    source: SourceType(rawValue: resultCard.sourceType)?.getSourceText()
                 )
                 completion(content)
             } else {
