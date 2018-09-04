@@ -46,7 +46,6 @@ class PlayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        
         setupUI()
         if let player = avPlayer, let resource = resource {
             playerView.resource = resource

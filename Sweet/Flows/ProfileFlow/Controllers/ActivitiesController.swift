@@ -209,11 +209,12 @@ extension ActivitiesController: UITableViewDelegate {
                     let card = response.card
                     if card.cardEnumType == .content, let video = card.video {
                         let videoURL =  URL(string: video)!
-                        VideoCardPlayerManager.shared.play(with: videoURL)
+                        let asset = SweetPlayerManager.assetNoCache(for: videoURL)
+                        let playerItem = AVPlayerItem(asset: asset)
+                        let player = AVPlayer(playerItem: playerItem)
                         let controller = PlayController()
-                        controller.avPlayer = VideoCardPlayerManager.shared.player
+                        controller.avPlayer = player
                         controller.resource = SweetPlayerResource(url: videoURL)
-                        VideoCardPlayerManager.shared.player = nil
                         self.present(controller, animated: true, completion: nil)
                     } else if card.cardEnumType == .choice {
                         var text = ""

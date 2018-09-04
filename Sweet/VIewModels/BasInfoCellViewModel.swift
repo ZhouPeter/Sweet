@@ -31,6 +31,6 @@ struct BaseInfoCellViewModel {
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
         isHiddenEdit = userID == user.userId ? user.signature != "" : true
-        cellHeight = 201
+        cellHeight = 200
     }
 }

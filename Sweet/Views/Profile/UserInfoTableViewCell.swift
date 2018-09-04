@@ -39,7 +39,7 @@ class UserInfoTableViewCell: UITableViewCell {
     
     private lazy var heartImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Star")
+        imageView.image = #imageLiteral(resourceName: "Star")
         return imageView
     }()
     private lazy var starContactLabel: UILabel = {
@@ -114,8 +114,12 @@ class UserInfoTableViewCell: UITableViewCell {
         nicknameLabel.pin(.right, to: avatarImageView, spacing: 16)
         nicknameLabel.align(.top, inset: 28)
         contentView.addSubview(starContactLabel)
-        starContactLabel.align(.left, to: nicknameLabel)
+        starContactLabel.align(.left, to: nicknameLabel, inset: 25)
         starContactLabel.pin(.bottom, to: nicknameLabel, spacing: 15)
+        contentView.addSubview(heartImageView)
+        heartImageView.constrain(width: 25, height: 25)
+        heartImageView.centerY(to: starContactLabel)
+        heartImageView.pin(.left, to: starContactLabel)
         contentView.addSubview(segmentLineView)
         segmentLineView.align(.left)
         segmentLineView.align(.right)

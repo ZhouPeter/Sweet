@@ -17,6 +17,7 @@ struct StoryDraft {
     var comment: String?
     var desc: String?
     var url: String?
+    var fromCardId: String?
     let date: Date
     var fileURL: URL {
         var name: String
@@ -40,11 +41,12 @@ struct StoryDraft {
         self.date = date
     }
     
-    init(filename: String, storyType: StoryType, date: Date, comment: String?, desc: String?, url: String?) {
+    init(filename: String, storyType: StoryType, date: Date, comment: String?, desc: String?, url: String?, fromCardId: String) {
         self.init(filename: filename, storyType: storyType, date: date)
         self.comment = comment
         self.desc = desc
         self.url = url
+        self.fromCardId = fromCardId
     }
     
     init?(data: StoryDraftData) {

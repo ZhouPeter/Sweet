@@ -68,7 +68,7 @@ class ProfileController: BaseViewController, ProfileView {
     private var photoBrowserImp: AvatarPhotoBrowserImp?
     private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
-    private var isFirstLoad = true
+    private var isReadLocal = false
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -146,13 +146,20 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let offsetY = tableView.contentOffset.y
+        DispatchQueue.main.async {
+            self.tableView.contentOffset.y = offsetY
+        }
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
-        if !isFirstLoad { readLocalData() }
-        if isFirstLoad { isFirstLoad = false }
+        if isReadLocal {
+            readLocalData()
+            isReadLocal = false
+        }
+        
     }
     
     deinit {
@@ -202,6 +209,7 @@ class ProfileController: BaseViewController, ProfileView {
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
         guard let user = userResponse, let updateRemain = updateRemain else { return }
+        isReadLocal = true
         delegate?.showAbout(user: user, updateRemain: updateRemain)
     }
     

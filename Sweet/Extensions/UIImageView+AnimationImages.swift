@@ -28,9 +28,11 @@ extension UIImageView {
         let prefetcher = SDWebImagePrefetcher.shared
         prefetcher.prefetchURLs(urls, progress: nil) { [weak self] (noOfFinishedUrls, noOfSkippedUrls) in
             guard noOfSkippedUrls == 0, let `self` = self else { return }
+            guard self.sd_imageURL == urls[0]  else { return }
             self.animationImages = urls.compactMap({
                 SDImageCache.shared.imageFromMemoryCache(forKey: prefetcher.manager.cacheKey(for: $0))
             })
+            self.startAnimating()
         }
     }
 }
