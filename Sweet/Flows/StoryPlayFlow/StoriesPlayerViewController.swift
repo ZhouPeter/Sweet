@@ -270,7 +270,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         avatarImageView.centerY(to: topContentView)
         avatarImageView.setViewRounded()
         topContentView.addSubview(dismissButton)
-        dismissButton.constrain(width: 30, height: 30)
+        dismissButton.constrain(width: 40, height: 40)
         dismissButton.align(.right, inset: 10)
         dismissButton.centerY(to: avatarImageView)
         topContentView.addSubview(progressView)
@@ -282,7 +282,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         storyInfoLabel.pin(.right, to: avatarImageView, spacing: 5)
         storyInfoLabel.centerY(to: avatarImageView)
         topContentView.addSubview(menuButton)
-        menuButton.constrain(width: 30, height: 30)
+        menuButton.constrain(width: 40, height: 40)
         menuButton.pin(.left, to: dismissButton, spacing: 15)
         menuButton.centerY(to: avatarImageView)
     

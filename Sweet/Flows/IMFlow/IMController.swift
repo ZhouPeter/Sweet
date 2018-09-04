@@ -71,7 +71,7 @@ class IMController: BaseViewController, IMView {
     private func setupLeftBarButton() {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "LeftArrow"), for: .normal)
-        button.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+        button.bounds = CGRect(origin: .zero, size: CGSize(width: 40, height: 40))
         button.addTarget(self, action: #selector(didPressLeftBarButtonItem), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }

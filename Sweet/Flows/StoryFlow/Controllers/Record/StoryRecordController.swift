@@ -520,7 +520,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         cameraSwitchButton.equal(.size, to: flashButton)
         cameraSwitchButton.centerX(to: flashButton)
         cameraSwitchCenterY = cameraSwitchButton.centerY(to: menuButton)
-        backButton.constrain(width: 30, height: 30)
+        backButton.constrain(width: 40, height: 40)
         backButton.align(.right, to: recordContainer, inset: 10)
         backButton.centerY(to: menuButton)
         avatarFakeView.hero.id = "avatar"
