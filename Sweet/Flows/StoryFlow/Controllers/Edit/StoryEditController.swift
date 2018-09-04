@@ -356,6 +356,11 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
 
     private func finish(with draft: StoryDraft) {
         let task = StoryPublishTask(storage: Storage(userID: user.userId), draft: draft)
+        if !UIDevice.current.hasLessThan2GBRAM {
+            task.finishBlock = { _ in
+                NotificationCenter.default.post(name: .storyDidPublish, object: nil)
+            }
+        }
         TaskRunner.shared.run(task)
         
         if UIDevice.current.hasLessThan2GBRAM {
