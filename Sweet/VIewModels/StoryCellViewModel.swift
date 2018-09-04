@@ -29,7 +29,7 @@ struct StoryCellViewModel {
     let descString: String?
     let commentString: String?
     let urlString: String?
-    
+    let fromCardId: String?
     init(model: StoryResponse) {
         avatarURL = URL(string: model.avatar)!
         nickname = model.nickname
@@ -44,6 +44,7 @@ struct StoryCellViewModel {
         descString = model.desc
         commentString = model.comment
         urlString = model.url
+        fromCardId = model.fromCardId
         type = model.type
         if type == .video || type == .poke {
             videoURL = URL(string: model.content)

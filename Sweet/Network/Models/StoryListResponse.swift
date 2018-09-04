@@ -53,6 +53,7 @@ struct StoryResponse: Codable {
     let comment: String?
     let desc: String?
     let url: String?
+    let fromCardId: String?
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -73,6 +74,7 @@ struct StoryResponse: Codable {
         case comment
         case desc
         case url
+        case fromCardId
     }
 }
 

@@ -17,6 +17,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.animationImages = nil
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
+            effectView.alpha = 0
             if viewModel.type == .poke {
                 coverImageView.sd_setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
@@ -29,7 +30,14 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
                 pokeView.isHidden = true
             }
         } else {
-            coverImageView.sd_setImage(with: viewModel.imageURL)
+            coverImageView.sd_setImage(with: viewModel.imageURL) { (image, _, _, _) in
+                if viewModel.type == .share {
+                    self.effectView.alpha = 1
+                    self.commentLabel.text = viewModel.commentString
+                } else {
+                    self.effectView.alpha = 0
+                }
+            }
             pokeView.isHidden = true
         }
         avatarImageView.sd_setImage(with: viewModel.avatarImageURL)
@@ -77,7 +85,21 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         label.textColor = .white
         return label
     }()
+    private lazy var effectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        return effectView
+    }()
     
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
@@ -89,6 +111,10 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         setupUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        commentLabel.text = ""
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,6 +126,12 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        effectView.fill(in: coverImageView)
+        contentView.addSubview(commentLabel)
+        commentLabel.align(.left, inset: 5)
+        commentLabel.align(.right, inset: 5)
+        commentLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
+        commentLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         contentView.addSubview(pokeView)
         pokeView.constrain(width: 50, height: 50)
         pokeViewCenterXConstraint = pokeView.centerX(to: contentView)

@@ -174,8 +174,9 @@ extension UIImage {
         let strechedImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return strechedImage
-
     }
+    
+    
     
     func resize(newSize: CGSize, interpolationQuality quality: CGInterpolationQuality) -> UIImage {
         var drawTransposed = false

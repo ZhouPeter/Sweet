@@ -72,6 +72,12 @@
 		580907C020B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
 		580907C120B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
 		580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580907BE20B7BEE10013BC0A /* EmojiControlView.swift */; };
+		580D9BBF213D60D700B8719C /* UISearchBar+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52A62088667600F7C3E1 /* UISearchBar+Placeholder.swift */; };
+		580D9BC2213D60D800B8719C /* UISearchBar+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD52A62088667600F7C3E1 /* UISearchBar+Placeholder.swift */; };
+		580D9BC4213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
+		580D9BC5213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
+		580D9BC6213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
+		580D9BC7213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
 		580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
@@ -1534,6 +1540,7 @@
 		5808D40A2113F25D00821A2C /* SDWebImagePhotoLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDWebImagePhotoLoader.swift; sourceTree = "<group>"; };
 		580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumberPageControlPlugin.swift; sourceTree = "<group>"; };
 		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
+		580D9BC3213E22E200B8719C /* StoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCardView.swift; sourceTree = "<group>"; };
 		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
 		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
 		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
@@ -2094,6 +2101,7 @@
 				58816D1220C67D1A0032D103 /* ModuleTableViewCell.swift */,
 				587D18C920DA310300D53708 /* CustomSegmentedControl.swift */,
 				58660353210AE460008C4448 /* InsetLabel.swift */,
+				580D9BC3213E22E200B8719C /* StoryCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3709,6 +3717,7 @@
 				ACBE052420B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				ACA3239220875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52620886C7C00B78CFD /* WebProvider.swift in Sources */,
+				580D9BC4213E22E200B8719C /* StoryCardView.swift in Sources */,
 				58BD52F7208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
 				58447B4C209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				5803573020AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
@@ -3884,6 +3893,7 @@
 				ACEFA0D02106D51D0098631F /* VideoScrollView.swift in Sources */,
 				586954AF21242C4A00D48196 /* Contacts.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
+				580D9BBF213D60D700B8719C /* UISearchBar+Placeholder.swift in Sources */,
 				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
@@ -4004,6 +4014,7 @@
 				ACEC5C3120EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58660356210AE460008C4448 /* InsetLabel.swift in Sources */,
 				58447B33209B3467004C2FFE /* UIAlertAction+TextColor.swift in Sources */,
+				580D9BC6213E22E200B8719C /* StoryCardView.swift in Sources */,
 				586954A921240E2C00D48196 /* UIColor+Hex.swift in Sources */,
 				58D578E52093198600AE5D38 /* UpdateController.swift in Sources */,
 				589E6BCE20A983850038FAED /* CardsAllController.swift in Sources */,
@@ -4096,6 +4107,7 @@
 				581D7BF720D9ED1F000D1E26 /* VersionUpdateHelper.swift in Sources */,
 				587D18D420DA465E00D53708 /* FeedbackController.swift in Sources */,
 				AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */,
+				580D9BC2213D60D800B8719C /* UISearchBar+Placeholder.swift in Sources */,
 				AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
@@ -4104,6 +4116,7 @@
 				584CDED120D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				58155E1020916D0F00ADEFFB /* ActionsController.swift in Sources */,
 				AC41420520BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
+				580D9BC7213E22E200B8719C /* StoryCardView.swift in Sources */,
 				58EA104D20B7FEDE001DD77C /* InputBottomView.m in Sources */,
 				AC04E98B2099C87F004401AC /* LookupFilter.m in Sources */,
 				AC956BAB20C0246400B40D9A /* MessageTicket.swift in Sources */,
@@ -4764,6 +4777,7 @@
 				ACBE052520B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
 				ACA3239320875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				ACD5A52720886C7C00B78CFD /* WebProvider.swift in Sources */,
+				580D9BC5213E22E200B8719C /* StoryCardView.swift in Sources */,
 				58BD52F8208DF89700F7C3E1 /* JSONDecoder+Dictionary.swift in Sources */,
 				58447B4D209C3998004C2FFE /* UIButton+Inset.swift in Sources */,
 				5803573120AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,

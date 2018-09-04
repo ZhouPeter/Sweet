@@ -154,7 +154,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
         return collectionView
 
     }()
-    private var page = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green
@@ -197,7 +196,6 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             })
             return
         }
-        page = 0
         web.request(
             .storyList(userId: user.userId),
             responseType: Response<StoryListResponse>.self) { [weak self] (result) in
