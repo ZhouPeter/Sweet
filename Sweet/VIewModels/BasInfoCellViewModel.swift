@@ -15,7 +15,7 @@ struct BaseInfoCellViewModel {
     let collegeInfoString: String
     let starContactString: String
     let signatureString: String
-    let isHiddenEdit: Bool
+    let isEditSignature: Bool
     let cellHeight: CGFloat
     let sexImage: UIImage
     init(user: UserResponse) {
@@ -30,7 +30,7 @@ struct BaseInfoCellViewModel {
                             (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
-        isHiddenEdit = userID == user.userId ? user.signature != "" : true
+        isEditSignature = userID == user.userId
         cellHeight = 200
     }
 }
