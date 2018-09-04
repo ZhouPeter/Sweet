@@ -147,7 +147,7 @@ class AcitivityCardTableViewCell: UITableViewCell {
             titleLabelLeft?.constant = -3
         } else {
             sameImageView.isHidden = false
-            sameImageView.sd_setImage(with: viewModel.avatarURL)
+            sameImageView.sd_setImage(with: viewModel.sameAvatarURL)
             titleLabelLeft?.constant = 8
         }
         titleLabel.text = viewModel.titleString
