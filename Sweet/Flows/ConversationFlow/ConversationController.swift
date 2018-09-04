@@ -145,7 +145,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messageInputBar.padding.right = 2
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.backgroundColor = .clear
-        messageInputBar.inputTextView.placeholder = "说点什么"
+        messageInputBar.inputTextView.placeholder = "输入你想说的话"
         messageInputBar.inputTextView.layer.borderWidth = 0
     }
 
