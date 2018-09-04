@@ -116,13 +116,15 @@ extension StoriesPlayerScrollView {
                 imageView.sd_setImage(with: videoURL.videoThumbnail(), placeholderImage: nil, options: [.avoidDecodeImage])
             } else if let imageURL = story.imageURL {
                 let url = imageURL.imageView2(size: imageView.bounds.size)
-                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage])
+                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage]) { (_, _, _, _) in
+                    if story.type == .share {
+                        self.effectView.alpha = 1
+                    } else {
+                        self.effectView.alpha = 0
+                    }
+                }
             }
-            if story.type == .share {
-                effectView.alpha = 0.95
-            } else {
-                effectView.alpha = 0
-            }
+            
         } else {
             imageView.image = nil
         }

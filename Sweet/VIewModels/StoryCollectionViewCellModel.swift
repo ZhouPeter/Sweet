@@ -21,6 +21,7 @@ struct StoryCollectionViewCellModel {
     let type: StoryType
     var pokeCenter: CGPoint = CGPoint(x: 0.5, y: 0.5)
     var callback: ((UInt64) -> Void)?
+    var commentString: String?
     init(model: StoryResponse) {
         name = model.nickname
         info  = "\(model.university)\n\(model.college)\n\(model.enrollment)"
@@ -39,5 +40,6 @@ struct StoryCollectionViewCellModel {
         sourceUserId = model.userId
         storyId = model.storyId
         type = model.type
+        commentString = model.comment
     }
 }

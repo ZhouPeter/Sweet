@@ -83,16 +83,15 @@ class ActionsTableViewCell: UITableViewCell {
                                     y: 48,
                                     width: UIScreen.mainWidth() / CGFloat(buttons.count) - 28,
                                     height: 2)
-        contentView.addSubview(placeholderView)
-        placeholderView.fill(in: contentView, top: 50)
     }
     
     func setPlaceholderContentView(view: UIView) {
         if placeholderView.superview != nil {
-            placeholderView.removeFromSuperview()
+//            placeholderView.removeFromSuperview()
+        } else {
+            placeholderView = view
+            contentView.addSubview(placeholderView)
+            placeholderView.fill(in: contentView, top: 50)
         }
-        placeholderView = view
-        contentView.addSubview(placeholderView)
-        placeholderView.fill(in: contentView, top: 50)
     }
 }

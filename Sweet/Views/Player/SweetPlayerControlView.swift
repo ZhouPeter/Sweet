@@ -304,6 +304,9 @@ class SweetPlayerControlView: UIView {
         self.selectedIndex = index
         videoTitleLabel.text = resource.name
         autoFadeOutControlViewWithAnimation()
+        loadingIndicator.isHidden = true
+        notFoundButton.isHidden = true
+        retryButton.isHidden = true
     }
     
 }

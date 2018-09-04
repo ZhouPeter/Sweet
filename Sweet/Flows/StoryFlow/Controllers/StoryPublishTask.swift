@@ -130,7 +130,8 @@ class StoryPublishTask: AsynchronousOperation {
                     touchPoints: self.draft.touchPoints,
                     comment: self.draft.comment,
                     desc: self.draft.desc,
-                    rawUrl: self.draft.url
+                    rawUrl: self.draft.url,
+                    fromCardId: self.draft.fromCardId
                 ),
                 completion: { (result) in
                     logger.debug(result)

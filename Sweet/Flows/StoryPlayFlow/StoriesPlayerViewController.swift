@@ -52,9 +52,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     var statusToken: NSKeyValueObservation?
     var imageTimer: Timer?
     var timerNumber: Float = 0
-  
+    var photoBrowserImp: PhotoBrowserImp!
+
     var stories: [StoryCellViewModel]! {
         didSet {
+            guard let stories = stories else { return }
             if stories.count == 0 {
             } else {
                 if let IDString = Defaults[.userID], let userID = UInt64(IDString) {
@@ -125,36 +127,20 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private lazy var commentLabel: InsetLabel = {
         let label = InsetLabel()
         label.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.font = UIFont.boldSystemFont(ofSize: 100)
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         label.textAlignment = .center
-        label.numberOfLines = 5
+        label.numberOfLines = 0
         label.isHidden = true
-        label.layer.cornerRadius = 10
-        label.clipsToBounds = true
         return label
     }()
     
-    private lazy var descLabel: InsetLabel = {
-        let label = InsetLabel()
-        label.isUserInteractionEnabled = true
-        label.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 20)
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .white
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        label.numberOfLines = 3
-        label.isHidden = true
-        label.layer.cornerRadius = 10
-        label.clipsToBounds = true
-        let arrowView = UIImageView(image: UIImage(named: "StoryRightArrow"))
-        label.addSubview(arrowView)
-        arrowView.constrain(width: 16, height: 16)
-        arrowView.align(.right)
-        arrowView.centerY(to: label)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
-        label.addGestureRecognizer(tap)
-        return label
+    private lazy var cardView: StoryCardView = {
+        let view = StoryCardView(frame: .zero)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressCardView(_:)))
+        view.addGestureRecognizer(tap)
+        return view
     }()
     
     private lazy var bottomButton: UIButton = {
@@ -220,13 +206,11 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         storiesScrollView = StoriesPlayerScrollView(frame: frame)
         storiesScrollView.scrollViewTap.require(toFail: touchTagTap)
         view.addSubview(storiesScrollView)
-//        storiesScrollView.fill(in: view)
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
         setTopUI()
         setBottmUI()
-//        update()
         
     }
     
@@ -294,14 +278,16 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         bottomButton.align(.bottom, to: view, inset: 25)
         bottomButton.constrain(width: 50, height: 50)
         bottomButton.setViewRounded()
-        view.addSubview(descLabel)
-        descLabel.align(.left, inset: 10)
-        descLabel.align(.right, inset: 10)
-        descLabel.pin(.top, to: bottomButton, spacing: 25)
+        view.addSubview(cardView)
+        cardView.align(.left, inset: 10)
+        cardView.align(.right, inset: 10)
+        cardView.constrain(height: 160)
+        cardView.pin(.top, to: bottomButton, spacing: 25)
         view.addSubview(commentLabel)
         commentLabel.align(.left, inset: 10)
         commentLabel.align(.right, inset: 10)
-        commentLabel.pin(.top, to: descLabel, spacing: 4)
+        commentLabel.pin(.top, to: cardView, spacing: 40)
+        commentLabel.align(.top, inset: UIScreen.safeTopMargin() + 70)
     }
     
     private func updateUserData() {
@@ -347,13 +333,27 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         if stories[currentIndex].type == .share {
             let descString = stories[currentIndex].descString
             let commentString = stories[currentIndex].commentString
-            descLabel.attributedText = descString?.getAttributedString(lineSpacing: 4)
-            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
-            descLabel.isHidden = descString == nil || descString == ""
+            let thumbnailURL = stories[currentIndex].imageURL
+            cardView.update(descString: descString!, thumbnailURL: thumbnailURL!)
+            commentLabel.text = commentString
+//            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
+            cardView.isHidden = false
             commentLabel.isHidden = commentString == nil || commentString == ""
+            if let cardId = stories[currentIndex].fromCardId {
+                web.request(
+                    .getCard(cardID: cardId),
+                    responseType: Response<CardGetResponse>.self) { (result) in
+                    switch result {
+                    case let .success(response):
+                        self.cardView.update(card: response.card)
+                    case let .failure(error):
+                        logger.error(error)
+                    }
+                }
+            }
             
         } else {
-            descLabel.isHidden = true
+            cardView.isHidden = true
             commentLabel.isHidden = true
         }
     }
@@ -595,15 +595,44 @@ extension StoriesPlayerViewController {
 
 // MARK: - Actions
 extension StoriesPlayerViewController {
-    @objc private func showWebView(_ tap: UITapGestureRecognizer) {
-        if let url = stories[currentIndex].urlString, Defaults[.review] == 0 {
+    @objc private func didPressCardView(_ tap: UITapGestureRecognizer) {
+        if let card = cardView.card {
             pause()
-            let webController = WebViewController(urlString: url)
-            webController.finish = { [weak self] in
-                self?.play()
+            if let video = card.video, let videoURL = URL(string: video) {
+                let asset = SweetPlayerManager.assetNoCache(for: videoURL)
+                let playerItem = AVPlayerItem(asset: asset)
+                let player = AVPlayer(playerItem: playerItem)
+                let controller = PlayController()
+                controller.avPlayer = player
+                controller.resource = SweetPlayerResource(url: videoURL)
+                present(controller, animated: true, completion: nil)
+            } else if let imageList = card.imageList {
+                let imageURLs = imageList.compactMap { URL(string: $0)}
+                photoBrowserImp = PhotoBrowserImp(highImageViewURLs: imageURLs)
+                let browser = CustomPhotoBrowser(delegate: photoBrowserImp,
+                                                 photoLoader: SDWebImagePhotoLoader(),
+                                                 originPageIndex: 0)
+                browser.animationType = .fade
+                browser.plugins.append(CustomNumberPageControlPlugin())
+                browser.show()
+            } else if let url = card.url {
+                let webController = WebViewController(urlString: url)
+                webController.finish = { [weak self] in
+                    self?.play()
+                }
+                navigationController?.pushViewController(webController, animated: true)
             }
-            navigationController?.pushViewController(webController, animated: true)
+        } else {
+            if let url = stories[currentIndex].urlString, Defaults[.review] == 0 {
+                pause()
+                let webController = WebViewController(urlString: url)
+                webController.finish = { [weak self] in
+                    self?.play()
+                }
+                navigationController?.pushViewController(webController, animated: true)
+            }
         }
+        
     }
     @objc private func didTapAvatar(_ tap: UITapGestureRecognizer) {
         runProfileFlow?(stories[currentIndex].userId)
