@@ -142,6 +142,7 @@ class UserInfoTableViewCell: UITableViewCell {
         contentView.addSubview(signatureLabel)
         signatureLabel.constrain(height: 40)
         signatureLabel.align(.left, inset: 45)
+        signatureLabel.align(.right, inset: 10)
         signatureLabel.pin(.bottom, to: segmentLineView2)
         contentView.addSubview(editButton)
         editButton.fill(in: signatureLabel, left: -22)
@@ -160,7 +161,6 @@ class UserInfoTableViewCell: UITableViewCell {
         starContactLabel.text = viewModel.starContactString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
-        editButton.isHidden = viewModel.isHiddenEdit
     }
     
     @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
@@ -168,6 +168,8 @@ class UserInfoTableViewCell: UITableViewCell {
     }
     
     @objc private func didPressEdit(_ sender: UIButton) {
-        delegate?.editSignature()
+        if let viewModel = viewModel, viewModel.isEditSignature {
+            delegate?.editSignature()
+        }
     }
 }
