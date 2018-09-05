@@ -116,6 +116,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
+        inputTextView.layoutIfNeeded()
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
     }

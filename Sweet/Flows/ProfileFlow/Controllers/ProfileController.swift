@@ -562,6 +562,7 @@ extension ProfileController: UITableViewDataSource {
 extension ProfileController: UserInfoTableViewCellDelegate {
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
         if user.userId == userId {
+            isReadLocal = true
             let controller = UpdateAvatarController(avatar: highURL.absoluteString)
             navigationController?.pushViewController(controller, animated: true)
         } else {
@@ -576,6 +577,7 @@ extension ProfileController: UserInfoTableViewCellDelegate {
     }
     
     func editSignature() {
+        isReadLocal = true
         let controller = UpdateSignatureController(signature: userResponse!.signature)
         navigationController?.pushViewController(controller, animated: true)
     }
