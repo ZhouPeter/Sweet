@@ -251,12 +251,16 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         guard index == self.index else { return }
-        guard let avPlayer = playerView.avPlayer, avPlayer.status == .readyToPlay else { return }
         playerView.playerLayer?.hero.id = cards[index].video
         playerView.playerLayer?.hero.modifiers = [.arc, .useScaleBasedSizeChange]
         let controller = PlayController()
+        if let avPlayer = playerView.avPlayer {
+            controller.avPlayer = avPlayer
+        } else {
+            VideoCardPlayerManager.shared.play(with: URL(string: cards[index].video!)!)
+            controller.avPlayer = VideoCardPlayerManager.shared.player
+        }
         controller.hero.isEnabled = true
-        controller.avPlayer = avPlayer
         controller.resource = playerView.resource
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false

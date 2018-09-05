@@ -133,10 +133,12 @@ protocol AboutView: BaseView {
     var showWebView: ((String, String) -> Void)? { get set }
     var showUpdate: ((UserResponse, UpdateRemainResponse) -> Void)? { get set }
     var showFeedback: (() -> Void)? { get set }
+    var showSetting: ((UserSetting) -> Void)? { get set }
 
 }
 
 class AboutController: BaseViewController, AboutView {
+    var showSetting: ((UserSetting) -> Void)?
     
     var showUpdate: ((UserResponse, UpdateRemainResponse) -> Void)?
     
@@ -146,9 +148,13 @@ class AboutController: BaseViewController, AboutView {
     
     private var user: UserResponse
     private var updateRemain: UpdateRemainResponse
-    init(user: UserResponse, updateRemain: UpdateRemainResponse) {
+    private var setting: UserSetting
+    private var storage: Storage?
+
+    init(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting) {
         self.user = user
         self.updateRemain = updateRemain
+        self.setting = setting
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -159,7 +165,22 @@ class AboutController: BaseViewController, AboutView {
         super.viewDidLoad()
         navigationItem.title = "更多"
         view.backgroundColor = UIColor.xpGray()
+        storage = Storage(userID: user.userId)
         setButtons()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        readUserDataAddUserSetting()
+    }
+    
+    private func readUserDataAddUserSetting() {
+        storage?.read({ [weak self] (realm) in
+            guard let `self` = self else { return }
+            guard let user = realm.object(ofType: UserData.self, forPrimaryKey: self.setting.userId) else { return }
+            self.user = UserResponse(data: user)
+            guard let setting = realm.object(ofType: SettingData.self, forPrimaryKey: self.setting.userId) else { return}
+            self.setting = UserSetting(data: setting)
+        })
     }
     
     // swiftlint:disable function_body_length
@@ -174,11 +195,21 @@ class AboutController: BaseViewController, AboutView {
             guard let `self` = self else { return }
             self.showUpdate?(self.user, self.updateRemain)
         }
+        let settingView = AboutRectView(title: "系统设置")
+        view.addSubview(settingView)
+        settingView.equal(.size, to: updateRectView)
+        settingView.centerX(to: updateRectView)
+        settingView.pin(.bottom, to: updateRectView, spacing: 20)
+        settingView.clickCallBack = { [weak self] in
+            guard let `self` = self else { return }
+            self.showSetting?(self.setting)
+        }
+    
         let questionRectView = AboutRectView(title: "常见问题")
         view.addSubview(questionRectView)
-        questionRectView.equal(.size, to: updateRectView)
-        questionRectView.centerX(to: updateRectView)
-        questionRectView.pin(.bottom, to: updateRectView, spacing: 20)
+        questionRectView.equal(.size, to: settingView)
+        questionRectView.centerX(to: settingView)
+        questionRectView.pin(.bottom, to: settingView, spacing: 20)
         questionRectView.clickCallBack = { [weak self] in
             let title = "常见问题"
             let urlString = "https://mx.miaobo.me/faq.html"

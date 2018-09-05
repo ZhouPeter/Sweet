@@ -125,7 +125,7 @@ class SweetPlayerControlView: UIView {
         let button = UIButton()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.setImage(#imageLiteral(resourceName: "NotFoundURL"), for: .normal)
-        button.setTitle("内容不见了...", for: .normal)
+        button.setTitle("内容不见了", for: .normal)
         button.isHidden = true
         return button
     }()
@@ -212,7 +212,7 @@ class SweetPlayerControlView: UIView {
         retryButton.constrain(width: 80, height: 30)
         mainMaskView.addSubview(notFoundButton)
         notFoundButton.center(to: mainMaskView)
-        notFoundButton.constrain(width: 200, height: 200)
+        notFoundButton.constrain(width: 120, height: 120)
         notFoundButton.setImageTop(space: 10)
     }
     func customizeUIComponents() {
@@ -241,6 +241,7 @@ class SweetPlayerControlView: UIView {
         notFoundButton.isHidden = false
         loadingIndicator.isHidden = true
         retryButton.isHidden = true
+        player?.placeholderImageView.image = nil
     }
     
     func playerStateDidChange(state: SweetPlayerState) {

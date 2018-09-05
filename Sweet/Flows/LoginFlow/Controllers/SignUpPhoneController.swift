@@ -222,6 +222,9 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                             self.successLogin(loginResponse: response)
                         }
                     })
+                    self.storage?.write({ (realm) in
+                        realm.create(SettingData.self, value: SettingData.data(with: response.setting), update: true)
+                    })
                 }
         })
     }

@@ -43,6 +43,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
+        label.enableShadow()
         return label
     }()
     

@@ -98,6 +98,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
+        label.enableShadow()
         return label
     }()
     override init(frame: CGRect) {
@@ -126,6 +127,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        coverImageView.addSubview(effectView)
         effectView.fill(in: coverImageView)
         contentView.addSubview(commentLabel)
         commentLabel.align(.left, inset: 5)
