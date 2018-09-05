@@ -126,6 +126,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        coverImageView.addSubview(effectView)
         effectView.fill(in: coverImageView)
         contentView.addSubview(commentLabel)
         commentLabel.align(.left, inset: 5)
