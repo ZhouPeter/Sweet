@@ -79,9 +79,9 @@ class SweetPlayerLayerView: UIView {
     }
     var isPlaying: Bool = false {
         didSet {
-            if oldValue != isPlaying {
+//            if oldValue != isPlaying {
                 delegate?.sweetPlayer(player: self, playerIsPlaying: isPlaying)
-            }
+//            }
         }
     }
     var isVideoMuted: Bool = true {
