@@ -18,7 +18,6 @@ final class InboxCoordinator: BaseCoordinator {
     private let storage: Storage
     private var conversations = [Conversation]()
     private var inboxView: InboxView?
-    private var isOffline = true
     
     init(user: User,
          token: String,
@@ -72,16 +71,12 @@ extension InboxCoordinator: InboxViewDelegate {
 extension InboxCoordinator: MessengerDelegate {
     func messengerDidLogin(user: User, success: Bool) {
         logger.debug(user.nickname, success)
-        if isOffline && Messenger.shared.state == .online {
-            isOffline = false
-            Messenger.shared.loadConversations()
-        }
+        Messenger.shared.loadConversations()
         self.inboxView?.didUpdateUserOnlineState(isUserOnline: true)
     }
     
     func messengerDidLogout(user: User) {
         logger.debug(user.nickname)
-        isOffline = true
         self.inboxView?.didUpdateUserOnlineState(isUserOnline: false)
     }
     
