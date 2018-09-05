@@ -78,6 +78,18 @@
 		580D9BC5213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
 		580D9BC6213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
 		580D9BC7213E22E200B8719C /* StoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BC3213E22E200B8719C /* StoryCardView.swift */; };
+		580D9BCC213FAAF400B8719C /* UpdateSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */; };
+		580D9BCD213FAAF400B8719C /* UpdateSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */; };
+		580D9BCE213FAAF400B8719C /* UpdateSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */; };
+		580D9BCF213FAAF400B8719C /* UpdateSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */; };
+		580D9BD8213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */; };
+		580D9BD9213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */; };
+		580D9BDA213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */; };
+		580D9BDB213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */; };
+		580D9BDD213FC14A00B8719C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BDC213FC14A00B8719C /* SettingData.swift */; };
+		580D9BDE213FC14A00B8719C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BDC213FC14A00B8719C /* SettingData.swift */; };
+		580D9BDF213FC14A00B8719C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BDC213FC14A00B8719C /* SettingData.swift */; };
+		580D9BE0213FC14A00B8719C /* SettingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BDC213FC14A00B8719C /* SettingData.swift */; };
 		580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
 		580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
@@ -1541,6 +1553,9 @@
 		580907B920B697F80013BC0A /* CustomNumberPageControlPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumberPageControlPlugin.swift; sourceTree = "<group>"; };
 		580907BE20B7BEE10013BC0A /* EmojiControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiControlView.swift; sourceTree = "<group>"; };
 		580D9BC3213E22E200B8719C /* StoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCardView.swift; sourceTree = "<group>"; };
+		580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSettingsController.swift; sourceTree = "<group>"; };
+		580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSettingTableViewCell.swift; sourceTree = "<group>"; };
+		580D9BDC213FC14A00B8719C /* SettingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
 		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
 		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
 		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
@@ -1977,6 +1992,7 @@
 				58155E2020917A5600ADEFFB /* ActionsTableViewCell.swift */,
 				58D578CE2092E70000AE5D38 /* StoryCollectionViewCell.swift */,
 				58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */,
+				580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -2162,6 +2178,7 @@
 				58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */,
 				58447B2B209B0909004C2FFE /* BlackNavigationController.swift */,
 				587D18D020DA465E00D53708 /* FeedbackController.swift */,
+				580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2277,6 +2294,7 @@
 				AC86A93120C3F2C000334D4A /* InstantMessageData.swift */,
 				AC86A93820C4051400334D4A /* ConversationData.swift */,
 				AC58388C20E9E32800A57161 /* StoryDraftData.swift */,
+				580D9BDC213FC14A00B8719C /* SettingData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3458,6 +3476,7 @@
 				58BD528820883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412182088828E0086891C /* WebAPI.swift in Sources */,
 				58155E352091D53E00ADEFFB /* WebViewController.swift in Sources */,
+				580D9BCC213FAAF400B8719C /* UpdateSettingsController.swift in Sources */,
 				ACE560A620997AAA00CE2564 /* NSURL+Path.m in Sources */,
 				58D85113211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				58CE1ED520A5542C00781EBF /* ProgressCollectionViewCell.swift in Sources */,
@@ -3559,6 +3578,7 @@
 				58EB21FF20DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				AC84120E20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F120AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
+				580D9BDD213FC14A00B8719C /* SettingData.swift in Sources */,
 				ACA323A7208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC86A93E20C4DC3F00334D4A /* User.swift in Sources */,
 				AC742DC62106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */,
@@ -3726,6 +3746,7 @@
 				AC2D51F420EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58BD5304208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778D920BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
+				580D9BD8213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */,
 				ACA3235520874A2900BDC92E /* Coordinator.swift in Sources */,
 				585B60E8213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				58CE1ECB20A5414E00781EBF /* StoriesCubeView.swift in Sources */,
@@ -3947,6 +3968,7 @@
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
 				AC557CA020B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				58816D1020C671040032D103 /* WXApi+Message.swift in Sources */,
+				580D9BCE213FAAF400B8719C /* UpdateSettingsController.swift in Sources */,
 				AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */,
 				ACA323032087410200BDC92E /* SweetTests.swift in Sources */,
 				ACDD0B0920C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
@@ -3999,6 +4021,7 @@
 				AC6C1D8B20A98BDB00F45F82 /* TopicListController.swift in Sources */,
 				581D7BEB20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC525AAE208DD705001070B2 /* IMCoordinator.swift in Sources */,
+				580D9BDF213FC14A00B8719C /* SettingData.swift in Sources */,
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58F4074D20B272410031630C /* SweetPlayerItem.swift in Sources */,
 				58CE1EC320A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
@@ -4008,6 +4031,7 @@
 				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				586954AD2124252300D48196 /* String+Check.swift in Sources */,
+				580D9BDA213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */,
 				58155E2320917A5E00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				AC4D091B20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
 				58CAB38A20AD581A007230AA /* CardsBaseController.swift in Sources */,
@@ -4176,6 +4200,7 @@
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
 				ACE560AE2099834000CE2564 /* StoryEditController.swift in Sources */,
 				58CAB38620AD14FA007230AA /* String+Rect.swift in Sources */,
+				580D9BCF213FAAF400B8719C /* UpdateSettingsController.swift in Sources */,
 				AC8412252088B1DE0086891C /* Signer.swift in Sources */,
 				5803574720AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				58C9806C20E325BF006BA830 /* UColor+Style.swift in Sources */,
@@ -4301,6 +4326,7 @@
 				AC841216208881A40086891C /* AuthPlugin.swift in Sources */,
 				AC616F9D20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				AC8EA9F420AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
+				580D9BDB213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */,
 				ACDFD27A20E0DD0F00D9C2D0 /* SweetTextMessageSizeCalculator.swift in Sources */,
 				58CCD2A1213D240100D4C5F7 /* URL+Path.swift in Sources */,
 				58CE1EE720A5697700781EBF /* StoryUVTableViewCell.swift in Sources */,
@@ -4377,6 +4403,7 @@
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				580F888920FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
+				580D9BE0213FC14A00B8719C /* SettingData.swift in Sources */,
 				58D85116211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				589E6BD920A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				ACDD0B1120C802E000B7400A /* PopupController.swift in Sources */,
@@ -4518,6 +4545,7 @@
 				58BD528620883D3500F7C3E1 /* AuthCoordinator.swift in Sources */,
 				58BD528920883DAE00F7C3E1 /* AuthFlowFactory.swift in Sources */,
 				AC8412192088828E0086891C /* WebAPI.swift in Sources */,
+				580D9BCD213FAAF400B8719C /* UpdateSettingsController.swift in Sources */,
 				58155E362091D53E00ADEFFB /* WebViewController.swift in Sources */,
 				58D85114211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */,
 				ACE560A720997AAA00CE2564 /* NSURL+Path.m in Sources */,
@@ -4619,6 +4647,7 @@
 				58EB220020DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
 				AC84120F20887C800086891C /* UIDevice+DeviceType.swift in Sources */,
 				AC8EA9F220AC0BAF0033615D /* UIViewController+Child.swift in Sources */,
+				580D9BDE213FC14A00B8719C /* SettingData.swift in Sources */,
 				ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC86A93F20C4DC3F00334D4A /* User.swift in Sources */,
 				AC742DC72106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */,
@@ -4786,6 +4815,7 @@
 				AC2D51F520EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
 				58BD5305208E00AB00F7C3E1 /* PowerContactsController.swift in Sources */,
 				AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
+				580D9BD9213FAC4E00B8719C /* UpdateSettingTableViewCell.swift in Sources */,
 				ACA3235620874A2900BDC92E /* Coordinator.swift in Sources */,
 				585B60E9213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				58CE1ECC20A5414E00781EBF /* StoriesCubeView.swift in Sources */,

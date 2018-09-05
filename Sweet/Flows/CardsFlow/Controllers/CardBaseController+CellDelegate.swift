@@ -79,11 +79,11 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 self.cellConfigurators[index] = configurator
                 logger.debug("评价完成")
                 cell.updateWith(selectedIndex)
-                if !Defaults[.isEvaluationOthers] {
-                    let alert = UIAlertController(title: "你的好友将会收到你的评价",
-                                                  message: "下次不再提示",
+                if Defaults[.isEvaluationOthers] == false {
+                    let alert = UIAlertController(title: nil,
+                                                  message: "你的好友将会收到你的评价",
                                                   preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "好的", style: .default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
                 Defaults[.isEvaluationOthers] = true
@@ -251,12 +251,16 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         guard index == self.index else { return }
-        guard let avPlayer = playerView.avPlayer, avPlayer.status == .readyToPlay else { return }
         playerView.playerLayer?.hero.id = cards[index].video
         playerView.playerLayer?.hero.modifiers = [.arc, .useScaleBasedSizeChange]
         let controller = PlayController()
+        if let avPlayer = playerView.avPlayer {
+            controller.avPlayer = avPlayer
+        } else {
+            VideoCardPlayerManager.shared.play(with: URL(string: cards[index].video!)!)
+            controller.avPlayer = VideoCardPlayerManager.shared.player
+        }
         controller.hero.isEnabled = true
-        controller.avPlayer = avPlayer
         controller.resource = playerView.resource
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false

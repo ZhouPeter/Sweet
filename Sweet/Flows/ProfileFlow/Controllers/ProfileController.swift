@@ -27,7 +27,7 @@ protocol ProfileView: BaseView {
 }
 
 protocol ProfileViewDelegate: class {
-    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse)
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting)
     func showConversation(user: User, buddy: User)
 }
 
@@ -65,6 +65,7 @@ class ProfileController: BaseViewController, ProfileView {
     }
     
     private var updateRemain: UpdateRemainResponse?
+    private var setting: UserSetting?
     private var photoBrowserImp: AvatarPhotoBrowserImp?
     private var actionsController: ActionsController?
     private var baseInfoViewModel: BaseInfoCellViewModel?
@@ -173,6 +174,12 @@ class ProfileController: BaseViewController, ProfileView {
         }) { [weak self] in
             if self?.userResponse != nil { self?.loadTableView() }
         }
+        
+        storage?.read({ [weak self, userId] (realm) in
+            guard let `self` = self else { return }
+            guard let setting = realm.object(ofType: SettingData.self, forPrimaryKey: userId) else { return}
+            self.setting = UserSetting(data: setting)
+        })
     }
     
     func saveUserData() {
@@ -184,6 +191,13 @@ class ProfileController: BaseViewController, ProfileView {
                 logger.debug("用户数据保存成功")
             }
         }
+    }
+    
+    func saveUserSetting() {
+        storage?.write({ [weak self] (realm) in
+            guard let `self` = self, let setting = self.setting else { return }
+            realm.create(SettingData.self, value: SettingData.data(with: setting), update: true)
+        })
     }
     private func setBackButton() {
         if navigationController?.viewControllers.count == 1 {
@@ -208,9 +222,9 @@ class ProfileController: BaseViewController, ProfileView {
 
 extension ProfileController {
     @objc private func moreAction(sender: UIButton) {
-        guard let user = userResponse, let updateRemain = updateRemain else { return }
+        guard let user = userResponse, let updateRemain = updateRemain, let setting = setting else { return }
         isReadLocal = true
-        delegate?.showAbout(user: user, updateRemain: updateRemain)
+        delegate?.showAbout(user: user, updateRemain: updateRemain, setting: setting)
     }
     
     @objc private func menuAction(sender: UIButton) {
@@ -278,6 +292,7 @@ extension ProfileController {
             add(childViewController: actionsController!, addView: false)
         }
         saveUserData()
+        saveUserSetting()
         updateViewModel()
         tableView.reloadData()
         let offsetY = tableView.contentOffset.y
@@ -333,6 +348,7 @@ extension ProfileController {
             switch result {
             case let .success(response):
                 self.userResponse = response.userProfile
+                self.setting = response.setting
                 completion?(true)
             case let .failure(error):
                 logger.error(error)
@@ -562,6 +578,7 @@ extension ProfileController: UITableViewDataSource {
 extension ProfileController: UserInfoTableViewCellDelegate {
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
         if user.userId == userId {
+            isReadLocal = true
             let controller = UpdateAvatarController(avatar: highURL.absoluteString)
             navigationController?.pushViewController(controller, animated: true)
         } else {
@@ -576,6 +593,7 @@ extension ProfileController: UserInfoTableViewCellDelegate {
     }
     
     func editSignature() {
+        isReadLocal = true
         let controller = UpdateSignatureController(signature: userResponse!.signature)
         navigationController?.pushViewController(controller, animated: true)
     }

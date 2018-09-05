@@ -25,7 +25,6 @@ class UserData: Object {
     @objc dynamic var likeCount = 0
     @objc dynamic var common = 0
 
-
     let userType = RealmOptional<Int32>()
     
     override static func primaryKey() -> String? {
@@ -62,6 +61,7 @@ class UserData: Object {
         data.isBlock = response.blacklist
         data.isSubscription = response.subscription
         data.common = response.common
+        data.phone = response.phone
         return data
     }
     

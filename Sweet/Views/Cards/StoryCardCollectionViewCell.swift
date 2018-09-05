@@ -98,6 +98,7 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
+        label.enableShadow()
         return label
     }()
     override init(frame: CGRect) {

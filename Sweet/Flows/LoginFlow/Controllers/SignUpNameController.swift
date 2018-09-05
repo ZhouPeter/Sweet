@@ -87,7 +87,7 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         let cancelAction = UIAlertAction(title: "返回修改", style: .cancel, handler: nil)
         let doneAction = UIAlertAction(title: "确认无误", style: .default) { [weak self] (_) in
             if let `self` = self, let model = self.loginRequestBody {
-                self.showSignUpPhone?(model)
+                self.showSignUpAvatar?(model)
             }
         }
         alertController.addAction(cancelAction)

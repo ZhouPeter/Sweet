@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import SwiftyUserDefaults
+import Reachability
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -24,7 +25,6 @@ var isVideoMuted = true
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
-
     public var index = 0 {
         didSet {
             if index > maxIndex { maxIndex = index }
@@ -82,9 +82,10 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private var isFetchLoadCards = false
-    
     private var avPlayer: AVPlayer?
- 
+    private var storage: Storage?
+    private var reachability = Reachability()
+    private var isWifi = false
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -103,6 +104,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = Storage(userID: user.userId)
         view.backgroundColor = UIColor.xpGray()
         view.addSubview(mainView)
         mainView.fill(in: view)
@@ -115,10 +117,41 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reachabilityChanged(note:)),
+                                               name: .reachabilityChanged,
+                                               object: reachability)
+       try? reachability?.startNotifier()
+        
+    }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
+        switch reachability.connection {
+        case .wifi:
+            sweetPlayerConf.shouldAutoPlay = true
+            isWifi = true
+        default:
+            isWifi = false
+            readSetting()
+        }
+    }
+    
+    private func readSetting() {
+        storage?.read({ (realm) in
+            guard let settingData = realm.object(ofType: SettingData.self, forPrimaryKey: self.user.userId) else { return }
+            if self.isWifi {
+                sweetPlayerConf.shouldAutoPlay = true
+            } else {
+                sweetPlayerConf.shouldAutoPlay = settingData.autoPlay
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        readSetting()
         if let avPlayer = avPlayer, view.alpha != 0 {
             if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
                 cell.playerView.setAVPlayer(player: avPlayer)
@@ -131,9 +164,11 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             cell.playerView.pauseWithRemove(isRemove: true)
         }
     }
-
+    
     deinit {
         cotentOffsetToken?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
+
         logger.debug("首页释放")
     }
     
@@ -269,7 +304,7 @@ extension CardsBaseController {
             cell.playerView.setAVPlayer(player: VideoCardPlayerManager.shared.player!)
             cell.playerView.isVideoMuted = isVideoMuted
             cell.playerView.seek(configurator.viewModel.currentTime) {
-                cell.playerView.play()
+                cell.playerView.autoPlay()
             }
             avPlayer = cell.playerView.avPlayer
         } else {

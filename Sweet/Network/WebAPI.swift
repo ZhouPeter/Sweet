@@ -75,6 +75,7 @@ enum WebAPI {
     case feedback(comment: String, type: Int)
     case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?, toUserId: String?, activityId: String?, storyId: String?)
     case recentStoryList(userID: UInt64)
+    case updateSetting(autoPlay: Bool, showMsg: Bool)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -210,6 +211,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/action/log"
         case .recentStoryList:
             return "/story/list"
+        case .updateSetting:
+            return "/user/setting/update"
         }
     }
     
@@ -354,6 +357,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters["toUserId"] = toUserId
             parameters["activityId"] = activityId
             parameters["storyId"] = storyId
+        case let .updateSetting(autoPlay, showMsg):
+            parameters = ["autoPlay": autoPlay, "showMsg": showMsg]
         default:
             break
         }

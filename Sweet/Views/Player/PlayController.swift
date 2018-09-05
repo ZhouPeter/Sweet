@@ -49,7 +49,10 @@ class PlayController: UIViewController {
         setupUI()
         if let player = avPlayer, let resource = resource {
             playerView.resource = resource
+            let autoPlay = sweetPlayerConf.shouldAutoPlay
+            sweetPlayerConf.shouldAutoPlay = true
             playerView.setAVPlayer(player: player)
+            sweetPlayerConf.shouldAutoPlay = autoPlay
             loadItemValues()
         }
         playerView.hero.isEnabled = true

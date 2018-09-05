@@ -172,6 +172,7 @@ class StoriesController: UIViewController, PageChildrenProtocol {
             if emptyView.superview != nil { return }
             collectionView.addSubview(emptyView)
             emptyView.backgroundColor = .clear
+            collectionView.layoutIfNeeded()
             emptyView.frame = CGRect(
                 x: 0,
                 y: 0,

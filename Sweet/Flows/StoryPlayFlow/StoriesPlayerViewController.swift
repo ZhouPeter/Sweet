@@ -893,6 +893,13 @@ extension StoriesPlayerViewController {
                             completion: {_ in })
             }
         }
+//        if Defaults[.isInputTextSendMessage] == false {
+//            let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//        } else {
+//            self.toast(message: "💗消息发送成功")
+//        }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
 }

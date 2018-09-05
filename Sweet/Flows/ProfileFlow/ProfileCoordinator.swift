@@ -171,6 +171,11 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
         router.push(updateOutput)
     }
     
+    private func showSetting(setting: UserSetting) {
+        let settingOutput = UpdateSettingsController(setting: setting)
+        router.push(settingOutput)
+    }
+    
     private func showWebView(title: String, urlString: String) {
         let webViewController = WebViewController(urlString: urlString)
         router.push(webViewController)
@@ -184,8 +189,8 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
 
 
 extension ProfileCoordinator: ProfileViewDelegate {
-    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse) {
-        let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain)
+    func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting) {
+        let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain, setting: setting)
         aboutOutput.showWebView = { [weak self] (title, urlString) in
             self?.showWebView(title: title, urlString: urlString)
         }
@@ -196,6 +201,9 @@ extension ProfileCoordinator: ProfileViewDelegate {
         
         aboutOutput.showUpdate = { [weak self] (user, updateRemain) in
             self?.showUpdate(user: user, updateRemain: updateRemain)
+        }
+        aboutOutput.showSetting = { [weak self] (setting) in
+            self?.showSetting(setting: setting)
         }
         router.push(aboutOutput)
     }

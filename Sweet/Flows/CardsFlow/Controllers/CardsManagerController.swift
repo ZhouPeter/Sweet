@@ -144,14 +144,26 @@ extension CardsManagerController: MessengerDelegate {
         if success {
             if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发成功", dismissAfter: 2)
-            } else if messageType == .like || messageType == .text {
+            } else if messageType == .text {
                 toast(message: "评论成功")
+            } else if messageType == .like {
+                if Defaults[.isInputTextSendMessage] == false {
+                    let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
+                    let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+                    rootViewController?.present(alert, animated: true, completion: nil)
+                    Defaults[.isInputTextSendMessage] = true
+                } else {
+                    toast(message: "❤️消息发送成功")
+                }
             }
         } else {
             if messageType == .card || messageType == .article {
                 JDStatusBarNotification.show(withStatus: "转发失败", dismissAfter: 2)
-            } else if messageType == .like || messageType == .text {
+            } else if messageType == .text {
                 toast(message: "评论失败")
+            } else if messageType == .like {
+                toast(message: "消息发送失败")
             }
         }
         waitingIMNotifications.remove(at: messageIndex)

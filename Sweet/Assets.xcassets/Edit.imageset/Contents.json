@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "编辑签名.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "编辑签名@2x.png",
+      "filename" : "签名icon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "编辑签名@3x.png",
+      "filename" : "签名icon@3x.png",
       "scale" : "3x"
     }
   ],

@@ -10,6 +10,7 @@ import Foundation
 
 struct  ProfileResponse: Codable {
     let userProfile: UserResponse
+    let setting: UserSetting
 }
 
 struct UserResponse: Codable {

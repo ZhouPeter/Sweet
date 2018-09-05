@@ -43,6 +43,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
+        label.enableShadow()
         return label
     }()
     
@@ -87,8 +88,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyImageView.addSubview(effectView)
         effectView.fill(in: storyImageView)
         contentView.addSubview(commentLabel)
-        commentLabel.align(.left, inset: 5)
-        commentLabel.align(.right, inset: 5)
+        commentLabel.align(.left, inset: 5, priority: .defaultHigh)
+        commentLabel.align(.right, inset: 5, priority: .defaultHigh)
         commentLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
         commentLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         contentView.addSubview(timeLabel)
