@@ -15,7 +15,7 @@ struct ActivitiesCardViewModel {
     let titleString: String
     init(model: CardResponse) {
         cardId = model.cardId
-        titleString = model.name!
+        titleString = model.name ?? "用户动态"
         activityViewModels = model.activityList!.map({
             return ActivityCardViewModel(model: $0)
         })

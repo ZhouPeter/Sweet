@@ -12,6 +12,7 @@ struct SubscriptionListResponse: Codable {
     let sections: [SubcriptionSection]
     let users: [Contact]
     let blocks: [Contact]
+    let blockSections: [SubcriptionSection]
 }
 
 struct SubcriptionSection: Codable {

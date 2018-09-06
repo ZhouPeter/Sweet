@@ -339,7 +339,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
 //            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             cardView.isHidden = false
             commentLabel.isHidden = commentString == nil || commentString == ""
-            if let cardId = stories[currentIndex].fromCardId {
+            if let cardId = stories[currentIndex].fromCardId, cardId != "" {
                 web.request(
                     .getCard(cardID: cardId),
                     responseType: Response<CardGetResponse>.self) { (result) in
@@ -561,10 +561,15 @@ extension StoriesPlayerViewController {
         uvViewController = StoryUVController(storyId: storyId, user: user)
         uvViewController.runProfileFlow = runProfileFlow
         uvViewController.delegate = self
-        add(childViewController: uvViewController)
-        view.tag = 100
+        add(childViewController: uvViewController, addView: false)
+        uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
+        view.addSubview(uvViewController.view)
+        uvViewController.view.tag = 100
     }
     func play() {
+        for subview in view.subviews {
+            if subview.tag == 100 { return }
+        }
         let storyId = stories[currentIndex].storyId
         web.request(.storyRead(storyId: storyId, fromCardId: fromCardId)) { (result) in
             switch result {
@@ -893,13 +898,6 @@ extension StoriesPlayerViewController {
                             completion: {_ in })
             }
         }
-//        if Defaults[.isInputTextSendMessage] == false {
-//            let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//        } else {
-//            self.toast(message: "💗消息发送成功")
-//        }
         NotificationCenter.default.post(name: .dismissShareCard, object: nil)
     }
 }
