@@ -12,7 +12,8 @@ protocol CardsPageCollectionViewDataSource: NSObjectProtocol {
     func cardsPageCollectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 }
 protocol CardsPageCollectionViewDelegate: NSObjectProtocol {
-    func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index:Int)
+    func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index:Int, oldIndex: Int)
+//    func cardsPageCollectionView(_ collectionView: UICollectionView, willScrollToIndex index:Int)
     func cardsPageCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 }
 class CardsPageCollectionView: UIView {
@@ -23,6 +24,7 @@ class CardsPageCollectionView: UIView {
     private var oldScrollViewOffset = CGPoint.zero
     weak var dataSoure: CardsPageCollectionViewDataSource?
     weak var delegate: CardsPageCollectionViewDelegate?
+    private var pageIndex: Int = 0
     
     init() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -132,10 +134,11 @@ extension CardsPageCollectionView: UIScrollViewDelegate {
         guard scrollView == pagingScrollView else { return }
         var scrollViewOffset = scrollView.contentOffset
         let pageIndex = Int(scrollViewOffset.y / itemSize.height + 0.5)
-        if scrollViewOffset.y == itemSize.height * CGFloat(pageIndex) &&
-            (scrollViewOffset.y != oldScrollViewOffset.y || pageIndex == collectionView.numberOfItems(inSection: 0) - 1) {
-            delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex)
+        if self.pageIndex != pageIndex || (pageIndex == collectionView.numberOfItems(inSection: 0) - 1 && oldScrollViewOffset.y < scrollViewOffset.y) {
+            delegate?.cardsPageCollectionView(collectionView, scrollToIndex: pageIndex, oldIndex: self.pageIndex)
+            self.pageIndex = pageIndex
         }
+       
         if scrollViewOffset.y >= 0 { scrollViewOffset.y -= cardInsetTop }
         collectionView.contentOffset = scrollViewOffset
     }

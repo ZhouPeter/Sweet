@@ -22,7 +22,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
     
     private var playerButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "VideoPlay"), for: .normal)
         button.tag = SweetPlayerControlView.ButtonType.play.rawValue
         button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
         button.isHidden = true

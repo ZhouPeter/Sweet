@@ -82,6 +82,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     
     private var isFetchLoadCards = false
+    private var isPreloadingCards = false
     private var avPlayer: AVPlayer?
     private var storage: Storage?
     private var reachability = Reachability()
@@ -344,31 +345,43 @@ extension CardsBaseController {
     private func downScrollCard(index: Int) {
         let maxIndex = mainView.collectionView.numberOfItems(inSection: 0) - 1
         if index <= maxIndex {
-            preloadingCard()
             self.index = index
         } else if index > maxIndex {
             self.index = maxIndex
             mainView.scrollToIndex(self.index)
         }
     }
+    
 
-    private func preloadingCard() {
+    private func preloadingCard(oldIndex: Int) {
         if mainView.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
-            let cardId = cards[index].cardId
+            let cardId = cards[oldIndex].cardId
+            let content = cards[oldIndex].content
             let direction = Direction.down
             let request: CardRequest = self is CardsAllController ?
                 .all(cardId: cardId, direction: direction) :
                 .sub(cardId: cardId, direction: direction)
             let semaphore  = DispatchSemaphore(value: 0)
             let count = preloadingCount - (mainView.collectionView.numberOfItems(inSection: 0) - 1 - index)
+            if isPreloadingCards { return }
             DispatchQueue.global().async {
+                var isForEach = true
+                self.isPreloadingCards = true
                 for i in 0..<count {
                     logger.debug(i)
-                    self.startLoadCards(cardRequest: request) { (_, _) in
-                        semaphore.signal()
+                    logger.debug(content ?? "")
+                    if isForEach == false { break }
+                    self.startLoadCards(cardRequest: request) { (success, _) in
+                        if success {
+                            semaphore.signal()
+                        } else {
+                            semaphore.signal()
+                            isForEach = false
+                        }
                     }
                     semaphore.wait()
                 }
+                self.isPreloadingCards = false
             }
 
         }
@@ -427,8 +440,9 @@ extension CardsBaseController: CardsPageCollectionViewDataSource {
 }
 // MARK: - CardsPageCollectionViewDelegate
 extension CardsBaseController: CardsPageCollectionViewDelegate {
-    func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int) {
+    func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int, oldIndex: Int) {
         if index >= self.index {
+            preloadingCard(oldIndex: oldIndex)
             downScrollCard(index: index)
         } else {
             self.index = index
