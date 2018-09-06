@@ -15,7 +15,6 @@ class SubscriptionController: BaseViewController, SubscriptionView {
     var showProfile: ((UInt64) -> Void)?
     private var sectionViewModels = [ContactSubcriptionSectionViewModel]()
     private var userViewModels = [ContactViewModel]()
-    private var blockViewModels = [ContactViewModel]()
     private var titles = [String]()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -54,6 +53,14 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                     }
                     self.sectionViewModels.append(viewModel)
                 })
+                response.blockSections.forEach({ (model) in
+                    var viewModel = ContactSubcriptionSectionViewModel(model: model, title: "已屏蔽", style: .borderGray)
+                    viewModel.callBack = { [weak self] sectionId in
+                        self?.delSectionBlocklist(sectionId: UInt64(sectionId)!)
+                    }
+                    self.sectionViewModels.append(viewModel)
+
+                })
                 response.users.forEach({ (model) in
                     var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
                     viewModel.callBack = { [weak self] userId in
@@ -62,16 +69,51 @@ class SubscriptionController: BaseViewController, SubscriptionView {
                     self.userViewModels.append(viewModel)
                 })
                 response.blocks.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
+                    var viewModel = ContactViewModel(model: model, title: "已屏蔽", style: .borderGray)
                     viewModel.callBack = { [weak self] userId in
                         self?.delBlocklist(userId: UInt64(userId)!)
                     }
-                    self.blockViewModels.append(viewModel)
+                    self.userViewModels.append(viewModel)
                 })
                 if self.sectionViewModels.count > 0 { self.titles.append("栏目") }
                 if self.userViewModels.count > 0 { self.titles.append("用户") }
-                if self.blockViewModels.count > 0 { self.titles.append("屏蔽") }
                 self.tableView.reloadData()
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    private func addSectionBlocklist(sectionId: UInt64) {
+        web.request(.addSectionBlock(sectionId: sectionId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId && $0.buttonTitle == "屏蔽" }) else { return }
+                self.sectionViewModels[index].buttonStyle = .borderGray
+                self.sectionViewModels[index].buttonTitle = "已屏蔽"
+                self.sectionViewModels[index].callBack = { [weak self] userId in
+                    self?.delSectionBlocklist(sectionId: sectionId)
+                }
+                let section: Int = self.titles.index(of: "栏目")!
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
+            case let .failure(error):
+                logger.error(error)
+            }
+        }
+    }
+    
+    private func delSectionBlocklist(sectionId: UInt64) {
+        web.request(.delSectionBlock(sectionId: sectionId)) { (result) in
+            switch result {
+            case .success:
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId && $0.buttonTitle == "已屏蔽"}) else { return }
+                self.sectionViewModels[index].buttonStyle = .backgroundColorGray
+                self.sectionViewModels[index].buttonTitle = "屏蔽"
+                self.sectionViewModels[index].callBack = { [weak self] userId in
+                    self?.addSectionBlocklist(sectionId: sectionId)
+                }
+                let section: Int = self.titles.index(of: "栏目")!
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
                 logger.error(error)
             }
@@ -81,13 +123,13 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.addBlock(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.blockViewModels.index(where: { $0.userId == userId }) else { return }
-                self.blockViewModels[index].buttonStyle = .borderGray
-                self.blockViewModels[index].buttonTitle = "恢复"
-                self.blockViewModels[index].callBack = { [weak self] userId in
+                guard let index = self.userViewModels.index(where: { $0.userId == userId && $0.buttonTitle == "屏蔽"}) else { return }
+                self.userViewModels[index].buttonStyle = .borderGray
+                self.userViewModels[index].buttonTitle = "已屏蔽"
+                self.userViewModels[index].callBack = { [weak self] userId in
                     self?.delBlocklist(userId: UInt64(userId)!)
                 }
-                let section: Int = self.titles.index(of: "屏蔽")!
+                let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -99,13 +141,13 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.delBlock(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.blockViewModels.index(where: { $0.userId == userId }) else { return }
-                self.blockViewModels[index].buttonStyle = .backgroundColorGray
-                self.blockViewModels[index].buttonTitle = "屏蔽"
-                self.blockViewModels[index].callBack = { [weak self] userId in
+                guard let index = self.userViewModels.index(where: { $0.userId == userId && $0.buttonTitle == "已屏蔽" }) else { return }
+                self.userViewModels[index].buttonStyle = .backgroundColorGray
+                self.userViewModels[index].buttonTitle = "屏蔽"
+                self.userViewModels[index].callBack = { [weak self] userId in
                     self?.addBlocklist(userId: UInt64(userId)!)
                 }
-                let section: Int = self.titles.index(of: "屏蔽")!
+                let section: Int = self.titles.index(of: "用户")!
                 self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
             case let .failure(error):
                 logger.error(error)
@@ -116,7 +158,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.delUserSubscription(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.userViewModels.index(where: { $0.userId == userId }) else { return }
+                guard let index = self.userViewModels.index(where: { $0.userId == userId && $0.buttonTitle == "已订阅" }) else { return }
                 self.userViewModels[index].buttonStyle = .backgroundColorBlue
                 self.userViewModels[index].buttonTitle = "订阅"
                 self.userViewModels[index].callBack = { [weak self] userId in
@@ -134,7 +176,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.addUserSubscription(userId: userId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.userViewModels.index(where: { $0.userId == userId }) else { return }
+                guard let index = self.userViewModels.index(where: { $0.userId == userId && $0.buttonTitle == "订阅" }) else { return }
                 self.userViewModels[index].buttonStyle = .borderBlue
                 self.userViewModels[index].buttonTitle = "已订阅"
                 self.userViewModels[index].callBack = { [weak self] userId in
@@ -152,7 +194,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.delSectionSubscription(sectionId: sectionId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId }) else { return }
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId && $0.buttonTitle == "已订阅" }) else { return }
                 self.sectionViewModels[index].buttonStyle = .backgroundColorBlue
                 self.sectionViewModels[index].buttonTitle = "订阅"
                 self.sectionViewModels[index].callBack = { [weak self] sectionId in
@@ -169,7 +211,7 @@ class SubscriptionController: BaseViewController, SubscriptionView {
         web.request(.addSectionSubscription(sectionId: sectionId)) { (result) in
             switch result {
             case .success:
-                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId }) else { return }
+                guard let index = self.sectionViewModels.index(where: { $0.sectionId == sectionId  && $0.buttonTitle == "订阅"}) else { return }
                 self.sectionViewModels[index].buttonStyle = .borderBlue
                 self.sectionViewModels[index].buttonTitle = "已订阅"
                 self.sectionViewModels[index].callBack = { [weak self] sectionId in
@@ -192,8 +234,6 @@ extension SubscriptionController: UITableViewDataSource {
             return sectionViewModels.count
         } else if titles[section] == "用户" {
             return userViewModels.count
-        } else if titles[section] == "屏蔽" {
-            return blockViewModels.count
         } else {
             return 0
         }
@@ -205,8 +245,6 @@ extension SubscriptionController: UITableViewDataSource {
             cell.updateSectionWithButton(viewModel: sectionViewModels[indexPath.row])
         } else if titles[indexPath.section] == "用户"{
             cell.update(viewModel: userViewModels[indexPath.row])
-        } else if titles[indexPath.section] == "屏蔽" {
-            cell.update(viewModel: blockViewModels[indexPath.row])
         }
         return cell
     }
@@ -221,8 +259,6 @@ extension SubscriptionController: UITableViewDelegate {
             
         } else if titles[indexPath.section] == "用户" {
             showProfile?(userViewModels[indexPath.row].userId)
-        } else if titles[indexPath.section] == "屏蔽" {
-            showProfile?(blockViewModels[indexPath.row].userId)
         }
     }
     

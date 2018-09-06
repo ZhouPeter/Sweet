@@ -171,6 +171,11 @@ class ContactTableViewCell: UITableViewCell {
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
+        if viewModel.infoString == "" {
+            nameCenterYConstraints?.constant = 0
+        } else {
+            nameCenterYConstraints?.constant = -10
+        }
         statusButton.isHidden = viewModel.isHiddenButton
         statusButton.setTitle(viewModel.buttonTitle, for: .normal)
         statusButton.setButtonStyle(style: viewModel.buttonStyle)

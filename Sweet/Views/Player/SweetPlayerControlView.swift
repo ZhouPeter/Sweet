@@ -241,7 +241,7 @@ class SweetPlayerControlView: UIView {
         notFoundButton.isHidden = false
         loadingIndicator.isHidden = true
         retryButton.isHidden = true
-        player?.placeholderImageView.image = nil
+        player?.placeholderImageView.isHidden = true
     }
     
     func playerStateDidChange(state: SweetPlayerState) {

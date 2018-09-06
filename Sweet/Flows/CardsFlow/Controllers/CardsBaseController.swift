@@ -154,7 +154,14 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         readSetting()
         if let avPlayer = avPlayer, view.alpha != 0 {
             if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+                let autoPlay = sweetPlayerConf.shouldAutoPlay
+                if let isPlaying = cell.playerView.avPlayer?.isPlaying {
+                    sweetPlayerConf.shouldAutoPlay = isPlaying
+                } else if let isPlaying = cell.playerView.savePlayer?.isPlaying {
+                    sweetPlayerConf.shouldAutoPlay = isPlaying
+                }
                 cell.playerView.setAVPlayer(player: avPlayer)
+                sweetPlayerConf.shouldAutoPlay = autoPlay
             }
         }
     }
@@ -306,7 +313,7 @@ extension CardsBaseController {
             cell.playerView.seek(configurator.viewModel.currentTime) {
                 cell.playerView.autoPlay()
             }
-            avPlayer = cell.playerView.avPlayer
+            avPlayer = VideoCardPlayerManager.shared.player!
         } else {
             for cell in mainView.collectionView.visibleCells {
                 if let cell = cell as? VideoCardCollectionViewCell,

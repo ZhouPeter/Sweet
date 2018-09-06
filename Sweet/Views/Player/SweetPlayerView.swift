@@ -179,7 +179,7 @@ class SweetPlayerView: UIView {
             isURLSet = true
             playerLayer?.playAVPlayer(player: player)
         } else {
-            pause()
+            savePlayer?.pause()
         }
     }
     
@@ -420,7 +420,6 @@ extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     }
     
     func sweetPlayer(player: SweetPlayerLayerView, playerIsPlaying playing: Bool) {
-        placeholderImageView.isHidden = playing
         controlView.playStateDidChange(isPlaying: playing)
         delegate?.sweetPlayer(player: self, playerIsPlaying: playing)
         

@@ -86,6 +86,7 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         }
     }
     override func playStateDidChange(isPlaying: Bool) {
+        player?.placeholderImageView.isHidden = isPlaying
         playerButton.isHidden = isPlaying
         noPlayMask.isHidden = isPlaying
     }
