@@ -78,6 +78,7 @@ class StoryCardView: UIView {
         thumbnailImageView.sd_setImage(with: thumbnailURL)
         sourceLabel.isHidden = true
         arrowImageView.isHidden = true
+        card = nil
     }
     
     func update(card: CardResponse) {
