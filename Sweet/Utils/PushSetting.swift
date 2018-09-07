@@ -25,7 +25,7 @@ class PushSetting {
             let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             rootViewController?.present(alert, animated: true, completion: nil)
             Defaults[.pushMessageTime] = Int(Date().timeIntervalSince1970)
-        } else {
+        } else if Defaults[.isSettingPush] == false {
             let appDelegate  = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.setUserNotificationCenter(completion: {
                 Defaults[.isSettingPush] = true

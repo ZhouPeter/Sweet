@@ -37,7 +37,7 @@ class SignUpNameController: BaseViewController, SignUpNameView {
         button.setTitle("下一步", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor.xpNavBlue()
         button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
         return button
     }()
