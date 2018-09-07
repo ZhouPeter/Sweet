@@ -336,7 +336,6 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             let thumbnailURL = stories[currentIndex].imageURL
             cardView.update(descString: descString!, thumbnailURL: thumbnailURL!)
             commentLabel.text = commentString
-//            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             cardView.isHidden = false
             commentLabel.isHidden = commentString == nil || commentString == ""
             if let cardId = stories[currentIndex].fromCardId, cardId != "" {
