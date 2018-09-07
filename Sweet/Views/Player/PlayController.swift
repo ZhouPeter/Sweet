@@ -1,3 +1,4 @@
+
 //
 //  PlayController.swift
 //  Sweet
@@ -61,6 +62,10 @@ class PlayController: UIViewController {
         let pan = CustomPanGestureRecognizer(orientation: .down, target: self, action: #selector(didPan(_:)))
         pan.require(toFail: playerView.panGesture)
         view.addGestureRecognizer(pan)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(logout),
+                                               name: NSNotification.Name(logoutNotiName),
+                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +77,10 @@ class PlayController: UIViewController {
     override func  viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         allowRotation = false
+    }
+    
+    @objc private func logout() {
+        dismiss(animated: true, completion: nil)
     }
     
     override var prefersStatusBarHidden: Bool { return true }

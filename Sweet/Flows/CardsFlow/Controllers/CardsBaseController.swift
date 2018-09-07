@@ -172,6 +172,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }
     
     deinit {
+        VideoCardPlayerManager.shared.clean()
         cotentOffsetToken?.invalidate()
         NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
         logger.debug("首页释放")
