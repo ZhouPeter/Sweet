@@ -52,7 +52,7 @@ class VideoCardPlayerManager: NSObject {
         player = AVPlayer(playerItem: playerItem)
     }
     
-    private func clean() {
+    func clean() {
         player?.pause()
         player?.replaceCurrentItem(with: nil)
         player = nil
