@@ -122,6 +122,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
             DispatchQueue.global().async {
                 let asset = AVURLAsset(url: viewModel.videoURL)
                 let assetGen =  AVAssetImageGenerator(asset: asset)
+                assetGen.requestedTimeToleranceAfter = CMTimeMakeWithSeconds(5, 600)
+                assetGen.requestedTimeToleranceBefore = CMTimeMakeWithSeconds(5, 600)
                 assetGen.appliesPreferredTrackTransform = true
                 let time = CMTimeMakeWithSeconds(5, 600)
                 var actualTime = CMTimeMake(0,0)

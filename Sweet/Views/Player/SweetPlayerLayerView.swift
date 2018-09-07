@@ -505,9 +505,6 @@ class SweetPlayerLayerView: UIView {
                         moviePlayDidEnd()
                         return
                     }
-                    if currentItem.isPlaybackLikelyToKeepUp || currentItem.isPlaybackBufferFull {
-                        
-                    }
                 }
             }
         }

@@ -161,7 +161,7 @@ class SweetPlayerView: UIView {
         isRemove = false
         self.resource = resource
         controlView.prepareUI(for: resource)
-        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
+//        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
             let asset = resource.definitions[currentDefinition].avURLAsset
@@ -174,12 +174,13 @@ class SweetPlayerView: UIView {
         isRemove = false
         self.savePlayer = player
         controlView.prepareUI(for: self.resource)
-        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
+//        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
             playerLayer?.playAVPlayer(player: player)
         } else {
-            savePlayer?.pause()
+//            savePlayer?.pause()
+            pause()
         }
     }
     
@@ -234,7 +235,7 @@ class SweetPlayerView: UIView {
 extension SweetPlayerView: UIGestureRecognizerDelegate {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let velocityPoint = (gestureRecognizer as? UIPanGestureRecognizer)?.velocity(in: self) else { return true }
-        if velocityPoint.y > 0 {
+        if velocityPoint.y > 0 && isFullScreen == false {
             return false
         } else {
             return true
@@ -392,8 +393,10 @@ extension SweetPlayerView {
 }
 extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     func sweetPlayer(player: SweetPlayerLayerView, playerStateDidChange state: SweetPlayerState) {
+        if state == .notFoundURL {
+            placeholderImageView.isHidden = true
+        }
         controlView.playerStateDidChange(state: state)
-        if state == .readyToPlay || state == .bufferFinished { placeholderImageView.isHidden = true }
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
         if state == . playedToTheEnd {
             seek(0) {
@@ -420,6 +423,7 @@ extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     }
     
     func sweetPlayer(player: SweetPlayerLayerView, playerIsPlaying playing: Bool) {
+        placeholderImageView.isHidden = playing
         controlView.playStateDidChange(isPlaying: playing)
         delegate?.sweetPlayer(player: self, playerIsPlaying: playing)
         

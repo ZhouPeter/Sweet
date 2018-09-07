@@ -73,11 +73,9 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var cotentOffsetToken: NSKeyValueObservation?
     private lazy var emptyView: EmptyEmojiView = {
         if self is CardsAllController {
-            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
-            return view
+            return EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
         } else {
-            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页发现有趣的内容")
-            return view
+            return EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页发现有趣的内容")
         }
     }()
     
@@ -176,7 +174,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     deinit {
         cotentOffsetToken?.invalidate()
         NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
-
         logger.debug("首页释放")
     }
     
