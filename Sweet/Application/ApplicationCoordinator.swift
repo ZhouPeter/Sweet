@@ -59,6 +59,11 @@ final class ApplicationCoordinator: BaseCoordinator {
                 runAuthFlow()
             case let .main(user, token):
                 runMainFlow(user: user, token: token)
+                DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
+                    let contacts = Contacts.getContacts()
+                    web.request(.uploadContacts(contacts: contacts)) { (_) in }
+                }
+                PushSetting.pushCheck()
             }
         }
     }

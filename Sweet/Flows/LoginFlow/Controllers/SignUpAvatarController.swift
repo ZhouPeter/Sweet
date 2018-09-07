@@ -32,7 +32,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("下一步", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor.xpNavBlue()
         button.alpha = 0.5
         button.isUserInteractionEnabled = false
         button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)

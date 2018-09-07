@@ -65,7 +65,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("进入", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor.xpNavBlue()
         button.alpha = 0.5
         button.isUserInteractionEnabled = false
         button.addTarget(self, action: #selector(enteringAction(_:)), for: .touchUpInside)
