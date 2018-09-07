@@ -85,10 +85,19 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
             self.progressView.progress = Float(currentTime / totalTime)
         }
     }
-    override func playStateDidChange(isPlaying: Bool) {
-        player?.placeholderImageView.isHidden = isPlaying
-        playerButton.isHidden = isPlaying
-        noPlayMask.isHidden = isPlaying
+    
+    override func prepareUI(for resource: SweetPlayerResource, selectedIndex index: Int = 0) {
+        super.prepareUI(for: resource, selectedIndex: index)
+        playerButton.isHidden = false
+        noPlayMask.isHidden = false
     }
+    override func playStateDidChange(isPlaying: Bool) {
+        if isPlaying {
+            playerButton.isHidden = isPlaying
+            noPlayMask.isHidden = isPlaying
+        }
+    }
+    
+    
 
 }
