@@ -13,7 +13,7 @@ protocol ActivitiesControllerDelegate: NSObjectProtocol {
     func acitvitiesScrollViewDidScroll(scrollView: UIScrollView)
 }
 class ActivitiesController: UIViewController, PageChildrenProtocol {
-
+    var showProfile: ((UInt64, SetTop?, (() -> Void)?) -> Void)?
     var cellNumber: Int = 0
     var user: User
     var avatar: String
@@ -116,6 +116,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
+        inputTextView.layoutIfNeeded()
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
     }
@@ -151,6 +152,13 @@ extension ActivitiesController {
                     let resultCard = response.card
                     CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityLike(activityId: activityId, comment: text)
+//                    if Defaults[.isInputTextSendMessage] == false {
+//                        let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
+//                        alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
+//                        self.present(alert, animated: true, completion: nil)
+//                    } else {
+//                        self.toast(message: "💗消息发送成功")
+//                    }
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -200,9 +208,49 @@ extension ActivitiesController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let url = viewModels[indexPath.row].url {
-            let controller = ShareWebViewController(urlString: url, cardId: viewModels[indexPath.row].fromCardId)
-            navigationController?.pushViewController(controller, animated: true)
+        let viewModel = viewModels[indexPath.row]
+        web.request(
+            .reviewCard(cardID: viewModel.fromCardId),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let card = response.card
+                    if card.cardEnumType == .content, let video = card.video {
+                        let videoURL =  URL(string: video)!
+                        let asset = SweetPlayerManager.assetNoCache(for: videoURL)
+                        let playerItem = AVPlayerItem(asset: asset)
+                        let player = AVPlayer(playerItem: playerItem)
+                        let controller = PlayController()
+                        controller.avPlayer = player
+                        controller.resource = SweetPlayerResource(url: videoURL)
+                        self.present(controller, animated: true, completion: nil)
+                    } else if card.cardEnumType == .choice {
+                        var text = ""
+                        if let content = card.content, let textString = try? content.htmlStringReplaceTag() {
+                            text = textString
+                        }
+                        let result = card.result == nil ? -1 : card.result!.index!
+                        let content = OptionCardContent(
+                            identifier: card.cardId,
+                            cardType: InstantMessage.CardType.preference,
+                            text: text,
+                            leftImageURLString: card.imageList![0],
+                            rightImageURLString: card.imageList![1],
+                            result: OptionCardContent.Result(rawValue: result)!
+                        )
+                        let preview = OptionCardPreviewController(content: content, user: self.user)
+                        preview.showProfile = self.showProfile
+                        let popup = PopupController(rootViewController: preview)
+                        popup.present(in: self)
+                    } else {
+                        if let url = viewModel.url {
+                            let controller = ShareWebViewController(urlString: url, cardId: viewModel.fromCardId)
+                            self.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    }
+                case let .failure(error):
+                    logger.error(error)
+                }
         }
     }
 }

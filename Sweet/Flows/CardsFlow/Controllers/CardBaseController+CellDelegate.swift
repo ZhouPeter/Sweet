@@ -29,7 +29,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
                     let viewModel = ChoiceCardViewModel(model: self.cards[index])
                     let configurator = CellConfigurator<ChoiceCardCollectionViewCell>(viewModel: viewModel)
                     self.cellConfigurators[index] = configurator
-                    self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    self.mainView.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                     self.vibrateFeedback()
                     CardAction.clickPreference.actionLog(card: self.cards[index])
                 case let .failure(error):
@@ -47,7 +47,7 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
         if let index = cards.index(where: { $0.cardId == cardId}) {
             if index != self.index {
                 self.index = index
-                scrollTo(row: self.index)
+                mainView.scrollToIndex(index)
                 return
             }
         }
@@ -58,6 +58,7 @@ extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
             delegate: self,
             completion: {}
         )
+        CardAction.clickStory.actionLog(card: cards[index])
     }
 }
 // MARK: - EvaluationCardCollectionViewCellDelegate
@@ -78,11 +79,11 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                 self.cellConfigurators[index] = configurator
                 logger.debug("评价完成")
                 cell.updateWith(selectedIndex)
-                if !Defaults[.isEvaluationOthers] {
-                    let alert = UIAlertController(title: "你的好友将会收到你的评价",
-                                                  message: "下次不再提示",
+                if Defaults[.isEvaluationOthers] == false {
+                    let alert = UIAlertController(title: nil,
+                                                  message: "你的好友将会收到你的评价",
                                                   preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "好的", style: .default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
                 Defaults[.isEvaluationOthers] = true
@@ -115,7 +116,7 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
                     self.vibrateFeedback()
                     CardAction.clickComment.actionLog(card: self.cards[index])
                     if Defaults[.isSameCardChoiceGuideShown] == false && response.contactUserList.count > 0 {
-                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - 40,
+                        let rect = CGRect(x: UIScreen.mainWidth() - (20 + 32 + 8 + 1 + 8 - 4) - CGFloat(response.contactUserList.count) * 40,
                                           y: UIScreen.navBarHeight() + 10 + cardCellHeight - 50 - 5 ,
                                           width: CGFloat(response.contactUserList.count) * 40,
                                           height: 40)
@@ -187,7 +188,7 @@ extension CardsBaseController: StoriesPlayerGroupViewControllerDelegate {
         }
         configurator.viewModel.updateStory(story: story, postion: postion)
         cellConfigurators[index] = configurator
-        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+        self.mainView.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
     
 }
@@ -203,7 +204,7 @@ extension CardsBaseController {
     private func showBrower(index: Int, originPageIndex: Int) {
         guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell>
             else { return }
-        guard let cell = collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
+        guard let cell = mainView.collectionView.cellForItem(at: IndexPath(item: self.index, section: 0))
             as? ContentCardCollectionViewCell else { return  }
         let imageIcon = cell.imageIcons[originPageIndex]
         let imageURLs = configurator.viewModel.imageURLList!
@@ -250,15 +251,17 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String) {
         guard let index = cards.index(where: { $0.cardId == cardId }) else { return }
         guard index == self.index else { return }
-        guard let avPlayer = playerView.avPlayer, avPlayer.status == .readyToPlay else { return }
-        playerView.hero.isEnabled = true
-        playerView.hero.id = cards[index].video
-        playerView.hero.modifiers = [.arc]
+        playerView.playerLayer?.hero.id = cards[index].video
+        playerView.playerLayer?.hero.modifiers = [.arc, .useScaleBasedSizeChange]
         let controller = PlayController()
+        if let avPlayer = playerView.avPlayer {
+            controller.avPlayer = avPlayer
+        } else {
+            VideoCardPlayerManager.shared.play(with: URL(string: cards[index].video!)!)
+            controller.avPlayer = VideoCardPlayerManager.shared.player
+        }
         controller.hero.isEnabled = true
-        controller.avPlayer = avPlayer
         controller.resource = playerView.resource
-        playerView.playerLayer?.playerToNil()
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false
         playerView.isVideoMuted = isVideoMuted
@@ -268,6 +271,11 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
 
 extension CardsBaseController: SweetPlayerViewDelegate {
     func sweetPlayer(player: SweetPlayerView, playerStateDidChange state: SweetPlayerState) {
+        if let indexPath = player.resource.indexPath, state == .readyToPlay {
+            if let cell = mainView.collectionView.cellForItem(at: indexPath) as? VideoCardCollectionViewCell {
+               cell.contentImageView.image = nil
+            }
+        }
         if state == .playedToTheEnd {
             CardAction.playEnd.actionLog(card: cards[index])
         }

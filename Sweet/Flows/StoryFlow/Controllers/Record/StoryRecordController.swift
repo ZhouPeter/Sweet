@@ -14,6 +14,7 @@ import SDWebImage
 
 extension Notification.Name {
     static let avatarFakeImageUpdate = Notification.Name(rawValue: "AvatarFakeImageUpdate")
+    static let storyDidPublish = Notification.Name(rawValue: "StoryDidPublish")
 }
 
 final class StoryRecordController: BaseViewController, StoryRecordView {
@@ -99,14 +100,18 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         return view
     } ()
     
-    private lazy var avatarCircleMask: CAShapeLayer = {
-        let layer = CAShapeLayer()
-        layer.lineWidth = 3
-        layer.lineCap = kCALineCapRound
-        layer.fillColor = nil
-        layer.strokeColor = UIColor.white.cgColor
-        layer.transform = CATransform3DMakeRotation(-CGFloat.pi * 0.5, 0, 0, 1)
-        return layer
+    private var avatarIndicatorContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        view.isUserInteractionEnabled = false
+        return view
+    } ()
+    
+    private var avatarIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    private var avatarCheckImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "Check")
+        return view
     } ()
     
     private lazy var menuButton: UIButton = {
@@ -193,6 +198,12 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             name: .avatarFakeImageUpdate,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(storyUploadDidFinish),
+            name: .storyDidPublish,
+            object: nil
+        )
     }
     
     @objc func didReceiveAvatarFakeImageNote(_ note: Notification) {
@@ -218,38 +229,13 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             self.topicButton.alpha = 1
         }, completion: nil)
         shootButton.resetProgress()
-        avatarCircle.isHidden = true
+        avatarCircle.alpha = 0
         chooseCameraRecord()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animateAvatarCircle()
-    }
-    
-    private func animateAvatarCircle() {
-        if isAvatarCircleAnamtionEnabled {
-            isAvatarCircleAnamtionEnabled = false
-            avatarCircle.isHidden = false
-            let animation = CABasicAnimation(keyPath: "strokeEnd")
-            animation.fromValue = 0
-            animation.toValue = 1
-            animation.duration = 0.5
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-            avatarCircleMask.add(animation, forKey: nil)
-        } else {
-            if Defaults[.isPersonalStoryChecked] {
-                avatarCircle.isHidden = true
-            } else {
-                avatarCircle.isHidden = false
-            }
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        avatarCircleMask.frame = CGRect(origin: .zero, size: avatarCircle.bounds.size)
-        avatarCircleMask.path = UIBezierPath(ovalIn: avatarCircleMask.bounds.insetBy(dx: 1.5, dy: 1.5)).cgPath
+        animateAvatar()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -263,6 +249,40 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         isStoryEditing = false
         shootButton.alpha = 1
         toggleOffMenu()
+    }
+    
+    private func animateAvatar() {
+        if isAvatarCircleAnamtionEnabled {
+            isAvatarCircleAnamtionEnabled = false
+            avatarCircle.alpha = 0
+            avatarIndicator.startAnimating()
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
+                self.avatarIndicatorContainer.alpha = 1
+            }, completion: { _ in
+                if UIDevice.current.hasLessThan2GBRAM {
+                    self.storyUploadDidFinish()
+                }
+            })
+        } else {
+            if Defaults[.isPersonalStoryChecked] {
+                avatarCircle.alpha = 0
+            } else {
+                avatarCircle.alpha = 1
+            }
+        }
+    }
+    
+    @objc private func storyUploadDidFinish() {
+        avatarIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
+            self.avatarCircle.alpha = 1
+            self.avatarCheckImageView.alpha = 1
+        }) { (_) in
+            UIView.animate(withDuration: 0.35, delay: 2, options: .curveEaseOut, animations: {
+                self.avatarCheckImageView.alpha = 0
+                self.avatarIndicatorContainer.alpha = 0
+            }, completion: nil)
+        }
     }
     
     func chooseCameraRecord() {
@@ -502,15 +522,23 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         cameraSwitchButton.alpha = 0
         recordContainer.addSubview(menuButton)
         recordContainer.addSubview(backButton)
-        avatarButton.constrain(width: 39, height: 39)
+        avatarButton.constrain(width: 40, height: 40)
         avatarButton.align(.left, to: recordContainer, inset: 10)
         avatarButton.align(.top, to: recordContainer, inset: 10)
         avatarFakeView.fill(in: avatarButton)
-        avatarCircle.constrain(width: 40, height: 40)
+        avatarCircle.constrain(width: 41, height: 41)
         avatarCircle.center(to: avatarButton)
-        avatarCircle.layer.mask = avatarCircleMask
         avatarCircleWhite.equal(.size, to: avatarCircle)
         avatarCircleWhite.center(to: avatarButton)
+        avatarButton.addSubview(avatarIndicatorContainer)
+        avatarIndicatorContainer.alpha = 0
+        avatarIndicatorContainer.fill(in: avatarButton)
+        avatarIndicatorContainer.addSubview(avatarIndicator)
+        avatarIndicator.fill(in: avatarIndicatorContainer)
+        avatarIndicatorContainer.addSubview(avatarCheckImageView)
+        avatarCheckImageView.alpha = 0
+        avatarCheckImageView.constrain(width: 21, height: 16)
+        avatarCheckImageView.center(to: avatarIndicatorContainer)
         menuButton.constrain(width: 40, height: 40)
         menuButton.centerY(to: avatarButton)
         menuButton.pin(.right, to: avatarButton, spacing: 10)
@@ -520,7 +548,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         cameraSwitchButton.equal(.size, to: flashButton)
         cameraSwitchButton.centerX(to: flashButton)
         cameraSwitchCenterY = cameraSwitchButton.centerY(to: menuButton)
-        backButton.constrain(width: 30, height: 30)
+        backButton.constrain(width: 40, height: 40)
         backButton.align(.right, to: recordContainer, inset: 10)
         backButton.centerY(to: menuButton)
         avatarFakeView.hero.id = "avatar"
@@ -553,20 +581,27 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func toggleMenu() {
         menuButton.isSelected = !menuButton.isSelected
-        var alpha: CGFloat = 0
+        var flashButtonAlpha: CGFloat = 0
+        var switchButtonAlpha: CGFloat = 0
+        let offset: CGFloat = 40
         if menuButton.isSelected {
-            alpha = 1
-            let offset: CGFloat = 40
-            flashButtonCenterY?.constant = offset
-            cameraSwitchCenterY?.constant = offset * 2
+            switchButtonAlpha = 1
+            if captureView.isBackCamera {
+                flashButtonCenterY?.constant = offset
+                cameraSwitchCenterY?.constant = offset * 2
+                flashButtonAlpha = 1
+            } else {
+                cameraSwitchCenterY?.constant = offset
+                flashButtonAlpha = 0
+            }
         } else {
             flashButtonCenterY?.constant = 0
             cameraSwitchCenterY?.constant = 0
         }
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut], animations: {
             self.view.layoutIfNeeded()
-            self.flashButton.alpha = alpha
-            self.cameraSwitchButton.alpha = alpha
+            self.flashButton.alpha = flashButtonAlpha
+            self.cameraSwitchButton.alpha = switchButtonAlpha
         }, completion: nil)
     }
     

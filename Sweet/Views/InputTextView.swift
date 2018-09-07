@@ -128,14 +128,14 @@ class InputTextView: UIView {
     private lazy var textView: GrowingTextView = {
         let textView = GrowingTextView()
         textView.placeholder = placehoder
-        textView.placeholderColor = .white
+        textView.placeholderColor = UIColor(white: 1, alpha: 0.5)
         textView.tintColor = textView.placeholderColor
         textView.placeholderLeftMargin = 5
         textView.maxHeight = 200
         textView.backgroundColor = .clear
         textView.delegate = self
         textView.textColor = .white
-        textView.font = UIFont.boldSystemFont(ofSize: 30)
+        textView.font = UIFont.systemFont(ofSize: 30)
         textView.isScrollEnabled = true
         textView.textAlignment = .center
         return textView

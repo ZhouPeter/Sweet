@@ -38,6 +38,7 @@ extension UIScreen {
         return 64 + top
     }
     
+    
     class func safeTopMargin() -> CGFloat {
         let top: CGFloat = isIphoneX() ? 44 : 0
         return top

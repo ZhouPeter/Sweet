@@ -145,7 +145,7 @@ final class ConversationController: MessagesViewController, ConversationView {
         messageInputBar.padding.right = 2
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.backgroundColor = .clear
-        messageInputBar.inputTextView.placeholder = "说点什么"
+        messageInputBar.inputTextView.placeholder = "输入你想说的话"
         messageInputBar.inputTextView.layer.borderWidth = 0
     }
 
@@ -409,7 +409,9 @@ extension ConversationController: MessageCellDelegate {
             let browserDelegate =
                 PhotoBrowserImp(thumbnaiImageViews: [cell.imageView], highImageViewURLs: [URL(string: content.url)!])
             photoBrowserDelegate = browserDelegate
-            let browser = CustomPhotoBrowser(delegate: browserDelegate, originPageIndex: 0)
+            let browser = CustomPhotoBrowser(delegate: browserDelegate,
+                                             photoLoader: SDWebImagePhotoLoader(),
+                                             originPageIndex: 0)
             browser.animationType = .scale
             browser.plugins.append(CustomNumberPageControlPlugin())
             browser.show()
@@ -417,7 +419,10 @@ extension ConversationController: MessageCellDelegate {
         }
         
         if let content = message.content as? OptionCardContent {
-            let preview = OptionCardPreviewController(content: content)
+            let preview = OptionCardPreviewController(content: content, user: self.user)
+            preview.showProfile = { [weak self] (buddyID, setTop, finishBlock) in
+                self?.delegate?.conversationControllerShowsProfile(buddyID: buddyID, setTop: setTop)
+            }
             let popup = PopupController(rootViewController: preview)
             popup.present(in: self)
         } else if let content = message.content as? ContentCardContent {
@@ -520,7 +525,7 @@ extension ConversationController: STPopupPreviewRecognizerDelegate {
         }
         let message = messages[indexPath.section]
         if let content = message.content as? OptionCardContent {
-            return OptionCardPreviewController(content: content)
+            return OptionCardPreviewController(content: content, user: user)
         }
         return nil
     }

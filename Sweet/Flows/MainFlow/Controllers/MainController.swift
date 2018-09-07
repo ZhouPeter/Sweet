@@ -257,6 +257,7 @@ extension MainController: PageboyViewControllerDelegate {
         direction: PageboyViewController.NavigationDirection,
         animated: Bool) {
         updateStatusBar(at: index)
+        NotificationCenter.default.post(name: Notification.Name.ScrollToPage, object: ["index": index])
     }
     
     func pageboyViewController(
@@ -264,7 +265,7 @@ extension MainController: PageboyViewControllerDelegate {
         willScrollToPageAt index: Int,
         direction: PageboyViewController.NavigationDirection,
         animated: Bool) {
-        NotificationCenter.default.post(name: Notification.Name.ScrollToPage, object: ["index": index])
+//        NotificationCenter.default.post(name: Notification.Name.ScrollToPage, object: ["index": index])
     }
     
     private func updateStatusBar(at index: Int) {

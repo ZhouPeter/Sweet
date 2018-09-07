@@ -7,8 +7,8 @@
 //
 
 import UIKit
-let cardCellHeight: CGFloat = UIScreen.mainWidth() * 1.5
-let cardOffset: CGFloat = 10
+let cardCellHeight: CGFloat = floor(UIScreen.mainWidth() * 1.5)
+let cardInsetTop: CGFloat = 10
 class CardsCollectionView: UICollectionView {
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -23,8 +23,8 @@ class CardsCollectionView: UICollectionView {
         layout.itemSize = CGSize(width: UIScreen.mainWidth(), height: cardCellHeight)
         self.init(frame: .zero, collectionViewLayout: layout)
         keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
-        contentInset.top = cardOffset
-        contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardOffset - UIScreen.navBarHeight()
+        contentInset.top = cardInsetTop
+        contentInset.bottom = UIScreen.mainHeight() - cardCellHeight - cardInsetTop - UIScreen.navBarHeight()
         backgroundColor = .clear
         isScrollEnabled = false
         register(cellType: ContentCardCollectionViewCell.self)

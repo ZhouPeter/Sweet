@@ -75,7 +75,7 @@ class UpdateUniversityController: BaseViewController, UpdateProtocol {
     }
     private func setupUI() {
         view.addSubview(searchBar)
-        searchBar.align(.top, to: view, inset: UIScreen.navBarHeight() + 10)
+        searchBar.align(.top, to: view, inset: UIScreen.navBarHeight())
         searchBar.align(.left, to: view)
         searchBar.align(.right, to: view)
         searchBar.constrain(height: 40)

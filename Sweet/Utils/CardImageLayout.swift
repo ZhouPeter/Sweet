@@ -13,7 +13,7 @@ extension ContentCardCollectionViewCell {
     func layout(urls: [URL]?) {
         imageViews.forEach { view in
             view.alpha = 0
-            view.kf.cancelDownloadTask()
+            view.sd_cancelCurrentImageLoad()
         }
         imageIcons.forEach { (view) in
             view.isHidden = true
@@ -27,31 +27,133 @@ extension ContentCardCollectionViewCell {
         }
   
         switch urls.count {
+        case 4, 5:
+            newFour(urls: Array<URL>(urls[0...3]))
+        case 6,7,8:
+            newSix(urls: Array<URL>(urls[0...5]))
+        case 9:
+            newNine(urls: urls)
         case 1:
             one(urls: urls)
         case 2:
             two(urls: urls)
-        case 3, 4:
+        case 3:
             threeOrFour(urls: urls)
-        case 5:
-            five(urls: urls)
-        case 6:
-            six(urls: urls)
-        case 7:
-            seven(urls: urls)
-        case 8:
-            eight(urls: urls)
-        case 9:
-            nine(urls: urls)
+//        case 5:
+//            five(urls: urls)
+//        case 6:
+//            six(urls: urls)
+//        case 7:
+//            seven(urls: urls)
+//        case 8:
+//            eight(urls: urls)
+//        case 9:
+//            nine(urls: urls)
         default:
             break
         }
     }
+    
+    func newFour(urls: [URL]) {
+        let margin: CGFloat = 0
+        let spacing: CGFloat = 3
+        var x = margin
+        var y = margin
+        let width = contentImageView.bounds.width - margin * 2
+        let imageWidth = (width - spacing) / 2
+        let imageHeight = imageWidth
+        let size = CGSize(width: imageWidth, height: imageHeight)
+        titleLabel.layoutIfNeeded()
+        let contentSumHeight = cardCellHeight - 110 -  titleLabel.frame.height
+        let contentHeight = viewModel!.contentHeight
+        let contentMaxHeight = contentSumHeight - (imageHeight * 2 + spacing)
+        contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+        var viewIndex = 0
+        customContent.layoutIfNeeded()
+        y = contentImageView.bounds.height - (imageHeight * 2 + spacing)
+        urls.forEach { (url) in
+            let container = imageViewContainers[viewIndex]
+            
+            container.isHidden = false
+            container.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
+            setImage(url: url, index: viewIndex)
+            x += container.bounds.width + spacing
+            if x + container.bounds.width > width {
+                x = 0
+                y += container.bounds.height + spacing
+            }
+            viewIndex += 1
+        }
+    }
+    
+    func newSix(urls: [URL]) {
+        let margin: CGFloat = 0
+        let spacing: CGFloat = 3
+        var x = margin
+        var y = margin
+        let width = contentImageView.bounds.width - margin * 2
+        let imageWidth = (width - spacing * 2) / 3
+        let imageHeight = imageWidth
+        let size = CGSize(width: imageWidth, height: imageHeight)
+        titleLabel.layoutIfNeeded()
+        let contentSumHeight = cardCellHeight - 110 -  titleLabel.frame.height
+        let contentHeight = viewModel!.contentHeight
+        let contentMaxHeight = contentSumHeight - (imageHeight * 2 + spacing)
+        contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+        var viewIndex = 0
+        customContent.layoutIfNeeded()
+        y = contentImageView.bounds.height - (imageHeight * 2 + spacing)
+        urls.forEach { (url) in
+            let container = imageViewContainers[viewIndex]
+            container.isHidden = false
+            container.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
+            setImage(url: url, index: viewIndex)
+            x += container.bounds.width + spacing
+            if x + container.bounds.width > width {
+                x = 0
+                y += container.bounds.height + spacing
+            }
+            viewIndex += 1
+        }
+    }
+    
+    func newNine(urls: [URL]) {
+        let margin: CGFloat = 0
+        let spacing: CGFloat = 3
+        var x = margin
+        var y = margin
+        let width = contentImageView.bounds.width - margin * 2
+        let imageWidth = (width - spacing * 2) / 3
+        let imageHeight = imageWidth
+        let size = CGSize(width: imageWidth, height: imageHeight)
+        titleLabel.layoutIfNeeded()
+        let contentSumHeight = cardCellHeight - 110 -  titleLabel.frame.height
+        let contentHeight = viewModel!.contentHeight
+        let contentMaxHeight = contentSumHeight - (imageHeight * 3 + 2 * spacing)
+        contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+        var viewIndex = 0
+        customContent.layoutIfNeeded()
+        y = contentImageView.bounds.height - (imageHeight * 3 + 2 * spacing)
+        urls.forEach { (url) in
+            let container = imageViewContainers[viewIndex]
+            container.isHidden = false
+            container.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
+            setImage(url: url, index: viewIndex)
+            x += container.bounds.width + spacing
+            if x + container.bounds.width > width {
+                x = 0
+                y += container.bounds.height + spacing
+            }
+            viewIndex += 1
+        }
+    }
+    
     func zero() {
         titleLabel.layoutIfNeeded()
         let contentHeight = viewModel!.contentHeight
-        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height - (sourceInfoView.isHidden ? 0 : 80)
+        let contentMaxHeight = cardCellHeight - 110 -  titleLabel.frame.height
         contentLabelHeight?.constant = min(contentHeight, contentMaxHeight)
+        
     }
     
     func one(urls: [URL]) {
@@ -529,7 +631,7 @@ extension ContentCardCollectionViewCell {
 
         SDWebImageManager.shared.loadImage(
                with: url,
-               options: [],
+               options: [.decodeFirstFrameOnly],
                progress: nil) { (image, data, _, _, _, _) in
                 guard let image = image else { return }
                 imageView.image = nil

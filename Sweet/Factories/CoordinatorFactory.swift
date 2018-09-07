@@ -22,6 +22,7 @@ protocol CoordinatorFactory {
                                 router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeProfileCoordinator(user: User,
                                 buddyID: UInt64,
+                                setTop: SetTop?,
                                 navigation: UINavigationController?) -> Coordinator & ProfileCoordinatorOutput
     func makeStoryPlayerCoordinator(
         user: User,

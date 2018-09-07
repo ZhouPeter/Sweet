@@ -22,8 +22,8 @@ ProfileFlowFactory {
         return viewController
     }
     
-    func makeProfileAboutOutput(user: UserResponse, updateRemain: UpdateRemainResponse) -> AboutView {
-        let viewController = AboutController(user: user, updateRemain: updateRemain)
+    func makeProfileAboutOutput(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting) -> AboutView {
+        let viewController = AboutController(user: user, updateRemain: updateRemain, setting: setting)
         return viewController
     }
 

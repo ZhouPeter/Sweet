@@ -18,6 +18,27 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
         button.addTarget(self, action: #selector(didPressCameraButton(button:)), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var tipLabel: UILabel = {
+        let label = UILabel()
+        label.text = "tips：完整的个人资料可以在“主页-设置”中修改"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+    private lazy var nextButton: ShrinkButton = {
+        let button = ShrinkButton()
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("下一步", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.backgroundColor = .black
+        button.alpha = 0.5
+        button.isUserInteractionEnabled = false
+        button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.xpYellow()
@@ -28,11 +49,24 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
         
     }
     
+    @objc private func nextAction(_ sender: UIButton) {
+        self.showSignUpPhone?(self.loginRequestBody)
+    }
+    
     private func setupUI() {
         view.addSubview(cameraButton)
         cameraButton.center(to: view, offsetY: -50)
         cameraButton.constrain(width: 100, height: 100)
         cameraButton.setViewRounded(borderWidth: 1, borderColor: UIColor.xpDarkGray())
+        view.addSubview(nextButton)
+        nextButton.constrain(height: 50)
+        nextButton.align(.left, inset: 28)
+        nextButton.align(.right, inset: 28)
+        nextButton.align(.bottom, inset: 120 + UIScreen.safeBottomMargin())
+        nextButton.setViewRounded()
+        view.addSubview(tipLabel)
+        tipLabel.pin(.top, to: nextButton, spacing: 10)
+        tipLabel.centerX(to: nextButton)
     }
 
     @objc private func didPressCameraButton(button: UIButton) {
@@ -96,8 +130,9 @@ extension SignUpAvatarController: UINavigationControllerDelegate, UIImagePickerC
                     return
                 }
                 self.cameraButton.setImage(newImage, for: .normal)
+                self.nextButton.isUserInteractionEnabled = true
+                self.nextButton.alpha = 1
                 self.loginRequestBody.avatar = response.host + response.key
-                self.showSignUpPhone?(self.loginRequestBody)
             }
         } catch {
             logger.debug(error)

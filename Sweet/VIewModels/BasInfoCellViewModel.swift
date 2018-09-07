@@ -11,30 +11,26 @@ import SwiftyUserDefaults
 struct BaseInfoCellViewModel {
     let userId: UInt64
     let avatarImageURL: URL
-    let nicknameSexAttributedString: NSAttributedString
+    let nicknameString: String
     let collegeInfoString: String
     let starContactString: String
     let signatureString: String
-    let isHiddenEdit: Bool
+    let isEditSignature: Bool
     let cellHeight: CGFloat
+    let sexImage: UIImage
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
-        let string = "\(user.nickname)" +  (user.gender == .male ? "♂" : "♀")
-        let attributedString = NSMutableAttributedString(string: string, attributes: [
-            .font: UIFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: UIColor.black
-            ])
-        attributedString.addAttribute(.foregroundColor,
-                                    value: user.gender == .male ? UIColor(hex: 0x4A90E2) : UIColor(hex: 0xB761F9),
-                                    range: NSRange(location: user.nickname.utf16.count, length: 1))
-        nicknameSexAttributedString = attributedString
+        nicknameString = user.nickname
+        sexImage = user.gender == .male ? #imageLiteral(resourceName: "Man") : #imageLiteral(resourceName: "Woman")
         let userID = UInt64(Defaults[.userID] ?? "0")
         starContactString = "\(user.likeCount == 0 ? "暂无" : "\(user.likeCount)")获赞"
                             + (user.common == 0 ? "" : "·\(user.common)共同联系人")
-        collegeInfoString = user.universityName + "·" + user.collegeName + "·" + "\(user.enrollment)级"
+        collegeInfoString = user.universityName +
+                            (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
+                            (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
-        isHiddenEdit = userID == user.userId ? user.signature != "" : true
-        cellHeight = 244
+        isEditSignature = userID == user.userId
+        cellHeight = 200
     }
 }

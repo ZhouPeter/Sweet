@@ -53,7 +53,7 @@ enum WebAPI {
     case storyRead(storyId: UInt64, fromCardId: String?)
     case storyTopics
     case searchTopic(topic: String)
-    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?, comment: String?, desc: String?, rawUrl: String?)
+    case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?, comment: String?, desc: String?, rawUrl: String?, fromCardId: String?)
     case delStory(storyId: UInt64)
     case socketAddress
     case removeRecentMessage(userID: UInt64)
@@ -73,8 +73,9 @@ enum WebAPI {
     case getVersion
     case reportUser(userID: UInt64)
     case feedback(comment: String, type: Int)
-    case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?)
+    case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?, toUserId: String?, activityId: String?, storyId: String?)
     case recentStoryList(userID: UInt64)
+    case updateSetting(autoPlay: Bool, showMsg: Bool)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -210,6 +211,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/card/action/log"
         case .recentStoryList:
             return "/story/list"
+        case .updateSetting:
+            return "/user/setting/update"
         }
     }
     
@@ -285,7 +288,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
              let .delStory(storyId),
              let .reportStory(storyId):
             parameters = ["storyId": storyId]
-        case let .publishStory(url, type, topic, center, points, comment, desc, rawUrl):
+        case let .publishStory(url, type, topic, center, points, comment, desc, rawUrl, fromCardId):
             parameters = ["content": url, "type": type.rawValue]
             if let topic = topic {
                 parameters["tag"] = topic
@@ -305,6 +308,9 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
             if let rawUrl = rawUrl {
                 parameters["url"] = rawUrl
+            }
+            if let fromCardId = fromCardId {
+                parameters["fromCardId"] = fromCardId
             }
         case let .commentCard(cardId, emoji):
             parameters = ["cardId": cardId, "emoji": emoji]
@@ -343,11 +349,16 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["userId": userID]
         case .feedback(let comment, let type):
             parameters = ["comment": comment, "type": type]
-        case let .cardActionLog(action, cardId, sectionId, contentId, preferenceId):
+        case let .cardActionLog(action, cardId, sectionId, contentId, preferenceId, toUserId, activityId, storyId):
             parameters = ["action" : action, "cardId": cardId]
             parameters["sectionId"] = sectionId
             parameters["contentId"] = contentId
             parameters["preferenceId"] = preferenceId
+            parameters["toUserId"] = toUserId
+            parameters["activityId"] = activityId
+            parameters["storyId"] = storyId
+        case let .updateSetting(autoPlay, showMsg):
+            parameters = ["autoPlay": autoPlay, "showMsg": showMsg]
         default:
             break
         }

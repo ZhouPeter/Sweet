@@ -14,6 +14,7 @@ struct ArticleMessageContent: MessageContent {
     let title: String
     let content: String
     let articleURL: String
+    var source: String?
     
     enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -21,5 +22,6 @@ struct ArticleMessageContent: MessageContent {
         case articleURL = "url"
         case title = "title"
         case content = "text"
+        case source = "source"
     }
 }

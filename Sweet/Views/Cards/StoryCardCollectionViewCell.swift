@@ -17,8 +17,8 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverImageView.animationImages = nil
         coverImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
+            effectView.alpha = 0
             if viewModel.type == .poke {
-//                coverImageView.kf.setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 coverImageView.sd_setImage(with: videoURL.videoThumbnail(size: coverImageView.frame.size))
                 pokeView.isHidden = false
                 let centerX = viewModel.pokeCenter.x * contentView.bounds.width
@@ -26,11 +26,18 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
                 pokeViewCenterXConstraint?.constant = centerX
                 pokeViewCenterYConstraint?.constant = centerY
             } else {
-                coverImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: coverImageView.frame.size)
+                coverImageView.setAnimationImages(withVideoURL: videoURL, animationDuration: 0.5, count: 3, size: coverImageView.frame.size)
                 pokeView.isHidden = true
             }
         } else {
-            coverImageView.sd_setImage(with: viewModel.imageURL)
+            coverImageView.sd_setImage(with: viewModel.imageURL) { (image, _, _, _) in
+                if viewModel.type == .share {
+                    self.effectView.alpha = 1
+                    self.commentLabel.text = viewModel.commentString
+                } else {
+                    self.effectView.alpha = 0
+                }
+            }
             pokeView.isHidden = true
         }
         avatarImageView.sd_setImage(with: viewModel.avatarImageURL)
@@ -78,16 +85,37 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         label.textColor = .white
         return label
     }()
+    private lazy var effectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        return effectView
+    }()
     
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.enableShadow()
+        return label
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
         coverMaskView.layer.cornerRadius = 5
+        coverMaskView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
+        coverMaskView.layer.borderWidth = 0.5
         coverImageView.layer.cornerRadius = 5
         avatarImageView.layer.cornerRadius = 24
         setupUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        commentLabel.text = ""
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -99,13 +127,17 @@ class StoryCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdat
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        coverImageView.addSubview(effectView)
+        effectView.fill(in: coverImageView)
+        contentView.addSubview(commentLabel)
+        commentLabel.align(.left, inset: 5)
+        commentLabel.align(.right, inset: 5)
+        commentLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
+        commentLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         contentView.addSubview(pokeView)
         pokeView.constrain(width: 50, height: 50)
         pokeViewCenterXConstraint = pokeView.centerX(to: contentView)
         pokeViewCenterYConstraint = pokeView.centerY(to: contentView)
-//        contentView.addSubview(infoLabel)
-//        infoLabel.centerX(to: contentView)
-//        infoLabel.align(.bottom, to: contentView, inset: 16)
         contentView.addSubview(nameLabel)
         nameLabel.centerX(to: contentView)
         nameLabel.align(.bottom, inset: 5)

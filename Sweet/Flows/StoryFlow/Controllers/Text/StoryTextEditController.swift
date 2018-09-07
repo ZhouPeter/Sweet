@@ -306,9 +306,9 @@ final class StoryTextEditController: UIViewController {
             center.y += textTransform.translation.y
         }
         rect = textView.frame.applying(transform)
-        let length = max(max(rect.width, rect.height), 100)
-        rect.size.width = length
-        rect.size.height = length
+        let minLength: CGFloat = 100
+        rect.size.width = max(rect.width, minLength)
+        rect.size.height = max(rect.height, minLength)
         textBoundingView.frame = rect
         textBoundingView.center = view.convert(center, from: textViewContainer)
     }

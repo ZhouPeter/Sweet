@@ -26,9 +26,16 @@ struct LoginResponse: Codable {
     let register: Bool //isNew
     let token: String
     let user: User
+    let setting: UserSetting?
     
     static func remove() {
         Defaults.remove(.token)
         Defaults.remove(.userID)
     }
+}
+
+struct UserSetting: Codable {
+    let userId: UInt64
+    let autoPlay: Bool
+    let showMsg: Bool    
 }

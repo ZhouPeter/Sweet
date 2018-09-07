@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ContactTableViewCell: UITableViewCell {
 
@@ -114,7 +115,7 @@ class ContactTableViewCell: UITableViewCell {
     
     func update(viewModel: ContactViewModel) {
         userId = viewModel.userId
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
@@ -144,9 +145,14 @@ class ContactTableViewCell: UITableViewCell {
     
     func updatePhoneContact(viewModel: PhoneContactViewModel) {
         phone = viewModel.phone
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
         avatarImageView.layer.mask = avatarImageViewMaskLayer
-        avatarLabel.text = viewModel.firstNameString
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
+        if let image = viewModel.placeholderAvatar {
+            avatarImageView.image = image
+            avatarLabel.text = ""
+        } else {
+            avatarLabel.text = viewModel.firstNameString
+        }
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
         statusButton.isHidden = viewModel.isHiddenButton
@@ -160,11 +166,16 @@ class ContactTableViewCell: UITableViewCell {
     
     func updateSectionWithButton(viewModel: ContactSubcriptionSectionViewModel) {
         sectionId = viewModel.sectionId
-        avatarImageView.kf.setImage(with: viewModel.avatarURL)
+        avatarImageView.sd_setImage(with: viewModel.avatarURL)
         avatarImageView.setViewRounded(cornerRadius: 5, corners: .allCorners)
         avatarLabel.text = ""
         nameLabel.text = viewModel.nameString
         infoLabel.text = viewModel.infoString
+        if viewModel.infoString == "" {
+            nameCenterYConstraints?.constant = 0
+        } else {
+            nameCenterYConstraints?.constant = -10
+        }
         statusButton.isHidden = viewModel.isHiddenButton
         statusButton.setTitle(viewModel.buttonTitle, for: .normal)
         statusButton.setButtonStyle(style: viewModel.buttonStyle)

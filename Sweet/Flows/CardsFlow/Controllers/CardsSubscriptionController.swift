@@ -32,15 +32,15 @@ class CardsSubscriptionController: CardsBaseController, CardsSubscriptionView {
             cardRequest: .sub(cardId: subCardsLastID, direction: Direction.recover)) {
                 [weak self] (success, _) in
                 if success {
-                    self?.collectionView.reloadData()
-                    self?.collectionView.performBatchUpdates(nil, completion: { (_) in
+                    self?.mainView.collectionView.reloadData()
+                    self?.mainView.collectionView.performBatchUpdates(nil, completion: { (_) in
                         self?.changeCurrentCell()
                     })
                 }
             }
         } else {
             changeCurrentCell()
-
         }
     }
+    
 }

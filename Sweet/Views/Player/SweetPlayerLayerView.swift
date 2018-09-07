@@ -26,6 +26,7 @@ enum SweetPlayerState {
     case bufferFinished
     case playedToTheEnd
     case error
+    case notFoundURL
 }
 
 /**
@@ -78,9 +79,9 @@ class SweetPlayerLayerView: UIView {
     }
     var isPlaying: Bool = false {
         didSet {
-            if oldValue != isPlaying {
+//            if oldValue != isPlaying {
                 delegate?.sweetPlayer(player: self, playerIsPlaying: isPlaying)
-            }
+//            }
         }
     }
     var isVideoMuted: Bool = true {
@@ -103,7 +104,7 @@ class SweetPlayerLayerView: UIView {
     fileprivate var lastPlayerItem: AVPlayerItem?
     
     /// playerLayer
-    fileprivate var playerLayer: AVPlayerLayer?
+    var playerLayer: AVPlayerLayer?
 
     /// 播放器的几种状态
     fileprivate var state = SweetPlayerState.notSetURL {
@@ -193,7 +194,6 @@ class SweetPlayerLayerView: UIView {
                                              width: width,
                                              height: self.bounds.height)
         }
-    
     }
     
     func playerToNil() {
@@ -297,8 +297,8 @@ class SweetPlayerLayerView: UIView {
         
         if let item = playerItem {
             addPlayerNotifications()
-            statusToken = item.observe(\.status, options: .new) { (_, _) in
-                if self.player?.status == .readyToPlay {
+            statusToken = item.observe(\.status, options: .new) { (object, _) in
+                if object.status == .readyToPlay {
                     self.state = .buffering
                     if self.shouldSeekTo != 0 {
                         logger.debug("SweetPlayerLayer | Should seek to \(self.shouldSeekTo)")
@@ -314,8 +314,17 @@ class SweetPlayerLayerView: UIView {
                         self.hasReadyToPlay = true
                         self.state = .readyToPlay
                     }
-                } else if self.player?.status == .failed {
-                    self.state = .error
+                } else if object.status == .failed {
+                    if let error = object.error {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102  {
+                            self.state = .notFoundURL
+                        } else{
+                            self.state = .error
+                        }
+                    } else {
+                        self.state = .error
+                    }
                 }
             }
             loadedToken = item.observe(\.loadedTimeRanges, options: .new, changeHandler: { (_, _) in
@@ -412,6 +421,7 @@ class SweetPlayerLayerView: UIView {
             initPlayerNoAsset(player: player)
         }
 
+
     }
     
     fileprivate func initPlayerNoAsset(player: AVPlayer) {
@@ -469,7 +479,16 @@ class SweetPlayerLayerView: UIView {
                 if playerItem.isPlaybackLikelyToKeepUp || playerItem.isPlaybackBufferFull {
                     self.state = .bufferFinished
                 } else if  playerItem.status == .failed {
-                    self.state = .error
+                    if let error = playerItem.error {
+                        let code = (error as NSError).code
+                        if code == -1100 || code == -1102 {
+                            self.state = .notFoundURL
+                        } else{
+                            self.state = .error
+                        }
+                    } else {
+                        self.state = .error
+                    }
                 } else if playerItem.isPlaybackBufferEmpty {
                     self.state = .buffering
                 } else {
@@ -485,9 +504,6 @@ class SweetPlayerLayerView: UIView {
                     if player.currentTime() >= currentItem.duration {
                         moviePlayDidEnd()
                         return
-                    }
-                    if currentItem.isPlaybackLikelyToKeepUp || currentItem.isPlaybackBufferFull {
-                        
                     }
                 }
             }

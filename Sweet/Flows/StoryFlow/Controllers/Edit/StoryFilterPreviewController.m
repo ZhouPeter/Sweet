@@ -23,7 +23,6 @@
 @property (assign, nonatomic) NSUInteger filterIndex;
 @property (assign, nonatomic) BOOL isPhoto;
 @property (strong, nonatomic) AVPlayer *audioPlayer;
-
 @property (strong, nonatomic) CAShapeLayer *maskLayer;
 @property (assign, nonatomic) CGFloat maskRatio;
 @property (strong, nonatomic) LookupFilter *backFilter;
@@ -31,6 +30,7 @@
 @property (assign, nonatomic) BOOL isFilterSwitching;
 @property (strong, nonatomic) NSMutableArray <NSString *> *filterNames;
 @property (assign, nonatomic) BOOL isScaleFilled;
+@property (strong, nonatomic) NSURL *fileURL;
 
 @end
 
@@ -40,6 +40,7 @@
     if (self = [super initWithNibName:nil bundle:nil]) {
         self.isPhoto = isPhoto;
         self.isScaleFilled = isScaleFilled;
+        self.fileURL = url;
         if (isPhoto) {
             GPUImagePicture *picture = [[GPUImagePicture alloc] initWithURL:url];
             self.output = picture;
@@ -90,7 +91,7 @@
 #pragma mark - Private
 
 - (void)setupPreviews {
-    GPUImageFillModeType fillMode =
+    GPUImageFillModeType fillMode = 
     self.isScaleFilled ? kGPUImageFillModePreserveAspectRatioAndFill : kGPUImageFillModePreserveAspectRatio;
     
     self.backPreview = [[GPUImageView alloc] initWithFrame:self.view.bounds];
@@ -120,6 +121,14 @@
     [path addLineToPoint:CGPointMake(self.forePreview.bounds.size.width, halfHeight)];
     self.maskLayer.path = path.CGPath;
     self.forePreview.layer.mask = self.maskLayer;
+    
+    if (!self.isPhoto) {
+        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:self.fileURL];
+        UIInterfaceOrientation orientation = [self orientationForTrack:playerItem.asset];
+        GPUImageRotationMode rotation = [self imageRotationModeFor:orientation];
+        [self.backPreview setInputRotation:rotation atIndex:0];
+        [self.forePreview setInputRotation:rotation atIndex:0];
+    }
 }
 
 - (void)setupFilters {
@@ -178,6 +187,37 @@
     if (self.isPhoto) {
         [(GPUImagePicture *)self.output processImage];
     }
+}
+
+- (GPUImageRotationMode)imageRotationModeFor:(UIInterfaceOrientation)orientation {
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return kGPUImageRotate180;
+    }
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return kGPUImageNoRotation;
+    }
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return kGPUImageRotateRight;
+    }
+    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return kGPUImageRotateLeft;
+    }
+    return kGPUImageNoRotation;
+}
+
+- (UIInterfaceOrientation)orientationForTrack:(AVAsset *)asset {
+    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    CGAffineTransform transform = videoTrack.preferredTransform;
+    if (transform.a == -1 && transform.d == -1) {
+        return UIInterfaceOrientationLandscapeRight;
+    }
+    if (transform.a == 1 && transform.d == 1) {
+        return UIInterfaceOrientationLandscapeLeft;
+    }
+    if (transform.b == -1 && transform.c == 1) {
+        return UIInterfaceOrientationPortraitUpsideDown;
+    }
+    return UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - Actions

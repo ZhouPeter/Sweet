@@ -99,7 +99,7 @@ class StoryUVController: BaseViewController {
         view.addSubview(bottomClearButton)
         bottomClearButton.constrain(width: 50, height: 50)
         bottomClearButton.centerX(to: view)
-        bottomClearButton.align(.bottom, inset: 25 + UIScreen.safeBottomMargin())
+        bottomClearButton.align(.bottom, inset: 25)
     }
     
     @objc private func didPressClose(sender: UIButton) {

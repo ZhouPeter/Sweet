@@ -9,4 +9,5 @@
 import Foundation
 protocol SignUpUniversityView: BaseView {
     var showSignUpCollege: ((LoginRequestBody) -> Void)? { get set }
+    var showSignUpSex: ((LoginRequestBody) -> Void)? { get set }
 }

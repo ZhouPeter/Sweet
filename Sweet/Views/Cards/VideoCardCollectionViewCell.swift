@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SDWebImage
 protocol VideoCardCollectionViewCellDelegate: NSObjectProtocol {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String)
 }
@@ -41,6 +42,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         controlView.addGestureRecognizer(tap)
         view.backgroundColor = .black
         view.isUserInteractionEnabled = true
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
         return view
     }()
         
@@ -62,6 +65,15 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         super.init(frame: frame)
         setupUI()
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentImageView.image = nil
+        playerView.placeholderImageView.image = nil
+        playerView.playerLayer?.resetPlayer()
+        playerView.controlView.hideLoader()
+    }
+    
     private var contentViewHeight: NSLayoutConstraint?
     private var contentLabelHeight: NSLayoutConstraint?
     private func setupUI() {
@@ -102,7 +114,32 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 self.contentLabel.lineBreakMode = .byTruncatingTail
             }
         }
-        contentImageView.kf.setImage(with:  viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail() )
+        let cacheKey = SDWebImageManager.shared.cacheKey(for: viewModel.videoURL)
+        playerView.placeholderImageView.isHidden = false
+        if let firstImage = SDImageCache.shared.imageFromCache(forKey: cacheKey) {
+            playerView.placeholderImageView.image = firstImage
+        } else {
+            DispatchQueue.global().async {
+                let asset = AVURLAsset(url: viewModel.videoURL)
+                let assetGen =  AVAssetImageGenerator(asset: asset)
+                assetGen.requestedTimeToleranceAfter = CMTimeMakeWithSeconds(5, 600)
+                assetGen.requestedTimeToleranceBefore = CMTimeMakeWithSeconds(5, 600)
+                assetGen.appliesPreferredTrackTransform = true
+                let time = CMTimeMakeWithSeconds(5, 600)
+                var actualTime = CMTimeMake(0,0)
+                do {
+                    let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
+                    let image = UIImage(cgImage: imageRef)
+                    DispatchQueue.main.async {
+                        SDImageCache.shared.store(image, forKey: cacheKey, toDisk: true, completion: nil)
+                        self.playerView.placeholderImageView.image = image
+                    }
+                } catch {
+                    self.playerView.placeholderImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())
+                    logger.debug(error)
+                }
+            }
+        }
         resetEmojiView()
         loadItemValues()
 
@@ -122,7 +159,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     
     private func loadItemValues() {
-        
         if let asset = playerView.avPlayer?.currentItem?.asset, asset.isPlayable,
             let urlAsset = asset as? AVURLAsset,
             urlAsset.url == viewModel!.videoURL {
@@ -148,6 +184,8 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
         let contentMaxHeight = videoContentSumHeight - videoWidth
         let naturalSize = track.naturalSize
+//        logger.debug(viewModel.contentTextAttributed ?? "")
+//        logger.debug(naturalSize)
         if naturalSize.width < naturalSize.height {
             var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
             if contentLabel.text == "" || contentLabel.text == nil {
@@ -161,14 +199,12 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
                 videoHeight = videoWidth
             }
             contentViewHeight?.constant = videoHeight
-            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
+            contentLabelHeight?.constant =  min(contentHeight, contentMaxHeight)
         } else {
-            let videoHeight = videoWidth
-            let contentMaxHeight = videoContentSumHeight - videoHeight
-            let contentHeight = viewModel.contentHeight
-            contentLabelHeight?.constant = min(contentMaxHeight, contentHeight)
-            contentViewHeight?.constant = videoHeight
+            contentLabelHeight?.constant =  min(contentHeight, contentMaxHeight)
+            contentViewHeight?.constant = videoContentSumHeight - min(contentHeight, contentMaxHeight)
         }
+
         for subview in contentImageView.subviews {
             if let subview = subview as? SweetPlayerView {
                 customContent.layoutIfNeeded()

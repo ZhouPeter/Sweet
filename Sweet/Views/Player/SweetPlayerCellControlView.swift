@@ -19,6 +19,24 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
             }
         }
     }
+    
+    private var playerButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "VideoPlay"), for: .normal)
+        button.tag = SweetPlayerControlView.ButtonType.play.rawValue
+        button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
+    private lazy var noPlayMask: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.isUserInteractionEnabled = false
+        view.isHidden = true
+        return view
+    }()
+    
     private lazy var voiceButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Mute"), for: .normal)
@@ -54,6 +72,11 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
         addSubview(timeLabel)
         timeLabel.align(.right, inset: 10)
         timeLabel.align(.bottom, inset: 6)
+        addSubview(noPlayMask)
+        noPlayMask.fill(in: self)
+        addSubview(playerButton)
+        playerButton.constrain(width: 80, height: 80)
+        playerButton.center(to: self)
     }
     override func playTimeDidChange(currentTime: TimeInterval, totalTime: TimeInterval) {
         DispatchQueue.main.async {
@@ -62,5 +85,19 @@ class SweetPlayerCellControlView: SweetPlayerControlView {
             self.progressView.progress = Float(currentTime / totalTime)
         }
     }
+    
+    override func prepareUI(for resource: SweetPlayerResource, selectedIndex index: Int = 0) {
+        super.prepareUI(for: resource, selectedIndex: index)
+        playerButton.isHidden = false
+        noPlayMask.isHidden = false
+    }
+    override func playStateDidChange(isPlaying: Bool) {
+        if isPlaying {
+            playerButton.isHidden = isPlaying
+            noPlayMask.isHidden = isPlaying
+        }
+    }
+    
+    
 
 }

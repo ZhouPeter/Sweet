@@ -11,7 +11,9 @@ import Foundation
 extension String {
     
     func checkPhone() -> Bool {
-        return count == 11
+        let scan: Scanner = Scanner(string: self)
+        var val: Int = 0
+        return scan.scanInt(&val) && scan.isAtEnd && count == 11
     }
     
     func checkTel() -> Bool {

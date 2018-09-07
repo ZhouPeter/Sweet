@@ -59,4 +59,10 @@ struct ContactSubcriptionSectionViewModel {
         self.buttonTitle = "已订阅"
         self.buttonStyle = .borderBlue
     }
+    
+    init(model: SubcriptionSection, title: String, style: ContactButtonStyle) {
+        self.init(model: model)
+        self.buttonTitle = title
+        self.buttonStyle = style
+    }
 }

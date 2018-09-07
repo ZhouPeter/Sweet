@@ -26,7 +26,7 @@ struct LongTextCardViewModel {
     let sourceText: String?
     init(model: CardResponse) {
         titleString = model.name!
-        let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 14),
+        let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 16),
                                                                     textColor: .black,
                                                                     lineSpacing: 5)
         contentTextAttributed = attributedText

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import SwiftyUserDefaults
+import Reachability
 enum Direction: Int {
     case unknown = 0
     case down = 2
@@ -24,7 +25,6 @@ var isVideoMuted = true
 class CardsBaseController: BaseViewController, CardsBaseView {
     weak var delegate: CardsBaseViewDelegate?
     var user: User
-
     public var index = 0 {
         didSet {
             if index > maxIndex { maxIndex = index }
@@ -42,25 +42,24 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     public var cards = [CardResponse]()
     public var activityCardId: String?
     public var activityId: String?
-    public lazy var collectionView: CardsCollectionView = {
-        let collectionView = CardsCollectionView()
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        pan = PanGestureRecognizer(direction: .vertical, target: self, action: #selector(didPan(_:)))
-        collectionView.addGestureRecognizer(pan)
-        cotentOffsetToken = collectionView.observe(
+    
+    lazy var mainView: CardsPageCollectionView = {
+        let view = CardsPageCollectionView()
+        view.dataSoure = self
+        view.delegate = self
+        cotentOffsetToken = view.collectionView.observe(
             \.contentOffset,
             options: [.new, .old],
             changeHandler: { [weak self] (object, change) in
                 guard let `self` = self else { return }
                 if change.newValue == change.oldValue { return }
-                if floor(object.contentOffset.y + cardOffset)  == floor(CGFloat(self.index) * cardCellHeight) {
+                if floor(object.contentOffset.y + cardInsetTop)  == floor(CGFloat(self.index) * cardCellHeight) {
                     if self.lastIndex == self.index { return }
                     self.changeCurrentCell()
                     self.lastIndex = self.index
                 }
         })
-        return collectionView
+        return view
     }()
     private lazy var downButton: UIButton = {
         let button = UIButton()
@@ -71,23 +70,21 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     }()
     private var maxIndex = 0
     private var lastIndex = 0
-    private var delayItem: DispatchWorkItem?
-    private var pan: PanGestureRecognizer!
     private var cotentOffsetToken: NSKeyValueObservation?
     private lazy var emptyView: EmptyEmojiView = {
         if self is CardsAllController {
-            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
-            return view
+            return EmptyEmojiView(image: #imageLiteral(resourceName: "AllEmptyEmoji"), title: "内容暂时没有了")
         } else {
-            let view = EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页发现有趣的内容")
-            return view
+            return EmptyEmojiView(image: #imageLiteral(resourceName: "EmptyEmoji"), title: "快去首页发现有趣的内容")
         }
     }()
     
     private var isFetchLoadCards = false
-    
+    private var isPreloadingCards = false
     private var avPlayer: AVPlayer?
- 
+    private var storage: Storage?
+    private var reachability = Reachability()
+    private var isWifi = false
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "说点有意思的"
@@ -103,14 +100,15 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = Storage(userID: user.userId)
         view.backgroundColor = UIColor.xpGray()
-        view.addSubview(collectionView)
-        collectionView.fill(in: view)
+        view.addSubview(mainView)
+        mainView.fill(in: view)
         if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
+            mainView.collectionView.contentInsetAdjustmentBehavior = .never
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
@@ -118,52 +116,72 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reachabilityChanged(note:)),
+                                               name: .reachabilityChanged,
+                                               object: reachability)
+       try? reachability?.startNotifier()
+        
+    }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        let reachability = note.object as! Reachability
+        switch reachability.connection {
+        case .wifi:
+            sweetPlayerConf.shouldAutoPlay = true
+            isWifi = true
+        default:
+            isWifi = false
+            readSetting()
+        }
+    }
+    
+    private func readSetting() {
+        storage?.read({ (realm) in
+            guard let settingData = realm.object(ofType: SettingData.self, forPrimaryKey: self.user.userId) else { return }
+            if self.isWifi {
+                sweetPlayerConf.shouldAutoPlay = true
+            } else {
+                sweetPlayerConf.shouldAutoPlay = settingData.autoPlay
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        readSetting()
         if let avPlayer = avPlayer, view.alpha != 0 {
-            if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+            if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+                let autoPlay = sweetPlayerConf.shouldAutoPlay
+                if let isPlaying = cell.playerView.avPlayer?.isPlaying {
+                    sweetPlayerConf.shouldAutoPlay = isPlaying
+                } else if let isPlaying = cell.playerView.savePlayer?.isPlaying {
+                    sweetPlayerConf.shouldAutoPlay = isPlaying
+                }
                 cell.playerView.setAVPlayer(player: avPlayer)
+                sweetPlayerConf.shouldAutoPlay = autoPlay
             }
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
+        if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
             cell.playerView.pauseWithRemove(isRemove: true)
         }
     }
     
-    
-    func setViewHidden(isHidden: Bool) {
-        if isHidden {
-            for cell in collectionView.visibleCells {
-                if let cell = cell as? VideoCardCollectionViewCell {
-                    cell.playerView.pause()
-                }
-            }
-        } else {
-            for cell in collectionView.visibleCells {
-                if let cell = cell as? VideoCardCollectionViewCell,
-                    let indexPath = collectionView.indexPath(for: cell),
-                    indexPath.item == index {
-                    cell.playerView.isVideoMuted = isVideoMuted
-                    cell.playerView.play()
-                }
-            }
-        }
-    }
-
     deinit {
+        VideoCardPlayerManager.shared.clean()
         cotentOffsetToken?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
         logger.debug("首页释放")
     }
     
     private func showEmptyView(isShow: Bool) {
         if isShow {
             if emptyView.superview != nil { return }
-            collectionView.addSubview(emptyView)
+            mainView.addSubview(emptyView)
             if self is CardsAllController {
                 if isFetchLoadCards {
                     emptyView.update(image: #imageLiteral(resourceName: "CardLoading"), title: "加载中")
@@ -173,8 +191,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             }
             emptyView.frame = CGRect(x: 0,
                                      y: -10,
-                                     width: collectionView.bounds.width,
-                                     height: collectionView.bounds.height + 11)
+                                     width: mainView.bounds.width,
+                                     height: mainView.bounds.height + 11)
         } else {
             emptyView.removeFromSuperview()
         }
@@ -195,26 +213,9 @@ class CardsBaseController: BaseViewController, CardsBaseView {
 
 // MARK: - Actions
 extension CardsBaseController {
-    @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
-        view.endEditing(true)
-        let point = gesture.location(in: nil)
-        if gesture.state == .began {
-            panPoint = point
-            panOffset = collectionView.contentOffset
-        } else if gesture.state == .changed {
-            guard let start = panPoint, var offset = panOffset else { return }
-            let translation = point.y - start.y
-            offset.y -= translation
-            collectionView.contentOffset = offset
-        } else {
-            gesture.isEnabled = false
-            let velocityY = gesture.velocity(in: nil).y
-            scrollCard(withPoint: point, velocityY: velocityY)
-        }
-    }
     @objc private func didPressDownButton(_ sender: UIButton) {
         index = maxIndex
-        scrollTo(row: index)
+        mainView.scrollToIndex(index)
     }
 }
 
@@ -223,7 +224,7 @@ extension CardsBaseController {
     func startLoadCards(cardRequest: CardRequest,
                         callback: ((_ success: Bool, _ cards: [CardResponse]?) -> Void)? = nil) {
         if isFetchLoadCards {
-            scrollTo(row: index)
+            callback?(false, nil)
             return
         }
         isFetchLoadCards = true
@@ -254,6 +255,7 @@ extension CardsBaseController {
                     } else {
                         response.list.forEach({ self.appendConfigurator(card: $0) })
                     }
+
                     callback?(true, response.list)
                 case let .failure(error):
                     if error.code == WebErrorCode.noCard.rawValue && direction == Direction.down {
@@ -265,23 +267,7 @@ extension CardsBaseController {
                 }
         }
     }
-    
-    func scrollTo(row: Int, completion: (() -> Void)? = nil) {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.pan.isEnabled = true
-            let offset: CGFloat =  CGFloat(row) * cardCellHeight - cardOffset
-            UIView.animate(
-                withDuration: 0.25,
-                delay: 0,
-                options: .curveEaseOut,
-                animations: {
-                    self.collectionView.contentOffset.y = offset
-            }, completion: { _ in
-                completion?()
-            })
-        }
-    }
+
 }
 
 // MARK: - Privates
@@ -291,22 +277,27 @@ extension CardsBaseController {
         cards.forEach({ (card) in
             self.appendConfigurator(card: card)
         })
-        let itemNumber = self.collectionView.numberOfItems(inSection: 0)
-        self.collectionView.performBatchUpdates({
+        let itemNumber = mainView.collectionView.numberOfItems(inSection: 0)
+        let addCount = self.cards.count - itemNumber
+        if addCount == 0 {
+            callback?(true, nil)
+            return
+        }
+        mainView.collectionView.performBatchUpdates({
             var items = [IndexPath]()
-            for item in 0..<cards.count {
+            for item in 0..<addCount {
                 items.append(IndexPath(item: itemNumber + item, section: 0))
             }
-            self.collectionView.insertItems(at: items)
+            mainView.collectionView.insertItems(at: items)
         }, completion: { (_) in
+            self.mainView.updatePageContentSize()
             callback?(true, cards)
         })
     }
     func changeCurrentCell() {
-
-        if self.cellConfigurators.count == 0 { return }
+        if cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: index, section: 0)
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        guard let cell = mainView.collectionView.cellForItem(at: indexPath) else { return }
         self.saveLastId()
         let configurator = self.cellConfigurators[index]
         if let cell = cell as? VideoCardCollectionViewCell,
@@ -319,71 +310,81 @@ extension CardsBaseController {
             cell.playerView.setAVPlayer(player: VideoCardPlayerManager.shared.player!)
             cell.playerView.isVideoMuted = isVideoMuted
             cell.playerView.seek(configurator.viewModel.currentTime) {
-                cell.playerView.play()
+                cell.playerView.autoPlay()
             }
-            avPlayer = cell.playerView.avPlayer
+            avPlayer = VideoCardPlayerManager.shared.player!
         } else {
-            for cell in collectionView.visibleCells {
+            for cell in mainView.collectionView.visibleCells {
                 if let cell = cell as? VideoCardCollectionViewCell,
-                    let indexPath = collectionView.indexPath(for: cell) {
+                    let indexPath = mainView.collectionView.indexPath(for: cell) {
                     let isCurrent = indexPath.item != index
                     cell.playerView.pauseWithRemove(isRemove: isCurrent)
                 }
             }
             VideoCardPlayerManager.shared.pause()
         }
-    }
-
-    private func scrollCard(withPoint point: CGPoint, velocityY: CGFloat) {
-        guard let start = panPoint else {
-            pan.isEnabled = true
-            return
-        }
-        var direction = Direction.unknown
-        let targetY = point.y + velocityY
-        let offset = start.y - targetY
-        let threshold = cardCellHeight * 0.3
-        if offset < -threshold {
-            if index == 0 {
-                self.scrollTo(row: index)
-            } else {
-                self.index -=  1
-                self.scrollTo(row: index)
+        
+        if cell is ChoiceCardCollectionViewCell  {
+            if Defaults[.isPreferenceGuideShown] == false {
+                Guide.showPreference()
+                Defaults[.isPreferenceGuideShown] = true
             }
-        } else if offset > threshold {
-            direction = .down
-            let maxIndex = collectionView.numberOfItems(inSection: 0) - 1
-            if index == maxIndex {
-                let cardId = cards[index].cardId
-                let request: CardRequest = self is CardsAllController ?
-                    .all(cardId: cardId, direction: direction) :
-                    .sub(cardId: cardId, direction: direction)
-                self.startLoadCards(cardRequest: request)
-                self.scrollTo(row: index)
-            } else if index < maxIndex {
-                self.preloadingCard()
-                index += 1
-                self.scrollTo(row: index)
-            } else if index > maxIndex {
-                index = max(maxIndex, 0)
-                self.scrollTo(row: index)
-            }
-        } else {
-            self.scrollTo(row: index)
         }
     }
     
-    private func preloadingCard() {
-        if self.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
-            let cardId = cards[index].cardId
+    func videoPauseAddRemove() {
+        for cell in mainView.collectionView.visibleCells {
+            if let cell = cell as? VideoCardCollectionViewCell {
+                cell.playerView.pauseWithRemove(isRemove: true)
+            }
+        }
+    }
+
+    private func downScrollCard(index: Int) {
+        let maxIndex = mainView.collectionView.numberOfItems(inSection: 0) - 1
+        if index <= maxIndex {
+            self.index = index
+        } else if index > maxIndex {
+            self.index = maxIndex
+            mainView.scrollToIndex(self.index)
+        }
+    }
+    
+
+    private func preloadingCard(oldIndex: Int) {
+        if mainView.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
+            let cardId = cards[oldIndex].cardId
+            let content = cards[oldIndex].content
             let direction = Direction.down
             let request: CardRequest = self is CardsAllController ?
                 .all(cardId: cardId, direction: direction) :
                 .sub(cardId: cardId, direction: direction)
-            self.startLoadCards(cardRequest: request)
+            let semaphore  = DispatchSemaphore(value: 0)
+            let count = preloadingCount - (mainView.collectionView.numberOfItems(inSection: 0) - 1 - index)
+            if isPreloadingCards { return }
+            DispatchQueue.global().async {
+                var isForEach = true
+                self.isPreloadingCards = true
+                for i in 0..<count {
+                    logger.debug(i)
+                    logger.debug(content ?? "")
+                    if isForEach == false { break }
+                    self.startLoadCards(cardRequest: request) { (success, _) in
+                        if success {
+                            semaphore.signal()
+                        } else {
+                            semaphore.signal()
+                            isForEach = false
+                        }
+                    }
+                    semaphore.wait()
+                }
+                self.isPreloadingCards = false
+            }
+
         }
     }
-    
+
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
@@ -416,15 +417,16 @@ extension CardsBaseController {
         }
     }
 }
-// MARK: - UICollectionViewDataSource
-extension CardsBaseController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - CardsPageCollectionViewDataSource
+extension CardsBaseController: CardsPageCollectionViewDataSource {
+    func cardsPageCollectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         showEmptyView(isShow: cellConfigurators.count == 0)
         return cellConfigurators.count
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func cardsPageCollectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let configurator = cellConfigurators[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configurator.reuseIdentifier, for: indexPath)
         configurator.configure(cell)
@@ -434,19 +436,30 @@ extension CardsBaseController: UICollectionViewDataSource {
         return cell
     }
 }
-// MARK: - UICollectionViewDelegate
-extension CardsBaseController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+// MARK: - CardsPageCollectionViewDelegate
+extension CardsBaseController: CardsPageCollectionViewDelegate {
+    func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index: Int, oldIndex: Int) {
+        if index >= self.index {
+            preloadingCard(oldIndex: oldIndex)
+            downScrollCard(index: index)
+        } else {
+            self.index = index
+        }
+    }
+    
+    func cardsPageCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let newIndex = indexPath.row
         if newIndex == index {
             if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
                 showVideoPlayerController(playerView: cell.playerView, cardId: cards[index].cardId)
+            } else if let _ = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                showImageBrowser(selectedIndex: 0)
             } else {
                 showWebView(indexPath: indexPath)
             }
         } else {
             index = newIndex
-            scrollTo(row: index)
+            mainView.scrollToIndex(index)
         }
     }
 }

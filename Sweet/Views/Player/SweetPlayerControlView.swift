@@ -117,6 +117,16 @@ class SweetPlayerControlView: UIView {
         button.setTitle("点击重试", for: .normal)
         button.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
         button.tag = SweetPlayerControlView.ButtonType.retry.rawValue
+        button.isHidden = true
+        return button
+    }()
+    
+    private lazy var notFoundButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.setImage(#imageLiteral(resourceName: "NotFoundURL"), for: .normal)
+        button.setTitle("内容不见了", for: .normal)
+        button.isHidden = true
         return button
     }()
     private lazy var nextLabel: UILabel = {
@@ -200,6 +210,10 @@ class SweetPlayerControlView: UIView {
         mainMaskView.addSubview(retryButton)
         retryButton.center(to: mainMaskView)
         retryButton.constrain(width: 80, height: 30)
+        mainMaskView.addSubview(notFoundButton)
+        notFoundButton.center(to: mainMaskView)
+        notFoundButton.constrain(width: 120, height: 120)
+        notFoundButton.setImageTop(space: 10)
     }
     func customizeUIComponents() {
         
@@ -208,19 +222,24 @@ class SweetPlayerControlView: UIView {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         retryButton.isHidden = true
+        notFoundButton.isHidden = true
     }
     
     func hideLoader() {
         loadingIndicator.isHidden = true
         retryButton.isHidden = true
+        notFoundButton.isHidden = true
     }
     
     func showRetry() {
         loadingIndicator.isHidden = true
         retryButton.isHidden = false
+        notFoundButton.isHidden = true
     }
     
-    func hideRetry() {
+    func showNotFoundURL() {
+        notFoundButton.isHidden = false
+        loadingIndicator.isHidden = true
         retryButton.isHidden = true
     }
     
@@ -234,6 +253,8 @@ class SweetPlayerControlView: UIView {
             hideLoader()
         case .error:
             showRetry()
+        case .notFoundURL:
+            showNotFoundURL()
         case .playedToTheEnd:
             break
         default:
@@ -283,6 +304,9 @@ class SweetPlayerControlView: UIView {
         self.selectedIndex = index
         videoTitleLabel.text = resource.name
         autoFadeOutControlViewWithAnimation()
+        loadingIndicator.isHidden = true
+        notFoundButton.isHidden = true
+        retryButton.isHidden = true
     }
     
 }

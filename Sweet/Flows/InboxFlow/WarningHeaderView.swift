@@ -30,7 +30,7 @@ final class WarningHeaderView: UIView {
         label.textAlignment = .center
         label.textColor = UIColor(hex: 0xB2B2B2)
         label.font = UIFont.systemFont(ofSize: 13)
-        label.text = "当前未连接"
+        label.text = "连接中..."
         addSubview(label)
         label.align(.left, to: self, inset: 67)
         label.centerY(to: self)

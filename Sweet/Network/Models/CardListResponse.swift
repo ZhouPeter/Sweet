@@ -36,10 +36,16 @@ enum SourceType: UInt, Codable {
             return "weixin.com"
         case .zhihu:
             return "zhihu.com"
-        case .toutiaohao:
-            return "toutiaohao.com"
+        case .toutiaohao, .xigua:
+            return "toutiao.com"
+        case .pear:
+            return "pearvideo.com"
+        case .douyin:
+            return "douyin.com"
+        case .bilibili:
+            return "bilibili.com"
         default:
-            return ""
+            return "其他来源"
         }
     }
     func getVideoSourceContent(name: String) -> String {
@@ -97,6 +103,7 @@ struct CardResponse: Codable {
         case activity
         case story
         case evaluation
+        case welcome
     }
     
     func makeShareText() -> String? {
@@ -130,19 +137,20 @@ struct CardResponse: Codable {
                 let asset = AVURLAsset(url: URL(string: video)!)
                 let assetGen =  AVAssetImageGenerator(asset: asset)
                 assetGen.appliesPreferredTrackTransform = true
-                let time = CMTimeMakeWithSeconds(0.0, 600)
+                let time = CMTimeMakeWithSeconds(5, 600)
                 var actualTime = CMTimeMake(0,0)
                 do {
                     let imageRef = try assetGen.copyCGImage(at: time, actualTime: &actualTime)
                     let text = (try content?.htmlStringReplaceTag()) ?? ""
-                    let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
+                    let image = UIImage(cgImage: imageRef).scaleAndCropImage(toSize: CGSize(width: 720, height: 1280))
                     guard let url = image.writeToCache(withAlpha: false) else { return nil }
                     let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                                 storyType: .share,
                                                 date: Date(),
                                                 comment: nil,
                                                 desc: String(text.prefix(100)),
-                                                url: self.url)
+                                                url: self.url,
+                                                fromCardId: cardId)
                     return storyDraft
                 } catch {
                     logger.error(error)
@@ -155,14 +163,15 @@ struct CardResponse: Codable {
                 let imageCount = CGImageSourceGetCount(gifSource!) 
                 guard imageCount > 0 else { return nil }
                 guard let imageRef = CGImageSourceCreateImageAtIndex(gifSource!, 0, nil) else { return nil }
-                let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
+                let image = UIImage(cgImage: imageRef).scaleAndCropImage(toSize: CGSize(width: 720, height: 1280))
                 guard let url = image.writeToCache(withAlpha: false) else { return nil }
                 let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                             storyType: .share,
                                             date: Date(),
                                             comment: nil,
                                             desc: String(text.prefix(100)),
-                                            url: self.url)
+                                            url: self.url,
+                                            fromCardId: cardId)
                 return storyDraft
             } else if let thumbnail = thumbnail {
                 let cfUrl = URL(string: thumbnail)! as CFURL
@@ -170,14 +179,15 @@ struct CardResponse: Codable {
                 let imageCount = CGImageSourceGetCount(gifSource!)
                 guard imageCount > 0 else { return nil }
                 guard let imageRef = CGImageSourceCreateImageAtIndex(gifSource!, 0, nil) else { return nil }
-                let image = UIImage(cgImage: imageRef).strechedToSize(toSize: CGSize(width: 720, height: 1280))
+                let image = UIImage(cgImage: imageRef).scaleAndCropImage(toSize: CGSize(width: 720, height: 1280))
                 guard let url = image.writeToCache(withAlpha: false) else { return nil }
                 let storyDraft = StoryDraft(filename: url.lastPathComponent,
                                             storyType: .share,
                                             date: Date(),
                                             comment: nil,
                                             desc: String(text.prefix(100)),
-                                            url: self.url)
+                                            url: self.url,
+                                            fromCardId: cardId)
                 return storyDraft
             } else  {
                 return nil

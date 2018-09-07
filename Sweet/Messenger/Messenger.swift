@@ -263,6 +263,8 @@ final class Messenger {
             let messages = response.msgList.map({ proto -> InstantMessage in
                 var message = InstantMessage(proto: proto)
                 message.isSent = true
+                message.isFailed = false
+                message.isRead = true
                 return message
             })
             self.saveMessages(messages, update: true, callback: {

@@ -32,21 +32,21 @@ class CustomPhotoBrowser: PhotoBrowser {
     }
 }
 class PhotoBrowserImp: NSObject, PhotoBrowserDelegate {
-    private var thumbnaiImageViews: [UIImageView]
+    private var thumbnaiImageViews: [UIImageView]?
     private var shareText: String?
     var highImageViewURLs: [URL]
-    init(thumbnaiImageViews: [UIImageView], highImageViewURLs: [URL], shareText: String? = nil) {
+    init(thumbnaiImageViews: [UIImageView]? = nil, highImageViewURLs: [URL], shareText: String? = nil) {
         self.thumbnaiImageViews = thumbnaiImageViews
         self.highImageViewURLs = highImageViewURLs
         self.shareText = shareText
     }
     
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailImageForIndex index: Int) -> UIImage? {
-        return thumbnaiImageViews[index].image
+        return thumbnaiImageViews?[index].image
     }
 
     func photoBrowser(_ photoBrowser: PhotoBrowser, thumbnailViewForIndex index: Int) -> UIView? {
-        return thumbnaiImageViews[index]
+        return thumbnaiImageViews?[index]
     }
     
     func photoBrowser(_ photoBrowser: PhotoBrowser, highQualityUrlForIndex index: Int) -> URL? {

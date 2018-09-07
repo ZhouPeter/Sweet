@@ -156,7 +156,13 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         var draft = StoryDraft(filename: name, storyType: .text, date: Date())
         draft.topic = topic
         draft.touchPoints = editController.makeTouchArea()
-        TaskRunner.shared.run(StoryPublishTask(storage: Storage(userID: user.userId), draft: draft))
+        let task = StoryPublishTask(storage: Storage(userID: user.userId), draft: draft)
+        if !UIDevice.current.hasLessThan2GBRAM {
+            task.finishBlock = { _ in
+                NotificationCenter.default.post(name: .storyDidPublish, object: nil)
+            }
+        }
+        TaskRunner.shared.run(task)
         Defaults[.isPersonalStoryChecked] = false
         view.hero.id = "avatar"
         NotificationCenter.default.post(name: .avatarFakeImageUpdate, object: image)

@@ -61,18 +61,19 @@ final class StoryGenerator {
     
     func generateVideo(with fileURL: URL, filter: LookupFilter, overlay: UIImage?, callback: @escaping (URL?) -> Void) {
         logger.debug(fileURL)
-        guard let track = AVAsset(url: fileURL).tracks(withMediaType: .video).first else {
+        let asset = AVAsset(url: fileURL)
+        guard let track = asset.tracks(withMediaType: .video).first else {
             callback(nil)
             return
         }
-        let videoSize = track.naturalSize.applying(track.preferredTransform)
-        movie = GPUImageMovie(url: fileURL)
         
+        movie = GPUImageMovie(url: fileURL)
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
         let renderSize = StoryConfg.videoSize
         writer = GPUImageMovieWriter(movieURL: url, size: renderSize)
         writer?.shouldPassthroughAudio = true
-        if AVAsset(url: url).tracks(withMediaType: .audio).count > 0 {
+        let audioTracks = asset.tracks(withMediaType: .audio)
+        if audioTracks.count > 0 {
             movie?.audioEncodingTarget = writer
         }
         movie?.enableSynchronizedEncoding(using: writer)
@@ -81,7 +82,14 @@ final class StoryGenerator {
         transformFilter = targetTransformFilter
         var scaleX: CGFloat = 1
         var scaleY: CGFloat = 1
-        let videoRatio = videoSize.width / videoSize.height
+        var videoSize = track.naturalSize
+        let orientation = self.orientation(videoTrack: track)
+        if orientation == .portrait || orientation == .portraitUpsideDown {
+            let size = videoSize
+            videoSize.width = size.height
+            videoSize.height = size.width
+        }
+        let videoRatio = abs(videoSize.width / videoSize.height)
         let renderRatio = renderSize.width / renderSize.height
         if videoRatio > renderRatio {
             scaleY = videoSize.height / renderSize.height * (renderSize.width / videoSize.width)
@@ -101,6 +109,7 @@ final class StoryGenerator {
         filter.addTarget(targetBlendFilter)
         uiElement?.addTarget(targetBlendFilter)
         targetBlendFilter.addTarget(writer)
+        writer?.setInputRotation(imageRotationMode(forUIInterfaceOrientation: orientation), at: 0)
         writer?.startRecording()
         movie?.startProcessing()
         let clean: () -> Void = { [weak self] in
@@ -121,6 +130,34 @@ final class StoryGenerator {
             logger.error(error ?? "")
             clean()
             DispatchQueue.main.async { callback(nil) }
+        }
+    }
+    
+    private func imageRotationMode(forUIInterfaceOrientation: UIInterfaceOrientation) -> GPUImageRotationMode {
+        switch forUIInterfaceOrientation {
+        case .landscapeRight:
+            return GPUImageRotationMode.rotate180
+        case .landscapeLeft:
+            return GPUImageRotationMode.noRotation
+        case .portrait:
+            return GPUImageRotationMode.rotateRight
+        case .portraitUpsideDown:
+            return GPUImageRotationMode.rotateLeft
+        default:
+            return GPUImageRotationMode.noRotation
+        }
+    }
+    
+    private func orientation(videoTrack: AVAssetTrack) -> UIInterfaceOrientation {
+        let trackTransform = videoTrack.preferredTransform
+        if trackTransform.a == -1 && trackTransform.d == -1 {
+            return UIInterfaceOrientation.landscapeRight
+        } else if trackTransform.a == 1 && trackTransform.d == 1  {
+            return UIInterfaceOrientation.landscapeLeft
+        } else if trackTransform.b == -1 && trackTransform.c == 1 {
+            return UIInterfaceOrientation.portraitUpsideDown
+        } else {
+            return UIInterfaceOrientation.portrait
         }
     }
 }

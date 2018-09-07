@@ -30,6 +30,23 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private lazy var effectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        return effectView
+    }()
+    
+    private lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.enableShadow()
+        return label
+    }()
+    
     private lazy var recoveryImageView = UIImageView()
     
     private lazy var recoveryLabel: UILabel = {
@@ -56,6 +73,11 @@ class StoryCollectionViewCell: UICollectionViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        commentLabel.text = ""
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,6 +85,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(storyImageView)
         storyImageView.fill(in: contentView)
+        storyImageView.addSubview(effectView)
+        effectView.fill(in: storyImageView)
+        contentView.addSubview(commentLabel)
+        commentLabel.align(.left, inset: 5, priority: .defaultHigh)
+        commentLabel.align(.right, inset: 5, priority: .defaultHigh)
+        commentLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25).isActive = true
+        commentLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         contentView.addSubview(timeLabel)
         timeLabel.align(.left, inset: 5)
         timeLabel.align(.top, inset: 5)
@@ -84,18 +113,24 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyImageView.animationImages = nil
         storyImageView.stopAnimating()
         if let videoURL = viewModel.videoURL {
+            effectView.alpha = 0
             if viewModel.type == .video {
-                storyImageView.setAnimationImages(url: videoURL, animationDuration: 0.5, count: 3, size: storyImageView.frame.size)
+                storyImageView.setAnimationImages(withVideoURL: videoURL, animationDuration: 0.5, count: 3, size: storyImageView.frame.size)
             } else if viewModel.type == .poke {
                 storyImageView.sd_setImage(with: videoURL.videoThumbnail(size: storyImageView.frame.size))
-                storyImageView.sd_setAnimationImages(with: [videoURL.videoThumbnail(size: storyImageView.frame.size)!])
                 pokeView.center = CGPoint(x: frame.width / 2 + viewModel.pokeCenter.x * frame.width,
                                           y: frame.height / 2 + viewModel.pokeCenter.y * frame.height)
                 pokeView.isHidden = false
             }
         } else if let imageURL = viewModel.imageURL {
-            storyImageView.sd_setImage(with: imageURL)
-            storyImageView.sd_setAnimationImages(with: [imageURL])
+            storyImageView.sd_setImage(with: imageURL) { (image, _, _, _) in
+                if viewModel.type == .share {
+                    self.effectView.alpha = 1
+                    self.commentLabel.text = viewModel.commentString
+                } else {
+                    self.effectView.alpha = 0
+                }
+            }
         }
         if viewModel.timestampString == ""  {
             timeLabel.isHidden = true

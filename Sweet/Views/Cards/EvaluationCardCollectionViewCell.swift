@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import SDWebImage
+
 protocol EvaluationCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
     func selectEvaluationCard(cell: EvaluationCardCollectionViewCell, cardId: String, selectedIndex: Int)
 }
+
 class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = EvaluationCardViewModel
     private lazy var contentLabel: UILabel = {
@@ -88,8 +91,8 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
         cardId = viewModel.cardId
         titleLabel.text = viewModel.titleString
         contentLabel.attributedText = viewModel.contentTextAttributed
-        leftImageView.kf.setImage(with: viewModel.imageURL[0])
-        rightImageView.kf.setImage(with: viewModel.imageURL[1])
+        leftImageView.sd_setImage(with: viewModel.imageURL[0].imageView2(size: leftImageView.bounds.size))
+        rightImageView.sd_setImage(with: viewModel.imageURL[1].imageView2(size: rightImageView.bounds.size))
         if let selectedIndex = viewModel.selectedIndex {
             if selectedIndex == 0 {
                 selectedButtonCenterXRightConstraint?.isActive = false

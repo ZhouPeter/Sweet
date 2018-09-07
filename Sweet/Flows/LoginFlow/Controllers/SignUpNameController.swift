@@ -10,7 +10,7 @@ import UIKit
 
 class SignUpNameController: BaseViewController, SignUpNameView {
     var showSignUpAvatar: ((LoginRequestBody) -> Void)?
-    
+    var showSignUpPhone: ((LoginRequestBody) -> Void)?
     var loginRequestBody: LoginRequestBody!
     private lazy var nicknameTextField: UITextField = {
         let textField = UITextField()

@@ -24,7 +24,7 @@ protocol SweetPlayerViewDelegate: class {
                      playerOrientChanged isFullscreen: Bool)
     func sweetPlayer(player: SweetPlayerView,
                      isMuted: Bool)
-    func sweetPlayerSwipeDown()
+    func sweetPlayerSwipeDown(pan: UIPanGestureRecognizer)
 }
 
 extension SweetPlayerViewDelegate {
@@ -42,7 +42,7 @@ extension SweetPlayerViewDelegate {
                      playerOrientChanged isFullscreen: Bool) {}
     func sweetPlayer(player: SweetPlayerView,
                      isMuted: Bool) {}
-    func sweetPlayerSwipeDown() {}
+    func sweetPlayerSwipeDown(pan: UIPanGestureRecognizer) {}
 }
 
 enum PanDirection: Int {
@@ -58,6 +58,11 @@ class SweetPlayerView: UIView {
         return UIApplication.shared.statusBarOrientation.isLandscape
     }
     var controlView: SweetPlayerControlView!
+    lazy var placeholderImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     fileprivate var panDirection = PanDirection.horizontal
     fileprivate var sumTime: TimeInterval = 0
     fileprivate var totalDuration: TimeInterval = 0
@@ -87,6 +92,8 @@ class SweetPlayerView: UIView {
             playerLayer?.player = newValue
         }
     }
+    
+    var savePlayer: AVPlayer?
     var playerLayer: SweetPlayerLayerView?
     var resource: SweetPlayerResource!
     
@@ -96,6 +103,7 @@ class SweetPlayerView: UIView {
             self.playerLayer?.videoGravity = videoGravity
         }
     }
+    
     init(controlView: SweetPlayerControlView = SweetPlayerControlView()) {
         super.init(frame: .zero)
         self.controlView = controlView
@@ -114,12 +122,15 @@ class SweetPlayerView: UIView {
     }
     
     private func initUI() {
+        addSubview(placeholderImageView)
+        placeholderImageView.fill(in: self)
         addSubview(controlView)
         controlView.fill(in: self)
         controlView.updateUI(isFullScreen)
         controlView.delegate = self
         controlView.player = self
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDirection(_:)))
+        panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
     }
     
@@ -132,9 +143,12 @@ class SweetPlayerView: UIView {
         playerLayer = SweetPlayerLayerView()
         playerLayer!.videoGravity = videoGravity
         insertSubview(playerLayer!, at: 0)
-        playerLayer!.fill(in: self)
         playerLayer!.delegate = self
-        self.layoutIfNeeded()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer?.frame = bounds
     }
     
     func setVideo(url: URL, name: String) {
@@ -144,21 +158,29 @@ class SweetPlayerView: UIView {
     
     func setVideo(resource: SweetPlayerResource) {
         isURLSet = false
+        isRemove = false
         self.resource = resource
         controlView.prepareUI(for: resource)
+//        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
             let asset = resource.definitions[currentDefinition].avURLAsset
             playerLayer?.playAsset(asset: asset)
-        }
+        } 
     }
     
     func setAVPlayer(player: AVPlayer) {
         isURLSet = false
+        isRemove = false
+        self.savePlayer = player
         controlView.prepareUI(for: self.resource)
+//        controlView.playStateDidChange(isPlaying: sweetPlayerConf.shouldAutoPlay)
         if sweetPlayerConf.shouldAutoPlay {
             isURLSet = true
             playerLayer?.playAVPlayer(player: player)
+        } else {
+//            savePlayer?.pause()
+            pause()
         }
     }
     
@@ -207,6 +229,18 @@ class SweetPlayerView: UIView {
     }
     @objc private func applicationDidEnterBackground() {
         pause()
+    }
+}
+
+extension SweetPlayerView: UIGestureRecognizerDelegate {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let velocityPoint = (gestureRecognizer as? UIPanGestureRecognizer)?.velocity(in: self) else { return true }
+        if velocityPoint.y > 0 && isFullScreen == false {
+            return false
+        } else {
+            return true
+        }
+        
     }
 }
 // MARK: - Actions
@@ -271,7 +305,7 @@ extension SweetPlayerView {
                 if isFullScreen {
                     fullScreenButtonPressed()
                 } else if velocityPoint.y > 0 {
-                    delegate?.sweetPlayerSwipeDown()
+                    delegate?.sweetPlayerSwipeDown(pan: pan)
                 }
             }
         default:
@@ -323,8 +357,12 @@ extension SweetPlayerView {
             return
         }
         if !isURLSet {
-            let asset = resource.definitions[currentDefinition]
-            playerLayer?.playAsset(asset: asset.avURLAsset)
+            if let player = savePlayer {
+                playerLayer?.playAVPlayer(player: player)
+            } else {
+                let asset = resource.definitions[currentDefinition]
+                playerLayer?.playAsset(asset: asset.avURLAsset)
+            }
             isURLSet = true
         }
         playerLayer?.play()
@@ -355,6 +393,9 @@ extension SweetPlayerView {
 }
 extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     func sweetPlayer(player: SweetPlayerLayerView, playerStateDidChange state: SweetPlayerState) {
+        if state == .notFoundURL {
+            placeholderImageView.isHidden = true
+        }
         controlView.playerStateDidChange(state: state)
         delegate?.sweetPlayer(player: self, playerStateDidChange: state)
         if state == . playedToTheEnd {
@@ -382,6 +423,7 @@ extension SweetPlayerView: SweetPlayerLayerViewDelegate {
     }
     
     func sweetPlayer(player: SweetPlayerLayerView, playerIsPlaying playing: Bool) {
+        placeholderImageView.isHidden = playing
         controlView.playStateDidChange(isPlaying: playing)
         delegate?.sweetPlayer(player: self, playerIsPlaying: playing)
         

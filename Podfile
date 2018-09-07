@@ -16,7 +16,7 @@ target 'Sweet' do
   pod 'PKHUD', '~> 5.0'
   pod 'NVActivityIndicatorView'
   pod 'VIMediaCache'
-  pod 'JXPhotoBrowser'
+  pod 'JXPhotoBrowser/Core'
   pod 'libimcloud', :git => 'https://gitee.com/miaobo/iOS.LIBIMCLOUD.git', :branch => 'master'
   pod 'SwiftProtobuf'
   pod 'MessageKit', :git => 'https://github.com/MessageKit/MessageKit.git', :branch => 'development'
@@ -31,6 +31,7 @@ target 'Sweet' do
   pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'Bugly'
+  pod 'YYText'
   
   target 'Sweet Dev' do
   end
