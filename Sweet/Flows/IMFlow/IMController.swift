@@ -109,6 +109,7 @@ class IMController: BaseViewController, IMView {
         if let object = noti.object as? [String: Any], let index = object["index"] as? Int {
             if  index == 2 {
                 titleView.selectedSegmentIndex = 0
+                PushSetting.pushCheck()
                 showInbox(true)
             }
         }

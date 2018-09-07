@@ -13,7 +13,7 @@ class PushSetting {
         guard let setting =  UIApplication.shared.currentUserNotificationSettings else { return }
         guard setting.types == [] else { return }
         if Defaults[.isSettingPush]
-            && Defaults[.pushMessageTime] + 2 * 7 * 24 * 60 * 60 < Int(Date().timeIntervalSince1970) {
+            && Defaults[.pushMessageTime] + 7 * 24 * 60 * 60 < Int(Date().timeIntervalSince1970) {
             let alert = UIAlertController(title: nil,
                                           message: "为了保证可以正常接收讲真联系人消息，建议你开启设置中的通知推送权限。",
                                           preferredStyle: .alert)

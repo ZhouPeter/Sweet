@@ -63,7 +63,6 @@ final class ApplicationCoordinator: BaseCoordinator {
                     let contacts = Contacts.getContacts()
                     web.request(.uploadContacts(contacts: contacts)) { (_) in }
                 }
-                PushSetting.pushCheck()
             }
         }
     }
