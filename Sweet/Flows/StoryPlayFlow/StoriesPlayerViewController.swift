@@ -563,6 +563,7 @@ extension StoriesPlayerViewController {
         add(childViewController: uvViewController, addView: false)
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
+        
         uvViewController.view.tag = 100
     }
     func play() {
@@ -679,7 +680,11 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func showStoryHistory(sender: UIButton) {
-       showStoryHistory()
+        if sender.isSelected {
+            closeStoryUV()
+        } else {
+            showStoryHistory()
+        }
     }
     
     @objc private func sendMessage(sender: UIButton) {
@@ -1050,6 +1055,9 @@ extension StoriesPlayerViewController {
 // MARK: - StoryUVControllerDelegate
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
+        uvViewController.willMove(toParentViewController: nil)
+        uvViewController.view.removeFromSuperview()
+        uvViewController.removeFromParentViewController()
         topContentView.isHidden = false
         bottomButton.isSelected = false
         play()
