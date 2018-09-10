@@ -49,7 +49,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     }()
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()

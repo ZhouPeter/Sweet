@@ -172,7 +172,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private var touchTagTap: TapGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()
@@ -282,7 +282,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         cardView.align(.left, inset: 10)
         cardView.align(.right, inset: 10)
         cardView.constrain(height: 160)
-        cardView.pin(.top, to: bottomButton, spacing: 25)
+        cardView.pin(.top, to: bottomButton, spacing: 35)
         view.addSubview(commentLabel)
         commentLabel.align(.left, inset: 10)
         commentLabel.align(.right, inset: 10)
@@ -563,7 +563,6 @@ extension StoriesPlayerViewController {
         add(childViewController: uvViewController, addView: false)
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
-        
         uvViewController.view.tag = 100
     }
     func play() {

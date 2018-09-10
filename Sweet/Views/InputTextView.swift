@@ -124,7 +124,7 @@ class InputTextView: UIView {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return view
     }()
-    
+    let textViewFont = UIFont.systemFont(ofSize: 30)
     private lazy var textView: GrowingTextView = {
         let textView = GrowingTextView()
         textView.placeholder = placehoder
@@ -135,7 +135,7 @@ class InputTextView: UIView {
         textView.backgroundColor = .clear
         textView.delegate = self
         textView.textColor = .white
-        textView.font = UIFont.systemFont(ofSize: 30)
+        textView.font = textViewFont
         textView.isScrollEnabled = true
         textView.textAlignment = .center
         return textView
@@ -143,7 +143,10 @@ class InputTextView: UIView {
 
     private lazy var senderButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("确认点赞", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "SureLike"), for: .normal)
         button.backgroundColor = .white
         button.addTarget(self, action: #selector(sendAction(_:)), for: .touchUpInside)
         return button
@@ -238,11 +241,12 @@ class InputTextView: UIView {
         addSubview(blackMaskView)
         blackMaskView.fill(in: self)
         addSubview(senderButton)
-        senderButton.constrain(width: 80, height: 40)
+        senderButton.constrain(width: 120, height: 40)
         senderButton.centerX(to: self)
         senderButtonBottomConstraint = senderButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         senderButtonBottomConstraint?.isActive = true
         senderButton.setViewRounded()
+        senderButton.setImageRight(space: 0)
         addSubview(cancelButton)
         cancelButton.constrain(width: 40, height: 40)
         cancelButton.centerY(to: senderButton)
@@ -260,7 +264,7 @@ class InputTextView: UIView {
 extension InputTextView {
     
     func clear() {
-        textView.font = UIFont.boldSystemFont(ofSize: 30)
+        textView.font = textViewFont
         textView.text = nil
     }
     
@@ -268,7 +272,7 @@ extension InputTextView {
         if isStarted {
             self.textView.becomeFirstResponder()
         } else {
-            textView.font = UIFont.boldSystemFont(ofSize: 30)
+            textView.font = textViewFont
             textView.text = nil
             textView.endEditing(true)
         }
