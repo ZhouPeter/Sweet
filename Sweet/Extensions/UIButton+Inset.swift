@@ -26,4 +26,28 @@ extension UIButton {
         titleEdgeInsets = UIEdgeInsets(top: titleTop, left: titleLeft, bottom: titleBottom, right: titleRight)
         imageEdgeInsets = UIEdgeInsets(top: imageTop, left: imageLeft, bottom: imageBottom, right: imageRight)
     }
+    
+    func setImageRight(space: CGFloat) {
+        layoutIfNeeded()
+        titleLabel?.invalidateIntrinsicContentSize()
+        guard let titleSize = titleLabel?.intrinsicContentSize else { return }
+        guard let imageSize = imageView?.frame.size else { return }
+        let imageLeft: CGFloat = titleSize.width + space
+        let imageRight: CGFloat = -titleSize.width - space
+        let imageBottom: CGFloat = 0
+        let imageTop: CGFloat = 0
+        let titleTop: CGFloat = 0
+        let titleBottom: CGFloat = 0
+        let titleLeft: CGFloat = -imageSize.width - space
+        let titleRight: CGFloat = imageSize.width + space
+        titleEdgeInsets = UIEdgeInsets(top: titleTop, left: titleLeft, bottom: titleBottom, right: titleRight)
+        imageEdgeInsets = UIEdgeInsets(top: imageTop, left: imageLeft, bottom: imageBottom, right: imageRight)
+        contentEdgeInsets = UIEdgeInsets.zero
+    }
+    
+    func resetEdgeInsets() {
+        titleEdgeInsets = .zero
+        imageEdgeInsets = .zero
+        contentEdgeInsets = .zero
+    }
 }

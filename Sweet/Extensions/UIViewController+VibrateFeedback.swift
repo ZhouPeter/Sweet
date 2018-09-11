@@ -13,7 +13,7 @@ extension UIViewController {
         if #available(iOS 10.0, *), traitCollection.forceTouchCapability == .available  {
             TapticEngine.selection.feedback()
         } else {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+//            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
     }
 }

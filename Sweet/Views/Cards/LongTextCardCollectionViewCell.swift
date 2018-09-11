@@ -150,7 +150,7 @@ class LongTextCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReu
     
     func resetEmojiView() {
         if let viewModel = viewModel {
-            emojiView.update(indexs: viewModel.defaultEmojiList,
+            emojiView.update(indexs: [1, 2, 6],
                              resultImage: viewModel.resultImageName,
                              resultAvatarURLs: viewModel.resultAvatarURLs,
                              emojiType: viewModel.emojiDisplayType)

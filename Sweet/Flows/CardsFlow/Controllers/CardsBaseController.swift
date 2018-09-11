@@ -87,7 +87,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var isWifi = false
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()
@@ -116,15 +116,16 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(reachabilityChanged(note:)),
                                                name: .reachabilityChanged,
                                                object: reachability)
+
        try? reachability?.startNotifier()
         
     }
     
+   
     @objc func reachabilityChanged(note: Notification) {
         let reachability = note.object as! Reachability
         switch reachability.connection {

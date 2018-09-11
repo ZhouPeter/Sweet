@@ -95,7 +95,7 @@ class StoryUVController: BaseViewController {
         closeButton.centerY(to: likeCountLabel)
         closeButton.constrain(width: 30, height: 30)
         view.addSubview(tableView)
-        tableView.fill(in: view, top: 60 + UIScreen.safeTopMargin(), bottom: 50 + 35 + 25 + UIScreen.safeBottomMargin())
+        tableView.fill(in: view, top: 60 + UIScreen.safeTopMargin(), bottom: 0)
         view.addSubview(bottomClearButton)
         bottomClearButton.constrain(width: 50, height: 50)
         bottomClearButton.centerX(to: view)
@@ -103,9 +103,7 @@ class StoryUVController: BaseViewController {
     }
     
     @objc private func didPressClose(sender: UIButton) {
-        willMove(toParentViewController: nil)
-        view.removeFromSuperview()
-        removeFromParentViewController()
+       
         delegate?.closeStoryUV()
     }
 }

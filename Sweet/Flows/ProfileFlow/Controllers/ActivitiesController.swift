@@ -49,7 +49,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     }()
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()
@@ -152,13 +152,6 @@ extension ActivitiesController {
                     let resultCard = response.card
                     CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityLike(activityId: activityId, comment: text)
-//                    if Defaults[.isInputTextSendMessage] == false {
-//                        let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
-//                        alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
-//                        self.present(alert, animated: true, completion: nil)
-//                    } else {
-//                        self.toast(message: "💗消息发送成功")
-//                    }
                 case let .failure(error):
                     logger.error(error)
                 }

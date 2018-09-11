@@ -29,7 +29,7 @@ struct BaseInfoCellViewModel {
         collegeInfoString = user.universityName +
                             (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
-        signatureString = user.signature == "" ? "暂时没有签名" : "「\(user.signature)」"
+        signatureString = user.signature == "" ? "暂时没有签名" : "\(user.signature)"
         isEditSignature = userID == user.userId
         cellHeight = 200
     }

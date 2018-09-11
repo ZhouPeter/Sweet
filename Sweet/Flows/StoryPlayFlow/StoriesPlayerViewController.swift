@@ -172,7 +172,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private var touchTagTap: TapGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()
@@ -282,7 +282,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         cardView.align(.left, inset: 10)
         cardView.align(.right, inset: 10)
         cardView.constrain(height: 160)
-        cardView.pin(.top, to: bottomButton, spacing: 25)
+        cardView.pin(.top, to: bottomButton, spacing: 35)
         view.addSubview(commentLabel)
         commentLabel.align(.left, inset: 10)
         commentLabel.align(.right, inset: 10)
@@ -679,7 +679,11 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func showStoryHistory(sender: UIButton) {
-       showStoryHistory()
+        if sender.isSelected {
+            closeStoryUV()
+        } else {
+            showStoryHistory()
+        }
     }
     
     @objc private func sendMessage(sender: UIButton) {
@@ -1050,6 +1054,9 @@ extension StoriesPlayerViewController {
 // MARK: - StoryUVControllerDelegate
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
+        uvViewController.willMove(toParentViewController: nil)
+        uvViewController.view.removeFromSuperview()
+        uvViewController.removeFromParentViewController()
         topContentView.isHidden = false
         bottomButton.isSelected = false
         play()
