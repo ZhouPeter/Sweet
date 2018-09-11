@@ -44,4 +44,10 @@ extension UIButton {
         imageEdgeInsets = UIEdgeInsets(top: imageTop, left: imageLeft, bottom: imageBottom, right: imageRight)
         contentEdgeInsets = UIEdgeInsets.zero
     }
+    
+    func resetEdgeInsets() {
+        titleEdgeInsets = .zero
+        imageEdgeInsets = .zero
+        contentEdgeInsets = .zero
+    }
 }

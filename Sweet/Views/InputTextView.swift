@@ -146,7 +146,7 @@ class InputTextView: UIView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitleColor(.black, for: .normal)
         button.setTitle("确认点赞", for: .normal)
-        button.setImage(#imageLiteral(resourceName: "SureLike"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "StarBlack"), for: .normal)
         button.backgroundColor = .white
         button.addTarget(self, action: #selector(sendAction(_:)), for: .touchUpInside)
         return button

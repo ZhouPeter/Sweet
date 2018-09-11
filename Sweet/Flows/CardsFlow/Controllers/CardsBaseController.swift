@@ -42,6 +42,8 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     public var cards = [CardResponse]()
     public var activityCardId: String?
     public var activityId: String?
+    public var preferenceCardId: String?
+    public var preferenceId: String?
     
     lazy var mainView: CardsPageCollectionView = {
         let view = CardsPageCollectionView()

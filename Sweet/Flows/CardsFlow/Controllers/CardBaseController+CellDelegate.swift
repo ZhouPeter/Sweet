@@ -39,7 +39,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     }
 }
 // MARK: - StoriesCardCollectionViewCellDelegate
-extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
+extension CardsBaseController: StoriesCardCollectionViewCellDelegate, UsersCardCollectionViewCellDelegate {
     func showStoriesPlayerController(cell: UICollectionViewCell,
                                      storiesGroup: [[StoryCellViewModel]],
                                      currentIndex: Int,

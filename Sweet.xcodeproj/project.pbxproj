@@ -776,6 +776,22 @@
 		58F4074C20B272410031630C /* SweetPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074A20B272410031630C /* SweetPlayerItem.swift */; };
 		58F4074D20B272410031630C /* SweetPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074A20B272410031630C /* SweetPlayerItem.swift */; };
 		58F4074E20B272410031630C /* SweetPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4074A20B272410031630C /* SweetPlayerItem.swift */; };
+		58FBAD06214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */; };
+		58FBAD07214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */; };
+		58FBAD08214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */; };
+		58FBAD09214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */; };
+		58FBAD0D214673D900688F1E /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD0C214673D800688F1E /* UserCardViewModel.swift */; };
+		58FBAD0E214673D900688F1E /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD0C214673D800688F1E /* UserCardViewModel.swift */; };
+		58FBAD0F214673D900688F1E /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD0C214673D800688F1E /* UserCardViewModel.swift */; };
+		58FBAD10214673D900688F1E /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD0C214673D800688F1E /* UserCardViewModel.swift */; };
+		58FBAD172146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */; };
+		58FBAD182146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */; };
+		58FBAD192146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */; };
+		58FBAD1A2146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */; };
+		58FBAD1C214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
+		58FBAD1D214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
+		58FBAD1E214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
+		58FBAD1F214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC04E9882099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
 		AC04E9892099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
@@ -1756,6 +1772,10 @@
 		58F0993B20E47F1400C9373A /* UINavigationBar+GradientImage .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+GradientImage .swift"; sourceTree = "<group>"; };
 		58F4074520B271C40031630C /* SweetPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerManager.swift; sourceTree = "<group>"; };
 		58F4074A20B272410031630C /* SweetPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerItem.swift; sourceTree = "<group>"; };
+		58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58FBAD0C214673D800688F1E /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewModel.swift; sourceTree = "<group>"; };
+		58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCardViewModel.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AC04E9862099C87F004401AC /* LookupFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupFilter.m; sourceTree = "<group>"; };
 		AC04E9872099C87F004401AC /* LookupFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupFilter.h; sourceTree = "<group>"; };
@@ -2027,7 +2047,9 @@
 				5803571A20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift */,
 				5803572520AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift */,
 				5803574320AAE0B500B2C94F /* StoryCardCollectionViewCell.swift */,
+				58FBAD05214647AF00688F1E /* UserCardCollectionViewCell.swift */,
 				5803574D20AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift */,
+				58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */,
 				580907BE20B7BEE10013BC0A /* EmojiControlView.swift */,
 				58EA104E20B7FEFF001DD77C /* GrowingTextView.h */,
 				58EA104F20B7FF00001DD77C /* GrowingTextView.m */,
@@ -2052,6 +2074,8 @@
 				583BC78420CE4F9100C4494E /* ContentVideoCardViewModel.swift */,
 				58C03E4C211D835800E0BDB7 /* LongTextCardViewModel.swift */,
 				587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */,
+				58FBAD0C214673D800688F1E /* UserCardViewModel.swift */,
+				58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -3390,6 +3414,7 @@
 				5811E396210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACEFA0CE2106D51D0098631F /* VideoScrollView.swift in Sources */,
 				586603452108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
+				58FBAD06214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
 				AC616F9520C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3D209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8C920B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -3466,6 +3491,7 @@
 				AC557C9E20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				AC45CD8820AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58816D0E20C671040032D103 /* WXApi+Message.swift in Sources */,
+				58FBAD172146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */,
 				AC2A258B20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				58CF3F8B20E102BA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC78F20CE5F4C00C4494E /* BadgeButton.swift in Sources */,
@@ -3609,6 +3635,7 @@
 				ACA3236C20875C1700BDC92E /* Router.swift in Sources */,
 				5872A84F20D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */,
+				58FBAD0D214673D900688F1E /* UserCardViewModel.swift in Sources */,
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
@@ -3677,6 +3704,7 @@
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
+				58FBAD1C214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E220ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090720B7A80F007686EB /* TextColorButton.swift in Sources */,
@@ -3816,6 +3844,7 @@
 				580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */,
 				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
+				58FBAD08214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				580F889620FDF104009148CC /* CardActionEnum.swift in Sources */,
@@ -3844,6 +3873,7 @@
 				AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC7C8E5620E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */,
+				58FBAD192146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */,
 				AC2A257020BBF16B00A82E62 /* Messenger.swift in Sources */,
 				58816D1520C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				ACBE052620B5559C00A1EC14 /* UIView+Shadow.swift in Sources */,
@@ -3963,10 +3993,12 @@
 				AC04E9902099C9A1004401AC /* StoryFilterPreviewController.m in Sources */,
 				58EA105220B7FF00001DD77C /* GrowingTextView.m in Sources */,
 				587D18D320DA465E00D53708 /* FeedbackController.swift in Sources */,
+				58FBAD0F214673D900688F1E /* UserCardViewModel.swift in Sources */,
 				AC52FDC820F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
 				583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
+				58FBAD1E214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
@@ -4234,6 +4266,7 @@
 				ACFC207B20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
 				ACA3236320875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
+				58FBAD09214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
 				ACA3238520875E4400BDC92E /* BaseView.swift in Sources */,
 				586954962122F21000D48196 /* VideoCardPlayerManager.swift in Sources */,
 				58C03E44211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift in Sources */,
@@ -4244,6 +4277,7 @@
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				585B68BB20AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074920B271C40031630C /* SweetPlayerManager.swift in Sources */,
+				58FBAD1F214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				587D18E020DB43A700D53708 /* StoriesPlayerView.swift in Sources */,
 				585B68D420B1211E00E734BC /* PlayController.swift in Sources */,
 				58155E2E2091B52100ADEFFB /* RoundedRectView.swift in Sources */,
@@ -4284,11 +4318,13 @@
 				AC8EA9EF20AC03500033615D /* TextGradientController.swift in Sources */,
 				583BC78D20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				58C03E4B211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
+				58FBAD10214673D900688F1E /* UserCardViewModel.swift in Sources */,
 				ACE560B3209983AF00CE2564 /* StoryRecordView.swift in Sources */,
 				58D578F02093248000AE5D38 /* UpdateCellViewModel.swift in Sources */,
 				AC87BC6920E1FD7D002BA32C /* Guide.swift in Sources */,
 				AC616FAD20C6C03200AD9004 /* StoryMessageContent.swift in Sources */,
 				ACA9CC4120C6734300873643 /* StoryMessageCell.swift in Sources */,
+				58FBAD1A2146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */,
 				5803C1252099CAD3007C3D1C /* UpdateUniversityController.swift in Sources */,
 				AC525ABA208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58447B5E209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
@@ -4462,6 +4498,7 @@
 				5811E397210579FB00558C00 /* CardMessageManager.swift in Sources */,
 				ACEFA0CF2106D51D0098631F /* VideoScrollView.swift in Sources */,
 				586603462108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
+				58FBAD07214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
 				AC616F9620C6BCAA00AD9004 /* MessageContent.swift in Sources */,
 				58447B3E209C06A5004C2FFE /* IMController.swift in Sources */,
 				ACF7A8CA20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
@@ -4538,6 +4575,7 @@
 				58D579072094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				AC557C9F20B7EA6C0068F1B3 /* AlbumCell.swift in Sources */,
 				58816D0F20C671040032D103 /* WXApi+Message.swift in Sources */,
+				58FBAD182146772600688F1E /* UsersCardCollectionViewCell.swift in Sources */,
 				AC2A258C20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
 				58CF3F8E20E103EA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC79020CE5F4C00C4494E /* BadgeButton.swift in Sources */,
@@ -4681,6 +4719,7 @@
 				ACA3236D20875C1700BDC92E /* Router.swift in Sources */,
 				5872A85020D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */,
+				58FBAD0E214673D900688F1E /* UserCardViewModel.swift in Sources */,
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
@@ -4749,6 +4788,7 @@
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
+				58FBAD1D214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				AC8EA9E320ABF43D0033615D /* GradientView.swift in Sources */,
 				AC4D090820B7A80F007686EB /* TextColorButton.swift in Sources */,

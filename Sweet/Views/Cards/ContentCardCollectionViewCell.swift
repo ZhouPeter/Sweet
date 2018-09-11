@@ -17,7 +17,7 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
 }
 
 
-class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
+class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentCardViewModel
     var viewModel: ViewModelType?
     lazy var contentLabel: UILabel = {
@@ -38,22 +38,10 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     var imageViews = [UIImageView]()
     var imageViewContainers = [UIView]()
     var imageIcons = [UIButton]()
-    lazy var emojiView: EmojiControlView = {
-        let view = EmojiControlView()
-        view.backgroundColor = .clear
-        view.delegate = self
-        return view
-    } ()
-    
-    lazy var shareButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
-        button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
-        return button
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        emojiView.delegate = self
         setupUI()
     }
     
@@ -150,7 +138,7 @@ class ContentCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     func resetEmojiView() {
         if let viewModel = viewModel {
-            emojiView.update(indexs: viewModel.defaultEmojiList,
+            emojiView.update(indexs: [1, 2, 6],
                              resultImage: viewModel.resultImageName,
                              resultAvatarURLs: viewModel.resultAvatarURLs,
                              emojiType: viewModel.emojiDisplayType)
@@ -166,12 +154,6 @@ extension ContentCardCollectionViewCell {
     @objc private func didPressImage(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate, let view = tap.view {
             delegate.showImageBrowser(selectedIndex: view.tag)
-        }
-    }
-    
-    @objc private func didPressShare(_ sender: UIButton) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
-            delegate.shareCard(cardId: cardId!)
         }
     }
 }

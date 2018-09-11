@@ -55,7 +55,7 @@ class EmojiControlView: UIView {
         return [UIImageView(), UIImageView(), UIImageView()]
     }()
     private var defaultEmojiList = [Int]()
-    
+    private var openIsHidden = false
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
@@ -90,9 +90,10 @@ class EmojiControlView: UIView {
         addSubview(openButton)
     }
     
-    func update(indexs: [Int], resultImage: String?, resultAvatarURLs: [URL]?, emojiType: EmojiViewDisplay) {
+    func update(indexs: [Int], resultImage: String?, resultAvatarURLs: [URL]?, emojiType: EmojiViewDisplay, openHidden: Bool = true) {
         clearUI()
-        self.defaultEmojiList = indexs
+        defaultEmojiList = indexs
+        openIsHidden = openHidden
         if let image = resultImage, let avatarURLs = resultAvatarURLs {
             updateResult(imageName: image, resultAvatarURLs: avatarURLs)
         } else if emojiType == .show {
@@ -136,7 +137,7 @@ class EmojiControlView: UIView {
             emojiImageViews[$0 - 1].tag = $0
         }
         openButton.frame = CGRect(x: insetX - emojiSpace, y: 17, width: 40, height: 16)
-        openButton.isHidden = false
+        openButton.isHidden = openIsHidden
     }
     
     private func updateAllShow(indexs: [Int]) {

@@ -135,6 +135,20 @@ extension CardsBaseController {
             let configurator = CellConfigurator<WelcomeCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
+        case .user:
+            var viewModel = UsersCardViewModel(model: card)
+            for (offset, var cellModel) in viewModel.userContents.enumerated() {
+                cellModel.showProfile = { [weak self] (buddyID, setTop) in
+                    self?.showProfile(userId: buddyID, setTop: setTop)
+                }
+                cellModel.callBack = { [weak self] preferenceId in
+                    self?.showInputView(cardId: viewModel.cardId, preferenceId: preferenceId)
+                }
+                viewModel.userContents[offset] = cellModel
+            }
+            let configurator = CellConfigurator<UsersCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
         default:
             logger.debug(card)
             break
@@ -195,6 +209,15 @@ extension CardsBaseController {
         self.activityId = activityId
         self.activityCardId = cardId
     }
+
+    private func showInputView(cardId: String, preferenceId: String) {
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.startEditing(isStarted: true)
+        self.preferenceId = preferenceId
+        self.preferenceCardId = cardId
+    }
 }
 
 // MARK: - InputTextViewDelegate
@@ -202,18 +225,49 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        sendActivityMessages(text: text)
-        
+        if activityId != nil {
+            sendActivityMessages(text: text)
+        } else if preferenceId != nil {
+            sendPreferenceMessages(text: text)
+        }
+        activityId = nil
+        activityCardId = nil
+        preferenceId = nil
+        preferenceCardId = nil
     }
     
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
+        activityId = nil
+        activityCardId = nil
+        preferenceId = nil
+        preferenceCardId = nil
     }
 }
 
 // MARK: - ActivityMessage Methods
 extension CardsBaseController {
+    func sendPreferenceMessages(text: String) {
+        let card = cards[index]
+        guard let cardId = preferenceCardId, let preferenceId = preferenceId else { return }
+        guard card.cardEnumType == .user, card.cardId == cardId else { return }
+        guard let index = card.userContentList!.index(where: { $0.preferenceId == UInt64(preferenceId) }) else { fatalError() }
+        guard let cardID = card.userContentList![index].fromCardId else { return }
+        let toUserId = card.userContentList![index].userId
+        web.request(
+            WebAPI.getCard(cardID: cardID),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let resultCard = response.card
+                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: preferenceId)
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+    }
+    
     func sendActivityMessages(text: String) {
         let card = cards[index]
         guard let cardId = activityCardId, let activityId = activityId else { return }
@@ -229,13 +283,6 @@ extension CardsBaseController {
                     let resultCard = response.card
                     CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
-//                    if Defaults[.isInputTextSendMessage] == false {
-//                        let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
-//                        alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
-//                        self.present(alert, animated: true, completion: nil)
-//                    } else {
-//                        self.toast(message: "💗消息发送成功")
-//                    }
                 case let .failure(error):
                     logger.error(error)
                 }
