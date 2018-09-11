@@ -14,6 +14,9 @@ import Contacts
 
 var allowRotation = false
 
+private let umengKey = "5b726bfeb27b0a4abd0000d8"
+private let wechatKey = "wx819697effecdb6f5"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -46,12 +49,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
         setupVolumeBar()
+        
+        WXApi.registerApp(wechatKey)
+        UMConfigure.initWithAppkey(umengKey, channel: nil)
+        
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
-        WXApi.registerApp("wx819697effecdb6f5")
-        Bugly.start(withAppId: "3180f4d2d2")
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)
@@ -153,7 +158,6 @@ extension AppDelegate {
     
     private func registerUserNotificattion(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         guard let types = UIApplication.shared.currentUserNotificationSettings?.types else { return }
-        UMConfigure.initWithAppkey("5b726bfeb27b0a4abd0000d8", channel: nil)
         #if DEBUG
         UMConfigure.setLogEnabled(true)
         #endif

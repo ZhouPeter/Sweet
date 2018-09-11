@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.3)
-  - Bugly (2.5.0)
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
@@ -68,16 +67,18 @@ PODS:
   - SwiftyUserDefaults (3.0.1)
   - SwipeCellKit (2.3.2)
   - TapticEngine (1.1.0)
+  - UMCAnalytics (5.5.0):
+    - UMCCommon
   - UMCCommon (1.5.2)
   - UMCPush (3.2.2):
     - UMCCommon
+  - UMCSecurityPlugins (1.0.6)
   - VIMediaCache (0.4)
   - VolumeBar (3.0.3)
   - WechatOpenSDK (1.8.2)
   - YYText (1.0.7)
 
 DEPENDENCIES:
-  - Bugly
   - FLEX (~> 2.0)
   - Gemini
   - Hero (~> 1.2.0)
@@ -100,7 +101,10 @@ DEPENDENCIES:
   - SwiftyUserDefaults
   - SwipeCellKit (= 2.3.2)
   - TapticEngine
+  - UMCAnalytics
+  - UMCCommon
   - UMCPush
+  - UMCSecurityPlugins
   - VIMediaCache
   - VolumeBar (~> 3.0.3)
   - WechatOpenSDK
@@ -109,7 +113,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Bugly
     - CocoaAsyncSocket
     - FLEX
     - Gemini
@@ -133,8 +136,10 @@ SPEC REPOS:
     - SwiftyUserDefaults
     - SwipeCellKit
     - TapticEngine
+    - UMCAnalytics
     - UMCCommon
     - UMCPush
+    - UMCSecurityPlugins
     - VIMediaCache
     - VolumeBar
     - WechatOpenSDK
@@ -164,7 +169,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Gemini: 1a932868fa70579457162c3a93cd844ad5df3455
@@ -191,13 +195,15 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   SwipeCellKit: 52b160ea820245eb972b2eca270cb3a6f68e33af
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
+  UMCAnalytics: 4667788559a72f2fa5077117d1b8802a3b6eb6bb
   UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
   UMCPush: 5ab89bdbcc1fe90b1c669ff79213b44dc4821ec5
+  UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 0f514d2aac24029ea8399c1d046bce6cbfa08012
+PODFILE CHECKSUM: cde81ae574f36316ee3bfae79f4e2b2a3f704096
 
 COCOAPODS: 1.5.3
