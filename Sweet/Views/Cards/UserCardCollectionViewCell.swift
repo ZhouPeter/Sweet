@@ -23,10 +23,17 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         coverImageView.stopAnimating()
         if let preferenceImageURL = viewModel.preferenceImageURL {
             coverImageView.sd_setImage(with: preferenceImageURL)
-            bottomButton.setTitle("给我点赞", for: .normal)
-            bottomButton.setImage(#imageLiteral(resourceName: "StarWhite"), for: .normal)
-            bottomButton.setImageRight(space: 0)
-            bottomButton.addTarget(self, action: #selector(likeAction(_:)), for: .touchUpInside)
+            if viewModel.like {
+                bottomButton.setImage(nil, for: .normal)
+                bottomButton.setTitle("已经点赞", for: .normal)
+                bottomButton.resetEdgeInsets()
+                bottomButton.isUserInteractionEnabled = false
+            } else {
+                bottomButton.setTitle("给我点赞", for: .normal)
+                bottomButton.setImage(#imageLiteral(resourceName: "StarWhite"), for: .normal)
+                bottomButton.setImageRight(space: 0)
+                bottomButton.addTarget(self, action: #selector(likeAction(_:)), for: .touchUpInside)
+            }
         } else if let viewModels = viewModel.storyViewModels, viewModels.count > 0 {
             let viewModel = viewModels[0]
             if let videoURL = viewModel.videoURL {
@@ -49,6 +56,13 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         commonContactLabel.text = viewModel.commonContactString
         preferenceLabel.text = viewModel.commentString
 
+    }
+    
+    func update(like: Bool) {
+        bottomButton.setImage(nil, for: .normal)
+        bottomButton.setTitle("已经点赞", for: .normal)
+        bottomButton.resetEdgeInsets()
+        bottomButton.isUserInteractionEnabled = false
     }
     
     private lazy var coverMaskView: UIView = {

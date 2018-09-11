@@ -42,8 +42,6 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     public var cards = [CardResponse]()
     public var activityCardId: String?
     public var activityId: String?
-    public var preferenceCardId: String?
-    public var preferenceId: String?
     
     lazy var mainView: CardsPageCollectionView = {
         let view = CardsPageCollectionView()
@@ -118,15 +116,16 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(reachabilityChanged(note:)),
                                                name: .reachabilityChanged,
                                                object: reachability)
+
        try? reachability?.startNotifier()
         
     }
     
+   
     @objc func reachabilityChanged(note: Notification) {
         let reachability = note.object as! Reachability
         switch reachability.connection {

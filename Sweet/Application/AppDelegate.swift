@@ -110,6 +110,21 @@ extension AppDelegate {
                                                selector: #selector(contactStoreDidChange(_:)),
                                                name: NSNotification.Name.CNContactStoreDidChange,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showScreenShot(note:)),
+                                               name: NSNotification.Name.UIApplicationUserDidTakeScreenshot,
+                                               object: nil)
+    }
+    
+    @objc func showScreenShot(note: Notification) {
+        if let data = UIScreen.screenShot(), let image =  UIImage(data: data), let resultImage = image.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom")) {
+            let controller = ScreenShotController(shotImage: resultImage)
+            let newWindow = Share(frame: UIScreen.main.bounds)
+            newWindow.windowLevel = UIWindowLevelStatusBar + 1
+            newWindow.addSubview(controller.view)
+            controller.view.frame = UIScreen.main.bounds
+            newWindow.makeKeyAndVisible()
+        }
     }
     @objc private func uploadContacts() {
         if web.tokenSource.token != nil {

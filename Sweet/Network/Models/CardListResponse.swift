@@ -211,12 +211,14 @@ struct UserContent: Codable {
     let fromCardId: String?
     let info: String
     let nickname: String
+    let activityId: String?
     let preferenceId: UInt64?
     let preferenceImage: String?
     let storyList: [StoryResponse]?
     let type: UserContentType
     let university: String
     let userId: UInt64
+    var like: Bool
 }
 
 struct ContentImage: Codable {

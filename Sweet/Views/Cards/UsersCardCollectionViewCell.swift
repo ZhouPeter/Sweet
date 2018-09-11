@@ -28,6 +28,13 @@ class UsersCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         collectionView.reloadData()
     }
     
+    func updateItem(item: Int, like: Bool) {
+        let cell = collectionView.cellForItem(at: IndexPath(row: item, section: 0))
+        if let cell = cell as? UserCardCollectionViewCell {
+            cell.update(like: like)
+        }
+    }
+    
     typealias ViewModelType = UsersCardViewModel
     private var cellConfigurators = [CellConfiguratorType]()
     private var viewModel: UsersCardViewModel?
@@ -98,8 +105,8 @@ extension UsersCardCollectionViewCell: UserCardCollectionViewCellDelegate {
     func showInputTextView(cell: UserCardCollectionViewCell) {
         if let viewModel = viewModel,
             let indexPath = collectionView.indexPath(for: cell),
-            let preferenceId = viewModel.userContents[indexPath.row].preferenceId {
-            viewModel.userContents[indexPath.row].callBack?(String(preferenceId))
+            let activityId = viewModel.userContents[indexPath.row].activityId {
+            viewModel.userContents[indexPath.row].callBack?(activityId)
         }
     }
     

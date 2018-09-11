@@ -792,6 +792,14 @@
 		58FBAD1D214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
 		58FBAD1E214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
 		58FBAD1F214685D800688F1E /* UsersCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */; };
+		58FBAD252147AF7200688F1E /* UIScreen+Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */; };
+		58FBAD262147AF7200688F1E /* UIScreen+Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */; };
+		58FBAD272147AF7200688F1E /* UIScreen+Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */; };
+		58FBAD282147AF7200688F1E /* UIScreen+Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */; };
+		58FBAD2C2147B9A200688F1E /* ScreenShotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */; };
+		58FBAD2D2147B9A200688F1E /* ScreenShotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */; };
+		58FBAD2E2147B9A200688F1E /* ScreenShotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */; };
+		58FBAD2F2147B9A200688F1E /* ScreenShotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */; };
 		7E630635BB65B171A8F45009 /* Pods_Sweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055C25ED47324EF5A4093DFF /* Pods_Sweet.framework */; };
 		AC04E9882099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
 		AC04E9892099C87F004401AC /* LookupFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AC04E9862099C87F004401AC /* LookupFilter.m */; };
@@ -1776,6 +1784,8 @@
 		58FBAD0C214673D800688F1E /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewModel.swift; sourceTree = "<group>"; };
 		58FBAD162146772600688F1E /* UsersCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCardViewModel.swift; sourceTree = "<group>"; };
+		58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Shot.swift"; sourceTree = "<group>"; };
+		58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotController.swift; sourceTree = "<group>"; };
 		A48B6C5F41AA87BE9A227F26 /* Pods-Sweet-Sweet Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AC04E9862099C87F004401AC /* LookupFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupFilter.m; sourceTree = "<group>"; };
 		AC04E9872099C87F004401AC /* LookupFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupFilter.h; sourceTree = "<group>"; };
@@ -2429,6 +2439,7 @@
 				58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */,
 				5808D40A2113F25D00821A2C /* SDWebImagePhotoLoader.swift */,
 				58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */,
+				58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2712,6 +2723,7 @@
 				586603442108A2F9008C4448 /* UISearchBar+Frame.swift */,
 				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
 				58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */,
+				58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3496,6 +3508,7 @@
 				58CF3F8B20E102BA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC78F20CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				AC86A93920C4051400334D4A /* ConversationData.swift in Sources */,
+				58FBAD2C2147B9A200688F1E /* ScreenShotController.swift in Sources */,
 				58BD52A72088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
 				58D3CCE520C8FA320078B36C /* StatusResponse.swift in Sources */,
 				587D18E720DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
@@ -3539,6 +3552,7 @@
 				AC84FE8820E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				58BD52C22088959700F7C3E1 /* SignUpNameController.swift in Sources */,
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
+				58FBAD252147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				58816CF820C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
@@ -3959,6 +3973,7 @@
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
 				583BC78C20CE50ED00C4494E /* VideoCardCollectionViewCell.swift in Sources */,
 				58E870B820CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
+				58FBAD272147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				5843DA6620A13EE6005C8AD2 /* BlackController.swift in Sources */,
 				AC972519209ABD09009FB966 /* StoryTextController.swift in Sources */,
 				ACF7A8C620B41AFD00592BC9 /* StoryKeyboardControlView.swift in Sources */,
@@ -4100,6 +4115,7 @@
 				AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
+				58FBAD2E2147B9A200688F1E /* ScreenShotController.swift in Sources */,
 				5803572320AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
@@ -4159,6 +4175,7 @@
 				58461D3420C6B6AF00E3712C /* ShareCardController.swift in Sources */,
 				589E6BBC20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
 				583BC77E20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
+				58FBAD2F2147B9A200688F1E /* ScreenShotController.swift in Sources */,
 				58F0993F20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
@@ -4446,6 +4463,7 @@
 				5803572420AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				580D9BE72142434500B8719C /* PushSetting.swift in Sources */,
 				ACA3238B20875E6300BDC92E /* OnboardingView.swift in Sources */,
+				58FBAD282147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				580F888920FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				ACA9CC5020C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				580D9BE0213FC14A00B8719C /* SettingData.swift in Sources */,
@@ -4580,6 +4598,7 @@
 				58CF3F8E20E103EA00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				583BC79020CE5F4C00C4494E /* BadgeButton.swift in Sources */,
 				AC86A93A20C4051400334D4A /* ConversationData.swift in Sources */,
+				58FBAD2D2147B9A200688F1E /* ScreenShotController.swift in Sources */,
 				AC45CD8920AD57A2005C4AA0 /* TLAuthorizedManager.swift in Sources */,
 				58D3CCE620C8FA320078B36C /* StatusResponse.swift in Sources */,
 				587D18E820DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
@@ -4623,6 +4642,7 @@
 				AC84FE8920E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				58BD52B72088818A00F7C3E1 /* EnrollmentTableViewCell.swift in Sources */,
 				58BD52C32088959700F7C3E1 /* SignUpNameController.swift in Sources */,
+				58FBAD262147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				58816CF920C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,

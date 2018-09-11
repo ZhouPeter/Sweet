@@ -211,7 +211,9 @@ extension CardsBaseController {
         if  imageIcon.titleLabel?.text == "GIF", imageIcon.isHidden == false {
             let imageView = cell.imageViews[originPageIndex]
             imageIcon.isHidden = true
-            imageView.sd_setImage(with: imageURLs[originPageIndex])
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                imageView.sd_setImage(with: imageURLs[originPageIndex])
+            }
         }
         let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,
