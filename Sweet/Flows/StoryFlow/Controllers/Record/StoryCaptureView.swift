@@ -21,18 +21,19 @@ final class StoryCaptureView: GPUImageView {
     private var filter = GPUImageFilter()
     private var camera: GPUImageStillCamera?
     private var writer: GPUImageMovieWriter?
-    private var queue = DispatchQueue.global()
+    private var cameraQueue = DispatchQueue(label: #file)
     
     private var isCameraSetuping = false
     
     func setupCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
         guard camera == nil else {
             callback?()
             return
         }
         guard isCameraSetuping == false else { return }
         isCameraSetuping = true
-        queue.async {
+        cameraQueue.async {
             self.fillMode = .preserveAspectRatioAndFill
             self.camera = GPUImageStillCamera(sessionPreset: StoryConfg.captureSessionPreset, cameraPosition: .back)
             self.camera?.outputImageOrientation = .portrait
@@ -45,14 +46,18 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func enableAudio(callback: (() -> Void)? = nil) {
-        queue.async {
+        logger.debug()
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.addAudioInputsAndOutputs()
             DispatchQueue.main.async { callback?() }
         }
     }
     
     func rotateCamera(callback: (() -> Void)? = nil) {
-        queue.async {
+        logger.debug()
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.rotateCamera()
             if self.camera?.cameraPosition() == .front {
                 self.camera?.removeTarget(self.filter)
@@ -76,7 +81,8 @@ final class StoryCaptureView: GPUImageView {
             callback?()
             return
         }
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             rawValue += 1
             let mode = AVCaptureDevice.TorchMode(rawValue: rawValue + 1 > 3 ? 0 : rawValue)!
             do {
@@ -93,9 +99,13 @@ final class StoryCaptureView: GPUImageView {
     private var isStarting = false
     
     func startCaputre(callback: (() -> Void)? = nil) {
-        guard isStarting == false, isStarted == false, camera != nil else { return }
+        guard isStarting == false, isStarted == false, camera != nil else {
+            callback?()
+            return
+        }
         isStarting = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.startCapture()
             self.isStarting = false
             DispatchQueue.main.async { callback?() }
@@ -105,9 +115,11 @@ final class StoryCaptureView: GPUImageView {
     private var isPausing = false
     
     func pauseCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
         guard isPausing == false, camera != nil else { return }
         isPausing = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.pauseCapture()
             self.isPaused = true
             self.isPausing = false
@@ -118,9 +130,15 @@ final class StoryCaptureView: GPUImageView {
     private var isResuming = false
     
     func resumeCamera(callback: (() -> Void)? = nil) {
-        guard isResuming == false, camera != nil else { return }
+        logger.debug()
+        guard isResuming == false, isPaused, camera != nil else {
+            callback?()
+            return
+        }
         isResuming = true
-        queue.async {
+        logger.debug("start resume")
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.resumeCameraCapture()
             self.isPaused = false
             self.isResuming = false
@@ -131,9 +149,14 @@ final class StoryCaptureView: GPUImageView {
     private var isStopping = false
     
     func stopCapture(callback: (() -> Void)? = nil) {
-        guard isStopping == false, isStarted == true, camera != nil else { return }
+        logger.debug()
+        guard isStopping == false, isStarted == true, camera != nil else {
+            callback?()
+            return
+        }
         isStopping = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.stopCapture()
             self.isStopping = false
             DispatchQueue.main.async { callback?() }
@@ -143,9 +166,14 @@ final class StoryCaptureView: GPUImageView {
     private var isStartingRecording = false
     
     func startRecording(callback: (() -> Void)? = nil) {
-        guard isStartingRecording == false else { return }
+        logger.debug()
+        guard isStartingRecording == false else {
+            callback?()
+            return
+        }
         isStartingRecording = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.setupRecording()
             DispatchQueue.main.async {
                 self.writer?.startRecording()
@@ -158,9 +186,11 @@ final class StoryCaptureView: GPUImageView {
     private var isFinishingRecording = false
     
     func finishRecording(_ callback: @escaping ((URL?) -> Void)) {
+        logger.debug()
         guard isFinishingRecording == false else { return }
         isFinishingRecording = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.writer?.finishRecording(completionHandler: { [weak self] in
                 DispatchQueue.main.async {
                     guard let `self` = self else { return }
@@ -176,9 +206,11 @@ final class StoryCaptureView: GPUImageView {
     private var isPhotoCapturing = false
     
     func capturePhoto(_ callback: @escaping ((URL?) -> Void)) {
+        logger.debug()
         guard isPhotoCapturing == false else { return }
         isPhotoCapturing = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.camera?.capturePhotoAsJPEGProcessedUp(
                 toFilter: self.filter,
                 withCompletionHandler: { [weak self] (data, error) in
@@ -207,6 +239,7 @@ final class StoryCaptureView: GPUImageView {
     // MARK: - Private
     
     private func setupRecording() {
+        logger.debug()
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
         let writer = GPUImageMovieWriter(
             movieURL: url,
@@ -226,9 +259,11 @@ final class StoryCaptureView: GPUImageView {
     private var isCleaning = false
     
     private func cleanRecording(callback: (() -> Void)? = nil) {
+        logger.debug()
         guard isCleaning == false else { return }
         isCleaning = true
-        queue.async {
+        cameraQueue.async { [weak self] in
+            guard let `self` = self else { return }
             self.filter.removeTarget(self.writer)
             self.writer = nil
             self.camera?.audioEncodingTarget = nil

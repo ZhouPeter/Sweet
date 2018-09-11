@@ -419,7 +419,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         
         if cameraAuthorization && micAuthorization {
             if cameraAuthorization {
-                startCamera { if micAuthorization { self.captureView.enableAudio() } }
+                startCamera {
+                    logger.debug(micAuthorization)
+                    if micAuthorization { self.captureView.enableAudio() }
+                }
             } else if micAuthorization {
                 captureView.enableAudio()
             }
@@ -429,12 +432,15 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             add(childViewController: authorizedVC)
         }
     }
-    
+    private var isCameraStarting = false
     private func startCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
+        isCameraStarting = true
         captureView.setupCamera {
             self.captureView.startCaputre(callback: {
-                self.captureView.resumeCamera(callback: {
+                self.captureView.resumeCamera(callback: { [weak self] in
                     callback?()
+                    self?.isCameraStarting = false
                 })
             })
         }
@@ -442,8 +448,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func resumeCamera(_ isOpen: Bool) {
         if isOpen {
-            captureView.startCaputre()
-            captureView.resumeCamera()
+            if isCameraStarting == false {
+                logger.debug("start resume")
+                captureView.startCaputre()
+                captureView.resumeCamera()
+            }
         } else {
             captureView.stopCapture()
         }
@@ -639,6 +648,7 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     }
     
     func requestCameraAuthorizeSuccess() {
+        logger.debug()
         startCamera()
     }
     
