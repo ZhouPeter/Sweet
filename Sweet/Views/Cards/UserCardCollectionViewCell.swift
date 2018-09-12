@@ -136,11 +136,10 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.layer.cornerRadius = 5
+        contentView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
+        contentView.layer.borderWidth = 0.5
         contentView.clipsToBounds = true
-        coverMaskView.layer.cornerRadius = 5
-        coverMaskView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
-        coverMaskView.layer.borderWidth = 0.5
-        coverImageView.layer.cornerRadius = 5
         setupUI()
     }
     
