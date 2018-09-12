@@ -133,6 +133,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.isHidden = true
+        label.enableShadow()
         return label
     }()
     
