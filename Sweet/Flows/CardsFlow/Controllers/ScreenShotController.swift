@@ -52,16 +52,17 @@ class ScreenShotController: UIViewController {
     }()
     
     private let shotImage: UIImage
-    private var retainClosure: (() -> Void)?
-
     init(shotImage: UIImage) {
         self.shotImage = shotImage
         super.init(nibName: nil, bundle: nil)
-        retainClosure = { _ = self }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIApplication.shared.statusBarStyle
     }
     
     override func viewDidLoad() {
@@ -74,7 +75,6 @@ class ScreenShotController: UIViewController {
     }
     
     @objc private func didPressView(_ sender: UITapGestureRecognizer) {
-        retainClosure = nil
         if let window = view.window as? Share {
            window.dismiss()
         }
@@ -84,8 +84,10 @@ class ScreenShotController: UIViewController {
     @objc private func shareToWeChat(_ sender: UIButton) {
         if sender.tag == 0 {
             WXApi.sendImage(image: shotImage, scene: .conversation)
+            web.request(.interfaceCallLog) { (_) in }
         } else {
             WXApi.sendImage(image: shotImage, scene: .timeline)
+            web.request(.interfaceCallLog) { (_) in }
         }
     }
     private func setupUI() {

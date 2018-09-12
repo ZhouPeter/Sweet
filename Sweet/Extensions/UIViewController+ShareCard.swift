@@ -17,6 +17,9 @@ extension UIViewController {
         controller.sendCallback = { (text, userIds) in
             CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
         }
+        controller.shareWXCallback = {
+            CardAction.shareWeixin.actionLog(card: card)
+        }
         controller.shareCallback = { draft in
             guard let IDString = Defaults[.userID], let userID = UInt64(IDString) else { return }
             let task = StoryPublishTask(storage: Storage(userID: userID), draft: draft)
@@ -24,6 +27,7 @@ extension UIViewController {
                 JDStatusBarNotification.show(withStatus: isSuccess ? "转发成功" : "转发失败", dismissAfter: 2)
             }
             TaskRunner.shared.run(task)
+            CardAction.shareStory.actionLog(card: card)
         }
         present(controller, animated: true, completion: nil)
         
