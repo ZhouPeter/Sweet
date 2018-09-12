@@ -91,6 +91,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -98,6 +99,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -105,6 +107,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -112,6 +115,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -162,16 +166,20 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         bottomButton.centerX(to: contentView)
         contentView.addSubview(preferenceLabel)
         preferenceLabel.pin(.top, to: bottomButton, spacing: 16)
-        preferenceLabel.centerX(to: contentView)
+        preferenceLabel.align(.left, inset: 5)
+        preferenceLabel.align(.right, inset: 5)
         contentView.addSubview(commonContactLabel)
-        commonContactLabel.centerX(to: contentView)
         commonContactLabel.pin(.top, to: preferenceLabel)
+        commonContactLabel.align(.left, inset: 5)
+        commonContactLabel.align(.right, inset: 5)
         contentView.addSubview(universityLabel)
-        universityLabel.centerX(to: contentView)
         universityLabel.pin(.top, to: commonContactLabel)
+        universityLabel.align(.left, inset: 5)
+        universityLabel.align(.right, inset: 5)
         contentView.addSubview(nameLabel)
-        nameLabel.centerX(to: contentView)
         nameLabel.pin(.top, to: universityLabel)
+        nameLabel.align(.left, inset: 5)
+        nameLabel.align(.right, inset: 5)
         contentView.addSubview(avatarImageView)
         avatarImageView.constrain(width: 60, height: 60)
         avatarImageView.centerX(to: contentView)
