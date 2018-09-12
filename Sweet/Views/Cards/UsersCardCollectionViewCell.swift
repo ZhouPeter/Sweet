@@ -101,11 +101,12 @@ extension UsersCardCollectionViewCell: UICollectionViewDelegate {
             
         } else {
             guard let delegate = delegate as? UsersCardCollectionViewCellDelegate, let viewModel = self.viewModel else { return }
-            var currentIndex = indexPath.row
+            let currentIndex = indexPath.row
             var index = 0
+            var newCurrentIndex = currentIndex
             viewModel.userContents.forEach {
                 if $0.type != .story && index < currentIndex {
-                    currentIndex -= 1
+                    newCurrentIndex -= 1
                 }
                 index += 1
             }
@@ -114,7 +115,7 @@ extension UsersCardCollectionViewCell: UICollectionViewDelegate {
             storyUserContents.forEach { storyUserContentsGroup.append( $0.storyViewModels!) }
             delegate.showStoriesPlayerController(cell: collectionView.cellForItem(at: indexPath)!,
                                                  storiesGroup: storyUserContentsGroup,
-                                                 currentIndex: currentIndex,
+                                                 currentIndex: newCurrentIndex,
                                                  cardId: cardId)
         }
     
@@ -134,11 +135,12 @@ extension UsersCardCollectionViewCell: UserCardCollectionViewCellDelegate {
         if let delegate = delegate as? UsersCardCollectionViewCellDelegate,
             let viewModel = viewModel,
             let indexPath =  collectionView.indexPath(for: cell) {
-            var currentIndex = indexPath.row
+            let currentIndex = indexPath.row
             var index = 0
+            var newCurrentIndex = currentIndex
             viewModel.userContents.forEach {
                 if $0.type != .story && index < currentIndex {
-                    currentIndex -= 1
+                    newCurrentIndex -= 1
                 }
                 index += 1
             }
@@ -147,7 +149,7 @@ extension UsersCardCollectionViewCell: UserCardCollectionViewCellDelegate {
             storyUserContents.forEach { storyUserContentsGroup.append( $0.storyViewModels!) }
             delegate.showStoriesPlayerController(cell: cell,
                                                  storiesGroup: storyUserContentsGroup,
-                                                 currentIndex: currentIndex,
+                                                 currentIndex: newCurrentIndex,
                                                  cardId: cardId)
         }
         

@@ -145,7 +145,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     
     private lazy var bottomButton: UIButton = {
         let bottomButton = UIButton()
-        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         bottomButton.setTitleColor(.black, for: .normal)
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
@@ -299,8 +299,16 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)
             if isSelf {
                 bottomButton.isSelected = false
+                if stories[currentIndex].newReadCount == 0 {
+                    bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+                    bottomButton.setTitle("", for: .normal)
+                } else {
+                    bottomButton.setImage(nil, for: .normal)
+                    bottomButton.setTitle("+\(stories[currentIndex].newReadCount)", for: .normal)
+                }
             } else {
                 bottomButton.isEnabled = !stories[currentIndex].like
+                bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             }
         }
     }
@@ -564,6 +572,11 @@ extension StoriesPlayerViewController {
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
         uvViewController.view.tag = 100
+        stories[currentIndex].newReadCount = 0
+        bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+        bottomButton.setTitle("", for: .normal)
+        delegate?.updateStory(story: stories[currentIndex], position: (groupIndex, currentIndex))
+
     }
     func play() {
         for subview in view.subviews {

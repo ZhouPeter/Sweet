@@ -85,6 +85,8 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
+                } else {
+                    self.toast(message: "❤️评价成功")
                 }
                 Defaults[.isEvaluationOthers] = true
                 self.vibrateFeedback()
