@@ -301,7 +301,11 @@ extension StoriesController: UICollectionViewDelegate {
 }
 
 extension StoriesController: StoriesPlayerGroupViewControllerDelegate {
-    
+    func updateStory(story: StoryCellViewModel, postion: (Int, Int)) {
+        guard let index = storyViewModels.index(where: { $0.storyId == story.storyId }) else { return }
+        storyViewModels[index] = story
+
+    }
     func delStory(storyId: UInt64) {
         guard let index = storyViewModels.index(where: { $0.storyId == storyId }) else { return }
         storyViewModels.remove(at: index)

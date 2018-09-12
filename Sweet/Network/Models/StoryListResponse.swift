@@ -54,6 +54,7 @@ struct StoryResponse: Codable {
     let desc: String?
     let url: String?
     let fromCardId: String?
+    var newReadCount: Int
     enum CodingKeys: String, CodingKey {
         case avatar
         case college
@@ -75,6 +76,7 @@ struct StoryResponse: Codable {
         case desc
         case url
         case fromCardId
+        case newReadCount
     }
 }
 

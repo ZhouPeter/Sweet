@@ -220,15 +220,15 @@ extension CardsBaseController: InputTextViewDelegate {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
         sendActivityMessages(text: text)
-        activityId = nil
-        activityCardId = nil
+//        activityId = nil
+//        activityCardId = nil
     }
     
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        activityId = nil
-        activityCardId = nil
+//        activityId = nil
+//        activityCardId = nil
     }
 }
 

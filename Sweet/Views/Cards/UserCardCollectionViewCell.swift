@@ -29,7 +29,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
                 bottomButton.resetEdgeInsets()
                 bottomButton.isUserInteractionEnabled = false
             } else {
-                bottomButton.setTitle("给我点赞", for: .normal)
+                bottomButton.setTitle("点个赞", for: .normal)
                 bottomButton.setImage(#imageLiteral(resourceName: "StarWhite"), for: .normal)
                 bottomButton.setImageRight(space: 0)
                 bottomButton.addTarget(self, action: #selector(likeAction(_:)), for: .touchUpInside)
