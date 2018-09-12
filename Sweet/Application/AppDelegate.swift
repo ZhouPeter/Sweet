@@ -122,45 +122,43 @@ extension AppDelegate {
     }
     
     @objc func showScreenShot(note: Notification) {
-//        let status = PHPhotoLibrary.authorizationStatus()
-//        if status == .restricted || status == .denied {
-//            return
-//        }
-//        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-//            let options = PHFetchOptions()
-//            let assetsFetchResults = PHAsset.fetchAssets(with: options)
-//            let lastAsset = assetsFetchResults.lastObject
-//            let imageManager = PHCachingImageManager()
-//            if let asset = lastAsset {
-//                let options = PHImageRequestOptions()
-//                options.isSynchronous = true
-//                options.deliveryMode = .highQualityFormat
-//                imageManager.requestImage(
-//                    for: asset,
-//                    targetSize: UIScreen.main.bounds.size,
-//                    contentMode: .aspectFill,
-//                    options: options,
-//                    resultHandler: { result, info in
-//                        guard let result = result else { return }
-//                        DispatchQueue.main.async {
-//                            let resultImage = result.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom"))
-//                            let controller = ScreenShotController(shotImage: resultImage!)
-//                            let newWindow = Share(frame: UIScreen.main.bounds)
-//                            newWindow.windowLevel = UIWindowLevelStatusBar + 1
-//                            newWindow.addSubview(controller.view)
-//                            controller.view.frame = UIScreen.main.bounds
-//                            newWindow.makeKeyAndVisible()
-//                        }
-//                })
-//            }
-//        }
-
-        if let data = UIScreen.screenShot(), let image =  UIImage(data: data), let resultImage = image.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom")) {
-            let controller = ScreenShotController(shotImage: resultImage)
-            let newWindow = Share(frame: UIScreen.main.bounds)
-            newWindow.rootViewController = controller
-            newWindow.windowLevel = UIWindowLevelStatusBar + 1
-            newWindow.makeKeyAndVisible()
+        let status = PHPhotoLibrary.authorizationStatus()
+        if status == .authorized {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+                let options = PHFetchOptions()
+                let assetsFetchResults = PHAsset.fetchAssets(with: options)
+                let lastAsset = assetsFetchResults.lastObject
+                let imageManager = PHCachingImageManager()
+                if let asset = lastAsset {
+                    let options = PHImageRequestOptions()
+                    options.isSynchronous = true
+                    options.deliveryMode = .highQualityFormat
+                    imageManager.requestImage(
+                        for: asset,
+                        targetSize: UIScreen.main.bounds.size,
+                        contentMode: .aspectFill,
+                        options: options,
+                        resultHandler: { result, info in
+                            guard let result = result else { return }
+                            DispatchQueue.main.async {
+                                let resultImage = result.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom"))
+                                let controller = ScreenShotController(shotImage: resultImage!)
+                                let newWindow = Share(frame: UIScreen.main.bounds)
+                                newWindow.rootViewController = controller
+                                newWindow.windowLevel = UIWindowLevelStatusBar + 1
+                                newWindow.makeKeyAndVisible()
+                            }
+                    })
+                }
+            }
+        } else {
+            if let data = UIScreen.screenShot(), let image =  UIImage(data: data), let resultImage = image.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom")) {
+                let controller = ScreenShotController(shotImage: resultImage)
+                let newWindow = Share(frame: UIScreen.main.bounds)
+                newWindow.rootViewController = controller
+                newWindow.windowLevel = UIWindowLevelStatusBar + 1
+                newWindow.makeKeyAndVisible()
+            }
         }
     }
     @objc private func uploadContacts() {
