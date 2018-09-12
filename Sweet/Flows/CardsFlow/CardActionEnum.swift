@@ -21,6 +21,8 @@ enum CardAction: String {
     case likeActivity = "like_activity"
     case clickAvatar = "click_avatar"
     case clickStory = "click_story"
+    case shareStory = "share_story"
+    case shareWeixin = "share_weixin"
     private func makeActionLogWebApi(card: CardResponse,
                                      toUserId: String? = nil,
                                      activityId: String? = nil,
@@ -74,6 +76,10 @@ enum CardAction: String {
             case .failure:
                 completion?(false)
             }
+        }
+        
+        if self == .shareWeixin {
+            web.request(.interfaceCallLog) { (_) in }
         }
     }
 }

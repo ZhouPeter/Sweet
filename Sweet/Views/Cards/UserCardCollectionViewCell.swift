@@ -96,21 +96,21 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
     
     private lazy var universityLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
     }()
     
     private  lazy var commonContactLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
     }()
     
     private lazy var preferenceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
     }()
@@ -123,6 +123,11 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
         return button
+    }()
+    private lazy var effectView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -149,6 +154,8 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
         coverMaskView.fill(in: contentView)
         contentView.addSubview(coverImageView)
         coverImageView.fill(in: contentView)
+        contentView.addSubview(effectView)
+        effectView.fill(in: contentView)
         contentView.addSubview(bottomButton)
         bottomButton.constrain(width: 120, height: 36)
         bottomButton.align(.bottom, inset: 8)

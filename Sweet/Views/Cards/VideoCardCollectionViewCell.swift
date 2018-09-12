@@ -138,7 +138,7 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
     }
     func resetEmojiView() {
         if let viewModel = viewModel {
-            emojiView.update(indexs: [1, 2, 6],
+            emojiView.update(indexs: [1, 2, 3],
                              resultImage: viewModel.resultImageName,
                              resultAvatarURLs: viewModel.resultAvatarURLs,
                              emojiType: viewModel.emojiDisplayType)

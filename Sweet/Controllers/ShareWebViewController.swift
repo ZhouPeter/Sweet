@@ -126,14 +126,14 @@ class ShareWebViewController: WebViewController, ShareWebView {
             if card.video != nil {
                 var viewModel = ContentVideoCardViewModel(model: card)
                 viewModel.emojiDisplayType = emojiDisplay
-                emojiView.update(indexs: [1, 2, 6],
+                emojiView.update(indexs: [1, 2, 3],
                                  resultImage: viewModel.resultImageName,
                                  resultAvatarURLs: viewModel.resultAvatarURLs,
                                  emojiType: viewModel.emojiDisplayType)
             } else {
                 var viewModel = ContentCardViewModel(model: card)
                 viewModel.emojiDisplayType = emojiDisplay
-                emojiView.update(indexs: [1, 2, 6],
+                emojiView.update(indexs: [1, 2, 3],
                                  resultImage: viewModel.resultImageName,
                                  resultAvatarURLs: viewModel.resultAvatarURLs,
                                  emojiType: viewModel.emojiDisplayType)

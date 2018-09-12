@@ -94,10 +94,30 @@ extension UsersCardCollectionViewCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let configurator = cellConfigurators[indexPath.row] as? CellConfigurator<UserCardCollectionViewCell>  else { fatalError() }
-        let buddyID = configurator.viewModel.userId
-        let setTop = SetTop(contentId: nil, preferenceId: configurator.viewModel.preferenceId)
-        configurator.viewModel.showProfile?(buddyID, setTop)
-        
+        if configurator.viewModel.type == .preference {
+            let buddyID = configurator.viewModel.userId
+            let setTop = SetTop(contentId: nil, preferenceId: configurator.viewModel.preferenceId)
+            configurator.viewModel.showProfile?(buddyID, setTop)
+            
+        } else {
+            guard let delegate = delegate as? UsersCardCollectionViewCellDelegate, let viewModel = self.viewModel else { return }
+            var currentIndex = indexPath.row
+            var index = 0
+            viewModel.userContents.forEach {
+                if $0.type != .story && index < currentIndex {
+                    currentIndex -= 1
+                }
+                index += 1
+            }
+            let storyUserContents = viewModel.userContents.filter { return $0.type == .story }
+            var storyUserContentsGroup = [[StoryCellViewModel]]()
+            storyUserContents.forEach { storyUserContentsGroup.append( $0.storyViewModels!) }
+            delegate.showStoriesPlayerController(cell: collectionView.cellForItem(at: indexPath)!,
+                                                 storiesGroup: storyUserContentsGroup,
+                                                 currentIndex: currentIndex,
+                                                 cardId: cardId)
+        }
+    
     }
 }
 

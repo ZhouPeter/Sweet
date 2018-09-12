@@ -26,6 +26,7 @@ extension ShareCardController: WXApiManagerDelegate {
 }
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
+    var shareWXCallback: (() -> Void)?
     var shareCallback: ((_ draft: StoryDraft) -> Void)?
     private var userIds = [UInt64]() {
         didSet {
@@ -328,6 +329,7 @@ extension ShareCardController: UITableViewDelegate {
         switch sections[indexPath.section] {
         case .wechat:
             WXApi.sendText(text: shareText!, scene: .conversation)
+            shareWXCallback?()
         case .story:
             guard let cell = tableView.cellForRow(at: indexPath) as? ModuleTableViewCell else { fatalError() }
             cell.selectButton.isSelected = !cell.selectButton.isSelected
