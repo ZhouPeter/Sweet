@@ -17,8 +17,9 @@ extension UIScreen {
         return UIScreen.main.bounds.size.height
     }
     
-    class func isIphoneX() -> Bool {
-        if mainHeight() == 812 {
+    class func isNotched() -> Bool {
+        let nativeHeight = UIScreen.main.nativeBounds.height
+        if nativeHeight == 2436 || nativeHeight == 1792 || nativeHeight == 2688  {
             return true
         } else {
             return false
@@ -34,18 +35,17 @@ extension UIScreen {
     }
     
     class func navBarHeight() -> CGFloat {
-        let top: CGFloat = isIphoneX() ? 24 : 0
+        let top: CGFloat = isNotched() ? 24 : 0
         return 64 + top
     }
     
-    
     class func safeTopMargin() -> CGFloat {
-        let top: CGFloat = isIphoneX() ? 44 : 0
+        let top: CGFloat = isNotched() ? 44 : 0
         return top
     }
     
     class func safeBottomMargin() -> CGFloat {
-        let bottom: CGFloat = isIphoneX() ? 34 : 0
+        let bottom: CGFloat = isNotched() ? 34 : 0
         return 0 + bottom
     }
 }

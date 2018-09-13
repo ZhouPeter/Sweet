@@ -20,7 +20,7 @@ class PopupController {
         let returnImageView = UIImageView(image: #imageLiteral(resourceName: "Return"))
         backgroundView.addSubview(returnImageView)
         returnImageView.align(.left, inset: 10)
-        returnImageView.align(.top, inset: UIScreen.isIphoneX() ? 54 : 20)
+        returnImageView.align(.top, inset: UIScreen.isNotched() ? 54 : 20)
         returnImageView.constrain(width: 30, height: 30)
         popupController.backgroundView = backgroundView
         popupController.containerView.layer.cornerRadius = 10

@@ -52,7 +52,7 @@ class SignUpCollegeController: BaseViewController, SignUpCollegeView {
         tableView.align(.left, to: view)
         tableView.align(.right, to: view)
         tableView.pin(.bottom, to: searchBar)
-        tableView.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 34 : 0)
+        tableView.align(.bottom, to: view, inset: UIScreen.isNotched() ? 34 : 0)
     }
     
     private func searchCollege(collegeName: String) {

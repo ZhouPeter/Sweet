@@ -80,7 +80,7 @@ class StoriesPlayerScrollView: UIScrollView {
         middleImageView.backgroundColor = .black
         middleImageView.contentMode = .scaleAspectFit
         middleImageView.isUserInteractionEnabled = true
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             middleImageView.layer.cornerRadius = 7
             middleImageView.clipsToBounds = true
         }

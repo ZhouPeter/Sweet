@@ -74,7 +74,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         view.backgroundColor = .black
         view.hero.modifiers = [.backgroundColor(.black)]
         view.addSubview(editContainer)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             editContainer.align(.top, to: view, inset: UIScreen.safeTopMargin())
             editContainer.centerX(to: view)
             editContainer.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
@@ -123,7 +123,7 @@ final class StoryTextController: BaseViewController, StoryTextView, StoryEditCan
         editButton.align(.left, to: view, inset: 10)
         finishButton.constrain(width: 50, height: 50)
         finishButton.align(.right, to: view, inset: 10)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             editButton.pin(.bottom, to: editContainer, spacing: 10)
             finishButton.pin(.bottom, to: editContainer, spacing: 10)
         } else {

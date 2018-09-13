@@ -147,7 +147,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
 
     private func dismiss() {
         router.dismissFlow(animated: true, completion: {
-            if UIScreen.isIphoneX() == false {
+            if UIScreen.isNotched() == false {
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
             }
             NotificationCenter.default.post(name: .EnablePageScroll, object: nil)

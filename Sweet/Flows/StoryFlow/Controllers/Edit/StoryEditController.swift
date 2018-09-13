@@ -105,7 +105,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         view.hero.modifiers = [.backgroundColor(.black)]
         add(childViewController: previewController)
         view.addSubview(editContainerView)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             editContainerView.align(.top, to: view, inset: UIScreen.safeTopMargin())
             editContainerView.centerX(to: view)
             editContainerView.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
@@ -150,7 +150,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         view.addSubview(editButton)
         editButton.constrain(width: 50, height: 50)
         editButton.align(.left, to: view, inset: 10)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             editButton.pin(.bottom, to: editContainerView, spacing: 10)
         } else {
             editButton.align(.bottom, to: view, inset: 25)
@@ -165,7 +165,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         finishButton.align(.right, to: view, inset: 10)
         view.addSubview(deleteButton)
         deleteButton.constrain(width: 84, height: 84)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             deleteButton.align(.bottom, to: editContainerView, inset: 10)
         } else {
             deleteButton.centerY(to: editButton)

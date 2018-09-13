@@ -254,7 +254,7 @@ class InputTextView: UIView {
         addSubview(textView)
         textView.align(.right, to: self, inset: 10)
         textView.align(.left, to: self, inset: 10)
-        textView.align(.top, to: self, inset: UIScreen.isIphoneX() ? 24 + 15 : 15)
+        textView.align(.top, to: self, inset: UIScreen.isNotched() ? 24 + 15 : 15)
         textView.pin(.top, to: senderButton, spacing: 10)
       
     }

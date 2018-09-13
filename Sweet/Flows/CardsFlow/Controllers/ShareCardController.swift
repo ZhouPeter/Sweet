@@ -198,7 +198,7 @@ class ShareCardController: BaseViewController {
         view.addSubview(topView)
         topView.align(.left)
         topView.align(.right)
-        topView.align(.top, inset: UIScreen.isIphoneX() ? 44 : 20)
+        topView.align(.top, inset: UIScreen.isNotched() ? 44 : 20)
         topView.constrain(height: 50)
         topView.addSubview(returnButton)
         returnButton.constrain(width: 40, height: 25)

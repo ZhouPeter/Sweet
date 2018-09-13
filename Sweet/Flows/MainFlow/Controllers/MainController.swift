@@ -269,7 +269,7 @@ extension MainController: PageboyViewControllerDelegate {
     }
     
     private func updateStatusBar(at index: Int) {
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             return
         }
         if index == 0 {

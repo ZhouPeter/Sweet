@@ -102,7 +102,7 @@ final class StoryTextEditController: UIViewController {
     } ()
     
     private var textContainerHeight: CGFloat {
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             return UIScreen.mainHeight() - UIScreen.safeTopMargin() - keyboardHeight
         }
         return view.bounds.height - keyboardHeight

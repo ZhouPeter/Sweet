@@ -86,7 +86,6 @@ public enum DeviceType: String, CaseIterable {
                 identifier.append(String(UnicodeScalar(UInt8(value))))
             }
         }
-        
         return DeviceType(identifier: identifier)
     }
     

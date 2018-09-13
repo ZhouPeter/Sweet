@@ -56,7 +56,7 @@ class SignUpEnrollmentController: BaseViewController, SignUpEnrollmentView {
         view.addSubview(yearsPickerView)
         yearsPickerView.align(.left, to: view)
         yearsPickerView.align(.right, to: view)
-        yearsPickerView.align(.bottom, to: view, inset: UIScreen.isIphoneX() ? 34 : 0)
+        yearsPickerView.align(.bottom, to: view, inset: UIScreen.isNotched() ? 34 : 0)
         yearsPickerView.constrain(height: 270)
     }
 }

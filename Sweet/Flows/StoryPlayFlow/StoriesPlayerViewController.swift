@@ -417,7 +417,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                                    height: view.bounds.width * 16 / 9)
                 playerView = AVPlayerView(frame: frame)
                 playerView.backgroundColor = .black
-                if UIScreen.isIphoneX() {
+                if UIScreen.isNotched() {
                     playerView.layer.cornerRadius = 7
                     playerView.clipsToBounds = true
                 }
