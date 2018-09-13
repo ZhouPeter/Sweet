@@ -142,7 +142,8 @@ extension AppDelegate {
             return
         }
         let now = Date()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        let delay: TimeInterval = UIDevice.current.hasLessThan2GBRAM ? 2 : 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             var asset: PHAsset?
             PHAssetCollection
                 .fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
@@ -157,8 +158,7 @@ extension AppDelegate {
                     guard results.count > 0 else { return }
                     asset = results.object(at: 0)
             }
-            logger.debug(asset?.creationDate?.timeIntervalSince(now) ?? 0)
-            guard let targetAsset = asset, let date = targetAsset.creationDate, abs(date.timeIntervalSince(now)) < 1 else {
+            guard let targetAsset = asset, let date = targetAsset.creationDate, abs(date.timeIntervalSince(now)) < 3 else {
                 DispatchQueue.main.async { callback(nil) }
                 return
             }
