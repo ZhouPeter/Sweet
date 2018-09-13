@@ -121,51 +121,60 @@ extension AppDelegate {
     }
     
     @objc func showScreenShot(note: Notification) {
-        let status = PHPhotoLibrary.authorizationStatus()
-        if status == .authorized {
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                let options = PHFetchOptions()
-                let assetsFetchResults = PHAsset.fetchAssets(with: options)
-                let lastAsset = assetsFetchResults.lastObject
-                let imageManager = PHCachingImageManager()
-                if let asset = lastAsset {
-                    let options = PHImageRequestOptions()
-                    options.isSynchronous = true
-                    options.deliveryMode = .highQualityFormat
-                    imageManager.requestImage(
-                        for: asset,
-                        targetSize: UIScreen.main.bounds.size,
-                        contentMode: .aspectFill,
-                        options: options,
-                        resultHandler: { result, info in
-                            guard let result = result else { return }
-                            DispatchQueue.main.async {
-                                let resultImage = result.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom"))
-                                let controller = ScreenShotController(shotImage: resultImage!)
-                                let newWindow = Share(frame: UIScreen.main.bounds)
-                                newWindow.rootViewController = controller
-                                newWindow.windowLevel = UIWindowLevelStatusBar + 1
-                                newWindow.makeKeyAndVisible()
-                            }
-                    })
-                }
+        logger.debug(note)
+        getScreenShotInAlbum { (image) in
+            let screenshot = image ?? UIScreen.screenshot()
+            guard let newImage = screenshot?.addedFooterImage(#imageLiteral(resourceName: "ShareBottom")) else {
+                logger.warning("screenshot is nil")
+                return
             }
-        } else {
-            if let data = UIScreen.screenShot(), let image =  UIImage(data: data), let resultImage = image.addSlaveImage(slaveImage: #imageLiteral(resourceName: "ShareBottom")) {
-                let controller = ScreenShotController(shotImage: resultImage)
-                let newWindow = Share(frame: UIScreen.main.bounds)
-                newWindow.rootViewController = controller
-                newWindow.windowLevel = UIWindowLevelStatusBar + 1
-                newWindow.makeKeyAndVisible()
-            }
+            let controller = ScreenShotController(shotImage: newImage)
+            let newWindow = Share(frame: UIScreen.main.bounds)
+            newWindow.rootViewController = controller
+            newWindow.windowLevel = UIWindowLevelStatusBar + 1
+            newWindow.makeKeyAndVisible()
         }
     }
+    
+    private func getScreenShotInAlbum(callback: @escaping (UIImage?) -> Void) {
+        guard PHPhotoLibrary.authorizationStatus() == .authorized else {
+            callback(nil)
+            return
+        }
+        let now = Date()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            var asset: PHAsset?
+            PHAssetCollection
+                .fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+                .enumerateObjects { (collection, _, shouldStop) in
+                    guard asset == nil else { return }
+                    let title = collection.localizedTitle ?? ""
+                    guard title == "Screenshots" || title == "屏幕快照" else { return }
+                    shouldStop.pointee = true
+                    let options = PHFetchOptions()
+                    options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+                    let results = PHAsset.fetchAssets(in: collection, options: options)
+                    guard results.count > 0 else { return }
+                    asset = results.object(at: 0)
+            }
+            logger.debug(asset?.creationDate?.timeIntervalSince(now) ?? 0)
+            guard let targetAsset = asset, let date = targetAsset.creationDate, abs(date.timeIntervalSince(now)) < 1 else {
+                DispatchQueue.main.async { callback(nil) }
+                return
+            }
+            AssetManager.resolveAsset(targetAsset,
+                                      size: UIScreen.main.bounds.size,
+                                      completion: { image in DispatchQueue.main.async { callback(image) } })
+        }
+    }
+    
     @objc private func uploadContacts() {
         if web.tokenSource.token != nil {
             let contacts = Contacts.getContacts()
             web.request(.uploadContacts(contacts: contacts)) { (_) in }
         }
     }
+    
     @objc private func contactStoreDidChange(_ notification: NSNotification) {
         uploadContacts()
     }

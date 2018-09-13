@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIScreen {
-    class func screenShot() -> Data? {
+    class func screenshot() -> UIImage? {
         var imageSize = CGSize.zero
         let orientation = UIApplication.shared.statusBarOrientation
         if orientation.isPortrait {
@@ -44,6 +44,6 @@ extension UIScreen {
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return UIImagePNGRepresentation(image!)
+        return image
     }
 }
