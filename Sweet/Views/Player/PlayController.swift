@@ -147,7 +147,7 @@ class PlayController: UIViewController {
         playerView.center = view.center
         view.addSubview(backButton)
         backButton.align(.left, to: view, inset: 10)
-        backButton.align(.top, to: view, inset: UIScreen.isIphoneX() ? 54 : 20)
+        backButton.align(.top, to: view, inset: UIScreen.isNotched() ? 54 : 20)
         backButton.constrain(width: 40, height: 40)
     }
     

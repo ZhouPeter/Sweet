@@ -36,6 +36,8 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
+        imageView.layer.borderColor = UIColor(hex: 0xf2f2f2).cgColor
+        imageView.layer.borderWidth = 0.5
         return imageView
     }()
     
@@ -46,6 +48,8 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
         let tap = UITapGestureRecognizer(target: self, action: #selector(selectAction(_:)))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
+        imageView.layer.borderColor = UIColor(hex: 0xf2f2f2).cgColor
+        imageView.layer.borderWidth = 0.5
         return imageView
     }()
     

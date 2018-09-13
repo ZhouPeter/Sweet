@@ -11,8 +11,11 @@ import SwiftyUserDefaults
 import AVKit
 import VolumeBar
 import Contacts
-
+import Photos
 var allowRotation = false
+
+private let umengKey = "5b726bfeb27b0a4abd0000d8"
+private let wechatKey = "wx819697effecdb6f5"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         #if DEBUG
             window = DebugWindow(frame: UIScreen.main.bounds)
         #else
@@ -46,17 +48,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
         setupVolumeBar()
+        
+        WXApi.registerApp(wechatKey)
+        UMConfigure.initWithAppkey(umengKey, channel: nil)
+        
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
-        WXApi.registerApp("wx819697effecdb6f5")
-        Bugly.start(withAppId: "3180f4d2d2")
         getSetting()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)
         NetworkHelper.networkCheck(viewController: rootController)
-        uploadContacts()
         addObservers()
         return true
     }
@@ -111,13 +114,67 @@ extension AppDelegate {
                                                selector: #selector(contactStoreDidChange(_:)),
                                                name: NSNotification.Name.CNContactStoreDidChange,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showScreenShot(note:)),
+                                               name: NSNotification.Name.UIApplicationUserDidTakeScreenshot,
+                                               object: nil)
     }
+    
+    @objc func showScreenShot(note: Notification) {
+        logger.debug(note)
+        getScreenShotInAlbum { (image) in
+            let screenshot = image ?? UIScreen.screenshot()
+            guard let newImage = screenshot?.addedFooterImage(#imageLiteral(resourceName: "ShareBottom")) else {
+                logger.warning("screenshot is nil")
+                return
+            }
+            let controller = ScreenShotController(shotImage: newImage)
+            let newWindow = Share(frame: UIScreen.main.bounds)
+            newWindow.rootViewController = controller
+            newWindow.windowLevel = UIWindowLevelStatusBar + 1
+            newWindow.makeKeyAndVisible()
+        }
+    }
+    
+    private func getScreenShotInAlbum(callback: @escaping (UIImage?) -> Void) {
+        guard PHPhotoLibrary.authorizationStatus() == .authorized else {
+            callback(nil)
+            return
+        }
+        let now = Date()
+        let delay: TimeInterval = UIDevice.current.hasLessThan2GBRAM ? 2 : 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            var asset: PHAsset?
+            PHAssetCollection
+                .fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+                .enumerateObjects { (collection, _, shouldStop) in
+                    guard asset == nil else { return }
+                    let title = collection.localizedTitle ?? ""
+                    guard title == "Screenshots" || title == "屏幕快照" else { return }
+                    shouldStop.pointee = true
+                    let options = PHFetchOptions()
+                    options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+                    let results = PHAsset.fetchAssets(in: collection, options: options)
+                    guard results.count > 0 else { return }
+                    asset = results.object(at: 0)
+            }
+            guard let targetAsset = asset, let date = targetAsset.creationDate, abs(date.timeIntervalSince(now)) < 3 else {
+                DispatchQueue.main.async { callback(nil) }
+                return
+            }
+            AssetManager.resolveAsset(targetAsset,
+                                      size: UIScreen.main.bounds.size,
+                                      completion: { image in DispatchQueue.main.async { callback(image) } })
+        }
+    }
+    
     @objc private func uploadContacts() {
         if web.tokenSource.token != nil {
             let contacts = Contacts.getContacts()
             web.request(.uploadContacts(contacts: contacts)) { (_) in }
         }
     }
+    
     @objc private func contactStoreDidChange(_ notification: NSNotification) {
         uploadContacts()
     }
@@ -154,7 +211,6 @@ extension AppDelegate {
     
     private func registerUserNotificattion(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         guard let types = UIApplication.shared.currentUserNotificationSettings?.types else { return }
-        UMConfigure.initWithAppkey("5b726bfeb27b0a4abd0000d8", channel: nil)
         #if DEBUG
         UMConfigure.setLogEnabled(true)
         #endif

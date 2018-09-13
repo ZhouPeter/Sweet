@@ -76,6 +76,7 @@ enum WebAPI {
     case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?, toUserId: String?, activityId: String?, storyId: String?)
     case recentStoryList(userID: UInt64)
     case updateSetting(autoPlay: Bool, showMsg: Bool)
+    case interfaceCallLog
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -213,6 +214,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/story/list"
         case .updateSetting:
             return "/user/setting/update"
+        case .interfaceCallLog:
+            return "/user/externalInterfaceCallLog/record"
         }
     }
     

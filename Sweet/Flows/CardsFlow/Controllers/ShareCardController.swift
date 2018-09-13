@@ -26,6 +26,7 @@ extension ShareCardController: WXApiManagerDelegate {
 }
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
+    var shareWXCallback: (() -> Void)?
     var shareCallback: ((_ draft: StoryDraft) -> Void)?
     private var userIds = [UInt64]() {
         didSet {
@@ -197,7 +198,7 @@ class ShareCardController: BaseViewController {
         view.addSubview(topView)
         topView.align(.left)
         topView.align(.right)
-        topView.align(.top, inset: UIScreen.isIphoneX() ? 44 : 20)
+        topView.align(.top, inset: UIScreen.isNotched() ? 44 : 20)
         topView.constrain(height: 50)
         topView.addSubview(returnButton)
         returnButton.constrain(width: 40, height: 25)
@@ -328,6 +329,7 @@ extension ShareCardController: UITableViewDelegate {
         switch sections[indexPath.section] {
         case .wechat:
             WXApi.sendText(text: shareText!, scene: .conversation)
+            shareWXCallback?()
         case .story:
             guard let cell = tableView.cellForRow(at: indexPath) as? ModuleTableViewCell else { fatalError() }
             cell.selectButton.isSelected = !cell.selectButton.isSelected

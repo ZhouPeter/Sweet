@@ -194,7 +194,7 @@ class SweetPlayerControlView: UIView {
         topMaskView.align(.top, to: mainMaskView)
         topMaskView.constrain(height: 60)
         topMaskView.addSubview(closeButton)
-        closeButton.align(.left, to: topMaskView, inset: UIScreen.isIphoneX() ? 34 : 10)
+        closeButton.align(.left, to: topMaskView, inset: UIScreen.isNotched() ? 34 : 10)
         closeButton.align(.top, to: topMaskView, inset: 15)
         closeButton.constrain(width: 30, height: 30)
         

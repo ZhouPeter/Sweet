@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyUserDefaults
 class PowerPushController: BaseViewController, PowerPushView {
     var onFinish: (() -> Void)?
     private lazy var titleLabel: UILabel = {
@@ -40,6 +40,7 @@ class PowerPushController: BaseViewController, PowerPushView {
     @objc private func openUserNotificationService(_ sender: UIButton) {
         let appDelegate  = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.setUserNotificationCenter(completion: {
+            Defaults[.isSettingPush] = true
             DispatchQueue.main.async {
                  logger.debug("推送授权完毕")  
                  self.onFinish?()

@@ -93,7 +93,7 @@ class AuthViewController: BaseViewController, AuthView {
     }
     
     private func setupUI() {
-        let imageView = UIImageView(image: UIScreen.isIphoneX() ? #imageLiteral(resourceName: "LoginCoverX") : #imageLiteral(resourceName: "LoginCover"))
+        let imageView = UIImageView(image: UIScreen.isNotched() ? #imageLiteral(resourceName: "LoginCoverX") : #imageLiteral(resourceName: "LoginCover"))
         imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
         imageView.fill(in: view)

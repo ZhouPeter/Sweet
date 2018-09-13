@@ -17,6 +17,11 @@ enum EmojiType: UInt, Codable {
     case happy
     case smile
 }
+enum UserContentType: UInt, Codable {
+    case unknown
+    case story
+    case preference
+}
 enum SourceType: UInt, Codable {
     case `default`
     case weibo
@@ -82,6 +87,7 @@ struct CardResponse: Codable {
     let video: String?
     let videoPic: String?
     var storyList: [[StoryResponse]]?
+    var userContentList: [UserContent]?
     var result: SelectResult?
     let type: UInt
     var cardEnumType: CardType {
@@ -104,6 +110,7 @@ struct CardResponse: Codable {
         case story
         case evaluation
         case welcome
+        case user
     }
     
     func makeShareText() -> String? {
@@ -196,6 +203,22 @@ struct CardResponse: Codable {
             return nil
         }
     }
+}
+
+struct UserContent: Codable {
+    let avatar: String
+    let comment: String
+    let fromCardId: String?
+    let info: String
+    let nickname: String
+    let activityId: String?
+    let preferenceId: UInt64?
+    let preferenceImage: String?
+    let storyList: [StoryResponse]?
+    let type: UserContentType
+    let university: String
+    let userId: UInt64
+    var like: Bool
 }
 
 struct ContentImage: Codable {

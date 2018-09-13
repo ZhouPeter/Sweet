@@ -39,7 +39,7 @@ extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     }
 }
 // MARK: - StoriesCardCollectionViewCellDelegate
-extension CardsBaseController: StoriesCardCollectionViewCellDelegate {
+extension CardsBaseController: StoriesCardCollectionViewCellDelegate, UsersCardCollectionViewCellDelegate {
     func showStoriesPlayerController(cell: UICollectionViewCell,
                                      storiesGroup: [[StoryCellViewModel]],
                                      currentIndex: Int,
@@ -85,6 +85,8 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
+                } else {
+                    self.toast(message: "❤️评价成功")
                 }
                 Defaults[.isEvaluationOthers] = true
                 self.vibrateFeedback()
@@ -211,7 +213,9 @@ extension CardsBaseController {
         if  imageIcon.titleLabel?.text == "GIF", imageIcon.isHidden == false {
             let imageView = cell.imageViews[originPageIndex]
             imageIcon.isHidden = true
-            imageView.sd_setImage(with: imageURLs[originPageIndex])
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                imageView.sd_setImage(with: imageURLs[originPageIndex])
+            }
         }
         let shareText: String? = String.getShareText(content: cards[index].content, url: cards[index].url)
         photoBrowserImp = PhotoBrowserImp(thumbnaiImageViews: cell.imageViews,

@@ -30,7 +30,7 @@ final class OnboardingController: BaseViewController, OnboardingView {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         view.addSubview(scrollView)
         for index in 0..<count {
-            let prefix = UIScreen.isIphoneX() ? "SlideX" : "Slide"
+            let prefix = UIScreen.isNotched() ? "SlideX" : "Slide"
             let image = UIImage(named: "\(prefix)\(index + 1)")
             let imageView = UIImageView(frame: CGRect(x: width * CGFloat(index), y: 0, width: width, height: height))
             imageView.contentMode = .scaleAspectFill

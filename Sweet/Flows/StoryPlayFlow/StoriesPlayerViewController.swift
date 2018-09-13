@@ -133,6 +133,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.isHidden = true
+        label.enableShadow()
         return label
     }()
     
@@ -145,7 +146,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     
     private lazy var bottomButton: UIButton = {
         let bottomButton = UIButton()
-        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         bottomButton.setTitleColor(.black, for: .normal)
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
         bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
@@ -172,7 +173,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     private var touchTagTap: TapGestureRecognizer!
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.placehoder = "说点有意思的"
+        view.placehoder = "可以带一句你想说的话"
         view.delegate = self
         return view
     }()
@@ -282,7 +283,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         cardView.align(.left, inset: 10)
         cardView.align(.right, inset: 10)
         cardView.constrain(height: 160)
-        cardView.pin(.top, to: bottomButton, spacing: 25)
+        cardView.pin(.top, to: bottomButton, spacing: 35)
         view.addSubview(commentLabel)
         commentLabel.align(.left, inset: 10)
         commentLabel.align(.right, inset: 10)
@@ -299,8 +300,16 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)
             if isSelf {
                 bottomButton.isSelected = false
+                if stories[currentIndex].newReadCount == 0 {
+                    bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+                    bottomButton.setTitle("", for: .normal)
+                } else {
+                    bottomButton.setImage(nil, for: .normal)
+                    bottomButton.setTitle("+\(stories[currentIndex].newReadCount)", for: .normal)
+                }
             } else {
                 bottomButton.isEnabled = !stories[currentIndex].like
+                bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             }
         }
     }
@@ -336,7 +345,6 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             let thumbnailURL = stories[currentIndex].imageURL
             cardView.update(descString: descString!, thumbnailURL: thumbnailURL!)
             commentLabel.text = commentString
-//            commentLabel.attributedText = commentString?.getAttributedString(lineSpacing: 10, textAlignment: .center)
             cardView.isHidden = false
             commentLabel.isHidden = commentString == nil || commentString == ""
             if let cardId = stories[currentIndex].fromCardId, cardId != "" {
@@ -409,7 +417,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                                    height: view.bounds.width * 16 / 9)
                 playerView = AVPlayerView(frame: frame)
                 playerView.backgroundColor = .black
-                if UIScreen.isIphoneX() {
+                if UIScreen.isNotched() {
                     playerView.layer.cornerRadius = 7
                     playerView.clipsToBounds = true
                 }
@@ -565,6 +573,11 @@ extension StoriesPlayerViewController {
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
         uvViewController.view.tag = 100
+        stories[currentIndex].newReadCount = 0
+        bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+        bottomButton.setTitle("", for: .normal)
+        delegate?.updateStory(story: stories[currentIndex], position: (groupIndex, currentIndex))
+
     }
     func play() {
         for subview in view.subviews {
@@ -680,7 +693,11 @@ extension StoriesPlayerViewController {
     }
     
     @objc private func showStoryHistory(sender: UIButton) {
-       showStoryHistory()
+        if sender.isSelected {
+            closeStoryUV()
+        } else {
+            showStoryHistory()
+        }
     }
     
     @objc private func sendMessage(sender: UIButton) {
@@ -1051,6 +1068,9 @@ extension StoriesPlayerViewController {
 // MARK: - StoryUVControllerDelegate
 extension StoriesPlayerViewController: StoryUVControllerDelegate {
     func closeStoryUV() {
+        uvViewController.willMove(toParentViewController: nil)
+        uvViewController.view.removeFromSuperview()
+        uvViewController.removeFromParentViewController()
         topContentView.isHidden = false
         bottomButton.isSelected = false
         play()

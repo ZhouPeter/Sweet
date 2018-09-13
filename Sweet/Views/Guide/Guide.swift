@@ -7,7 +7,27 @@
 //
 
 import UIKit
-
+class Share: UIWindow {
+    private var retainClosure: (() -> Void)?
+    var removeClosure: (() -> Void)?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        retainClosure = { _ = self }
+    }
+    
+    func dismiss() {
+        self.resignKey()
+        self.removeClosure?()
+        self.retainClosure = nil
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+}
 class Guide {
     let rootView: UIView
     private let window: SweetWindow

@@ -135,6 +135,21 @@ extension CardsBaseController {
             let configurator = CellConfigurator<WelcomeCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
+        case .user:
+            var viewModel = UsersCardViewModel(model: card)
+            for (offset, var cellModel) in viewModel.userContents.enumerated() {
+                cellModel.showProfile = { [weak self] (buddyID, setTop) in
+                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                    self?.showProfile(userId: buddyID, setTop: setTop)
+                }
+                cellModel.callBack = { [weak self] activityId in
+                    self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
+                }
+                viewModel.userContents[offset] = cellModel
+            }
+            let configurator = CellConfigurator<UsersCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
         default:
             logger.debug(card)
             break
@@ -191,10 +206,12 @@ extension CardsBaseController {
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
+        inputTextView.layoutIfNeeded()
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
         self.activityCardId = cardId
     }
+
 }
 
 // MARK: - InputTextViewDelegate
@@ -203,24 +220,56 @@ extension CardsBaseController: InputTextViewDelegate {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
         sendActivityMessages(text: text)
-        
+//        activityId = nil
+//        activityCardId = nil
     }
     
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
+//        activityId = nil
+//        activityCardId = nil
     }
 }
 
 // MARK: - ActivityMessage Methods
 extension CardsBaseController {
+    func sendPreferenceMessages(text: String) {
+        let card = cards[index]
+        guard let cardId = activityCardId, let activityId = activityId else { return }
+        guard card.cardEnumType == .user, card.cardId == cardId else { return }
+        guard let index = card.userContentList!.index(where: { $0.activityId == activityId }) else { fatalError() }
+        guard let cardID = card.userContentList![index].fromCardId else { return }
+        let toUserId = card.userContentList![index].userId
+        web.request(
+            WebAPI.getCard(cardID: cardID),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let resultCard = response.card
+                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
+    }
+
     func sendActivityMessages(text: String) {
         let card = cards[index]
         guard let cardId = activityCardId, let activityId = activityId else { return }
-        guard card.cardEnumType == .activity, card.cardId == cardId else { return }
-        guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
-        let toUserId = card.activityList![index].actor
-        let cardID = card.activityList![index].fromCardId
+        let toUserId: UInt64
+        let cardID: String
+        if card.cardEnumType == .activity, card.cardId == cardId  {
+            guard let index = card.activityList!.index(where: { $0.activityId == activityId }) else {fatalError()}
+            toUserId = card.activityList![index].actor
+            cardID = card.activityList![index].fromCardId
+        } else if card.cardEnumType == .user, cardId == cardId {
+            guard let index = card.userContentList!.index(where: { $0.activityId == activityId }) else {fatalError()}
+            toUserId = card.userContentList![index].userId
+            cardID = card.userContentList![index].fromCardId!
+        } else {
+            return
+        }
         web.request(
             WebAPI.getCard(cardID: cardID),
             responseType: Response<CardGetResponse>.self) { (result) in
@@ -229,42 +278,61 @@ extension CardsBaseController {
                     let resultCard = response.card
                     CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
                     self.requestActivityCardLike(cardId: cardId, activityId: activityId, comment: text)
-//                    if Defaults[.isInputTextSendMessage] == false {
-//                        let alert = UIAlertController(title: nil, message: "消息将出现在对话列表中", preferredStyle: .alert)
-//                        alert.addAction(UIAlertAction(title: "知道了", style: .cancel, handler: nil))
-//                        self.present(alert, animated: true, completion: nil)
-//                    } else {
-//                        self.toast(message: "💗消息发送成功")
-//                    }
                 case let .failure(error):
                     logger.error(error)
                 }
         }
     }
     
+    
     private func requestActivityCardLike(cardId: String, activityId: String, comment: String) {
         web.request(.activityCardLike(cardId: cardId, activityId: activityId, comment: comment)) { (result) in
             switch result {
             case .success:
                 guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-                guard let item = self.cards[index].activityList!.index(
-                    where: { $0.activityId == activityId }) else { return }
-                guard var configurator = self.cellConfigurators[index] as? CellConfigurator<ActivitiesCardCollectionViewCell> else {
-                    return
+                if self.cards[index].cardEnumType == .activity {
+                   self.updateActivityCard(index: index)
+                } else if self.cards[index].cardEnumType == .user {
+                    self.updateUserCard(index: index)
                 }
-                self.cards[index].activityList![item].like = true
-                configurator.viewModel.activityViewModels[item].like = true
-                self.cellConfigurators[index] = configurator
-                if let cell = self.mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
-                    let acCell = cell as? ActivitiesCardCollectionViewCell {
-                    acCell.updateItem(item: item, like: true)
-                }
-                CardAction.likeActivity.actionLog(card: self.cards[index],
-                                                  activityId: self.cards[index].activityList![item].activityId)
                 self.vibrateFeedback()
             case let  .failure(error):
                 logger.error(error)
             }
         }
+    }
+    
+    private func updateUserCard(index: Int) {
+        guard let item = cards[index].userContentList!.index(
+            where: { $0.activityId == activityId }) else { return }
+        guard var configurator = cellConfigurators[index] as? CellConfigurator<UsersCardCollectionViewCell> else {
+            return
+        }
+        cards[index].userContentList![item].like = true
+        configurator.viewModel.userContents[item].like = true
+        cellConfigurators[index] = configurator
+        if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
+            let usersCell = cell as? UsersCardCollectionViewCell {
+            usersCell.updateItem(item: item, like: true)
+        }
+        CardAction.likeActivity.actionLog(card: cards[index],
+                                          activityId: cards[index].userContentList![item].activityId)
+    }
+    
+    private func updateActivityCard(index: Int) {
+        guard let item = cards[index].activityList!.index(
+            where: { $0.activityId == activityId }) else { return }
+        guard var configurator = cellConfigurators[index] as? CellConfigurator<ActivitiesCardCollectionViewCell> else {
+            return
+        }
+        cards[index].activityList![item].like = true
+        configurator.viewModel.activityViewModels[item].like = true
+        cellConfigurators[index] = configurator
+        if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)),
+            let acCell = cell as? ActivitiesCardCollectionViewCell {
+            acCell.updateItem(item: item, like: true)
+        }
+        CardAction.likeActivity.actionLog(card: cards[index],
+                                          activityId: cards[index].activityList![item].activityId)
     }
 }

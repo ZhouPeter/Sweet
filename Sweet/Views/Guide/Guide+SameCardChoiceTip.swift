@@ -16,7 +16,7 @@ extension Guide {
         view.addSubview(focusView)
         focusView.fill(in: view)
         let label = UILabel()
-        label.text = "这些人也做了相同选择"
+        label.text = "这些人也发表了表情"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .white
         label.textAlignment = .center

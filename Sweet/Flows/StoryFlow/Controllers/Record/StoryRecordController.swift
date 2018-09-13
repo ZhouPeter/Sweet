@@ -26,7 +26,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     var isAvatarCircleAnamtionEnabled: Bool = false
     
     override var prefersStatusBarHidden: Bool {
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             return false
         }
         return true
@@ -173,7 +173,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         view.hero.modifiers = [.backgroundColor(.black)]
         view.addSubview(recordContainer)
         recordContainer.backgroundColor = .clear
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             recordContainer.align(.top, to: view, inset: UIScreen.safeTopMargin())
             recordContainer.centerX(to: view)
             recordContainer.constrain(width: view.bounds.width, height: view.bounds.width * (16.0/9))
@@ -212,7 +212,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         }
         setupNavigation()
@@ -419,7 +419,10 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         
         if cameraAuthorization && micAuthorization {
             if cameraAuthorization {
-                startCamera { if micAuthorization { self.captureView.enableAudio() } }
+                startCamera {
+                    logger.debug(micAuthorization)
+                    if micAuthorization { self.captureView.enableAudio() }
+                }
             } else if micAuthorization {
                 captureView.enableAudio()
             }
@@ -429,12 +432,15 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
             add(childViewController: authorizedVC)
         }
     }
-    
+    private var isCameraStarting = false
     private func startCamera(callback: (() -> Void)? = nil) {
+        logger.debug()
+        isCameraStarting = true
         captureView.setupCamera {
             self.captureView.startCaputre(callback: {
-                self.captureView.resumeCamera(callback: {
+                self.captureView.resumeCamera(callback: { [weak self] in
                     callback?()
+                    self?.isCameraStarting = false
                 })
             })
         }
@@ -442,8 +448,11 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func resumeCamera(_ isOpen: Bool) {
         if isOpen {
-            captureView.startCaputre()
-            captureView.resumeCamera()
+            if isCameraStarting == false {
+                logger.debug("start resume")
+                captureView.startCaputre()
+                captureView.resumeCamera()
+            }
         } else {
             captureView.stopCapture()
         }
@@ -469,7 +478,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func setupBottomView() {
         view.addSubview(bottomView)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             bottomView.pin(.bottom, to: recordContainer)
             bottomView.constrain(height: 40)
             bottomView.isIndicatorHidden = true
@@ -486,7 +495,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
         recordContainer.addSubview(shootButton)
         shootButton.centerX(to: recordContainer)
         shootButton.constrain(width: 76, height: 76)
-        if UIScreen.isIphoneX() {
+        if UIScreen.isNotched() {
             shootButton.align(.bottom, to: recordContainer, inset: 30)
         } else {
             shootButton.align(.bottom, to: view, inset: 64)
@@ -639,6 +648,7 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     }
     
     func requestCameraAuthorizeSuccess() {
+        logger.debug()
         startCamera()
     }
     
@@ -685,7 +695,7 @@ extension StoryRecordController: StoryRecordBottomViewDelegate {
                 addChildViewController(textGradientController)
                 textGradientController.didMove(toParentViewController: self)
                 view.insertSubview(textGradientController.view, belowSubview: bottomView)
-                if UIScreen.isIphoneX() {
+                if UIScreen.isNotched() {
                     textGradientController.view.fill(in: recordContainer)
                     textGradientController.view.clipsToBounds = true
                     textGradientController.view.layer.cornerRadius = 7

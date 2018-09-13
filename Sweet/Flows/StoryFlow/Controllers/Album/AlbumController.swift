@@ -50,7 +50,7 @@ final class AlbumController: UIViewController, AlbumView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UIScreen.isIphoneX() == false {
+        if UIScreen.isNotched() == false {
             UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
         }
         navigationController?.navigationBar.isHidden = false
@@ -61,7 +61,7 @@ final class AlbumController: UIViewController, AlbumView {
     override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil {
             onCancelled?()
-            if UIScreen.isIphoneX() == false {
+            if UIScreen.isNotched() == false {
                 UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
             }
         }

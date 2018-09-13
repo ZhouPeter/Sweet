@@ -12,7 +12,7 @@ import SDWebImage
 protocol VideoCardCollectionViewCellDelegate: NSObjectProtocol {
     func showVideoPlayerController(playerView: SweetPlayerView, cardId: String)
 }
-class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
+class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusable, CellUpdatable {
     typealias ViewModelType = ContentVideoCardViewModel
     private var viewModel: ViewModelType?
     private lazy var contentLabel: UILabel = {
@@ -46,23 +46,10 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         view.clipsToBounds = true
         return view
     }()
-        
-    lazy var emojiView: EmojiControlView = {
-        let view = EmojiControlView()
-        view.backgroundColor = .clear
-        view.delegate = self
-        return view
-    }()
-    
-    lazy var shareButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
-        button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
-        return button
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        emojiView.delegate = self
         setupUI()
     }
     
@@ -151,7 +138,7 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
     }
     func resetEmojiView() {
         if let viewModel = viewModel {
-            emojiView.update(indexs: viewModel.defaultEmojiList,
+            emojiView.update(indexs: [1, 2, 3],
                              resultImage: viewModel.resultImageName,
                              resultAvatarURLs: viewModel.resultAvatarURLs,
                              emojiType: viewModel.emojiDisplayType)
@@ -184,8 +171,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
         let videoContentSumHeight = cardCellHeight - 110 - titleLabel.font.lineHeight
         let contentMaxHeight = videoContentSumHeight - videoWidth
         let naturalSize = track.naturalSize
-//        logger.debug(viewModel.contentTextAttributed ?? "")
-//        logger.debug(naturalSize)
         if naturalSize.width < naturalSize.height {
             var videoHeight = videoContentSumHeight - min(contentHeight, contentMaxHeight)
             if contentLabel.text == "" || contentLabel.text == nil {
@@ -215,13 +200,6 @@ class VideoCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Cel
 }
 // MARK: - Actions
 extension VideoCardCollectionViewCell {
-
-    @objc private func didPressShare(_ sender: UIButton) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
-            delegate.shareCard(cardId: cardId!)
-        }
-    }
-    
     @objc private func didPressVideo(_ tap: UITapGestureRecognizer) {
         if let delegate = delegate as? VideoCardCollectionViewCellDelegate {
             delegate.showVideoPlayerController(playerView: playerView, cardId: viewModel!.cardId)

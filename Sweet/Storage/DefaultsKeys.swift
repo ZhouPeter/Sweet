@@ -19,6 +19,8 @@ extension DefaultsKeys {
     static let review = DefaultsKey<Int>("review")
     static let isPersonalStoryChecked = DefaultsKey<Bool>("isPersonalStoryChecked")
     static let isNotFirstLaunch = DefaultsKey<Bool>("isNotFirstLaunch")
+    static let isSettingPush = DefaultsKey<Bool>("isSettingPush")
+    static let pushMessageTime = DefaultsKey<Int>("pushMessageTime")
 }
 
 // Guide

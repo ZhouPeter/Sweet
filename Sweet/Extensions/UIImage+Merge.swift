@@ -47,4 +47,15 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    func addedFooterImage(_ footerImage: UIImage) -> UIImage? {
+        let bottomHeight = size.width * 160 / 750
+        let newSize = CGSize(width: size.width, height: size.height + bottomHeight)
+        UIGraphicsBeginImageContextWithOptions(newSize, true, 0)
+        draw(in: CGRect(origin: .zero, size: size))
+        footerImage.draw(in: CGRect(x: 0, y: size.height, width: size.width, height: bottomHeight))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
