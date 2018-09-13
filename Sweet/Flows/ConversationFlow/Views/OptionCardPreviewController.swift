@@ -29,7 +29,8 @@ final class OptionCardPreviewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         let size = CGSize(width: 356, height: 535)
-        let scale = UIScreen.mainHeight() / 667
+//        let scale = UIScreen.mainHeight() / 667
+        let scale = UIScreen.mainWidth() / 375
         contentSizeInPopup = CGSize(width: size.width * scale, height: size.height * scale)
         popupController?.navigationBarHidden = true
         let cardID = content.identifier
