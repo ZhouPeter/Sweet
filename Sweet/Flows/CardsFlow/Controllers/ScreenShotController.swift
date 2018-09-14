@@ -84,10 +84,8 @@ class ScreenShotController: UIViewController {
     @objc private func shareToWeChat(_ sender: UIButton) {
         if sender.tag == 0 {
             WXApi.sendImage(image: shotImage, scene: .conversation)
-            web.request(.interfaceCallLog) { (_) in }
         } else {
             WXApi.sendImage(image: shotImage, scene: .timeline)
-            web.request(.interfaceCallLog) { (_) in }
         }
     }
     private func setupUI() {

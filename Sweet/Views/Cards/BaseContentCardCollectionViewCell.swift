@@ -19,6 +19,7 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
         button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
 
@@ -38,7 +39,7 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         emojiView.align(.bottom)
         emojiView.constrain(height: 50)
         customContent.addSubview(shareButton)
-        shareButton.constrain(width: 24, height: 24)
+        shareButton.constrain(width: 50, height: 50)
         shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
     }

@@ -76,7 +76,7 @@ enum WebAPI {
     case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?, toUserId: String?, activityId: String?, storyId: String?)
     case recentStoryList(userID: UInt64)
     case updateSetting(autoPlay: Bool, showMsg: Bool)
-    case interfaceCallLog
+    case interfaceCallLog(type: Int)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -362,6 +362,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters["storyId"] = storyId
         case let .updateSetting(autoPlay, showMsg):
             parameters = ["autoPlay": autoPlay, "showMsg": showMsg]
+        case let .interfaceCallLog(`type`):
+            parameters = ["type": type]
         default:
             break
         }
