@@ -33,6 +33,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
                 bottomButton.setImage(#imageLiteral(resourceName: "StarWhite"), for: .normal)
                 bottomButton.setImageRight(space: 0)
                 bottomButton.addTarget(self, action: #selector(likeAction(_:)), for: .touchUpInside)
+                bottomButton.isUserInteractionEnabled = true
             }
         } else if let viewModels = viewModel.storyViewModels, viewModels.count > 0 {
             let viewModel = viewModels[0]
@@ -49,6 +50,7 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
             bottomButton.setTitle("查看小故事", for: .normal)
             bottomButton.resetEdgeInsets()
             bottomButton.addTarget(self, action: #selector(showStoryAction(_:)), for: .touchUpInside)
+            bottomButton.isUserInteractionEnabled = true
         }
         avatarImageView.sd_setImage(with: viewModel.avatarURL)
         nameLabel.text = viewModel.nicknameString
