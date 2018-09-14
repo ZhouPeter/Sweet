@@ -67,6 +67,7 @@ PODS:
   - SwiftyUserDefaults (3.0.1)
   - SwipeCellKit (2.3.2)
   - TapticEngine (1.1.0)
+  - TencentOpenAPI-Swift (3.3.2)
   - UMCAnalytics (5.5.0):
     - UMCCommon
   - UMCCommon (1.5.2)
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - SwiftyUserDefaults
   - SwipeCellKit (= 2.3.2)
   - TapticEngine
+  - TencentOpenAPI-Swift
   - UMCAnalytics
   - UMCCommon
   - UMCPush
@@ -136,6 +138,7 @@ SPEC REPOS:
     - SwiftyUserDefaults
     - SwipeCellKit
     - TapticEngine
+    - TencentOpenAPI-Swift
     - UMCAnalytics
     - UMCCommon
     - UMCPush
@@ -195,6 +198,7 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   SwipeCellKit: 52b160ea820245eb972b2eca270cb3a6f68e33af
   TapticEngine: b78b5513432b3c01af2ebbe018c0995778306757
+  TencentOpenAPI-Swift: 90769218aaa8cd31b8311635b5675365a8df3f4c
   UMCAnalytics: 4667788559a72f2fa5077117d1b8802a3b6eb6bb
   UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
   UMCPush: 5ab89bdbcc1fe90b1c669ff79213b44dc4821ec5
@@ -204,6 +208,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: cde81ae574f36316ee3bfae79f4e2b2a3f704096
+PODFILE CHECKSUM: e7d5e0149aac0f0d025820567790460b19348508
 
 COCOAPODS: 1.5.3

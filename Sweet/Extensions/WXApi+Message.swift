@@ -13,7 +13,7 @@ enum WeChatScene: Int32 {
     case favourite = 2
 }
 extension WXApi {
-    @discardableResult class func sendImage(image: UIImage, scene: WeChatScene) -> Bool {
+    @discardableResult class func sendImage(image: UIImage, scene: WeChatScene, isCallLog: Bool = true) -> Bool {
         let message = WXMediaMessage()
         let imageWidth: CGFloat = 50
         let thumbnailSize = CGSize(width: imageWidth, height: image.size.height / image.size.width * imageWidth)
@@ -26,14 +26,16 @@ extension WXApi {
         req.bText = false
         req.message = message
         req.scene = scene.rawValue
+        if isCallLog { web.request(.interfaceCallLog(type: 1)) { (_) in } }
         return WXApi.send(req)
     }
     
-    @discardableResult class func sendText(text: String, scene: WeChatScene) -> Bool {
+    @discardableResult class func sendText(text: String, scene: WeChatScene,  isCallLog: Bool = true) -> Bool {
         let req = SendMessageToWXReq()
         req.bText = true
         req.text = text
         req.scene = scene.rawValue
+        if isCallLog { web.request(.interfaceCallLog(type: 1)) { (_) in } }
         return WXApi.send(req)
     }
 }

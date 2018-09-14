@@ -23,6 +23,9 @@ enum CardAction: String {
     case clickStory = "click_story"
     case shareStory = "share_story"
     case shareWeixin = "share_weixin"
+    case shareQQ = "share_qq"
+    case shareQZ = "share_qzone"
+    case shareWeibo = "share_weibo"
     private func makeActionLogWebApi(card: CardResponse,
                                      toUserId: String? = nil,
                                      activityId: String? = nil,
@@ -79,7 +82,13 @@ enum CardAction: String {
         }
         
         if self == .shareWeixin {
-            web.request(.interfaceCallLog) { (_) in }
+            web.request(.interfaceCallLog(type: 1)) { (_) in }
+        } else if self == .shareQQ {
+            web.request(.interfaceCallLog(type: 3)) { (_) in }
+        } else if self == .shareQZ {
+            web.request(.interfaceCallLog(type: 4)) { (_) in }
+        } else if self == .shareWeibo {
+            web.request(.interfaceCallLog(type: 2)) { (_) in }
         }
     }
 }

@@ -64,15 +64,6 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
-        customContent.addSubview(emojiView)
-        emojiView.align(.right)
-        emojiView.align(.left)
-        emojiView.pin(.bottom, to: contentImageView)
-        emojiView.align(.bottom)
-        customContent.addSubview(shareButton)
-        shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.left, inset: 10)
-        shareButton.centerY(to: emojiView)
         
     }
     

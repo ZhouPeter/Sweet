@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 import JDStatusBarNotification
+import TencentOpenAPI
 extension Notification.Name {
     static let dismissShareCard = Notification.Name(rawValue: "dismissShareCard")
 
@@ -26,8 +27,8 @@ extension ShareCardController: WXApiManagerDelegate {
 }
 class ShareCardController: BaseViewController {
     var sendCallback: ((_ content: String, _ userIds: [UInt64]) -> Void)?
-    var shareWXCallback: (() -> Void)?
-    var shareCallback: ((_ draft: StoryDraft) -> Void)?
+    var shareMessageCallback: ((Int) -> Void)?
+    var shareStoryCallback: ((_ draft: StoryDraft) -> Void)?
     private var userIds = [UInt64]() {
         didSet {
             sendButton.backgroundColor = (isShareToStory || userIds.count > 0) ?  UIColor.xpBlue() : UIColor(hex: 0xf2f2f2)
@@ -70,8 +71,11 @@ class ShareCardController: BaseViewController {
         tableView.tableFooterView = UIView()
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(ModuleTableViewCell.self, forCellReuseIdentifier: "moduleCell")
+        tableView.register(ShareListTableViewCell.self, forCellReuseIdentifier: "shareListCell")
+        tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedSectionHeaderHeight = 0
         return tableView
     }()
     private lazy var segmentLineView: UIView = {
@@ -152,7 +156,7 @@ class ShareCardController: BaseViewController {
         sendCallback?(shareTextField.text!, userIds)
         if var draft = storyDraft, isShareToStory {
             draft.comment = shareTextField.text
-            shareCallback?(draft)
+            shareStoryCallback?(draft)
         }
     }
     
@@ -256,8 +260,8 @@ class ShareCardController: BaseViewController {
                     var viewModel = ContactViewModel(model: contact)
                     viewModel.isHiddeenSelectButton = false
                     self.contactViewModels.append(viewModel)
-                    self.updateSections()
                 })
+                self.updateSections()
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
@@ -293,9 +297,9 @@ extension ShareCardController: UITableViewDataSource {
         switch sections[indexPath.section] {
         case .wechat:
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "moduleCell", for: indexPath) as? ModuleTableViewCell else {fatalError()}
-            cell.accessoryType = .disclosureIndicator
-            cell.update(image: #imageLiteral(resourceName: "Wechat"), text: "转发到微信好友")
+                withIdentifier: "shareListCell", for: indexPath) as? ShareListTableViewCell else {fatalError()}
+            cell.update(images: [ #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ")])
+            cell.delegate = self
             return cell
         case .story:
             guard let cell = tableView.dequeueReusableCell(
@@ -312,24 +316,54 @@ extension ShareCardController: UITableViewDataSource {
     }
 }
 
+extension ShareCardController: ShareListTableViewCellDelegate {
+    func didSelectItemAt(index: Int) {
+        if index == 0 {
+            WXApi.sendText(text: shareText!, scene: .conversation, isCallLog: false)
+            shareMessageCallback?(0)
+        } else if index == 1 {
+            WXApi.sendText(text: shareText!, scene: .timeline, isCallLog: false)
+            shareMessageCallback?(1)
+        } else if index == 2 {
+            QQApiInterface.sendText(text: shareText!, isCallLog: false)
+            shareMessageCallback?(3)
+        }
+    }
+    
+}
+
 extension ShareCardController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch sections[section] {
         case .story, .contact:
             return 8
         case .wechat:
-            return 0
+            return 25
         }
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch sections[section] {
+        case .wechat:
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerView") as? SweetHeaderView
+            header?.update(title: "转发到")
+            return header
+        default:
+            return nil
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 68
+        switch sections[indexPath.section] {
+        case .wechat:
+            return 80
+        default:
+            return 68
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] {
-        case .wechat:
-            WXApi.sendText(text: shareText!, scene: .conversation)
-            shareWXCallback?()
+        case .wechat: break
         case .story:
             guard let cell = tableView.cellForRow(at: indexPath) as? ModuleTableViewCell else { fatalError() }
             cell.selectButton.isSelected = !cell.selectButton.isSelected

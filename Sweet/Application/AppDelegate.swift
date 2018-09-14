@@ -12,11 +12,13 @@ import AVKit
 import VolumeBar
 import Contacts
 import Photos
+import TencentOpenAPI
+
 var allowRotation = false
 
 private let umengKey = "5b726bfeb27b0a4abd0000d8"
 private let wechatKey = "wx819697effecdb6f5"
-
+private let tencentAppID = "1106459659"
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -50,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupVolumeBar()
         
         WXApi.registerApp(wechatKey)
+        _ = TencentOAuth.init(appId: tencentAppID, andDelegate: nil)
+
         UMConfigure.initWithAppkey(umengKey, channel: nil)
         
         registerUserNotificattion(launchOptions: launchOptions)
@@ -97,7 +101,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return WXApi.handleOpen(url, delegate: WXApiManager.shared)
+        if url.absoluteString.hasPrefix("wx") {
+            return WXApi.handleOpen(url, delegate: WXApiManager.shared)
+        } else {
+            return TencentOAuth.handleOpen(url)
+        }
     }
     
 }
