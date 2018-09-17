@@ -70,7 +70,7 @@ extension InboxCoordinator: InboxViewDelegate {
 
 extension InboxCoordinator: MessengerDelegate {
     func messengerDidLogin(user: User, success: Bool) {
-        logger.debug(user.nickname, success)
+        logger.debug("\(user.nickname), success: \(success)")
         Messenger.shared.loadConversations()
         self.inboxView?.didUpdateUserOnlineState(isUserOnline: true)
     }
@@ -86,7 +86,7 @@ extension InboxCoordinator: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        logger.debug(message.rawContent, success)
+        logger.debug("\(message.rawContent), success: \(success)")
     }
     
     func messengerDidUpdateConversations(_ conversations: [Conversation]) {

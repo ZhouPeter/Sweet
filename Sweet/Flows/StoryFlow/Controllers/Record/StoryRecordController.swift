@@ -306,10 +306,7 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     
     private func delayCameraClose() {
         cameraCloseDelay?.cancel()
-        cameraCloseDelay = DispatchWorkItem(block: { [weak self] in
-            logger.debug()
-            self?.resumeCamera(false)
-        })
+        cameraCloseDelay = DispatchWorkItem(block: { [weak self] in self?.resumeCamera(false) })
         if let item = cameraCloseDelay {
             cameraDelayQueue.asyncAfter(deadline: .now() + 1, execute: item)
         }
@@ -434,7 +431,6 @@ final class StoryRecordController: BaseViewController, StoryRecordView {
     }
     private var isCameraStarting = false
     private func startCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         isCameraStarting = true
         captureView.setupCamera {
             self.captureView.startCaputre(callback: {
@@ -648,7 +644,6 @@ extension StoryRecordController: TLStoryAuthorizedDelegate {
     }
     
     func requestCameraAuthorizeSuccess() {
-        logger.debug()
         startCamera()
     }
     

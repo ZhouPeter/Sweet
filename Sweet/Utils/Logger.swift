@@ -2,31 +2,26 @@
 //  Logger.swift
 //  Sweet
 //
-//  Created by Mario Z. on 2018/4/18.
-//  Copyright © 2018年 Miaozan. All rights reserved.
+//  Created by Mario Z. on 2018/9/17.
+//  Copyright © 2018 Miaozan. All rights reserved.
 //
 
 import Foundation
+import os
 
 let logger = SimpleLogger.sharedInstance
 
-class SimpleLogger {
+final class SimpleLogger {
     enum Level: Int {
         case none
         case error
-        case warning
-        case info
         case debug
         case verbose
         
-        func tag() -> String {
+        var tag: String {
             switch self {
             case .error:
                 return "🚫"
-            case .warning:
-                return "⚠️"
-            case .info:
-                return "🎯"
             case .debug:
                 return "🚦"
             case .verbose:
@@ -35,17 +30,22 @@ class SimpleLogger {
                 return ""
             }
         }
+        
+        var osLogType: OSLogType {
+            switch self {
+            case .error:
+                return .error
+            case .debug:
+                return .debug
+            default:
+                return .`default`
+            }
+        }
     }
     
     static let sharedInstance = SimpleLogger()
     
-    var level: Level = {
-        #if DEBUG
-        return .verbose
-        #else
-        return .none
-        #endif
-    } ()
+    var level = Level.verbose
     
     private init() { }
     
@@ -53,47 +53,40 @@ class SimpleLogger {
         return level.rawValue <= self.level.rawValue
     }
     
-    func error(_ items: Any..., path: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .error, items: items, path: path, function: function, line: line)
+    func error(_ message: @autoclosure () -> Any,
+               path: String = #file,
+               function: String = #function,
+               line: Int = #line) {
+        log(message, level: .error, path: path, function: function, line: line)
     }
     
-    func warning(_ items: Any..., path: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .warning, items: items, path: path, function: function, line: line)
+    func debug(_ message: @autoclosure () -> Any,
+               path: String = #file,
+               function: String = #function,
+               line: Int = #line) {
+        log(message, level: .debug, path: path, function: function, line: line)
     }
     
-    func info(_ items: Any..., path: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .info, items: items, path: path, function: function, line: line)
+    func verbose(_ message: @autoclosure () -> Any,
+                 path: String = #file,
+                 function: String = #function,
+                 line: Int = #line) {
+        log(message, level: .verbose, path: path, function: function, line: line)
     }
     
-    func debug(_ items: Any..., path: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .debug, items: items, path: path, function: function, line: line)
-    }
-    
-    func verbose(_ items: Any..., path: String = #file, function: String = #function, line: Int = #line) {
-        log(level: .verbose, items: items, path: path, function: function, line: line)
-    }
-    
-    private func log(level: Level, items: [Any], path: String, function: String, line: Int) {
-        if isEnabledFor(level: level) == false {
-            return
-        }
-        let separator = "\n"
-        var message = ""
-        for item in items {
-            if !message.isEmpty {
-                message += separator
-            }
-            if let itemStr = item as? String {
-                message += "  - \(itemStr)"
-            } else {
-                message += "  - \(String(describing: item))"
-            }
-        }
+    private func log(_ message: @autoclosure () -> Any,
+                     level: Level,
+                     path: String,
+                     function: String,
+                     line: Int) {
+        #if DEBUG
+        guard isEnabledFor(level: level) else { return }
         let file = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
-        let str = "[\(formatter.string(from: Date()))]"
-            + " \(level.tag()) "
-            + "\(file).\(function):\(line)\n\(message)"
-        print(str)
+        let logMessage = "[\(formatter.string(from: Date()))]"
+            + level.tag
+            + "\(file).\(function):\(line)\n\(message())"
+        print(logMessage)
+        #endif
     }
 }
 

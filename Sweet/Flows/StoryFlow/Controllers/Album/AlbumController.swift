@@ -132,7 +132,6 @@ extension AlbumController: UICollectionViewDelegate {
         if asset.mediaType == .video {
             AssetManager.resolveAVAsset(asset) { [weak self] (url, duration) in
                 guard let `self` = self, let url = url, let duration = duration else { return }
-                logger.debug(url, duration)
                 if duration > 10 {
                     let controller = VideoTrimmerViewController(fileURL: url)
                     controller.onFinished = { outputURL in

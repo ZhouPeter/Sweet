@@ -68,7 +68,6 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     private func runOnboardingFlow() {
-        logger.debug()
         let coordinator = coordinatorFactory.makeOnboardingCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             guard let `self` = self else { return }
@@ -82,7 +81,6 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     private func runAuthFlow() {
-        logger.debug()
         let coordinator = coordinatorFactory.makeAuthCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] isSettingPower in
             guard let `self` = self else { return }
@@ -105,7 +103,6 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     private func runMainFlow(user: User, token: String, isIMFlowSelected: Bool = false) {
-        logger.debug()
         let (coordinator, flow) = coordinatorFactory.makeMainCoordinator(user: user, token: token)
         addDependency(coordinator)
         router.setRootFlow(flow)

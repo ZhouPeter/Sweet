@@ -1287,10 +1287,6 @@
 		ACA323A8208763AA00BDC92E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323A6208763AA00BDC92E /* BaseViewController.swift */; };
 		ACA323A9208763AA00BDC92E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323A6208763AA00BDC92E /* BaseViewController.swift */; };
 		ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323A6208763AA00BDC92E /* BaseViewController.swift */; };
-		ACA323AD208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
-		ACA323AE208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
-		ACA323AF208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
-		ACA323B0208763D900BDC92E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA323AC208763D900BDC92E /* Logger.swift */; };
 		ACA83C0B20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
 		ACA83C0C20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
 		ACA83C0D20E5E5DB00908B35 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */; };
@@ -1395,6 +1391,8 @@
 		ACE560B6209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
 		ACE560B7209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
 		ACE560B8209984A000CE2564 /* StoryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE560B4209984A000CE2564 /* StoryEditView.swift */; };
+		ACE7481E214F542000AB7565 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE7481D214F542000AB7565 /* Logger.swift */; };
+		ACE7481F214F542000AB7565 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE7481D214F542000AB7565 /* Logger.swift */; };
 		ACEC5C2320EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
 		ACEC5C2420EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
 		ACEC5C2520EB1A90006E0BAA /* StoryPublishTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */; };
@@ -1940,7 +1938,6 @@
 		ACA3239C2087621700BDC92E /* CoordinatorFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A12087625100BDC92E /* FlowFactoryImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFactoryImp.swift; sourceTree = "<group>"; };
 		ACA323A6208763AA00BDC92E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		ACA323AC208763D900BDC92E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		ACA83C0A20E5E5DB00908B35 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		ACA9CC3D20C6734300873643 /* StoryMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMessageCell.swift; sourceTree = "<group>"; };
 		ACA9CC4220C6764C00873643 /* SweetMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessagesFlowLayout.swift; sourceTree = "<group>"; };
@@ -1973,6 +1970,7 @@
 		ACE560AA2099834000CE2564 /* StoryEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditController.swift; sourceTree = "<group>"; };
 		ACE560AF209983AF00CE2564 /* StoryRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecordView.swift; sourceTree = "<group>"; };
 		ACE560B4209984A000CE2564 /* StoryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditView.swift; sourceTree = "<group>"; };
+		ACE7481D214F542000AB7565 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		ACEC5C2220EB1A90006E0BAA /* StoryPublishTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPublishTask.swift; sourceTree = "<group>"; };
 		ACEC5C2E20EB2083006E0BAA /* AsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		ACEC5C3320EB2221006E0BAA /* StoryDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDraft.swift; sourceTree = "<group>"; };
@@ -2827,7 +2825,6 @@
 			isa = PBXGroup;
 			children = (
 				5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */,
-				ACA323AC208763D900BDC92E /* Logger.swift */,
 				58BD52F3208DDC3800F7C3E1 /* Upload.swift */,
 				58BD5313208F22CD00F7C3E1 /* Contacts.swift */,
 				58447B21209AE2D5004C2FFE /* TimerHelper.swift */,
@@ -2841,6 +2838,7 @@
 				586954B121242ED400D48196 /* NetworkHelper.swift */,
 				580D9BE32142434400B8719C /* PushSetting.swift */,
 				586DE270214A8C09005C4A94 /* ShareInviteHelper.swift */,
+				ACE7481D214F542000AB7565 /* Logger.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3478,7 +3476,6 @@
 				AC2A259720BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972542209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				58CBA6F12117FEB2002FCD54 /* ShareWebViewController.swift in Sources */,
-				ACA323AD208763D900BDC92E /* Logger.swift in Sources */,
 				587D18D120DA465E00D53708 /* FeedbackController.swift in Sources */,
 				58816CFC20C655740032D103 /* ActivitiesController.swift in Sources */,
 				AC9EF788208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -3645,6 +3642,7 @@
 				58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388D20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52952088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
+				ACE7481E214F542000AB7565 /* Logger.swift in Sources */,
 				586954B221242ED400D48196 /* NetworkHelper.swift in Sources */,
 				58BD52AA20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979120905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -4135,7 +4133,6 @@
 				58BD5311208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				58C75758212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC05F43A20DCA49300EC6CAA /* TextEditView.swift in Sources */,
-				ACA323AF208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CB20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				AC2A259D20BD2B9F00A82E62 /* General.pb.swift in Sources */,
 				ACA3237320875C2E00BDC92E /* Presentable.swift in Sources */,
@@ -4477,7 +4474,6 @@
 				ACA3239020875F0800BDC92E /* OnboardingController.swift in Sources */,
 				AC3280D220A9389A00B3B2D2 /* Transform.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
-				ACA323B0208763D900BDC92E /* Logger.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
 				584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				587D18CD20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
@@ -4580,7 +4576,6 @@
 				AC2A259820BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */,
 				58CBA6F22117FEB2002FCD54 /* ShareWebViewController.swift in Sources */,
-				ACA323AE208763D900BDC92E /* Logger.swift in Sources */,
 				587D18D220DA465E00D53708 /* FeedbackController.swift in Sources */,
 				58816CFD20C655740032D103 /* ActivitiesController.swift in Sources */,
 				AC9EF789208ECDB500C4907D /* CardsFlowFactory.swift in Sources */,
@@ -4747,6 +4742,7 @@
 				58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */,
 				AC58388E20E9E32800A57161 /* StoryDraftData.swift in Sources */,
 				58BD52962088570C00F7C3E1 /* ShrinkButton.swift in Sources */,
+				ACE7481F214F542000AB7565 /* Logger.swift in Sources */,
 				586954B321242ED400D48196 /* NetworkHelper.swift in Sources */,
 				58BD52AB20886EFB00F7C3E1 /* ContentTextTableViewCell.swift in Sources */,
 				AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
@@ -5034,7 +5030,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -5089,7 +5085,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

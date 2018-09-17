@@ -71,7 +71,6 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                 logger.error(error)
                 PKHUD.toast(message: "举报失败")
             case .success:
-                logger.debug()
                 PKHUD.toast(message: "举报成功")
             }
         }
@@ -84,7 +83,6 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                 logger.error(error)
                 PKHUD.toast(message: "操作失败")
             case .success:
-                logger.debug()
                 self.storage.write({ (realm) in
                     if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
                         user.isBlacklisted = true
@@ -106,7 +104,6 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                 logger.error(error)
                 PKHUD.toast(message: "操作失败")
             case .success:
-                logger.debug()
                 self.storage.write({ (realm) in
                     if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
                         user.isBlacklisted = false

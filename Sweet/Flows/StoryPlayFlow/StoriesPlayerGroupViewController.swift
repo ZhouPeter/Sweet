@@ -94,10 +94,6 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         super.init(nibName: nil, bundle: nil)
     }
     
-    deinit {
-        logger.debug()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let index = storiesGroup[0..<currentIndex].reduce(0) { $0 + $1.count } + currentPlayController!.currentIndex

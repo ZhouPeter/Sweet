@@ -20,20 +20,11 @@ private let umengKey = "5b726bfeb27b0a4abd0000d8"
 private let wechatKey = "wx819697effecdb6f5"
 private let tencentAppID = "1106459659"
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var rootController = UINavigationController(rootViewController: RootViewController())
-
-    func application(_ application: UIApplication,
-                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if allowRotation {
-            return [.portrait, .landscapeRight, .landscapeLeft]
-        } else {
-            return UIInterfaceOrientationMask.portrait
-        }
-    }
-    
     private lazy var applicationCoordinator: Coordinator = self.makeCoordinator()
 
     // MARK: - UIApplicationDelegate
@@ -41,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         #if DEBUG
             window = DebugWindow(frame: UIScreen.main.bounds)
         #else
@@ -65,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         NetworkHelper.networkCheck(viewController: rootController)
         addObservers()
+        
         return true
     }
     
@@ -108,11 +101,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func application(_ application: UIApplication,
+                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if allowRotation {
+            return [.portrait, .landscapeRight, .landscapeLeft]
+        } else {
+            return UIInterfaceOrientationMask.portrait
+        }
+    }
+    
 }
 
 // MARK: - Privates
 extension AppDelegate {
-    
     private func addObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(logoutAuth),
@@ -133,7 +134,7 @@ extension AppDelegate {
         getScreenShotInAlbum { (image) in
             let screenshot = image ?? UIScreen.screenshot()
             guard let newImage = screenshot?.addedFooterImage(#imageLiteral(resourceName: "ShareBottom")) else {
-                logger.warning("screenshot is nil")
+                logger.verbose("screenshot is nil")
                 return
             }
             let controller = ScreenShotController(shotImage: newImage)
@@ -263,7 +264,6 @@ extension AppDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
     @available(iOS 10.0, *)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -288,5 +288,4 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UMessage.didReceiveRemoteNotification(userInfo)
         }
     }
-
 }

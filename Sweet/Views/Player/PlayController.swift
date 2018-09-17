@@ -40,7 +40,6 @@ class PlayController: UIViewController {
     } ()
     
     deinit {
-        logger.debug()
         isMaskShowingToken?.invalidate()
     }
     

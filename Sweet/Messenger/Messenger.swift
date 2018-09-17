@@ -249,7 +249,6 @@ final class Messenger {
     }
     
     private func fetchMoreMessages(from buddy: User, remoteID: UInt64) {
-        logger.debug()
         var request = DirectionGetReq()
         request.from = buddy.userId
         request.msgID = remoteID
@@ -387,7 +386,7 @@ final class Messenger {
     
     private func saveMessages(_ messages: [InstantMessage], update: Bool = false, callback: (() -> Void)? = nil) {
         guard let userID = user?.userId else {
-            logger.warning("User is nil")
+            logger.verbose("User is nil")
             return
         }
         var userIDs = Set<UInt64>()
@@ -528,7 +527,6 @@ final class Messenger {
     private var isLogining = false
     
     private func login(_ callback: @escaping (Date?) -> Void) {
-        logger.debug()
         guard isLogining == false else {
             logger.debug("isLogining")
             return
@@ -558,7 +556,6 @@ final class Messenger {
     }
     
     private func connect(with address: SocketAddress, completion: @escaping () -> Void) {
-        logger.debug()
         if service.isConnected {
             logger.debug("Service already connected")
             completion()

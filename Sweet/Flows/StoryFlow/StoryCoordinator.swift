@@ -39,7 +39,6 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     override func start() {
-        logger.debug()
         showStoryRecordView()
     }
     
