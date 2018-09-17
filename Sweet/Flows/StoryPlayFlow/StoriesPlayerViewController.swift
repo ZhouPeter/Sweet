@@ -149,7 +149,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         bottomButton.setTitleColor(.black, for: .normal)
         bottomButton.translatesAutoresizingMaskIntoConstraints = false
-        bottomButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        bottomButton.backgroundColor = UIColor.white
         if isSelf {
             bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
             bottomButton.setImage(#imageLiteral(resourceName: "UvOpen"), for: .selected)

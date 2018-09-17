@@ -14,7 +14,7 @@ enum VersionUpdateType: UInt {
     case mustUpdate
 }
 class VersionUpdateHelper {
-    typealias UpdateCompletionType = (VersionUpdateType, String?, String?) -> Void
+    typealias UpdateCompletionType = (VersionUpdateType, String?, String?, String?) -> Void
     private class func getVersion(completion: @escaping UpdateCompletionType) {
         web.request(WebAPI.getVersion) { (result) in
             switch result {
@@ -31,17 +31,17 @@ class VersionUpdateHelper {
                 let newVersion = getVersionInteger(version: newVersionString)
                 if currentVersion < minVersion {
                     if let content = appVersion["content"] as? String, let url = appVersion["url"] as? String {
-                        completion(.mustUpdate, content, url)
+                        completion(.mustUpdate, newVersionString, content, url)
                     }
                 } else if currentVersion < newVersion {
                     if getUpdateTime(version: newVersion) < 5 {
                         setUpdateTime(version: newVersion)
                         if let content = appVersion["content"] as? String, let url = appVersion["url"] as? String {
-                            completion(.update, content, url)
+                            completion(.update, newVersionString, content, url)
                         }
                     }
                 } else {
-                    completion(.none, nil, nil)
+                    completion(.none, nil, nil, nil)
                 }
             }
         }
@@ -79,9 +79,9 @@ class VersionUpdateHelper {
     }
     
     class func versionCheck(viewController: UIViewController) {
-        self.getVersion { (updateType, content, url) in
+        self.getVersion { (updateType, newVersion, content, url) in
             if updateType == .mustUpdate {
-                let alertController = UIAlertController(title: "发现新版本",
+                let alertController = UIAlertController(title: "【讲真\(newVersion!)】版本更新",
                                                         message: content,
                                                         preferredStyle: .alert)
                 let updateAction = UIAlertAction(title: "立即更新", style: .default, handler: { (_) in
@@ -99,7 +99,7 @@ class VersionUpdateHelper {
                 alertController.preferredAction = updateAction
                 viewController.present(alertController, animated: true, completion: nil)
             } else if updateType == .update {
-                let alertController = UIAlertController(title: "发现新版本",
+                let alertController = UIAlertController(title: "【讲真\(newVersion!)】版本更新",
                                                         message: content,
                                                         preferredStyle: .alert)
                 let updateAction = UIAlertAction(title: "立即更新", style: .default, handler: { (_) in
