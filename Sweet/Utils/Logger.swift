@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import os
 
 let logger = SimpleLogger.sharedInstance
 
@@ -28,17 +27,6 @@ final class SimpleLogger {
                 return ""
             case .none:
                 return ""
-            }
-        }
-        
-        var osLogType: OSLogType {
-            switch self {
-            case .error:
-                return .error
-            case .debug:
-                return .debug
-            default:
-                return .`default`
             }
         }
     }
