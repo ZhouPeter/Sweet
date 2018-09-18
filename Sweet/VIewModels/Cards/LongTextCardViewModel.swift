@@ -24,6 +24,8 @@ struct LongTextCardViewModel {
     let thumbnailURL: URL?
     let sourceTextAttributed: NSAttributedString?
     let sourceText: String?
+    let type: CardResponse.CardType
+    let memberNumString: String?
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 16),
@@ -50,5 +52,7 @@ struct LongTextCardViewModel {
         thumbnailURL = URL(string: model.thumbnail ?? "")
         sourceTextAttributed = model.title?.getAttributedString(lineSpacing: 5)
         sourceText = model.sourceEnumType?.getSourceText()
+        type = model.cardEnumType
+        memberNumString = model.memberNum != nil ? "\(model.memberNum!)正在群聊讨论 → 🍉" : nil
     }
 }

@@ -120,6 +120,14 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
         }
         resetEmojiView()
         loadItemValues()
+        if viewModel.type == .groupChat {
+            emojiView.isHidden = true
+            addGroupButton.isHidden = false
+            addGroupButton.setTitle(viewModel.memberNumString, for: .normal)
+        } else {
+            emojiView.isHidden = false
+            addGroupButton.isHidden = true
+        }
 
     }
     

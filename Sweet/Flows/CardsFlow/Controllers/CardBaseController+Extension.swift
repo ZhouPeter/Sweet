@@ -76,7 +76,7 @@ extension CardsBaseController {
     
     func appendConfigurator(card: CardResponse) {
         switch card.cardEnumType {
-        case .content:
+        case .content, .groupChat:
             if card.video != nil {
                 let viewModel = ContentVideoCardViewModel(model: card)
                 let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)

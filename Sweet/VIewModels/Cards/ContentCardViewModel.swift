@@ -29,6 +29,8 @@ struct ContentCardViewModel {
     let thumbnailURL: URL?
     let sourceTitle: String?
     let sourceBrief: String?
+    let type: CardResponse.CardType
+    let memberNumString: String?
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
@@ -58,5 +60,7 @@ struct ContentCardViewModel {
         thumbnailURL = URL(string: model.thumbnail ?? "")
         sourceTitle = model.title
         sourceBrief = model.brief
+        type = model.cardEnumType
+        memberNumString = model.memberNum != nil ? "\(model.memberNum!)正在群聊讨论 → 🍉" : nil
     }
 }
