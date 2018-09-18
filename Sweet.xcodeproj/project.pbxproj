@@ -1201,6 +1201,8 @@
 		AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC981CCA2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */; };
+		AC981CCB2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */; };
 		AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
 		AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
 		AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
@@ -1323,6 +1325,10 @@
 		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC6E3472150B83400380488 /* Group.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3432150B83300380488 /* Group.pb.swift */; };
+		ACC6E3482150B83400380488 /* Group.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3432150B83300380488 /* Group.pb.swift */; };
+		ACC6E3492150B83400380488 /* GroupMessage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3462150B83400380488 /* GroupMessage.pb.swift */; };
+		ACC6E34A2150B83400380488 /* GroupMessage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3462150B83400380488 /* GroupMessage.pb.swift */; };
 		ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
 		ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
 		ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
@@ -1905,6 +1911,7 @@
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
 		AC972541209B2728009FB966 /* KeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 		AC974ADF2105C8890061EF38 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.pb.swift; sourceTree = "<group>"; };
 		AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MessageBubble.swift"; sourceTree = "<group>"; };
 		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
 		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
@@ -1948,6 +1955,8 @@
 		ACB5793D20F336FE006D597E /* BeautyFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeautyFilter.m; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
+		ACC6E3432150B83300380488 /* Group.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.pb.swift; sourceTree = "<group>"; };
+		ACC6E3462150B83400380488 /* GroupMessage.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMessage.pb.swift; sourceTree = "<group>"; };
 		ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditCancellable.swift; sourceTree = "<group>"; };
 		ACCD27EB20C54155002E96AB /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
@@ -2326,6 +2335,9 @@
 		AC2A254420BBEB1A00A82E62 /* Protos */ = {
 			isa = PBXGroup;
 			children = (
+				AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */,
+				ACC6E3432150B83300380488 /* Group.pb.swift */,
+				ACC6E3462150B83400380488 /* GroupMessage.pb.swift */,
 				AC2A258420BD2B9F00A82E62 /* Base.pb.swift */,
 				AC2A258320BD2B9F00A82E62 /* Command.pb.swift */,
 				AC2A258620BD2B9F00A82E62 /* General.pb.swift */,
@@ -3681,6 +3693,7 @@
 				AC616FA020C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829920FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				ACC6E3492150B83400380488 /* GroupMessage.pb.swift in Sources */,
 				AC1778BF20BF99C500D5330F /* IMView.swift in Sources */,
 				5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -3797,8 +3810,10 @@
 				ACEFA0C62106D51D0098631F /* ThumbSelectorView.swift in Sources */,
 				58816D1320C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				58447B27209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				AC981CCA2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */,
 				AC84FE7120E21B5D008FC795 /* DashView.swift in Sources */,
 				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				ACC6E3472150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C620BEB3100039368E /* ContactsView.swift in Sources */,
@@ -4781,6 +4796,7 @@
 				AC616FA120C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829A20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				ACC6E34A2150B83400380488 /* GroupMessage.pb.swift in Sources */,
 				AC1778C020BF99C500D5330F /* IMView.swift in Sources */,
 				5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -4897,8 +4913,10 @@
 				ACEFA0C72106D51D0098631F /* ThumbSelectorView.swift in Sources */,
 				58816D1420C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				58447B28209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				AC981CCB2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */,
 				AC84FE7220E21B5D008FC795 /* DashView.swift in Sources */,
 				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				ACC6E3482150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C720BEB3100039368E /* ContactsView.swift in Sources */,
