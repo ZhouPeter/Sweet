@@ -207,9 +207,20 @@ extension CardsBaseController {
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
+        inputTextView.updateSendButton(title: "确认点赞")
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
         self.activityCardId = cardId
+    }
+    
+    func showGroupInputView(isJoin: Bool){
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(inputTextView)
+        inputTextView.fill(in: window)
+        inputTextView.layoutIfNeeded()
+        inputTextView.placehoder = "带句你想说的话"
+        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入讨论组", image: nil)
+        inputTextView.startEditing(isStarted: true)
     }
 
 }
@@ -219,38 +230,47 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        sendActivityMessages(text: text)
-//        activityId = nil
-//        activityCardId = nil
+        if cards[index].cardEnumType == .activity {
+            sendActivityMessages(text: text)
+        } else if cards[index].cardEnumType == .groupChat {
+            joinGroup(text: text)
+        }
     }
     
     func removeInputTextView() {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-//        activityId = nil
-//        activityCardId = nil
     }
 }
 
 // MARK: - ActivityMessage Methods
 extension CardsBaseController {
-    func sendPreferenceMessages(text: String) {
-        let card = cards[index]
-        guard let cardId = activityCardId, let activityId = activityId else { return }
-        guard card.cardEnumType == .user, card.cardId == cardId else { return }
-        guard let index = card.userContentList!.index(where: { $0.activityId == activityId }) else { fatalError() }
-        guard let cardID = card.userContentList![index].fromCardId else { return }
-        let toUserId = card.userContentList![index].userId
-        web.request(
-            WebAPI.getCard(cardID: cardID),
-            responseType: Response<CardGetResponse>.self) { (result) in
-                switch result {
-                case let .success(response):
-                    let resultCard = response.card
-                    CardMessageManager.shard.sendMessage(card: resultCard, text: text, userIds: [toUserId], extra: activityId)
-                case let .failure(error):
-                    logger.error(error)
+    
+    func joinGroup(text: String) {
+        let cardId = cards[index].cardId
+        let contentId = cards[index].contentId!
+        let groupId = cards[index].groupId!
+        let isJoin = cards[index].join!
+        web.request(WebAPI.joinGroup(cardId: cardId, contentId: contentId, groupId: groupId, comment: text)) { (result) in
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+            case .success:
+                if isJoin {
+                    self.toast(message: "消息发送成功！")
+                } else {
+                    if Defaults[.isJoinGroupChat] == false {
+                        let alert = UIAlertController(title: nil, message: "你已加入群聊，请到消息页查看", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        Defaults[.isJoinGroupChat] = true
+                    } else {
+                        self.toast(message: "加入群聊成功！")
+                        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+                        self.cards[index].join = true
+                    }
                 }
+            }
         }
     }
 

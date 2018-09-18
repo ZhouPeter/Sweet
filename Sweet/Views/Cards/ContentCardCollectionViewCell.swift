@@ -14,7 +14,7 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showProfile(userId: UInt64, setTop: SetTop?)
     func openEmojis(cardId: String)
     func shareCard(cardId: String)
-    func addGroup(groupId: UInt64, cardId: String, contentId: String)
+    func joinGroup(groupId: UInt64, cardId: String, contentId: String)
 }
 
 
@@ -121,14 +121,10 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         }
         update(with: viewModel.imageURLList)
         resetEmojiView()
-        if viewModel.type == .groupChat {
-            emojiView.isHidden = true
-            addGroupButton.isHidden = false
-            addGroupButton.setTitle(viewModel.memberNumString, for: .normal)
-        } else {
-            emojiView.isHidden = false
-            addGroupButton.isHidden = true
-        }
+        update(isGroupChat: viewModel.type == .groupChat,
+               contentId: viewModel.contentId,
+               groupId: viewModel.groupId,
+               memberNumString: viewModel.memberNumString)
     }
     
     func updateEmojiView(viewModel: ContentCardViewModel) {

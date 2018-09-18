@@ -16,7 +16,7 @@ class SourceTitleView: UIView {
         return imageView
     }()
     
-    private lazy var backgroundView: UIView = {
+    lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
         return view
@@ -141,16 +141,20 @@ class LongTextCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReu
             }
         }
         resetEmojiView()
-        if viewModel.type == .groupChat {
-            emojiView.isHidden = true
-            addGroupButton.isHidden = false
-            addGroupButton.setTitle(viewModel.memberNumString, for: .normal)
-
-        } else {
-            emojiView.isHidden = false
-            addGroupButton.isHidden = true
-        }
+        update(isGroupChat: viewModel.type == .groupChat,
+               contentId: viewModel.contentId,
+               groupId: viewModel.groupId,
+               memberNumString: viewModel.memberNumString)
+        updateSourceView(withType: viewModel.type)
         
+    }
+    
+    func updateSourceView(withType type: CardResponse.CardType) {
+        if type == .groupChat {
+            sourceTitleView.backgroundView.backgroundColor = .white
+        } else {
+            sourceTitleView.backgroundView.backgroundColor = UIColor(hex: 0xf2f2f2)
+        }
     }
     func updateEmojiView(viewModel: LongTextCardViewModel) {
         self.viewModel = viewModel

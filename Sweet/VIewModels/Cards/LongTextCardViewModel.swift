@@ -21,6 +21,8 @@ struct LongTextCardViewModel {
     let defaultEmojiList: [Int]
     var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
+    let groupId: UInt64?
+    let join: Bool?
     let thumbnailURL: URL?
     let sourceTextAttributed: NSAttributedString?
     let sourceText: String?
@@ -42,6 +44,8 @@ struct LongTextCardViewModel {
                             UIFont.systemFont(ofSize: 12).pointSize
         cardId = model.cardId
         contentId = model.contentId
+        groupId = model.groupId
+        join = model.join
         if let emoji = model.result?.emoji, emoji != 0 {
             resultImageName = "ResultEmoji\(emoji)"
             resultAvatarURLs = model.result?.contactUserList.compactMap({ URL(string: $0.avatar) })
@@ -53,6 +57,6 @@ struct LongTextCardViewModel {
         sourceTextAttributed = model.title?.getAttributedString(lineSpacing: 5)
         sourceText = model.sourceEnumType?.getSourceText()
         type = model.cardEnumType
-        memberNumString = model.memberNum != nil ? "\(model.memberNum!)正在群聊讨论 → 🍉" : nil
+        memberNumString = model.memberNum != nil ? "\(model.memberNum!)人正在群聊讨论 → 🍉" : nil
     }
 }

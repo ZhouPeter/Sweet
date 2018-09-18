@@ -33,7 +33,12 @@ extension DefaultsKeys {
     static let isStoryTagGuideShown = DefaultsKey<Bool>("isStoryTagGuideShown")
     static let isSameCardChoiceGuideShown = DefaultsKey<Bool>("isSameCardChoiceGuideShown")
     static let isPreferenceGuideShown = DefaultsKey<Bool>("isPreferenceGuideShown")
+
+}
+//Toast
+extension DefaultsKeys {
     static let isInputTextSendMessage = DefaultsKey<Bool>("isInputTextSendMessage")
+    static let isJoinGroupChat = DefaultsKey<Bool>("isJoinGroupChat")
 
 }
 

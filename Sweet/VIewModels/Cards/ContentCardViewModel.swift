@@ -26,6 +26,8 @@ struct ContentCardViewModel {
     let defaultEmojiList: [Int]
     var emojiDisplayType: EmojiViewDisplay = .show
     let contentId: String?
+    let groupId: UInt64?
+    let join: Bool?
     let thumbnailURL: URL?
     let sourceTitle: String?
     let sourceBrief: String?
@@ -50,6 +52,8 @@ struct ContentCardViewModel {
 
         cardId = model.cardId
         contentId = model.contentId
+        groupId = model.groupId
+        join = model.join
         if let emoji = model.result?.emoji, emoji != 0 {
             resultImageName = "ResultEmoji\(emoji)"
             resultAvatarURLs = model.result?.contactUserList.compactMap({ URL(string: $0.avatar) })
@@ -61,6 +65,6 @@ struct ContentCardViewModel {
         sourceTitle = model.title
         sourceBrief = model.brief
         type = model.cardEnumType
-        memberNumString = model.memberNum != nil ? "\(model.memberNum!)正在群聊讨论 → 🍉" : nil
+        memberNumString = model.memberNum != nil ? "\(model.memberNum!)人正在群聊讨论 → 🍉" : nil
     }
 }

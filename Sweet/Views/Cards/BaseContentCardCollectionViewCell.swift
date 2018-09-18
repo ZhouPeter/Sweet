@@ -27,11 +27,18 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
     
     lazy var addGroupButton: UIButton = {
         let button = UIButton()
-        button.setTitle("126人正在群聊讨论 →  🍉", for: .normal)
-        button.setTitleColor(UIColor(hex: 0x9b9b9b), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(didPressAddGroup(_:)), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var groupBackgroudImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "GroupBg"))
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        return imageView
     }()
 
     override init(frame: CGRect) {
@@ -39,11 +46,19 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentId = nil
+        groupId = nil
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setupUI() {
+        contentView.insertSubview(groupBackgroudImageView, belowSubview: customContent)
+        groupBackgroudImageView.fill(in: customContent)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
         emojiView.align(.left)
@@ -57,7 +72,23 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         addGroupButton.constrain(width: 220, height: 50)
         addGroupButton.centerY(to: shareButton)
         addGroupButton.align(.right, inset: 15)
-        
+    }
+    
+    func update(isGroupChat: Bool, contentId: String?, groupId: UInt64?, memberNumString: String?) {
+        if isGroupChat {
+            self.contentId = contentId
+            self.groupId = groupId
+            emojiView.isHidden = true
+            addGroupButton.isHidden = false
+            addGroupButton.setTitle(memberNumString, for: .normal)
+            groupBackgroudImageView.isHidden = false
+            customContent.isShadowEnabled = false
+        } else {
+            emojiView.isHidden = false
+            addGroupButton.isHidden = true
+            groupBackgroudImageView.isHidden = true
+            customContent.isShadowEnabled = true
+        }
     }
     
 }
@@ -73,7 +104,7 @@ extension BaseContentCardCollectionViewCell {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate,
             let groupId = groupId,
             let contentId = contentId {
-            delegate.addGroup(groupId: groupId, cardId: cardId!, contentId: contentId)
+            delegate.joinGroup(groupId: groupId, cardId: cardId!, contentId: contentId)
         }
         
     }
