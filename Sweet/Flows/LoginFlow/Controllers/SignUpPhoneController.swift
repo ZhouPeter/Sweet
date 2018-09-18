@@ -13,7 +13,7 @@ let loginedKey = DefaultsKey<Bool>("logined") // 定义了你的key
 
 class SignUpPhoneController: BaseViewController, SignUpPhoneView {
     var onFinish: ((Bool) -> Void)?
-    var showSetting: (() -> Void)?
+    var showSignUpUniversity: ((LoginRequestBody) -> Void)?
     var loginRequestBody: LoginRequestBody!
     override var prefersStatusBarHidden: Bool {
         return false
@@ -193,6 +193,8 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                 case let .failure(error):
                     if error.code == WebErrorCode.verification.rawValue {
                         self.toast(message: "手机号或验证码输入错误")
+                    } else if error.code == WebErrorCode.userIsNil.rawValue {
+                        self.showSignUpUniversity?(self.loginRequestBody)
                     }
                     logger.error(error)
                 case let.success(response):
@@ -202,13 +204,7 @@ class SignUpPhoneController: BaseViewController, SignUpPhoneView {
                     Defaults[.userID] = "\(response.user.userId)"
                     self.storage = Storage(userID: response.user.userId)
                     self.storage?.write({ (realm) in
-                        let user = UserData()
-                        user.userID = Int64(response.user.userId)
-                        user.university = response.user.universityName
-                        user.college = response.user.collegeName
-                        user.avatarURLString = response.user.avatar
-                        user.phone = response.user.phone
-                        user.nickname = response.user.nickname
+                        let user = UserData.data(with: response.user)
                         realm.add(user, update: true)
                     }, callback: { (_) in
                         if !response.register && self.loginRequestBody.register {

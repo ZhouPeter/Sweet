@@ -43,14 +43,14 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
         loginOutput.onFinish = { [weak self]  isSettingPower in
             self?.finishFlow?(isSettingPower)
         }
+        loginOutput.showSignUpUniversity = { [weak self] model in
+            self?.showSignUpUniversity(model: model)
+        }
         router.push(loginOutput)
     }
     
     private func showSignUpUniversity(model: LoginRequestBody) {
         let universityOutput = factory.makeSignUpUniversityOutput(loginRequestBody: model)
-//        universityOutput.showSignUpCollege = { [weak self] model in
-//            self?.showSignUpCollege(model: model)
-//        }
         universityOutput.showSignUpSex = { [weak self] model in
             self?.showSignUpSex(model: model)
         }
@@ -86,9 +86,6 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
         nameOutput.showSignUpAvatar = { [weak self] model in
             self?.showSignUpAvatar(model: model)
         }
-//        nameOutput.showSignUpPhone = { [weak self] model in
-//            self?.showSignUpPhone(model: model)
-//        }
         router.push(nameOutput)
     }
     
@@ -96,6 +93,9 @@ final class AuthCoordinator: BaseCoordinator, AuthCoordinatorOutput {
         let avatarOutput = factory.makeSignUpAvatarOutput(loginRequestBody: model)
         avatarOutput.showSignUpPhone = { [weak self] model in
             self?.showSignUpPhone(model: model)
+        }
+        avatarOutput.onFinish = { [weak self]  isSettingPower in
+            self?.finishFlow?(isSettingPower)
         }
         router.push(avatarOutput)
     }

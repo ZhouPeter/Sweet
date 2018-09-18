@@ -8,9 +8,12 @@
 
 import UIKit
 import Photos
+import Contacts
+import SwiftyUserDefaults
 class SignUpAvatarController: BaseViewController, SignUpAvatarView {
     var showSignUpPhone: ((LoginRequestBody) -> Void)?
     var loginRequestBody: LoginRequestBody!
+    var onFinish: ((Bool) -> Void)?
     private lazy var cameraButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Camera_icon"), for: .normal)
@@ -38,6 +41,7 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
         button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
         return button
     }()
+    private var storage: Storage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +54,78 @@ class SignUpAvatarController: BaseViewController, SignUpAvatarView {
     }
     
     @objc private func nextAction(_ sender: UIButton) {
-        self.showSignUpPhone?(self.loginRequestBody)
+        if loginRequestBody.register == false {
+            loginRequestBody.register = true
+            web.request(
+                .login(body: loginRequestBody),
+                responseType: Response<LoginResponse>.self,
+                completion: { result in
+                    switch result {
+                    case let .failure(error):
+                        if error.code == WebErrorCode.verification.rawValue {
+                            self.toast(message: "手机号或验证码输入错误")
+                        }
+                        logger.error(error)
+                    case let.success(response):
+                        logger.debug(response)
+                        web.tokenSource.token = response.token
+                        Defaults[.token] =  response.token
+                        Defaults[.userID] = "\(response.user.userId)"
+                        self.storage = Storage(userID: response.user.userId)
+                        self.storage?.write({ (realm) in
+                            let user = UserData.data(with: response.user)
+                            realm.add(user, update: true)
+                        }, callback: { (_) in
+                            if !response.register && self.loginRequestBody.register {
+                                self.toast(
+                                    message: "你的账号已存在，正在自动登录",
+                                    duration: 3,
+                                    completion: {
+                                        self.successLogin(loginResponse: response)
+                                })
+                            } else {
+                                self.successLogin(loginResponse: response)
+                            }
+                        })
+                        if let setting = response.setting {
+                            self.storage?.write({ (realm) in
+                                realm.create(SettingData.self, value: SettingData.data(with: setting), update: true)
+                            })
+                        }
+                        
+                    }
+            })
+        } else {
+            self.showSignUpPhone?(self.loginRequestBody)
+        }
+    }
+    
+    
+    private func successLogin(loginResponse: LoginResponse) {
+        let logined = Defaults[loginedKey]
+        if !logined {
+            onFinish?(true)
+        } else {
+            if loginResponse.contactsUpload {
+                onFinish?(false)
+            } else {
+                onFinish?(true)
+            }
+        }
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        if status ==  .authorized {
+            let contacts = Contacts.getContacts()
+            web.request(.uploadContacts(contacts: contacts)) { (result) in
+                switch result {
+                case .success:
+                    logger.debug("登录上传通讯录成功")
+                case let .failure(error):
+                    logger.error(error)
+                }
+                
+            }
+        }
+        Defaults[loginedKey] = true
     }
     
     private func setupUI() {
