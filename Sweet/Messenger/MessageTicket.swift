@@ -93,3 +93,13 @@ extension BadgeSyncReq: MessageTicket {
         return UserCmdID.badgeSysncReq.rawValue
     }
 }
+
+extension GetConversationsReq: MessageTicket {
+    var module: ModuleID {
+        return .conversation
+    }
+    
+    var command: Int {
+        return ConversationCmdID.listReq.rawValue
+    }
+}

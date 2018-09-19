@@ -937,10 +937,6 @@
 		AC39E55520C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55720C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
-		AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
 		AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
@@ -1843,7 +1839,6 @@
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		AC39E55320C7AF0800340564 /* Messenger+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messenger+Send.swift"; sourceTree = "<group>"; };
-		AC3AA50120BFF40D00C046F1 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
 		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
 		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
@@ -2327,7 +2322,6 @@
 				AC956BA720C0246400B40D9A /* MessageTicket.swift */,
 				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
 				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
-				AC3AA50120BFF40D00C046F1 /* Conversation.swift */,
 			);
 			path = Messenger;
 			sourceTree = "<group>";
@@ -3715,7 +3709,6 @@
 				AC7C8E5420E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC84FE8D20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -4155,7 +4148,6 @@
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACEFA0CC2106D51D0098631F /* VideoCropView.swift in Sources */,
 				ACDA67642111B076000B0587 /* Comparable+Clamp.swift in Sources */,
-				AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
@@ -4500,7 +4492,6 @@
 				ACA83C0E20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
-				AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC39E55720C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				58DECE7320EB148D00A4CDA4 /* CardImageLayout.swift in Sources */,
 				ACCD27EF20C54155002E96AB /* BadgeView.swift in Sources */,
@@ -4818,7 +4809,6 @@
 				AC7C8E5520E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC84FE8E20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,

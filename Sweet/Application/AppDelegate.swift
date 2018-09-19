@@ -80,17 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                .update(
                 updateParameters: ["pushCode": deviceTokenString,
                                    "pushDeviceType": 1,
-                                   "type": UpdateUserType.pushToken.rawValue])) { (result) in
-                switch result {
-                case .success:
-                    logger.debug("上传deviceToken成功")
-                case let .failure(error):
-                    logger.error(error)
-                    logger.debug("上传deviceToken失败")
-                }
-            }
+                                   "type": UpdateUserType.pushToken.rawValue])) { _ in }
         }
-        logger.debug(deviceTokenString)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

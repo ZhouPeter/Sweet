@@ -16,7 +16,7 @@ final class InboxCoordinator: BaseCoordinator {
     private let user: User
     private let token: String
     private let storage: Storage
-    private var conversations = [Conversation]()
+    private var conversations = [IMConversation]()
     private var inboxView: InboxView?
     
     init(user: User,
@@ -50,21 +50,21 @@ final class InboxCoordinator: BaseCoordinator {
 }
 
 extension InboxCoordinator: InboxViewDelegate {
-    func inboxRemoveConversation(_ conversation: Conversation) {
-        Messenger.shared.removeConversation(userID: conversation.user.userId)
+    func inboxRemoveConversation(_ conversation: IMConversation) {
+        Messenger.shared.removeConversation(conversation.id)
     }
     
-    func inboxStartConversation(_ conversation: Conversation) {
-        let coordinator = ConversationCoordinator(
-            user: user,
-            buddy: conversation.user,
-            router: router,
-            coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in
-            self?.removeDependency(coordinator)
-        }
-        addDependency(coordinator)
-        coordinator.start()
+    func inboxStartConversation(_ conversation: IMConversation) {
+//        let coordinator = ConversationCoordinator(
+//            user: user,
+//            buddy: user,
+//            router: router,
+//            coordinatorFactory: coordinatorFactory)
+//        coordinator.finishFlow = { [weak self] in
+//            self?.removeDependency(coordinator)
+//        }
+//        addDependency(coordinator)
+//        coordinator.start()
     }
 }
 
@@ -89,7 +89,7 @@ extension InboxCoordinator: MessengerDelegate {
         logger.debug("\(message.rawContent), success: \(success)")
     }
     
-    func messengerDidUpdateConversations(_ conversations: [Conversation]) {
+    func messengerDidUpdateConversations(_ conversations: [IMConversation]) {
         inboxView?.didUpdateConversations(conversations)
     }
 }

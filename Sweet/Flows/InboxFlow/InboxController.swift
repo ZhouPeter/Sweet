@@ -12,7 +12,7 @@ import SwipeCellKit
 
 final class InboxController: BaseViewController, InboxView {
     weak var delegate: InboxViewDelegate?
-    private var conversations = [Conversation]()
+    private var conversations = [IMConversation]()
     private let headerView = WarningHeaderView()
     
     private lazy var tableView: UITableView = {
@@ -42,9 +42,9 @@ final class InboxController: BaseViewController, InboxView {
         tableView.tableHeaderView = headerView
     }
     
-    func didUpdateConversations(_ conversations: [Conversation]) {
+    func didUpdateConversations(_ conversations: [IMConversation]) {
         conversations.forEach { (conversation) in
-            if let index = self.conversations.index(where: { $0.user.userId == conversation.user.userId }) {
+            if let index = self.conversations.index(where: { $0.id == conversation.id }) {
                 self.conversations.remove(at: index)
                 self.conversations.insert(conversation, at: index)
             } else {
@@ -52,13 +52,7 @@ final class InboxController: BaseViewController, InboxView {
             }
         }
         self.conversations = self.conversations.sorted(by: {
-            if $0.date != $1.date {
-                return $0.date > $1.date
-            }
-            if let remoteIDA = $0.lastMessage?.remoteID, let remoteIDB = $1.lastMessage?.remoteID {
-                return remoteIDA > remoteIDB
-            }
-            return $0.user.nickname > $1.user.nickname
+            return $0.lastMessageTimestamp > $1.lastMessageTimestamp
         })
         tableView.reloadData()
     }

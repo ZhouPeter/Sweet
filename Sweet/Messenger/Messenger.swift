@@ -286,15 +286,18 @@ final class Messenger {
                 return message
             }), update: false)
         }
+        logger.debug("")
+        send(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
+            logger.debug(response)
+            guard let response = response, response.list.isNotEmpty else { return }
+        }
     }
     
     func loadLocalConversations() {
-        var conversations = [Conversation]()
+        var conversations = [IMConversation]()
         storage?.read({ (realm) in
             realm.objects(ConversationData.self).forEach({ (result) in
-                if let conversation = Conversation(data: result) {
-                    conversations.append(conversation)
-                }
+                conversations.append(result.makeIMConversation())
             })
         }, callback: {
             logger.debug(conversations.count)
@@ -303,19 +306,20 @@ final class Messenger {
         })
     }
     
-    func removeConversation(userID: UInt64) {
-        storage?.write({ (realm) in
-            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
-                realm.delete(conversation)
-            }
-            let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
-            realm.delete(results)
-        }, callback: { _ in
-            self.updateUnreadCount()
-        })
-        web.request(.removeRecentMessage(userID: userID)) { (result) in
-            logger.debug(result)
-        }
+    func removeConversation(_ id: UInt64) {
+        // TODO:
+//        storage?.write({ (realm) in
+//            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID)) {
+//                realm.delete(conversation)
+//            }
+//            let results = realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
+//            realm.delete(results)
+//        }, callback: { _ in
+//            self.updateUnreadCount()
+//        })
+//        web.request(.removeRecentMessage(userID: userID)) { (result) in
+//            logger.debug(result)
+//        }
     }
     
     func startConversation(userID: UInt64) {
@@ -421,7 +425,7 @@ final class Messenger {
     
     private func updateUserConversations(with userIDs: [UInt64]) {
         guard userIDs.isNotEmpty, let myID = user?.userId else { return }
-        var conversations = [Conversation]()
+        var conversations = [IMConversation]()
         var userIDsNotSaved = [UInt64]()
         storage?.write({ (realm) in
             userIDs.forEach({ (userID) in
@@ -447,20 +451,20 @@ final class Messenger {
                     conversationData = data
                 } else {
                     conversationData = ConversationData()
-                    conversationData.userID = userData.userID
-                    conversationData.user = userData
+                    conversationData.id = Int64(userData.userID)
+                    conversationData.avatarURL = userData.avatarURLString
+                    conversationData.name = userData.nickname
                 }
                 conversationData.unreadCount = unreadCount
                 conversationData.likesCount = likesCount
-                conversationData.lastMessage = lastMessage
-                conversationData.date = lastMessage.sentDate
+                conversationData.lastMessageID.value = lastMessage.remoteID.value
+                conversationData.lastMessageContent = InstantMessage(data: lastMessage).displayText()
+                conversationData.lastMessageTimestamp.value = Int64(lastMessage.createDate.timeIntervalSinceNow)
                 realm.add(conversationData, update: true)
             })
             let results = realm.objects(ConversationData.self)
             for result in results {
-                if let conversation = Conversation(data: result) {
-                    conversations.append(conversation)
-                }
+                conversations.append(result.makeIMConversation())
             }
         }, callback: { _ in
             if userIDsNotSaved.isNotEmpty {

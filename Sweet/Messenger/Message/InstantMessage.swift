@@ -34,7 +34,7 @@ struct InstantMessage {
         }
     }
     
-    func displayText(buddy user: User) -> String {
+    func displayText() -> String {
         switch type {
         case .text:
             return rawContent

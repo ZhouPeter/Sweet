@@ -151,7 +151,6 @@ extension CardsBaseController {
             cellConfigurators.append(configurator)
             cards.append(card)
         default:
-            logger.debug(card)
             break
         }
     }

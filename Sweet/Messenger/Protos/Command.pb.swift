@@ -39,6 +39,15 @@ enum ModuleID: SwiftProtobuf.Enum {
 
   /// 消息模块
   case message // = 5
+
+  /// 群模块
+  case group // = 6
+
+  /// 群消息模块
+  case groupMessage // = 7
+
+  /// 对话模块
+  case conversation // = 8
   case UNRECOGNIZED(Int)
 
   init() {
@@ -53,6 +62,9 @@ enum ModuleID: SwiftProtobuf.Enum {
     case 3: self = .login
     case 4: self = .user
     case 5: self = .message
+    case 6: self = .group
+    case 7: self = .groupMessage
+    case 8: self = .conversation
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -65,6 +77,9 @@ enum ModuleID: SwiftProtobuf.Enum {
     case .login: return 3
     case .user: return 4
     case .message: return 5
+    case .group: return 6
+    case .groupMessage: return 7
+    case .conversation: return 8
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -366,6 +381,34 @@ enum MsgCmdID: SwiftProtobuf.Enum {
 
 }
 
+enum ConversationCmdID: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case listReq // = 0
+  case listResp // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .listReq
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .listReq
+    case 1: self = .listResp
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .listReq: return 0
+    case .listResp: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension ModuleID: SwiftProtobuf._ProtoNameProviding {
@@ -376,6 +419,9 @@ extension ModuleID: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "LOGIN"),
     4: .same(proto: "USER"),
     5: .same(proto: "MESSAGE"),
+    6: .same(proto: "GROUP"),
+    7: .same(proto: "GROUP_MESSAGE"),
+    8: .same(proto: "CONVERSATION"),
   ]
 }
 
@@ -446,5 +492,12 @@ extension MsgCmdID: SwiftProtobuf._ProtoNameProviding {
     18: .same(proto: "RECENT_RESP"),
     19: .same(proto: "UNREAD_MSGID_REQ"),
     20: .same(proto: "UNREAD_MSGID_RESP"),
+  ]
+}
+
+extension ConversationCmdID: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "LIST_REQ"),
+    1: .same(proto: "LIST_RESP"),
   ]
 }

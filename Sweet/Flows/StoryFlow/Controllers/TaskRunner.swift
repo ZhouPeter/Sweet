@@ -49,7 +49,6 @@ extension TaskRunner {
         storage.read({ (realm) in
             drafts.append(contentsOf: realm.objects(StoryDraftData.self).flatMap(StoryDraft.init(data:)))
         }) {
-            logger.debug(drafts)
             drafts.forEach({ (draft) in
                 self.run(StoryPublishTask(storage: storage, draft: draft))
             })
