@@ -77,6 +77,7 @@ PODS:
   - VIMediaCache (0.4)
   - VolumeBar (3.0.3)
   - WechatOpenSDK (1.8.2)
+  - Weibo_SDK (3.2.3)
   - YYText (1.0.7)
 
 DEPENDENCIES:
@@ -110,6 +111,7 @@ DEPENDENCIES:
   - VIMediaCache
   - VolumeBar (~> 3.0.3)
   - WechatOpenSDK
+  - Weibo_SDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
   - YYText
 
 SPEC REPOS:
@@ -158,6 +160,8 @@ EXTERNAL SOURCES:
   SDWebImage:
     :branch: 5.x
     :git: https://github.com/rs/SDWebImage.git
+  Weibo_SDK:
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 CHECKOUT OPTIONS:
   libimcloud:
@@ -169,6 +173,9 @@ CHECKOUT OPTIONS:
   SDWebImage:
     :commit: 2bb336bc12a5690dd11988c0bc8bef2c7318508d
     :git: https://github.com/rs/SDWebImage.git
+  Weibo_SDK:
+    :commit: f5b138320aefe0ed20b76b8510521432f1a6c9ac
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -206,8 +213,9 @@ SPEC CHECKSUMS:
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
+  Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 2e455804e0397c8aee866d6bc8a323f8bfa61eec
+PODFILE CHECKSUM: b69898938b5685f1fb6152fbc1fcfb886a351fea
 
 COCOAPODS: 1.5.3

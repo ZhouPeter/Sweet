@@ -49,4 +49,24 @@ class ShareInviteHelper {
             }
         }
     }
+    
+    class func sendWeiboInviteMessage() {
+        if let url = Defaults[.inviteUrl] {
+            let text = "讲真APP超级好玩，你也下载来和我一起玩吧：\(url)"
+            WeiboSDK.sendText(text: text)
+        } else {
+            web.request(.inviteUrl) { (result) in
+                switch result {
+                case let .success(response):
+                    if let url = response["url"] as? String {
+                        let text = "讲真APP超级好玩，你也下载来和我一起玩吧：\(url)"
+                        WeiboSDK.sendText(text: text)
+                        Defaults[.inviteUrl] = url
+                    }
+                case let .failure(error):
+                    logger.error(error)
+                }
+            }
+        }
+    }
 }

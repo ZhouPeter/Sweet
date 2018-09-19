@@ -298,7 +298,7 @@ extension ShareCardController: UITableViewDataSource {
         case .wechat:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "shareListCell", for: indexPath) as? ShareListTableViewCell else {fatalError()}
-            cell.update(images: [ #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ")])
+            cell.update(images: [ #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ"), #imageLiteral(resourceName: "微博"),])
             cell.delegate = self
             return cell
         case .story:
@@ -326,6 +326,9 @@ extension ShareCardController: ShareListTableViewCellDelegate {
             shareMessageCallback?(1)
         } else if index == 2 {
             QQApiInterface.sendText(text: shareText!, isCallLog: false)
+            shareMessageCallback?(2)
+        } else if index == 3 {
+            WeiboSDK.sendText(text: shareText!, isCallLog: false)
             shareMessageCallback?(3)
         }
     }

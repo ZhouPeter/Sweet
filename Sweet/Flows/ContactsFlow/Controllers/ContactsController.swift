@@ -257,7 +257,7 @@ extension ContactsController: UITableViewDataSource {
         } else if indexPath.section == 1 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "shareListCell", for: indexPath) as? ShareListTableViewCell else { fatalError() }
-            cell.update(images: [#imageLiteral(resourceName: "通讯录"), #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ")])
+            cell.update(images: [#imageLiteral(resourceName: "通讯录"), #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ"), #imageLiteral(resourceName: "微博")])
             cell.delegate = self
             return cell
         } else {
@@ -281,6 +281,8 @@ extension ContactsController: ShareListTableViewCellDelegate {
             ShareInviteHelper.sendWXInviteMessage(scene: .timeline)
         } else if index == 3 {
             ShareInviteHelper.sendQQInviteMessage()
+        } else if index == 4  {
+            ShareInviteHelper.sendWeiboInviteMessage()
         }
     }
 }

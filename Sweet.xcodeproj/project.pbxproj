@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		23562495F56AEB699EAC4653 /* Pods_SweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0135478D65C69FE268B22C5F /* Pods_SweetTests.framework */; };
+		5800C2CD2152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
+		5800C2CE2152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
+		5800C2CF2152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
+		5800C2D02152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
 		5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
 		5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
 		5803571320AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
@@ -1579,6 +1583,7 @@
 		2B725F6E27BDDE57CD16E6B2 /* Pods-SweetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SweetTests/Pods-SweetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39B6E2AFAF5DF0EBCDB0F439 /* Pods-SweetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetTests/Pods-SweetTests.release.xcconfig"; sourceTree = "<group>"; };
 		4FF84DB9CCEBB7F0B8F859CF /* Pods-Sweet-Sweet Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.release.xcconfig"; sourceTree = "<group>"; };
+		5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeiboSDK+Message.swift"; sourceTree = "<group>"; };
 		5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer.swift; sourceTree = "<group>"; };
 		5803571520AAA7E900B2C94F /* ChoiceCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCardViewModel.swift; sourceTree = "<group>"; };
 		5803571A20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2732,6 +2737,7 @@
 				AC41420120BD477000DC62E0 /* Date+Timestamp.swift */,
 				58816D0D20C671040032D103 /* WXApi+Message.swift */,
 				586DE27D214B834D005C4A94 /* QQApi+Message.swift */,
+				5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */,
 				58E870B520CA2929004F91EB /* UIImageView+AnimationImages.swift */,
 				AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */,
 				581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */,
@@ -2956,6 +2962,7 @@
 				ACA3232A208745A700BDC92E /* SwiftLint */,
 				ACA3232E2087460500BDC92E /* Build Number */,
 				AC45CD0F20AD27B1005C4AA0 /* Embed Frameworks */,
+				A723BFB9DE68AA9958D7AC4F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3018,6 +3025,7 @@
 				ACA3232B208745B800BDC92E /* SwiftLint */,
 				ACA3232C208745C700BDC92E /* Build Number */,
 				AC45CD1E20AD27CD005C4AA0 /* Embed Frameworks */,
+				55E1BDA8C6BB302B7D028EDE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3192,6 +3200,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		55E1BDA8C6BB302B7D028EDE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-resources.sh",
+				"${PODS_ROOT}/Weibo_SDK/libWeiboSDK/WeiboSDK.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WeiboSDK.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5A3544958C2A3E28C7ED2EE6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3284,6 +3310,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A723BFB9DE68AA9958D7AC4F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-resources.sh",
+				"${PODS_ROOT}/Weibo_SDK/libWeiboSDK/WeiboSDK.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WeiboSDK.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Sweet/Pods-Sweet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ACA3232A208745A700BDC92E /* SwiftLint */ = {
@@ -3667,6 +3711,7 @@
 				AC4D091420B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				AC616F9A20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				58D578CA2092D30500AE5D38 /* StoriesController.swift in Sources */,
+				5800C2CD2152011900511F01 /* WeiboSDK+Message.swift in Sources */,
 				58A23E6F214A67B000AC8931 /* ShareListTableViewCell.swift in Sources */,
 				ACA3237820875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				5843DA7320A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -4113,6 +4158,7 @@
 				ACDB24E920BED0DE0039368E /* ConversationCell.swift in Sources */,
 				58D578F420934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				ACA323512087498900BDC92E /* ApplicationCoordinator.swift in Sources */,
+				5800C2CF2152011900511F01 /* WeiboSDK+Message.swift in Sources */,
 				5843DA5720A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				58D578CC2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				586954AD2124252300D48196 /* String+Check.swift in Sources */,
@@ -4462,6 +4508,7 @@
 				AC84FE8620E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				585B60EB213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				5800C2D02152011900511F01 /* WeiboSDK+Message.swift in Sources */,
 				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
 				AC4D091C20B7BE3A007686EB /* TopicHeaderView.swift in Sources */,
@@ -4767,6 +4814,7 @@
 				AC4D091520B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				AC616F9B20C6BE6E00AD9004 /* ContentCardContent.swift in Sources */,
 				58D578CB2092D30500AE5D38 /* StoriesController.swift in Sources */,
+				5800C2CE2152011900511F01 /* WeiboSDK+Message.swift in Sources */,
 				58A23E70214A67B000AC8931 /* ShareListTableViewCell.swift in Sources */,
 				ACA3237920875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
 				5843DA7420A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,

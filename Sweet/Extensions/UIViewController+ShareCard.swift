@@ -38,6 +38,8 @@ extension UIViewController {
             CardAction.shareWeixin.actionLog(card: card)
         } else if index == 2 {
             CardAction.shareQQ.actionLog(card: card)
-        } 
+        } else if index == 3 {
+            CardAction.shareWeibo.actionLog(card: card)
+        }
     }
 }

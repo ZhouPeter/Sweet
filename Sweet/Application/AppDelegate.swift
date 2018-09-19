@@ -18,7 +18,8 @@ var allowRotation = false
 
 private let umengKey = "5b726bfeb27b0a4abd0000d8"
 private let wechatKey = "wx819697effecdb6f5"
-private let tencentAppID = "1106459659"
+private let tencentKey = "1106459659"
+private let weiboKey = "3363635970"
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,10 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupVolumeBar()
         
         WXApi.registerApp(wechatKey)
-        _ = TencentOAuth.init(appId: tencentAppID, andDelegate: nil)
-
+        _ = TencentOAuth.init(appId: tencentKey, andDelegate: nil)
         UMConfigure.initWithAppkey(umengKey, channel: nil)
-        
+        WeiboSDK.registerApp(weiboKey)
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
@@ -96,8 +96,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         if url.absoluteString.hasPrefix("wx") {
             return WXApi.handleOpen(url, delegate: WXApiManager.shared)
-        } else {
+        } else if  url.absoluteString.hasPrefix("tencent") {
             return TencentOAuth.handleOpen(url)
+        } else {
+            return WeiboSDK.handleOpen(url, delegate: nil)
         }
     }
     
