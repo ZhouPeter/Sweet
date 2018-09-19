@@ -55,7 +55,7 @@ final class Messenger {
     }
     private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
     private var storage: Storage?
-    private var conversationUserID: UInt64?
+    private var currentConversationID: UInt64?
     private var messagesUnreadCount: Int? {
         didSet {
             if let count = messagesUnreadCount {
@@ -131,6 +131,32 @@ final class Messenger {
             logger.debug("Service stopped")
             self.multicastDelegate.invoke({ $0.messengerDidLogout(user: user) })
         }
+    }
+    
+    func loadUserWith(id: UInt64, isForceSynced: Bool = false, callback: @escaping ((User?) -> Void)) {
+        if isForceSynced {
+            getUserInfoList(with: [id]) { (users) in
+                if let user = users.first {
+                    self.storage?.write({ (realm) in
+                        realm.add(UserData.data(with: user), update: true)
+                    })
+                }
+                callback(users.first)
+            }
+            return
+        }
+        var buddy: User?
+        storage?.read({ (realm) in
+            if let result = realm.object(ofType: UserData.self, forPrimaryKey: id) {
+                buddy = User(data: result)
+            }
+        }, callback: {
+            if buddy == nil {
+                self.loadUserWith(id: id, isForceSynced: true, callback: callback)
+            } else {
+                callback(buddy)
+            }
+        })
     }
     
     func getUserInfoList(with userIDs: [UInt64], callback: @escaping ([User]) -> Void) {
@@ -322,24 +348,25 @@ final class Messenger {
 //        }
     }
     
-    func startConversation(userID: UInt64) {
-        conversationUserID = userID
+    func startConversation(_ id: UInt64) {
+        currentConversationID = id
     }
     
-    func endConversation(userID: UInt64) {
-        conversationUserID = nil
+    func endConversation() {
+        currentConversationID = nil
     }
     
-    func markConversationAsRead(userID: UInt64) {
-        storage?.write({ (realm) in
-            let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(userID))
-            data?.unreadCount = 0
-            data?.likesCount = 0
-            realm.objects(InstantMessageData.self).filter("from = \(userID) || to = \(userID)")
-                .forEach({ $0.isRead = true })
-        }, callback: { (_) in
-            self.updateUserConversations(with: [userID])
-        })
+    func markConversationAsRead(_ id: UInt64) {
+//        storage?.write({ (realm) in
+//            let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(id))
+//            data?.unreadCount = 0
+//            data?.likesCount = 0
+            // TODO:
+//            realm.objects(InstantMessageData.self).filter("from = \(id) || to = \(id)")
+//                .forEach({ $0.isRead = true })
+//        }, callback: { (_) in
+//            self.updateUserConversations(with: [userID])
+//        })
     }
     
     // MARK: - Private
@@ -352,7 +379,7 @@ final class Messenger {
             logger.debug(response)
             let messages: [InstantMessage] = response.msgList.map({ proto in
                 var message = InstantMessage(proto: proto)
-                if let userID = self.conversationUserID, message.from == userID {
+                if let userID = self.currentConversationID, message.from == userID {
                     message.isRead = true
                 }
                 message.isSent = true

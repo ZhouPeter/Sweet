@@ -861,10 +861,10 @@
 		AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
-		AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758C20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758D20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
 		AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
 		AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
 		AC21759120C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
@@ -1065,10 +1065,10 @@
 		AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
 		AC616FAC20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
 		AC616FAD20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
-		AC64646620E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
+		AC64646620E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646720E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646820E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646920E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
 		AC6A0BC1210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
 		AC6A0BC2210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
 		AC6A0BC3210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
@@ -1177,6 +1177,12 @@
 		AC8EAA0420AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC949B7F21523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
+		AC949B8021523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
+		AC949B8221523DE500FEB724 /* GroupConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B8121523DE500FEB724 /* GroupConversationController.swift */; };
+		AC949B8321523DE500FEB724 /* GroupConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B8121523DE500FEB724 /* GroupConversationController.swift */; };
+		AC949B85215241EF00FEB724 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B84215241EF00FEB724 /* ConversationViewController.swift */; };
+		AC949B86215241EF00FEB724 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B84215241EF00FEB724 /* ConversationViewController.swift */; };
 		AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
 		AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
 		AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
@@ -1820,7 +1826,7 @@
 		AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowFactory.swift; sourceTree = "<group>"; };
-		AC21758920C105240089D4D1 /* ConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationController.swift; sourceTree = "<group>"; };
+		AC21758920C105240089D4D1 /* SingleConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleConversationController.swift; sourceTree = "<group>"; };
 		AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstantMessage+MessageType.swift"; sourceTree = "<group>"; };
 		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
@@ -1871,7 +1877,7 @@
 		AC616F9920C6BE6E00AD9004 /* ContentCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardContent.swift; sourceTree = "<group>"; };
 		AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardContent.swift; sourceTree = "<group>"; };
 		AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMessageContent.swift; sourceTree = "<group>"; };
-		AC64646520E266E6001CF936 /* ConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCoordinator.swift; sourceTree = "<group>"; };
+		AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleConversationCoordinator.swift; sourceTree = "<group>"; };
 		AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleMessageContent.swift; sourceTree = "<group>"; };
 		AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticelMessageCell.swift; sourceTree = "<group>"; };
 		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
@@ -1900,6 +1906,9 @@
 		AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		AC8EAA0120AC39900033615D /* XGPUImageMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPUImageMovie.h; sourceTree = "<group>"; };
 		AC8EAA0220AC39900033615D /* XGPUImageMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGPUImageMovie.m; sourceTree = "<group>"; };
+		AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationCoordinator.swift; sourceTree = "<group>"; };
+		AC949B8121523DE500FEB724 /* GroupConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationController.swift; sourceTree = "<group>"; };
+		AC949B84215241EF00FEB724 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		AC956BA720C0246400B40D9A /* MessageTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTicket.swift; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
@@ -2500,8 +2509,11 @@
 		AC7C8E4F20E26A4D0041D2A0 /* ConversationFlow */ = {
 			isa = PBXGroup;
 			children = (
-				AC64646520E266E6001CF936 /* ConversationCoordinator.swift */,
-				AC21758920C105240089D4D1 /* ConversationController.swift */,
+				AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */,
+				AC21758920C105240089D4D1 /* SingleConversationController.swift */,
+				AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */,
+				AC949B8121523DE500FEB724 /* GroupConversationController.swift */,
+				AC949B84215241EF00FEB724 /* ConversationViewController.swift */,
 				AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */,
 				AC7C8E5220E26A890041D2A0 /* Views */,
 			);
@@ -3523,7 +3535,7 @@
 				58CAB37920AC0405007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				58F0993C20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
-				AC64646620E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646620E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				580F889420FDF104009148CC /* CardActionEnum.swift in Sources */,
@@ -3602,6 +3614,7 @@
 				AC45CD6C20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				AC2A256E20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
+				AC949B85215241EF00FEB724 /* ConversationViewController.swift in Sources */,
 				586DE283214B84CA005C4A94 /* QQApi+Message.swift in Sources */,
 				58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
@@ -3747,7 +3760,7 @@
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				587D18E220DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
-				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58FBAD1C214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -3777,6 +3790,7 @@
 				ACDB24E720BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
+				AC949B7F21523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */,
 				AC557CAD20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC0E829E20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3808,6 +3822,7 @@
 				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				ACC6E3472150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
+				AC949B8221523DE500FEB724 /* GroupConversationController.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C620BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC620A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
@@ -3863,7 +3878,7 @@
 				ACF29FF420ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				586954B421242ED400D48196 /* NetworkHelper.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
-				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758C20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				580F888820FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				587D18CC20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
@@ -4048,7 +4063,7 @@
 				AC52FDC820F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				58A23E78214A6A4300AC8931 /* ShareCollectionViewCell.swift in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
-				AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646820E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
 				58FBAD1E214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -4225,7 +4240,7 @@
 				587D18D420DA465E00D53708 /* FeedbackController.swift in Sources */,
 				AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				580D9BC2213D60D800B8719C /* UISearchBar+Placeholder.swift in Sources */,
-				AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758D20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -4363,7 +4378,7 @@
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				AC744E592109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				AC84FE7420E21B5D008FC795 /* DashView.swift in Sources */,
-				AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646920E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0420C656860032D103 /* ActivityListResponse.swift in Sources */,
 				5843DA6720A13EE6005C8AD2 /* BlackController.swift in Sources */,
@@ -4623,7 +4638,7 @@
 				58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				58F0993D20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
-				AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646720E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				580F889520FDF104009148CC /* CardActionEnum.swift in Sources */,
@@ -4702,6 +4717,7 @@
 				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC2A256F20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				AC45CD6D20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
+				AC949B86215241EF00FEB724 /* ConversationViewController.swift in Sources */,
 				586DE284214B84CA005C4A94 /* QQApi+Message.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
@@ -4847,7 +4863,7 @@
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				587D18E320DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
-				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58FBAD1D214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -4877,6 +4893,7 @@
 				ACDB24E820BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
+				AC949B8021523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */,
 				AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC0E829F20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -4908,6 +4925,7 @@
 				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
 				ACC6E3482150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
+				AC949B8321523DE500FEB724 /* GroupConversationController.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C720BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC720A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,

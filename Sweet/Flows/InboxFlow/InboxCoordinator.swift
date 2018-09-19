@@ -55,16 +55,28 @@ extension InboxCoordinator: InboxViewDelegate {
     }
     
     func inboxStartConversation(_ conversation: IMConversation) {
-//        let coordinator = ConversationCoordinator(
-//            user: user,
-//            buddy: user,
-//            router: router,
-//            coordinatorFactory: coordinatorFactory)
-//        coordinator.finishFlow = { [weak self] in
-//            self?.removeDependency(coordinator)
-//        }
-//        addDependency(coordinator)
-//        coordinator.start()
+        if conversation.isGroup {
+            return
+        }
+        Messenger.shared.loadUserWith(id: conversation.id) { [weak self] (user) in
+            guard let user = user else {
+                logger.error("User is nil")
+                return
+            }
+            self?.startConversationWith(buddy: user)
+        }
+    }
+    
+    private func startConversationWith(buddy: User) {
+        let coordinator = SingleConversationCoordinator(user: user,
+                                                        buddy: buddy,
+                                                        router: router,
+                                                        coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }
 
