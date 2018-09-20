@@ -98,7 +98,7 @@ final class Messenger {
     func addDelegate(_ delegate: MessengerDelegate) {
         multicastDelegate.addDelegate(delegate)
     }
-        
+    
     // MARK: - Login
     
     func login(with user: User, token: String) {
@@ -229,6 +229,7 @@ final class Messenger {
             if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(group.id)) {
                 realm.delete(data)
             }
+            realm.delete(realm.objects(InstantMessageData.self).filter("to == \(group.id)"))
         }, callback: { (_) in
             self.loadConversations()
         })
