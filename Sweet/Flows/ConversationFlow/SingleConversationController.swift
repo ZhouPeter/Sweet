@@ -21,6 +21,8 @@ final class SingleConversationController: ConversationViewController, SingleConv
     init(user: User, buddy: User) {
         self.buddy = buddy
         super.init(user: user)
+        members[user.userId] = user
+        members[buddy.userId] = buddy
         Messenger.shared.addDelegate(self)
         Messenger.shared.loadMessages(from: buddy)
     }
