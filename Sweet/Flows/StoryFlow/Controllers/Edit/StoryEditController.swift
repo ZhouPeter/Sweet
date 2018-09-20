@@ -364,7 +364,7 @@ final class StoryEditController: BaseViewController, StoryEditView, StoryEditCan
         TaskRunner.shared.run(task)
         
         if UIDevice.current.hasLessThan2GBRAM {
-            HUD.show(.progress)
+            HUD.show(.systemActivity)
             task.completionBlock = { [weak self] in
                 DispatchQueue.main.async { self?.complete() }
             }

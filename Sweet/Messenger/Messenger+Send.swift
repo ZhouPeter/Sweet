@@ -9,8 +9,13 @@
 import Foundation
 
 extension Messenger {
-    @discardableResult func sendText(_ text: String, from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
+    @discardableResult func sendText(_ text: String,
+                                     from: UInt64,
+                                     to: UInt64,
+                                     isGroup: Bool = false,
+                                     extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: .text, extra: extra)
+        message.isGroup = isGroup
         message.rawContent = text
         DispatchQueue.main.async { self.send(message) }
         return message
@@ -19,56 +24,60 @@ extension Messenger {
     @discardableResult func sendStory(_ content: StoryMessageContent,
                                       from: UInt64,
                                       to: UInt64,
+                                      isGroup: Bool = false,
                                       extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .story, from: from, to: to, extra: extra)
+        return sendMessage(with: content, type: .story, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
-    @discardableResult func sendEvaluationCard(
-        _ content: OptionCardContent,
-        from: UInt64,
-        to: UInt64,
-        extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .card, from: from, to: to, extra: extra)
+    @discardableResult func sendEvaluationCard(_ content: OptionCardContent,
+                                               from: UInt64,
+                                               to: UInt64,
+                                               isGroup: Bool = false,
+                                               extra: String? = nil) -> InstantMessage {
+        return sendMessage(with: content, type: .card, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
-    @discardableResult func sendPreferenceCard(
-        _ content: OptionCardContent,
-        from: UInt64,
-        to: UInt64,
-        extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .card, from: from, to: to)
+    @discardableResult func sendPreferenceCard(_ content: OptionCardContent,
+                                               from: UInt64,
+                                               to: UInt64,
+                                               isGroup: Bool = false,
+                                               extra: String? = nil) -> InstantMessage {
+        return sendMessage(with: content, type: .card, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
     @discardableResult func sendContentCard(_ content: ContentCardContent,
                                             from: UInt64,
                                             to: UInt64,
+                                            isGroup: Bool = false,
                                             extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .card, from: from, to: to, extra: extra)
+        return sendMessage(with: content, type: .card, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
-    @discardableResult func sendLike(from: UInt64, to: UInt64, extra: String? = nil) -> InstantMessage {
-        return sendMessage(type: .like, from: from, to: to, extra: extra)
+    @discardableResult func sendLike(from: UInt64, to: UInt64, isGroup: Bool = false, extra: String? = nil) -> InstantMessage {
+        return sendMessage(type: .like, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
-    @discardableResult func sendImage(with url: String, from: UInt64, to: UInt64) -> InstantMessage {
-        return sendMessage(with: ImageMessageContent(url: url), type: .image, from: from, to: to, extra: nil)
+    @discardableResult func sendImage(with url: String, from: UInt64, to: UInt64, isGroup: Bool = false) -> InstantMessage {
+        return sendMessage(with: ImageMessageContent(url: url), type: .image, from: from, to: to, isGroup: isGroup, extra: nil)
     }
     
     @discardableResult func sendArtice(_ content: ArticleMessageContent,
                                        from: UInt64,
                                        to: UInt64,
+                                       isGroup: Bool = false,
                                        extra: String? = nil) -> InstantMessage {
-        return sendMessage(with: content, type: .article, from: from, to: to, extra: extra)
+        return sendMessage(with: content, type: .article, from: from, to: to, isGroup: isGroup, extra: extra)
     }
     
-    @discardableResult func sendMessage(
-        with content: MessageContent? = nil,
-        type: IMType,
-        from: UInt64,
-        to: UInt64,
-        extra: String? = nil) -> InstantMessage {
+    @discardableResult func sendMessage(with content: MessageContent? = nil,
+                                        type: IMType,
+                                        from: UInt64,
+                                        to: UInt64,
+                                        isGroup: Bool = false,
+                                        extra: String? = nil) -> InstantMessage {
         var message = InstantMessage(from: from, to: to, type: type, extra: extra)
         message.content = content
+        message.isGroup = isGroup
         DispatchQueue.main.async { self.send(message) }
         return message
     }

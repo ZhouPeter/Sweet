@@ -93,3 +93,64 @@ extension BadgeSyncReq: MessageTicket {
         return UserCmdID.badgeSysncReq.rawValue
     }
 }
+
+extension GetConversationsReq: MessageTicket {
+    var module: ModuleID {
+        return .conversation
+    }
+    
+    var command: Int {
+        return ConversationCmdID.listReq.rawValue
+    }
+}
+
+extension GroupInfoGetReq: MessageTicket {
+    var module: ModuleID {
+        return .group
+    }
+
+    var command: Int {
+        return GroupCmdID.groupInfoGetReq.rawValue
+    }
+}
+
+extension GroupMessageSendReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageSendReq.rawValue
+    }
+}
+
+extension GroupMessageGetReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageGetReq.rawValue
+    }
+}
+
+extension GroupMessageRecentReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageRecentReq.rawValue
+    }
+}
+
+extension GroupMessageDirectionReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageDirectionReq.rawValue
+    }
+}
+

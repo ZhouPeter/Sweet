@@ -16,6 +16,7 @@ struct SetTop {
     let contentId: String?
     let preferenceId: UInt64?
 }
+
 class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     var finishFlow: (() -> Void)?
     private let factory: ProfileFlowFactory
@@ -24,6 +25,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     private let user: User
     private let buddyID: UInt64
     private let setTop: SetTop?
+    
     init(user: User,
          userID: UInt64,
          setTop: SetTop? = nil,
@@ -41,6 +43,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     override func start() {
         start(with: nil)
     }
+    
     override func start(with option: DeepLinkOption?) {
         if let option = option {
             showProfile(isPresent: option == .present)
@@ -48,7 +51,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
             showProfile()
         }
     }
-
     
     // MARK: - Private
     private func showProfile(isPresent: Bool = false) {
@@ -187,7 +189,6 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
 }
 
-
 extension ProfileCoordinator: ProfileViewDelegate {
     func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting) {
         let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain, setting: setting)
@@ -209,11 +210,10 @@ extension ProfileCoordinator: ProfileViewDelegate {
     }
 
     func showConversation(user: User, buddy: User) {
-        let coordinator = ConversationCoordinator(
-            user: user,
-            buddy: buddy,
-            router: router,
-            coordinatorFactory: coordinatorFactory)
+        let coordinator = SingleConversationCoordinator(user: user,
+                                                        buddy: buddy,
+                                                        router: router,
+                                                        coordinatorFactory: coordinatorFactory)
         coordinator.finishFlow = { [weak self] in
             self?.removeDependency(coordinator)
         }

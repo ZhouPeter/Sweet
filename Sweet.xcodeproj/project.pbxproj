@@ -865,10 +865,10 @@
 		AC1778DA20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DB20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
 		AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */; };
-		AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
-		AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* ConversationController.swift */; };
+		AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758C20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
+		AC21758D20C105240089D4D1 /* SingleConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758920C105240089D4D1 /* SingleConversationController.swift */; };
 		AC21758F20C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
 		AC21759020C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
 		AC21759120C108710089D4D1 /* InstantMessage+MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */; };
@@ -933,6 +933,10 @@
 		AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
+		AC30016921534C270034C538 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016821534C270034C538 /* Group.swift */; };
+		AC30016A21534C270034C538 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016821534C270034C538 /* Group.swift */; };
+		AC30016E21534C9E0034C538 /* GroupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016D21534C9E0034C538 /* GroupData.swift */; };
+		AC30016F21534C9E0034C538 /* GroupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016D21534C9E0034C538 /* GroupData.swift */; };
 		AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
@@ -941,10 +945,6 @@
 		AC39E55520C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55720C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
-		AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
-		AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AA50120BFF40D00C046F1 /* Conversation.swift */; };
 		AC4141FB20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FC20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
 		AC4141FD20BD2FD400DC62E0 /* SocketAddressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */; };
@@ -1073,10 +1073,10 @@
 		AC616FAB20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
 		AC616FAC20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
 		AC616FAD20C6C03200AD9004 /* StoryMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */; };
-		AC64646620E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
-		AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* ConversationCoordinator.swift */; };
+		AC64646620E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646720E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646820E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
+		AC64646920E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */; };
 		AC6A0BC1210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
 		AC6A0BC2210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
 		AC6A0BC3210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */; };
@@ -1185,6 +1185,12 @@
 		AC8EAA0420AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
 		AC8EAA0620AC39910033615D /* XGPUImageMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAA0220AC39900033615D /* XGPUImageMovie.m */; };
+		AC949B7F21523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
+		AC949B8021523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
+		AC949B8221523DE500FEB724 /* GroupConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B8121523DE500FEB724 /* GroupConversationController.swift */; };
+		AC949B8321523DE500FEB724 /* GroupConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B8121523DE500FEB724 /* GroupConversationController.swift */; };
+		AC949B85215241EF00FEB724 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B84215241EF00FEB724 /* ConversationViewController.swift */; };
+		AC949B86215241EF00FEB724 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B84215241EF00FEB724 /* ConversationViewController.swift */; };
 		AC956BA820C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
 		AC956BA920C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
 		AC956BAA20C0246400B40D9A /* MessageTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC956BA720C0246400B40D9A /* MessageTicket.swift */; };
@@ -1205,6 +1211,8 @@
 		AC972543209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972544209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
 		AC972545209B2728009FB966 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC972541209B2728009FB966 /* KeyboardListener.swift */; };
+		AC981CCA2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */; };
+		AC981CCB2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */; };
 		AC9DF12820D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
 		AC9DF12920D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
 		AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */; };
@@ -1327,6 +1335,10 @@
 		ACC6620B20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620C20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
 		ACC6620D20AA88830070641C /* TopicListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6620920AA88830070641C /* TopicListResponse.swift */; };
+		ACC6E3472150B83400380488 /* Group.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3432150B83300380488 /* Group.pb.swift */; };
+		ACC6E3482150B83400380488 /* Group.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3432150B83300380488 /* Group.pb.swift */; };
+		ACC6E3492150B83400380488 /* GroupMessage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3462150B83400380488 /* GroupMessage.pb.swift */; };
+		ACC6E34A2150B83400380488 /* GroupMessage.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC6E3462150B83400380488 /* GroupMessage.pb.swift */; };
 		ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
 		ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
 		ACC96E7420DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */; };
@@ -1823,7 +1835,7 @@
 		AC1778CE20BFC5C200D5330F /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D320BFC5D600D5330F /* InboxCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCoordinator.swift; sourceTree = "<group>"; };
 		AC1778D820BFC90A00D5330F /* ContactsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFlowFactory.swift; sourceTree = "<group>"; };
-		AC21758920C105240089D4D1 /* ConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationController.swift; sourceTree = "<group>"; };
+		AC21758920C105240089D4D1 /* SingleConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleConversationController.swift; sourceTree = "<group>"; };
 		AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstantMessage+MessageType.swift"; sourceTree = "<group>"; };
 		AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		AC2A256D20BBF16B00A82E62 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
@@ -1840,9 +1852,10 @@
 		AC2F978620904A9900D5DE4F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		AC30016821534C270034C538 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		AC30016D21534C9E0034C538 /* GroupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupData.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		AC39E55320C7AF0800340564 /* Messenger+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messenger+Send.swift"; sourceTree = "<group>"; };
-		AC3AA50120BFF40D00C046F1 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
 		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
 		AC45CCF020AD265E005C4AA0 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = Vendors/GPUImage/GPUImage.xcodeproj; sourceTree = "<group>"; };
@@ -1875,7 +1888,7 @@
 		AC616F9920C6BE6E00AD9004 /* ContentCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardContent.swift; sourceTree = "<group>"; };
 		AC616F9F20C6BEAD00AD9004 /* OptionCardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardContent.swift; sourceTree = "<group>"; };
 		AC616FA920C6C03200AD9004 /* StoryMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryMessageContent.swift; sourceTree = "<group>"; };
-		AC64646520E266E6001CF936 /* ConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCoordinator.swift; sourceTree = "<group>"; };
+		AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleConversationCoordinator.swift; sourceTree = "<group>"; };
 		AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleMessageContent.swift; sourceTree = "<group>"; };
 		AC6A0BC7210AF3FC002DD1A4 /* ArticelMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticelMessageCell.swift; sourceTree = "<group>"; };
 		AC6C1D8820A98BDB00F45F82 /* TopicListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListController.swift; sourceTree = "<group>"; };
@@ -1904,12 +1917,16 @@
 		AC8EA9F020AC0BAF0033615D /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		AC8EAA0120AC39900033615D /* XGPUImageMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGPUImageMovie.h; sourceTree = "<group>"; };
 		AC8EAA0220AC39900033615D /* XGPUImageMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGPUImageMovie.m; sourceTree = "<group>"; };
+		AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationCoordinator.swift; sourceTree = "<group>"; };
+		AC949B8121523DE500FEB724 /* GroupConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationController.swift; sourceTree = "<group>"; };
+		AC949B84215241EF00FEB724 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		AC956BA720C0246400B40D9A /* MessageTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTicket.swift; sourceTree = "<group>"; };
 		AC972511209ABCD4009FB966 /* StoryTextEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextEditController.swift; sourceTree = "<group>"; };
 		AC972516209ABD09009FB966 /* StoryTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextController.swift; sourceTree = "<group>"; };
 		AC97251E209ABD5E009FB966 /* StoryTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTextView.swift; sourceTree = "<group>"; };
 		AC972541209B2728009FB966 /* KeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 		AC974ADF2105C8890061EF38 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.pb.swift; sourceTree = "<group>"; };
 		AC9DF12720D10D5900922813 /* UIImage+MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MessageBubble.swift"; sourceTree = "<group>"; };
 		AC9EF782208ECCA900C4907D /* IMFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFlowFactory.swift; sourceTree = "<group>"; };
 		AC9EF787208ECDB500C4907D /* CardsFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsFlowFactory.swift; sourceTree = "<group>"; };
@@ -1953,6 +1970,8 @@
 		ACB5793D20F336FE006D597E /* BeautyFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeautyFilter.m; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		ACC6620920AA88830070641C /* TopicListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListResponse.swift; sourceTree = "<group>"; };
+		ACC6E3432150B83300380488 /* Group.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.pb.swift; sourceTree = "<group>"; };
+		ACC6E3462150B83400380488 /* GroupMessage.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMessage.pb.swift; sourceTree = "<group>"; };
 		ACC96E7120DA44EA00F09C7F /* StoryEditCancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEditCancellable.swift; sourceTree = "<group>"; };
 		ACCD27EB20C54155002E96AB /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		ACD5A52520886C7C00B78CFD /* WebProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebProvider.swift; sourceTree = "<group>"; };
@@ -2323,7 +2342,6 @@
 				AC956BA720C0246400B40D9A /* MessageTicket.swift */,
 				AC2A257720BC23C700A82E62 /* MessengerDelegate.swift */,
 				AC2A253F20BBE5E400A82E62 /* MessageHandler.swift */,
-				AC3AA50120BFF40D00C046F1 /* Conversation.swift */,
 			);
 			path = Messenger;
 			sourceTree = "<group>";
@@ -2331,6 +2349,9 @@
 		AC2A254420BBEB1A00A82E62 /* Protos */ = {
 			isa = PBXGroup;
 			children = (
+				AC981CC72151EDC6006F2DA9 /* Conversation.pb.swift */,
+				ACC6E3432150B83300380488 /* Group.pb.swift */,
+				ACC6E3462150B83400380488 /* GroupMessage.pb.swift */,
 				AC2A258420BD2B9F00A82E62 /* Base.pb.swift */,
 				AC2A258320BD2B9F00A82E62 /* Command.pb.swift */,
 				AC2A258620BD2B9F00A82E62 /* General.pb.swift */,
@@ -2359,6 +2380,7 @@
 				AC86A93820C4051400334D4A /* ConversationData.swift */,
 				AC58388C20E9E32800A57161 /* StoryDraftData.swift */,
 				580D9BDC213FC14A00B8719C /* SettingData.swift */,
+				AC30016D21534C9E0034C538 /* GroupData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2492,6 +2514,7 @@
 				AC52FDC520F7278D00267913 /* ImageMessageContent.swift */,
 				AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */,
 				583BC77820CE198900C4494E /* MessageContentHelper.swift */,
+				AC30016821534C270034C538 /* Group.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2499,8 +2522,11 @@
 		AC7C8E4F20E26A4D0041D2A0 /* ConversationFlow */ = {
 			isa = PBXGroup;
 			children = (
-				AC64646520E266E6001CF936 /* ConversationCoordinator.swift */,
-				AC21758920C105240089D4D1 /* ConversationController.swift */,
+				AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */,
+				AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */,
+				AC21758920C105240089D4D1 /* SingleConversationController.swift */,
+				AC949B8121523DE500FEB724 /* GroupConversationController.swift */,
+				AC949B84215241EF00FEB724 /* ConversationViewController.swift */,
 				AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */,
 				AC7C8E5220E26A890041D2A0 /* Views */,
 			);
@@ -3360,7 +3386,7 @@
 		};
 		ACA3232C208745C700BDC92E /* Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -3368,13 +3394,13 @@
 			name = "Build Number";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Scripts\" && sh \"./increase-build-number.sh\"";
+			shellScript = "cd \"${SRCROOT}/Scripts\" && sh \"./increase-build-number.sh\"\n";
 		};
 		ACA3232E2087460500BDC92E /* Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -3382,9 +3408,9 @@
 			name = "Build Number";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Scripts\" && sh \"./increase-build-number.sh\"";
+			shellScript = "cd \"${SRCROOT}/Scripts\" && sh \"./increase-build-number.sh\"\n";
 		};
 		D5C47F18F0EEE0C3541FD8A2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3561,7 +3587,7 @@
 				58CAB37920AC0405007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACF2DEBE2089E04F00660425 /* Response.swift in Sources */,
 				58F0993C20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
-				AC64646620E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646620E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACA3237120875C2E00BDC92E /* Presentable.swift in Sources */,
 				58D579062094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				580F889420FDF104009148CC /* CardActionEnum.swift in Sources */,
@@ -3610,6 +3636,7 @@
 				581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC2D51ED20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				ACEFA0D22106D51D0098631F /* CropMaskView.swift in Sources */,
+				AC30016921534C270034C538 /* Group.swift in Sources */,
 				58CAB38820AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC2A257820BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -3640,6 +3667,7 @@
 				AC45CD6C20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				AC2A256E20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				58BD5301208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
+				AC949B85215241EF00FEB724 /* ConversationViewController.swift in Sources */,
 				586DE283214B84CA005C4A94 /* QQApi+Message.swift in Sources */,
 				58CE1ED020A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				58BD52F1208DC8A800F7C3E1 /* QiniuProvider.swift in Sources */,
@@ -3726,6 +3754,7 @@
 				AC616FA020C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829920FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				ACC6E3492150B83400380488 /* GroupMessage.pb.swift in Sources */,
 				AC1778BF20BF99C500D5330F /* IMView.swift in Sources */,
 				5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F220934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -3747,7 +3776,6 @@
 				AC7C8E5420E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				585B68C220AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A258F20BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC3AA50220BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC84FE8D20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5302088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236620875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -3786,7 +3814,7 @@
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				587D18E220DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
-				AC21758A20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58FBAD1C214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BB920A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -3802,6 +3830,7 @@
 				ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C2F20EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
+				AC30016E21534C9E0034C538 /* GroupData.swift in Sources */,
 				AC05F43F20DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
@@ -3816,6 +3845,7 @@
 				ACDB24E720BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121D2088B0E60086891C /* SignPlugin.swift in Sources */,
+				AC949B7F21523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */,
 				AC557CAD20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC0E829E20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238820875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -3842,9 +3872,12 @@
 				ACEFA0C62106D51D0098631F /* ThumbSelectorView.swift in Sources */,
 				58816D1320C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				58447B27209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				AC981CCA2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */,
 				AC84FE7120E21B5D008FC795 /* DashView.swift in Sources */,
 				5843DA5520A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				ACC6E3472150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530D208EEFE700F7C3E1 /* PowerPushView.swift in Sources */,
+				AC949B8221523DE500FEB724 /* GroupConversationController.swift in Sources */,
 				58C75C1D209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C620BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC620A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
@@ -3900,7 +3933,7 @@
 				ACF29FF420ECB89800959CE5 /* DeliverTask.swift in Sources */,
 				586954B421242ED400D48196 /* NetworkHelper.swift in Sources */,
 				AC2A254220BBE5E400A82E62 /* MessageHandler.swift in Sources */,
-				AC21758C20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758C20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				ACEC5C3620EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				580F888820FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				587D18CC20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
@@ -4085,7 +4118,7 @@
 				AC52FDC820F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				58A23E78214A6A4300AC8931 /* ShareCollectionViewCell.swift in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
-				AC64646820E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646820E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
 				58FBAD1E214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -4186,7 +4219,6 @@
 				AC525A97208DB1E9001070B2 /* MainController.swift in Sources */,
 				ACEFA0CC2106D51D0098631F /* VideoCropView.swift in Sources */,
 				ACDA67642111B076000B0587 /* Comparable+Clamp.swift in Sources */,
-				AC3AA50420BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
@@ -4264,7 +4296,7 @@
 				587D18D420DA465E00D53708 /* FeedbackController.swift in Sources */,
 				AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				580D9BC2213D60D800B8719C /* UISearchBar+Placeholder.swift in Sources */,
-				AC21758D20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758D20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5803575120AAFA2C00B2C94F /* StoriesCardCollectionViewCell.swift in Sources */,
 				AC1778D720BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
 				5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */,
@@ -4402,7 +4434,7 @@
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				AC744E592109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				AC84FE7420E21B5D008FC795 /* DashView.swift in Sources */,
-				AC64646920E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646920E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACDD0AFE20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0420C656860032D103 /* ActivityListResponse.swift in Sources */,
 				5843DA6720A13EE6005C8AD2 /* BlackController.swift in Sources */,
@@ -4532,7 +4564,6 @@
 				ACA83C0E20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				AC8EA9EA20ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				AC525A98208DB1E9001070B2 /* MainController.swift in Sources */,
-				AC3AA50520BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC39E55720C7AF0800340564 /* Messenger+Send.swift in Sources */,
 				58DECE7320EB148D00A4CDA4 /* CardImageLayout.swift in Sources */,
 				ACCD27EF20C54155002E96AB /* BadgeView.swift in Sources */,
@@ -4664,7 +4695,7 @@
 				58CAB37A20AC0417007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				58C75C142099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				58F0993D20E47F1400C9373A /* UINavigationBar+GradientImage .swift in Sources */,
-				AC64646720E266E6001CF936 /* ConversationCoordinator.swift in Sources */,
+				AC64646720E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				ACF2DEBF2089E04F00660425 /* Response.swift in Sources */,
 				ACA3237220875C2E00BDC92E /* Presentable.swift in Sources */,
 				580F889520FDF104009148CC /* CardActionEnum.swift in Sources */,
@@ -4713,6 +4744,7 @@
 				581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC2D51EE20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				ACEFA0D32106D51D0098631F /* CropMaskView.swift in Sources */,
+				AC30016A21534C270034C538 /* Group.swift in Sources */,
 				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC2A257920BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -4743,6 +4775,7 @@
 				AC972513209ABCD4009FB966 /* StoryTextEditController.swift in Sources */,
 				AC2A256F20BBF16B00A82E62 /* Messenger.swift in Sources */,
 				AC45CD6D20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
+				AC949B86215241EF00FEB724 /* ConversationViewController.swift in Sources */,
 				586DE284214B84CA005C4A94 /* QQApi+Message.swift in Sources */,
 				58BD5302208E004E00F7C3E1 /* PowerFlowFactory.swift in Sources */,
 				58CE1ED120A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
@@ -4829,6 +4862,7 @@
 				AC616FA120C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829A20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
+				ACC6E34A2150B83400380488 /* GroupMessage.pb.swift in Sources */,
 				AC1778C020BF99C500D5330F /* IMView.swift in Sources */,
 				5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58D578F320934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
@@ -4850,7 +4884,6 @@
 				AC7C8E5520E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				585B68C320AF1D8E00E734BC /* SweetPlayerExtensions.swift in Sources */,
 				AC2A259020BD2B9F00A82E62 /* Command.pb.swift in Sources */,
-				AC3AA50320BFF40D00C046F1 /* Conversation.swift in Sources */,
 				AC84FE8E20E22876008FC795 /* FocusView.swift in Sources */,
 				ACD5A5312088731C00B78CFD /* String+MD5.swift in Sources */,
 				ACA3236720875BD500BDC92E /* CoordinatorFactory.swift in Sources */,
@@ -4889,7 +4922,7 @@
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				587D18E320DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
-				AC21758B20C105240089D4D1 /* ConversationController.swift in Sources */,
+				AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,
 				58FBAD1D214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				589E6BBA20A95E900038FAED /* CardsSubscriptionController.swift in Sources */,
@@ -4905,6 +4938,7 @@
 				ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C3020EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
+				AC30016F21534C9E0034C538 /* GroupData.swift in Sources */,
 				AC05F44020DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
@@ -4919,6 +4953,7 @@
 				ACDB24E820BED0DE0039368E /* ConversationCell.swift in Sources */,
 				AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */,
 				AC84121E2088B0E60086891C /* SignPlugin.swift in Sources */,
+				AC949B8021523B5800FEB724 /* GroupConversationCoordinator.swift in Sources */,
 				AC557CAE20B7F8C20068F1B3 /* UIImage+Write.swift in Sources */,
 				AC0E829F20FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
 				ACA3238920875E6300BDC92E /* OnboardingView.swift in Sources */,
@@ -4945,9 +4980,12 @@
 				ACEFA0C72106D51D0098631F /* ThumbSelectorView.swift in Sources */,
 				58816D1420C67D1A0032D103 /* ModuleTableViewCell.swift in Sources */,
 				58447B28209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
+				AC981CCB2151EDC6006F2DA9 /* Conversation.pb.swift in Sources */,
 				AC84FE7220E21B5D008FC795 /* DashView.swift in Sources */,
 				5843DA5620A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				ACC6E3482150B83400380488 /* Group.pb.swift in Sources */,
 				58BD530E208EF3AE00F7C3E1 /* PowerPushView.swift in Sources */,
+				AC949B8321523DE500FEB724 /* GroupConversationController.swift in Sources */,
 				58C75C1E209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				ACDB24C720BEB3100039368E /* ContactsView.swift in Sources */,
 				58CE1EC720A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
@@ -5152,10 +5190,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.sweet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5177,10 +5212,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = Sweet/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -warn-long-expression-type-checking=100 -Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.sweet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5201,11 +5233,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -5226,11 +5254,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetTests-Bridging-Header.h";
@@ -5249,11 +5273,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -5273,11 +5293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UGKT48GX9N;
 				INFOPLIST_FILE = SweetUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.miaobo.SweetUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SweetUITests-Bridging-Header.h";
@@ -5303,10 +5319,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
@@ -5333,10 +5346,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miaozan.XPro-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;

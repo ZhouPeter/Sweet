@@ -39,6 +39,15 @@ enum ModuleID: SwiftProtobuf.Enum {
 
   /// 消息模块
   case message // = 5
+
+  /// 群模块
+  case group // = 6
+
+  /// 群消息模块
+  case groupMessage // = 7
+
+  /// 对话模块
+  case conversation // = 8
   case UNRECOGNIZED(Int)
 
   init() {
@@ -53,6 +62,9 @@ enum ModuleID: SwiftProtobuf.Enum {
     case 3: self = .login
     case 4: self = .user
     case 5: self = .message
+    case 6: self = .group
+    case 7: self = .groupMessage
+    case 8: self = .conversation
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -65,6 +77,9 @@ enum ModuleID: SwiftProtobuf.Enum {
     case .login: return 3
     case .user: return 4
     case .message: return 5
+    case .group: return 6
+    case .groupMessage: return 7
+    case .conversation: return 8
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -366,6 +381,156 @@ enum MsgCmdID: SwiftProtobuf.Enum {
 
 }
 
+enum GroupCmdID: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case groupUnknown // = 0
+  case groupUserInfoGetReq // = 1
+  case groupUserInfoGetResp // = 2
+  case groupInfoGetReq // = 3
+  case groupInfoGetResp // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .groupUnknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .groupUnknown
+    case 1: self = .groupUserInfoGetReq
+    case 2: self = .groupUserInfoGetResp
+    case 3: self = .groupInfoGetReq
+    case 4: self = .groupInfoGetResp
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .groupUnknown: return 0
+    case .groupUserInfoGetReq: return 1
+    case .groupUserInfoGetResp: return 2
+    case .groupInfoGetReq: return 3
+    case .groupInfoGetResp: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+enum GroupMessageCmdID: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case groupMessageUnknown // = 0
+
+  ///发送群消息
+  case groupMessageSendReq // = 1
+
+  ///发送群消息响应
+  case groupMessageSendResp // = 2
+
+  ///群消息通知
+  case groupMessageNotify // = 3
+
+  ///群消息通知ack
+  case groupMessageNotifyAck // = 4
+
+  ///获取群消息
+  case groupMessageGetReq // = 5
+
+  ///获取群消息响应
+  case groupMessageGetResp // = 6
+
+  /// 获取指定count的最新消息
+  case groupMessageRecentReq // = 7
+
+  /// 获取指定count的最新消息响应
+  case groupMessageRecentResp // = 8
+
+  ///上下拉消息
+  case groupMessageDirectionReq // = 9
+
+  ///上下拉消息响应
+  case groupMessageDirectionResp // = 10
+
+  /// 获取群消息未读计数
+  case groupMessageGetUnreadcountReq // = 11
+
+  /// 获取群消息未读计数响应
+  case groupMessageGetUnreadcountResp // = 12
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .groupMessageUnknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .groupMessageUnknown
+    case 1: self = .groupMessageSendReq
+    case 2: self = .groupMessageSendResp
+    case 3: self = .groupMessageNotify
+    case 4: self = .groupMessageNotifyAck
+    case 5: self = .groupMessageGetReq
+    case 6: self = .groupMessageGetResp
+    case 7: self = .groupMessageRecentReq
+    case 8: self = .groupMessageRecentResp
+    case 9: self = .groupMessageDirectionReq
+    case 10: self = .groupMessageDirectionResp
+    case 11: self = .groupMessageGetUnreadcountReq
+    case 12: self = .groupMessageGetUnreadcountResp
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .groupMessageUnknown: return 0
+    case .groupMessageSendReq: return 1
+    case .groupMessageSendResp: return 2
+    case .groupMessageNotify: return 3
+    case .groupMessageNotifyAck: return 4
+    case .groupMessageGetReq: return 5
+    case .groupMessageGetResp: return 6
+    case .groupMessageRecentReq: return 7
+    case .groupMessageRecentResp: return 8
+    case .groupMessageDirectionReq: return 9
+    case .groupMessageDirectionResp: return 10
+    case .groupMessageGetUnreadcountReq: return 11
+    case .groupMessageGetUnreadcountResp: return 12
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+enum ConversationCmdID: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case listReq // = 0
+  case listResp // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .listReq
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .listReq
+    case 1: self = .listResp
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .listReq: return 0
+    case .listResp: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension ModuleID: SwiftProtobuf._ProtoNameProviding {
@@ -376,6 +541,9 @@ extension ModuleID: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "LOGIN"),
     4: .same(proto: "USER"),
     5: .same(proto: "MESSAGE"),
+    6: .same(proto: "GROUP"),
+    7: .same(proto: "GROUP_MESSAGE"),
+    8: .same(proto: "CONVERSATION"),
   ]
 }
 
@@ -446,5 +614,40 @@ extension MsgCmdID: SwiftProtobuf._ProtoNameProviding {
     18: .same(proto: "RECENT_RESP"),
     19: .same(proto: "UNREAD_MSGID_REQ"),
     20: .same(proto: "UNREAD_MSGID_RESP"),
+  ]
+}
+
+extension GroupCmdID: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "GROUP_UNKNOWN"),
+    1: .same(proto: "GROUP_USER_INFO_GET_REQ"),
+    2: .same(proto: "GROUP_USER_INFO_GET_RESP"),
+    3: .same(proto: "GROUP_INFO_GET_REQ"),
+    4: .same(proto: "GROUP_INFO_GET_RESP"),
+  ]
+}
+
+extension GroupMessageCmdID: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "GROUP_MESSAGE_UNKNOWN"),
+    1: .same(proto: "GROUP_MESSAGE_SEND_REQ"),
+    2: .same(proto: "GROUP_MESSAGE_SEND_RESP"),
+    3: .same(proto: "GROUP_MESSAGE_NOTIFY"),
+    4: .same(proto: "GROUP_MESSAGE_NOTIFY_ACK"),
+    5: .same(proto: "GROUP_MESSAGE_GET_REQ"),
+    6: .same(proto: "GROUP_MESSAGE_GET_RESP"),
+    7: .same(proto: "GROUP_MESSAGE_RECENT_REQ"),
+    8: .same(proto: "GROUP_MESSAGE_RECENT_RESP"),
+    9: .same(proto: "GROUP_MESSAGE_DIRECTION_REQ"),
+    10: .same(proto: "GROUP_MESSAGE_DIRECTION_RESP"),
+    11: .same(proto: "GROUP_MESSAGE_GET_UNREADCOUNT_REQ"),
+    12: .same(proto: "GROUP_MESSAGE_GET_UNREADCOUNT_RESP"),
+  ]
+}
+
+extension ConversationCmdID: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "LIST_REQ"),
+    1: .same(proto: "LIST_RESP"),
   ]
 }
