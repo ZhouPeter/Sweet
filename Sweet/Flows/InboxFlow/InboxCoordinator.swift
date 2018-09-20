@@ -51,7 +51,7 @@ final class InboxCoordinator: BaseCoordinator {
 
 extension InboxCoordinator: InboxViewDelegate {
     func inboxRemoveConversation(_ conversation: IMConversation) {
-        Messenger.shared.removeConversation(conversation.id)
+        Messenger.shared.removeConversation(conversation)
     }
     
     func inboxStartConversation(_ conversation: IMConversation) {

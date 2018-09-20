@@ -56,7 +56,7 @@ enum WebAPI {
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?, comment: String?, desc: String?, rawUrl: String?, fromCardId: String?)
     case delStory(storyId: UInt64)
     case socketAddress
-    case removeRecentMessage(userID: UInt64)
+    case removeConversation(id: UInt64, isGroup: Bool)
     case getSetting(version: String)
     case shareCard(cardId: String, comment: String, userId: UInt64)
     case shareStory(storyId: UInt64, comment: String, userId: UInt64, fromCardId: String?)
@@ -176,7 +176,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/setting/im/routes"
         case .commentCard:
             return "/card/comment"
-        case .removeRecentMessage:
+        case .removeConversation:
             return "/message/del"
         case .getSetting:
             return "/setting/get"
@@ -323,8 +323,12 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
         case let .commentCard(cardId, emoji):
             parameters = ["cardId": cardId, "emoji": emoji]
-        case let .removeRecentMessage(userID):
-            parameters = ["userId": userID]
+        case let .removeConversation(id, isGroup):
+            if isGroup {
+                parameters = ["groupId": id]
+            } else {
+                parameters = ["userId": id]
+            }
         case let .activityCardLike(cardId, activityId, comment):
             parameters = ["activityId": activityId, "comment": comment]
             if let cardId = cardId {

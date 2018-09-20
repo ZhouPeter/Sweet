@@ -547,20 +547,21 @@ final class Messenger {
         })
     }
     
-    func removeConversation(_ id: UInt64) {
+    func removeConversation(_ conversation: IMConversation) {
+        let id = conversation.id
         storage?.write({ (realm) in
             if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(id)) {
                 realm.delete(conversation)
             }
-            let messages = realm.objects(InstantMessageData.self).filter("from == \(id) || to == \(id)")
-            realm.delete(messages)
+            if conversation.isGroup {
+                realm.delete(realm.objects(InstantMessageData.self).filter("to == \(id)"))
+            } else {
+                realm.delete(realm.objects(InstantMessageData.self).filter("from == \(id) || to == \(id)"))
+            }
         }, callback: { (_) in
             self.updateUnreadCount()
         })
-        // TODO: 从列表中删除
-//        web.request(.removeRecentMessage(userID: userID)) { (result) in
-//            logger.debug(result)
-//        }
+        web.request(.removeConversation(id: id, isGroup: conversation.isGroup), completion: {_ in })
     }
     
     func startConversation(_ id: UInt64) {
@@ -580,7 +581,9 @@ final class Messenger {
             realm.objects(InstantMessageData.self)
                 .filter("from == \(id) || to == \(id)")
                 .forEach({ $0.isRead = true })
-        }, callback: nil)
+        }, callback: { _ in
+            self.updateUnreadCount()
+        })
     }
     
     // MARK: - Private
