@@ -15,10 +15,13 @@ protocol MessengerDelegate: class {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool)
     func messengerDidUpdateServerDate(_ serverDate: Date?)
     func messengerDidUpdateConversations(_ conversations: [IMConversation])
-    func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User)
-    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User)
     func messengerDidReceiveMessage(_ message: InstantMessage)
     func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int)
+    func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User)
+    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User)
+    func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group)
+    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group)
+    func messengerDidUpdateMember(_ member: User)
 }
 
 extension MessengerDelegate {
@@ -28,8 +31,11 @@ extension MessengerDelegate {
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {}
     func messengerDidUpdateServerDate(_ date: Date?) {}
     func messengerDidUpdateConversations(_ conversations: [IMConversation]) {}
-    func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {}
     func messengerDidReceiveMessage(_ message: InstantMessage) {}
-    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User) {}
     func messengerDidUpdateUnreadCount(messageUnread: Int, likesUnread: Int) {}
+    func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {}
+    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User) {}
+    func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group) {}
+    func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group) {}
+    func messengerDidUpdateMember(_ member: User) {}
 }

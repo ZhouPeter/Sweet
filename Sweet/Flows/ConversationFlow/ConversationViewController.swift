@@ -31,6 +31,7 @@ class ConversationViewController: MessagesViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
+        members[user.userId] = user
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,6 +66,12 @@ class ConversationViewController: MessagesViewController {
             }
             contentInsetBottom = nil
         }
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        guard parent == nil else { return }
+        delegate?.conversationDidFinish()
     }
     
     override func collectionView(_ collectionView: UICollectionView,
@@ -116,8 +123,24 @@ class ConversationViewController: MessagesViewController {
     
     // MARK: - Public
     
+    func loadMember(_ userID: UInt64) {
+        
+    }
+    
     @objc func loadMoreMessages() {
         
+    }
+    
+    func getLastSentMessage() -> InstantMessage? {
+        var lastMessage: InstantMessage?
+        for index in 0..<messages.count {
+            let message = messages[index]
+            if message.remoteID != nil {
+                lastMessage = message
+                break
+            }
+        }
+        return lastMessage
     }
     
     @discardableResult func handleTapAvatar(in cell: MessageCollectionViewCell, at indexPath: IndexPath) -> Bool {
@@ -331,13 +354,17 @@ extension ConversationViewController: MessagesDisplayDelegate {
                              in messagesCollectionView: MessagesCollectionView) {
         avatarView.placeholderTextColor = .gray
         avatarView.backgroundColor = .clear
-        if let id = UInt64(message.sender.id), let user = members[id] {
-            avatarView.sd_setImage(
-                with: URL(string: user.avatar),
-                placeholderImage: #imageLiteral(resourceName: "Logo"),
-                options: SDWebImageOptions(rawValue: 0),
-                completed: nil
-            )
+        if let id = UInt64(message.sender.id) {
+            if let user = members[id] {
+                avatarView.sd_setImage(
+                    with: URL(string: user.avatar),
+                    placeholderImage: #imageLiteral(resourceName: "Logo"),
+                    options: SDWebImageOptions(rawValue: 0),
+                    completed: nil
+                )
+            } else {
+                loadMember(id)
+            }
         }
     }
     

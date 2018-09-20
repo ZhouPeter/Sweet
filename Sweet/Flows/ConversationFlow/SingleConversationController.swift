@@ -21,7 +21,6 @@ final class SingleConversationController: ConversationViewController, SingleConv
     init(user: User, buddy: User) {
         self.buddy = buddy
         super.init(user: user)
-        members[user.userId] = user
         members[buddy.userId] = buddy
         Messenger.shared.addDelegate(self)
         Messenger.shared.loadMessages(from: buddy)
@@ -38,12 +37,6 @@ final class SingleConversationController: ConversationViewController, SingleConv
         messageInputBar.delegate = self
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
-    }
-    
-    override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
-        guard parent == nil else { return }
-        delegate?.conversationDidFinish()
     }
     
     override func didBlock(userID: UInt64) {
@@ -64,18 +57,10 @@ final class SingleConversationController: ConversationViewController, SingleConv
     override func loadMoreMessages() {
         guard messages.isNotEmpty else {
             logger.debug("messages is empty")
-            refreshControl.endRefreshing()
+            Messenger.shared.fetchRecentMessages(from: buddy)
             return
         }
-        var lastMessage: InstantMessage?
-        for index in 0..<messages.count {
-            let message = messages[index]
-            if message.remoteID != nil {
-                lastMessage = message
-                break
-            }
-        }
-        guard let message = lastMessage else {
+        guard let message = getLastSentMessage() else {
             logger.debug("lastMessage is nil")
             refreshControl.endRefreshing()
             return
@@ -129,6 +114,7 @@ extension SingleConversationController: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
+        guard message.from == user.userId, message.to == buddy.userId else { return }
         if let section = messages.index(where: { $0.localID == message.localID }) {
             let indexPath = IndexPath(row: 0, section: section)
             messages[indexPath.section] = message

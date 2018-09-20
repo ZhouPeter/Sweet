@@ -93,7 +93,7 @@ final class Messenger {
         connect()
     }
     
-    // MARK: - Public
+    // MARK: - Delegates
     
     func addDelegate(_ delegate: MessengerDelegate) {
         multicastDelegate.addDelegate(delegate)
@@ -102,6 +102,8 @@ final class Messenger {
     func removeDelegate(_ delegate: MessengerDelegate) {
         multicastDelegate.removeDelegate(delegate)
     }
+    
+    // MARK: - Login
     
     func login(with user: User, token: String) {
         self.user = user
@@ -132,6 +134,8 @@ final class Messenger {
             self.multicastDelegate.invoke({ $0.messengerDidLogout(user: user) })
         }
     }
+    
+    // MARK: - User
     
     func loadUserWith(id: UInt64, isForceSynced: Bool = false, callback: @escaping ((User?) -> Void)) {
         if isForceSynced {
@@ -172,6 +176,8 @@ final class Messenger {
             })
         })
     }
+    
+    // MARK: - Group
     
     func loadGroupWith(id: UInt64, isForceSynced: Bool = false, callback: @escaping ((Group?) -> Void)) {
         if isForceSynced {
@@ -297,7 +303,7 @@ final class Messenger {
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
-                .filter("from = \(buddy.userId) || to = \(buddy.userId)")
+                .filter("from == \(buddy.userId) || to == \(buddy.userId)")
                 .sorted(byKeyPath: "sentDate", ascending: false)
             let count = results.count
             guard count > 0 else { return }
@@ -339,7 +345,7 @@ final class Messenger {
             logger.debug("User is nil")
             return
         }
-        let limit = 20
+        let limit = 40
         var messages = [InstantMessage]()
         storage?.read({ (realm) in
             let results = realm
@@ -347,8 +353,8 @@ final class Messenger {
                 .filter(
                     NSPredicate(
                         format: "sentDate < %@ &&" +
-                            " ((from = \(user.userId) && to = \(buddy.userId)) ||" +
-                        " (from = \(buddy.userId) && to = \(user.userId)))",
+                            " ((from == \(user.userId) && to == \(buddy.userId)) ||" +
+                        " (from == \(buddy.userId) && to == \(user.userId)))",
                         lastMessage.sentDate as CVarArg
                     )
                 )
@@ -361,7 +367,7 @@ final class Messenger {
         }, callback: {
             if messages.isEmpty {
                 if let remoteID = lastMessage.remoteID {
-                    self.fetchMoreMessages(from: buddy, remoteID: remoteID)
+                    self.fetchMoreMessages(from: buddy, lastMessageID: remoteID)
                 } else {
                     self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], buddy: buddy)})
                 }
@@ -371,11 +377,11 @@ final class Messenger {
         })
     }
     
-    private func fetchMoreMessages(from buddy: User, remoteID: UInt64) {
+    private func fetchMoreMessages(from buddy: User, lastMessageID: UInt64) {
         var request = DirectionGetReq()
         request.from = buddy.userId
-        request.msgID = remoteID
-        request.count = 20
+        request.msgID = lastMessageID
+        request.count = 40
         request.direction = .up
         fetch(request, responseType: DirectionGetResp.self) { (response) in
             guard let response = response else {
@@ -396,6 +402,99 @@ final class Messenger {
     }
     
     // MARK: - Group Messages
+    
+    func loadMessages(from group: Group) {
+        var messages = [InstantMessage]()
+        storage?.read({ (realm) in
+            let results = realm
+                .objects(InstantMessageData.self)
+                .filter("to == \(group.id)")
+                .sorted(byKeyPath: "sentDate", ascending: false)
+            let count = results.count
+            guard count > 0 else { return }
+            let loopCount = min(20, count)
+            for index in 0..<loopCount {
+                messages.insert(InstantMessage(data: results[index]), at: 0)
+            }
+        }, callback: {
+            if messages.isEmpty {
+                self.fetchRecentMessages(from: group)
+            } else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
+            }
+        })
+    }
+    
+    func fetchRecentMessages(from group: Group) {
+        var request = GroupMessageRecentReq()
+        request.groupID = group.id
+        fetch(request, responseType: GroupMessageRecentResp.self) { (response) in
+            guard let response = response, response.resultCode == 0 else {
+                return
+            }
+            let messages = response.msgList.map({ proto -> InstantMessage in
+                var message = InstantMessage(proto: proto)
+                message.isSent = true
+                message.isFailed = false
+                message.isRead = true
+                return message
+            })
+            self.saveMessages(messages, update: true, callback: {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, group: group)})
+            })
+        }
+    }
+    
+    func loadMoreMessages(from group: Group, lastMessage: InstantMessage) {
+        let limit = 40
+        var messages = [InstantMessage]()
+        storage?.read({ (realm) in
+            let results = realm
+                .objects(InstantMessageData.self)
+                .filter("to == \(group.id)")
+                .filter(NSPredicate(format: "sentDate < %@", lastMessage.sentDate as NSDate))
+                .sorted(byKeyPath: "sentDate", ascending: false)
+            let count = min(results.count, limit)
+            guard count > 0 else { return }
+            for index in 0..<count {
+                messages.insert(InstantMessage(data: results[index]), at: 0)
+            }
+        }, callback: {
+            if messages.isEmpty {
+                if let remoteID = lastMessage.remoteID {
+                    self.fetchMoreMessages(from: group, lastMessageID: remoteID)
+                } else {
+                    self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], group: group)})
+                }
+            } else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, group: group)})
+            }
+        })
+    }
+    
+    private func fetchMoreMessages(from group: Group, lastMessageID: UInt64) {
+        var request = GroupMessageDirectionReq()
+        request.groupID = group.id
+        request.msgID = lastMessageID
+        request.count = 40
+        request.direction = .up
+        fetch(request, responseType: GroupMessageDirectionResp.self) { (response) in
+            guard let response = response else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], group: group) })
+                return
+            }
+            let messages = response.msgList.map({ proto -> InstantMessage in
+                var message = InstantMessage(proto: proto)
+                message.isSent = true
+                message.isFailed = false
+                message.isRead = true
+                return message
+            })
+            self.saveMessages(messages, update: true, callback: {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, group: group)})
+            })
+        }
+    }
     
     // MARK: - Conversations
     
@@ -431,7 +530,7 @@ final class Messenger {
             if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(id)) {
                 realm.delete(conversation)
             }
-            let messages = realm.objects(InstantMessageData.self).filter("from = \(id) || to = \(id)")
+            let messages = realm.objects(InstantMessageData.self).filter("from == \(id) || to == \(id)")
             realm.delete(messages)
         }, callback: { (_) in
             self.updateUnreadCount()
@@ -457,7 +556,7 @@ final class Messenger {
                 data.likesCount = 0
             }
             realm.objects(InstantMessageData.self)
-                .filter("from = \(id) || to = \(id)")
+                .filter("from == \(id) || to == \(id)")
                 .forEach({ $0.isRead = true })
         }, callback: nil)
     }
@@ -574,7 +673,7 @@ final class Messenger {
                 userIDs.insert(message.from == userID ? message.to : message.from)
                 var localMessage: InstantMessageData?
                 if let remoteID = message.remoteID, remoteID != 0 {
-                    localMessage = realm.objects(InstantMessageData.self).filter("remoteID = \(remoteID)").first
+                    localMessage = realm.objects(InstantMessageData.self).filter("remoteID == \(remoteID)").first
                 }
                 let newMessage = InstantMessageData.data(with: message)
                 if let local = localMessage {
@@ -599,57 +698,6 @@ final class Messenger {
     private func updateConversations() {
         guard currentConversationID == nil else { return }
         loadConversations()
-    }
-    
-    private func startNetworkReachabilityObserver() {
-        reachabilityManager?.listener = { status in
-            switch status {
-            case .notReachable, .unknown:
-                logger.error(status)
-                self.isNetworkReachable = false
-            default:
-                logger.debug("Network is OK")
-                self.isNetworkReachable = true
-            }
-        }
-        reachabilityManager?.startListening()
-    }
-    
-    @objc private func connect() {
-        guard state != .online else {
-            logger.debug("User is already Online")
-            return
-        }
-        guard let user = self.user else {
-            logger.debug("user is nil")
-            return
-        }
-        state = .connecting
-        web.request(.socketAddress, responseType: Response<SocketAddressResponse>.self) { (result) in
-            logger.debug(result)
-            if case let .failure(error) = result {
-                logger.error(error)
-                self.state = .offline
-                return
-            }
-            guard case let .success(response) = result, let address = response.routes.first else {
-                self.state = .offline
-                return
-            }
-            self.connect(with: address, completion: {
-                self.login({ (date) in
-                    if let date = date {
-                        self.serverDate = date
-                        self.state = .online
-                    } else {
-                        self.state = .offline
-                    }
-                    self.updateActiveStatus()
-                    self.listenMessageNotify()
-                    self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
-                })
-            })
-        }
     }
     
     private var isLogining = false
@@ -759,5 +807,58 @@ final class Messenger {
         request.count = UInt32(count)
         fetch(request, responseType: BadgeSyncResp.self, callback: nil)
         UIApplication.shared.applicationIconBadgeNumber = count
+    }
+    
+    // MARK: - Connection
+    
+    private func startNetworkReachabilityObserver() {
+        reachabilityManager?.listener = { status in
+            switch status {
+            case .notReachable, .unknown:
+                logger.error(status)
+                self.isNetworkReachable = false
+            default:
+                logger.debug("Network is OK")
+                self.isNetworkReachable = true
+            }
+        }
+        reachabilityManager?.startListening()
+    }
+    
+    @objc private func connect() {
+        guard state != .online else {
+            logger.debug("User is already Online")
+            return
+        }
+        guard let user = self.user else {
+            logger.debug("user is nil")
+            return
+        }
+        state = .connecting
+        web.request(.socketAddress, responseType: Response<SocketAddressResponse>.self) { (result) in
+            logger.debug(result)
+            if case let .failure(error) = result {
+                logger.error(error)
+                self.state = .offline
+                return
+            }
+            guard case let .success(response) = result, let address = response.routes.first else {
+                self.state = .offline
+                return
+            }
+            self.connect(with: address, completion: {
+                self.login({ (date) in
+                    if let date = date {
+                        self.serverDate = date
+                        self.state = .online
+                    } else {
+                        self.state = .offline
+                    }
+                    self.updateActiveStatus()
+                    self.listenMessageNotify()
+                    self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
+                })
+            })
+        }
     }
 }
