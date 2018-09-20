@@ -33,6 +33,7 @@ final class SingleConversationController: ConversationViewController, SingleConv
         super.viewDidLoad()
         title = buddy.nickname
         messagesCollectionView.messageCellDelegate = self
+        messageInputBar.delegate = self
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
     }

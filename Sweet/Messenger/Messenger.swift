@@ -157,7 +157,7 @@ final class Messenger {
     func getUserInfoList(with userIDs: [UInt64], callback: @escaping ([User]) -> Void) {
         var request = UserInfoGetReq()
         request.userIDList = userIDs
-        send(request, responseType: UserInfoGetResp.self, callback: { response in
+        fetch(request, responseType: UserInfoGetResp.self, callback: { response in
             var userList = [User]()
             guard let response = response, response.resultCode == 0 else {
                 callback(userList)
@@ -195,7 +195,7 @@ final class Messenger {
     func getGroupWith(id: UInt64, callback: @escaping ((Group?) -> Void)) {
         var request = GroupInfoGetReq()
         request.groupID = id
-        send(request, responseType: GroupInfoGetResp.self, callback: { (response) in
+        fetch(request, responseType: GroupInfoGetResp.self, callback: { (response) in
             guard let response = response, response.resultCode == 0 else {
                 callback(nil)
                 return
@@ -213,7 +213,7 @@ final class Messenger {
         guard state == .online else { return }
         var request = ActiveSyncReq()
         request.status = UIApplication.shared.applicationState == .background ? .background : .foreground
-        send(request, responseType: ActiveSyncResp.self, callback: nil)
+        fetch(request, responseType: ActiveSyncResp.self, callback: nil)
     }
     
     // MARK: - Messages
@@ -255,7 +255,7 @@ final class Messenger {
         
         if message.isGroup {
             let request = message.makeGroupMessageSendRequest()
-            send(request, responseType: GroupMessageSendResp.self) { (response) in
+            fetch(request, responseType: GroupMessageSendResp.self) { (response) in
                 guard let response = response, response.resultCode == 0 else {
                     handleCallback(-1, 0, Date())
                     return
@@ -264,7 +264,7 @@ final class Messenger {
             }
         } else {
             let request = message.makeSendRequest()
-            send(request, responseType: SendResp.self) { (response) in
+            fetch(request, responseType: SendResp.self) { (response) in
                 guard let response = response, response.resultCode == 0 else {
                     handleCallback(-1, 0, Date())
                     return
@@ -284,11 +284,13 @@ final class Messenger {
             if let remoteID = message.remoteID {
                 data.lastMessageID.value = Int64(remoteID)
             }
-            data.lastMessageTimestamp.value = Int64(message.sentDate.timeIntervalSinceNow)
+            data.lastMessageTimestamp.value = Int64(message.sentDate.timeIntervalSince1970 * 1000)
         }, callback: { (_) in
             self.loadLocalConversations()
         })
     }
+    
+    // MARK: - Single Messages
     
     func loadMessages(from buddy: User) {
         var messages = [InstantMessage]()
@@ -296,7 +298,7 @@ final class Messenger {
             let results = realm
                 .objects(InstantMessageData.self)
                 .filter("from = \(buddy.userId) || to = \(buddy.userId)")
-                .sorted(byKeyPath: "createDate", ascending: false)
+                .sorted(byKeyPath: "sentDate", ascending: false)
             let count = results.count
             guard count > 0 else { return }
             let loopCount = min(20, count)
@@ -304,8 +306,32 @@ final class Messenger {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
         }, callback: {
-            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+            if messages.isEmpty {
+                self.fetchRecentMessages(from: buddy)
+            } else {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+            }
         })
+    }
+    
+    func fetchRecentMessages(from buddy: User) {
+        var request = RecentGetReq()
+        request.from = buddy.userId
+        fetch(request, responseType: RecentGetResp.self) { (response) in
+            guard let response = response, response.resultCode == 0 else {
+                return
+            }
+            let messages = response.msgList.map({ proto -> InstantMessage in
+                var message = InstantMessage(proto: proto)
+                message.isSent = true
+                message.isFailed = false
+                message.isRead = true
+                return message
+            })
+            self.saveMessages(messages, update: true, callback: {
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, buddy: buddy)})
+            })
+        }
     }
     
     func loadMoreMessages(from buddy: User, lastMessage: InstantMessage) {
@@ -320,13 +346,13 @@ final class Messenger {
                 .objects(InstantMessageData.self)
                 .filter(
                     NSPredicate(
-                        format: "createDate < %@ &&" +
+                        format: "sentDate < %@ &&" +
                             " ((from = \(user.userId) && to = \(buddy.userId)) ||" +
                         " (from = \(buddy.userId) && to = \(user.userId)))",
-                        lastMessage.createDate as CVarArg
+                        lastMessage.sentDate as CVarArg
                     )
                 )
-                .sorted(byKeyPath: "createDate", ascending: false)
+                .sorted(byKeyPath: "sentDate", ascending: false)
             let count = min(results.count, limit)
             guard count > 0 else { return }
             for index in 0..<count {
@@ -351,7 +377,7 @@ final class Messenger {
         request.msgID = remoteID
         request.count = 20
         request.direction = .up
-        send(request, responseType: DirectionGetResp.self) { (response) in
+        fetch(request, responseType: DirectionGetResp.self) { (response) in
             guard let response = response else {
                 self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages([], buddy: buddy) })
                 return
@@ -369,13 +395,13 @@ final class Messenger {
         }
     }
     
+    // MARK: - Group Messages
+    
     // MARK: - Conversations
     
     func loadConversations() {
-        guard let userID = user?.userId, state == .online else { return }
-        var request = RecentGetReq()
-        request.from = userID
-        send(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
+        guard state == .online else { return }
+        fetch(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
             guard let response = response, response.list.isNotEmpty else { return }
             self.storage?.write({ (realm) in
                 realm.add(response.list.map(ConversationData.data(with:)), update: true)
@@ -389,11 +415,12 @@ final class Messenger {
     func loadLocalConversations() {
         var conversations = [IMConversation]()
         storage?.read({ (realm) in
-            realm.objects(ConversationData.self).forEach({ (result) in
-                conversations.append(result.makeIMConversation())
-            })
+            realm.objects(ConversationData.self)
+                .sorted(byKeyPath: "lastMessageTimestamp", ascending: false)
+                .forEach({ (result) in
+                    conversations.append(result.makeIMConversation())
+                })
         }, callback: {
-            logger.debug(conversations.count)
             self.updateUnreadCount()
             self.multicastDelegate.invoke({ $0.messengerDidUpdateConversations(conversations) })
         })
@@ -444,7 +471,7 @@ final class Messenger {
         }
         var request = GetReq()
         request.msgIDList = IDs
-        send(request, responseType: GetResp.self) { (response) in
+        fetch(request, responseType: GetResp.self) { (response) in
             guard let response = response else { return }
             logger.debug(response)
             let messages: [InstantMessage] = response.msgList.map({ proto in
@@ -470,7 +497,7 @@ final class Messenger {
         }
         var request = GroupMessageGetReq()
         request.msgIDList = IDs
-        send(request, responseType: GroupMessageGetResp.self) { response in
+        fetch(request, responseType: GroupMessageGetResp.self) { response in
             guard let response = response else { return }
             logger.debug(response)
             let messages: [InstantMessage] = response.msgList.map({ proto in
@@ -646,7 +673,7 @@ final class Messenger {
         message.token = token
         message.type = .ios
         message.state = .online
-        send(message, responseType: LoginResp.self) { (response) in
+        fetch(message, responseType: LoginResp.self) { (response) in
             self.isLogining = false
             if let response = response {
                 callback(Date(timeIntervalSince1970: Double(response.serverTime) / 1000))
@@ -686,7 +713,7 @@ final class Messenger {
         return queue
     }
     
-    private func send<T, R> (
+    private func fetch<T, R> (
         _ message: T,
         responseType: R.Type,
         callback: ((R?) -> Void)?) where T: Message & MessageTicket, R: Message {
@@ -730,7 +757,7 @@ final class Messenger {
         guard let count = messagesUnreadCount else { return }
         var request = BadgeSyncReq()
         request.count = UInt32(count)
-        send(request, responseType: BadgeSyncResp.self, callback: nil)
+        fetch(request, responseType: BadgeSyncResp.self, callback: nil)
         UIApplication.shared.applicationIconBadgeNumber = count
     }
 }
