@@ -20,5 +20,12 @@ protocol ConversationControllerDelegate: class {
 }
 
 extension ConversationControllerDelegate {
+    func conversationControllerShowsProfile(buddy: User) {}
+    func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?) {}
+    func conversationControllerShowsShareWebView(url: String, cardId: String) {}
+    func conversationControllerReports(buddy: User) {}
+    func conversationController(_ controller: ConversationViewController, blocksBuddy buddy: User) {}
+    func conversationController(_ controller: ConversationViewController, unblocksBuddy buddy: User) {}
+    func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User, messageId: String) {}
     func conversationDidFinish() {}
 }

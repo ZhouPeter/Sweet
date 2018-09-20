@@ -24,6 +24,7 @@ struct InstantMessage {
     var isFailed = false
     var isSending = false
     var extra: String?
+    var isGroup = false
     var content: MessageContent? {
         didSet {
             guard let content = content else {
@@ -81,6 +82,18 @@ extension InstantMessage {
         }
         return request
     }
+    
+    func makeGroupMessageSendRequest() -> GroupMessageSendReq {
+        var request = GroupMessageSendReq()
+        request.type = type
+        request.content = rawContent
+        request.sendTime = Date().timestamp()
+        request.groupID = to
+        if let extra = self.extra {
+            request.extra = extra
+        }
+        return request
+    }
 }
 
 extension InstantMessage {
@@ -88,6 +101,20 @@ extension InstantMessage {
         remoteID = proto.id
         from = proto.from
         to = proto.to
+        type = proto.type
+        rawContent = proto.content
+        status = proto.status
+        createDate = Date(timeIntervalSince1970: TimeInterval(proto.created) / 1000)
+        sentDate =  Date(timeIntervalSince1970: TimeInterval(proto.sendTime) / 1000)
+        extra = proto.extra.isEmpty ? nil : proto.extra
+        parseContent()
+    }
+    
+    init(proto: GroupIMProto) {
+        isGroup = true
+        remoteID = proto.id
+        from = proto.from
+        to = proto.groupID
         type = proto.type
         rawContent = proto.content
         status = proto.status

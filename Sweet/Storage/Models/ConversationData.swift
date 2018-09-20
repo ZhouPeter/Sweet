@@ -26,7 +26,7 @@ class ConversationData: Object {
         return "id"
     }
     
-    class func data(with conversation: IMConversation) {
+    class func data(with conversation: IMConversation) -> ConversationData {
         let data = ConversationData()
         data.id = Int64(conversation.id)
         data.name = conversation.name
@@ -42,6 +42,7 @@ class ConversationData: Object {
         data.unreadCount = Int(conversation.unreadCount)
         data.likesCount = Int(conversation.likeCount)
         data.isMute = conversation.isMute
+        return data
     }
     
     func makeIMConversation() -> IMConversation {

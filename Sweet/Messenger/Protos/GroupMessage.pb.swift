@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 }
 
 ///发送群消息
-struct Msg_GroupMessageSendReq {
+struct GroupMessageSendReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -48,7 +48,7 @@ struct Msg_GroupMessageSendReq {
 }
 
 ///发送群消息响应
-struct Msg_GroupMessageSendResp {
+struct GroupMessageSendResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -63,7 +63,7 @@ struct Msg_GroupMessageSendResp {
 }
 
 ///群消息通知
-struct Msg_GroupMessageNotify {
+struct GroupMessageNotify {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -78,7 +78,7 @@ struct Msg_GroupMessageNotify {
 }
 
 ///群消息通知ack
-struct Msg_GroupMessageNotifyAck {
+struct GroupMessageNotifyAck {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -91,7 +91,7 @@ struct Msg_GroupMessageNotifyAck {
 }
 
 ///获取群消息
-struct Msg_GroupMessageGetReq {
+struct GroupMessageGetReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -106,7 +106,7 @@ struct Msg_GroupMessageGetReq {
 }
 
 ///获取群消息响应
-struct Msg_GroupMessageGetResp {
+struct GroupMessageGetResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -121,7 +121,7 @@ struct Msg_GroupMessageGetResp {
 }
 
 /// 获取指定count的最新消息
-struct Msg_GroupMessageRecentReq {
+struct GroupMessageRecentReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -136,7 +136,7 @@ struct Msg_GroupMessageRecentReq {
 }
 
 /// 获取指定count的最新消息响应
-struct Msg_GroupMessageRecentResp {
+struct GroupMessageRecentResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -153,7 +153,7 @@ struct Msg_GroupMessageRecentResp {
 }
 
 ///上下拉消息
-struct Msg_GroupMessageDirectionReq {
+struct GroupMessageDirectionReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -172,7 +172,7 @@ struct Msg_GroupMessageDirectionReq {
 }
 
 ///上下拉消息响应
-struct Msg_GroupMessageDirectionResp {
+struct GroupMessageDirectionResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -191,7 +191,7 @@ struct Msg_GroupMessageDirectionResp {
 }
 
 /// 获取群消息未读计数
-struct Msg_GroupMessageGetUnreadCountReq {
+struct GroupMessageGetUnreadCountReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -204,7 +204,7 @@ struct Msg_GroupMessageGetUnreadCountReq {
   init() {}
 }
 
-struct Msg_GroupMessageGetUnreadCountResp {
+struct GroupMessageGetUnreadCountResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -220,10 +220,8 @@ struct Msg_GroupMessageGetUnreadCountResp {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "msg"
-
-extension Msg_GroupMessageSendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageSendReq"
+extension GroupMessageSendReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageSendReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id"),
     2: .same(proto: "type"),
@@ -269,7 +267,7 @@ extension Msg_GroupMessageSendReq: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageSendReq) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageSendReq) -> Bool {
     if self.groupID != other.groupID {return false}
     if self.type != other.type {return false}
     if self.content != other.content {return false}
@@ -281,8 +279,8 @@ extension Msg_GroupMessageSendReq: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Msg_GroupMessageSendResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageSendResp"
+extension GroupMessageSendResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageSendResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "result_code"),
     2: .standard(proto: "msg_id"),
@@ -308,7 +306,7 @@ extension Msg_GroupMessageSendResp: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageSendResp) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageSendResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.msgID != other.msgID {return false}
     if unknownFields != other.unknownFields {return false}
@@ -316,8 +314,8 @@ extension Msg_GroupMessageSendResp: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
-extension Msg_GroupMessageNotify: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageNotify"
+extension GroupMessageNotify: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageNotify"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id"),
     2: .standard(proto: "msg_id"),
@@ -343,7 +341,7 @@ extension Msg_GroupMessageNotify: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageNotify) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageNotify) -> Bool {
     if self.groupID != other.groupID {return false}
     if self.msgID != other.msgID {return false}
     if unknownFields != other.unknownFields {return false}
@@ -351,8 +349,8 @@ extension Msg_GroupMessageNotify: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
-extension Msg_GroupMessageNotifyAck: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageNotifyAck"
+extension GroupMessageNotifyAck: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageNotifyAck"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "msg_id"),
   ]
@@ -373,15 +371,15 @@ extension Msg_GroupMessageNotifyAck: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageNotifyAck) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageNotifyAck) -> Bool {
     if self.msgID != other.msgID {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }
 }
 
-extension Msg_GroupMessageGetReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageGetReq"
+extension GroupMessageGetReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageGetReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id"),
     2: .standard(proto: "msg_id_list"),
@@ -407,7 +405,7 @@ extension Msg_GroupMessageGetReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageGetReq) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageGetReq) -> Bool {
     if self.groupID != other.groupID {return false}
     if self.msgIDList != other.msgIDList {return false}
     if unknownFields != other.unknownFields {return false}
@@ -415,8 +413,8 @@ extension Msg_GroupMessageGetReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
-extension Msg_GroupMessageGetResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageGetResp"
+extension GroupMessageGetResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageGetResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "result_code"),
     2: .standard(proto: "msg_list"),
@@ -442,7 +440,7 @@ extension Msg_GroupMessageGetResp: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageGetResp) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageGetResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.msgList != other.msgList {return false}
     if unknownFields != other.unknownFields {return false}
@@ -450,8 +448,8 @@ extension Msg_GroupMessageGetResp: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Msg_GroupMessageRecentReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageRecentReq"
+extension GroupMessageRecentReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageRecentReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id"),
     2: .same(proto: "count"),
@@ -477,7 +475,7 @@ extension Msg_GroupMessageRecentReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageRecentReq) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageRecentReq) -> Bool {
     if self.groupID != other.groupID {return false}
     if self.count != other.count {return false}
     if unknownFields != other.unknownFields {return false}
@@ -485,8 +483,8 @@ extension Msg_GroupMessageRecentReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-extension Msg_GroupMessageRecentResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageRecentResp"
+extension GroupMessageRecentResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageRecentResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "result_code"),
     2: .standard(proto: "group_id"),
@@ -517,7 +515,7 @@ extension Msg_GroupMessageRecentResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageRecentResp) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageRecentResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.groupID != other.groupID {return false}
     if self.msgList != other.msgList {return false}
@@ -526,8 +524,8 @@ extension Msg_GroupMessageRecentResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Msg_GroupMessageDirectionReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageDirectionReq"
+extension GroupMessageDirectionReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageDirectionReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id"),
     2: .standard(proto: "msg_id"),
@@ -563,7 +561,7 @@ extension Msg_GroupMessageDirectionReq: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageDirectionReq) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageDirectionReq) -> Bool {
     if self.groupID != other.groupID {return false}
     if self.msgID != other.msgID {return false}
     if self.direction != other.direction {return false}
@@ -573,8 +571,8 @@ extension Msg_GroupMessageDirectionReq: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension Msg_GroupMessageDirectionResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageDirectionResp"
+extension GroupMessageDirectionResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageDirectionResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "result_code"),
     2: .standard(proto: "group_id"),
@@ -610,7 +608,7 @@ extension Msg_GroupMessageDirectionResp: SwiftProtobuf.Message, SwiftProtobuf._M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageDirectionResp) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageDirectionResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.groupID != other.groupID {return false}
     if self.msgList != other.msgList {return false}
@@ -620,8 +618,8 @@ extension Msg_GroupMessageDirectionResp: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-extension Msg_GroupMessageGetUnreadCountReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageGetUnreadCountReq"
+extension GroupMessageGetUnreadCountReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageGetUnreadCountReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "group_id_list"),
   ]
@@ -642,15 +640,15 @@ extension Msg_GroupMessageGetUnreadCountReq: SwiftProtobuf.Message, SwiftProtobu
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageGetUnreadCountReq) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageGetUnreadCountReq) -> Bool {
     if self.groupIDList != other.groupIDList {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }
 }
 
-extension Msg_GroupMessageGetUnreadCountResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GroupMessageGetUnreadCountResp"
+extension GroupMessageGetUnreadCountResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupMessageGetUnreadCountResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "result_code"),
     2: .standard(proto: "unread_list"),
@@ -676,7 +674,7 @@ extension Msg_GroupMessageGetUnreadCountResp: SwiftProtobuf.Message, SwiftProtob
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Msg_GroupMessageGetUnreadCountResp) -> Bool {
+  func _protobuf_generated_isEqualTo(other: GroupMessageGetUnreadCountResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.unreadList != other.unreadList {return false}
     if unknownFields != other.unknownFields {return false}

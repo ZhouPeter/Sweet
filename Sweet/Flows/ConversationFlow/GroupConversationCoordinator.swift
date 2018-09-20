@@ -8,13 +8,6 @@
 
 import Foundation
 
-struct Group {
-    let id: UInt64
-    var name: String
-    var memberCount: Int
-    var avatarURL: String
-}
-
 protocol GroupConversationCoordinatorOutput {
     var finishFlow: (() -> Void)? { get set }
 }
@@ -38,6 +31,13 @@ final class GroupConversationCoordinator: BaseCoordinator, ConversationCoordinat
     
     override func start() {
         Messenger.shared.markConversationAsRead(group.id)
-        
+        let conversation = GroupConversationController(user: user, group: group)
+        conversation.delegate = self
+        router.push(conversation)
+        Messenger.shared.startConversation(group.id)
     }
+}
+
+extension GroupConversationCoordinator: ConversationControllerDelegate {
+    
 }

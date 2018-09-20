@@ -103,3 +103,33 @@ extension GetConversationsReq: MessageTicket {
         return ConversationCmdID.listReq.rawValue
     }
 }
+
+extension GroupInfoGetReq: MessageTicket {
+    var module: ModuleID {
+        return .group
+    }
+
+    var command: Int {
+        return GroupCmdID.groupInfoGetReq.rawValue
+    }
+}
+
+extension GroupMessageSendReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageSendReq.rawValue
+    }
+}
+
+extension GroupMessageGetReq: MessageTicket {
+    var module: ModuleID {
+        return .groupMessage
+    }
+    
+    var command: Int {
+        return GroupMessageCmdID.groupMessageGetReq.rawValue
+    }
+}

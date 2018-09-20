@@ -56,14 +56,21 @@ extension InboxCoordinator: InboxViewDelegate {
     
     func inboxStartConversation(_ conversation: IMConversation) {
         if conversation.isGroup {
-            return
-        }
-        Messenger.shared.loadUserWith(id: conversation.id) { [weak self] (user) in
-            guard let user = user else {
-                logger.error("User is nil")
-                return
+            Messenger.shared.loadGroupWith(id: conversation.id) { [weak self] (group) in
+                guard let group = group else {
+                    logger.error("Group is nil")
+                    return
+                }
+                self?.startConversationWith(group: group)
             }
-            self?.startConversationWith(buddy: user)
+        } else {
+            Messenger.shared.loadUserWith(id: conversation.id) { [weak self] (user) in
+                guard let user = user else {
+                    logger.error("User is nil")
+                    return
+                }
+                self?.startConversationWith(buddy: user)
+            }
         }
     }
     
@@ -72,9 +79,17 @@ extension InboxCoordinator: InboxViewDelegate {
                                                         buddy: buddy,
                                                         router: router,
                                                         coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in
-            self?.removeDependency(coordinator)
-        }
+        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    private func startConversationWith(group: Group) {
+        let coordinator = GroupConversationCoordinator(user: user,
+                                                       group: group,
+                                                       router: router,
+                                                       coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
         addDependency(coordinator)
         coordinator.start()
     }

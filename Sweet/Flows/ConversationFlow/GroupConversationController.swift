@@ -14,10 +14,10 @@ protocol GroupConversationView: BaseView {
 }
 
 final class GroupConversationController: ConversationViewController, GroupConversationView {
-    private let conversation: IMConversation
+    private let group: Group
     
-    init(user: User, conversation: IMConversation) {
-        self.conversation = conversation
+    init(user: User, group: Group) {
+        self.group = group
         super.init(user: user)
         Messenger.shared.addDelegate(self)
 //        Messenger.shared.loadMessages(from: <#T##User#>)
@@ -30,7 +30,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
-        title = conversation.name
+        title = group.name
         messageInputBar.delegate = self
     }
 }

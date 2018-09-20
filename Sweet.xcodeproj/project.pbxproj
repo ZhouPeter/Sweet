@@ -929,6 +929,10 @@
 		AC2F979220905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979320905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
 		AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */; };
+		AC30016921534C270034C538 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016821534C270034C538 /* Group.swift */; };
+		AC30016A21534C270034C538 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016821534C270034C538 /* Group.swift */; };
+		AC30016E21534C9E0034C538 /* GroupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016D21534C9E0034C538 /* GroupData.swift */; };
+		AC30016F21534C9E0034C538 /* GroupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC30016D21534C9E0034C538 /* GroupData.swift */; };
 		AC3280CF20A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
@@ -1843,6 +1847,8 @@
 		AC2F978620904A9900D5DE4F /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AC2F978B20904F8000D5DE4F /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AC2F979020905E3600D5DE4F /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		AC30016821534C270034C538 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		AC30016D21534C9E0034C538 /* GroupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupData.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		AC39E55320C7AF0800340564 /* Messenger+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messenger+Send.swift"; sourceTree = "<group>"; };
 		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
@@ -2369,6 +2375,7 @@
 				AC86A93820C4051400334D4A /* ConversationData.swift */,
 				AC58388C20E9E32800A57161 /* StoryDraftData.swift */,
 				580D9BDC213FC14A00B8719C /* SettingData.swift */,
+				AC30016D21534C9E0034C538 /* GroupData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2502,6 +2509,7 @@
 				AC52FDC520F7278D00267913 /* ImageMessageContent.swift */,
 				AC6A0BC0210AF1EF002DD1A4 /* ArticleMessageContent.swift */,
 				583BC77820CE198900C4494E /* MessageContentHelper.swift */,
+				AC30016821534C270034C538 /* Group.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -2510,8 +2518,8 @@
 			isa = PBXGroup;
 			children = (
 				AC64646520E266E6001CF936 /* SingleConversationCoordinator.swift */,
-				AC21758920C105240089D4D1 /* SingleConversationController.swift */,
 				AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */,
+				AC21758920C105240089D4D1 /* SingleConversationController.swift */,
 				AC949B8121523DE500FEB724 /* GroupConversationController.swift */,
 				AC949B84215241EF00FEB724 /* ConversationViewController.swift */,
 				AC7C8E5320E26C970041D2A0 /* ConversationControllerDelegate.swift */,
@@ -3584,6 +3592,7 @@
 				581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC2D51ED20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				ACEFA0D22106D51D0098631F /* CropMaskView.swift in Sources */,
+				AC30016921534C270034C538 /* Group.swift in Sources */,
 				58CAB38820AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC97251F209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC2A257820BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -3776,6 +3785,7 @@
 				ACAFC58D20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C2F20EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58BD530A208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
+				AC30016E21534C9E0034C538 /* GroupData.swift in Sources */,
 				AC05F43F20DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528E208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD120A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
@@ -4687,6 +4697,7 @@
 				581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */,
 				AC2D51EE20EA07F8002156DB /* CGPoint+RawRepresentable.swift in Sources */,
 				ACEFA0D32106D51D0098631F /* CropMaskView.swift in Sources */,
+				AC30016A21534C270034C538 /* Group.swift in Sources */,
 				58CE1EDB20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				58CAB38920AD581A007230AA /* CardsBaseController.swift in Sources */,
 				AC2A257920BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
@@ -4879,6 +4890,7 @@
 				ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */,
 				ACEC5C3020EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
 				58BD530B208ECE9B00F7C3E1 /* PowerPushController.swift in Sources */,
+				AC30016F21534C9E0034C538 /* GroupData.swift in Sources */,
 				AC05F44020DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				58BD528F208842DF00F7C3E1 /* AuthViewController.swift in Sources */,
 				589E6BD220A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
