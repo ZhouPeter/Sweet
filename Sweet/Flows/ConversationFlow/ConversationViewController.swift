@@ -123,7 +123,7 @@ class ConversationViewController: MessagesViewController {
     
     // MARK: - Public
     
-    func loadMember(_ userID: UInt64) {
+    func loadMember(_ userID: UInt64, callback: @escaping ((User?) -> Void)) {
         
     }
     
@@ -363,7 +363,15 @@ extension ConversationViewController: MessagesDisplayDelegate {
                     completed: nil
                 )
             } else {
-                loadMember(id)
+                loadMember(id) { [weak avatarView] (user) in
+                    guard let user = user else { return }
+                    avatarView?.sd_setImage(
+                        with: URL(string: user.avatar),
+                        placeholderImage: #imageLiteral(resourceName: "Logo"),
+                        options: SDWebImageOptions(rawValue: 0),
+                        completed: nil
+                    )
+                }
             }
         }
     }

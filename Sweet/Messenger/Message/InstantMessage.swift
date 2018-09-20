@@ -141,6 +141,7 @@ extension InstantMessage {
         isRead = data.isRead
         isFailed = !data.isSent
         extra = data.extra
+        isGroup = data.isGroup
         parseContent()
     }
     

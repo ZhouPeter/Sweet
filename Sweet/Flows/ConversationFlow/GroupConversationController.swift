@@ -65,14 +65,15 @@ final class GroupConversationController: ConversationViewController, GroupConver
         Messenger.shared.loadMoreMessages(from: group, lastMessage: message)
     }
     
-    override func loadMember(_ userID: UInt64) {
+    override func loadMember(_ userID: UInt64, callback: @escaping ((User?) -> Void)) {
         Messenger.shared.loadUserWith(id: userID) { [weak self] (user) in
             guard let user = user else {
                 logger.error("Load user failed: \(userID)")
+                callback(nil)
                 return
             }
             self?.members[userID] = user
-            self?.messagesCollectionView.reloadData()
+            callback(user)
         }
     }
 }
@@ -96,8 +97,9 @@ extension GroupConversationController: MessengerDelegate {
     }
     
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group) {
-        defer { refreshControl.endRefreshing() }
-        guard messages.isNotEmpty, group.id == self.group.id else { return }
+        guard group.id == self.group.id else { return }
+        refreshControl.endRefreshing()
+        guard messages.isNotEmpty else { return }
         self.messages.insert(contentsOf: messages, at: 0)
         messagesCollectionView.reloadDataAndKeepOffset()
     }

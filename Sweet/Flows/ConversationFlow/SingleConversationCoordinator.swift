@@ -31,7 +31,7 @@ final class SingleConversationCoordinator: BaseCoordinator, ConversationCoordina
     }
     
     override func start() {
-        Messenger.shared.markConversationAsRead(buddy.userId)
+        Messenger.shared.markConversationAsRead(buddy.userId, isGroup: false)
         let conversation = SingleConversationController(user: user, buddy: buddy)
         conversation.delegate = self
         router.push(conversation)

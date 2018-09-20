@@ -32,7 +32,6 @@ final class SingleConversationController: ConversationViewController, SingleConv
     override func viewDidLoad() {
         super.viewDidLoad()
         title = buddy.nickname
-        messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
@@ -130,8 +129,9 @@ extension SingleConversationController: MessengerDelegate {
     }
 
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], buddy: User) {
-        defer { refreshControl.endRefreshing() }
-        guard messages.isNotEmpty, buddy.userId == self.buddy.userId else { return }
+        guard buddy.userId == self.buddy.userId else { return }
+        refreshControl.endRefreshing()
+        guard messages.isNotEmpty else { return }
         self.messages.insert(contentsOf: messages, at: 0)
         messagesCollectionView.reloadDataAndKeepOffset()
     }

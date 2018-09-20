@@ -43,10 +43,7 @@ final class InboxController: BaseViewController, InboxView {
     }
     
     func didUpdateConversations(_ conversations: [IMConversation]) {
-        logger.debug(conversations)
-        self.conversations = conversations.sorted(by: {
-            return $0.lastMessageTimestamp > $1.lastMessageTimestamp
-        })
+        self.conversations = conversations.sorted(by: { $0.lastMessageTimestamp > $1.lastMessageTimestamp })
         tableView.reloadData()
     }
     

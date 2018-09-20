@@ -9,6 +9,7 @@
 import RealmSwift
 
 class ConversationData: Object {
+    @objc dynamic var key = ""
     @objc dynamic var id: Int64 = 0
     @objc dynamic var name = ""
     @objc dynamic var memberCount = 0
@@ -23,7 +24,7 @@ class ConversationData: Object {
     @objc dynamic var isMute = false
     
     override static func primaryKey() -> String? {
-        return "id"
+        return "key"
     }
     
     class func data(with conversation: IMConversation) -> ConversationData {
@@ -42,7 +43,12 @@ class ConversationData: Object {
         data.unreadCount = Int(conversation.unreadCount)
         data.likesCount = Int(conversation.likeCount)
         data.isMute = conversation.isMute
+        data.key = ConversationData.makeKey(id: conversation.id, isGroup: conversation.isGroup)
         return data
+    }
+    
+    class func makeKey(id: UInt64, isGroup: Bool) -> String {
+        return "\(id)#\(isGroup)"
     }
     
     func makeIMConversation() -> IMConversation {
