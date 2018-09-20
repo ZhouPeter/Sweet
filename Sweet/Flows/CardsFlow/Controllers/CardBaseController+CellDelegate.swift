@@ -320,3 +320,12 @@ extension CardsBaseController: ShareWebViewControllerDelegate {
         self.reloadContentCell(index: index)
     }
 }
+
+extension CardsBaseController: MessengerDelegate {
+    func messengerDidQuitGroup(_ groupID: UInt64, success: Bool) {
+        guard success  else { return }
+        for (index, card) in cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupID {
+            cards[index].join = false
+        }
+    }
+}
