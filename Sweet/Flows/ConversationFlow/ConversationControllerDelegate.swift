@@ -17,7 +17,6 @@ protocol ConversationControllerDelegate: class {
     func conversationController(_ controller: ConversationViewController, unblocksBuddy buddy: User)
     func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User, messageId: String)
     func conversationDidFinish()
-    func conversationQuit(group: Group)
 }
 
 extension ConversationControllerDelegate {
@@ -29,5 +28,4 @@ extension ConversationControllerDelegate {
     func conversationController(_ controller: ConversationViewController, unblocksBuddy buddy: User) {}
     func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User, messageId: String) {}
     func conversationDidFinish() {}
-    func conversationQuit(group: Group) {}
 }

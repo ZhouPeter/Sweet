@@ -40,19 +40,8 @@ final class GroupConversationCoordinator: BaseCoordinator, ConversationCoordinat
 }
 
 extension GroupConversationCoordinator: ConversationControllerDelegate {
-    func conversationQuit(group: Group) {
-        HUD.show(.systemActivity)
-        web.request(.quitGroup(groupID: group.id)) { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                HUD.hide()
-                self.router.popFlow(animated: true)
-                Messenger.shared.leaveGroup(group: group)
-            case .failure(let error):
-                logger.error(error)
-                HUD.flash(.label("退出失败，请重试"), delay: 2, completion: nil)
-            }
-        }
+    func conversationDidFinish() {
+        Messenger.shared.endConversation()
+        finishFlow?()
     }
 }

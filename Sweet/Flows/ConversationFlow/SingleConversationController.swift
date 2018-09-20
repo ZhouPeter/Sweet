@@ -23,7 +23,6 @@ final class SingleConversationController: ConversationViewController, SingleConv
         super.init(user: user)
         members[buddy.userId] = buddy
         Messenger.shared.addDelegate(self)
-        Messenger.shared.loadMessages(from: buddy)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +36,7 @@ final class SingleConversationController: ConversationViewController, SingleConv
         messageInputBar.delegate = self
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
+        Messenger.shared.loadMessages(from: buddy)
     }
     
     override func didBlock(userID: UInt64) {
@@ -106,11 +106,7 @@ extension SingleConversationController: MessengerDelegate {
         guard buddy.userId == self.buddy.userId else { return }
         self.messages = messages
         messagesCollectionView.reloadData()
-        let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-        let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height
-        if contentHeight > visibleHeight {
-            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
-        }
+        messagesCollectionView.scrollToBottom()
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {

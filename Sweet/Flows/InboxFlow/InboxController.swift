@@ -43,15 +43,8 @@ final class InboxController: BaseViewController, InboxView {
     }
     
     func didUpdateConversations(_ conversations: [IMConversation]) {
-        conversations.forEach { (conversation) in
-            if let index = self.conversations.index(where: { $0.id == conversation.id }) {
-                self.conversations.remove(at: index)
-                self.conversations.insert(conversation, at: index)
-            } else {
-                self.conversations.append(conversation)
-            }
-        }
-        self.conversations = self.conversations.sorted(by: {
+        logger.debug(conversations)
+        self.conversations = conversations.sorted(by: {
             return $0.lastMessageTimestamp > $1.lastMessageTimestamp
         })
         tableView.reloadData()

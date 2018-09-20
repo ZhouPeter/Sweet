@@ -215,6 +215,29 @@ final class Messenger {
         })
     }
     
+    func quitGroup(_ group: Group) {
+        web.request(.quitGroup(groupID: group.id)) { (result) in
+            switch result {
+            case .success:
+                self.clearGroup(group: group)
+                self.multicastDelegate.invoke({ $0.messengerDidQuitGroup(group.id, success: true) })
+            case .failure(let error):
+                logger.error(error)
+                self.multicastDelegate.invoke({ $0.messengerDidQuitGroup(group.id, success: false) })
+            }
+        }
+    }
+    
+    private func clearGroup(group: Group) {
+        storage?.write({ (realm) in
+            if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(group.id)) {
+                realm.delete(data)
+            }
+        }, callback: { (_) in
+            self.loadConversations()
+        })
+    }
+    
     @objc func updateActiveStatus() {
         guard state == .online else { return }
         var request = ActiveSyncReq()
@@ -500,8 +523,10 @@ final class Messenger {
     
     func loadConversations() {
         guard state == .online else { return }
+        logger.debug("")
         fetch(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
             guard let response = response, response.list.isNotEmpty else { return }
+            logger.debug(response)
             self.storage?.write({ (realm) in
                 realm.add(response.list.map(ConversationData.data(with:)), update: true)
             }, callback: { (_) in
@@ -559,16 +584,6 @@ final class Messenger {
                 .filter("from == \(id) || to == \(id)")
                 .forEach({ $0.isRead = true })
         }, callback: nil)
-    }
-    
-    func leaveGroup(group: Group) {
-        storage?.write({ (realm) in
-            if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(group.id)) {
-                realm.delete(data)
-            }
-        }, callback: { (_) in
-            self.loadConversations()
-        })
     }
     
     // MARK: - Private
@@ -866,6 +881,7 @@ final class Messenger {
                     }
                     self.updateActiveStatus()
                     self.listenMessageNotify()
+                    self.listenGroupMessageNotify()
                     self.multicastDelegate.invoke({ $0.messengerDidLogin(user: user, success: date != nil) })
                 })
             })

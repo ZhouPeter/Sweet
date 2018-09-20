@@ -21,7 +21,6 @@ final class GroupConversationController: ConversationViewController, GroupConver
         self.group = group
         super.init(user: user)
         Messenger.shared.addDelegate(self)
-        Messenger.shared.loadMessages(from: group)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +36,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didPressRightBarButton))
+        Messenger.shared.loadMessages(from: group)
     }
     
     @objc private func didPressRightBarButton() {
@@ -44,7 +44,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
         controller.view.tintColor = .black
         controller.addAction(UIAlertAction(title: "退出群聊", style: .default, handler: { [weak self] (_) in
             guard let self = self else { return }
-            self.delegate?.conversationQuit(group: self.group)
+            HUD.show(.systemActivity)
+            Messenger.shared.quitGroup(self.group)
         }))
         controller.addAction(UIAlertAction(title: "再聊会", style: .cancel, handler: nil))
         present(controller, animated: true, completion: nil)
@@ -91,11 +92,7 @@ extension GroupConversationController: MessengerDelegate {
         guard group.id == self.group.id else { return }
         self.messages = messages
         messagesCollectionView.reloadData()
-        let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-        let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height
-        if contentHeight > visibleHeight {
-            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
-        }
+        messagesCollectionView.scrollToBottom()
     }
     
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group) {
@@ -123,5 +120,15 @@ extension GroupConversationController: MessengerDelegate {
         self.messages.append(message)
         messagesCollectionView.insertSections([self.messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
+    }
+    
+    func messengerDidQuitGroup(_ groupID: UInt64, success: Bool) {
+        guard groupID == group.id else { return }
+        if success {
+            HUD.hide()
+            navigationController?.popViewController(animated: true)
+        } else {
+            HUD.flash(.label("退出失败，请重试"), delay: 2, completion: nil)
+        }
     }
 }

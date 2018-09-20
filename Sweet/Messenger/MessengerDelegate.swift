@@ -22,6 +22,7 @@ protocol MessengerDelegate: class {
     func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group)
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group)
     func messengerDidUpdateMember(_ member: User)
+    func messengerDidQuitGroup(_ groupID: UInt64, success: Bool)
 }
 
 extension MessengerDelegate {
@@ -38,4 +39,5 @@ extension MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group) {}
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group) {}
     func messengerDidUpdateMember(_ member: User) {}
+    func messengerDidQuitGroup(_ groupID: UInt64, success: Bool) {}
 }
