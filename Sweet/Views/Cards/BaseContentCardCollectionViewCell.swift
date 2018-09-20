@@ -83,11 +83,13 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
             addGroupButton.setTitle(memberNumString, for: .normal)
             groupBackgroudImageView.isHidden = false
             customContent.isShadowEnabled = false
+            shareButton.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
         } else {
             emojiView.isHidden = false
             addGroupButton.isHidden = true
             groupBackgroudImageView.isHidden = true
             customContent.isShadowEnabled = true
+            shareButton.setImage(#imageLiteral(resourceName: "CardShareGray"), for: .normal)
         }
     }
     

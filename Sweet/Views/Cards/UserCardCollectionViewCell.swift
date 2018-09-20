@@ -138,10 +138,11 @@ class UserCardCollectionViewCell: UICollectionViewCell, CellReusable, CellUpdata
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.layer.cornerRadius = 5
-        contentView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
-        contentView.layer.borderWidth = 0.5
-        contentView.clipsToBounds = true
+        contentView.setView(cornerRadius: 5, borderWidth: 0.5, borderColor: UIColor(hex: 0xF2F2F2))
+//        contentView.layer.cornerRadius = 5
+//        contentView.layer.borderColor = UIColor(hex: 0xF2F2F2).cgColor
+//        contentView.layer.borderWidth = 0.5
+//        contentView.clipsToBounds = true
         setupUI()
     }
     

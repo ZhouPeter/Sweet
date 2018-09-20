@@ -131,6 +131,7 @@ struct CardResponse: Codable {
             } else {
                 content = self.content
             }
+            
             text = String.getShareText(content: content, url: url)
         } else {
             text = nil
