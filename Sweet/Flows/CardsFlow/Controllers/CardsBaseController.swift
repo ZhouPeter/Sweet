@@ -122,6 +122,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
                                                object: reachability)
 
        try? reachability?.startNotifier()
+        Messenger.shared.addDelegate(self)
         
     }
     
