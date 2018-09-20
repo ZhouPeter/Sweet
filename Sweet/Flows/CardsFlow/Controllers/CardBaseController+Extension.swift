@@ -266,8 +266,11 @@ extension CardsBaseController {
                     } else {
                         self.toast(message: "加入群聊成功！")
                         Messenger.shared.loadConversations()
-                        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-                        self.cards[index].join = true
+//                        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
+//                        self.cards[index].join = true
+                        for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
+                            self.cards[index].join = true
+                        }
                     }
                 }
             }
