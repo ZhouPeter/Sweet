@@ -561,6 +561,16 @@ final class Messenger {
         }, callback: nil)
     }
     
+    func leaveGroup(group: Group) {
+        storage?.write({ (realm) in
+            if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: Int64(group.id)) {
+                realm.delete(data)
+            }
+        }, callback: { (_) in
+            self.loadConversations()
+        })
+    }
+    
     // MARK: - Private
     
     private func getMessages(with IDs: [UInt64], callback: @escaping ([InstantMessage]) -> Void) {

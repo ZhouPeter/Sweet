@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageKit
+import PKHUD
 
 protocol GroupConversationView: BaseView {
     
@@ -32,6 +33,21 @@ final class GroupConversationController: ConversationViewController, GroupConver
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
         title = "\(group.name) (\(group.memberCount)人)"
         messageInputBar.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Quit"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(didPressRightBarButton))
+    }
+    
+    @objc private func didPressRightBarButton() {
+        let controller = UIAlertController(title: "确定退出群聊？", message: nil, preferredStyle: .alert)
+        controller.view.tintColor = .black
+        controller.addAction(UIAlertAction(title: "退出群聊", style: .default, handler: { [weak self] (_) in
+            guard let self = self else { return }
+            self.delegate?.conversationQuit(group: self.group)
+        }))
+        controller.addAction(UIAlertAction(title: "再聊会", style: .cancel, handler: nil))
+        present(controller, animated: true, completion: nil)
     }
     
     override func loadMoreMessages() {
