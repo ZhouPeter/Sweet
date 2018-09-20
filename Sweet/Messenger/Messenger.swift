@@ -98,11 +98,7 @@ final class Messenger {
     func addDelegate(_ delegate: MessengerDelegate) {
         multicastDelegate.addDelegate(delegate)
     }
-    
-    func removeDelegate(_ delegate: MessengerDelegate) {
-        multicastDelegate.removeDelegate(delegate)
-    }
-    
+        
     // MARK: - Login
     
     func login(with user: User, token: String) {
