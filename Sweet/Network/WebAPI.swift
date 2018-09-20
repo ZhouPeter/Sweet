@@ -78,6 +78,7 @@ enum WebAPI {
     case updateSetting(autoPlay: Bool, showMsg: Bool)
     case interfaceCallLog(type: Int)
     case quitGroup(groupID: UInt64)
+    case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -219,6 +220,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/externalInterfaceCallLog/record"
         case .quitGroup:
             return "/group/quit"
+        case .joinGroup:
+            return "/group/join"
         }
     }
     
@@ -369,6 +372,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["type": type]
         case .quitGroup(let groupID):
             parameters = ["groupId": groupID]
+        case let .joinGroup(cardId, contentId, groupId, comment):
+            parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
         default:
             break
         }

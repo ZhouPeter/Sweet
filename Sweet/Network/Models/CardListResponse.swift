@@ -90,6 +90,9 @@ struct CardResponse: Codable {
     var userContentList: [UserContent]?
     var result: SelectResult?
     let type: UInt
+    let groupId: UInt64?
+    var join: Bool?
+    let memberNum: UInt?
     var cardEnumType: CardType {
         return CardType(rawValue: type) ?? .unknown
     }
@@ -111,6 +114,7 @@ struct CardResponse: Codable {
         case evaluation
         case welcome
         case user
+        case groupChat
     }
     
     func makeShareText() -> String? {
@@ -127,6 +131,7 @@ struct CardResponse: Codable {
             } else {
                 content = self.content
             }
+            
             text = String.getShareText(content: content, url: url)
         } else {
             text = nil

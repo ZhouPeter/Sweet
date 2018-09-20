@@ -9,6 +9,8 @@
 import UIKit
 
 class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
+    var groupId: UInt64?
+    var contentId: String?
     lazy var emojiView: EmojiControlView = {
         let view = EmojiControlView()
         view.backgroundColor = .clear
@@ -22,10 +24,32 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         button.contentHorizontalAlignment = .left
         return button
     }()
+    
+    lazy var addGroupButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.contentHorizontalAlignment = .right
+        button.addTarget(self, action: #selector(didPressAddGroup(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var groupBackgroudImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "GroupBg"))
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        return imageView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentId = nil
+        groupId = nil
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,6 +57,8 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
     }
     
     private func setupUI() {
+        contentView.insertSubview(groupBackgroudImageView, belowSubview: customContent)
+        groupBackgroudImageView.fill(in: customContent)
         customContent.addSubview(emojiView)
         emojiView.align(.right)
         emojiView.align(.left)
@@ -42,6 +68,29 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         shareButton.constrain(width: 50, height: 50)
         shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
+        customContent.addSubview(addGroupButton)
+        addGroupButton.constrain(width: 220, height: 50)
+        addGroupButton.centerY(to: shareButton)
+        addGroupButton.align(.right, inset: 15)
+    }
+    
+    func update(isGroupChat: Bool, contentId: String?, groupId: UInt64?, memberNumString: String?) {
+        if isGroupChat {
+            self.contentId = contentId
+            self.groupId = groupId
+            emojiView.isHidden = true
+            addGroupButton.isHidden = false
+            addGroupButton.setTitle(memberNumString, for: .normal)
+            groupBackgroudImageView.isHidden = false
+            customContent.isShadowEnabled = false
+            shareButton.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
+        } else {
+            emojiView.isHidden = false
+            addGroupButton.isHidden = true
+            groupBackgroudImageView.isHidden = true
+            customContent.isShadowEnabled = true
+            shareButton.setImage(#imageLiteral(resourceName: "CardShareGray"), for: .normal)
+        }
     }
     
 }
@@ -51,6 +100,15 @@ extension BaseContentCardCollectionViewCell {
         if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
             delegate.shareCard(cardId: cardId!)
         }
+    }
+    
+    @objc private func didPressAddGroup(_ sender: UIButton) {
+        if let delegate = delegate as? ContentCardCollectionViewCellDelegate,
+            let groupId = groupId,
+            let contentId = contentId {
+            delegate.joinGroup(groupId: groupId, cardId: cardId!, contentId: contentId)
+        }
+        
     }
 }
 

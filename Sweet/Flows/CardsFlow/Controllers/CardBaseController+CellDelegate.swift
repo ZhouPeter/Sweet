@@ -98,6 +98,10 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    func joinGroup(groupId: UInt64, cardId: String, contentId: String) {
+        guard let index = cards.index(where: { $0.cardId == cardId}) else { return }
+        showGroupInputView(isJoin: cards[index].join!)
+    }
 
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
