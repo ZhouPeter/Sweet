@@ -218,7 +218,7 @@ extension CardsBaseController {
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
         inputTextView.placehoder = "带句你想说的话"
-        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入讨论组", image: nil)
+        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入讨论群", image: nil)
         inputTextView.startEditing(isStarted: true)
     }
 
