@@ -71,12 +71,16 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
             timeLabel.text = nil
         }
         badgeView.isHidden = false
-        if conversation.unreadCount > 0 {
-            badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
-        } else if conversation.likeCount > 0 {
+        if conversation.isMute && conversation.unreadCount > 0 {
             badgeView.text = nil
         } else {
-            badgeView.isHidden = true
+            if conversation.unreadCount > 0 {
+                badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
+            } else if conversation.likeCount > 0 {
+                badgeView.text = nil
+            } else {
+                badgeView.isHidden = true
+            }
         }
     }
     

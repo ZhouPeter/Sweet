@@ -79,6 +79,7 @@ enum WebAPI {
     case interfaceCallLog(type: Int)
     case quitGroup(groupID: UInt64)
     case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
+    case muteGroup(groupID: UInt64, isMuted: Bool)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -222,6 +223,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/group/quit"
         case .joinGroup:
             return "/group/join"
+        case .muteGroup:
+            return "/group/mute"
         }
     }
     
@@ -378,6 +381,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["groupId": groupID]
         case let .joinGroup(cardId, contentId, groupId, comment):
             parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
+        case .muteGroup(let groupID, let isMuted):
+            parameters = ["groupId": groupID, "mute": isMuted]
         default:
             break
         }

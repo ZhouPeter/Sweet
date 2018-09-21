@@ -245,6 +245,20 @@ final class Messenger {
         fetch(request, responseType: ActiveSyncResp.self, callback: nil)
     }
     
+    func muteGroup(_ group: Group, isMuted: Bool) {
+        web.request(
+            .muteGroup(groupID: group.id, isMuted: !group.isMuted),
+            completion: { (result) in
+                switch result {
+                case .success:
+                    self.updateConversations()
+                    self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
+                case .failure:
+                    self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: group.isMuted) })
+                }
+        })
+    }
+    
     // MARK: - Messages
     
     func send(_ message: InstantMessage) {
@@ -803,6 +817,8 @@ final class Messenger {
         getDeliverQueue(forModule: module, command: command).addOperation(task)
     }
     
+    // MARK: - Badge number
+    
     private func updateUnreadCount() {
         var unreadLikes = 0
         var unreadMessages = 0
@@ -810,7 +826,9 @@ final class Messenger {
             let conversations = realm.objects(ConversationData.self)
             for conversation in conversations {
                 unreadLikes += conversation.likesCount
-                unreadMessages += conversation.unreadCount
+                if !conversation.isMute {
+                    unreadMessages += conversation.unreadCount
+                }
             }
             self.messagesUnreadCount = unreadMessages
         }, callback: {

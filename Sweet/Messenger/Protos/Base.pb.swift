@@ -317,6 +317,9 @@ struct GroupInfo {
   ///图标（可能为空）
   var icon: String = String()
 
+  ///静音
+  var mute: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -736,6 +739,7 @@ extension GroupInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     5: .same(proto: "created"),
     6: .same(proto: "status"),
     7: .same(proto: "icon"),
+    8: .same(proto: "mute"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -748,6 +752,7 @@ extension GroupInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       case 5: try decoder.decodeSingularUInt64Field(value: &self.created)
       case 6: try decoder.decodeSingularUInt32Field(value: &self.status)
       case 7: try decoder.decodeSingularStringField(value: &self.icon)
+      case 8: try decoder.decodeSingularBoolField(value: &self.mute)
       default: break
       }
     }
@@ -775,6 +780,9 @@ extension GroupInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     if !self.icon.isEmpty {
       try visitor.visitSingularStringField(value: self.icon, fieldNumber: 7)
     }
+    if self.mute != false {
+      try visitor.visitSingularBoolField(value: self.mute, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -786,6 +794,7 @@ extension GroupInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     if self.created != other.created {return false}
     if self.status != other.status {return false}
     if self.icon != other.icon {return false}
+    if self.mute != other.mute {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

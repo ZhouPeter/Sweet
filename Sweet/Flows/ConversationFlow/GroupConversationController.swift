@@ -15,7 +15,7 @@ protocol GroupConversationView: BaseView {
 }
 
 final class GroupConversationController: ConversationViewController, GroupConversationView {
-    private let group: Group
+    private var group: Group
     
     init(user: User, group: Group) {
         self.group = group
@@ -40,14 +40,21 @@ final class GroupConversationController: ConversationViewController, GroupConver
     }
     
     @objc private func didPressRightBarButton() {
-        let controller = UIAlertController(title: "确定退出群聊？", message: nil, preferredStyle: .alert)
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.view.tintColor = .black
-        controller.addAction(UIAlertAction(title: "退出群聊", style: .default, handler: { [weak self] (_) in
+        controller.addAction(
+            UIAlertAction(title: group.isMuted ? "关闭消息免打扰" : "消息免打扰", style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                HUD.show(.systemActivity)
+                Messenger.shared.muteGroup(self.group, isMuted: !self.group.isMuted)
+            })
+        )
+        controller.addAction(UIAlertAction(title: "删除并退出群聊", style: .destructive, handler: { [weak self] (_) in
             guard let self = self else { return }
             HUD.show(.systemActivity)
             Messenger.shared.quitGroup(self.group)
         }))
-        controller.addAction(UIAlertAction(title: "再聊会", style: .cancel, handler: nil))
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         present(controller, animated: true, completion: nil)
     }
     
@@ -131,6 +138,16 @@ extension GroupConversationController: MessengerDelegate {
             navigationController?.popViewController(animated: true)
         } else {
             HUD.flash(.label("退出失败，请重试"), delay: 2, completion: nil)
+        }
+    }
+    
+    func messengerDidMuteGroup(_ groupID: UInt64, isMuted: Bool) {
+        guard groupID == group.id else { return }
+        if isMuted == group.isMuted {
+            HUD.flash(.label("操作失败，请重试"), delay: 2, completion: nil)
+        } else {
+            HUD.hide()
+            group.isMuted = isMuted
         }
     }
 }

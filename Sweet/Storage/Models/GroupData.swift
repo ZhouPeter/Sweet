@@ -14,6 +14,7 @@ class GroupData: Object {
     @objc dynamic var name = ""
     @objc dynamic var memberCount: Int = 0
     @objc dynamic var avatarURL = ""
+    @objc dynamic var isMuted = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -25,6 +26,7 @@ class GroupData: Object {
         data.name = group.name
         data.memberCount = group.memberCount
         data.avatarURL = group.avatarURL?.absoluteString ?? ""
+        data.isMuted = group.isMuted
         return data
     }
     
@@ -32,6 +34,7 @@ class GroupData: Object {
         return Group(id: UInt64(id),
                      name: name,
                      memberCount: memberCount,
-                     avatarURL: URL(string: avatarURL))
+                     avatarURL: URL(string: avatarURL),
+                     isMuted: isMuted)
     }
 }

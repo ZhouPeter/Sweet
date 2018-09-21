@@ -13,18 +13,21 @@ struct Group {
     var name: String
     var memberCount: Int
     var avatarURL: URL?
+    var isMuted: Bool
     
     init(proto: GroupInfo) {
         id = proto.groupID
         name = proto.name
         memberCount = Int(proto.memberNum)
         avatarURL = URL(string: proto.icon)
+        isMuted = proto.mute
     }
     
-    init(id: UInt64, name: String, memberCount: Int, avatarURL: URL?) {
+    init(id: UInt64, name: String, memberCount: Int, avatarURL: URL?, isMuted: Bool) {
         self.id = id
         self.name = name
         self.memberCount = memberCount
         self.avatarURL = avatarURL
+        self.isMuted = isMuted
     }
 }
