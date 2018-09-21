@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApi.registerApp(wechatKey)
         _ = TencentOAuth.init(appId: tencentKey, andDelegate: nil)
         UMConfigure.initWithAppkey(umengKey, channel: nil)
+        WeiboSDK.enableDebugMode(true)
         WeiboSDK.registerApp(weiboKey)
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
@@ -89,10 +90,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return WXApi.handleOpen(url, delegate: WXApiManager.shared)
         } else if  url.absoluteString.hasPrefix("tencent") {
             return TencentOAuth.handleOpen(url)
+        } else if url.absoluteString.hasPrefix("wb") {
+            return WeiboSDK.handleOpen(url, delegate: self)
         } else {
-            return WeiboSDK.handleOpen(url, delegate: nil)
+            return true
         }
     }
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if url.absoluteString.hasPrefix("wx") {
+            return WXApi.handleOpen(url, delegate: WXApiManager.shared)
+        } else if  url.absoluteString.hasPrefix("tencent") {
+            return TencentOAuth.handleOpen(url)
+        } else if url.absoluteString.hasPrefix("wb") {
+            return WeiboSDK.handleOpen(url, delegate: self)
+        } else {
+            return true
+        }
+    }
+    
     
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -105,6 +120,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+extension AppDelegate: WeiboSDKDelegate {
+    func didReceiveWeiboRequest(_ request: WBBaseRequest!) {
+        
+    }
+    
+    func didReceiveWeiboResponse(_ response: WBBaseResponse!) {
+        
+    }
+}
 // MARK: - Privates
 extension AppDelegate {
     private func addObservers() {
