@@ -40,7 +40,7 @@ extension RecentGetReq: MessageTicket {
     }
     
     var command: Int {
-        return MsgCmdID.recentReq.rawValue
+        return MsgCmdID.recentGetReq.rawValue
     }
 }
 
