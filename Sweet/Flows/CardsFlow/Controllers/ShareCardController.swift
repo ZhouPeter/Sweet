@@ -311,6 +311,7 @@ extension ShareCardController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else {fatalError()}
             cell.update(viewModel: contactViewModels[indexPath.row])
+            cell.selectButton.isSelected = userIds.contains(contactViewModels[indexPath.row].userId)
             return cell
         }
     }
