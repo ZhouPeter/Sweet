@@ -252,6 +252,11 @@ final class Messenger {
                 switch result {
                 case .success:
                     self.updateConversations()
+                    self.storage?.write({ (realm) in
+                        if let data = realm.object(ofType: GroupData.self, forPrimaryKey: group.id) {
+                            data.isMuted = isMuted
+                        }
+                    })
                     self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
                 case .failure:
                     self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: group.isMuted) })
@@ -361,9 +366,9 @@ final class Messenger {
             }
         }, callback: {
             self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
-            if shouldFetchRecent || messages.isEmpty {
+//            if shouldFetchRecent || messages.isEmpty {
                 self.fetchRecentMessages(from: buddy)
-            }
+//            }
         })
     }
     
@@ -385,6 +390,7 @@ final class Messenger {
             })
             self.saveMessages(messages, callback: {
                 self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy)})
+                self.updateConversations()
             })
         }
     }
@@ -476,9 +482,9 @@ final class Messenger {
                 }
         }, callback: {
             self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
-            if shouldFetchRecent || messages.isEmpty {
+//            if shouldFetchRecent || messages.isEmpty {
                 self.fetchRecentMessages(from: group)
-            }
+//            }
         })
     }
     
@@ -499,6 +505,7 @@ final class Messenger {
             })
             self.saveMessages(messages, callback: {
                 self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group)})
+                self.updateConversations()
             })
         }
     }
@@ -560,7 +567,7 @@ final class Messenger {
         fetch(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
             guard let response = response, response.list.isNotEmpty else { return }
 //            response.list.forEach({
-//                logger.debug("\($0.name), \($0.unreadCount)")
+//                logger.debug("\($0.name), \($0.unreadCount), \($0.isMute)")
 //            })
             self.storage?.write({ (realm) in
                 realm.add(response.list.map(ConversationData.data(with:)), update: true)
@@ -666,6 +673,7 @@ final class Messenger {
             callback([])
             return
         }
+        logger.debug("")
         var request = GroupMessageGetReq()
         request.msgIDList = IDs
         fetch(request, responseType: GroupMessageGetResp.self) { response in
@@ -760,7 +768,6 @@ final class Messenger {
     }
     
     private func updateConversations() {
-        guard currentConversationID == nil else { return }
         loadConversations()
     }
     
