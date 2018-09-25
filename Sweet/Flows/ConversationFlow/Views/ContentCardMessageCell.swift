@@ -42,16 +42,23 @@ final class ContentCardMessageCell: MediaMessageCell {
     override func setup() {
         super.setup()
         mediaContainerView.backgroundColor = .white
-        mediaContainerView.addSubview(label)
-        label.align(.left, inset: 10)
-        label.align(.top, inset: 6)
-        label.align(.right, inset: 10)
-        label.constrain(height: 60)
         mediaContainerView.addSubview(imageView)
+        let labelBackView = UIView()
+        labelBackView.backgroundColor = .white
+        mediaContainerView.addSubview(labelBackView)
+        mediaContainerView.addSubview(label)
         imageView.align(.left)
         imageView.align(.right)
         imageView.pin(.bottom, to: label)
         imageView.align(.bottom)
+        labelBackView.align(.left)
+        labelBackView.align(.right)
+        labelBackView.align(.top)
+        labelBackView.align(.bottom, to: label)
+        label.align(.left, inset: 10)
+        label.align(.top, inset: 6)
+        label.align(.right, inset: 10)
+        label.constrain(height: 60)
     }
     
     override func prepareForReuse() {
