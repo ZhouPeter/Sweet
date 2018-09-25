@@ -322,7 +322,7 @@ final class Messenger {
     private func updateConversationWithSendMessage(_ message: InstantMessage) {
         guard let myID = user?.userId, message.from == myID else { return }
         storage?.write({ (realm) in
-            let key = ConversationData.makeKey(id: message.to, isGroup: false)
+            let key = ConversationData.makeKey(id: message.to, isGroup: message.isGroup)
             guard let data = realm.object(ofType: ConversationData.self, forPrimaryKey: key) else { return }
             data.lastMessageContent = message.displayText()
             if let remoteID = message.remoteID {
