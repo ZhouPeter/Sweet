@@ -338,6 +338,7 @@ final class Messenger {
     
     func loadMessages(from buddy: User) {
         var messages = [InstantMessage]()
+        var isLocalMessagesNew = false
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -349,11 +350,17 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
+            let key = ConversationData.makeKey(id: buddy.userId, isGroup: false)
+            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key),
+                let lastID = conversation.lastMessageID.value {
+                if UInt64(lastID) == messages.last?.remoteID {
+                    isLocalMessagesNew = true
+                }
+            }
         }, callback: {
-            if messages.isEmpty {
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+            if messages.isEmpty || isLocalMessagesNew == false {
                 self.fetchRecentMessages(from: buddy)
-            } else {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
             }
         })
     }
@@ -444,6 +451,7 @@ final class Messenger {
     
     func loadMessages(from group: Group) {
         var messages = [InstantMessage]()
+        var isLocalMessagesNew = false
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -455,11 +463,17 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
+            let key = ConversationData.makeKey(id: group.id, isGroup: true)
+            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key),
+                let lastID = conversation.lastMessageID.value {
+                if UInt64(lastID) == messages.last?.remoteID {
+                    isLocalMessagesNew = true
+                }
+            }
         }, callback: {
-            if messages.isEmpty {
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
+            if messages.isEmpty || isLocalMessagesNew == false {
                 self.fetchRecentMessages(from: group)
-            } else {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
             }
         })
     }
