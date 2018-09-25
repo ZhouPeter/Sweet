@@ -98,6 +98,10 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 }
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
+    func joinGroup(groupId: UInt64, cardId: String, contentId: String) {
+        guard let index = cards.index(where: { $0.cardId == cardId}) else { return }
+        showGroupInputView(isJoin: cards[index].join!)
+    }
 
     func shareCard(cardId: String) {
         if let index = cards.index(where: { $0.cardId == cardId }) {
@@ -314,5 +318,14 @@ extension CardsBaseController: ShareWebViewControllerDelegate {
         guard let index = self.cards.index(where: { $0.cardId == card.cardId }) else { return }
         self.cards[index] = card
         self.reloadContentCell(index: index)
+    }
+}
+
+extension CardsBaseController: MessengerDelegate {
+    func messengerDidQuitGroup(_ groupID: UInt64, success: Bool) {
+        guard success else { return }
+        for (index, card) in cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupID {
+            cards[index].join = false
+        }
     }
 }

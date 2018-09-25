@@ -117,6 +117,7 @@ class InputTextView: UIView {
             textView.placeholder = placehoder
         }
     }
+    var buttonRightSpacing: CGFloat = 5
     weak var delegate: InputTextViewDelegate?
     var textToken: NSKeyValueObservation?
     private lazy var blackMaskView: UIView = {
@@ -181,6 +182,15 @@ class InputTextView: UIView {
     
     deinit {
         textToken?.invalidate()
+    }
+    func updateSendButton(title: String, image: UIImage? = #imageLiteral(resourceName: "StarBlack")) {
+        senderButton.setTitle(title, for: .normal)
+        senderButton.setImage(image, for: .normal)
+        if image == nil {
+            senderButton.resetEdgeInsets()
+        } else {
+            senderButton.setImageRight(space: buttonRightSpacing)
+        }
     }
     private func contentSizeToFit() {
         var contentSize = textView.contentSize

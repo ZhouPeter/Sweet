@@ -56,7 +56,7 @@ enum WebAPI {
     case publishStory(url: String, type: StoryType, topic: String?, pokeCenter: CGPoint?, touchPoints: [CGPoint]?, comment: String?, desc: String?, rawUrl: String?, fromCardId: String?)
     case delStory(storyId: UInt64)
     case socketAddress
-    case removeRecentMessage(userID: UInt64)
+    case removeConversation(id: UInt64, isGroup: Bool)
     case getSetting(version: String)
     case shareCard(cardId: String, comment: String, userId: UInt64)
     case shareStory(storyId: UInt64, comment: String, userId: UInt64, fromCardId: String?)
@@ -76,7 +76,10 @@ enum WebAPI {
     case cardActionLog(action: String, cardId: String, sectionId: String?, contentId: String?, preferenceId: String?, toUserId: String?, activityId: String?, storyId: String?)
     case recentStoryList(userID: UInt64)
     case updateSetting(autoPlay: Bool, showMsg: Bool)
-    case interfaceCallLog
+    case interfaceCallLog(type: Int)
+    case quitGroup(groupID: UInt64)
+    case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
+    case muteGroup(groupID: UInt64, isMuted: Bool)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -174,7 +177,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/setting/im/routes"
         case .commentCard:
             return "/card/comment"
-        case .removeRecentMessage:
+        case .removeConversation:
             return "/message/del"
         case .getSetting:
             return "/setting/get"
@@ -216,6 +219,12 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/setting/update"
         case .interfaceCallLog:
             return "/user/externalInterfaceCallLog/record"
+        case .quitGroup:
+            return "/group/quit"
+        case .joinGroup:
+            return "/group/join"
+        case .muteGroup:
+            return "/group/mute"
         }
     }
     
@@ -317,8 +326,12 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             }
         case let .commentCard(cardId, emoji):
             parameters = ["cardId": cardId, "emoji": emoji]
-        case let .removeRecentMessage(userID):
-            parameters = ["userId": userID]
+        case let .removeConversation(id, isGroup):
+            if isGroup {
+                parameters = ["groupId": id]
+            } else {
+                parameters = ["userId": id]
+            }
         case let .activityCardLike(cardId, activityId, comment):
             parameters = ["activityId": activityId, "comment": comment]
             if let cardId = cardId {
@@ -362,6 +375,14 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters["storyId"] = storyId
         case let .updateSetting(autoPlay, showMsg):
             parameters = ["autoPlay": autoPlay, "showMsg": showMsg]
+        case let .interfaceCallLog(`type`):
+            parameters = ["type": type]
+        case .quitGroup(let groupID):
+            parameters = ["groupId": groupID]
+        case let .joinGroup(cardId, contentId, groupId, comment):
+            parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
+        case .muteGroup(let groupID, let isMuted):
+            parameters = ["groupId": groupID, "mute": isMuted]
         default:
             break
         }

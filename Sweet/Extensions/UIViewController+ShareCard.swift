@@ -17,10 +17,10 @@ extension UIViewController {
         controller.sendCallback = { (text, userIds) in
             CardMessageManager.shard.sendMessage(card: card, text: text, userIds: userIds)
         }
-        controller.shareWXCallback = {
-            CardAction.shareWeixin.actionLog(card: card)
+        controller.shareMessageCallback = { index in
+            self.shareActionLog(index: index, card: card)
         }
-        controller.shareCallback = { draft in
+        controller.shareStoryCallback = { draft in
             guard let IDString = Defaults[.userID], let userID = UInt64(IDString) else { return }
             let task = StoryPublishTask(storage: Storage(userID: userID), draft: draft)
             task.finishBlock = { isSuccess in
@@ -31,5 +31,15 @@ extension UIViewController {
         }
         present(controller, animated: true, completion: nil)
         
+    }
+    
+    private func shareActionLog(index: Int, card: CardResponse) {
+        if index == 0 || index == 1 {
+            CardAction.shareWeixin.actionLog(card: card)
+        } else if index == 2 {
+            CardAction.shareQQ.actionLog(card: card)
+        } else if index == 3 {
+            CardAction.shareWeibo.actionLog(card: card)
+        }
     }
 }

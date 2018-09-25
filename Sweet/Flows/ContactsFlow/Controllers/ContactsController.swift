@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import TencentOpenAPI
 private let contactsButtonWidth: CGFloat = 44
 private let contactsButtonHeight: CGFloat = 60
 private let buttonSpace: CGFloat = 50
@@ -16,7 +16,15 @@ class ContactsController: BaseViewController, ContactsView {
     weak var delegate: ContactsViewDelegate?
     private var blacklistViewModel = [ContactViewModel]()
     private var allViewModels = [ContactViewModel]()
-    private var titles = [String]()
+    private var titles = ["邀请好友"] {
+        didSet {
+            if titles.count == 0 {
+                titles.append("邀请好友")
+            } else if titles[0] != "邀请好友" {
+                titles.insert("邀请好友", at: 0)
+            }
+        }
+    }
     private lazy var emptyView: EmptyEmojiView = {
         let view = EmptyEmojiView(image: nil, title: "聊过天的人会出现在这里")
         view.emojiImageView.image = nil
@@ -27,8 +35,6 @@ class ContactsController: BaseViewController, ContactsView {
     
     private lazy var categoryViewModels: [ContactCategoryViewModel] = {
         var viewModels = [ContactCategoryViewModel]()
-        let addViewModel = ContactCategoryViewModel(categoryImage: #imageLiteral(resourceName: "AddFriend"), title: "邀请好友")
-        viewModels.append(addViewModel)
         let subViewModel = ContactCategoryViewModel(categoryImage: #imageLiteral(resourceName: "Subscribe"), title: "订阅")
         viewModels.append(subViewModel)
         return viewModels
@@ -46,6 +52,7 @@ class ContactsController: BaseViewController, ContactsView {
         tableView.sectionFooterHeight = 0
         tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "contactCell")
         tableView.register(SweetHeaderView.self, forHeaderFooterViewReuseIdentifier: "headerView")
+        tableView.register(ShareListTableViewCell.self, forCellReuseIdentifier: "shareListCell")
         tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = UIColor(hex: 0xf7f7f7)
         tableView.separatorColor = UIColor(hex: 0xF2F2F2)
@@ -67,7 +74,6 @@ class ContactsController: BaseViewController, ContactsView {
         return searchController
     }()
     // MARK: - Private
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xf7f7f7)
@@ -90,11 +96,12 @@ class ContactsController: BaseViewController, ContactsView {
             if emptyView.superview != nil { return }
             tableView.addSubview(emptyView)
             emptyView.backgroundColor = .clear
+            let searchBarHeight = searchController.searchBar.frame.height
             emptyView.frame = CGRect(
                 x: 0,
-                y: 8 + 80 * 2,
+                y: 68 + 25 + 80 + searchBarHeight,
                 width: tableView.bounds.width,
-                height: tableView.bounds.height - (8 + 80 * 2) + 1
+                height: tableView.bounds.height - (68 + 25 + 80 + searchBarHeight) + 1
             )
         } else {
             emptyView.removeFromSuperview()
@@ -177,6 +184,9 @@ extension ContactsController: UISearchBarDelegate {
 
 extension ContactsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            return 80
+        }
         return 68
     }
     
@@ -204,12 +214,12 @@ extension ContactsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                delegate?.contactsShowInvite()
-            } else {
                 delegate?.contactsShowSubscription()
             }
+        } else if indexPath.section == 1 {
+            
         } else {
-            let viewModel = viewModelsGroup[indexPath.section - 1][indexPath.row]
+            let viewModel = viewModelsGroup[indexPath.section - 2][indexPath.row]
             let userID = viewModel.userId
             if titles[indexPath.section - 1] == "黑名单" {
                 let alertSheet = UIAlertController()
@@ -229,23 +239,50 @@ extension ContactsController: UITableViewDelegate {
 
 extension ContactsController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModelsGroup.count + 1
+        return viewModelsGroup.count + 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : viewModelsGroup[section - 1].count
+        return section <= 1 ? 1 : viewModelsGroup[section - 2].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
+    
         if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
             cell.updateCategroy(viewModel: categoryViewModels[indexPath.row])
             cell.accessoryType = .disclosureIndicator
+            return cell
+        } else if indexPath.section == 1 {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "shareListCell", for: indexPath) as? ShareListTableViewCell else { fatalError() }
+            cell.update(images: [#imageLiteral(resourceName: "通讯录"), #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ"), #imageLiteral(resourceName: "微博")])
+            cell.delegate = self
+            return cell
         } else {
-            cell.update(viewModel: viewModelsGroup[indexPath.section - 1][indexPath.row])
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
+            cell.update(viewModel: viewModelsGroup[indexPath.section - 2][indexPath.row])
             cell.accessoryType = .none
+            return cell
         }
-        return cell
+    }
+}
+
+
+extension ContactsController: ShareListTableViewCellDelegate {
+    func didSelectItemAt(index: Int) {
+        if index == 0 {
+            delegate?.contactsShowInvite()
+        } else if index == 1 {
+            ShareInviteHelper.sendWXInviteMessage(scene: .conversation)
+        } else if index == 2 {
+            ShareInviteHelper.sendWXInviteMessage(scene: .timeline)
+        } else if index == 3 {
+            ShareInviteHelper.sendQQInviteMessage()
+        } else if index == 4  {
+            ShareInviteHelper.sendWeiboInviteMessage()
+        }
     }
 }

@@ -26,7 +26,6 @@ final class StoryCaptureView: GPUImageView {
     private var isCameraSetuping = false
     
     func setupCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard camera == nil else {
             callback?()
             return
@@ -46,7 +45,6 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func enableAudio(callback: (() -> Void)? = nil) {
-        logger.debug()
         cameraQueue.async { [weak self] in
             guard let `self` = self else { return }
             self.camera?.addAudioInputsAndOutputs()
@@ -55,7 +53,6 @@ final class StoryCaptureView: GPUImageView {
     }
     
     func rotateCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         cameraQueue.async { [weak self] in
             guard let `self` = self else { return }
             self.camera?.rotateCamera()
@@ -115,7 +112,6 @@ final class StoryCaptureView: GPUImageView {
     private var isPausing = false
     
     func pauseCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isPausing == false, camera != nil else { return }
         isPausing = true
         cameraQueue.async { [weak self] in
@@ -130,7 +126,6 @@ final class StoryCaptureView: GPUImageView {
     private var isResuming = false
     
     func resumeCamera(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isResuming == false, isPaused, camera != nil else {
             callback?()
             return
@@ -149,7 +144,6 @@ final class StoryCaptureView: GPUImageView {
     private var isStopping = false
     
     func stopCapture(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStopping == false, isStarted == true, camera != nil else {
             callback?()
             return
@@ -166,7 +160,6 @@ final class StoryCaptureView: GPUImageView {
     private var isStartingRecording = false
     
     func startRecording(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isStartingRecording == false else {
             callback?()
             return
@@ -186,7 +179,6 @@ final class StoryCaptureView: GPUImageView {
     private var isFinishingRecording = false
     
     func finishRecording(_ callback: @escaping ((URL?) -> Void)) {
-        logger.debug()
         guard isFinishingRecording == false else { return }
         isFinishingRecording = true
         cameraQueue.async { [weak self] in
@@ -206,7 +198,6 @@ final class StoryCaptureView: GPUImageView {
     private var isPhotoCapturing = false
     
     func capturePhoto(_ callback: @escaping ((URL?) -> Void)) {
-        logger.debug()
         guard isPhotoCapturing == false else { return }
         isPhotoCapturing = true
         cameraQueue.async { [weak self] in
@@ -239,7 +230,6 @@ final class StoryCaptureView: GPUImageView {
     // MARK: - Private
     
     private func setupRecording() {
-        logger.debug()
         let url = URL.videoCacheURL(withName: UUID().uuidString + ".mp4")
         let writer = GPUImageMovieWriter(
             movieURL: url,
@@ -259,7 +249,6 @@ final class StoryCaptureView: GPUImageView {
     private var isCleaning = false
     
     private func cleanRecording(callback: (() -> Void)? = nil) {
-        logger.debug()
         guard isCleaning == false else { return }
         isCleaning = true
         cameraQueue.async { [weak self] in

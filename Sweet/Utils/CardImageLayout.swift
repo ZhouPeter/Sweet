@@ -39,16 +39,6 @@ extension ContentCardCollectionViewCell {
             two(urls: urls)
         case 3:
             threeOrFour(urls: urls)
-//        case 5:
-//            five(urls: urls)
-//        case 6:
-//            six(urls: urls)
-//        case 7:
-//            seven(urls: urls)
-//        case 8:
-//            eight(urls: urls)
-//        case 9:
-//            nine(urls: urls)
         default:
             break
         }

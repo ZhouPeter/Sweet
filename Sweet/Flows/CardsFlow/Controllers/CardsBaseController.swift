@@ -122,6 +122,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
                                                object: reachability)
 
        try? reachability?.startNotifier()
+        Messenger.shared.addDelegate(self)
         
     }
     
@@ -366,9 +367,7 @@ extension CardsBaseController {
             DispatchQueue.global().async {
                 var isForEach = true
                 self.isPreloadingCards = true
-                for i in 0..<count {
-                    logger.debug(i)
-                    logger.debug(content ?? "")
+                for _ in 0..<count {
                     if isForEach == false { break }
                     self.startLoadCards(cardRequest: request) { (success, _) in
                         if success {

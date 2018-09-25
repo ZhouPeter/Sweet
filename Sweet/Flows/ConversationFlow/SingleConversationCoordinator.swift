@@ -13,7 +13,7 @@ protocol ConversationCoordinatorOuput {
     var finishFlow: (() -> Void)? { get set }
 }
 
-final class ConversationCoordinator: BaseCoordinator, ConversationCoordinatorOuput {
+final class SingleConversationCoordinator: BaseCoordinator, ConversationCoordinatorOuput {
     var finishFlow: (() -> Void)?
     
     private let user: User
@@ -31,15 +31,15 @@ final class ConversationCoordinator: BaseCoordinator, ConversationCoordinatorOup
     }
     
     override func start() {
-        Messenger.shared.markConversationAsRead(userID: buddy.userId)
-        let conversation = ConversationController(user: user, buddy: buddy)
+        Messenger.shared.markConversationAsRead(buddy.userId, isGroup: false)
+        let conversation = SingleConversationController(user: user, buddy: buddy)
         conversation.delegate = self
         router.push(conversation)
-        Messenger.shared.startConversation(userID: buddy.userId)
+        Messenger.shared.startConversation(buddy.userId)
     }
 }
 
-extension ConversationCoordinator: ConversationControllerDelegate {
+extension SingleConversationCoordinator: ConversationControllerDelegate {
     func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?) {
         let navigation = UINavigationController()
         let coordinator = self.coordinatorFactory
@@ -71,20 +71,18 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                 logger.error(error)
                 PKHUD.toast(message: "举报失败")
             case .success:
-                logger.debug()
                 PKHUD.toast(message: "举报成功")
             }
         }
     }
     
-    func conversationController(_ controller: ConversationController, blocksBuddy buddy: User) {
+    func conversationController(_ controller: ConversationViewController, blocksBuddy buddy: User) {
         web.request(.addBlacklist(userId: buddy.userId)) { (result) in
             switch result {
             case .failure(let error):
                 logger.error(error)
                 PKHUD.toast(message: "操作失败")
             case .success:
-                logger.debug()
                 self.storage.write({ (realm) in
                     if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
                         user.isBlacklisted = true
@@ -93,20 +91,19 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                     Messenger.shared.loadConversations()
                 })
                 PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: {
-                    controller.didBlock()
+                    controller.didBlock(userID: buddy.userId)
                 })
             }
         }
     }
     
-    func conversationController(_ controller: ConversationController, unblocksBuddy buddy: User) {
+    func conversationController(_ controller: ConversationViewController, unblocksBuddy buddy: User) {
         web.request(.delBlacklist(userId: buddy.userId)) { (result) in
             switch result {
             case .failure(let error):
                 logger.error(error)
                 PKHUD.toast(message: "操作失败")
             case .success:
-                logger.debug()
                 self.storage.write({ (realm) in
                     if let user = realm.object(ofType: UserData.self, forPrimaryKey: buddy.userId) {
                         user.isBlacklisted = false
@@ -115,7 +112,7 @@ extension ConversationCoordinator: ConversationControllerDelegate {
                     Messenger.shared.loadConversations()
                 })
                 PKHUD.toast(message: "将不再收到该用户的任何信息", duration: 1, completion: {
-                    controller.didUnblock()
+                    controller.didUnblock(userID: buddy.userId)
                 })
             }
         }
@@ -138,12 +135,12 @@ extension ConversationCoordinator: ConversationControllerDelegate {
     }
 
     func conversationDidFinish() {
-        Messenger.shared.endConversation(userID: buddy.userId)
+        Messenger.shared.endConversation()
         finishFlow?()
     }
 }
 
-extension ConversationCoordinator: ShareWebViewControllerDelegate {
+extension SingleConversationCoordinator: ShareWebViewControllerDelegate {
     func showProfile(userId: UInt64, webView: ShareWebViewController) {
         let coordinator = self.coordinatorFactory
             .makeProfileCoordinator(user: user, userID: userId, router: router)

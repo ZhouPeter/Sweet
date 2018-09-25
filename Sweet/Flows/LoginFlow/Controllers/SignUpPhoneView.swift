@@ -10,4 +10,6 @@ import Foundation
 
 protocol SignUpPhoneView: BaseView {
     var onFinish: ((Bool) -> Void)? { get set }
+    var showSignUpUniversity: ((LoginRequestBody) -> Void)? { get set }
+
 }

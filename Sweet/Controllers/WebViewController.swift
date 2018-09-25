@@ -87,7 +87,7 @@ class WebViewController: BaseViewController {
         context: UnsafeMutableRawPointer?) {
         if keyPath == "title" {
             if let title = change?[NSKeyValueChangeKey.newKey] as? String {
-                navigationItem.title = title
+                navigationItem.title = "来自" + title
             }
         }
     }

@@ -16,7 +16,7 @@ final class InboxCoordinator: BaseCoordinator {
     private let user: User
     private let token: String
     private let storage: Storage
-    private var conversations = [Conversation]()
+    private var conversations = [IMConversation]()
     private var inboxView: InboxView?
     
     init(user: User,
@@ -50,19 +50,46 @@ final class InboxCoordinator: BaseCoordinator {
 }
 
 extension InboxCoordinator: InboxViewDelegate {
-    func inboxRemoveConversation(_ conversation: Conversation) {
-        Messenger.shared.removeConversation(userID: conversation.user.userId)
+    func inboxRemoveConversation(_ conversation: IMConversation) {
+        Messenger.shared.removeConversation(conversation)
     }
     
-    func inboxStartConversation(_ conversation: Conversation) {
-        let coordinator = ConversationCoordinator(
-            user: user,
-            buddy: conversation.user,
-            router: router,
-            coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in
-            self?.removeDependency(coordinator)
+    func inboxStartConversation(_ conversation: IMConversation) {
+        if conversation.isGroup {
+            Messenger.shared.loadGroupWith(id: conversation.id) { [weak self] (group) in
+                guard let group = group else {
+                    logger.error("Group is nil")
+                    return
+                }
+                self?.startConversationWith(group: group)
+            }
+        } else {
+            Messenger.shared.loadUserWith(id: conversation.id) { [weak self] (user) in
+                guard let user = user else {
+                    logger.error("User is nil")
+                    return
+                }
+                self?.startConversationWith(buddy: user)
+            }
         }
+    }
+    
+    private func startConversationWith(buddy: User) {
+        let coordinator = SingleConversationCoordinator(user: user,
+                                                        buddy: buddy,
+                                                        router: router,
+                                                        coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    private func startConversationWith(group: Group) {
+        let coordinator = GroupConversationCoordinator(user: user,
+                                                       group: group,
+                                                       router: router,
+                                                       coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
         addDependency(coordinator)
         coordinator.start()
     }
@@ -70,7 +97,7 @@ extension InboxCoordinator: InboxViewDelegate {
 
 extension InboxCoordinator: MessengerDelegate {
     func messengerDidLogin(user: User, success: Bool) {
-        logger.debug(user.nickname, success)
+        logger.debug("\(user.nickname), success: \(success)")
         Messenger.shared.loadConversations()
         self.inboxView?.didUpdateUserOnlineState(isUserOnline: true)
     }
@@ -86,10 +113,10 @@ extension InboxCoordinator: MessengerDelegate {
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
-        logger.debug(message.rawContent, success)
+        logger.debug("\(message.rawContent), success: \(success)")
     }
     
-    func messengerDidUpdateConversations(_ conversations: [Conversation]) {
+    func messengerDidUpdateConversations(_ conversations: [IMConversation]) {
         inboxView?.didUpdateConversations(conversations)
     }
 }

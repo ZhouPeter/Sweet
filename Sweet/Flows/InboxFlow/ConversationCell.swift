@@ -56,22 +56,31 @@ final class ConversationCell: SwipeTableViewCell, CellReusable {
     
     private var avatarURL: URL?
     
-    func updateWith(_ conversation: Conversation) {
-        let url = URL(string: conversation.user.avatar)
+    func updateWith(_ conversation: IMConversation) {
+        let url = URL(string: conversation.avatarURL)
         if avatarURL != url {
             avatarImageView.sd_setImage(with: url)
             avatarURL = url
         }
-        nameLabel.text = conversation.user.nickname
-        contentLabel.text = conversation.lastMessage?.displayText(buddy: conversation.user)
-        timeLabel.text = TimerHelper.coversationTimeText(with: conversation.date)
+        nameLabel.text = conversation.name
+        contentLabel.text = conversation.lastMessageContent
+        if conversation.lastMessageTimestamp > 0  {
+            let date = Date(timeIntervalSince1970: TimeInterval(conversation.lastMessageTimestamp/1000))
+            timeLabel.text = TimerHelper.coversationTimeText(with: date)
+        } else {
+            timeLabel.text = nil
+        }
         badgeView.isHidden = false
-        if conversation.unreadCount > 0 {
-            badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
-        } else if conversation.likesCount > 0 {
+        if conversation.isMute && conversation.unreadCount > 0 {
             badgeView.text = nil
         } else {
-            badgeView.isHidden = true
+            if conversation.unreadCount > 0 {
+                badgeView.text = conversation.unreadCount > 99 ? "99+" : "\(conversation.unreadCount)"
+            } else if conversation.likeCount > 0 {
+                badgeView.text = nil
+            } else {
+                badgeView.isHidden = true
+            }
         }
     }
     

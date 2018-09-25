@@ -100,6 +100,52 @@ enum IMType: SwiftProtobuf.Enum {
 
 }
 
+struct IMConversation {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 对话 ID。群聊为群组 ID，单聊为用户 ID
+  var id: UInt64 = 0
+
+  /// 对话名称。群聊为群组名称，单聊为对象名称
+  var name: String = String()
+
+  /// 成员数量
+  var memberCount: UInt32 = 0
+
+  /// 成员 ID。不全，简略给出。单聊成员个数为 2.
+  var memberIds: [UInt64] = []
+
+  /// 对话头像地址
+  var avatarURL: String = String()
+
+  /// 是否是群组对话
+  var isGroup: Bool = false
+
+  /// 最新的消息 ID
+  var lastMessageID: UInt64 = 0
+
+  /// 最新的消息显示内容
+  var lastMessageContent: String = String()
+
+  /// 最新的消息时间
+  var lastMessageTimestamp: UInt64 = 0
+
+  /// 未读消息计数
+  var unreadCount: UInt64 = 0
+
+  /// 点赞计数
+  var likeCount: UInt64 = 0
+
+  /// 是否静音
+  var isMute: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct IMProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -224,6 +270,99 @@ struct SimpleUserInfo {
   init() {}
 }
 
+///未读群消息
+struct UnreadGroupMessage {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 群组ID
+  var groupID: UInt64 = 0
+
+  /// 未读数量
+  var count: UInt32 = 0
+
+  /// 最后一条消息的时间
+  var lastTime: UInt64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+///群组信息
+struct GroupInfo {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 群组ID
+  var groupID: UInt64 = 0
+
+  ///名称
+  var name: String = String()
+
+  ///成员数量
+  var memberNum: UInt32 = 0
+
+  ///最大成员数
+  var maxMember: UInt32 = 0
+
+  ///创建时间
+  var created: UInt64 = 0
+
+  /// 状态 0正常 1删除
+  var status: UInt32 = 0
+
+  ///图标（可能为空）
+  var icon: String = String()
+
+  ///静音
+  var mute: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+///群消息结构
+struct GroupIMProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// 群消息Id
+  var id: UInt64 = 0
+
+  /// 群Id
+  var groupID: UInt64 = 0
+
+  /// 发送者Id
+  var from: UInt64 = 0
+
+  /// 消息类型
+  var type: IMType = .unknown
+
+  /// 消息内容
+  var content: String = String()
+
+  /// 状态
+  var status: UInt32 = 0
+
+  /// 消息发送时间
+  var sendTime: UInt64 = 0
+
+  /// 消息创建时间
+  var created: UInt64 = 0
+
+  /// 附加内容 cardId or itemId
+  var extra: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension IMType: SwiftProtobuf._ProtoNameProviding {
@@ -236,6 +375,101 @@ extension IMType: SwiftProtobuf._ProtoNameProviding {
     5: .same(proto: "IMAGE"),
     6: .same(proto: "ARTICLE"),
   ]
+}
+
+extension IMConversation: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "IMConversation"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "member_count"),
+    4: .same(proto: "memberIDs"),
+    5: .same(proto: "avatarURL"),
+    6: .same(proto: "isGroup"),
+    7: .same(proto: "lastMessageID"),
+    8: .same(proto: "lastMessageContent"),
+    9: .same(proto: "lastMessageTimestamp"),
+    10: .same(proto: "unreadCount"),
+    11: .same(proto: "likeCount"),
+    12: .same(proto: "isMute"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt64Field(value: &self.id)
+      case 2: try decoder.decodeSingularStringField(value: &self.name)
+      case 3: try decoder.decodeSingularUInt32Field(value: &self.memberCount)
+      case 4: try decoder.decodeRepeatedUInt64Field(value: &self.memberIds)
+      case 5: try decoder.decodeSingularStringField(value: &self.avatarURL)
+      case 6: try decoder.decodeSingularBoolField(value: &self.isGroup)
+      case 7: try decoder.decodeSingularUInt64Field(value: &self.lastMessageID)
+      case 8: try decoder.decodeSingularStringField(value: &self.lastMessageContent)
+      case 9: try decoder.decodeSingularUInt64Field(value: &self.lastMessageTimestamp)
+      case 10: try decoder.decodeSingularUInt64Field(value: &self.unreadCount)
+      case 11: try decoder.decodeSingularUInt64Field(value: &self.likeCount)
+      case 12: try decoder.decodeSingularBoolField(value: &self.isMute)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.id != 0 {
+      try visitor.visitSingularUInt64Field(value: self.id, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if self.memberCount != 0 {
+      try visitor.visitSingularUInt32Field(value: self.memberCount, fieldNumber: 3)
+    }
+    if !self.memberIds.isEmpty {
+      try visitor.visitPackedUInt64Field(value: self.memberIds, fieldNumber: 4)
+    }
+    if !self.avatarURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.avatarURL, fieldNumber: 5)
+    }
+    if self.isGroup != false {
+      try visitor.visitSingularBoolField(value: self.isGroup, fieldNumber: 6)
+    }
+    if self.lastMessageID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.lastMessageID, fieldNumber: 7)
+    }
+    if !self.lastMessageContent.isEmpty {
+      try visitor.visitSingularStringField(value: self.lastMessageContent, fieldNumber: 8)
+    }
+    if self.lastMessageTimestamp != 0 {
+      try visitor.visitSingularUInt64Field(value: self.lastMessageTimestamp, fieldNumber: 9)
+    }
+    if self.unreadCount != 0 {
+      try visitor.visitSingularUInt64Field(value: self.unreadCount, fieldNumber: 10)
+    }
+    if self.likeCount != 0 {
+      try visitor.visitSingularUInt64Field(value: self.likeCount, fieldNumber: 11)
+    }
+    if self.isMute != false {
+      try visitor.visitSingularBoolField(value: self.isMute, fieldNumber: 12)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: IMConversation) -> Bool {
+    if self.id != other.id {return false}
+    if self.name != other.name {return false}
+    if self.memberCount != other.memberCount {return false}
+    if self.memberIds != other.memberIds {return false}
+    if self.avatarURL != other.avatarURL {return false}
+    if self.isGroup != other.isGroup {return false}
+    if self.lastMessageID != other.lastMessageID {return false}
+    if self.lastMessageContent != other.lastMessageContent {return false}
+    if self.lastMessageTimestamp != other.lastMessageTimestamp {return false}
+    if self.unreadCount != other.unreadCount {return false}
+    if self.likeCount != other.likeCount {return false}
+    if self.isMute != other.isMute {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
 }
 
 extension IMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -452,4 +686,193 @@ extension SimpleUserInfo.Gender: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "FEMALE"),
     3: .same(proto: "OTHER"),
   ]
+}
+
+extension UnreadGroupMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "UnreadGroupMessage"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "group_id"),
+    2: .same(proto: "count"),
+    3: .standard(proto: "last_time"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt64Field(value: &self.groupID)
+      case 2: try decoder.decodeSingularUInt32Field(value: &self.count)
+      case 3: try decoder.decodeSingularUInt64Field(value: &self.lastTime)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.groupID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.groupID, fieldNumber: 1)
+    }
+    if self.count != 0 {
+      try visitor.visitSingularUInt32Field(value: self.count, fieldNumber: 2)
+    }
+    if self.lastTime != 0 {
+      try visitor.visitSingularUInt64Field(value: self.lastTime, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: UnreadGroupMessage) -> Bool {
+    if self.groupID != other.groupID {return false}
+    if self.count != other.count {return false}
+    if self.lastTime != other.lastTime {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension GroupInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupInfo"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "group_id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "member_num"),
+    4: .standard(proto: "max_member"),
+    5: .same(proto: "created"),
+    6: .same(proto: "status"),
+    7: .same(proto: "icon"),
+    8: .same(proto: "mute"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt64Field(value: &self.groupID)
+      case 2: try decoder.decodeSingularStringField(value: &self.name)
+      case 3: try decoder.decodeSingularUInt32Field(value: &self.memberNum)
+      case 4: try decoder.decodeSingularUInt32Field(value: &self.maxMember)
+      case 5: try decoder.decodeSingularUInt64Field(value: &self.created)
+      case 6: try decoder.decodeSingularUInt32Field(value: &self.status)
+      case 7: try decoder.decodeSingularStringField(value: &self.icon)
+      case 8: try decoder.decodeSingularBoolField(value: &self.mute)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.groupID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.groupID, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if self.memberNum != 0 {
+      try visitor.visitSingularUInt32Field(value: self.memberNum, fieldNumber: 3)
+    }
+    if self.maxMember != 0 {
+      try visitor.visitSingularUInt32Field(value: self.maxMember, fieldNumber: 4)
+    }
+    if self.created != 0 {
+      try visitor.visitSingularUInt64Field(value: self.created, fieldNumber: 5)
+    }
+    if self.status != 0 {
+      try visitor.visitSingularUInt32Field(value: self.status, fieldNumber: 6)
+    }
+    if !self.icon.isEmpty {
+      try visitor.visitSingularStringField(value: self.icon, fieldNumber: 7)
+    }
+    if self.mute != false {
+      try visitor.visitSingularBoolField(value: self.mute, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: GroupInfo) -> Bool {
+    if self.groupID != other.groupID {return false}
+    if self.name != other.name {return false}
+    if self.memberNum != other.memberNum {return false}
+    if self.maxMember != other.maxMember {return false}
+    if self.created != other.created {return false}
+    if self.status != other.status {return false}
+    if self.icon != other.icon {return false}
+    if self.mute != other.mute {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension GroupIMProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GroupIMProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "group_id"),
+    3: .same(proto: "from"),
+    4: .same(proto: "type"),
+    5: .same(proto: "content"),
+    6: .same(proto: "status"),
+    7: .standard(proto: "send_time"),
+    8: .same(proto: "created"),
+    9: .same(proto: "extra"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt64Field(value: &self.id)
+      case 2: try decoder.decodeSingularUInt64Field(value: &self.groupID)
+      case 3: try decoder.decodeSingularUInt64Field(value: &self.from)
+      case 4: try decoder.decodeSingularEnumField(value: &self.type)
+      case 5: try decoder.decodeSingularStringField(value: &self.content)
+      case 6: try decoder.decodeSingularUInt32Field(value: &self.status)
+      case 7: try decoder.decodeSingularUInt64Field(value: &self.sendTime)
+      case 8: try decoder.decodeSingularUInt64Field(value: &self.created)
+      case 9: try decoder.decodeSingularStringField(value: &self.extra)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.id != 0 {
+      try visitor.visitSingularUInt64Field(value: self.id, fieldNumber: 1)
+    }
+    if self.groupID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.groupID, fieldNumber: 2)
+    }
+    if self.from != 0 {
+      try visitor.visitSingularUInt64Field(value: self.from, fieldNumber: 3)
+    }
+    if self.type != .unknown {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 4)
+    }
+    if !self.content.isEmpty {
+      try visitor.visitSingularStringField(value: self.content, fieldNumber: 5)
+    }
+    if self.status != 0 {
+      try visitor.visitSingularUInt32Field(value: self.status, fieldNumber: 6)
+    }
+    if self.sendTime != 0 {
+      try visitor.visitSingularUInt64Field(value: self.sendTime, fieldNumber: 7)
+    }
+    if self.created != 0 {
+      try visitor.visitSingularUInt64Field(value: self.created, fieldNumber: 8)
+    }
+    if !self.extra.isEmpty {
+      try visitor.visitSingularStringField(value: self.extra, fieldNumber: 9)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: GroupIMProto) -> Bool {
+    if self.id != other.id {return false}
+    if self.groupID != other.groupID {return false}
+    if self.from != other.from {return false}
+    if self.type != other.type {return false}
+    if self.content != other.content {return false}
+    if self.status != other.status {return false}
+    if self.sendTime != other.sendTime {return false}
+    if self.created != other.created {return false}
+    if self.extra != other.extra {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
 }

@@ -14,6 +14,7 @@ protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showProfile(userId: UInt64, setTop: SetTop?)
     func openEmojis(cardId: String)
     func shareCard(cardId: String)
+    func joinGroup(groupId: UInt64, cardId: String, contentId: String)
 }
 
 
@@ -28,7 +29,7 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         return label
     } ()
     
-    var contentImageView: UIImageView = {
+    lazy var contentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tag = 10086
         imageView.isUserInteractionEnabled = true
@@ -64,15 +65,6 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         contentImageView.pin(.bottom, to: contentLabel, spacing: 10)
         contentImageView.setViewRounded(cornerRadius: 5, corners: [.bottomLeft, .bottomRight])
         setupImageViews()
-        customContent.addSubview(emojiView)
-        emojiView.align(.right)
-        emojiView.align(.left)
-        emojiView.pin(.bottom, to: contentImageView)
-        emojiView.align(.bottom)
-        customContent.addSubview(shareButton)
-        shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.left, inset: 10)
-        shareButton.centerY(to: emojiView)
         
     }
     
@@ -129,6 +121,10 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         }
         update(with: viewModel.imageURLList)
         resetEmojiView()
+        update(isGroupChat: viewModel.type == .groupChat,
+               contentId: viewModel.contentId,
+               groupId: viewModel.groupId,
+               memberNumString: viewModel.memberNumString)
     }
     
     func updateEmojiView(viewModel: ContentCardViewModel) {

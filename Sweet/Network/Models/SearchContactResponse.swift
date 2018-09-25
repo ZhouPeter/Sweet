@@ -14,5 +14,6 @@ struct SearchContactResponse: Codable {
     let contacts: [Contact]
     let phoneContacts: [PhoneContact]
     let subscriptions: [Contact]
+    let users: [Contact]
     
 }

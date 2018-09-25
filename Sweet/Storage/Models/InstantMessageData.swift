@@ -23,6 +23,7 @@ class InstantMessageData: Object {
     @objc dynamic var isRead = false
     @objc dynamic var isFailed = false
     @objc dynamic var extra: String?
+    @objc dynamic var isGroup = false
     
     override static func primaryKey() -> String? {
         return "localID"
@@ -46,6 +47,7 @@ class InstantMessageData: Object {
         data.isRead = message.isRead
         data.isFailed = message.isFailed
         data.extra = message.extra
+        data.isGroup = message.isGroup
         return data
     }
 }

@@ -34,7 +34,9 @@ target 'Sweet' do
   pod 'SDWebImage', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'SDWebImage/WebP', :git => 'https://github.com/rs/SDWebImage.git', :branch => '5.x'
   pod 'YYText'
-  
+  pod 'TencentOpenAPI-Swift'
+  pod 'Weibo_SDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
+
   target 'Sweet Dev' do
   end
   

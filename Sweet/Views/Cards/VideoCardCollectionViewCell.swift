@@ -42,6 +42,7 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
         controlView.addGestureRecognizer(tap)
         view.backgroundColor = .black
         view.isUserInteractionEnabled = true
+//        view.setViewRounded(cornerRadius: 5)
         view.layer.cornerRadius = 5
         view.clipsToBounds = true
         return view
@@ -76,15 +77,6 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
         contentViewHeight = contentImageView.constrain(height: UIScreen.mainWidth() - 30)
         customContent.addSubview(playerView)
         playerView.fill(in: contentImageView)
-        customContent.addSubview(emojiView)
-        emojiView.align(.right)
-        emojiView.align(.left)
-        emojiView.pin(.bottom, to: contentImageView)
-        emojiView.align(.bottom)
-        customContent.addSubview(shareButton)
-        shareButton.constrain(width: 24, height: 24)
-        shareButton.align(.left, inset: 10)
-        shareButton.centerY(to: emojiView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -129,6 +121,10 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
         }
         resetEmojiView()
         loadItemValues()
+        update(isGroupChat: viewModel.type == .groupChat,
+               contentId: viewModel.contentId,
+               groupId: viewModel.groupId,
+               memberNumString: viewModel.memberNumString)
 
     }
     

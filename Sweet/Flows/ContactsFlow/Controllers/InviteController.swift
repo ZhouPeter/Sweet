@@ -149,23 +149,7 @@ extension InviteController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if let url = Defaults[.inviteUrl] {
-                let text = "讲真APP超级好玩，你也下载来和我一起玩吧：\(url)"
-                WXApi.sendText(text: text, scene: .conversation)
-            } else {
-                web.request(.inviteUrl) { (result) in
-                    switch result {
-                    case let .success(response):
-                        if let url = response["url"] as? String {
-                            let text = "讲真APP超级好玩，你也下载来和我一起玩吧：\(url)"
-                            WXApi.sendText(text: text, scene: .conversation)
-                            Defaults[.inviteUrl] = url
-                        }
-                    case let .failure(error):
-                        logger.error(error)
-                    }
-                }
-            }
+            ShareInviteHelper.sendWXInviteMessage(scene: .conversation)
         } else if indexPath.section == 1 {
             if let userId = viewModels[indexPath.row].userId {
                 delegate?.showProfile(userId: userId)

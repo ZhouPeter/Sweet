@@ -78,6 +78,7 @@ class UserData: Object {
         data.city = user.city
         data.userType.value = user.userType
         data.isBlacklisted = user.isBlacklisted ?? false
+        data.phone = user.phone
         return data
     }
 }

@@ -55,6 +55,11 @@ class SignUpUniversityController: BaseViewController, SignUpUniversityView {
         navigationController?.navigationBar.barTintColor = UIColor.xpYellow()
         navigationItem.title = "你的学校"
         setupUI()
+        if loginRequestBody.register == false {
+            let alert = UIAlertController(title: nil, message: "完善资料， 开启讲真之旅", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "开始", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -13,12 +13,17 @@ final class Storage {
     
     var realm: Realm {
         let realmURL = URL.userDirectory(with: userID).appendingPathComponent("data.realm")
-        let schemaVersion: UInt64 = 1
+        let schemaVersion: UInt64 = 2
         let config = Realm.Configuration(
             fileURL: realmURL,
             schemaVersion: schemaVersion,
-            migrationBlock: nil,
-            deleteRealmIfMigrationNeeded: true
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < schemaVersion {
+                    migration.deleteData(forType: InstantMessageData.className())
+                    migration.deleteData(forType: ConversationData.className())
+                }
+        },
+            deleteRealmIfMigrationNeeded: false
         )
         do {
             let realm = try Realm(configuration: config)

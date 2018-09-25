@@ -18,6 +18,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
     var subscriptionsViewModels = [ContactViewModel]()
     var blacklistViewModels = [ContactViewModel]()
     var blockViewModels = [ContactViewModel]()
+    var userViewModels = [ContactViewModel]()
     var phoneContactViewModels = [PhoneContactViewModel]()
     var titles = [String]()
     private var lastestSearchText: String = ""
@@ -60,11 +61,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         navigationItem.hidesBackButton = true
         navigationItem.titleView = searchBar
         view.addSubview(tableView)
-//        tableView.fill(in: view)
-        tableView.align(.left)
-        tableView.align(.right)
-        tableView.align(.bottom)
-        tableView.align(.top)
+        tableView.fill(in: view)
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
@@ -95,6 +92,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         phoneContactViewModels.removeAll()
         blockViewModels.removeAll()
         blacklistViewModels.removeAll()
+        userViewModels.removeAll()
         titles.removeAll()
     }
     
@@ -135,7 +133,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.subscriptionsViewModels.append(viewModel)
                 })
-                
+               
                 response.phoneContacts.forEach({ (model) in
                     var viewModel = PhoneContactViewModel(model: model)
                     viewModel.callBack = { [weak self] phone in
@@ -143,10 +141,15 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.phoneContactViewModels.append(viewModel)
                 })
+                response.users.forEach({ (model) in
+                    let viewModel = ContactViewModel(model: model)
+                    self.userViewModels.append(viewModel)
+                })
                 if self.contactViewModels.count == 0 &&
                     self.blacklistViewModels.count == 0 &&
                     self.subscriptionsViewModels.count == 0 &&
-                    self.phoneContactViewModels.count == 0 && name.checkPhone() {
+                    self.phoneContactViewModels.count == 0 &&
+                    self.userViewModels.count == 0 && name.checkPhone() {
                     let model = PhoneContact(name: name,
                                              phone: name,
                                              status: .notInvited,
@@ -164,10 +167,10 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 }
             
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
-                 if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }
+                if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }
                 if self.subscriptionsViewModels.count > 0 { self.titles.append("订阅") }
                 if self.phoneContactViewModels.count > 0 { self.titles.append("通讯录") }
-
+                if self.userViewModels.count > 0 { self.titles.append("用户") }
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
@@ -316,6 +319,8 @@ extension ContactSearchController: UITableViewDataSource {
             return subscriptionsViewModels.count
         case "通讯录":
             return phoneContactViewModels.count
+        case "用户":
+            return userViewModels.count
         default:
             return 0
         }
@@ -333,6 +338,8 @@ extension ContactSearchController: UITableViewDataSource {
             cell.update(viewModel: subscriptionsViewModels[indexPath.row])
         case "通讯录":
             cell.updatePhoneContact(viewModel: phoneContactViewModels[indexPath.row])
+        case "用户":
+            cell.update(viewModel: userViewModels[indexPath.row])
         default: break
         }
         return cell
@@ -364,6 +371,8 @@ extension ContactSearchController: UITableViewDelegate {
             if let userId = phoneContactViewModels[indexPath.row].userId {
                 showProfile?(userId)
             }
+        case "用户":
+            showProfile?(userViewModels[indexPath.row].userId)
         default: break
         }
     }

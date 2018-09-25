@@ -54,7 +54,7 @@ extension UIView {
         return image!
     }
     
-    func setView(cornerRadius: CGFloat,
+    @discardableResult func setView(cornerRadius: CGFloat,
                  borderWidth: CGFloat,
                  borderColor: UIColor) -> RounderLayer {
         layoutIfNeeded()
@@ -83,7 +83,7 @@ extension UIView {
         return groupLayer
     }
     
-    func setViewRounded(cornerRadius: CGFloat, corners: UIRectCorner) {
+    func setViewRounded(cornerRadius: CGFloat, corners: UIRectCorner = UIRectCorner.allCorners) {
         layoutIfNeeded()
         let maskPath = UIBezierPath(roundedRect: bounds,
                                     byRoundingCorners: corners,
