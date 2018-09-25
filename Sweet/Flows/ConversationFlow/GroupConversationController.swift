@@ -100,7 +100,11 @@ extension GroupConversationController: MessengerDelegate {
         guard group.id == self.group.id else { return }
         self.messages = messages
         messagesCollectionView.reloadData()
-        messagesCollectionView.scrollToBottom()
+        let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+        let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height
+        if contentHeight > visibleHeight {
+            messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
+        }
     }
     
     func messengerDidLoadMoreMessages(_ messages: [InstantMessage], group: Group) {

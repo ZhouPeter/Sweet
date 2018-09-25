@@ -381,7 +381,7 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, buddy: buddy)})
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy)})
             })
         }
     }
@@ -493,7 +493,7 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMoreMessages(messages, group: group)})
+                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group)})
             })
         }
     }
