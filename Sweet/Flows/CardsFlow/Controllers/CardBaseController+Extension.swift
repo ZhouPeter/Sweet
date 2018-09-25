@@ -212,13 +212,13 @@ extension CardsBaseController {
         self.activityCardId = cardId
     }
     
-    func showGroupInputView(isJoin: Bool){
+    func showGroupInputView(isJoin: Bool, placehoder: String?){
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
-        inputTextView.placehoder = "带句你想说的话"
-        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入讨论群", image: nil)
+        inputTextView.placehoder =  placehoder ?? "带句你想说的话"
+        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入群聊", image: nil)
         inputTextView.startEditing(isStarted: true)
     }
 
@@ -265,8 +265,6 @@ extension CardsBaseController {
                         Defaults[.isJoinGroupChat] = true
                     } else {
                         self.toast(message: "加入群聊成功！")
-//                        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-//                        self.cards[index].join = true
                         for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
                             self.cards[index].join = true
                         }

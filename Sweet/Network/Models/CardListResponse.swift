@@ -91,6 +91,7 @@ struct CardResponse: Codable {
     var result: SelectResult?
     let type: UInt
     let groupId: UInt64?
+    let topic: String?
     var join: Bool?
     let memberNum: UInt?
     var cardEnumType: CardType {
