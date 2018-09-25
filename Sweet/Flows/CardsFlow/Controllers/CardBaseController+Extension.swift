@@ -229,9 +229,10 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        if cards[index].cardEnumType == .activity {
+        let type = cards[index].cardEnumType
+        if type == .activity || type == .user {
             sendActivityMessages(text: text)
-        } else if cards[index].cardEnumType == .groupChat {
+        } else if type == .groupChat {
             joinGroup(text: text)
         }
     }
