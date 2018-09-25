@@ -22,7 +22,7 @@ final class ContentCardMessageCell: MediaMessageCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "Logo")
+        imageView.backgroundColor = UIColor(hex: 0xdedede)
         return imageView
     } ()
     
