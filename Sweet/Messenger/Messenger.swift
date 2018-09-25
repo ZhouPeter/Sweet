@@ -559,6 +559,9 @@ final class Messenger {
         guard state == .online else { return }
         fetch(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
             guard let response = response, response.list.isNotEmpty else { return }
+//            response.list.forEach({
+//                logger.debug("\($0.name), \($0.unreadCount)")
+//            })
             self.storage?.write({ (realm) in
                 realm.add(response.list.map(ConversationData.data(with:)), update: true)
             }, callback: { (_) in
@@ -609,18 +612,24 @@ final class Messenger {
     }
     
     func markConversationAsRead(_ id: UInt64, isGroup: Bool) {
+        var isConversationUpdated = false
         storage?.write({ (realm) in
             let key = ConversationData.makeKey(id: id, isGroup: isGroup)
             if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: key) {
-                data.unreadCount = 0
-                data.likesCount = 0
+                if data.unreadCount > 0 || data.likesCount > 0 {
+                    data.unreadCount = 0
+                    data.likesCount = 0
+                    isConversationUpdated = true
+                }
             }
             realm.objects(InstantMessageData.self)
                 .filter("isGroup == \(isGroup)")
                 .filter("from == \(id) || to == \(id)")
                 .forEach({ $0.isRead = true })
         }, callback: { _ in
-            self.loadConversations()
+            if isConversationUpdated {
+                self.loadConversations()
+            }
         })
     }
     
