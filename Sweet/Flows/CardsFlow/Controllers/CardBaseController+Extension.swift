@@ -206,6 +206,7 @@ extension CardsBaseController {
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
+        inputTextView.placehoder = "带句你想说的话"
         inputTextView.updateSendButton(title: "确认点赞")
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
@@ -217,7 +218,7 @@ extension CardsBaseController {
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
-        inputTextView.placehoder =  placehoder ?? "带句你想说的话"
+        inputTextView.placehoder = placehoder ?? "带句你想说的话"
         inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入群聊", image: nil)
         inputTextView.startEditing(isStarted: true)
     }
