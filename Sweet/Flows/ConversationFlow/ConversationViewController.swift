@@ -144,13 +144,19 @@ class ConversationViewController: MessagesViewController {
     }
     
     func reloadDataAndGoToBottom() {
-        DispatchQueue.main.throttle(deadline: .now() + 0.15) {
-            self.messagesCollectionView.reloadData()
-            let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-            let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
-            if contentHeight > visibleHeight {
-                self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
-            }
+        DispatchQueue.main.throttle(deadline: .now() + 0.2, context: "Conversation") {
+            logger.debug("Throttling...")
+            self.reloadDataAndGoToBottomWithoutThrottle()
+        }
+    }
+    
+    func reloadDataAndGoToBottomWithoutThrottle() {
+        logger.debug("")
+        self.messagesCollectionView.reloadData()
+        let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+        let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
+        if contentHeight > visibleHeight {
+            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
         }
     }
     

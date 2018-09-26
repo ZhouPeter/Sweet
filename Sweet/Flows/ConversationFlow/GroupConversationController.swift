@@ -98,6 +98,11 @@ extension GroupConversationController: MessageInputBarDelegate {
 extension GroupConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group) {
         guard group.id == self.group.id else { return }
+        if self.messages.isEmpty {
+            self.messages = messages
+            reloadDataAndGoToBottomWithoutThrottle()
+            return
+        }
         self.messages = messages
         reloadDataAndGoToBottom()
     }
