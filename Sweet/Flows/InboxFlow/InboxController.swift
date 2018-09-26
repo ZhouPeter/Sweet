@@ -43,8 +43,10 @@ final class InboxController: BaseViewController, InboxView {
     }
     
     func didUpdateConversations(_ conversations: [IMConversation]) {
-        self.conversations = conversations.sorted(by: { $0.lastMessageTimestamp > $1.lastMessageTimestamp })
-        tableView.reloadData()
+        DispatchQueue.main.throttle(deadline: .now() + 0.15) {
+            self.conversations = conversations.sorted(by: { $0.lastMessageTimestamp > $1.lastMessageTimestamp })
+            self.tableView.reloadData()
+        }
     }
     
     func didUpdateUserOnlineState(isUserOnline: Bool) {
