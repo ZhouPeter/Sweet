@@ -265,6 +265,7 @@ extension CardsBaseController {
                         alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                         Defaults[.isJoinGroupChat] = true
+                        Messenger.shared.loadConversations()
                     } else {
                         self.toast(message: "加入群聊成功！")
                         for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
