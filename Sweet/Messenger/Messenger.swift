@@ -38,6 +38,10 @@ final class Messenger {
     }
     private(set) var isNetworkReachable = false {
         didSet {
+            if !isNetworkReachable {
+                deliverQueues.values.forEach({ $0.cancelAllOperations() })
+                deliverQueues.removeAll()
+            }
             if isNetworkReachable && user != nil && token != nil {
                 connect()
             }
@@ -343,9 +347,17 @@ final class Messenger {
     
     // MARK: - Single Messages
     
-    func loadMessages(from buddy: User) {
+    func loadMessages(from buddy: User, fetchRecent: Bool = true) {
+        loadLocalMessages(from: buddy, callback: { messages in
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+            if fetchRecent {
+                self.fetchRecentMessages(from: buddy)
+            }
+        })
+    }
+    
+    func loadLocalMessages(from buddy: User, callback: @escaping ([InstantMessage]) -> Void) {
         var messages = [InstantMessage]()
-        var shouldFetchRecent = true
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -357,20 +369,8 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
-            let key = ConversationData.makeKey(id: buddy.userId, isGroup: false)
-            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key) {
-                if let lastID = conversation.lastMessageID.value,
-                    UInt64(lastID) == messages.last?.remoteID,
-                    conversation.unreadCount == 0,
-                    conversation.likesCount == 0 {
-                    shouldFetchRecent = false
-                }
-            }
         }, callback: {
-            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
-//            if shouldFetchRecent || messages.isEmpty {
-                self.fetchRecentMessages(from: buddy)
-//            }
+            callback(messages)
         })
     }
     
@@ -391,7 +391,7 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy)})
+                self.loadMessages(from: buddy, fetchRecent: false)
                 self.updateConversations()
             })
         }
@@ -460,9 +460,18 @@ final class Messenger {
     
     // MARK: - Group Messages
     
-    func loadMessages(from group: Group) {
+    func loadMessages(from group: Group, fetchRecent: Bool = true) {
+        logger.debug("fetchRecent: \(fetchRecent)")
+        loadLocalMessages(from: group, callback: { messages in
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
+            if fetchRecent {
+                self.fetchRecentMessages(from: group)
+            }
+        })
+    }
+    
+    func loadLocalMessages(from group: Group, callback: @escaping ([InstantMessage]) -> Void) {
         var messages = [InstantMessage]()
-        var shouldFetchRecent = true
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -474,19 +483,8 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
-            let key = ConversationData.makeKey(id: group.id, isGroup: true)
-            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key),
-                let lastID = conversation.lastMessageID.value,
-                UInt64(lastID) == messages.last?.remoteID,
-                conversation.unreadCount == 0,
-                conversation.likesCount == 0 {
-                    shouldFetchRecent = false
-                }
         }, callback: {
-            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
-//            if shouldFetchRecent || messages.isEmpty {
-                self.fetchRecentMessages(from: group)
-//            }
+            callback(messages)
         })
     }
     
@@ -506,7 +504,7 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group)})
+                self.loadMessages(from: group, fetchRecent: false)
                 self.updateConversations()
             })
         }
