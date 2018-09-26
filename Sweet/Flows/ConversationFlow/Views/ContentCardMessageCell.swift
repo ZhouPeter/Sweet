@@ -13,7 +13,6 @@ final class ContentCardMessageCell: MediaMessageCell {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 15)
-        label.text = "世界上的女明星那么多，你偏偏喜欢国内的。那么，你是喜欢杨幂还是柳岩呢？"
         label.numberOfLines = 3
         return label
     } ()

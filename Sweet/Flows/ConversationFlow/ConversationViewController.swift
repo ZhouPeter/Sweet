@@ -143,6 +143,17 @@ class ConversationViewController: MessagesViewController {
         return lastMessage
     }
     
+    func reloadDataAndGoToBottom() {
+        DispatchQueue.main.throttle(deadline: .now() + 0.15) {
+            self.messagesCollectionView.reloadData()
+            let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+            let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
+            if contentHeight > visibleHeight {
+                self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
+            }
+        }
+    }
+    
     @discardableResult func handleTapAvatar(in cell: MessageCollectionViewCell, at indexPath: IndexPath) -> Bool {
         if let id = UInt64(messages[indexPath.section].sender.id), let user = members[id] {
             delegate?.conversationControllerShowsProfile(buddy: user)

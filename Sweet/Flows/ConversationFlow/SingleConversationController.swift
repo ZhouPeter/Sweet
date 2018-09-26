@@ -104,12 +104,7 @@ extension SingleConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
         guard buddy.userId == self.buddy.userId else { return }
         self.messages = messages
-        messagesCollectionView.reloadData()
-        let contentHeight = messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-        let visibleHeight = messagesCollectionView.bounds.size.height - messageInputBar.bounds.height
-        if contentHeight > visibleHeight {
-            messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
-        }
+        reloadDataAndGoToBottom()
     }
     
     func messengerDidSendMessage(_ message: InstantMessage, success: Bool) {
