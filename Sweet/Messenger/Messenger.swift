@@ -252,12 +252,14 @@ final class Messenger {
                 switch result {
                 case .success:
                     self.updateConversations()
-                    self.storage?.write({ (realm) in
-                        if let data = realm.object(ofType: GroupData.self, forPrimaryKey: group.id) {
-                            data.isMuted = isMuted
-                        }
+                    self.loadGroupWith(id: group.id, isForceSynced: true, callback: { _ in
+                        self.storage?.write({ (realm) in
+                            if let data = realm.object(ofType: GroupData.self, forPrimaryKey: group.id) {
+                                data.isMuted = isMuted
+                            }
+                        })
+                        self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
                     })
-                    self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
                 case .failure:
                     self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: group.isMuted) })
                 }
