@@ -79,8 +79,9 @@ struct ActivityCardViewModel {
     var callBack: ((String) -> Void)?
     var showProfile: ((UInt64, SetTop?) -> Void)?
     let setTop: SetTop?
-    let url: String?
+    let url: URL?
     let fromCardId: String
+    let isSame: Bool
     init(model: ActivityResponse, userAvatarURL: URL? = nil) {
         actor = model.actor
         activityId = model.activityId
@@ -98,11 +99,12 @@ struct ActivityCardViewModel {
         }
         like = model.like
         isHiddenLikeButton = model.actor == UInt64(Defaults[.userID]!)!
+        isSame = model.same
         if let userAvatarURL = userAvatarURL, model.same {
             sameAvatarURL = userAvatarURL
         }
         setTop = SetTop(contentId: model.contentId, preferenceId: model.preferenceId)
-        url = model.url
+        url = model.url == nil ? nil : URL(string: model.url!)
         fromCardId = model.fromCardId
     }
 }

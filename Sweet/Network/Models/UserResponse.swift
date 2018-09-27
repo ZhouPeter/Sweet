@@ -28,6 +28,8 @@ struct UserResponse: Codable {
     var blacklist: Bool
     var block: Bool
     let common: Int
+    let activityNum: UInt64
+    let storyNum: UInt64
 }
 
 extension User {

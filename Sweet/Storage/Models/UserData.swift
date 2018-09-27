@@ -116,5 +116,7 @@ extension UserResponse {
         blacklist = data.isBlacklisted
         block = data.isBlock
         common = data.common
+        activityNum = 0
+        storyNum = 0
     }
 }

@@ -45,3 +45,34 @@ class SweetHeaderView: UITableViewHeaderFooterView {
         titleLabel.text = title
     }
 }
+
+
+class SweetCollectionHeaderView: UICollectionReusableView {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.black.withAlphaComponent(0.3)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.backgroundColor = .clear
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+        backgroundColor = .clear
+        addSubview(titleLabel)
+        titleLabel.align(.left, to: self, inset: 16)
+        titleLabel.centerY(to: self)
+    }
+    
+    func update(title: String) {
+        titleLabel.text = title
+    }
+}

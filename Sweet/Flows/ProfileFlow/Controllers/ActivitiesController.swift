@@ -35,6 +35,9 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
             cellNumber = viewModels.count
         }
     }
+    
+    private var groupCount = [Int]()
+    
     private var page = 0
     private var loadFinish = false
     private lazy var tableView: UITableView = {
@@ -47,6 +50,20 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
         return tableView
     }()
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: (UIScreen.mainWidth() - 6) / 3, height: (UIScreen.mainHeight() - 6) / 3)
+        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 3
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor.xpGray()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(ActivityCollectionViewCell.self, forCellWithReuseIdentifier: "ActivityCollectionCell")
+        collectionView.register(SweetCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerView")
+        return collectionView
+    }()
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "可以带一句你想说的话"
@@ -56,8 +73,13 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     private var activityId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        tableView.fill(in: view)
+        if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == user.userId {
+            view.addSubview(tableView)
+            tableView.fill(in: view)
+        } else {
+            view.addSubview(collectionView)
+            collectionView.fill(in: view)
+        }
         loadRequest()
     }
     
@@ -65,7 +87,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         if viewModels.count > 0 { return }
         page = 0
         web.request(
-            .activityList(page: 0, userId: user.userId,
+            .preferenceList(page: 0, userId: user.userId,
                           contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
             responseType: Response<ActivityListResponse>.self) { (result) in
                 switch result {
@@ -79,8 +101,24 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
                         }
                         return viewModel
                     }
-                    self.tableView.contentOffset = .zero
-                    self.tableView.reloadData()
+                    for (index, viewModel) in self.viewModels.enumerated() {
+                        if viewModel.isSame == false {
+                            self.groupCount.append(index)
+                            self.groupCount.append(self.viewModels.count - index)
+                            break
+                        }
+                        if index == self.viewModels.count - 1 && viewModel.isSame {
+                            self.groupCount.append(self.viewModels.count)
+                            self.groupCount.append(0)
+                        }
+                    }
+                    if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == self.user.userId {
+                        self.tableView.contentOffset = .zero
+                        self.tableView.reloadData()
+                    } else {
+                        self.collectionView.contentOffset = .zero
+                        self.collectionView.reloadData()
+                    }
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -91,7 +129,7 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         if loadFinish { return }
         page += 1
         web.request(
-            .activityList(page: page, userId: user.userId,
+            .preferenceList(page: page, userId: user.userId,
                           contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
             responseType: Response<ActivityListResponse>.self) { (result) in
                 switch result {
@@ -105,7 +143,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
                         }
                         return viewModel
                     })
-                    self.tableView.reloadData()
+                    if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == self.user.userId {
+                        self.tableView.reloadData()
+                    } else {
+                        self.collectionView.reloadData()
+                    }
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -119,6 +161,52 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         inputTextView.layoutIfNeeded()
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
+    }
+    
+    private func showOriginalCard(viewModel: ActivityCardViewModel) {
+        web.request(
+            .reviewCard(cardID: viewModel.fromCardId),
+            responseType: Response<CardGetResponse>.self) { (result) in
+                switch result {
+                case let .success(response):
+                    let card = response.card
+                    if card.cardEnumType == .content, let video = card.video {
+                        let videoURL =  URL(string: video)!
+                        let asset = SweetPlayerManager.assetNoCache(for: videoURL)
+                        let playerItem = AVPlayerItem(asset: asset)
+                        let player = AVPlayer(playerItem: playerItem)
+                        let controller = PlayController()
+                        controller.avPlayer = player
+                        controller.resource = SweetPlayerResource(url: videoURL)
+                        self.present(controller, animated: true, completion: nil)
+                    } else if card.cardEnumType == .choice {
+                        var text = ""
+                        if let content = card.content, let textString = try? content.htmlStringReplaceTag() {
+                            text = textString
+                        }
+                        let result = card.result == nil ? -1 : card.result!.index!
+                        let content = OptionCardContent(
+                            identifier: card.cardId,
+                            cardType: InstantMessage.CardType.preference,
+                            text: text,
+                            leftImageURLString: card.imageList![0],
+                            rightImageURLString: card.imageList![1],
+                            result: OptionCardContent.Result(rawValue: result)!
+                        )
+                        let preview = OptionCardPreviewController(content: content, user: self.user)
+                        preview.showProfile = self.showProfile
+                        let popup = PopupController(rootViewController: preview)
+                        popup.present(in: self)
+                    } else {
+                        if let url = viewModel.url {
+                            let controller = ShareWebViewController(urlString: url.absoluteString, cardId: viewModel.fromCardId)
+                            self.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    }
+                case let .failure(error):
+                    logger.error(error)
+                }
+        }
     }
 }
 
@@ -166,13 +254,73 @@ extension ActivitiesController {
                 let viewModel = ActivityCardViewModel(model: self.activityList[item],
                                                       userAvatarURL: URL(string: self.avatar))
                 self.viewModels[item] = viewModel
-                self.tableView.reloadRows(at: [IndexPath(row: item, section: 0)], with: .automatic)
+                if item > self.groupCount[0] - 1 {
+                    self.collectionView.reloadItems(at: [IndexPath(item: item - self.groupCount[0], section: 1)])
+                } else {
+                    self.collectionView.reloadItems(at: [IndexPath(item: item, section: 0)])
+                }
             case let  .failure(error):
                 logger.error(error)
             }
         }
     }
 }
+extension ActivitiesController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return groupCount.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return groupCount[section]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "ActivityCollectionCell",
+            for: indexPath) as? ActivityCollectionViewCell else { fatalError() }
+        let index = indexPath.section == 0 ? indexPath.row : indexPath.row + groupCount[0]
+        cell.update(viewModel: viewModels[index])
+        return cell
+    }
+    
+}
+extension ActivitiesController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = indexPath.section == 0 ? indexPath.row : indexPath.row + groupCount[0]
+        let viewModel = viewModels[index]
+        if viewModel.like == false {
+            showInputView(activityId: viewModel.activityId)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModels.count - 1 && indexPath.section == groupCount.count - 1 {
+            loadMoreRequest()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let cell = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "headerView",
+            for: indexPath) as? SweetCollectionHeaderView else { fatalError() }
+        cell.update(title: "更多喜欢")
+        return cell
+    }
+    
+}
+
+extension ActivitiesController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 1 {
+            return CGSize(width: UIScreen.mainWidth(), height: 30)
+        } else {
+            return .zero
+        }
+    }
+}
+
 extension ActivitiesController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
@@ -188,9 +336,6 @@ extension ActivitiesController: UITableViewDataSource {
 }
 
 extension ActivitiesController: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        delegate?.acitvitiesScrollViewDidScroll(scrollView: scrollView)
-    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (cardCellHeight - 50) / 4
     }
@@ -202,48 +347,12 @@ extension ActivitiesController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewModel = viewModels[indexPath.row]
-        web.request(
-            .reviewCard(cardID: viewModel.fromCardId),
-            responseType: Response<CardGetResponse>.self) { (result) in
-                switch result {
-                case let .success(response):
-                    let card = response.card
-                    if card.cardEnumType == .content, let video = card.video {
-                        let videoURL =  URL(string: video)!
-                        let asset = SweetPlayerManager.assetNoCache(for: videoURL)
-                        let playerItem = AVPlayerItem(asset: asset)
-                        let player = AVPlayer(playerItem: playerItem)
-                        let controller = PlayController()
-                        controller.avPlayer = player
-                        controller.resource = SweetPlayerResource(url: videoURL)
-                        self.present(controller, animated: true, completion: nil)
-                    } else if card.cardEnumType == .choice {
-                        var text = ""
-                        if let content = card.content, let textString = try? content.htmlStringReplaceTag() {
-                            text = textString
-                        }
-                        let result = card.result == nil ? -1 : card.result!.index!
-                        let content = OptionCardContent(
-                            identifier: card.cardId,
-                            cardType: InstantMessage.CardType.preference,
-                            text: text,
-                            leftImageURLString: card.imageList![0],
-                            rightImageURLString: card.imageList![1],
-                            result: OptionCardContent.Result(rawValue: result)!
-                        )
-                        let preview = OptionCardPreviewController(content: content, user: self.user)
-                        preview.showProfile = self.showProfile
-                        let popup = PopupController(rootViewController: preview)
-                        popup.present(in: self)
-                    } else {
-                        if let url = viewModel.url {
-                            let controller = ShareWebViewController(urlString: url, cardId: viewModel.fromCardId)
-                            self.navigationController?.pushViewController(controller, animated: true)
-                        }
-                    }
-                case let .failure(error):
-                    logger.error(error)
-                }
-        }
+        showOriginalCard(viewModel: viewModel)
+    }
+}
+
+extension ActivitiesController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.acitvitiesScrollViewDidScroll(scrollView: scrollView)
     }
 }

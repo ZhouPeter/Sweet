@@ -566,6 +566,11 @@ extension ProfileController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
+            if user.userId == userId {
+                cell.update(activityTitle: "动态 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
+            } else {
+                cell.update(activityTitle: "共同喜欢 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
+            }
            cell.delegate = self
             if let view = actionsController?.view {
                 cell.setPlaceholderContentView(view: view)

@@ -32,7 +32,7 @@ class UserInfoTableViewCell: UITableViewCell {
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .black
         return label
     }()
@@ -42,10 +42,17 @@ class UserInfoTableViewCell: UITableViewCell {
         imageView.image = #imageLiteral(resourceName: "Star")
         return imageView
     }()
-    private lazy var starContactLabel: UILabel = {
+    private lazy var starLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = UIColor.black.withAlphaComponent(0.65)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = UIColor.black
+        return label
+    }()
+    
+    private lazy var contactLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = UIColor.black
         return label
     }()
     private lazy var segmentLineView: UIView = {
@@ -113,13 +120,16 @@ class UserInfoTableViewCell: UITableViewCell {
         contentView.addSubview(nicknameLabel)
         nicknameLabel.pin(.right, to: avatarImageView, spacing: 16)
         nicknameLabel.align(.top, inset: 28)
-        contentView.addSubview(starContactLabel)
-        starContactLabel.align(.left, to: nicknameLabel, inset: 25)
-        starContactLabel.pin(.bottom, to: nicknameLabel, spacing: 15)
+        contentView.addSubview(starLabel)
+        starLabel.align(.left, to: nicknameLabel)
+        starLabel.pin(.bottom, to: nicknameLabel, spacing: 15)
         contentView.addSubview(heartImageView)
         heartImageView.constrain(width: 25, height: 25)
-        heartImageView.centerY(to: starContactLabel)
-        heartImageView.pin(.left, to: starContactLabel)
+        heartImageView.centerY(to: starLabel)
+        heartImageView.pin(.right, to: starLabel)
+        contentView.addSubview(contactLabel)
+        contactLabel.centerY(to: starLabel)
+        contactLabel.pin(.right, to: heartImageView)
         contentView.addSubview(segmentLineView)
         segmentLineView.align(.left)
         segmentLineView.align(.right)
@@ -158,7 +168,8 @@ class UserInfoTableViewCell: UITableViewCell {
         avatarImageView.sd_setImage(with: viewModel.avatarImageURL)
         sexImageView.image = viewModel.sexImage
         nicknameLabel.text = viewModel.nicknameString
-        starContactLabel.text = viewModel.starContactString
+        starLabel.text = viewModel.starString
+        contactLabel.text = viewModel.contactString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
     }

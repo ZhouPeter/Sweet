@@ -14,11 +14,9 @@ class ActionsTableViewCell: UITableViewCell {
     weak var delegate: ActionsTableViewCellDelegate?
     private lazy var buttons: [UIButton] = {
         var buttons = [UIButton]()
-        let titles = ["动态", "小故事"]
-        for index in 0 ..< titles.count {
+        for index in 0 ..< 2 {
             let button = UIButton()
             button.backgroundColor = .white
-            button.setTitle(titles[index], for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             button.setTitleColor(.black, for: .normal)
             button.tag = index
@@ -87,11 +85,15 @@ class ActionsTableViewCell: UITableViewCell {
     
     func setPlaceholderContentView(view: UIView) {
         if placeholderView.superview != nil {
-//            placeholderView.removeFromSuperview()
         } else {
             placeholderView = view
             contentView.addSubview(placeholderView)
             placeholderView.fill(in: contentView, top: 50)
         }
+    }
+    
+    func update(activityTitle: String, storyTitle: String) {
+        buttons[0].setTitle(activityTitle, for: .normal)
+        buttons[1].setTitle(storyTitle, for: .normal)
     }
 }
