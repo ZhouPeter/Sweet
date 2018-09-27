@@ -143,8 +143,18 @@ class ConversationViewController: MessagesViewController {
         return lastMessage
     }
     
+    private var lastReloadDate: Date?
+    private let realodDelay: TimeInterval = 0.2
+    
     func reloadDataAndGoToBottom() {
-        logger.debug("")
+        let now = Date()
+        if let last = lastReloadDate, now.timeIntervalSince(last) < realodDelay {
+            DispatchQueue.main.asyncAfter(deadline: .now() + realodDelay) {
+                self.reloadDataAndGoToBottom()
+            }
+            return
+        }
+        lastReloadDate = Date()
         self.messagesCollectionView.reloadData()
         let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
         let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height

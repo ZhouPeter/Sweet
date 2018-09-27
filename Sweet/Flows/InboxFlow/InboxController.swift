@@ -42,16 +42,20 @@ final class InboxController: BaseViewController, InboxView {
         tableView.tableHeaderView = headerView
     }
     
+    private var lastReloadDate: Date?
+    private let reloadDelay: TimeInterval = 0.2
+    
     func didUpdateConversations(_ conversations: [IMConversation]) {
-        DispatchQueue
-            .global()
-            .throttle(deadline: .now() + 0.15, context: "Inbox") { [weak self] in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                self.conversations = conversations.sorted(by: { $0.lastMessageTimestamp > $1.lastMessageTimestamp })
+        self.conversations = conversations.sorted(by: { $0.lastMessageTimestamp > $1.lastMessageTimestamp })
+        let now = Date()
+        if let last = lastReloadDate, now.timeIntervalSince(last) < reloadDelay {
+            DispatchQueue.main.asyncAfter(deadline: .now() + reloadDelay) {
                 self.tableView.reloadData()
             }
+            return
         }
+        lastReloadDate = now
+        self.tableView.reloadData()
     }
     
     func didUpdateUserOnlineState(isUserOnline: Bool) {
