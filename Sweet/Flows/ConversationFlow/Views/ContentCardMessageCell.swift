@@ -6,8 +6,9 @@
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import MessageKit
+
 final class ContentCardMessageCell: MediaMessageCell {
     private let label: UILabel = {
         let label = UILabel()
