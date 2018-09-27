@@ -670,7 +670,6 @@ final class Messenger {
             } else {
                 self.loadLocalConversations()
             }
-            
         })
     }
 
