@@ -649,8 +649,41 @@ final class Messenger {
     
     private func updateConversations(withOutgoingMessage message: InstantMessage) {
         guard let myID = user?.userId, message.from == myID else { return }
+        if currentConversationIDs.contains(message.to) == false {
+            loadConversations()
+            return
+        }
+        var shouldLoadAllConversations = false
         storage?.write({ (realm) in
-            guard let data = ConversationData.object(in: realm, id: message.to, isGroup: message.isGroup) else { return }
+            guard let data = ConversationData.object(in: realm, id: message.to, isGroup: message.isGroup) else {
+                shouldLoadAllConversations = true
+                return
+            }
+            data.lastMessageContent = message.displayText()
+            if let remoteID = message.remoteID {
+                data.lastMessageID.value = Int64(remoteID)
+            }
+            data.lastMessageTimestamp.value = Int64(message.sentDate.timeIntervalSince1970 * 1000)
+        }, callback: { (_) in
+            if shouldLoadAllConversations {
+                self.loadConversations()
+            } else {
+                self.loadLocalConversations()
+            }
+            
+        })
+    }
+
+    private func updateConversations(withIncomingMessage message: InstantMessage) {
+        guard let myID = user?.userId, message.from != myID else { return }
+        if currentConversationIDs.contains(message.from) == false {
+            loadConversations()
+            return
+        }
+        let conversationID = message.isGroup ? message.to : message.from
+        markConversationAsRead(id: conversationID, isGroup: message.isGroup)
+        storage?.write({ (realm) in
+            guard let data = ConversationData.object(in: realm, id: conversationID, isGroup: message.isGroup) else { return }
             data.lastMessageContent = message.displayText()
             if let remoteID = message.remoteID {
                 data.lastMessageID.value = Int64(remoteID)
@@ -659,25 +692,6 @@ final class Messenger {
         }, callback: { (_) in
             self.loadLocalConversations()
         })
-    }
-
-    private func updateConversations(withIncomingMessage message: InstantMessage) {
-        if currentConversationIDs.contains(message.from) {
-            let conversationID = message.isGroup ? message.to : message.from
-            markConversationAsRead(id: conversationID, isGroup: message.isGroup)
-            storage?.write({ (realm) in
-                guard let data = ConversationData.object(in: realm, id: conversationID, isGroup: message.isGroup) else { return }
-                data.lastMessageContent = message.displayText()
-                if let remoteID = message.remoteID {
-                    data.lastMessageID.value = Int64(remoteID)
-                }
-                data.lastMessageTimestamp.value = Int64(message.sentDate.timeIntervalSince1970 * 1000)
-            }, callback: { (_) in
-                self.loadLocalConversations()
-            })
-            return
-        }
-        loadConversations()
     }
     
     // MARK: - Private
