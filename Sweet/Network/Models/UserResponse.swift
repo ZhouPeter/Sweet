@@ -30,6 +30,7 @@ struct UserResponse: Codable {
     let common: Int
     let activityNum: UInt64
     let storyNum: UInt64
+    let rank: UInt64
 }
 
 extension User {

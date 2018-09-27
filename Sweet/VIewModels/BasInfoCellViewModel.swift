@@ -16,9 +16,10 @@ struct BaseInfoCellViewModel {
     let starString: String
     let contactString: String
     let signatureString: String
-    let isEditSignature: Bool
     let cellHeight: CGFloat
     let sexImage: UIImage
+    let rankString: String
+    let isLoginUser: Bool
     init(user: UserResponse) {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
@@ -31,7 +32,8 @@ struct BaseInfoCellViewModel {
                             (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "\(user.signature)"
-        isEditSignature = userID == user.userId
+        isLoginUser = userID == user.userId
+        rankString = "本校排行\(user.rank)"
         cellHeight = 200
     }
 }

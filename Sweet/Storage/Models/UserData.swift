@@ -118,5 +118,6 @@ extension UserResponse {
         common = data.common
         activityNum = 0
         storyNum = 0
+        rank = 0
     }
 }

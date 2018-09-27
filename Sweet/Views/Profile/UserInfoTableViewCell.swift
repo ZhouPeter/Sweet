@@ -55,6 +55,27 @@ class UserInfoTableViewCell: UITableViewCell {
         label.textColor = UIColor.black
         return label
     }()
+    
+    private lazy var rankLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.contentInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.backgroundColor = UIColor(hex: 0xF5A623)
+        label.textColor = .white
+        label.layer.cornerRadius = 3
+        label.clipsToBounds = true
+        return label
+    }()
+    
+    private lazy var helpLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.backgroundColor = UIColor(hex: 0xF5222D)
+        label.textColor = .white
+        label.text = "获❤️秘籍"
+        label.textAlignment = .center
+        return label
+    }()
     private lazy var segmentLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xf2f2f2)
@@ -127,6 +148,15 @@ class UserInfoTableViewCell: UITableViewCell {
         heartImageView.constrain(width: 25, height: 25)
         heartImageView.centerY(to: starLabel)
         heartImageView.pin(.right, to: starLabel)
+        contentView.addSubview(rankLabel)
+        rankLabel.pin(.right, to: heartImageView, spacing: 6)
+        rankLabel.pin(.top, to: heartImageView, spacing: -10)
+        rankLabel.constrain(height: 20)
+        contentView.addSubview(helpLabel)
+        helpLabel.pin(.right, to: rankLabel, spacing: 6)
+        helpLabel.centerY(to: rankLabel)
+        helpLabel.constrain(width: 52, height: 20)
+        helpLabel.setViewRounded(cornerRadius: 3)
         contentView.addSubview(contactLabel)
         contactLabel.centerY(to: starLabel)
         contactLabel.pin(.right, to: heartImageView)
@@ -172,6 +202,15 @@ class UserInfoTableViewCell: UITableViewCell {
         contactLabel.text = viewModel.contactString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
+        if viewModel.isLoginUser {
+            rankLabel.text = viewModel.rankString
+            rankLabel.isHidden = false
+            helpLabel.isHidden = false
+        } else {
+            rankLabel.isHidden = true
+            helpLabel.isHidden = true
+        }
+        
     }
     
     @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
@@ -179,7 +218,7 @@ class UserInfoTableViewCell: UITableViewCell {
     }
     
     @objc private func didPressEdit(_ sender: UIButton) {
-        if let viewModel = viewModel, viewModel.isEditSignature {
+        if let viewModel = viewModel, viewModel.isLoginUser {
             delegate?.editSignature()
         }
     }
