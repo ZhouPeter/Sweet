@@ -1351,6 +1351,8 @@
 		ACAFC58E20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
 		ACAFC58F20CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
 		ACAFC59020CF919E004C9737 /* TopicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */; };
+		ACB1F612215CFF02006A16F3 /* DispatchQueue+Throttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB1F611215CFF02006A16F3 /* DispatchQueue+Throttle.swift */; };
+		ACB1F613215CFF02006A16F3 /* DispatchQueue+Throttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB1F611215CFF02006A16F3 /* DispatchQueue+Throttle.swift */; };
 		ACB5793E20F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
 		ACB5793F20F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
 		ACB5794020F336FE006D597E /* BeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB5793D20F336FE006D597E /* BeautyFilter.m */; };
@@ -2001,6 +2003,7 @@
 		ACA9CC4720C6769800873643 /* SweetMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		ACA9CC4C20C6819D00873643 /* OptionCardMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCardMessageCell.swift; sourceTree = "<group>"; };
 		ACAFC58C20CF919E004C9737 /* TopicSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSearchCell.swift; sourceTree = "<group>"; };
+		ACB1F611215CFF02006A16F3 /* DispatchQueue+Throttle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Throttle.swift"; sourceTree = "<group>"; };
 		ACB5793C20F336FE006D597E /* BeautyFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeautyFilter.h; sourceTree = "<group>"; };
 		ACB5793D20F336FE006D597E /* BeautyFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeautyFilter.m; sourceTree = "<group>"; };
 		ACBE052320B5559C00A1EC14 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
@@ -2819,6 +2822,7 @@
 				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
 				58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */,
 				58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */,
+				ACB1F611215CFF02006A16F3 /* DispatchQueue+Throttle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3616,6 +3620,7 @@
 				58C75756212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC0BA70620EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */,
 				5803572120AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
+				ACB1F612215CFF02006A16F3 /* DispatchQueue+Throttle.swift in Sources */,
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
@@ -4745,6 +4750,7 @@
 				58C75757212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
 				AC0BA70720EF44BC009C1FC6 /* SweetTextMessageCell.swift in Sources */,
 				5803572220AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
+				ACB1F613215CFF02006A16F3 /* DispatchQueue+Throttle.swift in Sources */,
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,

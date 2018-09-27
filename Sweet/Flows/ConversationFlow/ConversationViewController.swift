@@ -143,23 +143,15 @@ class ConversationViewController: MessagesViewController {
         return lastMessage
     }
     
-    private var lastReloadDate: Date?
-    private let realodDelay: TimeInterval = 0.2
-    
     func reloadDataAndGoToBottom() {
-        let now = Date()
-        if let last = lastReloadDate, now.timeIntervalSince(last) < realodDelay {
-            DispatchQueue.main.asyncAfter(deadline: .now() + realodDelay) {
-                self.reloadDataAndGoToBottom()
+        DispatchQueue.main.throttleNext(interval: 0.5, context: #file + #function + "\(#line)") {
+            logger.debug("Executed")
+            self.messagesCollectionView.reloadData()
+            let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+            let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
+            if contentHeight > visibleHeight {
+                self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
             }
-            return
-        }
-        lastReloadDate = Date()
-        self.messagesCollectionView.reloadData()
-        let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-        let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
-        if contentHeight > visibleHeight {
-            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
         }
     }
     

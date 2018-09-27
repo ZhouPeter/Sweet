@@ -31,7 +31,10 @@ final class ContentCardMessageCell: MediaMessageCell {
         and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ContentCardContent else { return }
-        label.attributedText = content.text.getHtmlAttributedString(font: label.font, textColor: .black, lineSpacing: 0)
+        content.text.converHTMLToAttributedString(font: label.font, textColor: .black) { [weak self] (text, attributedString) in
+            guard let self = self, content.text == text else { return }
+            self.label.attributedText = attributedString
+        }
         let url = URL(string: content.imageURLString)?.imageView2(size: imageView.bounds.size)
         showLoading(true)
         imageView.sd_setImage(with: url) { [weak self] (_, _, _, _) in
@@ -59,12 +62,5 @@ final class ContentCardMessageCell: MediaMessageCell {
         label.align(.top, inset: 6)
         label.align(.right, inset: 10)
         label.constrain(height: 60)
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        label.text = nil
-        imageView.image = nil
-        imageView.sd_cancelCurrentImageLoad()
     }
 }
