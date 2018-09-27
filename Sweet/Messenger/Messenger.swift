@@ -659,6 +659,8 @@ final class Messenger {
                 shouldLoadAllConversations = true
                 return
             }
+            data.unreadCount = 0
+            data.likesCount = 0
             data.lastMessageContent = message.displayText()
             if let remoteID = message.remoteID {
                 data.lastMessageID.value = Int64(remoteID)
@@ -675,14 +677,16 @@ final class Messenger {
 
     private func updateConversations(withIncomingMessage message: InstantMessage) {
         guard let myID = user?.userId, message.from != myID else { return }
-        if currentConversationIDs.contains(message.from) == false {
+        let conversationID = message.isGroup ? message.to : message.from
+        if currentConversationIDs.contains(conversationID) == false {
             loadConversations()
             return
         }
-        let conversationID = message.isGroup ? message.to : message.from
         markConversationAsRead(id: conversationID, isGroup: message.isGroup)
         storage?.write({ (realm) in
             guard let data = ConversationData.object(in: realm, id: conversationID, isGroup: message.isGroup) else { return }
+            data.unreadCount = 0
+            data.likesCount = 0
             data.lastMessageContent = message.displayText()
             if let remoteID = message.remoteID {
                 data.lastMessageID.value = Int64(remoteID)
