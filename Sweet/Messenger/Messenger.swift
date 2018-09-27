@@ -38,6 +38,10 @@ final class Messenger {
     }
     private(set) var isNetworkReachable = false {
         didSet {
+            if !isNetworkReachable {
+                deliverQueues.values.forEach({ $0.cancelAllOperations() })
+                deliverQueues.removeAll()
+            }
             if isNetworkReachable && user != nil && token != nil {
                 connect()
             }
@@ -252,7 +256,14 @@ final class Messenger {
                 switch result {
                 case .success:
                     self.updateConversations()
-                    self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
+                    self.loadGroupWith(id: group.id, isForceSynced: true, callback: { _ in
+                        self.storage?.write({ (realm) in
+                            if let data = realm.object(ofType: GroupData.self, forPrimaryKey: group.id) {
+                                data.isMuted = isMuted
+                            }
+                        })
+                        self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: !group.isMuted) })
+                    })
                 case .failure:
                     self.multicastDelegate.invoke({ $0.messengerDidMuteGroup(group.id, isMuted: group.isMuted) })
                 }
@@ -322,7 +333,7 @@ final class Messenger {
     private func updateConversationWithSendMessage(_ message: InstantMessage) {
         guard let myID = user?.userId, message.from == myID else { return }
         storage?.write({ (realm) in
-            let key = ConversationData.makeKey(id: message.to, isGroup: false)
+            let key = ConversationData.makeKey(id: message.to, isGroup: message.isGroup)
             guard let data = realm.object(ofType: ConversationData.self, forPrimaryKey: key) else { return }
             data.lastMessageContent = message.displayText()
             if let remoteID = message.remoteID {
@@ -336,9 +347,17 @@ final class Messenger {
     
     // MARK: - Single Messages
     
-    func loadMessages(from buddy: User) {
+    func loadMessages(from buddy: User, fetchRecent: Bool = true) {
+        loadLocalMessages(from: buddy, callback: { messages in
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
+            if fetchRecent {
+                self.fetchRecentMessages(from: buddy)
+            }
+        })
+    }
+    
+    func loadLocalMessages(from buddy: User, callback: @escaping ([InstantMessage]) -> Void) {
         var messages = [InstantMessage]()
-        var isLocalMessagesNew = false
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -350,22 +369,13 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
-            let key = ConversationData.makeKey(id: buddy.userId, isGroup: false)
-            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key),
-                let lastID = conversation.lastMessageID.value {
-                if UInt64(lastID) == messages.last?.remoteID {
-                    isLocalMessagesNew = true
-                }
-            }
         }, callback: {
-            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy) })
-            if messages.isEmpty || isLocalMessagesNew == false {
-                self.fetchRecentMessages(from: buddy)
-            }
+            callback(messages)
         })
     }
     
     func fetchRecentMessages(from buddy: User) {
+        logger.debug("")
         var request = RecentGetReq()
         request.from = buddy.userId
         request.count = UInt32(messageLoadCount)
@@ -381,7 +391,8 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, buddy: buddy)})
+                self.loadMessages(from: buddy, fetchRecent: false)
+                self.updateConversations()
             })
         }
     }
@@ -449,9 +460,18 @@ final class Messenger {
     
     // MARK: - Group Messages
     
-    func loadMessages(from group: Group) {
+    func loadMessages(from group: Group, fetchRecent: Bool = true) {
+        logger.debug("fetchRecent: \(fetchRecent)")
+        loadLocalMessages(from: group, callback: { messages in
+            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
+            if fetchRecent {
+                self.fetchRecentMessages(from: group)
+            }
+        })
+    }
+    
+    func loadLocalMessages(from group: Group, callback: @escaping ([InstantMessage]) -> Void) {
         var messages = [InstantMessage]()
-        var isLocalMessagesNew = false
         storage?.read({ (realm) in
             let results = realm
                 .objects(InstantMessageData.self)
@@ -463,22 +483,13 @@ final class Messenger {
             for index in 0..<loopCount {
                 messages.insert(InstantMessage(data: results[index]), at: 0)
             }
-            let key = ConversationData.makeKey(id: group.id, isGroup: true)
-            if let conversation = realm.object(ofType: ConversationData.self, forPrimaryKey: key),
-                let lastID = conversation.lastMessageID.value {
-                if UInt64(lastID) == messages.last?.remoteID {
-                    isLocalMessagesNew = true
-                }
-            }
         }, callback: {
-            self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
-            if messages.isEmpty || isLocalMessagesNew == false {
-                self.fetchRecentMessages(from: group)
-            }
+            callback(messages)
         })
     }
     
     func fetchRecentMessages(from group: Group) {
+        logger.debug("")
         var request = GroupMessageRecentReq()
         request.groupID = group.id
         fetch(request, responseType: GroupMessageRecentResp.self) { (response) in
@@ -493,7 +504,8 @@ final class Messenger {
                 return message
             })
             self.saveMessages(messages, callback: {
-                self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group)})
+                self.loadMessages(from: group, fetchRecent: false)
+                self.updateConversations()
             })
         }
     }
@@ -554,6 +566,9 @@ final class Messenger {
         guard state == .online else { return }
         fetch(GetConversationsReq(), responseType: GetConversationsResp.self) { (response) in
             guard let response = response, response.list.isNotEmpty else { return }
+//            response.list.forEach({
+//                logger.debug("\($0.name), \($0.unreadCount), \($0.isMute)")
+//            })
             self.storage?.write({ (realm) in
                 realm.add(response.list.map(ConversationData.data(with:)), update: true)
             }, callback: { (_) in
@@ -604,18 +619,24 @@ final class Messenger {
     }
     
     func markConversationAsRead(_ id: UInt64, isGroup: Bool) {
+        var isConversationUpdated = false
         storage?.write({ (realm) in
             let key = ConversationData.makeKey(id: id, isGroup: isGroup)
             if let data = realm.object(ofType: ConversationData.self, forPrimaryKey: key) {
-                data.unreadCount = 0
-                data.likesCount = 0
+                if data.unreadCount > 0 || data.likesCount > 0 {
+                    data.unreadCount = 0
+                    data.likesCount = 0
+                    isConversationUpdated = true
+                }
             }
             realm.objects(InstantMessageData.self)
                 .filter("isGroup == \(isGroup)")
                 .filter("from == \(id) || to == \(id)")
                 .forEach({ $0.isRead = true })
         }, callback: { _ in
-            self.loadConversations()
+            if isConversationUpdated {
+                self.loadConversations()
+            }
         })
     }
     
@@ -652,6 +673,7 @@ final class Messenger {
             callback([])
             return
         }
+        logger.debug("")
         var request = GroupMessageGetReq()
         request.msgIDList = IDs
         fetch(request, responseType: GroupMessageGetResp.self) { response in
@@ -746,7 +768,6 @@ final class Messenger {
     }
     
     private func updateConversations() {
-        guard currentConversationID == nil else { return }
         loadConversations()
     }
     

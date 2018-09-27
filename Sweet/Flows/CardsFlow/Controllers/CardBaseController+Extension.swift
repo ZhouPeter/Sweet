@@ -206,19 +206,20 @@ extension CardsBaseController {
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
+        inputTextView.placehoder = "带句你想说的话"
         inputTextView.updateSendButton(title: "确认点赞")
         inputTextView.startEditing(isStarted: true)
         self.activityId = activityId
         self.activityCardId = cardId
     }
     
-    func showGroupInputView(isJoin: Bool){
+    func showGroupInputView(isJoin: Bool, placehoder: String?){
         let window = UIApplication.shared.keyWindow!
         window.addSubview(inputTextView)
         inputTextView.fill(in: window)
         inputTextView.layoutIfNeeded()
-        inputTextView.placehoder = "带句你想说的话"
-        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入讨论群", image: nil)
+        inputTextView.placehoder = placehoder ?? "带句你想说的话"
+        inputTextView.updateSendButton(title: isJoin ? "发送消息" : "加入群聊", image: nil)
         inputTextView.startEditing(isStarted: true)
     }
 
@@ -229,9 +230,10 @@ extension CardsBaseController: InputTextViewDelegate {
     func inputTextViewDidPressSendMessage(text: String) {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
-        if cards[index].cardEnumType == .activity {
+        let type = cards[index].cardEnumType
+        if type == .activity || type == .user {
             sendActivityMessages(text: text)
-        } else if cards[index].cardEnumType == .groupChat {
+        } else if type == .groupChat {
             joinGroup(text: text)
         }
     }
@@ -263,10 +265,9 @@ extension CardsBaseController {
                         alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                         Defaults[.isJoinGroupChat] = true
+                        Messenger.shared.loadConversations()
                     } else {
                         self.toast(message: "加入群聊成功！")
-//                        guard let index = self.cards.index(where: { $0.cardId == cardId }) else { return }
-//                        self.cards[index].join = true
                         for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
                             self.cards[index].join = true
                         }
