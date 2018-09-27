@@ -87,7 +87,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
                             if viewModel.index == 1 {
                                 viewModel.commentString = "一览众山小"
                             } else {
-                                viewModel.commentString = "超过上一位还需\(Int(self.viewModels[Int(viewModel.index - 1) - 1].likeCount) - Int(viewModel.likeCount + 1))❤️"
+                                viewModel.commentString = "超过上一位还需\(Int(self.viewModels[Int(viewModel.index - 1) - 1].likeCount) - Int(viewModel.likeCount) + 1)❤️"
                             }
                         } else {
                             viewModel.commentString = "回到之前的排名还需\(Int(self.viewModels[Int(viewModel.index - 1) + response.rankChangeNum].likeCount) - Int(viewModel.likeCount))❤️"

@@ -82,6 +82,7 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private var viewModel: ViewModelType?
     func updateWith(_ viewModel: NotiCardViewModel) {
         self.viewModel = viewModel
+        menuButton.isHidden = true
         titleLabel.textColor = .white
         titleLabel.text = viewModel.titleString
         rankingView.update(changeType: viewModel.changeType)
@@ -115,6 +116,7 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private lazy var helpButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "Help"), for: .normal)
+        button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(didPressHelp(_:)), for: .touchUpInside)
         return button
     }()
@@ -144,7 +146,6 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         Guide.showLikeRankHelpMessage()
     }
     private func setupUI() {
-        menuButton.isHidden = true
         customContent.insertSubview(colorBackgroudImageView, belowSubview: titleLabel)
         colorBackgroudImageView.fill(in: customContent)
         customContent.addSubview(collectionView)
@@ -160,7 +161,7 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         customContent.addSubview(helpButton)
         helpButton.centerY(to: titleLabel)
         helpButton.align(.right, to: customContent, inset: 10)
-        helpButton.constrain(width: 20, height: 20)
+        helpButton.constrain(width: 40, height: 40)
     }
 }
 
