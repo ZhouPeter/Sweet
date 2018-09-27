@@ -143,19 +143,23 @@ class ConversationViewController: MessagesViewController {
         return lastMessage
     }
     
+    private var lastReloadDate: Date?
+    private let realodDelay: TimeInterval = 0.2
+    
     func reloadDataAndGoToBottom() {
-        DispatchQueue
-            .global()
-            .throttle(deadline: .now() + 0.15, context: "Conversation") { [weak self] in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                self.messagesCollectionView.reloadData()
-                let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-                let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
-                if contentHeight > visibleHeight {
-                    self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
-                }
+        let now = Date()
+        if let last = lastReloadDate, now.timeIntervalSince(last) < realodDelay {
+            DispatchQueue.main.asyncAfter(deadline: .now() + realodDelay) {
+                self.reloadDataAndGoToBottom()
             }
+            return
+        }
+        lastReloadDate = Date()
+        self.messagesCollectionView.reloadData()
+        let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
+        let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messageInputBar.bounds.height
+        if contentHeight > visibleHeight {
+            self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
         }
     }
     
@@ -211,13 +215,11 @@ class ConversationViewController: MessagesViewController {
                 case .success(let response):
                     self.contentInsetBottom = self.messagesCollectionView.contentInset.bottom
                     self.contentOffset = self.messagesCollectionView.contentOffset
-                    if let user = self.members[message.from] {
-                        self.delegate?.conversationControllerShowsStory(
-                            StoryCellViewModel(model: response.story),
-                            user: user,
-                            messageId: message.messageId
-                        )
-                    }
+                    self.delegate?.conversationControllerShowsStory(
+                        StoryCellViewModel(model: response.story),
+                        user: self.user,
+                        messageId: message.messageId
+                    )
                     if let cell = cell as? StoryMessageCell {
                         cell.thumbnailImageView.hero.isEnabled = true
                         cell.thumbnailImageView.hero.id = "\(response.story.userId)" + message.messageId

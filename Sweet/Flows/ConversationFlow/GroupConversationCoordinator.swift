@@ -21,21 +21,25 @@ final class GroupConversationCoordinator: BaseCoordinator, ConversationCoordinat
     private let router: Router
     private let coordinatorFactory: CoordinatorFactory
     private let storage: Storage
+    private var conversation: IMConversation?
     
-    init(user: User, group: Group, router: Router, coordinatorFactory: CoordinatorFactory) {
+    init(user: User, group: Group, conversation: IMConversation? = nil, router: Router, coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.group = group
         self.router = router
+        self.conversation = conversation
         self.coordinatorFactory = coordinatorFactory
         self.storage = Storage(userID: user.userId)
     }
     
     override func start() {
-        Messenger.shared.markConversationAsRead(group.id, isGroup: true)
-        let conversation = GroupConversationController(user: user, group: group)
-        conversation.delegate = self
-        router.push(conversation)
+        let controller = GroupConversationController(user: user, group: group, conversation: conversation)
+        controller.delegate = self
+        router.push(controller)
         Messenger.shared.startConversation(group.id)
+        if let conversation = conversation {        
+            Messenger.shared.markConversationAsRead(conversation)
+        }
     }
 }
 
@@ -81,7 +85,7 @@ extension GroupConversationCoordinator: ConversationControllerDelegate {
     }
     
     func conversationDidFinish() {
-        Messenger.shared.endConversation()
+        Messenger.shared.endConversation(group.id)
         finishFlow?()
     }
 }

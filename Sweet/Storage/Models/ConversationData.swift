@@ -71,4 +71,8 @@ class ConversationData: Object {
         conversation.isMute = isMute
         return conversation
     }
+    
+    class func object(in realm: Realm, id: UInt64, isGroup: Bool) -> ConversationData? {
+        return realm.object(ofType: ConversationData.self, forPrimaryKey: makeKey(id: id, isGroup: isGroup))
+    }
 }

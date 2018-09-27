@@ -20,6 +20,7 @@ private let umengKey = "5b726bfeb27b0a4abd0000d8"
 private let wechatKey = "wx819697effecdb6f5"
 private let tencentKey = "1106459659"
 private let weiboKey = "3363635970"
+
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        setupThirdPartySDKs()
         
         #if DEBUG
             window = DebugWindow(frame: UIScreen.main.bounds)
@@ -43,12 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootController
         window?.makeKeyAndVisible()
         setupVolumeBar()
-        
-        WXApi.registerApp(wechatKey)
-        _ = TencentOAuth.init(appId: tencentKey, andDelegate: nil)
-        UMConfigure.initWithAppkey(umengKey, channel: nil)
-        WeiboSDK.enableDebugMode(true)
-        WeiboSDK.registerApp(weiboKey)
         registerUserNotificattion(launchOptions: launchOptions)
         let notification = launchOptions?[.remoteNotification] as? [String: AnyObject]
         let deepLink = DeepLinkOption.build(with: notification)
@@ -58,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         NetworkHelper.networkCheck(viewController: rootController)
         addObservers()
-        
+      
         return true
     }
     
@@ -121,16 +117,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: WeiboSDKDelegate {
-    func didReceiveWeiboRequest(_ request: WBBaseRequest!) {
-        
+    func didReceiveWeiboRequest(_ request: WBBaseRequest!) {}
+    
+    func didReceiveWeiboResponse(_ response: WBBaseResponse!) {}
+}
+
+// MARK: - Privates
+
+extension AppDelegate {
+    private func setupThirdPartySDKs() {
+        WXApi.registerApp(wechatKey)
+        _ = TencentOAuth.init(appId: tencentKey, andDelegate: nil)
+        UMConfigure.initWithAppkey(umengKey, channel: nil)
+        WeiboSDK.enableDebugMode(true)
+        WeiboSDK.registerApp(weiboKey)
     }
     
-    func didReceiveWeiboResponse(_ response: WBBaseResponse!) {
-        
-    }
-}
-// MARK: - Privates
-extension AppDelegate {
     private func addObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(logoutAuth),
@@ -281,7 +283,6 @@ extension AppDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    @available(iOS 10.0, *)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
@@ -295,7 +296,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.sound, .badge, .alert])
     }
     
-    @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {

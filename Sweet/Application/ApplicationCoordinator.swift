@@ -110,6 +110,7 @@ final class ApplicationCoordinator: BaseCoordinator {
         if isIMFlowSelected {
             flow.selectIMFlow()
         }
+        web.request(.startup) { (_) in }
     }
 }
 
