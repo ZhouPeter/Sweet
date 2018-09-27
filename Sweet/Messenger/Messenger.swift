@@ -59,7 +59,7 @@ final class Messenger {
         guard let service = ImCloudService.sharedInstance() else { fatalError() }
         return service
     }
-    private let reachabilityManager = NetworkReachabilityManager(host: WebAPI.socketAddress.baseURL.absoluteString)
+    private let reachabilityManager = NetworkReachabilityManager()
     private var storage: Storage?
     private var currentConversationID: UInt64?
     private var messagesUnreadCount: Int? {

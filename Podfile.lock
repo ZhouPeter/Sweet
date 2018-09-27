@@ -47,7 +47,6 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.3.0)
   - Pageboy (2.5.4)
   - PKHUD (5.1.0)
-  - ReachabilitySwift (4.1.0)
   - Realm (3.7.6):
     - Realm/Headers (= 3.7.6)
   - Realm/Headers (3.7.6)
@@ -95,7 +94,6 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - Pageboy (~> 2.0)
   - PKHUD (~> 5.0)
-  - ReachabilitySwift
   - RealmSwift
   - Reveal-SDK
   - SDWebImage (from `https://github.com/rs/SDWebImage.git`, branch `5.x`)
@@ -132,7 +130,6 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - Pageboy
     - PKHUD
-    - ReachabilitySwift
     - Realm
     - RealmSwift
     - Result
@@ -197,7 +194,6 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
   Pageboy: 46d743783414a18f8b27a988485e0ed2ea219ff7
   PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
-  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -220,6 +216,6 @@ SPEC CHECKSUMS:
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a1b0e814075010b33d778adaf69364e6c6c9fca6
+PODFILE CHECKSUM: da168f44c4a8b8d6dbc8f1dffa0441150b9e6063
 
 COCOAPODS: 1.5.3
