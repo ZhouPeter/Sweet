@@ -98,10 +98,10 @@
 		580D9BE52142434500B8719C /* PushSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BE32142434400B8719C /* PushSetting.swift */; };
 		580D9BE62142434500B8719C /* PushSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BE32142434400B8719C /* PushSetting.swift */; };
 		580D9BE72142434500B8719C /* PushSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D9BE32142434400B8719C /* PushSetting.swift */; };
-		580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
-		580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
-		580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
-		580F886B20F4D6CA009148CC /* String+HTMlL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTMlL.swift */; };
+		580F886820F4D6CA009148CC /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTML.swift */; };
+		580F886920F4D6CA009148CC /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTML.swift */; };
+		580F886A20F4D6CA009148CC /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTML.swift */; };
+		580F886B20F4D6CA009148CC /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F886720F4D6CA009148CC /* String+HTML.swift */; };
 		580F887220F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
 		580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
 		580F887420F5FDD9009148CC /* SourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580F887120F5FDD9009148CC /* SourceInfoView.swift */; };
@@ -1618,7 +1618,7 @@
 		580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSettingTableViewCell.swift; sourceTree = "<group>"; };
 		580D9BDC213FC14A00B8719C /* SettingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingData.swift; sourceTree = "<group>"; };
 		580D9BE32142434400B8719C /* PushSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSetting.swift; sourceTree = "<group>"; };
-		580F886720F4D6CA009148CC /* String+HTMlL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMlL.swift"; sourceTree = "<group>"; };
+		580F886720F4D6CA009148CC /* String+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
 		580F887120F5FDD9009148CC /* SourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfoView.swift; sourceTree = "<group>"; };
 		580F888520FC91CC009148CC /* UpdateRemainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRemainResponse.swift; sourceTree = "<group>"; };
 		580F888C20FD8867009148CC /* GIFImageMake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImageMake.swift; sourceTree = "<group>"; };
@@ -2775,7 +2775,7 @@
 				58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */,
 				AC2D51EC20EA07F8002156DB /* CGPoint+RawRepresentable.swift */,
 				AC2D51F320EA0815002156DB /* CGRect+RawRepresentable.swift */,
-				580F886720F4D6CA009148CC /* String+HTMlL.swift */,
+				580F886720F4D6CA009148CC /* String+HTML.swift */,
 				586603442108A2F9008C4448 /* UISearchBar+Frame.swift */,
 				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
 				58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */,
@@ -3770,7 +3770,7 @@
 				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
-				580F886820F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				580F886820F4D6CA009148CC /* String+HTML.swift in Sources */,
 				58C03E48211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E52105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
@@ -3965,7 +3965,7 @@
 				58816CFA20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				58DECE7220EB148D00A4CDA4 /* CardImageLayout.swift in Sources */,
 				58EB220120DCD92000337DDF /* UIViewController+VibrateFeedback.swift in Sources */,
-				580F886A20F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				580F886A20F4D6CA009148CC /* String+HTML.swift in Sources */,
 				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58FBAD08214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
@@ -4292,7 +4292,7 @@
 				AC8EA9E520ABF43E0033615D /* GradientView.swift in Sources */,
 				ACA323A02087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
-				580F886B20F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				580F886B20F4D6CA009148CC /* String+HTML.swift in Sources */,
 				58E870B920CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
 				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
@@ -4879,7 +4879,7 @@
 				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
-				580F886920F4D6CA009148CC /* String+HTMlL.swift in Sources */,
+				580F886920F4D6CA009148CC /* String+HTML.swift in Sources */,
 				58C03E49211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E62105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
