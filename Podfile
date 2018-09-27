@@ -35,7 +35,6 @@ target 'Sweet' do
   pod 'YYText'
   pod 'TencentOpenAPI-Swift'
   pod 'Weibo_SDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
-  pod 'Bugly'
 
   target 'Sweet Dev' do
   end

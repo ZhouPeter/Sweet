@@ -13,7 +13,6 @@ import VolumeBar
 import Contacts
 import Photos
 import TencentOpenAPI
-import Bugly
 
 var allowRotation = false
 
@@ -21,7 +20,6 @@ private let umengKey = "5b726bfeb27b0a4abd0000d8"
 private let wechatKey = "wx819697effecdb6f5"
 private let tencentKey = "1106459659"
 private let weiboKey = "3363635970"
-private let buglyAPPID = "3180f4d2d2"
 
 @UIApplicationMain
 
@@ -128,7 +126,6 @@ extension AppDelegate: WeiboSDKDelegate {
 
 extension AppDelegate {
     private func setupThirdPartySDKs() {
-        Bugly.start(withAppId: buglyAPPID)
         WXApi.registerApp(wechatKey)
         _ = TencentOAuth.init(appId: tencentKey, andDelegate: nil)
         UMConfigure.initWithAppkey(umengKey, channel: nil)
