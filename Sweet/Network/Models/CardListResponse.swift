@@ -88,6 +88,7 @@ struct CardResponse: Codable {
     let videoPic: String?
     var storyList: [[StoryResponse]]?
     var userContentList: [UserContent]?
+    var likeRank: LikeRank?
     var result: SelectResult?
     let type: UInt
     let groupId: UInt64?
@@ -116,6 +117,7 @@ struct CardResponse: Codable {
         case welcome
         case user
         case groupChat
+        case likeRank
     }
     
     func makeShareText() -> String? {
@@ -248,6 +250,20 @@ struct SelectResult: Codable {
         let avatar: String
         let userId: UInt64
     }
+}
+
+struct LikeRank: Codable {
+    let rankChangeNum: Int
+    let rankList: [LikeRankRecord]
+}
+
+struct LikeRankRecord: Codable {
+    let avatar: String
+    let index: UInt64
+    let info: String
+    let likeCount: UInt64
+    let name: String
+    let userId: UInt64
 }
 
 struct CardGetResponse: Codable {

@@ -150,6 +150,22 @@ extension CardsBaseController {
             let configurator = CellConfigurator<UsersCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
+            
+        case .likeRank:
+            var viewModel = NotiCardViewModel(model: card)
+            viewModel.showRankingList = {
+                self.delegate?.showLikeRankList(title: viewModel.titleString)
+            }
+            for (offset, var cellModel) in viewModel.likeRankViewModels.enumerated() {
+                cellModel.showProfile = { [weak self] (buddyID, setTop) in
+                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                    self?.showProfile(userId: buddyID, setTop: setTop)
+                }
+                viewModel.likeRankViewModels[offset] = cellModel
+            }
+            let configurator = CellConfigurator<NotiCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
         default:
             break
         }

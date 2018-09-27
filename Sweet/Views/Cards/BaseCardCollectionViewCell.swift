@@ -88,6 +88,11 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        menuButton.isHidden = false
+        titleLabel.textColor = .black
+    }
     
     private func setupBaseUI() {
         contentView.backgroundColor = UIColor.xpGray()

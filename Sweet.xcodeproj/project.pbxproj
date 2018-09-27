@@ -12,6 +12,18 @@
 		5800C2CE2152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
 		5800C2CF2152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
 		5800C2D02152011900511F01 /* WeiboSDK+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */; };
+		5800C2E02159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */; };
+		5800C2E12159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */; };
+		5800C2E22159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */; };
+		5800C2E32159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */; };
+		5800C2E72159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */; };
+		5800C2E82159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */; };
+		5800C2E92159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */; };
+		5800C2EA2159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */; };
+		5800C2EC215A029000511F01 /* NotiCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2EB215A029000511F01 /* NotiCardViewModel.swift */; };
+		5800C2ED215A029000511F01 /* NotiCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2EB215A029000511F01 /* NotiCardViewModel.swift */; };
+		5800C2EE215A029000511F01 /* NotiCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2EB215A029000511F01 /* NotiCardViewModel.swift */; };
+		5800C2EF215A029000511F01 /* NotiCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800C2EB215A029000511F01 /* NotiCardViewModel.swift */; };
 		5803571120AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
 		5803571220AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
 		5803571320AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */; };
@@ -756,6 +768,18 @@
 		58D85114211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
 		58D85115211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
 		58D85116211A8DE000AEE9EF /* UIViewController+ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */; };
+		58D862CB215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */; };
+		58D862CC215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */; };
+		58D862CD215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */; };
+		58D862CE215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */; };
+		58D862D2215A609B0053E25F /* LikeRankListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D1215A609B0053E25F /* LikeRankListController.swift */; };
+		58D862D3215A609B0053E25F /* LikeRankListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D1215A609B0053E25F /* LikeRankListController.swift */; };
+		58D862D4215A609B0053E25F /* LikeRankListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D1215A609B0053E25F /* LikeRankListController.swift */; };
+		58D862D5215A609B0053E25F /* LikeRankListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D1215A609B0053E25F /* LikeRankListController.swift */; };
+		58D862D9215B21040053E25F /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */; };
+		58D862DA215B21040053E25F /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */; };
+		58D862DB215B21040053E25F /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */; };
+		58D862DC215B21040053E25F /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */; };
 		58DECE6220E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6520E9D36C00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
 		58DECE6620E9D36D00A4CDA4 /* CardBaseController+CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */; };
@@ -1598,6 +1622,9 @@
 		39B6E2AFAF5DF0EBCDB0F439 /* Pods-SweetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SweetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SweetTests/Pods-SweetTests.release.xcconfig"; sourceTree = "<group>"; };
 		4FF84DB9CCEBB7F0B8F859CF /* Pods-Sweet-Sweet Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sweet-Sweet Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sweet-Sweet Dev/Pods-Sweet-Sweet Dev.release.xcconfig"; sourceTree = "<group>"; };
 		5800C2CC2152011900511F01 /* WeiboSDK+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeiboSDK+Message.swift"; sourceTree = "<group>"; };
+		5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiRankingCollectionViewCell.swift; sourceTree = "<group>"; };
+		5800C2EB215A029000511F01 /* NotiCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiCardViewModel.swift; sourceTree = "<group>"; };
 		5803571020AA82B900B2C94F /* PanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer.swift; sourceTree = "<group>"; };
 		5803571520AAA7E900B2C94F /* ChoiceCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCardViewModel.swift; sourceTree = "<group>"; };
 		5803571A20AAA98600B2C94F /* ChoiceCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1804,6 +1831,9 @@
 		58D5790020944FDE00AE5D38 /* UpdateGenderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderController.swift; sourceTree = "<group>"; };
 		58D579052094566D00AE5D38 /* UpdateGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGenderTableViewCell.swift; sourceTree = "<group>"; };
 		58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShareCard.swift"; sourceTree = "<group>"; };
+		58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+LikeRank.swift"; sourceTree = "<group>"; };
+		58D862D1215A609B0053E25F /* LikeRankListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRankListController.swift; sourceTree = "<group>"; };
+		58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingCollectionViewCell.swift; sourceTree = "<group>"; };
 		58DECE6120E9D2B600A4CDA4 /* CardBaseController+CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardBaseController+CellDelegate.swift"; sourceTree = "<group>"; };
 		58DECE6820EA24FE00A4CDA4 /* NSAttributeString+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributeString+Size.swift"; sourceTree = "<group>"; };
 		58DECE6F20EB148D00A4CDA4 /* CardImageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageLayout.swift; sourceTree = "<group>"; };
@@ -2114,6 +2144,9 @@
 				58C03E40211D6D1400E0BDB7 /* BaseContentCardCollectionViewCell.swift */,
 				58C03E47211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift */,
 				587D1ED12133C93F006281F4 /* WelcomeCardCollectionViewCell.swift */,
+				5800C2DF2159D5B200511F01 /* NotiCardCollectionViewCell.swift */,
+				5800C2E62159E04700511F01 /* NotiRankingCollectionViewCell.swift */,
+				58D862D8215B21040053E25F /* RankingCollectionViewCell.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -2131,6 +2164,7 @@
 				587D1ED62133D3E3006281F4 /* WelcomeCardViewModel.swift */,
 				58FBAD0C214673D800688F1E /* UserCardViewModel.swift */,
 				58FBAD1B214685D800688F1E /* UsersCardViewModel.swift */,
+				5800C2EB215A029000511F01 /* NotiCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -2490,6 +2524,7 @@
 				5808D40A2113F25D00821A2C /* SDWebImagePhotoLoader.swift */,
 				58C75755212A6B0F00A5D408 /* CardsPageCollectionView.swift */,
 				58FBAD2B2147B9A200688F1E /* ScreenShotController.swift */,
+				58D862D1215A609B0053E25F /* LikeRankListController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2569,6 +2604,7 @@
 				AC84FE8720E224DD008FC795 /* Guide+SameCardChoiceTip.swift */,
 				585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */,
 				AC84FE8C20E22876008FC795 /* FocusView.swift */,
+				58D862CA215A3A4C0053E25F /* Guide+LikeRank.swift */,
 			);
 			path = Guide;
 			sourceTree = "<group>";
@@ -3566,6 +3602,7 @@
 				58C03E4D211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				580F887220F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				580D9BE42142434400B8719C /* PushSetting.swift in Sources */,
+				58D862CB215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */,
 				ACC96E7220DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420220BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
@@ -3580,6 +3617,7 @@
 				AC8412222088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5314208F22CD00F7C3E1 /* Contacts.swift in Sources */,
 				58D578D42092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				5800C2EC215A029000511F01 /* NotiCardViewModel.swift in Sources */,
 				58C0EFBF211001960038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58C75C132099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				587D1ED22133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
@@ -3648,6 +3686,7 @@
 				58816CF820C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
+				5800C2E02159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				AC84FE8320E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				AC52FDC620F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				AC2A257D20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
@@ -3751,6 +3790,7 @@
 				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
+				58D862D9215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,
 				AC616FA020C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829920FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238D20875F0800BDC92E /* OnboardingController.swift in Sources */,
@@ -3767,6 +3807,7 @@
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886820F4D6CA009148CC /* String+HTML.swift in Sources */,
+				5800C2E72159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
 				58C03E48211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E52105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CE2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
@@ -3805,6 +3846,7 @@
 				583BC78520CE4F9100C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC361B1E215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */,
 				ACEFA0C22106D51D0098631F /* AVAssetTimeSelector.swift in Sources */,
+				58D862D2215A609B0053E25F /* LikeRankListController.swift in Sources */,
 				58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CB2088B01200F7C3E1 /* URL+Path.swift in Sources */,
@@ -4057,6 +4099,7 @@
 				AC84FE8A20E224DD008FC795 /* Guide+SameCardChoiceTip.swift in Sources */,
 				AC2A257F20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
 				58CE1EE120A5652700781EBF /* StoryUVController.swift in Sources */,
+				5800C2EE215A029000511F01 /* NotiCardViewModel.swift in Sources */,
 				58C75C1A2099DF7D00DBD28C /* SweetPickerView.swift in Sources */,
 				ACD5A52820886C7C00B78CFD /* WebProvider.swift in Sources */,
 				AC2A258D20BD2B9F00A82E62 /* Message.pb.swift in Sources */,
@@ -4097,6 +4140,7 @@
 				AC525AB9208DDBB1001070B2 /* StoryFlowFactory.swift in Sources */,
 				58A084E72105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58447B5D209C5B16004C2FFE /* ContactViewModel.swift in Sources */,
+				58D862CD215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */,
 				AC8EAA0520AC39910033615D /* XGPUImageMovie.m in Sources */,
 				58CCD29C213D1D7F00D4C5F7 /* UIImage+Resize.swift in Sources */,
 				585B68BF20AF183E00E734BC /* SweetPlayerView.swift in Sources */,
@@ -4118,6 +4162,7 @@
 				58FBAD0F214673D900688F1E /* UserCardViewModel.swift in Sources */,
 				AC52FDC820F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				58A23E78214A6A4300AC8931 /* ShareCollectionViewCell.swift in Sources */,
+				5800C2E92159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
 				AC972521209ABD5E009FB966 /* StoryTextView.swift in Sources */,
 				AC64646820E266E6001CF936 /* SingleConversationCoordinator.swift in Sources */,
 				583BC77D20CE1A1900C4494E /* MessageContentHelper.swift in Sources */,
@@ -4179,6 +4224,7 @@
 				58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */,
 				ACDB24E020BECFD50039368E /* InboxView.swift in Sources */,
 				AC525AA9208DD6F9001070B2 /* StoryRecordController.swift in Sources */,
+				58D862DB215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,
 				586954A421240E1300D48196 /* UIView+Round.swift in Sources */,
 				AC616F9020C6B55A00AD9004 /* MediaMessageCell.swift in Sources */,
 				AC84121020887C800086891C /* UIDevice+DeviceType.swift in Sources */,
@@ -4224,6 +4270,7 @@
 				ACCD27EE20C54155002E96AB /* BadgeView.swift in Sources */,
 				58BD535B2090A46400F7C3E1 /* ProfileFlowFactory.swift in Sources */,
 				58FBAD2E2147B9A200688F1E /* ScreenShotController.swift in Sources */,
+				58D862D4215A609B0053E25F /* LikeRankListController.swift in Sources */,
 				5803572320AAB9E700B2C94F /* EvaluationCardViewModel.swift in Sources */,
 				ACA3238A20875E6300BDC92E /* OnboardingView.swift in Sources */,
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
@@ -4258,6 +4305,7 @@
 				ACA3239420875FB100BDC92E /* UIView+Layout.swift in Sources */,
 				58CE1ED220A54A3F00781EBF /* StoryPlayProgressView.swift in Sources */,
 				AC2D51F620EA0815002156DB /* CGRect+RawRepresentable.swift in Sources */,
+				5800C2E22159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				58C75C1F209AA7B500DBD28C /* UpdatePhoneController.swift in Sources */,
 				58447B58209C58CC004C2FFE /* ContactListResponse.swift in Sources */,
 				587D1ED42133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
@@ -4290,6 +4338,7 @@
 				ACA3236F20875C1700BDC92E /* Router.swift in Sources */,
 				580F886B20F4D6CA009148CC /* String+HTML.swift in Sources */,
 				58E870B920CA2929004F91EB /* UIImageView+AnimationImages.swift in Sources */,
+				5800C2EF215A029000511F01 /* NotiCardViewModel.swift in Sources */,
 				AC4D091720B7B774007686EB /* UIButton+Topic.swift in Sources */,
 				AC2A254320BBE5E400A82E62 /* MessageHandler.swift in Sources */,
 				580F889020FD8867009148CC /* GIFImageMake.swift in Sources */,
@@ -4360,6 +4409,7 @@
 				58BD53242090302B00F7C3E1 /* CellConfigurator.swift in Sources */,
 				580907C220B7BEE10013BC0A /* EmojiControlView.swift in Sources */,
 				58A79FEE20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */,
+				58D862DC215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,
 				AC86A93520C3F2C000334D4A /* InstantMessageData.swift in Sources */,
 				58447B2A209AF7E1004C2FFE /* UpdateAvatarController.swift in Sources */,
 				ACF1A70F20919FDF0046BF21 /* ShootButton.swift in Sources */,
@@ -4388,6 +4438,7 @@
 				58CE1EC920A5409900781EBF /* StoryCollectionViewCellModel.swift in Sources */,
 				AC525AC0208DF3E8001070B2 /* CardsCoordinator.swift in Sources */,
 				AC0E82A120FC7BD800CBDCE5 /* IndexPathButton.swift in Sources */,
+				5800C2E32159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				58D578FF20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACFC207B20AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				580907BD20B697F90013BC0A /* CustomNumberPageControlPlugin.swift in Sources */,
@@ -4402,6 +4453,7 @@
 				58C7575221269A4700A5D408 /* LoginResponse.swift in Sources */,
 				AC2F979420905E3600D5DE4F /* DefaultsKeys.swift in Sources */,
 				585B68BB20AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
+				58D862D5215A609B0053E25F /* LikeRankListController.swift in Sources */,
 				58F4074920B271C40031630C /* SweetPlayerManager.swift in Sources */,
 				58FBAD1F214685D800688F1E /* UsersCardViewModel.swift in Sources */,
 				587D18E020DB43A700D53708 /* StoriesPlayerView.swift in Sources */,
@@ -4462,6 +4514,7 @@
 				AC51D93920FDE964004A52BA /* WarningHeaderView.swift in Sources */,
 				ACEC5C3720EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5808D40E2113F25D00821A2C /* SDWebImagePhotoLoader.swift in Sources */,
+				5800C2EA2159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
 				AC525A8D208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58463DDE2099903000698CF8 /* UpdateSignatureController.swift in Sources */,
 				58447B4A209C2E07004C2FFE /* ContactsController.swift in Sources */,
@@ -4516,6 +4569,7 @@
 				5803573320AABEA900B2C94F /* ActivitiesCardViewModel.swift in Sources */,
 				ACFC208220AEA11200D696B9 /* UIImage+Merge.swift in Sources */,
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
+				58D862CE215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */,
 				AC6A0BCB210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
@@ -4675,6 +4729,7 @@
 				58C03E4E211D835800E0BDB7 /* LongTextCardViewModel.swift in Sources */,
 				580F887320F5FDD9009148CC /* SourceInfoView.swift in Sources */,
 				580D9BE52142434500B8719C /* PushSetting.swift in Sources */,
+				58D862CC215A3A4C0053E25F /* Guide+LikeRank.swift in Sources */,
 				ACC96E7320DA44EA00F09C7F /* StoryEditCancellable.swift in Sources */,
 				AC41420320BD477000DC62E0 /* Date+Timestamp.swift in Sources */,
 				58BD527D2087771500F7C3E1 /* UIColor+Hex.swift in Sources */,
@@ -4689,6 +4744,7 @@
 				5863A83B20ABCF3A0016B089 /* StoryUvList.swift in Sources */,
 				AC8412232088B1DE0086891C /* Signer.swift in Sources */,
 				58BD5315208F22CD00F7C3E1 /* Contacts.swift in Sources */,
+				5800C2ED215A029000511F01 /* NotiCardViewModel.swift in Sources */,
 				58C0EFC2211001990038EB2F /* Guide+ShowPlayTagTip.swift in Sources */,
 				58D578D52092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
 				587D1ED32133C93F006281F4 /* WelcomeCardCollectionViewCell.swift in Sources */,
@@ -4757,6 +4813,7 @@
 				58816CF920C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
+				5800C2E12159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				AC84FE8420E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				AC52FDC720F7278D00267913 /* ImageMessageContent.swift in Sources */,
 				AC2A257E20BCF83E00A82E62 /* MulticastDelegate.swift in Sources */,
@@ -4860,6 +4917,7 @@
 				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
+				58D862DA215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,
 				AC616FA120C6BEAD00AD9004 /* OptionCardContent.swift in Sources */,
 				AC0E829A20FC6DE200CBDCE5 /* SweetMessageCell.swift in Sources */,
 				ACA3238E20875F0800BDC92E /* OnboardingController.swift in Sources */,
@@ -4876,6 +4934,7 @@
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886920F4D6CA009148CC /* String+HTML.swift in Sources */,
+				5800C2E82159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
 				58C03E49211D727300E0BDB7 /* LongTextCardCollectionViewCell.swift in Sources */,
 				58A084E62105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
 				58BD52CF2088B93200F7C3E1 /* UIImage+Resize.swift in Sources */,
@@ -4914,6 +4973,7 @@
 				583BC78620CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				AC361B1F215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */,
 				ACEFA0C32106D51D0098631F /* AVAssetTimeSelector.swift in Sources */,
+				58D862D3215A609B0053E25F /* LikeRankListController.swift in Sources */,
 				58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
 				58BD52CC2088B01200F7C3E1 /* URL+Path.swift in Sources */,
@@ -5342,7 +5402,7 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5372,7 +5432,7 @@
 					"DEV=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sweet/Sweet Dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VersionUpdateHelper.versionCheck(viewController: rootController)
         NetworkHelper.networkCheck(viewController: rootController)
         addObservers()
-        
+      
         return true
     }
     

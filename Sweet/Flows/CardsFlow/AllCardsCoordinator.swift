@@ -27,7 +27,17 @@ class AllCardsCoordinator: BaseCoordinator {
     }
 }
 
-extension AllCardsCoordinator: CardsBaseViewDelegate {    
+extension AllCardsCoordinator: LikeRankListViewDelegate {
+    
+}
+
+extension AllCardsCoordinator: CardsBaseViewDelegate {
+    func showLikeRankList(title: String) {
+        let controller = LikeRankListController(title: title)
+        controller.delegate = self
+        router.push(controller.toPresent())
+    }
+    
     
     func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
