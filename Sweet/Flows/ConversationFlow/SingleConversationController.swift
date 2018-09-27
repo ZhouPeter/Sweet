@@ -103,6 +103,11 @@ extension SingleConversationController: MessageInputBarDelegate {
 extension SingleConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
         guard buddy.userId == self.buddy.userId else { return }
+        if self.messages.isEmpty {
+            self.messages = messages
+            reloadDataAndGoToBottomWithoutThrottle()
+            return
+        }
         self.messages = messages
         reloadDataAndGoToBottom()
     }

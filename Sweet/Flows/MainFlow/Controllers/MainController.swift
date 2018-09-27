@@ -9,8 +9,8 @@
 import UIKit
 import Pageboy
 import VolumeBar
-import Reachability
 import JDStatusBarNotification
+import Alamofire
 
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -45,7 +45,7 @@ final class MainController: PageboyViewController, MainView {
     private var controllers = [UINavigationController]()
     private var statusBarStyle = UIStatusBarStyle.lightContent
     private var statusBarHidden: Bool = false
-    private var reachability = Reachability()
+    private let reachabilityManager = NetworkReachabilityManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +62,7 @@ final class MainController: PageboyViewController, MainView {
         onCardsFlowSelect?(cards)
         edgesForExtendedLayout = []
         addObservers()
-        try? reachability?.startNotifier()
+        
         onStoryFlowSelect?(story)
         onIMFlowSelect?(imList)
         VolumeBar.shared.start()
@@ -155,22 +155,23 @@ final class MainController: PageboyViewController, MainView {
             name: .StatusBarNoHidden,
             object: nil
         )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(reachabilityChanged(note:)),
-            name: .reachabilityChanged,
-            object: reachability)
-
+        startListenNetwork()
     }
     
-    @objc func reachabilityChanged(note: Notification) {
-        let reachability = note.object as! Reachability
-        switch reachability.connection {
-        case .none:
-            JDStatusBarNotification.show(withStatus: "当前网络不可用，请检查你的网络设置")
-        default:
-            JDStatusBarNotification.dismiss()
+    deinit {
+        reachabilityManager?.stopListening()
+    }
+    
+    private func startListenNetwork() {
+        reachabilityManager?.listener = { [weak self] _ in
+            guard let self = self, let reachability = self.reachabilityManager else { return }
+            if reachability.isReachable {
+                JDStatusBarNotification.dismiss()
+            } else {
+                JDStatusBarNotification.show(withStatus: "当前网络不可用，请检查你的网络设置")
+            }
         }
+        reachabilityManager?.startListening()
     }
     
     @objc func didReceivePageScrollDiableNote() {

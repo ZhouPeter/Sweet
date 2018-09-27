@@ -1,37 +1,35 @@
 //
-//  String+HTMlL.swift
+//  String+HTML.swift
 //  Sweet
 //
 //  Created by 周鹏杰 on 2018/7/10.
 //  Copyright © 2018年 Miaozan. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension String {
     func getHtmlAttributedString(font: UIFont, textColor: UIColor, lineSpacing: CGFloat) -> NSAttributedString? {
         let addHeaderString = "<head><style>img{width:\(font.pointSize)px ;height: \(font.pointSize)px}</style></head>" + self
-        let attributedText = try? NSMutableAttributedString(
-            data: addHeaderString.data(using: String.Encoding.unicode)!,
-            options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-            documentAttributes: nil)
+        guard let stringData = addHeaderString.data(using: String.Encoding.unicode) else { return nil }
+        let attributes = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+        guard let string =
+            try? NSMutableAttributedString(data: stringData, options:attributes, documentAttributes: nil)
+            else { return nil }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
-        attributedText?.addAttributes([ NSAttributedStringKey.paragraphStyle:paragraphStyle, 
-                                        NSAttributedStringKey.font: font,
-                                        NSAttributedStringKey.foregroundColor: textColor],
-                                      range: NSRange(location: 0, length: attributedText!.length))
-        return attributedText
+        string.addAttributes([.paragraphStyle:paragraphStyle, .font: font, .foregroundColor: textColor],
+                             range: NSRange(location: 0, length: string.length))
+        return string
     }
     
     func getAttributedString(lineSpacing: CGFloat, textAlignment: NSTextAlignment = .left) -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: self)
+        let string = NSMutableAttributedString(string: self)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
         paragraphStyle.alignment = textAlignment
-        attributedText.addAttributes([ NSAttributedStringKey.paragraphStyle: paragraphStyle ],
-                                        range: NSRange(location: 0, length: attributedText.length))
-        return attributedText
+        string.addAttributes([.paragraphStyle: paragraphStyle ], range: NSRange(location: 0, length: string.length))
+        return string
     }
     
     static func getShareText(content: String?, url: String?) -> String? {
