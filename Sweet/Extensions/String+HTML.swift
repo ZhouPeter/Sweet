@@ -23,6 +23,16 @@ extension String {
         return string
     }
     
+    func converHTMLToAttributedString(font: UIFont, textColor: UIColor, callback: @escaping ((String, NSAttributedString?) -> Void)) {
+        let text = self
+        DispatchQueue.global().async {
+            let attributed = text.getHtmlAttributedString(font: font, textColor: textColor, lineSpacing: 0)
+            DispatchQueue.main.async {
+                callback(text, attributed)
+            }
+        }
+    }
+    
     func getAttributedString(lineSpacing: CGFloat, textAlignment: NSTextAlignment = .left) -> NSAttributedString {
         let string = NSMutableAttributedString(string: self)
         let paragraphStyle = NSMutableParagraphStyle()

@@ -48,6 +48,8 @@ final class OptionCardMessageCell: MediaMessageCell {
         return imageView
     } ()
     
+    
+    
     override func configure(
         with message: MessageType,
         at indexPath: IndexPath,
