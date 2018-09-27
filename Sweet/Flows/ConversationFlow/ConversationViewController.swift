@@ -212,13 +212,11 @@ class ConversationViewController: MessagesViewController {
                 case .success(let response):
                     self.contentInsetBottom = self.messagesCollectionView.contentInset.bottom
                     self.contentOffset = self.messagesCollectionView.contentOffset
-                    if let user = self.members[message.from] {
-                        self.delegate?.conversationControllerShowsStory(
-                            StoryCellViewModel(model: response.story),
-                            user: user,
-                            messageId: message.messageId
-                        )
-                    }
+                    self.delegate?.conversationControllerShowsStory(
+                        StoryCellViewModel(model: response.story),
+                        user: self.user,
+                        messageId: message.messageId
+                    )
                     if let cell = cell as? StoryMessageCell {
                         cell.thumbnailImageView.hero.isEnabled = true
                         cell.thumbnailImageView.hero.id = "\(response.story.userId)" + message.messageId
