@@ -19,4 +19,5 @@ protocol CardsBaseViewDelegate: class {
                           fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,
                           completion: (() -> Void)?)
+    func showLikeRankList(title: String)
 }

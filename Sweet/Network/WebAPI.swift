@@ -80,6 +80,8 @@ enum WebAPI {
     case quitGroup(groupID: UInt64)
     case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
     case muteGroup(groupID: UInt64, isMuted: Bool)
+    case likeRankList(start: Int?, end: Int?)
+    case startup
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -225,6 +227,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/group/join"
         case .muteGroup:
             return "/group/mute"
+        case .likeRankList:
+            return "/user/like/rank/list"
+        case .startup:
+            return "/user/startup"
         }
     }
     
@@ -383,6 +389,13 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
         case .muteGroup(let groupID, let isMuted):
             parameters = ["groupId": groupID, "mute": isMuted]
+        case let .likeRankList(start, end):
+            if let start = start {
+                parameters["start"] = start
+            }
+            if let end = end {
+                parameters["end"] = end
+            }
         default:
             break
         }

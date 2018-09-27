@@ -34,7 +34,7 @@ class VersionUpdateHelper {
                         completion(.mustUpdate, newVersionString, content, url)
                     }
                 } else if currentVersion < newVersion {
-                    if getUpdateTime(version: newVersion) < 5 {
+                    if getUpdateTime(version: newVersion) < 1 {
                         setUpdateTime(version: newVersion)
                         if let content = appVersion["content"] as? String, let url = appVersion["url"] as? String {
                             completion(.update, newVersionString, content, url)
@@ -54,14 +54,20 @@ class VersionUpdateHelper {
     }
     
     private class func getUpdateTime(version: Int) -> Int {
-        let versionTimeKey = DefaultsKey<Int>("\(version)UpdateVersion")
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        let dateString = df.string(from: Date())
+        let versionTimeKey = DefaultsKey<Int>("\(version)\(dateString)UpdateVersion")
         return Defaults[versionTimeKey]
     }
     
     private class func setUpdateTime(version: Int) {
-        let versionTimeKey = DefaultsKey<Int>("\(version)UpdateVersion")
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        let dateString = df.string(from: Date())
+        let versionTimeKey = DefaultsKey<Int>("\(version)\(dateString)UpdateVersion")
         let oldTime = getUpdateTime(version: version)
-        if oldTime == 5 { return }
+        if oldTime == 1 { return }
         Defaults[versionTimeKey] = oldTime + 1
     }
     private class func appStore(urlString: String?) {

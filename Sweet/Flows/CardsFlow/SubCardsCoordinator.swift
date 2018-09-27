@@ -26,8 +26,19 @@ class SubCardsCoordinator: BaseCoordinator {
         self.subView = subView
     }
 }
+extension SubCardsCoordinator: LikeRankListViewDelegate {
+    
+}
 
 extension SubCardsCoordinator: CardsBaseViewDelegate {
+    func showLikeRankList(title: String) {
+        let controller = LikeRankListController(title: title)
+        controller.delegate = self
+        router.push(controller.toPresent())
+    }
+    
+
+    
     func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,
@@ -50,7 +61,7 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
         
     }
     
-    func showProfile(userId: UInt64, setTop: SetTop?) {
+    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
         let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
                                                                     userID: userId,
                                                                     setTop: setTop,
