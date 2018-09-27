@@ -9,16 +9,19 @@
 import UIKit
 import AVFoundation
 import SwiftyUserDefaults
-import Reachability
+import Alamofire
+
 enum Direction: Int {
     case unknown = 0
     case down = 2
     case recover = 3
 }
+
 enum CardRequest {
     case all(cardId: String?, direction: Direction?)
     case sub(cardId: String?, direction: Direction?)
 }
+
 let preloadingCount = 5
 var isVideoMuted = true
 
@@ -83,7 +86,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var isPreloadingCards = false
     private var avPlayer: AVPlayer?
     private var storage: Storage?
-    private var reachability = Reachability()
+    private let reachabilityManager = NetworkReachabilityManager()
     private var isWifi = false
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
@@ -100,7 +103,13 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    deinit {
+        reachabilityManager?.stopListening()
+        VideoCardPlayerManager.shared.clean()
+        cotentOffsetToken?.invalidate()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = Storage(userID: user.userId)
@@ -116,27 +125,23 @@ class CardsBaseController: BaseViewController, CardsBaseView {
         downButton.constrain(width: 60, height: 60)
         downButton.align(.right, inset: 10)
         downButton.align(.bottom, inset: 10)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reachabilityChanged(note:)),
-                                               name: .reachabilityChanged,
-                                               object: reachability)
-
-       try? reachability?.startNotifier()
-        Messenger.shared.addDelegate(self)
         
+        Messenger.shared.addDelegate(self)
+        startListenNetwork()
     }
     
-   
-    @objc func reachabilityChanged(note: Notification) {
-        let reachability = note.object as! Reachability
-        switch reachability.connection {
-        case .wifi:
-            sweetPlayerConf.shouldAutoPlay = true
-            isWifi = true
-        default:
-            isWifi = false
-            readSetting()
+    private func startListenNetwork() {
+        reachabilityManager?.listener = { [weak self] _ in
+            guard let self = self, let reachability = self.reachabilityManager else { return }
+            if reachability.isReachableOnEthernetOrWiFi {
+                sweetPlayerConf.shouldAutoPlay = true
+                self.isWifi = true
+            } else {
+                self.isWifi = false
+                self.readSetting()
+            }
         }
+        reachabilityManager?.startListening()
     }
     
     private func readSetting() {
@@ -166,18 +171,12 @@ class CardsBaseController: BaseViewController, CardsBaseView {
             }
         }
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
             cell.playerView.pauseWithRemove(isRemove: true)
         }
-    }
-    
-    deinit {
-        VideoCardPlayerManager.shared.clean()
-        cotentOffsetToken?.invalidate()
-        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
-        logger.debug("首页释放")
     }
     
     private func showEmptyView(isShow: Bool) {
@@ -257,7 +256,7 @@ extension CardsBaseController {
                     } else {
                         response.list.forEach({ self.appendConfigurator(card: $0) })
                     }
-
+                    
                     callback?(true, response.list)
                 case let .failure(error):
                     if error.code == WebErrorCode.noCard.rawValue && direction == Direction.down {
@@ -269,7 +268,7 @@ extension CardsBaseController {
                 }
         }
     }
-
+    
 }
 
 // MARK: - Privates
@@ -341,7 +340,7 @@ extension CardsBaseController {
             }
         }
     }
-
+    
     private func downScrollCard(index: Int) {
         let maxIndex = mainView.collectionView.numberOfItems(inSection: 0) - 1
         if index <= maxIndex {
@@ -352,7 +351,7 @@ extension CardsBaseController {
         }
     }
     
-
+    
     private func preloadingCard(oldIndex: Int) {
         if mainView.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
             let cardId = cards[oldIndex].cardId
@@ -381,10 +380,10 @@ extension CardsBaseController {
                 }
                 self.isPreloadingCards = false
             }
-
+            
         }
     }
-
+    
     private func showWebView(indexPath: IndexPath) {
         let card = cards[indexPath.row]
         guard let url = card.url else { return }
@@ -403,10 +402,10 @@ extension CardsBaseController {
         CardAction.clickUrl.actionLog(card: card)
         CardTimerHelper.countDown(time: 10, countDownBlock: { time in
             guard let last = self.navigationController?.viewControllers.last,
-                  let webController = last as? WebViewController,
-                  webController.urlString == card.url else {
-                CardTimerHelper.cancelTimer()
-                return
+                let webController = last as? WebViewController,
+                webController.urlString == card.url else {
+                    CardTimerHelper.cancelTimer()
+                    return
             }
         }) {
             if let last = self.navigationController?.viewControllers.last,

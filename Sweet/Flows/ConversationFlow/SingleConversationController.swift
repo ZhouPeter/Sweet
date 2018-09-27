@@ -17,12 +17,15 @@ protocol SingleConversationView: BaseView {
 
 final class SingleConversationController: ConversationViewController, SingleConversationView {
     private var buddy: User
+    private var conversation: IMConversation?
     
-    init(user: User, buddy: User) {
+    init(user: User, buddy: User, conversation: IMConversation? = nil) {
         self.buddy = buddy
+        self.conversation = conversation
         super.init(user: user)
         members[buddy.userId] = buddy
         Messenger.shared.addDelegate(self)
+        Messenger.shared.loadMessages(from: buddy, conversation: conversation)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,7 +38,6 @@ final class SingleConversationController: ConversationViewController, SingleConv
         messageInputBar.delegate = self
         navigationItem.rightBarButtonItem =
             UIBarButtonItem(image: #imageLiteral(resourceName: "Menu_black"), style: .plain, target: self, action: #selector(didPressRightBarButton))
-        Messenger.shared.loadMessages(from: buddy)
     }
     
     override func didBlock(userID: UInt64) {
@@ -103,11 +105,6 @@ extension SingleConversationController: MessageInputBarDelegate {
 extension SingleConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
         guard buddy.userId == self.buddy.userId else { return }
-        if self.messages.isEmpty {
-            self.messages = messages
-            reloadDataAndGoToBottomWithoutThrottle()
-            return
-        }
         self.messages = messages
         reloadDataAndGoToBottom()
     }

@@ -154,3 +154,13 @@ extension GroupMessageDirectionReq: MessageTicket {
     }
 }
 
+extension MarkConversationAsReadReq: MessageTicket {
+    var module: ModuleID {
+        return .conversation
+    }
+    
+    var command: Int {
+        return ConversationCmdID.markReadReq.rawValue
+    }
+}
+
