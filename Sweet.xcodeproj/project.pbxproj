@@ -941,8 +941,6 @@
 		AC3280D020A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D120A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
 		AC3280D220A9389A00B3B2D2 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280CE20A9389A00B3B2D2 /* Transform.swift */; };
-		AC361B1E215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC361B1D215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift */; };
-		AC361B1F215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC361B1D215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift */; };
 		AC39E55420C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55520C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
 		AC39E55620C7AF0800340564 /* Messenger+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC39E55320C7AF0800340564 /* Messenger+Send.swift */; };
@@ -1857,7 +1855,6 @@
 		AC30016821534C270034C538 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		AC30016D21534C9E0034C538 /* GroupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupData.swift; sourceTree = "<group>"; };
 		AC3280CE20A9389A00B3B2D2 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
-		AC361B1D215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+DebounceThrottle.swift"; sourceTree = "<group>"; };
 		AC39E55320C7AF0800340564 /* Messenger+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messenger+Send.swift"; sourceTree = "<group>"; };
 		AC4141FA20BD2FD400DC62E0 /* SocketAddressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressResponse.swift; sourceTree = "<group>"; };
 		AC41420120BD477000DC62E0 /* Date+Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Timestamp.swift"; sourceTree = "<group>"; };
@@ -2780,7 +2777,6 @@
 				ACDA67612111B076000B0587 /* Comparable+Clamp.swift */,
 				58D85112211A8DE000AEE9EF /* UIViewController+ShareCard.swift */,
 				58FBAD242147AF7200688F1E /* UIScreen+Shot.swift */,
-				AC361B1D215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3803,7 +3799,6 @@
 				ACA9CC4D20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				58447B2C209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				583BC78520CE4F9100C4494E /* ContentVideoCardViewModel.swift in Sources */,
-				AC361B1E215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */,
 				ACEFA0C22106D51D0098631F /* AVAssetTimeSelector.swift in Sources */,
 				58150FCF20F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD527F2088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
@@ -4912,7 +4907,6 @@
 				ACA9CC4E20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				58447B2D209B0909004C2FFE /* BlackNavigationController.swift in Sources */,
 				583BC78620CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
-				AC361B1F215B452700BECE05 /* DispatchQueue+DebounceThrottle.swift in Sources */,
 				ACEFA0C32106D51D0098631F /* AVAssetTimeSelector.swift in Sources */,
 				58150FD020F301A300CADBF2 /* UserInfoTableViewCell.swift in Sources */,
 				58BD52802088344700F7C3E1 /* UIScreen+Metrics.swift in Sources */,
