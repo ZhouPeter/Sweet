@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.3)
-  - Bugly (2.5.0)
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
@@ -81,7 +80,6 @@ PODS:
   - YYText (1.0.7)
 
 DEPENDENCIES:
-  - Bugly
   - FLEX (~> 2.0)
   - Gemini
   - Hero (~> 1.2.0)
@@ -117,7 +115,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - Bugly
     - CocoaAsyncSocket
     - FLEX
     - Gemini
@@ -179,7 +176,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   Gemini: 1a932868fa70579457162c3a93cd844ad5df3455
@@ -216,6 +212,6 @@ SPEC CHECKSUMS:
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: da168f44c4a8b8d6dbc8f1dffa0441150b9e6063
+PODFILE CHECKSUM: a342ad396ec005b3ed475fc8ea9460339c23f942
 
 COCOAPODS: 1.5.3
