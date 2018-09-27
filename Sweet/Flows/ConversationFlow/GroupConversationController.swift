@@ -16,11 +16,14 @@ protocol GroupConversationView: BaseView {
 
 final class GroupConversationController: ConversationViewController, GroupConversationView {
     private var group: Group
+    private var conversation: IMConversation?
     
-    init(user: User, group: Group) {
+    init(user: User, group: Group, conversation: IMConversation? = nil) {
         self.group = group
+        self.conversation = conversation
         super.init(user: user)
         Messenger.shared.addDelegate(self)
+        Messenger.shared.loadMessages(from: group, conversation: conversation)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,7 +39,6 @@ final class GroupConversationController: ConversationViewController, GroupConver
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didPressRightBarButton))
-        Messenger.shared.loadMessages(from: group)
     }
     
     @objc private func didPressRightBarButton() {
@@ -98,11 +100,6 @@ extension GroupConversationController: MessageInputBarDelegate {
 extension GroupConversationController: MessengerDelegate {
     func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group) {
         guard group.id == self.group.id else { return }
-        if self.messages.isEmpty {
-            self.messages = messages
-            reloadDataAndGoToBottomWithoutThrottle()
-            return
-        }
         self.messages = messages
         reloadDataAndGoToBottom()
     }

@@ -144,13 +144,6 @@ class ConversationViewController: MessagesViewController {
     }
     
     func reloadDataAndGoToBottom() {
-        DispatchQueue.main.throttle(deadline: .now() + 0.2, context: "Conversation") {
-            logger.debug("Throttling...")
-            self.reloadDataAndGoToBottomWithoutThrottle()
-        }
-    }
-    
-    func reloadDataAndGoToBottomWithoutThrottle() {
         logger.debug("")
         self.messagesCollectionView.reloadData()
         let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height

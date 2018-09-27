@@ -507,6 +507,8 @@ enum ConversationCmdID: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case listReq // = 0
   case listResp // = 1
+  case markReadReq // = 2
+  case markReadResp // = 3
   case UNRECOGNIZED(Int)
 
   init() {
@@ -517,6 +519,8 @@ enum ConversationCmdID: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .listReq
     case 1: self = .listResp
+    case 2: self = .markReadReq
+    case 3: self = .markReadResp
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -525,6 +529,8 @@ enum ConversationCmdID: SwiftProtobuf.Enum {
     switch self {
     case .listReq: return 0
     case .listResp: return 1
+    case .markReadReq: return 2
+    case .markReadResp: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -649,5 +655,7 @@ extension ConversationCmdID: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "LIST_REQ"),
     1: .same(proto: "LIST_RESP"),
+    2: .same(proto: "MARK_READ_REQ"),
+    3: .same(proto: "MARK_READ_RESP"),
   ]
 }

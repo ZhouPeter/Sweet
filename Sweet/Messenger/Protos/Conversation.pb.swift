@@ -49,6 +49,32 @@ struct GetConversationsResp {
   init() {}
 }
 
+struct MarkConversationAsReadReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var userID: UInt64 = 0
+
+  var groupID: UInt64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct MarkConversationAsReadResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var resultCode: UInt32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension GetConversationsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -116,6 +142,70 @@ extension GetConversationsResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   func _protobuf_generated_isEqualTo(other: GetConversationsResp) -> Bool {
     if self.resultCode != other.resultCode {return false}
     if self.list != other.list {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension MarkConversationAsReadReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "MarkConversationAsReadReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "group_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt64Field(value: &self.userID)
+      case 2: try decoder.decodeSingularUInt64Field(value: &self.groupID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.userID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.userID, fieldNumber: 1)
+    }
+    if self.groupID != 0 {
+      try visitor.visitSingularUInt64Field(value: self.groupID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: MarkConversationAsReadReq) -> Bool {
+    if self.userID != other.userID {return false}
+    if self.groupID != other.groupID {return false}
+    if unknownFields != other.unknownFields {return false}
+    return true
+  }
+}
+
+extension MarkConversationAsReadResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "MarkConversationAsReadResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "result_code"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularUInt32Field(value: &self.resultCode)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.resultCode != 0 {
+      try visitor.visitSingularUInt32Field(value: self.resultCode, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  func _protobuf_generated_isEqualTo(other: MarkConversationAsReadResp) -> Bool {
+    if self.resultCode != other.resultCode {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }
