@@ -99,8 +99,7 @@ extension CardsBaseController: EvaluationCardCollectionViewCellDelegate {
 // MARK: - ContentCardCollectionViewCellDelegate
 extension CardsBaseController: ContentCardCollectionViewCellDelegate {
     func joinGroup(groupId: UInt64, cardId: String, contentId: String) {
-        guard let index = cards.index(where: { $0.cardId == cardId}) else { return }
-        showGroupInputView(isJoin: cards[index].join!, placehoder: cards[index].topic == nil ? nil : "发送想说的话到\(cards[index].topic!)讨论群")
+        joinGroup(text: "")
     }
 
     func shareCard(cardId: String) {

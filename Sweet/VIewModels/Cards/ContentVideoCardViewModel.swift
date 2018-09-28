@@ -26,7 +26,7 @@ struct ContentVideoCardViewModel {
     let join: Bool?
     var currentTime: TimeInterval = 0.0
     let type: CardResponse.CardType
-    let memberNumString: String?
+    let joinGroupButtonString: String?
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),
@@ -52,6 +52,11 @@ struct ContentVideoCardViewModel {
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
         defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
         type = model.cardEnumType
-        memberNumString = model.memberNum != nil ? "\(model.memberNum!)人正在群聊讨论 → 🍉" : nil
+        if join == false {
+            joinGroupButtonString = "点此加入群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
+        } else {
+            joinGroupButtonString = "发消息到群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
+        }
+        
     }
 }

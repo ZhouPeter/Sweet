@@ -124,7 +124,7 @@ class ContentCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReus
         update(isGroupChat: viewModel.type == .groupChat,
                contentId: viewModel.contentId,
                groupId: viewModel.groupId,
-               memberNumString: viewModel.memberNumString)
+               joinGroupButtonString: viewModel.joinGroupButtonString)
     }
     
     func updateEmojiView(viewModel: ContentCardViewModel) {

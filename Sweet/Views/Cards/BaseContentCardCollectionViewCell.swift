@@ -25,11 +25,11 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         return button
     }()
     
-    lazy var addGroupButton: UIButton = {
+    lazy var joinGroupButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.contentHorizontalAlignment = .right
+        button.contentHorizontalAlignment = .center
         button.addTarget(self, action: #selector(didPressAddGroup(_:)), for: .touchUpInside)
         return button
     }()
@@ -68,29 +68,37 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
         shareButton.constrain(width: 50, height: 50)
         shareButton.align(.left, inset: 10)
         shareButton.centerY(to: emojiView)
-        customContent.addSubview(addGroupButton)
-        addGroupButton.constrain(width: 220, height: 50)
-        addGroupButton.centerY(to: shareButton)
-        addGroupButton.align(.right, inset: 15)
+        customContent.addSubview(joinGroupButton)
+        joinGroupButton.constrain(height: 50)
+        joinGroupButton.centerY(to: shareButton)
+        joinGroupButton.align(.left, inset: 15)
+        joinGroupButton.align(.right, inset: 15)
     }
     
-    func update(isGroupChat: Bool, contentId: String?, groupId: UInt64?, memberNumString: String?) {
+    func update(isGroupChat: Bool, contentId: String?, groupId: UInt64?, joinGroupButtonString: String?) {
         if isGroupChat {
             self.contentId = contentId
             self.groupId = groupId
             emojiView.isHidden = true
-            addGroupButton.isHidden = false
-            addGroupButton.setTitle(memberNumString, for: .normal)
+            joinGroupButton.isHidden = false
+            joinGroupButton.setTitle(joinGroupButtonString, for: .normal)
             groupBackgroudImageView.isHidden = false
             customContent.isShadowEnabled = false
             shareButton.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
+            shareButton.isHidden = true
         } else {
             emojiView.isHidden = false
-            addGroupButton.isHidden = true
+            joinGroupButton.isHidden = true
             groupBackgroudImageView.isHidden = true
             customContent.isShadowEnabled = true
             shareButton.setImage(#imageLiteral(resourceName: "CardShareGray"), for: .normal)
+            shareButton.isHidden = false
         }
+        
+    }
+    
+    func updateButtonString(joinGroupButtonString: String?){
+        joinGroupButton.setTitle(joinGroupButtonString, for: .normal)
     }
     
 }

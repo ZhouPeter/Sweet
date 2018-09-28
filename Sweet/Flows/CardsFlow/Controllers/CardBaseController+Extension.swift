@@ -172,47 +172,74 @@ extension CardsBaseController {
     }
     
     func updateContentCellEmoji(index: Int) {
-        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil, self.cards[index].imageList?.count ?? 0 > 0 {
-            guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: configurator.viewModel)
+        if cards[index].cardEnumType == .content {
+            if cards[index].video == nil, cards[index].imageList?.count ?? 0 > 0 {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
+                    cell.updateEmojiView(viewModel: configurator.viewModel)
+                }
+            } else if cards[index].video != nil {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
+                    cell.updateEmojiView(viewModel: configurator.viewModel)
+                }
+            } else if cards[index].thumbnail != nil {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
+                    cell.updateEmojiView(viewModel: configurator.viewModel)
+                }
             }
-        } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
-            guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: configurator.viewModel)
+        }
+    }
+    
+    func updateContentData(index: Int) {
+        if cards[index].cardEnumType == .groupChat || cards[index].cardEnumType == .content  {
+            if self.cards[index].video == nil, cards[index].imageList?.count ?? 0 > 0 {
+                let viewModel = ContentCardViewModel(model: cards[index])
+                let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators[index] = configurator
+                
+            } else if cards[index].video != nil {
+                let viewModel = ContentVideoCardViewModel(model: cards[index])
+                let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators[index] = configurator
+            } else if cards[index].thumbnail != nil {
+                let viewModel = LongTextCardViewModel(model: cards[index])
+                let configurator = CellConfigurator<LongTextCardCollectionViewCell>(viewModel: viewModel)
+                cellConfigurators[index] = configurator
             }
-        } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
-            guard let configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> else { return }
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: configurator.viewModel)
+        }
+    }
+    
+    func updateGroupCellButtonTitle(index: Int) {
+        if cards[index].cardEnumType == .content {
+            if cards[index].video == nil, cards[index].imageList?.count ?? 0 > 0 {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<ContentCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? BaseContentCardCollectionViewCell {
+                    cell.updateButtonString(joinGroupButtonString: configurator.viewModel.joinGroupButtonString)
+                }
+            } else if cards[index].video != nil {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<VideoCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? BaseContentCardCollectionViewCell {
+                    cell.updateButtonString(joinGroupButtonString: configurator.viewModel.joinGroupButtonString)
+                }
+            } else if cards[index].thumbnail != nil {
+                guard let configurator = cellConfigurators[index] as? CellConfigurator<LongTextCardCollectionViewCell> else { return }
+                if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? BaseContentCardCollectionViewCell {
+                    cell.updateButtonString(joinGroupButtonString: configurator.viewModel.joinGroupButtonString)
+                }
             }
         }
     }
     
     func reloadContentCell(index: Int) {
-        if self.cards[index].cardEnumType == .content, self.cards[index].video == nil, self.cards[index].imageList?.count ?? 0 > 0 {
-            let viewModel = ContentCardViewModel(model: self.cards[index])
-            let configurator = CellConfigurator<ContentCardCollectionViewCell>(viewModel: viewModel)
-            self.cellConfigurators[index] = configurator
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ContentCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: viewModel)
-            }
-        } else if self.cards[index].cardEnumType == .content, self.cards[index].video != nil {
-            let viewModel = ContentVideoCardViewModel(model: self.cards[index])
-            let configurator = CellConfigurator<VideoCardCollectionViewCell>(viewModel: viewModel)
-            self.cellConfigurators[index] = configurator
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: viewModel)
-            }
-        } else if self.cards[index].cardEnumType == .content, self.cards[index].thumbnail != nil {
-            let viewModel = LongTextCardViewModel(model: self.cards[index])
-            let configurator = CellConfigurator<LongTextCardCollectionViewCell>(viewModel: viewModel)
-            self.cellConfigurators[index] = configurator
-            if let cell = mainView.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? LongTextCardCollectionViewCell {
-                cell.updateEmojiView(viewModel: viewModel)
-            }
-        }
+        updateContentData(index: index)
+        updateContentCellEmoji(index: index)
+    }
+    
+    func reloadGroupCell(index: Int) {
+        updateContentData(index: index)
+        updateGroupCellButtonTitle(index: index)
     }
 }
 // MARK: - Private Methods
@@ -281,14 +308,16 @@ extension CardsBaseController {
                         alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                         Defaults[.isJoinGroupChat] = true
-                        Messenger.shared.loadConversations()
                     } else {
                         self.toast(message: "加入群聊成功！")
                         for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
                             self.cards[index].join = true
+                            self.reloadGroupCell(index: index)
                         }
                     }
                 }
+                Messenger.shared.loadConversations()
+                self.delegate?.showGroupConversation(groupId: groupId)
             }
         }
     }

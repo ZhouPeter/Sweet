@@ -124,7 +124,7 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
         update(isGroupChat: viewModel.type == .groupChat,
                contentId: viewModel.contentId,
                groupId: viewModel.groupId,
-               memberNumString: viewModel.memberNumString)
+               joinGroupButtonString: viewModel.joinGroupButtonString)
 
     }
     

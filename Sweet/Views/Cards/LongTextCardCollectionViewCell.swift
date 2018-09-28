@@ -144,7 +144,7 @@ class LongTextCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReu
         update(isGroupChat: viewModel.type == .groupChat,
                contentId: viewModel.contentId,
                groupId: viewModel.groupId,
-               memberNumString: viewModel.memberNumString)
+               joinGroupButtonString: viewModel.joinGroupButtonString)
         updateSourceView(withType: viewModel.type)
         
     }

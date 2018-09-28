@@ -25,6 +25,16 @@ class AllCardsCoordinator: BaseCoordinator {
         allView.delegate = self
         self.allView = allView
     }
+    
+    private func startConversationWith(group: Group) {
+        let coordinator = GroupConversationCoordinator(user: user,
+                                                       group: group,
+                                                       router: router,
+                                                       coordinatorFactory: coordinatorFactory)
+        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
+    }
 }
 
 extension AllCardsCoordinator: LikeRankListViewDelegate {
@@ -32,6 +42,16 @@ extension AllCardsCoordinator: LikeRankListViewDelegate {
 }
 
 extension AllCardsCoordinator: CardsBaseViewDelegate {
+    func showGroupConversation(groupId: UInt64) {
+        Messenger.shared.loadGroupWith(id: groupId) { [weak self] (group) in
+            guard let group = group else {
+                logger.error("Group is nil")
+                return
+            }
+            self?.startConversationWith(group: group)
+        }
+    }
+    
     func showLikeRankList(title: String) {
         let controller = LikeRankListController(title: title)
         controller.delegate = self
