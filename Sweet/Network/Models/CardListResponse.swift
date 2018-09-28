@@ -262,7 +262,7 @@ struct StealLikeInfo: Codable {
     let name: String
     let universityName: String
     let userId: UInt64
-    var stolen: Bool
+    var success: Bool
 }
 struct LikeRank: Codable {
     let rankChangeNum: Int

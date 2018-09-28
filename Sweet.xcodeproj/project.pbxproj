@@ -202,15 +202,14 @@
 		583DE8D620B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
 		583DE8D720B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
 		583DE8D820B664FB0071F651 /* PhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */; };
-		58438586215DC6A700E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
-		58438587215DC6A700E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
-		58438588215DC6A800E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
-		58438589215DC6A800E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
-
 		5843856C215CC85E00E36C91 /* GameCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843856B215CC85E00E36C91 /* GameCardCollectionViewCell.swift */; };
 		5843856D215CC85E00E36C91 /* GameCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843856B215CC85E00E36C91 /* GameCardCollectionViewCell.swift */; };
 		5843856E215CC85E00E36C91 /* GameCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843856B215CC85E00E36C91 /* GameCardCollectionViewCell.swift */; };
 		5843856F215CC85E00E36C91 /* GameCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843856B215CC85E00E36C91 /* GameCardCollectionViewCell.swift */; };
+		58438586215DC6A700E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
+		58438587215DC6A700E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
+		58438588215DC6A800E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
+		58438589215DC6A800E36C91 /* Guide+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D862CA215A3A4C0053E25F /* Guide+Message.swift */; };
 		58438590215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
 		58438591215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
 		58438592215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
