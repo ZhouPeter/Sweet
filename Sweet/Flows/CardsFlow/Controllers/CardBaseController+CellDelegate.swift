@@ -145,6 +145,14 @@ extension CardsBaseController: ContentCardCollectionViewCellDelegate {
         showBrower(index: index, originPageIndex: selectedIndex)
     }
 }
+
+extension CardsBaseController: GameCardCollectionViewCellDelegate {
+    func changeViewModel(_ viewModel: GameCardViewModel) {
+        guard let index = cards.index(where: { $0.cardId == viewModel.cardId }) else { return }
+        let configurator = CellConfigurator<GameCardCollectionViewCell>(viewModel: viewModel)
+        cellConfigurators[index] = configurator
+    }
+}
 // MARK: - BaseCardCollectionViewCellDelegate
 extension CardsBaseController: BaseCardCollectionViewCellDelegate {
     func showAlertController(cardId: String, fromCell: BaseCardCollectionViewCell) {

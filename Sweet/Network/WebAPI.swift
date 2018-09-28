@@ -83,6 +83,7 @@ enum WebAPI {
     case muteGroup(groupID: UInt64, isMuted: Bool)
     case likeRankList(start: Int?, end: Int?)
     case startup
+    case stealLike(cardId: String, duration: UInt64, success: Bool, toUserId: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -234,6 +235,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/like/rank/list"
         case .startup:
             return "/user/startup"
+        case .stealLike:
+            return "/like/steal"
         }
     }
     
@@ -406,6 +409,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             if let end = end {
                 parameters["end"] = end
             }
+        case let .stealLike(cardId, duration, success, toUserId):
+            parameters = ["cardId": cardId, "duration": duration, "success": success, "toUserId": toUserId]
         default:
             break
         }

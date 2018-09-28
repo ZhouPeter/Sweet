@@ -91,6 +91,7 @@ class CardsPageCollectionView: UIView {
         collectionView.register(cellType: WelcomeCardCollectionViewCell.self)
         collectionView.register(cellType: UsersCardCollectionViewCell.self)
         collectionView.register(cellType: NotiCardCollectionViewCell.self)
+        collectionView.register(cellType: GameCardCollectionViewCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.addGestureRecognizer(pagingScrollView.panGestureRecognizer)
