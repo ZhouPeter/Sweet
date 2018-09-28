@@ -166,6 +166,11 @@ extension CardsBaseController {
             let configurator = CellConfigurator<NotiCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
+        case .likeSteal:
+            let viewModel = GameCardViewModel(model: card)
+            let configurator = CellConfigurator<GameCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
         default:
             break
         }
