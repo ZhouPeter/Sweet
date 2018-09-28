@@ -29,12 +29,11 @@ struct GameCardViewModel {
         cardId = model.cardId
         titleString = model.name!
         let info = model.stealLikeInfo!
-        resultTitleString = "刚刚你被某人偷❤️×1"
         likeString = "当前(\(info.likeCount + 1)-1)"
-        isHiddenLikeCount = false
-        isHiddenInfo = false
         timeString = "--:--"
-        isShowCompleteInfo = false
+        isShowCompleteInfo = info.stolen
+        isHiddenInfo = !info.stolen
+        isHiddenLikeCount = info.stolen
         avatarURL = URL(string: info.avatar)!
         if info.gender == .male {
             heOrSheString = "他"
@@ -46,9 +45,10 @@ struct GameCardViewModel {
             simpleInfoString = "女生·\(info.city.prefix(info.city.count - 1))某大学"
             completeInfoString = "\(info.name)·\(info.universityName)"
         }
+        resultTitleString = info.stolen ? "从\(heOrSheString)偷❤️成功\n👇👇👇" : "刚刚你被某人偷❤️×1"
         commentString = info.info
         isBigButton = false
-        buttonTitleString = "偷回去"
+        buttonTitleString =  info.stolen ? "访问主页" : "偷回去"
         userId = info.userId
     }
     
