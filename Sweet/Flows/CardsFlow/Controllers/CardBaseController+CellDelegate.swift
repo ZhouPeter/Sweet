@@ -14,8 +14,8 @@ import SDWebImage
 // MARK: - ChoiceCardCollectionViewCellDelegate
 extension CardsBaseController: ChoiceCardCollectionViewCellDelegate {
     
-    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
-        delegate?.showProfile(userId: userId, setTop: setTop)
+    func showProfile(buddyID: UInt64, setTop: SetTop? = nil) {
+        delegate?.showProfile(buddyID: buddyID, setTop: setTop)
     }
     
     func selectChoiceCard(cardId: String, selectedIndex: Int) {
@@ -306,7 +306,7 @@ extension CardsBaseController: SweetPlayerViewDelegate {
 
 extension CardsBaseController: ShareWebViewControllerDelegate {
     func showProfile(userId: UInt64, webView: ShareWebViewController) {
-        showProfile(userId: userId)
+        showProfile(buddyID: userId)
     }
     
     func showAllEmoji(cardId: String) {

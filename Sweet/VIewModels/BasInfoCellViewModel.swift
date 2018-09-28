@@ -33,7 +33,7 @@ struct BaseInfoCellViewModel {
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "\(user.signature)"
         isLoginUser = userID == user.userId
-        rankString = "本校排行\(user.rank)"
+        rankString = user.rank == 0 ? "" : "本校排行\(user.rank)"
         cellHeight = 200
     }
 }

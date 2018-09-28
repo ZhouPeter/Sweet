@@ -14,10 +14,10 @@ protocol CoordinatorFactory {
     func makePowerCoordinator(router: Router) -> Coordinator & PowerCoordinatorOutput
     func makeMainCoordinator(user: User, token: String) -> (coordinator: Coordinator, toPresent: MainView)
     func makeProfileCoordinator(user: User,
-                                userID: UInt64,
+                                buddyID: UInt64,
                                 router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeProfileCoordinator(user: User,
-                                userID: UInt64,
+                                buddyID: UInt64,
                                 setTop: SetTop?,
                                 router: Router) -> Coordinator & ProfileCoordinatorOutput
     func makeProfileCoordinator(user: User,

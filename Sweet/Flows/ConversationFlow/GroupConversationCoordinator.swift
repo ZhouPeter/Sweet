@@ -56,7 +56,7 @@ extension GroupConversationCoordinator: ConversationControllerDelegate {
     
     func conversationControllerShowsProfile(buddy: User) {
         let coordinator = self.coordinatorFactory
-            .makeProfileCoordinator(user: user, userID: buddy.userId, router: router)
+            .makeProfileCoordinator(user: user, buddyID: buddy.userId, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
         addDependency(coordinator)
         coordinator.start()
@@ -93,7 +93,7 @@ extension GroupConversationCoordinator: ConversationControllerDelegate {
 extension GroupConversationCoordinator: ShareWebViewControllerDelegate {
     func showProfile(userId: UInt64, webView: ShareWebViewController) {
         let coordinator = self.coordinatorFactory
-            .makeProfileCoordinator(user: user, userID: userId, router: router)
+            .makeProfileCoordinator(user: user, buddyID: userId, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
         addDependency(coordinator)
         coordinator.start()

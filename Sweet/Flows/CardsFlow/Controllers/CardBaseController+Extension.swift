@@ -111,7 +111,7 @@ extension CardsBaseController {
                 }
                 activityViewModel.showProfile = { [weak self] (buddyID, setTop) in
                     CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
-                    self?.showProfile(userId: buddyID, setTop: setTop)
+                    self?.showProfile(buddyID: buddyID, setTop: setTop)
                 }
                 viewModel.activityViewModels[offset] = activityViewModel
             }
@@ -123,7 +123,7 @@ extension CardsBaseController {
             for (offset, var cellModel) in viewModel.storyCellModels.enumerated() {
                 cellModel.callback = { [weak self] userId in
                     CardAction.clickAvatar.actionLog(card: card, toUserId: String(userId))
-                    self?.showProfile(userId: userId)
+                    self?.showProfile(buddyID: userId)
                 }
                 viewModel.storyCellModels[offset] = cellModel
             }
@@ -140,7 +140,7 @@ extension CardsBaseController {
             for (offset, var cellModel) in viewModel.userContents.enumerated() {
                 cellModel.showProfile = { [weak self] (buddyID, setTop) in
                     CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
-                    self?.showProfile(userId: buddyID, setTop: setTop)
+                    self?.showProfile(buddyID: buddyID, setTop: setTop)
                 }
                 cellModel.callBack = { [weak self] activityId in
                     self?.showInputView(cardId: viewModel.cardId, activityId: activityId)
@@ -159,7 +159,7 @@ extension CardsBaseController {
             for (offset, var cellModel) in viewModel.likeRankViewModels.enumerated() {
                 cellModel.showProfile = { [weak self] (buddyID, setTop) in
                     CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
-                    self?.showProfile(userId: buddyID, setTop: setTop)
+                    self?.showProfile(buddyID: buddyID, setTop: setTop)
                 }
                 viewModel.likeRankViewModels[offset] = cellModel
             }

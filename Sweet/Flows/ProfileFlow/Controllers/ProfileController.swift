@@ -29,6 +29,7 @@ protocol ProfileView: BaseView {
 protocol ProfileViewDelegate: class {
     func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting)
     func showConversation(user: User, buddy: User)
+    func showLikeRankList(title: String)
 }
 
 class ProfileController: BaseViewController, ProfileView {
@@ -581,6 +582,10 @@ extension ProfileController: UITableViewDataSource {
 }
 
 extension ProfileController: UserInfoTableViewCellDelegate {
+    func showLikeRankList() {
+        delegate?.showLikeRankList(title: userResponse!.universityName + "❤️优秀榜")
+    }
+    
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {
         if user.userId == userId {
             isReadLocal = true

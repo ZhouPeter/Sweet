@@ -189,7 +189,26 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
 }
 
+extension ProfileCoordinator: LikeRankListViewDelegate {
+    func showProfile(buddyID: UInt64, setTop: SetTop?) {
+        let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
+                                                                    buddyID: buddyID,
+                                                                    setTop: setTop,
+                                                                    router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+}
 extension ProfileCoordinator: ProfileViewDelegate {
+    func showLikeRankList(title: String) {
+        let controller = LikeRankListController(title: title)
+        controller.delegate = self
+        router.push(controller.toPresent())
+    }
+    
     func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting) {
         let aboutOutput  = factory.makeProfileAboutOutput(user: user, updateRemain: updateRemain, setting: setting)
         aboutOutput.showWebView = { [weak self] (title, urlString) in

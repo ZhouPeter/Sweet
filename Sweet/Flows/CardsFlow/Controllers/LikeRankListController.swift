@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 protocol LikeRankListViewDelegate: class {
-    func showProfile(userId: UInt64, setTop: SetTop?)
+    func showProfile(buddyID: UInt64, setTop: SetTop?)
 }
 
 protocol LikeRankListView: BaseView {
@@ -74,7 +74,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
                 self.viewModels = response.rankList.map( {
                     var viewModel = LikeRankViewModel(model: $0)
                     viewModel.showProfile = { [weak self] (userId, setTop) in
-                        self?.delegate?.showProfile(userId: userId, setTop: setTop)
+                        self?.delegate?.showProfile(buddyID: userId, setTop: setTop)
                     }
                    
                     return viewModel

@@ -57,21 +57,21 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
                                       delegate: delegate, fromCardId: fromCardId)
     }
     
-    func makeProfileCoordinator(user: User, userID: UInt64,
+    func makeProfileCoordinator(user: User, buddyID: UInt64,
                                 setTop: SetTop?, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
                 user: user,
-                userID: userID,
+                userID: buddyID,
                 setTop: setTop,
                 router: router,
                 factory: FlowFactoryImp(),
                 coordinatorFactory: CoordinatorFactoryImp())
     }
     
-    func makeProfileCoordinator(user: User, userID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
+    func makeProfileCoordinator(user: User, buddyID: UInt64, router: Router) -> Coordinator & ProfileCoordinatorOutput {
         return ProfileCoordinator(
             user: user,
-            userID: userID,
+            userID: buddyID,
             router: router,
             factory: FlowFactoryImp(),
             coordinatorFactory: CoordinatorFactoryImp())

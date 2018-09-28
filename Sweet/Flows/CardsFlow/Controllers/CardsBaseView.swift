@@ -13,7 +13,7 @@ protocol CardsBaseView: BaseView {
 }
 
 protocol CardsBaseViewDelegate: class {
-    func showProfile(userId: UInt64, setTop: SetTop?)
+    func showProfile(buddyID: UInt64, setTop: SetTop?)
     func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int,
                           fromCardId: String?,
