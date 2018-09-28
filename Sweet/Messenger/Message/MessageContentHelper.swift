@@ -15,7 +15,7 @@ class MessageContentHelper {
         if let content = resultCard.content, let result = try? content.htmlStringReplaceTag() {
             text = result
         }
-        if resultCard.cardEnumType == .content {
+        if resultCard.cardEnumType == .content || resultCard.cardEnumType == .groupChat {
             if let videoUrl = resultCard.video {
                 MessageContentHelper.makeUploadFirstVideoImage(videoUrl: videoUrl) { (imageUrl) in
                     guard let imageUrl = imageUrl else {
