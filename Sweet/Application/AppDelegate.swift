@@ -131,6 +131,7 @@ extension AppDelegate {
         UMConfigure.initWithAppkey(umengKey, channel: nil)
         WeiboSDK.enableDebugMode(true)
         WeiboSDK.registerApp(weiboKey)
+        UMessage.setAutoAlert(false)
     }
     
     private func addObservers() {
@@ -290,7 +291,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
              @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
         if notification.request.trigger is UNPushNotificationTrigger {
-            UMessage.setAutoAlert(false)
             UMessage.didReceiveRemoteNotification(userInfo)
         }
         completionHandler([.sound, .badge, .alert])
