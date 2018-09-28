@@ -263,7 +263,6 @@ class ConversationViewController: MessagesViewController {
     }
     
     private func setupInputBar() {
-        scrollsToBottomOnKeybordBeginsEditing = true
         maintainPositionOnKeyboardFrameChanged = true
         messageInputBar.isTranslucent = false
         messageInputBar.separatorLine.isHidden = true
