@@ -88,7 +88,7 @@ extension OptionCardPreviewController: ChoiceCardCollectionViewCellDelegate {
         }
     }
     
-    func showProfile(userId: UInt64, setTop: SetTop?) {
-        showProfile?(userId, setTop, nil)
+    func showProfile(buddyID: UInt64, setTop: SetTop?) {
+        showProfile?(buddyID, setTop, nil)
     }
 }

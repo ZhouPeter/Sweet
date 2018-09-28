@@ -12,6 +12,7 @@ import SDWebImage
 protocol UserInfoTableViewCellDelegate: class {
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL)
     func editSignature()
+    func showLikeRankList()
 }
 
 class UserInfoTableViewCell: UITableViewCell {
@@ -64,6 +65,9 @@ class UserInfoTableViewCell: UITableViewCell {
         label.textColor = .white
         label.layer.cornerRadius = 3
         label.clipsToBounds = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressRank(_:)))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -74,6 +78,9 @@ class UserInfoTableViewCell: UITableViewCell {
         label.textColor = .white
         label.text = "获❤️秘籍"
         label.textAlignment = .center
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressHelp(_:)))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
         return label
     }()
     private lazy var segmentLineView: UIView = {
@@ -203,9 +210,14 @@ class UserInfoTableViewCell: UITableViewCell {
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
         if viewModel.isLoginUser {
-            rankLabel.text = viewModel.rankString
             rankLabel.isHidden = false
             helpLabel.isHidden = false
+            if viewModel.rankString == "" {
+                rankLabel.isHidden = true
+            } else {
+                rankLabel.text = viewModel.rankString
+            }
+            
         } else {
             rankLabel.isHidden = true
             helpLabel.isHidden = true
@@ -221,5 +233,12 @@ class UserInfoTableViewCell: UITableViewCell {
         if let viewModel = viewModel, viewModel.isLoginUser {
             delegate?.editSignature()
         }
+    }
+    @objc private func didPressHelp(_ tap: UITapGestureRecognizer) {
+        Guide.showGetStarHelpMessage()
+    }
+    
+    @objc private func didPressRank(_ tap: UITapGestureRecognizer) {
+        delegate?.showLikeRankList()
     }
 }

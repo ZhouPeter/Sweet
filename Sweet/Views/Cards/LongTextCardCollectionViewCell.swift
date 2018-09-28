@@ -178,7 +178,7 @@ extension LongTextCardCollectionViewCell: EmojiControlViewDelegate {
     func didTapAvatar(index: Int) {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             if let viewModel = viewModel, let userIDs = viewModel.resultUseIDs {
-                delegate.showProfile(userId: userIDs[index],
+                delegate.showProfile(buddyID: userIDs[index],
                                      setTop: SetTop(contentId: viewModel.contentId, preferenceId: nil))
             }
         }

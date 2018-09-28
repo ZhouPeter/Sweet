@@ -77,7 +77,7 @@ extension ContactsCoordinator: ContactsViewDelegate {
 //    }
     
     private func addProfileCoordinator(userID: UInt64) {
-        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, userID: userID, router: router)
+        let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, buddyID: userID, router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

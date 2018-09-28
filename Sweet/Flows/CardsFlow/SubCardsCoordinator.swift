@@ -36,9 +36,7 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
         controller.delegate = self
         router.push(controller.toPresent())
     }
-    
 
-    
     func showStoriesGroup(storiesGroup: [[StoryCellViewModel]],
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,
@@ -61,9 +59,9 @@ extension SubCardsCoordinator: CardsBaseViewDelegate {
         
     }
     
-    func showProfile(userId: UInt64, setTop: SetTop? = nil) {
+    func showProfile(buddyID: UInt64, setTop: SetTop? = nil) {
         let coordinator = coordinatorFactory.makeProfileCoordinator(user: user,
-                                                                    userID: userId,
+                                                                    buddyID: buddyID,
                                                                     setTop: setTop,
                                                                     router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in

@@ -11,11 +11,11 @@ import SDWebImage
 
 protocol ChoiceCardCollectionViewCellDelegate: BaseCardCollectionViewCellDelegate {
     func selectChoiceCard(cardId: String, selectedIndex: Int)
-    func showProfile(userId: UInt64, setTop: SetTop?)
+    func showProfile(buddyID: UInt64, setTop: SetTop?)
 }
 
 extension ChoiceCardCollectionViewCellDelegate {
-    func showProfile(userId: UInt64, setTop: SetTop?) {}
+    func showProfile(buddyID: UInt64, setTop: SetTop?) {}
 }
 
 class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, CellUpdatable {
@@ -293,7 +293,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     
     @objc private func didPressAvatar(_ tap: UITapGestureRecognizer) {
         if let delegate  = delegate as? ChoiceCardCollectionViewCellDelegate, let view = tap.view {
-            delegate.showProfile(userId: viewModel!.userIDs![view.tag],
+            delegate.showProfile(buddyID: viewModel!.userIDs![view.tag],
                                  setTop: SetTop(contentId: nil, preferenceId: viewModel?.preferenceId))
         }
     }

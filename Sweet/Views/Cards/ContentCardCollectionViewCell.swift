@@ -11,7 +11,7 @@ import SDWebImage
 protocol ContentCardCollectionViewCellDelegate: NSObjectProtocol {
     func showImageBrowser(selectedIndex: Int)
     func contentCardComment(cardId: String, emoji: Int)
-    func showProfile(userId: UInt64, setTop: SetTop?)
+    func showProfile(buddyID: UInt64, setTop: SetTop?)
     func openEmojis(cardId: String)
     func shareCard(cardId: String)
     func joinGroup(groupId: UInt64, cardId: String, contentId: String)
@@ -158,7 +158,7 @@ extension ContentCardCollectionViewCell: EmojiControlViewDelegate {
     func didTapAvatar(index: Int) {
         if let delegate  = delegate as? ContentCardCollectionViewCellDelegate {
             if let viewModel = viewModel, let userIDs = viewModel.resultUseIDs {
-                delegate.showProfile(userId: userIDs[index],
+                delegate.showProfile(buddyID: userIDs[index],
                                      setTop: SetTop(contentId: viewModel.contentId, preferenceId: nil))
             }
         }

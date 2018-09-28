@@ -58,7 +58,7 @@ extension IMCoordinator: IMViewDelegate {
     
     func imViewDidPressAvatarButton() {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
-                                                                         userID: user.userId,
+                                                                         buddyID: user.userId,
                                                                          router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
@@ -88,7 +88,7 @@ extension IMCoordinator: IMViewDelegate {
     
     private func showProfile(userID: UInt64) {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user,
-                                                                         userID: userID,
+                                                                         buddyID: userID,
                                                                          router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
