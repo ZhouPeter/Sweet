@@ -15,7 +15,7 @@ class CardMessageManager {
         let cardId  = card.cardId
         let from = UInt64(Defaults[.userID]!)!
         MessageContentHelper.getContentCardContent(resultCard: card) { (content) in
-            if card.cardEnumType == .content {
+            if card.cardEnumType == .content || card.cardEnumType == .groupChat {
                 if let content = content as? ContentCardContent {
                     userIds.forEach {
                         waitingIMNotifications.append(
