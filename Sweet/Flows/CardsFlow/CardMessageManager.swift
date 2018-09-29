@@ -57,7 +57,7 @@ class CardMessageManager {
     func sendMessage(card: CardResponse, text: String, userIds: [UInt64], extra: String) {
         let from = UInt64(Defaults[.userID]!)!
         MessageContentHelper.getContentCardContent(resultCard: card) { (content) in
-            if card.cardEnumType == .content {
+            if card.cardEnumType == .content || card.cardEnumType == .groupChat {
                 if let content = content as? ContentCardContent {
                     userIds.forEach {
                         Messenger.shared.sendContentCard(content, from: from, to: $0, extra: extra)

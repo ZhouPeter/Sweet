@@ -144,6 +144,7 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     }
     @objc private func didPressHelp(_ sender: UIButton) {
         Guide.showLikeRankHelpMessage()
+        CardAction.clickHelp.actionLog(cardId: viewModel!.cardId)
     }
     private func setupUI() {
         customContent.insertSubview(colorBackgroudImageView, belowSubview: titleLabel)

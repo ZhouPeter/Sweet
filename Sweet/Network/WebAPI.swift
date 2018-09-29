@@ -307,6 +307,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             } else {
                 parameters = [:]
             }
+            parameters["cardVersion"] = 3
         case let .evaluateCard(cardId, index),
              let .choiceCard(cardId, index):
             parameters = ["cardId": cardId, "index": index]

@@ -32,7 +32,12 @@ protocol ProfileViewDelegate: class {
     func showLikeRankList(title: String)
 }
 
-class ProfileController: BaseViewController, ProfileView {
+class ProfileController: BaseViewController, ProfileView, NavBarTitleChangeable {
+    var preferredTextAttributes: [NSAttributedStringKey : Any] {
+        let item = FunNavTitleTextAttributesItem(color: .black)
+        return getNavgationBarTitleTextAttributes(with: item)
+    }
+    
     weak var delegate: ProfileViewDelegate?
     private var userScrollFlag = false
     var showStory: (() -> Void)?
@@ -148,20 +153,23 @@ class ProfileController: BaseViewController, ProfileView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setNavigationBar()
         let offsetY = tableView.contentOffset.y
         DispatchQueue.main.async {
             self.tableView.contentOffset.y = offsetY
         }
+        if isReadLocal {
+            readLocalData()
+            isReadLocal = false
+        }
+    }
+    
+    private func setNavigationBar() {
         NotificationCenter.default.post(name: .BlackStatusBar, object: nil)
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
-        if isReadLocal {
-            readLocalData()
-            isReadLocal = false
-        }
-        
     }
     
     deinit {

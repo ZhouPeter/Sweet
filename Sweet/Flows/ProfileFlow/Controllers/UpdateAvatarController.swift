@@ -11,7 +11,12 @@ import Photos
 import SwiftyUserDefaults
 import SDWebImage
 
-class UpdateAvatarController: BaseViewController, UpdateProtocol {
+class UpdateAvatarController: BaseViewController, UpdateProtocol, NavBarTitleChangeable {
+    
+    var preferredTextAttributes: [NSAttributedStringKey : Any] {
+        let item = FunNavTitleTextAttributesItem(color: .white)
+        return getNavgationBarTitleTextAttributes(with: item)
+    }
     var saveCompletion: ((String, Int?) -> Void)?
     
     var avatar: String
@@ -41,10 +46,6 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.barTintColor = .black
-        navigationController?.navigationBar.tintColor = .white
         view.backgroundColor = .black
         navigationItem.title = "修改头像"
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moreButton)
@@ -52,6 +53,18 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
         avatarImageView.constrain(width: UIScreen.mainWidth(), height: UIScreen.mainWidth())
         avatarImageView.centerX(to: view)
         avatarImageView.align(.top, to: view, inset: UIScreen.navBarHeight() + 36)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationBar()
+    }
+    
+    private func setNavigationBar() {
+        NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.tintColor = .white
     }
     @objc private func backAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

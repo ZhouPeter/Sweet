@@ -214,6 +214,14 @@
 		58438591215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
 		58438592215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
 		58438593215DD97A00E36C91 /* GameCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843858F215DD97A00E36C91 /* GameCardViewModel.swift */; };
+		584385AA215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */; };
+		584385AB215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */; };
+		584385AC215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */; };
+		584385AD215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */; };
+		584385AF215F67F300E36C91 /* FunNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385AE215F67F300E36C91 /* FunNavigationViewController.swift */; };
+		584385B0215F67F300E36C91 /* FunNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385AE215F67F300E36C91 /* FunNavigationViewController.swift */; };
+		584385B1215F67F300E36C91 /* FunNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385AE215F67F300E36C91 /* FunNavigationViewController.swift */; };
+		584385B2215F67F300E36C91 /* FunNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584385AE215F67F300E36C91 /* FunNavigationViewController.swift */; };
 		5843DA4B209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4C209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
 		5843DA4D209FF454005C8AD2 /* ContactsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */; };
@@ -1683,6 +1691,8 @@
 		583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserController.swift; sourceTree = "<group>"; };
 		5843856B215CC85E00E36C91 /* GameCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		5843858F215DD97A00E36C91 /* GameCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardViewModel.swift; sourceTree = "<group>"; };
+		584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarTitleChangeable.swift; sourceTree = "<group>"; };
+		584385AE215F67F300E36C91 /* FunNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunNavigationViewController.swift; sourceTree = "<group>"; };
 		5843DA4A209FF454005C8AD2 /* ContactsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFooterView.swift; sourceTree = "<group>"; };
 		5843DA4F20A0261D005C8AD2 /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
 		5843DA5420A028C6005C8AD2 /* PhoneContactListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContactListResponse.swift; sourceTree = "<group>"; };
@@ -2753,6 +2763,8 @@
 		ACA32330208747D400BDC92E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				584385AE215F67F300E36C91 /* FunNavigationViewController.swift */,
+				584385A7215F67E600E36C91 /* NavBarTitleChangeable.swift */,
 				ACA323A6208763AA00BDC92E /* BaseViewController.swift */,
 				58155E342091D53E00ADEFFB /* WebViewController.swift */,
 				583DE8D420B664FB0071F651 /* PhotoBrowserController.swift */,
@@ -3662,6 +3674,7 @@
 				58D3CCE520C8FA320078B36C /* StatusResponse.swift in Sources */,
 				587D18E720DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				589E6BCC20A983850038FAED /* CardsAllController.swift in Sources */,
+				584385AA215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */,
 				58325B8E20A2F496000E851F /* ContactSearchController.swift in Sources */,
 				58DECE6920EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				ACA3236020875B4100BDC92E /* Array+isNotEmpty.swift in Sources */,
@@ -3762,6 +3775,7 @@
 				ACA83C0B20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				58D5790120944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA1208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
+				584385AF215F67F300E36C91 /* FunNavigationViewController.swift in Sources */,
 				58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B820AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074B20B272410031630C /* SweetPlayerItem.swift in Sources */,
@@ -4054,6 +4068,7 @@
 				58BD532E2090466600F7C3E1 /* UserResponse.swift in Sources */,
 				AC45CD6E20AD4D2C005C4AA0 /* StoryCaptureView.swift in Sources */,
 				58D578D62092FAE200AE5D38 /* StoryListResponse.swift in Sources */,
+				584385AC215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */,
 				AC2A259920BD2B9F00A82E62 /* User.pb.swift in Sources */,
 				AC7C8E5620E26C970041D2A0 /* ConversationControllerDelegate.swift in Sources */,
 				ACDB24B020BD74E00039368E /* InstantMessage.swift in Sources */,
@@ -4258,6 +4273,7 @@
 				ACF2DEB12089C5ED00660425 /* LoginRequestBody.swift in Sources */,
 				58F4074D20B272410031630C /* SweetPlayerItem.swift in Sources */,
 				58CE1EC320A53D5E00781EBF /* StoriesPlayerGroupViewController.swift in Sources */,
+				584385B1215F67F300E36C91 /* FunNavigationViewController.swift in Sources */,
 				ACDB24E920BED0DE0039368E /* ConversationCell.swift in Sources */,
 				58D578F420934B6F00AE5D38 /* SweetHeaderView.swift in Sources */,
 				58438588215DC6A800E36C91 /* Guide+Message.swift in Sources */,
@@ -4370,6 +4386,7 @@
 				580F889020FD8867009148CC /* GIFImageMake.swift in Sources */,
 				581D7BF720D9ED1F000D1E26 /* VersionUpdateHelper.swift in Sources */,
 				587D18D420DA465E00D53708 /* FeedbackController.swift in Sources */,
+				584385AD215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */,
 				AC58388920E9CDCB00A57161 /* TaskRunner.swift in Sources */,
 				580D9BC2213D60D800B8719C /* UISearchBar+Placeholder.swift in Sources */,
 				AC21758D20C105240089D4D1 /* SingleConversationController.swift in Sources */,
@@ -4393,6 +4410,7 @@
 				58816CFB20C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				AC4D091120B7B1AC007686EB /* TopicListView.swift in Sources */,
 				ACEC5C3220EB2083006E0BAA /* AsynchronousOperation.swift in Sources */,
+				584385B2215F67F300E36C91 /* FunNavigationViewController.swift in Sources */,
 				AC1778C220BF99C500D5330F /* IMView.swift in Sources */,
 				AC05F43B20DCA49300EC6CAA /* TextEditView.swift in Sources */,
 				ACA323A52087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -4798,6 +4816,7 @@
 				58D3CCE620C8FA320078B36C /* StatusResponse.swift in Sources */,
 				587D18E820DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				58BD52A82088667600F7C3E1 /* UISearchBar+Placeholder.swift in Sources */,
+				584385AB215F67E700E36C91 /* NavBarTitleChangeable.swift in Sources */,
 				589E6BCD20A983850038FAED /* CardsAllController.swift in Sources */,
 				58DECE6A20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58325B8F20A2F496000E851F /* ContactSearchController.swift in Sources */,
@@ -4898,6 +4917,7 @@
 				ACA83C0C20E5E5DB00908B35 /* RootViewController.swift in Sources */,
 				58D5790220944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				AC525AA2208DD6E9001070B2 /* StoryCoordinator.swift in Sources */,
+				584385B0215F67F300E36C91 /* FunNavigationViewController.swift in Sources */,
 				58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */,
 				585B68B920AF182200E734BC /* SweetPlayerControlView.swift in Sources */,
 				58F4074C20B272410031630C /* SweetPlayerItem.swift in Sources */,

@@ -269,13 +269,12 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     }
     
     @objc private func didPressProfile(_ tap: UITapGestureRecognizer) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
-            delegate.showProfile(buddyID: viewModel!.userId, setTop: nil)
-        }
+        viewModel?.showProfile?(viewModel!.userId)
     }
     
     @objc private func didPressHelp(_ sender: UIButton) {
         Guide.showGameHelpMessage()
+        CardAction.clickHelp.actionLog(cardId: viewModel!.cardId)
     }
     
     @objc private func didToPlay(_ sender: UIButton) {
@@ -304,9 +303,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         updateWith(viewModel)
     }
     @objc private func didShowProfile(_ sender: UIButton) {
-        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
-            delegate.showProfile(buddyID: viewModel!.userId, setTop: nil)
-        }
+            viewModel?.showProfile?(viewModel!.userId)
     }
     @objc private func didPlayTouchDown(_ sender: UIButton) {
         time = 0

@@ -25,6 +25,7 @@ struct GameCardViewModel {
     let heOrSheString: String
     let userId: UInt64
     let cardId: String
+    var showProfile: ((UInt64) -> Void)?
     init(model: CardResponse) {
         cardId = model.cardId
         titleString = model.name!

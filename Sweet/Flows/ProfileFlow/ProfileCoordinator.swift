@@ -92,7 +92,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
    
     private func showProfile(buddyID: UInt64, setTop: SetTop?, finishBlock: (() -> Void)?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = coordinatorFactory.makeProfileCoordinator(
             user: user,
             buddyID: buddyID,

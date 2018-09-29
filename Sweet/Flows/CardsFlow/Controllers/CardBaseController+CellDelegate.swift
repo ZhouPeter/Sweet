@@ -301,7 +301,11 @@ extension CardsBaseController: SweetPlayerViewDelegate {
     
     func sweetPlayer(player: SweetPlayerView, playTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval) {
         if let indexPath = player.resource.indexPath {
-            if cards[indexPath.row].cardEnumType == .content, cards[indexPath.row].video != nil {
+            if cards[indexPath.row].cardEnumType == .content || cards[indexPath.row].cardEnumType == .groupChat,
+                cards[indexPath.row].video != nil {
+                if currentTime == 10 {
+                    CardAction.play10s.actionLog(card: cards[indexPath.row])
+                }
                 if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
                     configurator.viewModel.currentTime = currentTime
                     cellConfigurators[indexPath.row] = configurator

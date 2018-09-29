@@ -145,7 +145,7 @@ struct CardResponse: Codable {
     }
     
     func makeStoryDraft() -> StoryDraft? {
-        if cardEnumType == .content {
+        if cardEnumType == .content || cardEnumType == .groupChat {
             var text = ""
             if let content = content, let result = try? content.htmlStringReplaceTag().removedURLLinks() {
                 text = result

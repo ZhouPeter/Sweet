@@ -59,7 +59,7 @@ extension CardsBaseController {
             }
             alertController.addAction(blockAction)
         }
-        if cardType == .content {
+        if cardType == .content || cardType == .groupChat {
             let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
                 web.request(.cardReport(cardId: cardId), completion: {
                     switch $0 {
@@ -121,9 +121,9 @@ extension CardsBaseController {
         case .story:
             var viewModel = StoriesCardViewModel(model: card)
             for (offset, var cellModel) in viewModel.storyCellModels.enumerated() {
-                cellModel.callback = { [weak self] userId in
-                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(userId))
-                    self?.showProfile(buddyID: userId)
+                cellModel.callback = { [weak self] buddyID in
+                    CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                    self?.showProfile(buddyID: buddyID)
                 }
                 viewModel.storyCellModels[offset] = cellModel
             }
@@ -154,6 +154,7 @@ extension CardsBaseController {
         case .likeRank:
             var viewModel = NotiCardViewModel(model: card)
             viewModel.showRankingList = {
+                CardAction.clickRank.actionLog(card: card)
                 self.delegate?.showLikeRankList(title: viewModel.titleString)
             }
             for (offset, var cellModel) in viewModel.likeRankViewModels.enumerated() {
@@ -167,7 +168,11 @@ extension CardsBaseController {
             cellConfigurators.append(configurator)
             cards.append(card)
         case .likeSteal:
-            let viewModel = GameCardViewModel(model: card)
+            var viewModel = GameCardViewModel(model: card)
+            viewModel.showProfile = { [weak self] buddyID in
+                CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                self?.showProfile(buddyID: buddyID)
+            }
             let configurator = CellConfigurator<GameCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)

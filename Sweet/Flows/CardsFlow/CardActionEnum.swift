@@ -26,6 +26,9 @@ enum CardAction: String {
     case shareQQ = "share_qq"
     case shareQZ = "share_qzone"
     case shareWeibo = "share_weibo"
+    case play10s = "play_10s"
+    case clickHelp = "click_help"
+    case clickRank = "click_rank"
     private func makeActionLogWebApi(card: CardResponse,
                                      toUserId: String? = nil,
                                      activityId: String? = nil,
