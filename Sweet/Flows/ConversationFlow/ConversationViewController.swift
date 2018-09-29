@@ -267,16 +267,27 @@ class ConversationViewController: MessagesViewController {
         maintainPositionOnKeyboardFrameChanged = true
         messageInputBar.isTranslucent = false
         messageInputBar.separatorLine.isHidden = true
-        messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButton"), for: .normal)
-        messageInputBar.sendButton.setImage(#imageLiteral(resourceName: "SendButtonDisabled"), for: .disabled)
-        messageInputBar.sendButton.setTitle(nil, for: .normal)
-        messageInputBar.padding.right = 2
+        messageInputBar.sendButton.setBackgroundImage(UIImage(named: "SendButton"), for: .normal)
+        messageInputBar.sendButton.setBackgroundImage(UIImage(named: "SendButtonDisabled"), for: .disabled)
+        messageInputBar.sendButton.setTitle("发送", for: .normal)
+        messageInputBar.sendButton.setTitleColor(.white, for: .normal)
+        messageInputBar.sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        messageInputBar.sendButton.setSize(CGSize(width: 50, height: 32), animated: false)
+        messageInputBar.padding.right = 8
         messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.placeholder = "输入你想说的话"
         messageInputBar.inputTextView.layer.borderWidth = 0
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = UIColor(hex: 0x979797)
+        bottomLine.isUserInteractionEnabled = false
+        messageInputBar.addSubview(bottomLine)
+        bottomLine.align(.left, to: messageInputBar, inset: 12)
+        bottomLine.align(.right, to: messageInputBar, inset: 70)
+        bottomLine.align(.bottom, to: messageInputBar, inset: 5)
+        bottomLine.constrain(height: 1)
     }
-    
+
     private func makeBubbleMask(isIncomming: Bool) -> UIImageView {
         if isIncomming {
             return UIImageView(image: inComingBubbleMaskImage)
