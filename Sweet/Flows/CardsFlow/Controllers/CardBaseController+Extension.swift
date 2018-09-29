@@ -311,19 +311,11 @@ extension CardsBaseController {
                 logger.error(error)
             case .success:
                 if isJoin {
-                    self.toast(message: "消息发送成功！")
                 } else {
-                    if Defaults[.isJoinGroupChat] == false {
-                        let alert = UIAlertController(title: nil, message: "你已加入群聊，请到消息页查看", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "知道了", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        Defaults[.isJoinGroupChat] = true
-                    } else {
-                        self.toast(message: "加入群聊成功！")
-                        for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
-                            self.cards[index].join = true
-                            self.reloadGroupCell(index: index)
-                        }
+                    self.toast(message: "加入群聊成功！")
+                    for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupChat && card.groupId! == groupId {
+                        self.cards[index].join = true
+                        self.reloadGroupCell(index: index)
                     }
                 }
                 Messenger.shared.loadConversations()

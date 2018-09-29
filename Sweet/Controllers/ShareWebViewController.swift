@@ -38,7 +38,7 @@ class ShareWebViewController: WebViewController, ShareWebView {
     
     lazy var shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "CardShare"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "CardShareGray"), for: .normal)
         button.addTarget(self, action: #selector(didPressShare(_:)), for: .touchUpInside)
         return button
     }()

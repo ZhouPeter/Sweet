@@ -52,11 +52,7 @@ struct ContentVideoCardViewModel {
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
         defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
         type = model.cardEnumType
-        if join == false {
-            joinGroupButtonString = "点此加入群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
-        } else {
-            joinGroupButtonString = "发消息到群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
-        }
-        
+        joinGroupButtonString = "点此进入群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
+
     }
 }

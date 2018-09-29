@@ -11,12 +11,8 @@ import Photos
 import SwiftyUserDefaults
 import SDWebImage
 
-class UpdateAvatarController: BaseViewController, UpdateProtocol, NavBarTitleChangeable {
+class UpdateAvatarController: BaseViewController, UpdateProtocol {
     
-    var preferredTextAttributes: [NSAttributedStringKey : Any] {
-        let item = FunNavTitleTextAttributesItem(color: .white)
-        return getNavgationBarTitleTextAttributes(with: item)
-    }
     var saveCompletion: ((String, Int?) -> Void)?
     
     var avatar: String
@@ -60,11 +56,22 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol, NavBarTitleCha
         setNavigationBar()
     }
     
+    private var oldBarStyle: UIBarStyle?
+
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        if let barStyle = oldBarStyle, parent == nil {
+            navigationController?.navigationBar.barStyle = barStyle
+        }
+    }
+    
     private func setNavigationBar() {
+        oldBarStyle = navigationController?.navigationBar.barStyle
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     @objc private func backAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

@@ -52,9 +52,9 @@ final class MainController: PageboyViewController, MainView {
         view.backgroundColor = .black
         navigationController?.navigationBar.isHidden = true
         if let nav = navigationController { onViewDidLoad?(nav) }
-        let story = FunNavigationViewController()
-        let cards = FunNavigationViewController()
-        let imList = FunNavigationViewController()
+        let story = UINavigationController()
+        let cards = UINavigationController()
+        let imList = UINavigationController()
         controllers = [story, cards, imList]
         dataSource = self
         delegate = self
