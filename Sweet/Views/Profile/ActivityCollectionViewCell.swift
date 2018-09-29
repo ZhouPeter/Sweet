@@ -22,6 +22,7 @@ class ActivityCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -52,7 +53,8 @@ class ActivityCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(maskCoverView)
         maskCoverView.fill(in: contentView)
         contentView.addSubview(titleLabel)
-        titleLabel.centerX(to: contentView)
+        titleLabel.align(.left)
+        titleLabel.align(.right)
         titleLabel.align(.top, inset: 40)
         contentView.addSubview(likeButton)
         likeButton.centerX(to: contentView)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TapticEngine
 
 class GameContentView: UIView {
     private lazy var titleLabel: UILabel = {
@@ -38,6 +39,7 @@ class GameContentView: UIView {
     }()
     private lazy var infoTitleLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .black
         return label
@@ -71,14 +73,17 @@ class GameContentView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private var titleLabelLayoutConstraint: NSLayoutConstraint?
+    private var titleLabelLayoutCenterYConstraint: NSLayoutConstraint?
+    private var infoTitleLabelLayoutTopConstraint: NSLayoutConstraint?
+    private var infoSubTitleLabelLayoutBottomConstraint: NSLayoutConstraint?
+
     private func setupUI() {
         addSubview(subTitleLabel)
         subTitleLabel.centerX(to: self)
         subTitleLabel.centerY(to: self, offset: -75 + titleLabel.font.lineHeight / 2)
         addSubview(titleLabel)
         titleLabel.centerX(to: self)
-        titleLabelLayoutConstraint = titleLabel.centerY(to: self, offset: -75 - subTitleLabel.font.lineHeight / 2)
+        titleLabelLayoutCenterYConstraint = titleLabel.centerY(to: self, offset: -75 - subTitleLabel.font.lineHeight / 2)
         addSubview(infoMaskView)
         infoMaskView.align(.bottom, inset: 30)
         infoMaskView.align(.left, inset: 20)
@@ -93,10 +98,12 @@ class GameContentView: UIView {
         avatarImageView.setViewRounded(borderWidth: 2, borderColor: .white)
         infoMaskView.addSubview(infoTitleLabel)
         infoTitleLabel.pin(.right, to: avatarImageView, spacing: 20)
-        infoTitleLabel.align(.top, to: avatarImageView)
+        infoTitleLabel.align(.right, inset: 10)
+        infoTitleLabelLayoutTopConstraint = infoTitleLabel.align(.top, to: avatarImageView)
         infoMaskView.addSubview(infoSubTitleLabel)
         infoSubTitleLabel.align(.left, to: infoTitleLabel)
-        infoSubTitleLabel.align(.bottom, to: avatarImageView)
+        infoSubTitleLabel.align(.right, inset: 10)
+        infoSubTitleLabelLayoutBottomConstraint = infoSubTitleLabel.align(.bottom, to: avatarImageView)
     }
     
     private func hiddenInfo(isHidden: Bool) {
@@ -110,18 +117,22 @@ class GameContentView: UIView {
         hiddenInfo(isHidden: viewModel.isHiddenInfo)
         subTitleLabel.isHidden = viewModel.isHiddenLikeCount
         if subTitleLabel.isHidden {
-            titleLabelLayoutConstraint?.constant = -75
+            titleLabelLayoutCenterYConstraint?.constant = -75
         } else {
-            titleLabelLayoutConstraint?.constant = -75 - subTitleLabel.font.lineHeight / 2
+            titleLabelLayoutCenterYConstraint?.constant = -75 - subTitleLabel.font.lineHeight / 2
         }
         titleLabel.text = viewModel.resultTitleString
         subTitleLabel.text = viewModel.likeString
         if viewModel.isShowCompleteInfo {
             infoTitleLabel.text = viewModel.completeInfoString
             avatarImageView.sd_setImage(with: viewModel.avatarURL)
+            infoTitleLabelLayoutTopConstraint?.constant = -10
+            infoSubTitleLabelLayoutBottomConstraint?.constant = 10
         } else {
             infoTitleLabel.text = viewModel.simpleInfoString
             avatarImageView.image = UIImage(named: "AvatarPh")
+            infoTitleLabelLayoutTopConstraint?.constant = 0
+            infoSubTitleLabelLayoutBottomConstraint?.constant = 0
         }
         timeLabel.text = viewModel.timeString
         infoSubTitleLabel.text = viewModel.commentString
@@ -154,6 +165,8 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private lazy var playButtonBackgroudView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didPressProfile(_:)))
+        gameContentInfoView.addGestureRecognizer(tap)
         return view
     }()
     
@@ -169,6 +182,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private lazy var gameContentInfoView: GameContentView = {
         let view = GameContentView(frame: .zero)
         view.layer.cornerRadius = 10
+     
         return view
     }()
     
@@ -236,10 +250,11 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     
     private func setButtonSelector(buttonString: String) {
         playButton.removeTarget(self, action: nil, for: .allEvents)
+        gameContentInfoView.isUserInteractionEnabled = false
         playButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         if buttonString == "偷回去" {
             playButton.addTarget(self, action: #selector(didToPlay(_:)), for: .touchUpInside)
-        } else if buttonString == "开始" || buttonString == "停" {
+        } else if buttonString == "按住" || buttonString == "停" {
             playButton.addTarget(self, action: #selector(didPlayTouchDown(_:)), for: .touchDown)
             playButton.addTarget(self, action: #selector(didPlayTouchUp(_:)), for: .touchUpInside)
             playButton.addTarget(self, action: #selector(didPlayTouchUp(_:)), for: .touchUpOutside)
@@ -248,8 +263,15 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         } else if buttonString == "访问主页" {
             playButton.addTarget(self, action: #selector(didShowProfile(_:)), for: .touchUpInside)
             playButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+            gameContentInfoView.isUserInteractionEnabled = true
         }
         
+    }
+    
+    @objc private func didPressProfile(_ tap: UITapGestureRecognizer) {
+        if let delegate = delegate as? ContentCardCollectionViewCellDelegate {
+            delegate.showProfile(buddyID: viewModel!.userId, setTop: nil)
+        }
     }
     
     @objc private func didPressHelp(_ sender: UIButton) {
@@ -260,7 +282,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         guard var viewModel = self.viewModel else { return }
         viewModel.isHiddenInfo = true
         viewModel.isHiddenLikeCount = true
-        viewModel.buttonTitleString = "开始"
+        viewModel.buttonTitleString = "按住"
         viewModel.isBigButton = false
         viewModel.timeString = "-- : --"
         viewModel.resultTitleString = "按出1秒 偷❤️×1"
@@ -276,7 +298,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
         viewModel.isBigButton = false
         viewModel.resultTitleString =
 """
-从\(viewModel.heOrSheString)偷❤️成功
+从\(viewModel.heOrSheString)偷❤️+1成功
 👇👇👇
 """
         updateWith(viewModel)
@@ -323,7 +345,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     @objc private func didPlayTouchUp(_ sender: UIButton) {
         timer?.cancel()
         timer = nil
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             if  self.time >= 90 && self.time <= 110 {
                 guard var viewModel = self.viewModel else { return }
                 viewModel.isHiddenInfo = true
@@ -334,18 +356,22 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
                 viewModel.resultTitleString = "偷❤️成功🎉"
                 self.updateWith(viewModel)
                 self.requestStealLike(isSuccess: true)
-
+                if #available(iOS 10.0, *), self.traitCollection.forceTouchCapability == .available  {
+                    TapticEngine.impact.feedback(.heavy)
+                } else {
+                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                }
             } else {
                 guard var viewModel = self.viewModel else { return }
                 viewModel.isHiddenInfo = true
-                viewModel.isHiddenLikeCount = true
-                viewModel.buttonTitleString = "开始"
+                viewModel.isHiddenLikeCount = false
+                viewModel.likeString = "按住0.9~1.1s内"
+                viewModel.buttonTitleString = "按住"
                 viewModel.isBigButton = false
                 viewModel.timeString = "\(self.time.toTimeString())"
                 viewModel.resultTitleString = "偷❤️失败"
                 self.updateWith(viewModel)
                 self.requestStealLike(isSuccess: false)
-
             }
         }
     }
