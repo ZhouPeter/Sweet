@@ -159,7 +159,7 @@ extension AppDelegate {
             let controller = ScreenShotController(shotImage: newImage)
             let newWindow = Share(frame: UIScreen.main.bounds)
             newWindow.rootViewController = controller
-            newWindow.windowLevel = UIWindowLevelStatusBar + 1
+            newWindow.windowLevel = UIWindowLevelAlert + 1
             newWindow.makeKeyAndVisible()
         }
     }

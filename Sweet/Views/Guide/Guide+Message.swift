@@ -39,7 +39,7 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-        label.constrain(height: 80)
+//        label.constrain(height: 80)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }
@@ -56,8 +56,7 @@ extension Guide {
         let string =
 """
 获❤️秘籍：
-在讲真中，当有人给你点赞，你的❤️
-数就会+1。
+在讲真中，当有人给你点赞，你的❤️数就会+1。
 """
         let size = string.boundingSize(font: UIFont.systemFont(ofSize: 18),
                                        size: CGSize(width: UIScreen.mainWidth() - 40 - 40,
@@ -76,7 +75,7 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-        label.constrain(height: 160)
+//        label.constrain(height: 160)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }
@@ -94,7 +93,7 @@ extension Guide {
         let string =
 """
 按住时间在0.9~1.1秒内，偷❤️成功
-互动越多，获得❤️的机会就越多哦！
+当有人给你点赞，❤️数就会+1
 """
         let size = string.boundingSize(font: UIFont.systemFont(ofSize: 18),
                                        size: CGSize(width: UIScreen.mainWidth() - 40 - 40,
@@ -113,7 +112,7 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-        label.constrain(height: 120)
+//        label.constrain(height: 120)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }

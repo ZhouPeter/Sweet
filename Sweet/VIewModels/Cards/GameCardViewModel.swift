@@ -11,7 +11,7 @@ import Foundation
 struct GameCardViewModel {
     let titleString: String
     var resultTitleString: String
-    let likeString: String
+    var likeString: String
     var isHiddenLikeCount: Bool
     var isHiddenInfo: Bool
     var timeString: String
@@ -38,12 +38,12 @@ struct GameCardViewModel {
         if info.gender == .male {
             heOrSheString = "他"
             simpleInfoString = "男生·\(info.city.prefix(info.city.count - 1))某大学"
-            completeInfoString = "\(info.name)·\(info.universityName)"
+            completeInfoString = "\(info.name)\n\(info.universityName)"
             
         } else {
             heOrSheString = "她"
             simpleInfoString = "女生·\(info.city.prefix(info.city.count - 1))某大学"
-            completeInfoString = "\(info.name)·\(info.universityName)"
+            completeInfoString = "\(info.name)\n\(info.universityName)"
         }
         resultTitleString = info.success ? "从\(heOrSheString)偷❤️成功\n👇👇👇" : "刚刚你被某人偷❤️×1"
         commentString = info.info
