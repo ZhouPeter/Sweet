@@ -90,7 +90,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
                                 viewModel.commentString = "超过上一位还需\(Int(self.viewModels[Int(viewModel.index - 1) - 1].likeCount) - Int(viewModel.likeCount) + 1)❤️"
                             }
                         } else {
-                            viewModel.commentString = "回到之前的排名还需\(Int(self.viewModels[Int(viewModel.index - 1) + response.rankChangeNum].likeCount) - Int(viewModel.likeCount))❤️"
+                            viewModel.commentString = "回到之前的排名还需\(Int(self.viewModels[Int(viewModel.index - 1) + response.rankChangeNum].likeCount) - Int(viewModel.likeCount) + 1)❤️"
                         }
                     }
                     return viewModel
