@@ -27,6 +27,7 @@ struct ContentVideoCardViewModel {
     var currentTime: TimeInterval = 0.0
     let type: CardResponse.CardType
     let joinGroupButtonString: String?
+    var isPlayTo10s: Bool = false
     init(model: CardResponse) {
         titleString = model.name!
         let attributedText = model.content?.getHtmlAttributedString(font: UIFont.systemFont(ofSize: 18),

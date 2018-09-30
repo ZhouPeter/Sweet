@@ -303,10 +303,12 @@ extension CardsBaseController: SweetPlayerViewDelegate {
         if let indexPath = player.resource.indexPath {
             if cards[indexPath.row].cardEnumType == .content || cards[indexPath.row].cardEnumType == .groupChat,
                 cards[indexPath.row].video != nil {
-                if currentTime == 10 {
-                    CardAction.play10s.actionLog(card: cards[indexPath.row])
-                }
+                logger.debug(currentTime)
                 if var configurator = cellConfigurators[indexPath.row] as? CellConfigurator<VideoCardCollectionViewCell> {
+                    if Int(currentTime) == 10  && configurator.viewModel.isPlayTo10s == false {
+                        CardAction.play10s.actionLog(card: cards[indexPath.row])
+                        configurator.viewModel.isPlayTo10s = true
+                    }
                     configurator.viewModel.currentTime = currentTime
                     cellConfigurators[indexPath.row] = configurator
                 }
