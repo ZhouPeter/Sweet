@@ -57,7 +57,7 @@ struct LongTextCardViewModel {
         sourceTextAttributed = model.title?.getAttributedString(lineSpacing: 5)
         sourceText = model.sourceEnumType?.getSourceText()
         type = model.cardEnumType
-        joinGroupButtonString = "点此进入群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
+        joinGroupButtonString = "点此进入群聊" + (model.topic == nil ? "": " \(model.topic!) ") + "🍉"
         
     }
 }

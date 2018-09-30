@@ -65,7 +65,7 @@ struct ContentCardViewModel {
         sourceTitle = model.title
         sourceBrief = model.brief
         type = model.cardEnumType
-        joinGroupButtonString = "点此进入群聊" + (model.topic == nil ? "": " #\(model.topic!)# ") + "🍉"
+        joinGroupButtonString = "点此进入群聊" + (model.topic == nil ? "": " \(model.topic!) ") + "🍉"
         
     }
 }
