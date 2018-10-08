@@ -466,6 +466,7 @@ final class StoryTextEditController: UIViewController {
     }
 
     private func isPanLocatedInTextView() -> Bool {
+        guard pan.numberOfTouches > 0 else { return false }
         return textBoundingView.frame.insetBy(dx: -20, dy: -20).contains(pan.location(ofTouch: 0, in: view))
     }
 }
