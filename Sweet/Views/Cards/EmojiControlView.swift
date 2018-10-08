@@ -117,7 +117,7 @@ class EmojiControlView: UIView {
             segmentView.isHidden = false
             insetX -= emojiWidth + emojiSpace
         }
-        for (index, avatarURL) in resultAvatarURLs.enumerated() {
+        for (index, avatarURL) in resultAvatarURLs.prefix(3).enumerated() {
             avatarImageViews[index].frame = CGRect(x: insetX, y: insetY, width: emojiWidth, height: emojiHeight)
             insetX -= emojiWidth + emojiSpace
             avatarImageViews[index].isHidden = false

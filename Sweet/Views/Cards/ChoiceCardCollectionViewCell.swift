@@ -247,7 +247,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
                 rightImageViews.forEach { (imageView) in
                     imageView.isHidden = true
                 }
-                for (offset, url) in urls.enumerated() {
+                for (offset, url) in urls.prefix(3).enumerated() {
                     rightImageViews[offset].isHidden = false
                     rightImageViews[offset].sd_setImage(with: url.imageView2(size: rightImageView.bounds.size))
                     let offsetCenterX: CGFloat = 40.0 / 2 + CGFloat(offset) * 50  - sumButtonWidth / 2

@@ -57,7 +57,7 @@ struct ContentCardViewModel {
         if let emoji = model.result?.emoji, emoji != 0 {
             resultImageName = "ResultEmoji\(emoji)"
             resultAvatarURLs = model.result?.contactUserList.compactMap({ URL(string: $0.avatar) })
-            resultUseIDs =  model.result?.contactUserList.compactMap({ $0.userId })
+            resultUseIDs = model.result?.contactUserList.compactMap({ $0.userId })
         }
         defaultImageNameList = model.defaultEmojiList!.map { "Emoji\($0.rawValue)"}
         defaultEmojiList = model.defaultEmojiList!.map { Int($0.rawValue) }
