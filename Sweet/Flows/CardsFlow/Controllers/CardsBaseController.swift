@@ -354,8 +354,8 @@ extension CardsBaseController {
     
     private func preloadingCard(oldIndex: Int) {
         if mainView.collectionView.numberOfItems(inSection: 0) - 1 - index < preloadingCount {
+            if oldIndex > cards.count - 1 { return }
             let cardId = cards[oldIndex].cardId
-            let content = cards[oldIndex].content
             let direction = Direction.down
             let request: CardRequest = self is CardsAllController ?
                 .all(cardId: cardId, direction: direction) :
@@ -433,6 +433,11 @@ extension CardsBaseController: CardsPageCollectionViewDataSource {
             cell.delegate = self
         }
         return cell
+    }
+    func cardsPageCollectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? VideoCardCollectionViewCell {
+            cell.playerView.pause()
+        }
     }
 }
 // MARK: - CardsPageCollectionViewDelegate

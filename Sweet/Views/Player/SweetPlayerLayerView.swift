@@ -96,9 +96,6 @@ class SweetPlayerLayerView: UIView {
         }
     }
     
-    /// 计时器
-    var timer: Timer?
-    
     fileprivate var urlAsset: AVURLAsset?
     
     fileprivate var lastPlayerItem: AVPlayerItem?
@@ -156,7 +153,6 @@ class SweetPlayerLayerView: UIView {
         if let player = player {
             player.play()
             player.isMuted = isVideoMuted
-            setupTimer()
             isPlaying = true
         }
     }
@@ -164,7 +160,6 @@ class SweetPlayerLayerView: UIView {
     open func pause() {
         player?.pause()
         isPlaying = false
-        timer?.fireDate = Date.distantFuture
     }
     
     deinit {
@@ -174,6 +169,10 @@ class SweetPlayerLayerView: UIView {
         bufferEmptyToken?.invalidate()
         keepUpToken?.invalidate()
         rateToken?.invalidate()
+        if let playbackTimeObserver = playbackTimeObserver {
+            player?.removeTimeObserver(playbackTimeObserver)
+            self.playbackTimeObserver = nil
+        }
     }
 
     // MARK: - layoutSubviews
@@ -198,7 +197,6 @@ class SweetPlayerLayerView: UIView {
     
     func playerToNil() {
         self.player = nil
-        self.timer?.invalidate()
     }
     
     open func cleanPlayer() {
@@ -211,8 +209,6 @@ class SweetPlayerLayerView: UIView {
         self.playDidEnd = false
         self.playerItem = nil
         self.seekTime   = 0
-        self.timer?.invalidate()
-//        self.rateToken?.invalidate()
         // 移除原来的layer
         if isRemoveLayer { self.playerLayer?.removeFromSuperlayer() }
         // 把player置为nil
@@ -225,14 +221,13 @@ class SweetPlayerLayerView: UIView {
     
     open func onTimeSliderBegan() {
         if self.player?.currentItem?.status == .readyToPlay {
-            self.timer?.fireDate = Date.distantFuture
+//            self.timer?.fireDate = Date.distantFuture
         }
     }
     open func seek(to secounds: TimeInterval, completion:(() -> Void)?) {
         if secounds.isNaN {
             return
         }
-        setupTimer()
         if self.player?.currentItem?.status == .readyToPlay {
             let draggedTime = CMTimeMake(Int64(secounds), 1)
             self.player!.seek(to: draggedTime,
@@ -269,13 +264,24 @@ class SweetPlayerLayerView: UIView {
     fileprivate func removePlayerNotifations() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
-    
+    fileprivate var playbackTimeObserver: Any?
     fileprivate func onPlayerChange() {
         self.playerLayer?.player = player
         rateToken?.invalidate()
         if let player = player {
             rateToken = player.observe(\.rate, options: .new, changeHandler: { (_, _) in
                 self.updateStatus()
+            })
+            playbackTimeObserver = player.addPeriodicTimeObserver(
+                forInterval: CMTime(value: CMTimeValue(30.0),
+                                    timescale: CMTimeScale(60.0)),
+                queue: DispatchQueue(label: "player.time.queue"),
+                using: { [weak self] _ in
+                    guard let `self` = self else { return }
+                    DispatchQueue.main.async { [weak self] in
+                        guard let `self` = self else { return }
+                        self.playerTimerAction()
+                    }
             })
         }
     }
@@ -449,15 +455,6 @@ class SweetPlayerLayerView: UIView {
     }
     
     
-    func setupTimer() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                     target: self,
-                                     selector: #selector(playerTimerAction),
-                                     userInfo: nil,
-                                     repeats: true)
-        timer?.fireDate = Date()
-    }
     
     // MARK: - 计时器事件
     @objc fileprivate func playerTimerAction() {
@@ -519,7 +516,6 @@ class SweetPlayerLayerView: UIView {
             self.state = .playedToTheEnd
             self.isPlaying = false
             self.playDidEnd = true
-            self.timer?.invalidate()
         }
     }
     // MARK: - Notification Event

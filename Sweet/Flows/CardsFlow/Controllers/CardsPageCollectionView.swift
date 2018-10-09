@@ -13,8 +13,8 @@ protocol CardsPageCollectionViewDataSource: NSObjectProtocol {
 }
 protocol CardsPageCollectionViewDelegate: NSObjectProtocol {
     func cardsPageCollectionView(_ collectionView: UICollectionView, scrollToIndex index:Int, oldIndex: Int)
-//    func cardsPageCollectionView(_ collectionView: UICollectionView, willScrollToIndex index:Int)
     func cardsPageCollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    func cardsPageCollectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 }
 class CardsPageCollectionView: UIView {
     let collectionView: UICollectionView
@@ -120,6 +120,10 @@ extension CardsPageCollectionView: UICollectionViewDataSource {
 extension CardsPageCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate!.cardsPageCollectionView(collectionView, didSelectItemAt: indexPath)
+    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        logger.debug("消失\(indexPath.row)")
+        delegate!.cardsPageCollectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 }
 

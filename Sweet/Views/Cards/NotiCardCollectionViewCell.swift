@@ -71,7 +71,6 @@ class RankingView: UIView {
             titleLabel.text = "你的排名下降了"
         } else {
             titleLabel.text = "你的排名没有变化"
-
         }
     }
     
