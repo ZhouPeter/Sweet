@@ -353,6 +353,20 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
                 viewModel.resultTitleString = "偷❤️成功🎉"
                 self.updateWith(viewModel)
                 self.requestStealLike(isSuccess: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    guard var viewModel = self.viewModel else { return }
+                    viewModel.isHiddenInfo = false
+                    viewModel.isHiddenLikeCount = true
+                    viewModel.isShowCompleteInfo = true
+                    viewModel.buttonTitleString = "访问主页"
+                    viewModel.isBigButton = false
+                    viewModel.resultTitleString =
+                    """
+                    从\(viewModel.heOrSheString)偷❤️+1成功
+                    👇👇👇
+                    """
+                    self.updateWith(viewModel)
+                })
                 if #available(iOS 10.0, *), self.traitCollection.forceTouchCapability == .available  {
                     TapticEngine.impact.feedback(.heavy)
                 } else {
