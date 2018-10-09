@@ -14,7 +14,7 @@ target 'Sweet' do
   pod 'RealmSwift'
   pod 'SwiftyUserDefaults'
   pod 'Pageboy', '~> 2.0'
-  pod 'Hero', '~> 1.2.0'
+  pod 'Hero'
   pod 'TapticEngine'
   pod 'PKHUD', '~> 5.0'
   pod 'NVActivityIndicatorView'

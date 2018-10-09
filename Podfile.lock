@@ -82,7 +82,7 @@ PODS:
 DEPENDENCIES:
   - FLEX (~> 2.0)
   - Gemini
-  - Hero (~> 1.2.0)
+  - Hero
   - JDStatusBarNotification
   - JXPhotoBrowser/Core
   - KMNavigationBarTransition
@@ -212,6 +212,6 @@ SPEC CHECKSUMS:
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a342ad396ec005b3ed475fc8ea9460339c23f942
+PODFILE CHECKSUM: 48f393c7a8102f6ea54d62c4da7b92b2f8bdf9f1
 
 COCOAPODS: 1.5.3

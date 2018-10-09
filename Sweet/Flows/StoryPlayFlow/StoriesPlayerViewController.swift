@@ -452,9 +452,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             player?.currentItem?.cancelPendingSeeks()
             player?.currentItem?.asset.cancelLoading()
             player?.replaceCurrentItem(with: nil)
-//            playerView.removeFromSuperview()
             playerItem = nil
-//            playerView = nil
             player = nil
             playerView.isHidden = true
         } else {

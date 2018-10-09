@@ -156,7 +156,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         let progress = translation.y / view.bounds.height
         switch gesture.state {
         case .began:
-            onFinish?()
+            hero.dismissViewController()
         case .changed:
             Hero.shared.update(progress)
             let currentPos = CGPoint(x: translation.x + view.center.x, y: translation.y + view.center.y)
@@ -164,6 +164,9 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         default:
             if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
                 Hero.shared.finish()
+                DispatchQueue.main.async {
+                     self.onFinish?()
+                }
             } else {
                 Hero.shared.cancel()
             }
