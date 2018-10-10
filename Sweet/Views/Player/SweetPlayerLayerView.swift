@@ -71,6 +71,8 @@ class SweetPlayerLayerView: UIView {
             onPlayerChange()
         }
     }
+    
+    var timer: Timer?
 
     var videoGravity = AVLayerVideoGravity.resizeAspect {
         didSet {
@@ -154,12 +156,25 @@ class SweetPlayerLayerView: UIView {
             player.play()
             player.isMuted = isVideoMuted
             isPlaying = true
+            setupTimer()
         }
     }
     
     open func pause() {
         player?.pause()
         isPlaying = false
+        timer?.fireDate = Date.distantFuture
+    }
+    
+    private func setupTimer() {
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
+        }
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { [weak self] (_) in
+            self?.playerTimerAction()
+        })
+        timer?.fireDate = Date.distantPast
     }
     
     deinit {
@@ -195,10 +210,6 @@ class SweetPlayerLayerView: UIView {
         }
     }
     
-    func playerToNil() {
-        self.player = nil
-    }
-    
     open func cleanPlayer() {
         player?.replaceCurrentItem(with: nil)
         resetPlayer(isRemoveLayer: false)
@@ -213,6 +224,8 @@ class SweetPlayerLayerView: UIView {
         if isRemoveLayer { self.playerLayer?.removeFromSuperlayer() }
         // 把player置为nil
         self.player = nil
+        self.timer?.invalidate()
+        self.timer = nil
     }
     
     open func prepareToDeinit() {
@@ -221,7 +234,7 @@ class SweetPlayerLayerView: UIView {
     
     open func onTimeSliderBegan() {
         if self.player?.currentItem?.status == .readyToPlay {
-//            self.timer?.fireDate = Date.distantFuture
+            self.timer?.fireDate = Date.distantFuture
         }
     }
     open func seek(to secounds: TimeInterval, completion:(() -> Void)?) {
@@ -266,24 +279,14 @@ class SweetPlayerLayerView: UIView {
     }
     fileprivate var playbackTimeObserver: Any?
     fileprivate func onPlayerChange() {
-        self.playerLayer?.player = player
+        playerLayer?.player = player
         rateToken?.invalidate()
         if let player = player {
             rateToken = player.observe(\.rate, options: .new, changeHandler: { (_, _) in
                 self.updateStatus()
             })
-            playbackTimeObserver = player.addPeriodicTimeObserver(
-                forInterval: CMTime(value: CMTimeValue(30.0),
-                                    timescale: CMTimeScale(60.0)),
-                queue: DispatchQueue(label: "player.time.queue"),
-                using: { [weak self] _ in
-                    guard let `self` = self else { return }
-                    DispatchQueue.main.async { [weak self] in
-                        guard let `self` = self else { return }
-                        self.playerTimerAction()
-                    }
-            })
         }
+        
     }
     
     fileprivate func onPlayerItemChange() {

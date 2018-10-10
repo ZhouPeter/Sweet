@@ -110,7 +110,9 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
                     let image = UIImage(cgImage: imageRef)
                     DispatchQueue.main.async {
                         SDImageCache.shared.store(image, forKey: cacheKey, toDisk: true, completion: nil)
-                        self.playerView.placeholderImageView.image = image
+                        if asset.url == self.viewModel?.videoURL {
+                            self.playerView.placeholderImageView.image = image
+                        }
                     }
                 } catch {
                     self.playerView.placeholderImageView.sd_setImage(with: viewModel.videoPicURL ?? viewModel.videoURL.videoThumbnail())

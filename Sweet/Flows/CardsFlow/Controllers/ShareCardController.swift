@@ -153,6 +153,10 @@ class ShareCardController: BaseViewController {
     }
     private var storyPublishToken: NSKeyValueObservation?
     @objc private func sendAction(_ sender: UIButton) {
+        sender.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            sender.isEnabled = true
+        }
         sendCallback?(shareTextField.text!, userIds)
         if var draft = storyDraft, isShareToStory {
             draft.comment = shareTextField.text
