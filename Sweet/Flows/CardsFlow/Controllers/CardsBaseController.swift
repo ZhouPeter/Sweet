@@ -59,6 +59,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
                 if floor(object.contentOffset.y + cardInsetTop)  == floor(CGFloat(self.index) * cardCellHeight) {
                     if self.lastIndex == self.index { return }
                     self.changeCurrentCell()
+                    self.setLastCurrentCell()
                     self.lastIndex = self.index
                 }
         })
@@ -295,6 +296,16 @@ extension CardsBaseController {
             callback?(true, cards)
         })
     }
+    
+    func setLastCurrentCell() {
+        if cellConfigurators.count == 0 { return }
+        let indexPath = IndexPath(item: lastIndex, section: 0)
+        guard let cell = mainView.collectionView.cellForItem(at: indexPath) else { return }
+        if let cell = cell as? VideoCardCollectionViewCell {
+            cell.playerView.pause()
+        }
+    }
+    
     func changeCurrentCell() {
         if cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: index, section: 0)
