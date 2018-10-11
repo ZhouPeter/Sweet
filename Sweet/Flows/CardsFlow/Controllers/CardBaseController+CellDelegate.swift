@@ -176,8 +176,9 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             self.present(alert, animated: true, completion: nil)
             return
         }
-        let alert = self.makeAlertController(cardId: cardId)
-        self.present(alert, animated: true, completion: nil)
+        if let alert = self.makeAlertController(cardId: cardId, cardType: cardType) {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate

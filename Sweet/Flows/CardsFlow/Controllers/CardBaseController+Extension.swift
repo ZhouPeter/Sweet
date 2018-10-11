@@ -10,17 +10,26 @@ import Foundation
 import SwiftyUserDefaults
 import JDStatusBarNotification
 extension CardsBaseController {
-    func makeAlertController(cardId: String) -> UIAlertController {
+    func makeAlertController(cardId: String, cardType: CardResponse.CardType) -> UIAlertController? {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
-            web.request(.cardReport(cardId: cardId), completion: {
-                switch $0 {
-                case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
-                case .failure: break
-                }
-            })
+        if cardType == .evaluation || cardType == .choice {
+            let shareAction = UIAlertAction.makeAlertAction(title: "分享给联系人", style: .default) { (_) in
+                self.shareCard(cardId: cardId)
+            }
+            alertController.addAction(shareAction)
+        } else if cardType == .content || cardType == .groupChat {
+            let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
+                web.request(.cardReport(cardId: cardId), completion: {
+                    switch $0 {
+                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
+                    case .failure: break
+                    }
+                })
+            }
+            alertController.addAction(reportAction)
+        } else {
+            return nil
         }
-        alertController.addAction(reportAction)
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         return alertController

@@ -107,6 +107,7 @@ class ChoiceCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, Ce
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        menuButton.isHidden = false
     }
     
     required init?(coder aDecoder: NSCoder) {

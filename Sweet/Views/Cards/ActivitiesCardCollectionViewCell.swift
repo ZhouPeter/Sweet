@@ -28,6 +28,7 @@ class ActivitiesCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        menuButton.isHidden = false
         setupUI()
     }
 
