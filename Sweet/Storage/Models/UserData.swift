@@ -27,7 +27,7 @@ class UserData: Object {
     @objc dynamic var activityNum: Int64 = 0
     @objc dynamic var storyNum: Int64 = 0
     @objc dynamic var rank: Int64 = 0
-    @objc dynamic var zodiac: String = ""
+    @objc dynamic var zodiac: String?
 
 
     let userType = RealmOptional<Int32>()

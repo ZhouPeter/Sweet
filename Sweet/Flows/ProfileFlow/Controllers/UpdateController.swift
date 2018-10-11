@@ -156,12 +156,12 @@ class UpdateController: BaseViewController, UpdateView {
             
         }
         userViewModels.append(genderViewModel)
-        let zodiacString = user.zodiac == "" ? "设置星座" : user.zodiac
+        let zodiacString = (user.zodiac == "" || user.zodiac == nil) ? "设置星座" : user.zodiac!
         let constellationViewModel = UpdateCellViewModel(
             title: "星座",
             content:  zodiacString) { [weak self] in
                 guard let `self` = self else { return }
-                let controller = UpdateConstellationController(constellationName: self.user.zodiac)
+                let controller = UpdateConstellationController(constellationName: self.user.zodiac ?? "")
                 controller.saveCompletion = { [weak self] (zodiac, _)  in
                     self?.user.zodiac = zodiac
                     self?.viewModels[0][3].content = zodiac

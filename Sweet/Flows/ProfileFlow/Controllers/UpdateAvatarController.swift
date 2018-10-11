@@ -56,17 +56,7 @@ class UpdateAvatarController: BaseViewController, UpdateProtocol {
         setNavigationBar()
     }
     
-    private var oldBarStyle: UIBarStyle?
-
-    override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
-        if let barStyle = oldBarStyle, parent == nil {
-            navigationController?.navigationBar.barStyle = barStyle
-        }
-    }
-    
     private func setNavigationBar() {
-        oldBarStyle = navigationController?.navigationBar.barStyle
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.barStyle = .black

@@ -10,7 +10,8 @@ import UIKit
 
 class BaseViewController: UIViewController {
     var automaticallyDisablePageScroll = true
-    
+    private var oldBarStyle: UIBarStyle?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -24,6 +25,11 @@ class BaseViewController: UIViewController {
         return false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        oldBarStyle = navigationController?.navigationBar.barStyle
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         autoDisablePageScroll()
@@ -32,6 +38,13 @@ class BaseViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         autoDisablePageScroll()
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        if let barStyle = oldBarStyle, parent == nil {
+            navigationController?.navigationBar.barStyle = barStyle
+        }
     }
     
     private func autoDisablePageScroll() {
