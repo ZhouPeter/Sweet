@@ -176,20 +176,8 @@ extension CardsBaseController: BaseCardCollectionViewCellDelegate {
             self.present(alert, animated: true, completion: nil)
             return
         }
-        let sectionId = cards[index].sectionId!
-        web.request(.sectionStatus(sectionId: sectionId),
-                    responseType: Response<StatusResponse>.self) { (result) in
-                        switch result {
-                        case let .success(response):
-                            let alert = self.makeAlertController(status: response,
-                                                                 cardType: cardType,
-                                                                 cardId: cardId,
-                                                                 sectionId: sectionId)
-                            self.present(alert, animated: true, completion: nil)
-                        case let .failure(error):
-                            logger.error(error)
-                    }
-        }
+        let alert = self.makeAlertController(cardId: cardId)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 // MARK: - StoriesPlayerGroupViewControllerDelegate

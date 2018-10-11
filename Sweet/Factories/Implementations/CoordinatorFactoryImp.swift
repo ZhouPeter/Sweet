@@ -191,12 +191,4 @@ final class CoordinatorFactoryImp: CoordinatorFactory {
             coordinatorFactory: CoordinatorFactoryImp())
     }
     
-    func makeSubCardsCoordinator(user: User, router: Router) -> SubCardsCoordinator {
-        return SubCardsCoordinator(
-            user: user,
-            router: router,
-            factory: FlowFactoryImp(),
-            coordinatorFactory: CoordinatorFactoryImp())
-    }
-    
 }

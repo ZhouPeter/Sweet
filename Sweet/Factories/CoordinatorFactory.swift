@@ -60,5 +60,4 @@ protocol CoordinatorFactory {
     func makeContactsCoordinator(router: Router, token: String, storage: Storage, user: User) -> ContactsCoordinator
     func makeInboxCoordinator(user: User, router: Router, token: String) -> InboxCoordinator
     func makeAllCardsCoordinator(user: User, router: Router) -> AllCardsCoordinator
-    func makeSubCardsCoordinator(user: User, router: Router) -> SubCardsCoordinator
 }

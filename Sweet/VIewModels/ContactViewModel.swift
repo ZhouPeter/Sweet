@@ -40,29 +40,3 @@ struct ContactCategoryViewModel {
     let categoryImage: UIImage
     let title: String
 }
-
-struct ContactSubcriptionSectionViewModel {
-    let avatarURL: URL
-    let infoString: String
-    let nameString: String
-    let sectionId: UInt64
-    let isHiddenButton: Bool
-    var buttonTitle: String
-    var buttonStyle: ContactButtonStyle
-    var callBack: ((String) -> Void)?
-    init(model: SubcriptionSection) {
-        self.isHiddenButton = false
-        self.avatarURL = URL(string: model.avatar)!
-        self.infoString = model.info
-        self.nameString = model.name
-        self.sectionId = model.sectionId
-        self.buttonTitle = "已订阅"
-        self.buttonStyle = .borderBlue
-    }
-    
-    init(model: SubcriptionSection, title: String, style: ContactButtonStyle) {
-        self.init(model: model)
-        self.buttonTitle = title
-        self.buttonStyle = style
-    }
-}

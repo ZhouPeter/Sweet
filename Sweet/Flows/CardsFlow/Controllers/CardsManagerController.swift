@@ -15,7 +15,6 @@ protocol CardsManagerView: BaseView {
 
 protocol CardsManagerViewDelegate: class {
     func showAll(view: CardsAllView)
-    func showSubscription(view: CardsSubscriptionView)
 }
 var waitingIMNotifications = [InstantMessage]()
 
@@ -24,24 +23,16 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     weak var delegate: CardsManagerViewDelegate?
     var user: User
     private var allView: CardsAllController
-    private var subscriptionView: CardsSubscriptionController
     
     init(user: User) {
         self.user = user
         self.allView = CardsAllController(user: user)
-        self.subscriptionView = CardsSubscriptionController(user: user)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private lazy var titleView: CustomSegmentedControl = {
-        let control = CustomSegmentedControl(items: ["全部", "订阅"])
-        control.selectedSegmentIndex = 0
-        control.addTarget(self, action: #selector(switchView(_:)), for: .valueChanged)
-        return control
-    }()
 
     private lazy var rightBadgeView: BadgeView = {
         let view = BadgeView(cornerRadius: 15)
@@ -69,20 +60,16 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         rightBadgeView.centerY(to: button)
         return button
     }()
-    private var isAllShown = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.titleView = titleView
+        navigationItem.title = "讲真"
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
         setupControllers()
         automaticallyAdjustsScrollViewInsets = false
         Messenger.shared.addDelegate(self)
-        showAll(true)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(scrollToPage(_:)),
-                                               name: Notification.Name.ScrollToPage,
-                                               object: nil)
+        show()
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -93,28 +80,12 @@ class CardsManagerController: BaseViewController, CardsManagerView {
     
     // MARK: - Private
     private func setupControllers() {
-        add(childViewController: subscriptionView)
-        subscriptionView.view.fill(in: view)
         add(childViewController: allView)
         allView.view.fill(in: view)
     }
-    private func showAll(_ isAllShown: Bool) {
-        self.isAllShown = isAllShown
-        allView.view.alpha = isAllShown ? 1 : 0
-        subscriptionView.view.alpha = isAllShown ? 0 : 1
-        if isAllShown {
-            delegate?.showAll(view: allView)
-            allView.loadCards()
-            subscriptionView.videoPauseAddRemove()
-        } else {
-            delegate?.showSubscription(view: subscriptionView)
-            subscriptionView.loadCards()
-            allView.videoPauseAddRemove()
-        }
-    }
-    
-    @objc private func switchView(_ sender: CustomSegmentedControl) {
-        showAll(sender.selectedSegmentIndex == 0)
+    private func show() {
+        delegate?.showAll(view: allView)
+        allView.loadCards()
     }
     
 }
@@ -190,13 +161,5 @@ extension CardsManagerController {
         }
          return false
     }
-    
-    @objc private func scrollToPage(_ noti: Notification) {
-        if let object = noti.object as? [String: Any], let index = object["index"] as? Int {
-            if  index == 1 {
-                titleView.selectedSegmentIndex = 0
-                showAll(true)
-            }
-        }
-    }
+
 }

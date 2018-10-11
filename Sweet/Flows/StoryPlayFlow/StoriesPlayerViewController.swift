@@ -764,59 +764,6 @@ extension StoriesPlayerViewController {
                     }
                     self?.present(controller, animated: true, completion: nil)
                 }))
-                alertController.addAction(UIAlertAction.makeAlertAction(
-                    title: response.subscription ? "取消订阅" : "订阅该用户",
-                    style: .default,
-                    handler: { (_) in
-                        if response.subscription {
-                            web.request(.delUserSubscription(userId: userId), completion: { (result) in
-                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
-                                switch result {
-                                case .success:
-                                    JDStatusBarNotification.show(withStatus: "取消订阅成功", dismissAfter: 2)
-                                case .failure:
-                                    JDStatusBarNotification.show(withStatus: "取消订阅失败，请稍后重试。", dismissAfter: 2)
-                                }
-                            })
-                        } else {
-                            web.request(.addUserSubscription(userId: userId), completion: { (result) in
-                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
-                                switch result {
-                                case .success:
-                                    JDStatusBarNotification.show(withStatus: "订阅成功", dismissAfter: 2)
-                                case .failure:
-                                    JDStatusBarNotification.show(withStatus: "订阅失败，请稍后重试。", dismissAfter: 2)
-                                }
-                            })
-                        }
-                }))
-                let blockAction = UIAlertAction.makeAlertAction(
-                    title: response.block ? "取消屏蔽" : "屏蔽该用户",
-                    style: .default,
-                    handler: { (_) in
-                        if response.block {
-                            web.request(.delBlock(userId: userId), completion: { (result) in
-                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
-                                switch result {
-                                case .success:
-                                    JDStatusBarNotification.show(withStatus: "取消屏蔽成功", dismissAfter: 2)
-                                case .failure:
-                                    JDStatusBarNotification.show(withStatus: "取消屏蔽失败，请稍后重试。", dismissAfter: 2)
-                                }
-                            })
-                        } else {
-                            web.request(.addBlock(userId: userId), completion: { (result) in
-                                self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)
-                                switch result {
-                                case .success:
-                                    JDStatusBarNotification.show(withStatus: "屏蔽成功", dismissAfter: 2)
-                                case .failure:
-                                    JDStatusBarNotification.show(withStatus: "屏蔽失败，请稍后重试。", dismissAfter: 2)
-                                }
-                            })
-                        }
-                })
-                alertController.addAction(blockAction)
                 let reportAction = UIAlertAction.makeAlertAction(title: "投诉", style: .default, handler: { (_) in
                     web.request(.reportStory(storyId: storyId), completion: { (result) in
                         self?.delegate?.changeStatusBarHidden(isHidden: false, becomeAfter: 2)

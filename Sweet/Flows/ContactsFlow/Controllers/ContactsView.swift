@@ -13,10 +13,7 @@ protocol ContactsView: BaseView {
 }
 
 protocol ContactsViewDelegate: class {
-    func contactsShowSubscription()
-//    func contactsShowBlock()
     func contactsShowInvite()
-//    func contactsShowBlack()
     func contactsShowSearch(searchView: ContactSearchView)
     func contactsShowProfile(userID: UInt64)
 }

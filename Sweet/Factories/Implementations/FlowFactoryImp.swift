@@ -176,12 +176,4 @@ extension FlowFactoryImp: ContactsFlowFactory {
         return BlackController()
     }
     
-    func makeBlockOutput() -> BlockView {
-        return BlockController()
-    }
-    
-    func makeSubscriptionOutput() -> SubscriptionView {
-        return SubscriptionController()
-    }
-    
 }

@@ -224,7 +224,6 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private var time: UInt64 = 0
     private var viewModel: GameCardViewModel?
     func updateWith(_ viewModel: GameCardViewModel) {
-        menuButton.isHidden = true
         titleLabel.textColor = .white
         self.viewModel = viewModel
         gameContentInfoView.update(viewModel: viewModel)
