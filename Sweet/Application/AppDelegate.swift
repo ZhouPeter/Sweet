@@ -247,10 +247,7 @@ extension AppDelegate {
             UMessage.registerForRemoteNotifications(launchOptions: launchOptions,
                                                     entity: nil,
                                                     completionHandler: {(_, _) in })
-            if #available(iOS 10.0, *) {
-                let center = UNUserNotificationCenter.current()
-                center.delegate = self
-            }
+            UNUserNotificationCenter.current().delegate = self
         }
     }
     
@@ -258,14 +255,10 @@ extension AppDelegate {
         UMessage.registerForRemoteNotifications(launchOptions: nil,
                                                 entity: nil,
                                                 completionHandler: {(_, _) in })
-        if #available(iOS 10.0, *) {
-            let center = UNUserNotificationCenter.current()
-            center.delegate = self
-            let types: UNAuthorizationOptions = [.badge, .alert, .sound]
-            center.requestAuthorization(options: types) { (_, _) in
-                completion?()
-            }
-        } else {
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        let types: UNAuthorizationOptions = [.badge, .alert, .sound]
+        center.requestAuthorization(options: types) { (_, _) in
             completion?()
         }
     }

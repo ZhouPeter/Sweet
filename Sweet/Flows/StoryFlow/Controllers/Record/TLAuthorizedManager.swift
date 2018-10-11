@@ -44,15 +44,11 @@ class TLAuthorizedManager: NSObject {
     }
     
     public static func openAuthorizationSetting() {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(
-                URL(string: UIApplicationOpenSettingsURLString)!,
-                options: [:],
-                completionHandler: nil
-            )
-        } else {
-            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
-        }
+        UIApplication.shared.open(
+            URL(string: UIApplicationOpenSettingsURLString)!,
+            options: [:],
+            completionHandler: nil
+        )
     }
     
     fileprivate static func requestMicAuthorizationStatus(_ callabck:@escaping AuthorizedCallback) {

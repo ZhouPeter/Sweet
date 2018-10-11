@@ -28,7 +28,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     var runProfileFlow: ((UInt64) -> Void)?
     
     var runStoryFlow: ((String) -> Void)?
-
+    
     var onFinish: (() -> Void)?
     
     var currentPlayController: StoriesPlayerViewController? {
@@ -40,7 +40,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     
     func pause() {
         currentPlayController?.pause()
-
+        
     }
     
     func play() {
@@ -69,9 +69,7 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         collectionView.register(StoryPlayCollectionViewCell.self, forCellWithReuseIdentifier: "placeholderCell")
         collectionView.delegate = self
         collectionView.dataSource = self
-        if #available(iOS 10.0, *) {
-            collectionView.prefetchDataSource = self
-        }
+        collectionView.prefetchDataSource = self
         collectionView.isPagingEnabled = true
         collectionView.gemini.cubeAnimation().cubeDegree(90).shadowEffect(.fadeIn)
         return collectionView
@@ -165,14 +163,14 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
             if progress + gesture.velocity(in: nil).y / view.bounds.height > 0.3 {
                 Hero.shared.finish()
                 DispatchQueue.main.async {
-                     self.onFinish?()
+                    self.onFinish?()
                 }
             } else {
                 Hero.shared.cancel()
             }
         }
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return statusBarHidden
     }
@@ -210,9 +208,9 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
         }
     }
 }
+
 // MARK: - StoriesPlayerViewControllerDelegate
 extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate {
-    
     func changeStatusBarHidden(isHidden: Bool, becomeAfter: Double) {
         let oldStatusBarHidden = statusBarHidden
         statusBarHidden = isHidden
@@ -222,13 +220,16 @@ extension StoriesPlayerGroupViewController: StoriesPlayerViewControllerDelegate 
             self.setNeedsStatusBarAppearanceUpdate()
         })
     }
+    
     func updateStory(story: StoryCellViewModel, position: (Int, Int)) {
         storiesGroup[position.0][position.1] = story
         delegate?.updateStory(story: story, postion: position)
     }
+    
     func delStory(storyId: UInt64) {
         delegate?.delStory(storyId: storyId)
     }
+    
     func dismissController() {
         onFinish?()
     }
@@ -327,3 +328,4 @@ extension StoriesPlayerGroupViewController: UICollectionViewDelegate {
         contentOffset = scrollView.contentOffset
     }
 }
+

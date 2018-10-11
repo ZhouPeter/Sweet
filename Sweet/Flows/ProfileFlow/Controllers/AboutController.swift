@@ -241,11 +241,7 @@ class AboutController: BaseViewController, AboutView {
                 url = URL(string: "https://mx.miaobo.me/complain.html")!
             }
             if UIApplication.shared.canOpenURL(url) {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
         view.addSubview(bottomView)

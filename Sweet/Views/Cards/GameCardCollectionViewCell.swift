@@ -367,7 +367,7 @@ class GameCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
                     """
                     self.updateWith(viewModel)
                 })
-                if #available(iOS 10.0, *), self.traitCollection.forceTouchCapability == .available  {
+                if self.traitCollection.forceTouchCapability == .available  {
                     TapticEngine.impact.feedback(.heavy)
                 } else {
                     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)

@@ -10,7 +10,7 @@ import TapticEngine
 
 extension UIViewController {
     func vibrateFeedback() {
-        if #available(iOS 10.0, *), traitCollection.forceTouchCapability == .available  {
+        if traitCollection.forceTouchCapability == .available  {
             TapticEngine.notification.feedback(.success)
         } else {
 //            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
