@@ -206,7 +206,9 @@
 }
 
 - (UIInterfaceOrientation)orientationForTrack:(AVAsset *)asset {
-    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    NSArray<AVAssetTrack *> *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    if (tracks.count == 0) { return UIInterfaceOrientationPortrait; }
+    AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
     CGAffineTransform transform = videoTrack.preferredTransform;
     if (transform.a == -1 && transform.d == -1) {
         return UIInterfaceOrientationLandscapeRight;
