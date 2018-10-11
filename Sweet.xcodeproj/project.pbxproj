@@ -489,6 +489,14 @@
 		58A79FEC20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
 		58A79FED20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
 		58A79FEE20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */; };
+		58AEFD0B216DEFA500E048AA /* UpdateConstellationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */; };
+		58AEFD0C216DEFA500E048AA /* UpdateConstellationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */; };
+		58AEFD0D216DEFA500E048AA /* UpdateConstellationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */; };
+		58AEFD0E216DEFA500E048AA /* UpdateConstellationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */; };
+		58AEFD12216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
+		58AEFD13216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
+		58AEFD14216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
+		58AEFD15216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
 		58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
@@ -1738,6 +1746,8 @@
 		58A23E6E214A67B000AC8931 /* ShareListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListTableViewCell.swift; sourceTree = "<group>"; };
 		58A23E75214A6A4300AC8931 /* ShareCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCollectionViewCell.swift; sourceTree = "<group>"; };
 		58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivityCardTableViewCell.swift; sourceTree = "<group>"; };
+		58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateConstellationController.swift; sourceTree = "<group>"; };
+		58AEFD11216DFB4900E048AA /* ConstellationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstellationCell.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Metrics.swift"; sourceTree = "<group>"; };
@@ -2104,6 +2114,7 @@
 				58150FCE20F301A300CADBF2 /* UserInfoTableViewCell.swift */,
 				580D9BD7213FAC4E00B8719C /* UpdateSettingTableViewCell.swift */,
 				58D862E2215B84630053E25F /* ActivityCollectionViewCell.swift */,
+				58AEFD11216DFB4900E048AA /* ConstellationCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -2302,6 +2313,7 @@
 				58447B2B209B0909004C2FFE /* BlackNavigationController.swift */,
 				587D18D020DA465E00D53708 /* FeedbackController.swift */,
 				580D9BCB213FAAF400B8719C /* UpdateSettingsController.swift */,
+				58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3570,6 +3582,7 @@
 				ACEC5C3420EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5872A84820D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA5F20A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				58AEFD0B216DEFA500E048AA /* UpdateConstellationController.swift in Sources */,
 				589E6BC320A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5307208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACDD0B0720C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
@@ -3854,6 +3867,7 @@
 				ACFC207820AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AB2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
+				58AEFD12216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				587D18E220DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */,
@@ -4006,6 +4020,7 @@
 				580F886A20F4D6CA009148CC /* String+HTML.swift in Sources */,
 				AC9DF12A20D10D5900922813 /* UIImage+MessageBubble.swift in Sources */,
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
+				58AEFD14216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				58FBAD08214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -4055,6 +4070,7 @@
 				587D18E920DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,
 				5803574620AAE0B500B2C94F /* StoryCardCollectionViewCell.swift in Sources */,
 				58CBA6F32117FEB2002FCD54 /* ShareWebViewController.swift in Sources */,
+				58AEFD0D216DEFA500E048AA /* UpdateConstellationController.swift in Sources */,
 				5843DA5C20A03350005C8AD2 /* PhoneContactViewModel.swift in Sources */,
 				5803572820AABA5E00B2C94F /* EvaluationCardCollectionViewCell.swift in Sources */,
 				589E6BD320A98B6C0038FAED /* ContentCardViewModel.swift in Sources */,
@@ -4532,6 +4548,7 @@
 				AC2F978A20904A9900D5DE4F /* UserData.swift in Sources */,
 				AC05F44220DCA83500EC6CAA /* StoryTextEditControllerDelegate.swift in Sources */,
 				5866330520BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
+				58AEFD15216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				AC86A94120C4DC3F00334D4A /* User.swift in Sources */,
 				586603482108A2F9008C4448 /* UISearchBar+Frame.swift in Sources */,
 				ACA3234D2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -4562,6 +4579,7 @@
 				58816CFF20C655750032D103 /* ActivitiesController.swift in Sources */,
 				AC45CD8720AD57A2005C4AA0 /* TLStoryAuthorizationController.swift in Sources */,
 				58447B54209C5143004C2FFE /* ContactTableViewCell.swift in Sources */,
+				58AEFD0E216DEFA500E048AA /* UpdateConstellationController.swift in Sources */,
 				5843DA6C20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */,
 				58D578FA209352F800AE5D38 /* UpdateNicknameController.swift in Sources */,
 				ACA3235D20874A3C00BDC92E /* DeepLinkOption.swift in Sources */,
@@ -4697,6 +4715,7 @@
 				ACEC5C3520EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5872A84920D39AE500B6DC8F /* CardsCollectionView.swift in Sources */,
 				5843DA6020A0364F005C8AD2 /* UIButton+Style.swift in Sources */,
+				58AEFD0C216DEFA500E048AA /* UpdateConstellationController.swift in Sources */,
 				589E6BC420A97BDD0038FAED /* CardListResponse.swift in Sources */,
 				58BD5308208E00C500F7C3E1 /* PowerContactsView.swift in Sources */,
 				ACDD0B0820C7FEE800B7400A /* OptionCardPreviewController.swift in Sources */,
@@ -4981,6 +5000,7 @@
 				ACFC207920AE993D00D696B9 /* StoryGenerator.swift in Sources */,
 				ACE560AC2099834000CE2564 /* StoryEditController.swift in Sources */,
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
+				58AEFD13216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				587D18E320DB43D500D53708 /* StoriesGroupView.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */,

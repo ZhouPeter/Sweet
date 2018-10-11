@@ -19,6 +19,7 @@ enum UpdateUserType: UInt, Codable {
     case college
     case signature
     case enrollment
+    case zodiac
 }
 
 struct LoginResponse: Codable {

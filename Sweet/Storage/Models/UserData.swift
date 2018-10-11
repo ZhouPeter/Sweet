@@ -27,6 +27,8 @@ class UserData: Object {
     @objc dynamic var activityNum: Int64 = 0
     @objc dynamic var storyNum: Int64 = 0
     @objc dynamic var rank: Int64 = 0
+    @objc dynamic var zodiac: String = ""
+
 
     let userType = RealmOptional<Int32>()
     
@@ -68,6 +70,7 @@ class UserData: Object {
         data.activityNum = Int64(response.activityNum)
         data.storyNum = Int64(response.storyNum)
         data.rank = Int64(response.rank)
+        data.zodiac = response.zodiac
         return data
     }
     
@@ -125,5 +128,6 @@ extension UserResponse {
         activityNum = UInt64(data.activityNum)
         storyNum = UInt64(data.storyNum)
         rank = UInt64(data.rank)
+        zodiac = data.zodiac
     }
 }

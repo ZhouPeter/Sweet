@@ -199,7 +199,7 @@ class UserInfoTableViewCell: UITableViewCell {
         bottomMaskView.align(.bottom)
         bottomMaskView.constrain(height: 8)
     }
-
+    
     func updateWith(_ viewModel: BaseInfoCellViewModel) {
         self.viewModel = viewModel
         avatarImageView.sd_setImage(with: viewModel.avatarImageURL)

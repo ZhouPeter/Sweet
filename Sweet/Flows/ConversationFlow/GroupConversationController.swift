@@ -82,7 +82,37 @@ final class GroupConversationController: ConversationViewController, GroupConver
                 return
             }
             self?.members[userID] = user
+            self?.loadVisbleCells(user: user)
             callback(user)
+        }
+    }
+    
+    private func loadVisbleCells(user: User) {
+        for cell in messagesCollectionView.visibleCells {
+            if let indexPath = messagesCollectionView.indexPath(for: cell) {
+                if let id = UInt64(messages[indexPath.section].sender.id), id == user.userId {
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                }
+            }
+        }
+    }
+    override func messageTopLabelHeight(for message: MessageType,
+                               at indexPath: IndexPath,
+                               in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 17
+    }
+    
+    override func messageTopLabelAttributedText(for message: MessageType,
+                                       at indexPath: IndexPath) -> NSAttributedString? {
+        if let id = UInt64(messages[indexPath.section].sender.id), let user = members[id] {
+            let topText = self.user.userId == user.userId ? "我" : user.nickname + "·" + user.collegeName!
+            let attributedString = NSAttributedString(
+                string: topText,
+                attributes: [.font : UIFont.systemFont(ofSize: 12),
+                             .foregroundColor: UIColor(hex: 0x4a4a4a)])
+            return attributedString
+        } else {
+            return nil
         }
     }
 }

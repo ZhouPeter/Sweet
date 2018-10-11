@@ -57,8 +57,13 @@ class UpdateController: BaseViewController, UpdateView {
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.tintColor = .black
     }
-    deinit {
-        writeUserData()
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        if parent == nil {
+            writeUserData()
+        }
+
     }
     
     private func writeUserData() {
@@ -73,6 +78,7 @@ class UpdateController: BaseViewController, UpdateView {
                 userData.college =  user.collegeName
                 userData.enrollment = user.enrollment
                 userData.phone = user.phone
+                userData.zodiac = user.zodiac
                 realm.add(userData, update: true)
             }
         })
@@ -150,23 +156,36 @@ class UpdateController: BaseViewController, UpdateView {
             
         }
         userViewModels.append(genderViewModel)
+        let zodiacString = user.zodiac == "" ? "设置星座" : user.zodiac
+        let constellationViewModel = UpdateCellViewModel(
+            title: "星座",
+            content:  zodiacString) { [weak self] in
+                guard let `self` = self else { return }
+                let controller = UpdateConstellationController(constellationName: self.user.zodiac)
+                controller.saveCompletion = { [weak self] (zodiac, _)  in
+                    self?.user.zodiac = zodiac
+                    self?.viewModels[0][3].content = zodiac
+                    self?.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
+                }
+                self.navigationController?.pushViewController(controller, animated: true)
+        }
+        userViewModels.append(constellationViewModel)
         let endIndex = user.signature.count > 10 ?
                        user.signature.index(user.signature.startIndex, offsetBy: 10) : user.signature.endIndex
         let range = user.signature.startIndex..<endIndex
         let signatureViewModel = UpdateCellViewModel(
             title: "签名",
             content: String(user.signature[range])) { [weak self] in
-            guard let `self` = self else { return }
-            guard self.isCanUpdate(updateRemainCount: self.updateRemain.signature, title: "签名") else { return }
-            let controller = UpdateSignatureController(signature: self.user.signature)
-            controller.saveCompletion = { [weak self] (signature, remain)  in
-                self?.updateRemain.signature = remain!
-                self?.user.signature = signature
-                self?.viewModels[0][3].content = signature
-                self?.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
-            }
-            self.navigationController?.pushViewController(controller, animated: true)
-       
+                guard let `self` = self else { return }
+                guard self.isCanUpdate(updateRemainCount: self.updateRemain.signature, title: "签名") else { return }
+                let controller = UpdateSignatureController(signature: self.user.signature)
+                controller.saveCompletion = { [weak self] (signature, remain)  in
+                    self?.updateRemain.signature = remain!
+                    self?.user.signature = signature
+                    self?.viewModels[0][4].content = signature
+                    self?.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
+                }
+                self.navigationController?.pushViewController(controller, animated: true)
         }
 
         userViewModels.append(signatureViewModel)

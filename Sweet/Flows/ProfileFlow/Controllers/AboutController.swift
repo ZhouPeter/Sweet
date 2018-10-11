@@ -168,8 +168,8 @@ class AboutController: BaseViewController, AboutView {
         storage = Storage(userID: user.userId)
         setButtons()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         readUserDataAddUserSetting()
     }
     

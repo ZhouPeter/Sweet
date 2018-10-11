@@ -31,6 +31,7 @@ struct UserResponse: Codable {
     let activityNum: UInt64
     let storyNum: UInt64
     let rank: UInt64
+    var zodiac: String
 }
 
 extension User {

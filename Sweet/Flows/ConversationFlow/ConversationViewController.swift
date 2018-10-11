@@ -293,6 +293,17 @@ class ConversationViewController: MessagesViewController {
         }
         return UIImageView(image: outgoingBubbleMaskImage)
     }
+    
+    func messageTopLabelHeight(for message: MessageType,
+                               at indexPath: IndexPath,
+                               in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+    
+    func messageTopLabelAttributedText(for message: MessageType,
+                                       at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
+    }
 }
 
 extension ConversationViewController: MessagesLayoutDelegate { }
