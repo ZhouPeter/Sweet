@@ -50,7 +50,8 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     var playerView: UIView!
     var playbackTimeObserver: Any?
     var statusToken: NSKeyValueObservation?
-    var imageTimer: Timer?
+    var playTimer: Timer?
+    private var isPaused = false
     var timerNumber: Float = 0
     var photoBrowserImp: PhotoBrowserImp!
 
@@ -218,13 +219,15 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.post(name: Notification.Name.StatusBarHidden, object: nil)
+        isPaused = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: Notification.Name.StatusBarNoHidden, object: nil)
-
+        isPaused = true
     }
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -365,6 +368,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             commentLabel.isHidden = true
         }
     }
+    
     private func updatePokeView() {
         if stories[currentIndex].type == .poke {
             pokeView.isHidden = false
@@ -381,6 +385,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             pokeLongPress.isEnabled = false
         }
     }
+    
     private func updateTouchTag() {
         if let path = stories[currentIndex].touchPath, runStoryFlow != nil {
             touchTagTap.isEnabled = true
@@ -406,9 +411,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             let asset = resource.definitions[0]
             playerItem = AVPlayerItem(asset: asset.avURLAsset)
             player = AVPlayer(playerItem: playerItem)
-            if #available(iOS 10.0, *) {
-                player?.automaticallyWaitsToMinimizeStalling = false
-            }
+            player?.automaticallyWaitsToMinimizeStalling = false
             player?.actionAtItemEnd = .none
             if playerView == nil {
                 let frame = CGRect(x: 0,
@@ -466,7 +469,6 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         removePlayTimeObserver()
         removeImageTimer()
     }
-
 }
 
 extension StoriesPlayerViewController: InputTextViewDelegate {
@@ -482,39 +484,23 @@ extension StoriesPlayerViewController: InputTextViewDelegate {
         inputTextView.clear()
         inputTextView.removeFromSuperview()
     }
-    
 }
-extension Timer {
-    fileprivate class func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
-        if #available(iOS 10.0, *) {
-            return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: repeats, block: block)
-        } else {
-            return Timer.scheduledTimer(timeInterval: timeInterval,
-                                        target: self,
-                                        selector: #selector(blcokInvoke(timer:)),
-                                        userInfo: block,
-                                        repeats: repeats)
-        }
-    }
-    @objc private class func blcokInvoke(timer: Timer) {
-        if let block = timer.userInfo as? (Timer) -> Void {
-            block(timer)
-        }
-    }
-}
+
 // MARK: - ImageTimer Methods
 extension StoriesPlayerViewController {
     private func removeImageTimer() {
-        if imageTimer != nil {
-            imageTimer?.invalidate()
-            imageTimer = nil
+        if playTimer != nil {
+            playTimer?.invalidate()
+            playTimer = nil
         }
     }
-    @objc private func imageTimeDown() {
+    
+    @objc private func playTimeUpdate() {
+        guard isPaused == false else { return }
         timerNumber += 1.0 / 60.0
         if timerNumber >= 3 {
-            imageTimer?.invalidate()
-            imageTimer = nil
+            playTimer?.invalidate()
+            playTimer = nil
             currentStoryPlayEnd()
         }
         let ratio = timerNumber / 3
@@ -522,28 +508,28 @@ extension StoriesPlayerViewController {
     }
     
     private func imagePause() {
-        imageTimer?.invalidate()
-        imageTimer = nil
+        playTimer?.invalidate()
+        playTimer = nil
     }
     
     private func imagePlay() {
         removeImageTimer()
-        imageTimer = Timer.scheduledTimer(timeInterval: 1.0/60.0, repeats: true, block: { [weak self] (_) in
-            self?.imageTimeDown()
-        })
+        playTimer = Timer.scheduledTimer(timeInterval: 1.0/60.0,
+                                          target: self,
+                                          selector: #selector(playTimeUpdate),
+                                          userInfo: nil,
+                                          repeats: true)
     }
     
     private func imageReset() {
         timerNumber = 0
-        imageTimer?.invalidate()
-        imageTimer = nil
+        playTimer?.invalidate()
+        playTimer = nil
     }
-   
 }
 
 // MARK: - Privates
 extension StoriesPlayerViewController {
-
     private func currentStoryPlayEnd() {
         if currentIndex == stories.count - 1 {
             delegate?.playToNext()
@@ -577,6 +563,7 @@ extension StoriesPlayerViewController {
         delegate?.updateStory(story: stories[currentIndex], position: (groupIndex, currentIndex))
 
     }
+    
     func play() {
         for subview in view.subviews {
             if subview.tag == 100 { return }
