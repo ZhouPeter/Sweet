@@ -56,6 +56,7 @@ class EvaluationCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable
     private var selectedButtonCenterXRightConstraint: NSLayoutConstraint?
     override init(frame: CGRect) {
         super.init(frame: frame)
+        menuButton.isHidden = false
         setupUI()
     }
     
