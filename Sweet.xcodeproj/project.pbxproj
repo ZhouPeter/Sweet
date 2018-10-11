@@ -497,6 +497,14 @@
 		58AEFD13216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
 		58AEFD14216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
 		58AEFD15216DFB4900E048AA /* ConstellationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD11216DFB4900E048AA /* ConstellationCell.swift */; };
+		58AEFD23216F33B300E048AA /* TopUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD22216F33B300E048AA /* TopUsersView.swift */; };
+		58AEFD24216F33B300E048AA /* TopUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD22216F33B300E048AA /* TopUsersView.swift */; };
+		58AEFD25216F33B300E048AA /* TopUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD22216F33B300E048AA /* TopUsersView.swift */; };
+		58AEFD26216F33B300E048AA /* TopUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD22216F33B300E048AA /* TopUsersView.swift */; };
+		58AEFD2A216F3AE000E048AA /* UserRankingListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */; };
+		58AEFD2B216F3AE000E048AA /* UserRankingListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */; };
+		58AEFD2C216F3AE000E048AA /* UserRankingListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */; };
+		58AEFD2D216F3AE000E048AA /* UserRankingListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */; };
 		58BD5279208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527A208776F500F7C3E1 /* UColor+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD5278208776F500F7C3E1 /* UColor+Style.swift */; };
 		58BD527C2087771500F7C3E1 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */; };
@@ -1748,6 +1756,8 @@
 		58A79FEA20EDEE1400C14B8E /* AcitivityCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivityCardTableViewCell.swift; sourceTree = "<group>"; };
 		58AEFD0A216DEFA500E048AA /* UpdateConstellationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateConstellationController.swift; sourceTree = "<group>"; };
 		58AEFD11216DFB4900E048AA /* ConstellationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstellationCell.swift; sourceTree = "<group>"; };
+		58AEFD22216F33B300E048AA /* TopUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUsersView.swift; sourceTree = "<group>"; };
+		58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRankingListResponse.swift; sourceTree = "<group>"; };
 		58BD5278208776F500F7C3E1 /* UColor+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UColor+Style.swift"; sourceTree = "<group>"; };
 		58BD527B2087771500F7C3E1 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		58BD527E2088344700F7C3E1 /* UIScreen+Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Metrics.swift"; sourceTree = "<group>"; };
@@ -2600,6 +2610,7 @@
 				AC21758E20C108710089D4D1 /* InstantMessage+MessageType.swift */,
 				AC0E829820FC6DE200CBDCE5 /* SweetMessageCell.swift */,
 				AC0E829D20FC7BD800CBDCE5 /* IndexPathButton.swift */,
+				58AEFD22216F33B300E048AA /* TopUsersView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3006,6 +3017,7 @@
 				58816D0020C656860032D103 /* ActivityListResponse.swift */,
 				58D3CCE420C8FA320078B36C /* StatusResponse.swift */,
 				580F888520FC91CC009148CC /* UpdateRemainResponse.swift */,
+				58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3818,6 +3830,7 @@
 				58BD52DA2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EDF20A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2A20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
+				58AEFD23216F33B300E048AA /* TopUsersView.swift in Sources */,
 				ACA3239D2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886820F4D6CA009148CC /* String+HTML.swift in Sources */,
 				5800C2E72159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
@@ -3842,6 +3855,7 @@
 				58BD52FA208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BC20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E302091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				58AEFD2A216F3AE000E048AA /* UserRankingListResponse.swift in Sources */,
 				58D578FC20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA9CC4820C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3120C6B6AF00E3712C /* ShareCardController.swift in Sources */,
@@ -3983,6 +3997,7 @@
 				ACA3239F2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				583BC78720CE4F9400C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				580F887420F5FDD9009148CC /* SourceInfoView.swift in Sources */,
+				58AEFD25216F33B300E048AA /* TopUsersView.swift in Sources */,
 				AC742DC82106CFFA00B18DED /* VideoTrimmerViewController.swift in Sources */,
 				ACA3236E20875C1700BDC92E /* Router.swift in Sources */,
 				AC4D091620B7B774007686EB /* UIButton+Topic.swift in Sources */,
@@ -4186,6 +4201,7 @@
 				58CE1EDC20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
 				AC2A259120BD2B9F00A82E62 /* Command.pb.swift in Sources */,
 				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
+				58AEFD2C216F3AE000E048AA /* UserRankingListResponse.swift in Sources */,
 				AC87BC6820E1FD7D002BA32C /* Guide.swift in Sources */,
 				5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				AC86A94020C4DC3F00334D4A /* User.swift in Sources */,
@@ -4530,6 +4546,7 @@
 				585B68C020AF183E00E734BC /* SweetPlayerView.swift in Sources */,
 				AC86A93C20C4051400334D4A /* ConversationData.swift in Sources */,
 				AC51D93920FDE964004A52BA /* WarningHeaderView.swift in Sources */,
+				58AEFD2D216F3AE000E048AA /* UserRankingListResponse.swift in Sources */,
 				ACEC5C3720EB2221006E0BAA /* StoryDraft.swift in Sources */,
 				5808D40E2113F25D00821A2C /* SDWebImagePhotoLoader.swift in Sources */,
 				5800C2EA2159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
@@ -4669,6 +4686,7 @@
 				AC557C9C20B7E5E60068F1B3 /* AlbumController.swift in Sources */,
 				AC6A0BC4210AF1EF002DD1A4 /* ArticleMessageContent.swift in Sources */,
 				ACA3237B20875DA200BDC92E /* OnboardingCoordinator.swift in Sources */,
+				58AEFD26216F33B300E048AA /* TopUsersView.swift in Sources */,
 				ACD5A5332088731C00B78CFD /* String+MD5.swift in Sources */,
 				AC1778DC20BFC90A00D5330F /* ContactsFlowFactory.swift in Sources */,
 				58A084E82105F2A500221339 /* TapGestureRecognizer.swift in Sources */,
@@ -4951,6 +4969,7 @@
 				58BD52DB2089D69B00F7C3E1 /* SignUpPhoneController.swift in Sources */,
 				58CE1EE020A5652700781EBF /* StoryUVController.swift in Sources */,
 				5833DD2B20EF6027009AE471 /* SweetPlayerCellControlView.swift in Sources */,
+				58AEFD24216F33B300E048AA /* TopUsersView.swift in Sources */,
 				ACA3239E2087621700BDC92E /* CoordinatorFactoryImp.swift in Sources */,
 				580F886920F4D6CA009148CC /* String+HTML.swift in Sources */,
 				5800C2E82159E04700511F01 /* NotiRankingCollectionViewCell.swift in Sources */,
@@ -4975,6 +4994,7 @@
 				58BD52FB208DFB6300F7C3E1 /* String+Check.swift in Sources */,
 				58BD52BD20888DB900F7C3E1 /* SignUpSexController.swift in Sources */,
 				58155E312091BE1300ADEFFB /* AboutRectView.swift in Sources */,
+				58AEFD2B216F3AE000E048AA /* UserRankingListResponse.swift in Sources */,
 				58D578FD20942D4A00AE5D38 /* BorderContentView.swift in Sources */,
 				ACA9CC4920C6769800873643 /* SweetMessageSizeCalculator.swift in Sources */,
 				58461D3220C6B6AF00E3712C /* ShareCardController.swift in Sources */,
