@@ -81,7 +81,6 @@ class NotiCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Cel
     private var viewModel: ViewModelType?
     func updateWith(_ viewModel: NotiCardViewModel) {
         self.viewModel = viewModel
-        menuButton.isHidden = true
         titleLabel.textColor = .white
         titleLabel.text = viewModel.titleString
         rankingView.update(changeType: viewModel.changeType)

@@ -242,18 +242,10 @@
 		5843DA6A20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */; };
 		5843DA6B20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */; };
 		5843DA6C20A1469A005C8AD2 /* ContactWithButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */; };
-		5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6D20A1A515005C8AD2 /* BlockController.swift */; };
-		5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6D20A1A515005C8AD2 /* BlockController.swift */; };
-		5843DA7020A1A515005C8AD2 /* BlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6D20A1A515005C8AD2 /* BlockController.swift */; };
-		5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA6D20A1A515005C8AD2 /* BlockController.swift */; };
 		5843DA7320A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */; };
 		5843DA7420A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */; };
 		5843DA7520A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */; };
 		5843DA7620A1CABC005C8AD2 /* SubscriptionListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */; };
-		5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */; };
-		5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */; };
-		5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */; };
-		5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */; };
 		58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
 		58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
 		58447B24209AE2D5004C2FFE /* TimerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58447B21209AE2D5004C2FFE /* TimerHelper.swift */; };
@@ -310,10 +302,6 @@
 		584CDED620D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
 		584CDED720D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
 		584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED420D0F8A400523406 /* CardsBaseView.swift */; };
-		584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
-		584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
-		584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
-		584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDED920D1032F00523406 /* SubCardsCoordinator.swift */; };
 		584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
@@ -1690,9 +1678,7 @@
 		5843DA5E20A0364F005C8AD2 /* UIButton+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Style.swift"; sourceTree = "<group>"; };
 		5843DA6320A13EE6005C8AD2 /* BlackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackController.swift; sourceTree = "<group>"; };
 		5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactWithButtonViewModel.swift; sourceTree = "<group>"; };
-		5843DA6D20A1A515005C8AD2 /* BlockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockController.swift; sourceTree = "<group>"; };
 		5843DA7220A1CABC005C8AD2 /* SubscriptionListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListResponse.swift; sourceTree = "<group>"; };
-		5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionController.swift; sourceTree = "<group>"; };
 		58447B21209AE2D5004C2FFE /* TimerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerHelper.swift; sourceTree = "<group>"; };
 		58447B26209AF7E1004C2FFE /* UpdateAvatarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAvatarController.swift; sourceTree = "<group>"; };
 		58447B2B209B0909004C2FFE /* BlackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackNavigationController.swift; sourceTree = "<group>"; };
@@ -1707,7 +1693,6 @@
 		58463DDA2099903000698CF8 /* UpdateSignatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSignatureController.swift; sourceTree = "<group>"; };
 		584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCardsCoordinator.swift; sourceTree = "<group>"; };
 		584CDED420D0F8A400523406 /* CardsBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsBaseView.swift; sourceTree = "<group>"; };
-		584CDED920D1032F00523406 /* SubCardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCardsCoordinator.swift; sourceTree = "<group>"; };
 		584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayCollectionViewCell.swift; sourceTree = "<group>"; };
 		585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Guide+ShowPreference.swift"; sourceTree = "<group>"; };
 		585B68B720AF182200E734BC /* SweetPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetPlayerControlView.swift; sourceTree = "<group>"; };
@@ -2379,8 +2364,6 @@
 				58447B46209C2E07004C2FFE /* ContactsController.swift */,
 				5843DA4F20A0261D005C8AD2 /* InviteController.swift */,
 				5843DA6320A13EE6005C8AD2 /* BlackController.swift */,
-				5843DA6D20A1A515005C8AD2 /* BlockController.swift */,
-				5843DA7720A1CDE9005C8AD2 /* SubscriptionController.swift */,
 				58325B8D20A2F496000E851F /* ContactSearchController.swift */,
 			);
 			path = Controllers;
@@ -2519,7 +2502,6 @@
 				580F889320FDF104009148CC /* CardActionEnum.swift */,
 				AC525ABC208DF3E8001070B2 /* CardsCoordinator.swift */,
 				584CDECD20D0F4BD00523406 /* AllCardsCoordinator.swift */,
-				584CDED920D1032F00523406 /* SubCardsCoordinator.swift */,
 				AC525AC1208DF3EC001070B2 /* Controllers */,
 				5811E395210579FB00558C00 /* CardMessageManager.swift */,
 			);
@@ -3687,7 +3669,6 @@
 				58447B22209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				584CDEDF20D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC1778D420BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
-				584CDEDA20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58BD529E20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E8208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
 				58CE1EDA20A5590F00781EBF /* StoriesPlayerScrollView.swift in Sources */,
@@ -3705,7 +3686,6 @@
 				58BD528B20883DE900F7C3E1 /* AuthView.swift in Sources */,
 				58FBAD252147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				58816CF820C634C70032D103 /* EvaluationListResponse.swift in Sources */,
-				5843DA7820A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				589E6BDB20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				5800C2E02159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				AC84FE8320E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
@@ -3808,7 +3788,6 @@
 				5872A84F20D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E720ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				58FBAD0D214673D900688F1E /* UserCardViewModel.swift in Sources */,
-				5843DA6E20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D120B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571620AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				58D862D9215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,
@@ -4140,7 +4119,6 @@
 				586954AF21242C4A00D48196 /* Contacts.swift in Sources */,
 				58D5790320944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
 				580D9BBF213D60D700B8719C /* UISearchBar+Placeholder.swift in Sources */,
-				5843DA7A20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED020D0F4BD00523406 /* AllCardsCoordinator.swift in Sources */,
 				ACDD0AFD20C7DBF500B7400A /* ContentCardMessageCell.swift in Sources */,
 				58816D0320C656860032D103 /* ActivityListResponse.swift in Sources */,
@@ -4241,7 +4219,6 @@
 				58CAB37B20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACEFA0D82106D51D0098631F /* HandlerView.swift in Sources */,
 				587D18E420DB43D500D53708 /* StoriesGroupView.swift in Sources */,
-				5843DA7020A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58D578D12092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */,
@@ -4300,7 +4277,6 @@
 				ACA9CC4F20C6819D00873643 /* OptionCardMessageCell.swift in Sources */,
 				589E6BD820A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				5808D3F92112DD6700821A2C /* WXApiManager.swift in Sources */,
-				584CDEDC20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				ACDD0B1020C802E000B7400A /* PopupController.swift in Sources */,
 				589E6BDD20A9A9370038FAED /* BaseCardCollectionViewCell.swift in Sources */,
 				580F888F20FD8867009148CC /* GIFImageMake.swift in Sources */,
@@ -4510,7 +4486,6 @@
 				AC2A257B20BC23C700A82E62 /* MessengerDelegate.swift in Sources */,
 				58C75C162099DE9B00DBD28C /* UpdateEnrollmentController.swift in Sources */,
 				58D5790420944FDE00AE5D38 /* UpdateGenderController.swift in Sources */,
-				5843DA7B20A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				584CDED820D0F8A400523406 /* CardsBaseView.swift in Sources */,
 				AC744E592109AD1900E6D131 /* DebugWindow.swift in Sources */,
 				AC84FE7420E21B5D008FC795 /* DashView.swift in Sources */,
@@ -4599,7 +4574,6 @@
 				58BD53512090A19600F7C3E1 /* ProfileController.swift in Sources */,
 				AC6A0BCB210AF3FC002DD1A4 /* ArticelMessageCell.swift in Sources */,
 				58CAB37C20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
-				5843DA7120A1A515005C8AD2 /* BlockController.swift in Sources */,
 				58DECE6C20EA24FE00A4CDA4 /* NSAttributeString+Size.swift in Sources */,
 				58D579092094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58C75759212A6B0F00A5D408 /* CardsPageCollectionView.swift in Sources */,
@@ -4636,7 +4610,6 @@
 				AC3280D220A9389A00B3B2D2 /* Transform.swift in Sources */,
 				58BD5312208F1BBB00F7C3E1 /* UploadTokenResponse.swift in Sources */,
 				ACF7A8CC20B431FB00592BC9 /* StoryPokeView.swift in Sources */,
-				584CDEDD20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				587D18CD20DA310300D53708 /* CustomSegmentedControl.swift in Sources */,
 				583BC78820CE4F9500C4494E /* ContentVideoCardViewModel.swift in Sources */,
 				ACEFA0CD2106D51D0098631F /* VideoCropView.swift in Sources */,
@@ -4823,7 +4796,6 @@
 				ACA323A32087625100BDC92E /* FlowFactoryImp.swift in Sources */,
 				584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */,
 				AC1778D520BFC5D600D5330F /* InboxCoordinator.swift in Sources */,
-				584CDEDB20D1032F00523406 /* SubCardsCoordinator.swift in Sources */,
 				58447B23209AE2D5004C2FFE /* TimerHelper.swift in Sources */,
 				58BD529F20885DC400F7C3E1 /* SignUpUniversityView.swift in Sources */,
 				58BD52E9208DB5AD00F7C3E1 /* SearchCollegeResponse.swift in Sources */,
@@ -4842,7 +4814,6 @@
 				58FBAD262147AF7200688F1E /* UIScreen+Shot.swift in Sources */,
 				58816CF920C634C70032D103 /* EvaluationListResponse.swift in Sources */,
 				58BD528C20883DE900F7C3E1 /* AuthView.swift in Sources */,
-				5843DA7920A1CDE9005C8AD2 /* SubscriptionController.swift in Sources */,
 				5800C2E12159D5B200511F01 /* NotiCardCollectionViewCell.swift in Sources */,
 				AC84FE8420E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				AC52FDC720F7278D00267913 /* ImageMessageContent.swift in Sources */,
@@ -4944,7 +4915,6 @@
 				5872A85020D3B11600B6DC8F /* PhotoBrowserImp.swift in Sources */,
 				AC8EA9E820ABF62F0033615D /* GradientSwitchView.swift in Sources */,
 				58FBAD0E214673D900688F1E /* UserCardViewModel.swift in Sources */,
-				5843DA6F20A1A515005C8AD2 /* BlockController.swift in Sources */,
 				585B68D220B1211E00E734BC /* PlayController.swift in Sources */,
 				5803571720AAA7E900B2C94F /* ChoiceCardViewModel.swift in Sources */,
 				58D862DA215B21040053E25F /* RankingCollectionViewCell.swift in Sources */,

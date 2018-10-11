@@ -42,39 +42,15 @@ extension ContactsCoordinator: ContactsViewDelegate {
         }
     }
     
-    func contactsShowSubscription() {
-        let subscriptionView = factory.makeSubscriptionOutput()
-        subscriptionView.showProfile = { [weak self] userId in
-            self?.addProfileCoordinator(userID: userId)
-        }
-        router.push(subscriptionView)
-    }
-    
     func contactsShowInvite() {
         let inviteView = factory.makeInviteOutput()
         inviteView.delegate = self
         router.push(inviteView)
     }
     
-//    func contactsShowBlock() {
-//        let blockView = factory.makeBlockOutput()
-//        blockView.showProfile = { [weak self] userId in
-//            self?.addProfileCoordinator(userID: userId)
-//        }
-//        router.push(blockView)
-//    }
-    
     func contactsShowProfile(userID: UInt64) {
         addProfileCoordinator(userID: userID)
     }
-    
-//    func contactsShowBlack() {
-//        let blackView = factory.makeBlackOutput()
-//        blackView.showProfile = { [weak self] userId in
-//            self?.addProfileCoordinator(userID: userId)
-//        }
-//        router.push(blackView)
-//    }
     
     private func addProfileCoordinator(userID: UInt64) {
         let coordinator = self.coordinatorFactory.makeProfileCoordinator(user: user, buddyID: userID, router: router)

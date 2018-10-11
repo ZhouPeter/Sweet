@@ -33,13 +33,6 @@ class ContactsController: BaseViewController, ContactsView {
         return view
     }()
     
-    private lazy var categoryViewModels: [ContactCategoryViewModel] = {
-        var viewModels = [ContactCategoryViewModel]()
-        let subViewModel = ContactCategoryViewModel(categoryImage: #imageLiteral(resourceName: "Subscribe"), title: "订阅")
-        viewModels.append(subViewModel)
-        return viewModels
-    } ()
-    
     private var viewModelsGroup = [[ContactViewModel]]() {
         didSet { showEmptyView(isShow: viewModelsGroup.count == 0) }
     }
@@ -99,9 +92,9 @@ class ContactsController: BaseViewController, ContactsView {
             let searchBarHeight = searchController.searchBar.frame.height
             emptyView.frame = CGRect(
                 x: 0,
-                y: 68 + 25 + 80 + searchBarHeight,
+                y: 68 + 25 + searchBarHeight,
                 width: tableView.bounds.width,
-                height: tableView.bounds.height - (68 + 25 + 80 + searchBarHeight) + 1
+                height: tableView.bounds.height - (68 + 25 + searchBarHeight) + 1
             )
         } else {
             emptyView.removeFromSuperview()
@@ -184,9 +177,6 @@ extension ContactsController: UISearchBarDelegate {
 
 extension ContactsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 {
-            return 80
-        }
         return 68
     }
     
@@ -213,13 +203,9 @@ extension ContactsController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                delegate?.contactsShowSubscription()
-            }
-        } else if indexPath.section == 1 {
             
         } else {
-            let viewModel = viewModelsGroup[indexPath.section - 2][indexPath.row]
+            let viewModel = viewModelsGroup[indexPath.section - 1][indexPath.row]
             let userID = viewModel.userId
             if titles[indexPath.section - 1] == "黑名单" {
                 let alertSheet = UIAlertController()
@@ -239,22 +225,15 @@ extension ContactsController: UITableViewDelegate {
 
 extension ContactsController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModelsGroup.count + 2
+        return viewModelsGroup.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section <= 1 ? 1 : viewModelsGroup[section - 2].count
+        return section == 0 ? 1 : viewModelsGroup[section - 1].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
-            cell.updateCategroy(viewModel: categoryViewModels[indexPath.row])
-            cell.accessoryType = .disclosureIndicator
-            return cell
-        } else if indexPath.section == 1 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "shareListCell", for: indexPath) as? ShareListTableViewCell else { fatalError() }
             cell.update(images: [#imageLiteral(resourceName: "通讯录"), #imageLiteral(resourceName: "微信"), #imageLiteral(resourceName: "朋友圈"), #imageLiteral(resourceName: "QQ"), #imageLiteral(resourceName: "微博")])
@@ -263,7 +242,7 @@ extension ContactsController: UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "contactCell", for: indexPath) as? ContactTableViewCell else { fatalError() }
-            cell.update(viewModel: viewModelsGroup[indexPath.section - 2][indexPath.row])
+            cell.update(viewModel: viewModelsGroup[indexPath.section - 1][indexPath.row])
             cell.accessoryType = .none
             return cell
         }

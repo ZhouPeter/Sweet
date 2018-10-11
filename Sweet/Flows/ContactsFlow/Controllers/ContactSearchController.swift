@@ -15,9 +15,7 @@ protocol ContactSearchView: BaseView {
 class ContactSearchController: BaseViewController, ContactSearchView {
     var showProfile: ((UInt64) -> Void)?
     var contactViewModels = [ContactViewModel]()
-    var subscriptionsViewModels = [ContactViewModel]()
     var blacklistViewModels = [ContactViewModel]()
-    var blockViewModels = [ContactViewModel]()
     var userViewModels = [ContactViewModel]()
     var phoneContactViewModels = [PhoneContactViewModel]()
     var titles = [String]()
@@ -88,9 +86,7 @@ class ContactSearchController: BaseViewController, ContactSearchView {
     
     private func removeAllData() {
         contactViewModels.removeAll()
-        subscriptionsViewModels.removeAll()
         phoneContactViewModels.removeAll()
-        blockViewModels.removeAll()
         blacklistViewModels.removeAll()
         userViewModels.removeAll()
         titles.removeAll()
@@ -117,22 +113,6 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                     }
                     self.blacklistViewModels.append(viewModel)
                 })
-                
-                response.subscriptions.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "已订阅", style: .borderBlue)
-                    viewModel.callBack = { [weak self] userId in
-                        self?.delSubscription(userId: UInt64(userId)!)
-                    }
-                    self.subscriptionsViewModels.append(viewModel)
-                })
-                
-                response.blocks.forEach({ (model) in
-                    var viewModel = ContactViewModel(model: model, title: "恢复", style: .borderGray)
-                    viewModel.callBack = { [weak self] userId in
-                        self?.delBlock(userId: UInt64(userId)!)
-                    }
-                    self.subscriptionsViewModels.append(viewModel)
-                })
                
                 response.phoneContacts.forEach({ (model) in
                     var viewModel = PhoneContactViewModel(model: model)
@@ -147,7 +127,6 @@ class ContactSearchController: BaseViewController, ContactSearchView {
                 })
                 if self.contactViewModels.count == 0 &&
                     self.blacklistViewModels.count == 0 &&
-                    self.subscriptionsViewModels.count == 0 &&
                     self.phoneContactViewModels.count == 0 &&
                     self.userViewModels.count == 0 && name.checkPhone() {
                     let model = PhoneContact(name: name,
@@ -168,50 +147,12 @@ class ContactSearchController: BaseViewController, ContactSearchView {
             
                 if self.contactViewModels.count > 0 { self.titles.append("联系人") }
                 if self.blacklistViewModels.count > 0 { self.titles.append("黑名单") }
-                if self.subscriptionsViewModels.count > 0 { self.titles.append("订阅") }
                 if self.phoneContactViewModels.count > 0 { self.titles.append("通讯录") }
                 if self.userViewModels.count > 0 { self.titles.append("用户") }
                 self.tableView.reloadData()
             case let .failure(error):
                 logger.error(error)
             }
-        }
-    }
-
-    private func delBlock(userId: UInt64) {
-        web.request(.delBlock(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.blockViewModels.index(where: { $0.userId == userId }),
-                    let section = self.titles.index(where: { $0 == "屏蔽"}) else { return }
-                self.blockViewModels[index].buttonTitle = "屏蔽"
-                self.blockViewModels[index].buttonStyle = .backgroundColorGray
-                self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.addBlock(userId: UInt64(userId)!)
-                }
-                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
-        }
-    }
-    
-    private func addBlock(userId: UInt64) {
-        web.request(.addBlock(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.blockViewModels.index(where: { $0.userId == userId }),
-                    let section = self.titles.index(where: { $0 == "屏蔽"}) else { return }
-                self.blockViewModels[index].buttonTitle = "恢复"
-                self.blockViewModels[index].buttonStyle = .borderGray
-                self.blockViewModels[index].callBack = { [weak self] userId in
-                    self?.delBlock(userId: UInt64(userId)!)
-                }
-                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
-            
         }
     }
     
@@ -267,41 +208,6 @@ class ContactSearchController: BaseViewController, ContactSearchView {
         }
     }
     
-    private func addSubscription(userId: UInt64) {
-        web.request(.addUserSubscription(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.subscriptionsViewModels.index(where: { $0.userId == userId }),
-                      let section = self.titles.index(where: { $0 == "订阅"}) else { return }
-                self.subscriptionsViewModels[index].buttonTitle = "已订阅"
-                self.subscriptionsViewModels[index].buttonStyle = .borderBlue
-                self.subscriptionsViewModels[index].callBack = { [weak self] userId in
-                    self?.delSubscription(userId: UInt64(userId)!)
-                }
-                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
-        }
-    }
-    
-    private func delSubscription(userId: UInt64) {
-        web.request(.delUserSubscription(userId: userId)) { (result) in
-            switch result {
-            case .success:
-                guard let index = self.subscriptionsViewModels.index(where: { $0.userId == userId }),
-                    let section = self.titles.index(where: { $0 == "订阅"}) else { return }
-                self.subscriptionsViewModels[index].buttonTitle = "订阅"
-                self.subscriptionsViewModels[index].buttonStyle = .backgroundColorBlue
-                self.subscriptionsViewModels[index].callBack = { [weak self] userId in
-                    self?.addSubscription(userId: UInt64(userId)!)
-                }
-                self.tableView.reloadRows(at: [IndexPath(row: index, section: section)], with: .automatic)
-            case let .failure(error):
-                logger.error(error)
-            }
-        }
-    }
 }
 
 extension ContactSearchController: UITableViewDataSource {
@@ -315,8 +221,6 @@ extension ContactSearchController: UITableViewDataSource {
             return contactViewModels.count
         case "黑名单":
             return blacklistViewModels.count
-        case "订阅":
-            return subscriptionsViewModels.count
         case "通讯录":
             return phoneContactViewModels.count
         case "用户":
@@ -334,8 +238,6 @@ extension ContactSearchController: UITableViewDataSource {
             cell.update(viewModel: contactViewModels[indexPath.row])
         case "黑名单":
             cell.update(viewModel: blacklistViewModels[indexPath.row])
-        case "订阅":
-            cell.update(viewModel: subscriptionsViewModels[indexPath.row])
         case "通讯录":
             cell.updatePhoneContact(viewModel: phoneContactViewModels[indexPath.row])
         case "用户":
@@ -365,8 +267,6 @@ extension ContactSearchController: UITableViewDelegate {
             showProfile?(contactViewModels[indexPath.row].userId)
         case "黑名单":
             showProfile?(blacklistViewModels[indexPath.row].userId)
-        case "订阅":
-            showProfile?(subscriptionsViewModels[indexPath.row].userId)
         case "通讯录":
             if let userId = phoneContactViewModels[indexPath.row].userId {
                 showProfile?(userId)

@@ -237,30 +237,10 @@ extension ProfileController {
     
     @objc private func menuAction(sender: UIButton) {
         guard let userId = userResponse?.userId,
-            let blacklist = userResponse?.blacklist,
-            let block = userResponse?.block,
-            let subscription = userResponse?.subscription else { return }
+            let blacklist = userResponse?.blacklist else { return }
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let sendMessageAction = UIAlertAction.makeAlertAction(title: "发送消息", style: .default) { [weak self] (_) in
             self?.sendMessage()
-        }
-        let subscriptionAction = UIAlertAction.makeAlertAction(
-        title: subscription ? "取消订阅" : "订阅",
-        style: .default) { [weak self] (_) in
-            if subscription {
-                self?.delUserSubscription(userId: userId)
-            } else {
-                self?.addUserSubscription(userId: userId)
-            }
-        }
-        let shieldAction = UIAlertAction.makeAlertAction(
-            title: block ? "取消屏蔽" : "屏蔽",
-            style: .default) { [weak self] (_) in
-            if block {
-                self?.delUserBlock(userId: userId)
-            } else {
-                self?.addUserBlock(userId: userId)
-            }
         }
         let addBlacklistAction = UIAlertAction.makeAlertAction(
             title: blacklist ? "移出黑名单" : "加入黑名单",
@@ -273,8 +253,6 @@ extension ProfileController {
         }
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
         alertController.addAction(sendMessageAction)
-        alertController.addAction(subscriptionAction)
-        alertController.addAction(shieldAction)
         alertController.addAction(addBlacklistAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)

@@ -10,66 +10,18 @@ import Foundation
 import SwiftyUserDefaults
 import JDStatusBarNotification
 extension CardsBaseController {
-    func makeAlertController(status: StatusResponse,
-                                     cardType: CardResponse.CardType,
-                                     cardId: String,
-                                     sectionId: UInt64) -> UIAlertController {
+    func makeAlertController(cardId: String) -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let subscriptionAction = UIAlertAction.makeAlertAction(
-            title: status.subscription ? "取消订阅" : "订阅该栏目",
-            style: .default) { (_) in
-                if status.subscription {
-                    web.request(.delSectionSubscription(sectionId: sectionId), completion: {
-                        switch $0 {
-                        case .success: JDStatusBarNotification.show(withStatus: "已取消订阅", dismissAfter: 2)
-                        case .failure: break
-                        }
-                    })
-                } else {
-                    web.request(.addSectionSubscription(sectionId: sectionId), completion: {
-                        switch $0 {
-                        case .success: JDStatusBarNotification.show(withStatus: "订阅成功", dismissAfter: 2)
-                        case .failure: break
-                        }
-                    })
+        let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
+            web.request(.cardReport(cardId: cardId), completion: {
+                switch $0 {
+                case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
+                case .failure: break
                 }
+            })
         }
-       
+        alertController.addAction(reportAction)
         let cancelAction = UIAlertAction.makeAlertAction(title: "取消", style: .cancel, handler: nil)
-        alertController.addAction(subscriptionAction)
-        if cardType != .evaluation {
-            let blockAction = UIAlertAction.makeAlertAction(
-                title: status.block ? "取消屏蔽" : "屏蔽该栏目",
-                style: .default) { (_) in
-                    if status.block {
-                        web.request(.delSectionBlock(sectionId: sectionId), completion: {
-                            switch $0 {
-                            case .success: JDStatusBarNotification.show(withStatus: "恢复推送该栏目的内容", dismissAfter: 2)
-                            case .failure: break
-                            }
-                        })
-                    } else {
-                        web.request(.addSectionBlock(sectionId: sectionId), completion: {
-                            switch $0 {
-                            case .success: JDStatusBarNotification.show(withStatus: "不再推送该栏目的内容", dismissAfter: 2)
-                            case .failure: break
-                            }
-                        })
-                    }
-            }
-            alertController.addAction(blockAction)
-        }
-        if cardType == .content || cardType == .groupChat {
-            let reportAction = UIAlertAction.makeAlertAction(title: "内容投诉", style: .default) { (_) in
-                web.request(.cardReport(cardId: cardId), completion: {
-                    switch $0 {
-                    case .success: JDStatusBarNotification.show(withStatus: "已经收到反馈", dismissAfter: 2)
-                    case .failure: break
-                    }
-                })
-            }
-            alertController.addAction(reportAction)
-        }
         alertController.addAction(cancelAction)
         return alertController
     }

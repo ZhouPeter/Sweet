@@ -44,6 +44,7 @@ class BaseContentCardCollectionViewCell: BaseCardCollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        menuButton.isHidden = false
     }
     
     override func prepareForReuse() {

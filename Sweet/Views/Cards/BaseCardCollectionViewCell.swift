@@ -39,6 +39,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     
     lazy var menuButton: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.setImage(#imageLiteral(resourceName: "More_Gray"), for: .normal)
         button.addTarget(self, action: #selector(menuAction(_:)), for: .touchUpInside)
         return button
@@ -90,7 +91,6 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        menuButton.isHidden = false
         titleLabel.textColor = .black
     }
     

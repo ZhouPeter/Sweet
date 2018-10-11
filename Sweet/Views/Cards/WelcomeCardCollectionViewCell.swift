@@ -52,7 +52,6 @@ class WelcomeCardCollectionViewCell: BaseCardCollectionViewCell, CellReusable, C
     
     
     private func setupUI() {
-        menuButton.isHidden = true
         let scale = UIScreen.mainWidth() / 375
         customContent.addSubview(centerImageView)
         centerImageView.align(.left, inset: 28 * scale)
