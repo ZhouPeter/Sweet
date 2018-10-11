@@ -121,7 +121,7 @@ extension GroupConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         let message = Messenger.shared.sendText(text, from: user.userId, to: group.id, isGroup: true)
         messages.append(message)
-        messagesCollectionView.insertSections([messages.count - 1])
+        messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
         inputBar.inputTextView.text = ""
         messagesCollectionView.scrollToBottom(animated: true)
     }
@@ -150,7 +150,7 @@ extension GroupConversationController: MessengerDelegate {
             messagesCollectionView.reloadSections([section])
         } else {
             messages.append(message)
-            messagesCollectionView.insertSections([messages.count - 1])
+            messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
             messagesCollectionView.scrollToBottom(animated: true)
         }
     }
@@ -158,7 +158,7 @@ extension GroupConversationController: MessengerDelegate {
     func messengerDidReceiveMessage(_ message: InstantMessage) {
         guard message.to == group.id else { return }
         self.messages.append(message)
-        messagesCollectionView.insertSections([self.messages.count - 1])
+        messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
     }
     

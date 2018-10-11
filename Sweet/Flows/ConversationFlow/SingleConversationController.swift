@@ -96,7 +96,7 @@ extension SingleConversationController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         let message = Messenger.shared.sendText(text, from: user.userId, to: buddy.userId)
         messages.append(message)
-        messagesCollectionView.insertSections([messages.count - 1])
+        messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
         inputBar.inputTextView.text = ""
         messagesCollectionView.scrollToBottom(animated: true)
     }
@@ -117,7 +117,7 @@ extension SingleConversationController: MessengerDelegate {
             messagesCollectionView.reloadSections([section])
         } else {
             messages.append(message)
-            messagesCollectionView.insertSections([messages.count - 1])
+            messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
             messagesCollectionView.scrollToBottom(animated: true)
         }
     }
@@ -125,7 +125,7 @@ extension SingleConversationController: MessengerDelegate {
     func messengerDidReceiveMessage(_ message: InstantMessage) {
         guard message.from == buddy.userId, message.to == user.userId else { return }
         self.messages.append(message)
-        messagesCollectionView.insertSections([self.messages.count - 1])
+        messagesCollectionView.insertSections([messages.isEmpty ? 0 : messages.count - 1])
         messagesCollectionView.scrollToBottom(animated: true)
     }
 
