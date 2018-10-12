@@ -12,9 +12,10 @@ struct BaseInfoCellViewModel {
     let userId: UInt64
     let avatarImageURL: URL
     let nicknameString: String
+    let constellationString: String
     let collegeInfoString: String
     let starString: String
-    let contactString: String
+    let relevantString: String
     let signatureString: String
     let cellHeight: CGFloat
     let sexImage: UIImage
@@ -24,16 +25,17 @@ struct BaseInfoCellViewModel {
         userId = user.userId
         avatarImageURL = URL(string: user.avatar)!
         nicknameString = user.nickname
+        constellationString = user.zodiac ??  ""
         sexImage = user.gender == .male ? #imageLiteral(resourceName: "Man") : #imageLiteral(resourceName: "Woman")
         let userID = UInt64(Defaults[.userID] ?? "0")
         starString = "\(user.likeCount)"
-        contactString = (user.common == 0 ? "" : " · \(user.common)共同联系人")
+        relevantString =  "共同联系人\(user.common)人"
         collegeInfoString = user.universityName +
                             (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))
         signatureString = user.signature == "" ? "暂时没有签名" : "\(user.signature)"
         isLoginUser = userID == user.userId
-        rankString = user.rank == 0 ? "" : "本校排行\(user.rank)"
-        cellHeight = 200
+        rankString = user.rank == 0 ? "" : "学校排行\(user.rank)"
+        cellHeight = 200 + (isLoginUser ? 0 : 40)
     }
 }
