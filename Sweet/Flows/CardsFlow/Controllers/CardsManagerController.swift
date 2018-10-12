@@ -18,8 +18,11 @@ protocol CardsManagerViewDelegate: class {
 }
 var waitingIMNotifications = [InstantMessage]()
 
-class CardsManagerController: BaseViewController, CardsManagerView {
-
+class CardsManagerController: BaseViewController, CardsManagerView, NavBarStyleChangeable {
+    var barStyle: UIBarStyle {
+        return .black
+    }
+    
     weak var delegate: CardsManagerViewDelegate?
     var user: User
     private var allView: CardsAllController

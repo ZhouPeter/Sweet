@@ -91,7 +91,7 @@ extension StoryPlayerCoordinator {
     }
     
     private func runStoryFlow(topic: String, finishBlock: (() -> Void)?){
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = coordinatorFactory
             .makeDismissableStoryCoordinator(user: user, topic: topic, navigation: navigation)
         coordinator.finishFlow = { [weak self, weak coordinator] in
@@ -104,7 +104,7 @@ extension StoryPlayerCoordinator {
     }
     
     private func runProfileFlow(buddyID: UInt64, finishBlock: (() -> Void)?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = coordinatorFactory.makeProfileCoordinator(
             user: user,
             buddyID: buddyID,

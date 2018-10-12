@@ -80,7 +80,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
     
     private func showStory() {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = coordinatorFactory
             .makeDismissableStoryCoordinator(user: user, topic: nil, navigation: navigation)
         coordinator.finishFlow = { [weak self, weak coordinator] in
@@ -92,7 +92,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
     }
    
     private func showProfile(buddyID: UInt64, setTop: SetTop?, finishBlock: (() -> Void)?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = coordinatorFactory.makeProfileCoordinator(
             user: user,
             buddyID: buddyID,
@@ -111,7 +111,7 @@ class ProfileCoordinator: BaseCoordinator, ProfileCoordinatorOutput {
                                        stories: [StoryCellViewModel],
                                        current: Int,
                                        delegate: StoriesPlayerGroupViewControllerDelegate?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         var storiesGroup = [[StoryCellViewModel]]()
         var newCurrent = 0
         var newCurrentStart = 0
