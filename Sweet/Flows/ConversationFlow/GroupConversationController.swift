@@ -82,20 +82,24 @@ final class GroupConversationController: ConversationViewController, GroupConver
                 return
             }
             self?.members[userID] = user
-            self?.loadVisbleCells(user: user)
+            self?.reloadVisbleCells(for: user)
             callback(user)
         }
     }
     
-    private func loadVisbleCells(user: User) {
+    private func reloadVisbleCells(for user: User) {
+        var sections = [Int]()
         for cell in messagesCollectionView.visibleCells {
             if let indexPath = messagesCollectionView.indexPath(for: cell) {
                 if let id = UInt64(messages[indexPath.section].sender.id), id == user.userId {
-                    messagesCollectionView.reloadItems(at: [indexPath])
+                    sections.append(indexPath.section)
                 }
             }
         }
+        guard sections.isNotEmpty else { return }
+        messagesCollectionView.reloadSections(IndexSet(sections))
     }
+    
     override func messageTopLabelHeight(for message: MessageType,
                                at indexPath: IndexPath,
                                in messagesCollectionView: MessagesCollectionView) -> CGFloat {
