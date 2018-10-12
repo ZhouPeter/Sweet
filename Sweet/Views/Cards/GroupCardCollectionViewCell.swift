@@ -16,7 +16,7 @@ class GroupCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Ce
     func updateWith(_ viewModel: GroupCardViewModel) {
         titleLabel.textColor = .white
         self.viewModel = viewModel
-        backgroudImageView.sd_setImage(with: viewModel.backgroudImageURL)
+        backgroundImageView.sd_setImage(with: viewModel.backgroudImageURL)
         titleLabel.text = viewModel.titleString
         groupTitleLabel.text = viewModel.groupTitle
         avatarImageViews.forEach { $0.isHidden = true }
@@ -26,9 +26,11 @@ class GroupCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Ce
         }
         joinGroupButton.setTitle(viewModel.buttonTitleString, for: .normal)
     }
-    private lazy var backgroudImageView: UIImageView = {
+    private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
         return imageView
     }()
     private lazy var backgroundMaskImageView: UIView = {
@@ -100,22 +102,27 @@ class GroupCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Ce
     }
     
     private func setupUI() {
-        customContent.addSubview(backgroudImageView)
-        backgroudImageView.fill(in: customContent)
-        customContent.addSubview(backgroundMaskImageView)
-        backgroundMaskImageView.fill(in: customContent)
+        let scale = UIScreen.mainWidth() / 375
+        customContent.insertSubview(backgroundImageView, belowSubview: titleLabel)
+        backgroundImageView.fill(in: customContent)
+        backgroundImageView.addSubview(backgroundMaskImageView)
+        backgroundMaskImageView.fill(in: backgroundImageView)
+        customContent.addSubview(helpButton)
+        helpButton.centerY(to: titleLabel)
+        helpButton.align(.right, to: customContent, inset: 10)
+        helpButton.constrain(width: 40, height: 40)
         customContent.addSubview(groupTitleLabel)
-        groupTitleLabel.align(.top, inset: 120)
+        groupTitleLabel.align(.top, inset: 120 * scale)
         groupTitleLabel.centerX(to: customContent)
         customContent.addSubview(subTitleLabel)
-        subTitleLabel.pin(.bottom, to: groupTitleLabel, spacing: 35)
+        subTitleLabel.pin(.bottom, to: groupTitleLabel, spacing: 35 * scale)
         subTitleLabel.centerX(to: customContent)
         setAvatarImageViews()
         
         customContent.addSubview(joinGroupButton)
         joinGroupButton.align(.left, inset: 40)
         joinGroupButton.align(.right, inset: 40)
-        joinGroupButton.align(.bottom, inset: 60)
+        joinGroupButton.align(.bottom, inset: 60 * scale)
         joinGroupButton.constrain(height: 85)
     }
     
