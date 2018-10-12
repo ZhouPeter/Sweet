@@ -10,7 +10,6 @@ import UIKit
 
 class BaseViewController: UIViewController {
     var automaticallyDisablePageScroll = true
-    private var oldBarStyle: UIBarStyle?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +26,6 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        oldBarStyle = navigationController?.navigationBar.barStyle
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,12 +38,7 @@ class BaseViewController: UIViewController {
         autoDisablePageScroll()
     }
     
-    override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
-        if let barStyle = oldBarStyle, parent == nil {
-            navigationController?.navigationBar.barStyle = barStyle
-        }
-    }
+
     
     private func autoDisablePageScroll() {
         guard automaticallyDisablePageScroll, let count = navigationController?.viewControllers.count else { return }

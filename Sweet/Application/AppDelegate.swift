@@ -26,7 +26,7 @@ private let weiboKey = "3363635970"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var rootController = UINavigationController(rootViewController: RootViewController())
+    var rootController = FunNavigationViewController(rootViewController: RootViewController())
     private lazy var applicationCoordinator: Coordinator = self.makeCoordinator()
 
     // MARK: - UIApplicationDelegate

@@ -128,7 +128,7 @@ final class StoryCoordinator: BaseCoordinator, StoryCoodinatorOutput {
     }
     
     private func addStoryPlayerCoordinator(_ storiesGroup: [[StoryCellViewModel]]) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         navigation.hero.isEnabled = true
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
             user: user,

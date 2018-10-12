@@ -32,8 +32,10 @@ protocol ProfileViewDelegate: class {
     func showLikeRankList(title: String)
 }
 
-class ProfileController: BaseViewController, ProfileView {
-    
+class ProfileController: BaseViewController, ProfileView, NavBarStyleChangeable {
+    var barStyle: UIBarStyle {
+        return .default
+    }
     weak var delegate: ProfileViewDelegate?
     private var userScrollFlag = false
     var showStory: (() -> Void)?

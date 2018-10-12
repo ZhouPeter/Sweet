@@ -63,7 +63,7 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
                           currentIndex: Int, fromCardId: String?,
                           delegate: StoriesPlayerGroupViewControllerDelegate?,
                           completion: (() -> Void)?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         navigation.hero.isEnabled = true
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(user: user,
                                                                         navigation: navigation,

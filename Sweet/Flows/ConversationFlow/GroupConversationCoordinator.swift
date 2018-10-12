@@ -45,7 +45,7 @@ final class GroupConversationCoordinator: BaseCoordinator, ConversationCoordinat
 
 extension GroupConversationCoordinator: ConversationControllerDelegate {
     func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         let coordinator = self.coordinatorFactory
             .makeProfileCoordinator(user: user, buddyID: buddyID, setTop: setTop, navigation: navigation)
         coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
@@ -69,7 +69,7 @@ extension GroupConversationCoordinator: ConversationControllerDelegate {
     }
     
     func conversationControllerShowsStory(_ viewModel: StoryCellViewModel, user: User, messageId: String) {
-        let navigation = UINavigationController()
+        let navigation = FunNavigationViewController()
         navigation.hero.isEnabled = true
         let coordinator = coordinatorFactory.makeStoryPlayerCoordinator(
             user: user,
