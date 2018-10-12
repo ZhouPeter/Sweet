@@ -92,6 +92,7 @@ class CardsPageCollectionView: UIView {
         collectionView.register(cellType: UsersCardCollectionViewCell.self)
         collectionView.register(cellType: NotiCardCollectionViewCell.self)
         collectionView.register(cellType: GameCardCollectionViewCell.self)
+        collectionView.register(cellType: GroupCardCollectionViewCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.addGestureRecognizer(pagingScrollView.panGestureRecognizer)
@@ -122,7 +123,6 @@ extension CardsPageCollectionView: UICollectionViewDelegate {
         delegate!.cardsPageCollectionView(collectionView, didSelectItemAt: indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        logger.debug("消失\(indexPath.row)")
         delegate!.cardsPageCollectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 }

@@ -54,6 +54,14 @@ extension GroupConversationCoordinator: ConversationControllerDelegate {
         coordinator.start(with: .present)
     }
     
+    func conversationControllerShowsProfile(buddyID: UInt64) {
+        let coordinator = self.coordinatorFactory
+            .makeProfileCoordinator(user: user, buddyID: buddyID, router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in self?.removeDependency(coordinator) }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
     func conversationControllerShowsProfile(buddy: User) {
         let coordinator = self.coordinatorFactory
             .makeProfileCoordinator(user: user, buddyID: buddy.userId, router: router)

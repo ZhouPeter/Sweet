@@ -9,3 +9,4 @@ import UIKit
 public protocol NavBarStyleChangeable: class {
     var barStyle: UIBarStyle { get }
 }
+
