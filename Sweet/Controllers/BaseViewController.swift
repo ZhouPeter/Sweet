@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
         super.viewDidAppear(animated)
         autoDisablePageScroll()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         autoDisablePageScroll()

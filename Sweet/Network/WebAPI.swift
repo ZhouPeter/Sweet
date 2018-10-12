@@ -79,7 +79,7 @@ enum WebAPI {
     case updateSetting(autoPlay: Bool, showMsg: Bool)
     case interfaceCallLog(type: Int)
     case quitGroup(groupID: UInt64)
-    case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
+    case joinGroup(cardId: String?, contentId: String?, groupId: UInt64, comment: String?)
     case muteGroup(groupID: UInt64, isMuted: Bool)
     case likeRankList(start: Int?, end: Int?)
     case startup
@@ -404,7 +404,16 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
              .groupUserRanking(let groupID):
             parameters = ["groupId": groupID]
         case let .joinGroup(cardId, contentId, groupId, comment):
-            parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
+            if let cardId = cardId {
+                parameters["cardId"] = cardId
+            }
+            if let contentId = contentId {
+                parameters["contentId"] = contentId
+            }
+            if let comment = comment {
+                parameters["comment"] = comment
+            }
+            parameters = ["groupId": groupId]
         case .muteGroup(let groupID, let isMuted):
             parameters = ["groupId": groupID, "mute": isMuted]
         case let .likeRankList(start, end):
