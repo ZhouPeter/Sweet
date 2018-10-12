@@ -13,7 +13,7 @@ final class Storage {
     
     var realm: Realm {
         let realmURL = URL.userDirectory(with: userID).appendingPathComponent("data.realm")
-        let schemaVersion: UInt64 = 4
+        let schemaVersion: UInt64 = 6
         let config = Realm.Configuration(
             fileURL: realmURL,
             schemaVersion: schemaVersion,

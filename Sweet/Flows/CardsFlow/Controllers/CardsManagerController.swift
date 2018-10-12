@@ -68,7 +68,6 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         setupControllers()
         automaticallyAdjustsScrollViewInsets = false
         Messenger.shared.addDelegate(self)
-        show()
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +75,8 @@ class CardsManagerController: BaseViewController, CardsManagerView {
         NotificationCenter.default.post(name: .WhiteStatusBar, object: nil)
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.setBackgroundGradientImage(colors: [UIColor(hex:0x66E5FF), UIColor(hex: 0x36C6FD)])
+        show()
+
     }
     
     // MARK: - Private
