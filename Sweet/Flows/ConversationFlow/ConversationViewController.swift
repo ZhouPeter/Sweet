@@ -74,6 +74,8 @@ class ConversationViewController: MessagesViewController {
         delegate?.conversationDidFinish()
     }
     
+    private var contentAttributedTextCaches = [String: NSAttributedString]()
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let message = messages[indexPath.section]
@@ -106,6 +108,14 @@ class ConversationViewController: MessagesViewController {
         if value is ContentCardContent {
             let cell = messagesCollectionView.dequeueReusableCell(ContentCardMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            let key = message.localID
+            if let text = contentAttributedTextCaches[key] {
+                cell.configure(attributedText: text)
+            } else {
+                cell.configureAttributedText { [weak self] (text) in
+                    self?.contentAttributedTextCaches[key] = text
+                }
+            }
             return cell
         }
         if value is ImageMessageContent {
@@ -394,14 +404,8 @@ extension ConversationViewController: MessagesDisplayDelegate {
                     completed: nil
                 )
             } else {
-                loadMember(id) { [weak avatarView] (user) in
-                    guard let user = user else { return }
-                    avatarView?.sd_setImage(
-                        with: URL(string: user.avatar),
-                        placeholderImage: #imageLiteral(resourceName: "Logo"),
-                        options: SDWebImageOptions(rawValue: 0),
-                        completed: nil
-                    )
+                loadMember(id) { [weak messagesCollectionView] (user) in
+                    messagesCollectionView?.reloadItems(at: [indexPath])
                 }
             }
         }

@@ -25,21 +25,33 @@ final class ContentCardMessageCell: MediaMessageCell {
         return imageView
     } ()
     
+    private var message: MessageType?
+    
     override func configure(
         with message: MessageType,
         at indexPath: IndexPath,
         and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard case let .custom(value) = message.kind, let content = value as? ContentCardContent else { return }
-        content.text.converHTMLToAttributedString(font: label.font, textColor: .black) { [weak self] (text, attributedString) in
-            guard let self = self, content.text == text else { return }
-            self.label.attributedText = attributedString
-        }
+        self.message = message
         let url = URL(string: content.imageURLString)?.imageView2(size: imageView.bounds.size)
         showLoading(true)
         imageView.sd_setImage(with: url) { [weak self] (_, _, _, _) in
             self?.showLoading(false)
         }
+    }
+    
+    func configureAttributedText(callback: @escaping (NSAttributedString?) -> Void) {
+        guard let message = message else { return }
+        guard case let .custom(value) = message.kind, let content = value as? ContentCardContent else { return }
+        content.text.converHTMLToAttributedString(font: label.font, textColor: .black) { [weak self] (text, attributedString) in
+            self?.label.attributedText = attributedString
+            callback(attributedString)
+        }
+    }
+    
+    func configure(attributedText: NSAttributedString) {
+        label.attributedText = attributedText
     }
     
     override func setup() {

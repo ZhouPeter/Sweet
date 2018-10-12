@@ -17,6 +17,7 @@ protocol GroupConversationView: BaseView {
 final class GroupConversationController: ConversationViewController, GroupConversationView {
     private var group: Group
     private var conversation: IMConversation?
+    private var userAttributedNames = [UInt64: NSAttributedString]()
     
     init(user: User, group: Group, conversation: IMConversation? = nil) {
         self.group = group
@@ -82,22 +83,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
                 return
             }
             self?.members[userID] = user
-            self?.reloadVisbleCells(for: user)
             callback(user)
         }
-    }
-    
-    private func reloadVisbleCells(for user: User) {
-        var sections = [Int]()
-        for cell in messagesCollectionView.visibleCells {
-            if let indexPath = messagesCollectionView.indexPath(for: cell) {
-                if let id = UInt64(messages[indexPath.section].sender.id), id == user.userId {
-                    sections.append(indexPath.section)
-                }
-            }
-        }
-        guard sections.isNotEmpty else { return }
-        messagesCollectionView.reloadSections(IndexSet(sections))
     }
     
     override func messageTopLabelHeight(for message: MessageType,
@@ -108,16 +95,30 @@ final class GroupConversationController: ConversationViewController, GroupConver
     
     override func messageTopLabelAttributedText(for message: MessageType,
                                        at indexPath: IndexPath) -> NSAttributedString? {
-        if let id = UInt64(messages[indexPath.section].sender.id), let user = members[id] {
-            let topText = self.user.userId == user.userId ? "我" : user.nickname + "·" + user.collegeName!
-            let attributedString = NSAttributedString(
-                string: topText,
-                attributes: [.font : UIFont.systemFont(ofSize: 12),
-                             .foregroundColor: UIColor(hex: 0x4a4a4a)])
-            return attributedString
-        } else {
-            return nil
+        guard let id = UInt64(messages[indexPath.section].sender.id) else { return nil }
+        if let text = userAttributedNames[id] {
+            return text
         }
+        
+        if let member = members[id] {
+            let string: String
+            if user.userId == member.userId {
+                string = "我"
+            } else {
+                if let college = member.collegeName, college.isEmpty == false {
+                    string = "\(member.nickname) · \(college)"
+                } else {
+                    string = member.nickname
+                }
+            }
+            let text = NSAttributedString(string: string,
+                                          attributes: [.font : UIFont.systemFont(ofSize: 12),
+                                                       .foregroundColor: UIColor(hex: 0x4a4a4a)])
+            userAttributedNames[id] = text
+            return text
+        }
+        
+        return nil
     }
 }
 
