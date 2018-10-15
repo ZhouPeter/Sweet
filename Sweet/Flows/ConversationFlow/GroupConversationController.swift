@@ -66,8 +66,6 @@ final class GroupConversationController: ConversationViewController, GroupConver
                     self.setMessagesCollectionViewHeader()
                     self.topUsersView?.update(userRankingList: response.list)
                 case .failure(let error):
-//                    self.setMessagesCollectionViewHeader()
-//                    self.topUsersView?.update(userRankingList: [UserRankingResponse(avatar: self.user.avatar, userId: self.user.userId)])
                     logger.debug(error)
                 }
         }
@@ -154,8 +152,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
 }
 extension GroupConversationController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffetY = scrollView.contentOffset.y
-        topUsersView?.frame.origin.y = -contentOffetY - messagesCollectionView.contentInset.top
+//        let contentOffetY = scrollView.contentOffset.y
+//        topUsersView?.frame.origin.y = -contentOffetY - messagesCollectionView.contentInset.top
     }
 }
 

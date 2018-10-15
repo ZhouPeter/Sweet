@@ -310,7 +310,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             } else {
                 parameters = [:]
             }
-            parameters["cardVersion"] = 3
+            parameters["cardVersion"] = 4
         case let .evaluateCard(cardId, index),
              let .choiceCard(cardId, index):
             parameters = ["cardId": cardId, "index": index]
@@ -447,7 +447,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         #if DEV
         return URL(string: "https://sweet-api-t.miaobo.me/v2")!
         #else
-        return URL(string: "https://sweet-api.miaobo.me/v2")!
+//        return URL(string: "https://sweet-api.miaobo.me/v2")!
+        return URL(string: "https://sweet-api-pre.tome.fun/v2")!
         #endif
     }
     
