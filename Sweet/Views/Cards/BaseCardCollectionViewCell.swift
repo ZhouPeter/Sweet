@@ -91,7 +91,7 @@ class BaseCardCollectionViewCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        titleLabel.textColor = .black
+        titleLabel.textColor = UIColor.black.withAlphaComponent(0.5)
     }
     
     private func setupBaseUI() {
