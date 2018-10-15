@@ -66,21 +66,21 @@ class AboutBottomView: UIView {
         label.textColor = UIColor.xpTextGray()
         label.text = "《讲真用户协议》"
         label.tag = 1
+        label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
         label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
         return label
     } ()
     
-    private var complainLabel: UILabel = {
+    private lazy var complainLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor.xpTextGray()
         label.text = "《侵权投诉指引》"
         label.tag = 2
+        label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showWebView(_:)))
         label.addGestureRecognizer(tap)
-        label.isUserInteractionEnabled = true
         return label
     } ()
     

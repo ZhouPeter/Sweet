@@ -10,14 +10,15 @@ import UIKit
 
 class BaseViewController: UIViewController {
     var automaticallyDisablePageScroll = true
-
+    var isHiddenBackItemTitle = true
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let backBarButtonItem = UIBarButtonItem()
-        backBarButtonItem.title = ""
-        navigationItem.backBarButtonItem = backBarButtonItem
-
+        if isHiddenBackItemTitle {
+            let backBarButtonItem = UIBarButtonItem()
+            backBarButtonItem.title = ""
+            navigationItem.backBarButtonItem = backBarButtonItem
+        }
     }
     
     override var shouldAutorotate: Bool {

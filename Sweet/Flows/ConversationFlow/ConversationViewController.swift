@@ -44,6 +44,7 @@ class ConversationViewController: MessagesViewController {
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
         setupCollectionView()
         setupInputBar()
+        setupBackItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -295,6 +296,12 @@ class ConversationViewController: MessagesViewController {
         bottomLine.align(.right, to: messageInputBar, inset: 70)
         bottomLine.align(.bottom, to: messageInputBar, inset: 5)
         bottomLine.constrain(height: 1)
+    }
+    
+    private func setupBackItem() {
+        let backBarButtonItem = UIBarButtonItem()
+        backBarButtonItem.title = ""
+        navigationItem.backBarButtonItem = backBarButtonItem
     }
 
     private func makeBubbleMask(isIncomming: Bool) -> UIImageView {

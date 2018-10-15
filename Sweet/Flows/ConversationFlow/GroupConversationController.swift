@@ -63,8 +63,10 @@ final class GroupConversationController: ConversationViewController, GroupConver
             responseType: Response<UserRankingListResponse>.self) { (result) in
                 switch result {
                 case .success(let response):
-                    self.setMessagesCollectionViewHeader()
-                    self.topUsersView?.update(userRankingList: response.list)
+                    if response.list.count > 0 {
+                        self.setMessagesCollectionViewHeader()
+                        self.topUsersView?.update(userRankingList: response.list)
+                    }
                 case .failure(let error):
                     logger.debug(error)
                 }
