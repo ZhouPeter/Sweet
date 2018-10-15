@@ -229,6 +229,7 @@ struct UserContent: Codable {
     let fromCardId: String?
     let info: String
     let nickname: String
+    let gender: Gender?
     let activityId: String?
     let preferenceId: UInt64?
     let preferenceImage: String?

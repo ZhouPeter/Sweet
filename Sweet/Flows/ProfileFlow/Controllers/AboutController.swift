@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SafariServices
 class RoundedTopView: UIView {
     var cornerRadius: CGFloat
     var fillColor: UIColor
@@ -240,9 +240,8 @@ class AboutController: BaseViewController, AboutView {
             } else {
                 url = URL(string: "https://mx.miaobo.me/complain.html")!
             }
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
+            let safariController = SFSafariViewController(url: url)
+            self.present(safariController, animated: true, completion: nil)
         }
         view.addSubview(bottomView)
         bottomView.align(.left, to: view, inset: 18)

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SafariServices
 class AuthViewController: BaseViewController, AuthView {
     var showSignUp: ((LoginRequestBody) -> Void)?
     var showLogin: ((LoginRequestBody) -> Void)?
@@ -75,7 +75,9 @@ class AuthViewController: BaseViewController, AuthView {
     
     @objc private func showUserWebView(_ tap: UITapGestureRecognizer) {
         let url = URL(string: "https://mx.miaobo.me/privacy.html")!
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        let safariController = SFSafariViewController(url: url)
+        present(safariController, animated: true, completion: nil)
+//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     @objc private func loginAction(_ sender: UIButton) {
