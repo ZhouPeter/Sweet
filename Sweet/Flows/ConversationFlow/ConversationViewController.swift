@@ -159,7 +159,11 @@ class ConversationViewController: MessagesViewController {
             logger.debug("Executed")
             self.messagesCollectionView.reloadData()
             let contentHeight = self.messagesCollectionView.collectionViewLayout.collectionViewContentSize.height
-            let visibleHeight = self.messagesCollectionView.bounds.size.height - self.messagesCollectionView.contentInset.top - self.messageInputBar.bounds.height
+                                + self.messageInputBar.bounds.height + self.messagesCollectionView.contentInset.top
+            let visibleHeight = self.messagesCollectionView.bounds.size.height
+                                - self.messageInputBar.bounds.height - self.messagesCollectionView.contentInset.top
+            logger.debug(contentHeight)
+            logger.debug(visibleHeight)
             if contentHeight > visibleHeight {
                 self.messagesCollectionView.contentOffset = CGPoint(x: 0, y: contentHeight - visibleHeight)
             }
