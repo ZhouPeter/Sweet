@@ -306,6 +306,8 @@
 		584CDEE020D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE120D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
 		584CDEE220D1383000523406 /* StoryPlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584CDEDE20D1383000523406 /* StoryPlayCollectionViewCell.swift */; };
+		584F87BA2174ACAC0004E294 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
+		584F87BD2174ACAC0004E294 /* GroupConversationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC949B7E21523B5800FEB724 /* GroupConversationCoordinator.swift */; };
 		585B60E8213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
 		585B60E9213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
 		585B60EA213679C9000AB22B /* Guide+ShowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585B60E7213679C9000AB22B /* Guide+ShowPreference.swift */; };
@@ -4066,6 +4068,7 @@
 				AC4D091020B7B1AC007686EB /* TopicListView.swift in Sources */,
 				58AEFD14216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				58FBAD08214647AF00688F1E /* UserCardCollectionViewCell.swift in Sources */,
+				584F87BA2174ACAC0004E294 /* GroupConversationCoordinator.swift in Sources */,
 				58AEFD4D21704B5200E048AA /* GroupCardViewModel.swift in Sources */,
 				AC1778C120BF99C500D5330F /* IMView.swift in Sources */,
 				ACA323A42087625100BDC92E /* FlowFactoryImp.swift in Sources */,
@@ -4451,6 +4454,7 @@
 				ACA323AA208763AA00BDC92E /* BaseViewController.swift in Sources */,
 				AC8412202088B0E60086891C /* SignPlugin.swift in Sources */,
 				58D578EB20931CB100AE5D38 /* UpdateTableViewCell.swift in Sources */,
+				584F87BD2174ACAC0004E294 /* GroupConversationCoordinator.swift in Sources */,
 				5803571420AA82B900B2C94F /* PanGestureRecognizer.swift in Sources */,
 				58CF3F9220E103EC00D0A887 /* CardBaseController+Extension.swift in Sources */,
 				587D18EA20DB442400D53708 /* StoryPlayerCoordinator.swift in Sources */,

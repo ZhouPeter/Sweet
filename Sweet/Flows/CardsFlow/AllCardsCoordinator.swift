@@ -13,11 +13,13 @@ class AllCardsCoordinator: BaseCoordinator {
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
     private let user: User
+    private let storage: Storage
     private var allView: CardsAllView?
     init(user: User, router: Router, factory: CardsFlowFactory, coordinatorFactory: CoordinatorFactory) {
         self.user = user
         self.router = router
         self.factory = factory
+        self.storage = Storage(userID: user.userId)
         self.coordinatorFactory = coordinatorFactory
     }
     
@@ -27,13 +29,22 @@ class AllCardsCoordinator: BaseCoordinator {
     }
     
     private func startConversationWith(group: Group) {
-        let coordinator = GroupConversationCoordinator(user: user,
-                                                       group: group,
-                                                       router: router,
-                                                       coordinatorFactory: coordinatorFactory)
-        coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
-        addDependency(coordinator)
-        coordinator.start()
+        var conversation: IMConversation? = nil
+        storage.read({(realm) in
+            if let conversationData = ConversationData.object(in: realm, id: group.id, isGroup: true) {
+                conversation = conversationData.makeIMConversation()
+            }
+        }) {
+            let coordinator = GroupConversationCoordinator(user: self.user,
+                                                           group: group,
+                                                           conversation: conversation,
+                                                           router: self.router,
+                                                           coordinatorFactory: self.coordinatorFactory)
+            coordinator.finishFlow = { [weak self] in self?.removeDependency(coordinator) }
+            self.addDependency(coordinator)
+            coordinator.start()
+        }
+       
     }
 }
 
