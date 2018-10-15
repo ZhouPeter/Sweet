@@ -39,7 +39,6 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-//        label.constrain(height: 80)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }
@@ -75,7 +74,6 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-//        label.constrain(height: 160)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }
@@ -112,9 +110,47 @@ extension Guide {
         label.clipsToBounds = true
         view.addSubview(label)
         label.centerY(to: view)
-//        label.constrain(height: 120)
         label.align(.left, inset: 20)
         label.align(.right, inset: 20)
     }
+    
+    class func showGroupHelpMessage() {
+        let guide = Guide()
+        let view = guide.rootView
+        let mask = UIView()
+        mask.backgroundColor = .black
+        mask.alpha = 0.6
+        view.addSubview(mask)
+        mask.fill(in: view)
+        let label = InsetLabel()
+        label.contentInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        let string =
+"""
+群聊内会展示当日活跃TOP5的用户
+排名在当日24点重新计算
+"""
+        let size = string.boundingSize(font: UIFont.systemFont(ofSize: 18),
+                                       size: CGSize(width: UIScreen.mainWidth() - 40 - 40,
+                                                    height: CGFloat.greatestFiniteMagnitude))
+        if size.height < 2 * UIFont.systemFont(ofSize: 18).lineHeight {
+            label.attributedText = string.getAttributedString(lineSpacing: 0)
+        } else {
+            label.attributedText = string.getAttributedString(lineSpacing: 20)
+        }
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.backgroundColor = .white
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.layer.cornerRadius = 5
+        label.clipsToBounds = true
+        view.addSubview(label)
+        label.centerY(to: view)
+        label.align(.left, inset: 20)
+        label.align(.right, inset: 20)
+    }
+    
+    
+    
 }
 

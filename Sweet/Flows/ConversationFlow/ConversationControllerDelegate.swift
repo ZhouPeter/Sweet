@@ -10,6 +10,7 @@ import Foundation
 
 protocol ConversationControllerDelegate: class {
     func conversationControllerShowsProfile(buddy: User)
+    func conversationControllerShowsProfile(buddyID: UInt64)
     func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?)
     func conversationControllerShowsShareWebView(url: String, cardId: String)
     func conversationControllerReports(buddy: User)
@@ -21,6 +22,7 @@ protocol ConversationControllerDelegate: class {
 
 extension ConversationControllerDelegate {
     func conversationControllerShowsProfile(buddy: User) {}
+    func conversationControllerShowsProfile(buddyID: UInt64) {}
     func conversationControllerShowsProfile(buddyID: UInt64, setTop: SetTop?) {}
     func conversationControllerShowsShareWebView(url: String, cardId: String) {}
     func conversationControllerReports(buddy: User) {}

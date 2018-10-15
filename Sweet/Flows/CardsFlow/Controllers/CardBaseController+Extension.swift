@@ -137,6 +137,15 @@ extension CardsBaseController {
             let configurator = CellConfigurator<GameCardCollectionViewCell>(viewModel: viewModel)
             cellConfigurators.append(configurator)
             cards.append(card)
+        case .groupTopic:
+            var viewModel = GroupCardViewModel(model: card)
+            viewModel.showProfile = { [weak self] buddyID in
+                CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                self?.showProfile(buddyID: buddyID)
+            }
+            let configurator = CellConfigurator<GroupCardCollectionViewCell>(viewModel: viewModel)
+            cellConfigurators.append(configurator)
+            cards.append(card)
         default:
             break
         }

@@ -95,6 +95,8 @@ struct CardResponse: Codable {
     let groupId: UInt64?
     let topic: String?
     var join: Bool?
+    let backgroundImage: String?
+    let userAvatarList: [UserAvatar]?
     let memberNum: UInt?
     var cardEnumType: CardType {
         return CardType(rawValue: type) ?? .unknown
@@ -120,6 +122,7 @@ struct CardResponse: Codable {
         case groupChat
         case likeRank
         case likeSteal
+        case groupTopic
     }
     
     func makeShareText() -> String? {
@@ -213,6 +216,11 @@ struct CardResponse: Codable {
             return nil
         }
     }
+}
+
+struct UserAvatar: Codable {
+    let avatar: String
+    let userId: UInt64
 }
 
 struct UserContent: Codable {

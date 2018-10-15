@@ -306,6 +306,36 @@ extension CardsBaseController: SweetPlayerViewDelegate {
     }
 }
 
+extension CardsBaseController: GroupCardCollectionViewCellDelegate {
+    func joinGroup(groupId: UInt64) {
+        let isJoin = cards[index].join ?? false
+        web.request(WebAPI.joinGroup(cardId: nil, contentId: nil, groupId: groupId, comment: nil)) { (result) in
+            switch result {
+            case .failure(let error):
+                logger.error(error)
+            case .success:
+                if isJoin {
+                } else {
+                    self.toast(message: "加入群聊成功！")
+                    for (index, card) in self.cards.enumerated() where card.cardEnumType == .groupTopic && card.groupId! == groupId {
+                        self.cards[index].join = true
+                        var viewModel = GroupCardViewModel(model: self.cards[index])
+                        viewModel.showProfile = { [weak self] buddyID in
+                            CardAction.clickAvatar.actionLog(card: card, toUserId: String(buddyID))
+                            self?.showProfile(buddyID: buddyID)
+                        }
+                        let configurator = CellConfigurator<GroupCardCollectionViewCell>(viewModel: viewModel)
+                        self.cellConfigurators[index] = configurator
+                        self.mainView.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+                    }
+                }
+                Messenger.shared.loadConversations()
+                self.delegate?.showGroupConversation(groupId: groupId)
+            }
+        }
+    }
+}
+
 extension CardsBaseController: ShareWebViewControllerDelegate {
     func showProfile(userId: UInt64, webView: ShareWebViewController) {
         showProfile(buddyID: userId)

@@ -30,7 +30,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    private var topUsersView: TopUsersView?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
@@ -40,8 +40,39 @@ final class GroupConversationController: ConversationViewController, GroupConver
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didPressRightBarButton))
+        loadTopUsers()
     }
     
+    private func setMessagesCollectionViewHeader() {
+        topUsersView = TopUsersView(frame: CGRect(x: 0, y: UIScreen.navBarHeight(), width: UIScreen.mainWidth(), height: 64))
+        messagesCollectionView.contentInset.top += 64
+        topUsersView?.showProfile = { [weak self] buddyID in
+            self?.delegate?.conversationControllerShowsProfile(buddyID: buddyID)
+        }
+        topUsersView?.backgroundColor = UIColor(hex: 0xF2F2F2)
+        topUsersView?.layer.shadowRadius = 2
+        topUsersView?.layer.shadowColor = UIColor(hex: 0xE0E0E0).cgColor
+        topUsersView?.layer.shadowOpacity = 0.4
+        topUsersView?.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.addSubview(topUsersView!)
+    }
+    
+    private func loadTopUsers() {
+        web.request(
+            .groupUserRanking(groupId: group.id),
+            responseType: Response<UserRankingListResponse>.self) { (result) in
+                switch result {
+                case .success(let response):
+                    self.setMessagesCollectionViewHeader()
+                    self.topUsersView?.update(userRankingList: response.list)
+                case .failure(let error):
+//                    self.setMessagesCollectionViewHeader()
+//                    self.topUsersView?.update(userRankingList: [UserRankingResponse(avatar: self.user.avatar, userId: self.user.userId)])
+                    logger.debug(error)
+                }
+        }
+    }
+
     @objc private func didPressRightBarButton() {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.view.tintColor = .black
@@ -119,6 +150,12 @@ final class GroupConversationController: ConversationViewController, GroupConver
         }
         
         return nil
+    }
+}
+extension GroupConversationController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffetY = scrollView.contentOffset.y
+        topUsersView?.frame.origin.y = -contentOffetY - messagesCollectionView.contentInset.top
     }
 }
 

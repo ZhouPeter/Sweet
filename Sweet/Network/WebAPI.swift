@@ -79,11 +79,12 @@ enum WebAPI {
     case updateSetting(autoPlay: Bool, showMsg: Bool)
     case interfaceCallLog(type: Int)
     case quitGroup(groupID: UInt64)
-    case joinGroup(cardId: String, contentId: String, groupId: UInt64, comment: String)
+    case joinGroup(cardId: String?, contentId: String?, groupId: UInt64, comment: String?)
     case muteGroup(groupID: UInt64, isMuted: Bool)
     case likeRankList(start: Int?, end: Int?)
     case startup
     case stealLike(cardId: String, duration: UInt64, success: Bool, toUserId: UInt64)
+    case groupUserRanking(groupId: UInt64)
 }
 
 extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
@@ -237,6 +238,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/startup"
         case .stealLike:
             return "/like/steal"
+        case .groupUserRanking:
+            return "/group/user/ranking"
         }
     }
     
@@ -397,10 +400,20 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["autoPlay": autoPlay, "showMsg": showMsg]
         case let .interfaceCallLog(`type`):
             parameters = ["type": type]
-        case .quitGroup(let groupID):
+        case .quitGroup(let groupID),
+             .groupUserRanking(let groupID):
             parameters = ["groupId": groupID]
         case let .joinGroup(cardId, contentId, groupId, comment):
-            parameters = ["cardId": cardId, "contentId": contentId, "groupId": groupId, "comment": comment]
+            if let cardId = cardId {
+                parameters["cardId"] = cardId
+            }
+            if let contentId = contentId {
+                parameters["contentId"] = contentId
+            }
+            if let comment = comment {
+                parameters["comment"] = comment
+            }
+            parameters = ["groupId": groupId]
         case .muteGroup(let groupID, let isMuted):
             parameters = ["groupId": groupID, "mute": isMuted]
         case let .likeRankList(start, end):
