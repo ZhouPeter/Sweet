@@ -413,7 +413,7 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             if let comment = comment {
                 parameters["comment"] = comment
             }
-            parameters = ["groupId": groupId]
+            parameters["groupId"] = groupId
         case .muteGroup(let groupID, let isMuted):
             parameters = ["groupId": groupID, "mute": isMuted]
         case let .likeRankList(start, end):
@@ -447,8 +447,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
         #if DEV
         return URL(string: "https://sweet-api-t.miaobo.me/v2")!
         #else
-//        return URL(string: "https://sweet-api.miaobo.me/v2")!
-        return URL(string: "https://sweet-api-pre.tome.fun/v2")!
+        return URL(string: "https://sweet-api.miaobo.me/v2")!
+//        return URL(string: "https://sweet-api-pre.tome.fun/v2")!
         #endif
     }
     

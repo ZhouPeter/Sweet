@@ -136,8 +136,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
             if user.userId == member.userId {
                 string = "我"
             } else {
-                if let college = member.collegeName, college.isEmpty == false {
-                    string = "\(member.nickname) · \(college)"
+                if let university = member.universityName, university.isEmpty == false {
+                    string = "\(member.nickname) · \(university)"
                 } else {
                     string = member.nickname
                 }
