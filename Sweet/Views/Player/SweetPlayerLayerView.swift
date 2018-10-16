@@ -86,13 +86,19 @@ class SweetPlayerLayerView: UIView {
 //            }
         }
     }
+    private var currentCategory: String?
     var isVideoMuted: Bool = true {
         didSet {
             self.player?.isMuted = isVideoMuted
             if isVideoMuted {
-                try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-                try? AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
-            } else {
+                if let category = currentCategory {
+                    try? AVAudioSession.sharedInstance().setCategory(category)
+                    try? AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
+                    player?.pause()
+                    player?.play()
+                }
+            } else if AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayback {
+                currentCategory = AVAudioSession.sharedInstance().category
                 try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             }
         }
