@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 protocol StoryPlayerCoordinatorOutput: class {
     var finishFlow: (() -> Void)? { get set }
@@ -27,6 +28,7 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
     private let fromUserId: UInt64?
     private let fromMessageId: String?
     private let isCanOpenEdit: Bool
+    
     init(user: User,
          router: Router,
          factory: StoryPlayerFlowFactory,
@@ -61,6 +63,8 @@ final class StoryPlayerCoordinator: BaseCoordinator, StoryPlayerCoordinatorOutpu
 
 extension StoryPlayerCoordinator {
     private func showStoriesGroupView() {
+        let currentCategory = AVAudioSession.sharedInstance().category
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         let storiesGroupView = factory.makeStoiesGroupView(
             user: user,
             storiesGroup: storiesGroup,
@@ -70,6 +74,10 @@ extension StoryPlayerCoordinator {
             fromMessageId:  fromMessageId,
             delegate: delegate)
         storiesGroupView.onFinish = { [weak self] in
+            if currentCategory != AVAudioSessionCategoryPlayback {
+                try? AVAudioSession.sharedInstance().setCategory(currentCategory)
+                try? AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
+            }
             self?.router.dismissFlow()
             self?.finishFlow?()
         }
