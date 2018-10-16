@@ -16,7 +16,7 @@ class VideoCardPlayerManager: NSObject {
     }
     
     var player: AVPlayer?
-    private var assetURL: URL?
+    var assetURL: URL?
     private var asset: AVAsset?
     private var playerItem: AVPlayerItem?
     private var status = AVPlayerItemStatus.unknown

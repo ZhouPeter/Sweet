@@ -11,6 +11,7 @@ import Pageboy
 import VolumeBar
 import JDStatusBarNotification
 import Alamofire
+import AVFoundation
 
 extension UINavigationController {
     open override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -65,6 +66,7 @@ final class MainController: PageboyViewController, MainView {
         
         onStoryFlowSelect?(story)
         onIMFlowSelect?(imList)
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         VolumeBar.shared.start()
         UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelAlert
         DispatchQueue.main.async {

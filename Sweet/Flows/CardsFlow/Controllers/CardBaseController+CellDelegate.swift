@@ -268,8 +268,10 @@ extension CardsBaseController: VideoCardCollectionViewCellDelegate {
         controller.resource = playerView.resource
         self.present(controller, animated: true, completion: nil)
         isVideoMuted = false
+        isFromPlayerController = true
         playerView.isVideoMuted = isVideoMuted
         CardAction.clickVideo.actionLog(card: cards[index])
+        
     }
 }
 
