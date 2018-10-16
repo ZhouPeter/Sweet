@@ -77,7 +77,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.view.tintColor = .black
         controller.addAction(
-            UIAlertAction(title: group.isMuted ? "关闭消息免打扰" : "消息免打扰", style: .default, handler: { [weak self] _ in
+            UIAlertAction(title: group.isMuted ? "打开消息通知" : "消息免打扰", style: .default, handler: { [weak self] _ in
                 guard let self = self else { return }
                 HUD.show(.systemActivity)
                 Messenger.shared.muteGroup(self.group, isMuted: !self.group.isMuted)

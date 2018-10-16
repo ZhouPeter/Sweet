@@ -74,7 +74,7 @@ PODS:
     - UMCCommon
   - UMCSecurityPlugins (1.0.6)
   - VIMediaCache (0.4)
-  - VolumeBar (3.0.3)
+  - VolumeBar (3.0.4)
   - WechatOpenSDK (1.8.2)
   - Weibo_SDK (3.2.3)
   - YYText (1.0.7)
@@ -107,7 +107,7 @@ DEPENDENCIES:
   - UMCPush
   - UMCSecurityPlugins
   - VIMediaCache
-  - VolumeBar (~> 3.0.3)
+  - VolumeBar (~> 3.0.4)
   - WechatOpenSDK
   - Weibo_SDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
   - YYText
@@ -207,11 +207,11 @@ SPEC CHECKSUMS:
   UMCPush: 5ab89bdbcc1fe90b1c669ff79213b44dc4821ec5
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
-  VolumeBar: 72aedbc71a30f5c64479b9574a86f39e254fb216
+  VolumeBar: 4d0fa32e251ef9af30fffde8dd087ac5ad7bc9e6
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 48f393c7a8102f6ea54d62c4da7b92b2f8bdf9f1
+PODFILE CHECKSUM: 4e56dde4c70e9a77728900c984b0c4122461385f
 
 COCOAPODS: 1.5.3

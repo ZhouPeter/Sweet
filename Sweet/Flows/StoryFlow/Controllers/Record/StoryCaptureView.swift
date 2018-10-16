@@ -103,6 +103,8 @@ final class StoryCaptureView: GPUImageView {
         isStarting = true
         cameraQueue.async { [weak self] in
             guard let `self` = self else { return }
+            self.camera?.captureSession.automaticallyConfiguresApplicationAudioSession = false
+            try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
             self.camera?.startCapture()
             self.isStarting = false
             DispatchQueue.main.async { callback?() }
@@ -152,6 +154,8 @@ final class StoryCaptureView: GPUImageView {
         cameraQueue.async { [weak self] in
             guard let `self` = self else { return }
             self.camera?.stopCapture()
+            try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+            try? AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
             self.isStopping = false
             DispatchQueue.main.async { callback?() }
         }

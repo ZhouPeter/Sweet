@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let deepLink = DeepLinkOption.build(with: notification)
         applicationCoordinator.start(with: deepLink)
         getSetting()
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         VersionUpdateHelper.versionCheck(viewController: rootController)
         NetworkHelper.networkCheck(viewController: rootController)
         addObservers()

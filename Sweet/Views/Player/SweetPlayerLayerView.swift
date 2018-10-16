@@ -89,6 +89,12 @@ class SweetPlayerLayerView: UIView {
     var isVideoMuted: Bool = true {
         didSet {
             self.player?.isMuted = isVideoMuted
+            if isVideoMuted {
+                try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+                try? AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
+            } else {
+                try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            }
         }
     }
     
