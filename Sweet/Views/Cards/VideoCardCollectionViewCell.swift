@@ -56,6 +56,7 @@ class VideoCardCollectionViewCell: BaseContentCardCollectionViewCell, CellReusab
     override func prepareForReuse() {
         super.prepareForReuse()
         contentImageView.image = nil
+        playerView.resource = nil
         playerView.placeholderImageView.image = nil
         playerView.playerLayer?.resetPlayer()
         playerView.controlView.hideLoader()

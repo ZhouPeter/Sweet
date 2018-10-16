@@ -89,6 +89,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     private var storage: Storage?
     private let reachabilityManager = NetworkReachabilityManager()
     private var isWifi = false
+    var isFromPlayerController = false
     lazy var inputTextView: InputTextView = {
         let view = InputTextView()
         view.placehoder = "可以带一句你想说的话"
@@ -159,7 +160,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         readSetting()
-        if let avPlayer = avPlayer, view.alpha != 0 {
+        if let avPlayer = avPlayer, isFromPlayerController {
             if let cell = mainView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? VideoCardCollectionViewCell {
                 let autoPlay = sweetPlayerConf.shouldAutoPlay
                 if let isPlaying = cell.playerView.avPlayer?.isPlaying {
@@ -171,6 +172,7 @@ class CardsBaseController: BaseViewController, CardsBaseView {
                 sweetPlayerConf.shouldAutoPlay = autoPlay
             }
         }
+        isFromPlayerController = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -307,6 +309,7 @@ extension CardsBaseController {
     }
     
     func changeCurrentCell() {
+        if isFromPlayerController { return }
         if cellConfigurators.count == 0 { return }
         let indexPath = IndexPath(item: index, section: 0)
         guard let cell = mainView.collectionView.cellForItem(at: indexPath) else { return }
