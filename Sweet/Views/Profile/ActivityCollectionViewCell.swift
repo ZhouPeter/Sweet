@@ -10,7 +10,7 @@ import UIKit
 
 class ActivityCollectionViewCell: UICollectionViewCell {
     
-    private var viewModel: ActivityCardViewModel?
+    private var viewModel: PreferenceTextViewModel?
     private lazy var preferenceImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = UIViewContentMode.scaleAspectFill
@@ -64,17 +64,17 @@ class ActivityCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func likeAction(_ sender: UIButton) {
-        if let viewModel = viewModel, !viewModel.like {
+        if let viewModel = viewModel, !viewModel.isLike {
             viewModel.callBack?(viewModel.activityId)
         }
     }
     
-    func update(viewModel: ActivityCardViewModel) {
+    func update(viewModel: PreferenceTextViewModel) {
         self.viewModel = viewModel
-        preferenceImageView.sd_setImage(with: viewModel.url)
-        titleLabel.text = viewModel.commentString
-        likeButton.setImage(viewModel.like ? #imageLiteral(resourceName: "Like") : #imageLiteral(resourceName: "Unlike").withRenderingMode(.alwaysTemplate), for: .normal)
-
+        preferenceImageView.sd_setImage(with: viewModel.imageURL)
+        titleLabel.text = viewModel.textString
+        likeButton.setImage(viewModel.isLike ? #imageLiteral(resourceName: "Like") : #imageLiteral(resourceName: "Unlike").withRenderingMode(.alwaysTemplate), for: .normal)
+        likeButton.isHidden = viewModel.isHiddenLikeButton
     }
     
 }

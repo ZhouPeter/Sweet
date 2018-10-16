@@ -29,27 +29,16 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private var activityList = [ActivityResponse]()
-    private var viewModels = [ActivityCardViewModel]() {
+    private var activityList = [PreferenceTextResponse]()
+    private var viewModels = [PreferenceTextViewModel]() {
         didSet {
             cellNumber = viewModels.count
         }
     }
     
     private var groupCount = [Int]()
-    
     private var page = 0
     private var loadFinish = false
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorInset.left = 0
-        tableView.tableFooterView = UIView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.showsVerticalScrollIndicator = false
-        tableView.register(AcitivityCardTableViewCell.self, forCellReuseIdentifier: "ActivityCell")
-        return tableView
-    }()
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: (UIScreen.mainWidth() - 6) / 3, height: (UIScreen.mainHeight() - 6) / 3)
@@ -73,13 +62,8 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
     private var activityId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == user.userId {
-            view.addSubview(tableView)
-            tableView.fill(in: view)
-        } else {
-            view.addSubview(collectionView)
-            collectionView.fill(in: view)
-        }
+        view.addSubview(collectionView)
+        collectionView.fill(in: view)
         loadRequest()
     }
     
@@ -87,15 +71,16 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         if viewModels.count > 0 { return }
         page = 0
         web.request(
-            .preferenceList(page: 0, userId: user.userId,
-                          contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
-            responseType: Response<ActivityListResponse>.self) { (result) in
+            .preferenceTextList(page: 0, userId: user.userId,
+                                contentId: setTop?.contentId,
+                                preferenceId: setTop?.preferenceId),
+            responseType: Response<PreferenceTextListResponse>.self) { (result) in
                 switch result {
                 case let .success(response):
                     self.activityList = response.list
                     self.loadFinish = response.list.count < 10
                     self.viewModels = response.list.map {
-                        var viewModel = ActivityCardViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        var viewModel = PreferenceTextViewModel(model: $0)
                         viewModel.callBack = { activityId in
                             self.showInputView(activityId: viewModel.activityId)
                         }
@@ -109,16 +94,11 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
                         }
                         if index == self.viewModels.count - 1 && viewModel.isSame {
                             self.groupCount.append(self.viewModels.count)
-                            self.groupCount.append(0)
+//                            self.groupCount.append(0)
                         }
                     }
-                    if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == self.user.userId {
-                        self.tableView.contentOffset = .zero
-                        self.tableView.reloadData()
-                    } else {
-                        self.collectionView.contentOffset = .zero
-                        self.collectionView.reloadData()
-                    }
+                    self.collectionView.contentOffset = .zero
+                    self.collectionView.reloadData()
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -129,25 +109,21 @@ class ActivitiesController: UIViewController, PageChildrenProtocol {
         if loadFinish { return }
         page += 1
         web.request(
-            .preferenceList(page: page, userId: user.userId,
+            .preferenceTextList(page: page, userId: user.userId,
                           contentId: setTop?.contentId, preferenceId: setTop?.preferenceId),
-            responseType: Response<ActivityListResponse>.self) { (result) in
+            responseType: Response<PreferenceTextListResponse>.self) { (result) in
                 switch result {
                 case let .success(response):
                     self.activityList.append(contentsOf: response.list)
                     self.loadFinish = response.list.count < 10
                     self.viewModels.append(contentsOf: response.list.map {
-                        var viewModel = ActivityCardViewModel(model: $0, userAvatarURL: URL(string: self.avatar))
+                        var viewModel = PreferenceTextViewModel(model: $0)
                         viewModel.callBack = { activityId in
                             self.showInputView(activityId: viewModel.activityId)
                         }
                         return viewModel
                     })
-                    if let IDString = Defaults[.userID], let userID = UInt(IDString), userID == self.user.userId {
-                        self.tableView.reloadData()
-                    } else {
-                        self.collectionView.reloadData()
-                    }
+                    self.collectionView.reloadData()
                 case let .failure(error):
                     logger.error(error)
                 }
@@ -230,8 +206,8 @@ extension ActivitiesController {
     func sendActivityMessages(text: String) {
         guard let activityId = activityId else { return }
         guard let index = activityList.index(where: { $0.activityId == activityId }) else {fatalError()}
-        let toUserId = activityList[index].actor
-        let cardID = activityList[index].fromCardId
+        let toUserId = activityList[index].userId
+        let cardID = activityList[index].cardId
         web.request(
             WebAPI.getCard(cardID: cardID),
             responseType: Response<CardGetResponse>.self) { (result) in
@@ -251,8 +227,7 @@ extension ActivitiesController {
             case .success:
                 guard let item = self.activityList.index(where: { $0.activityId == activityId }) else { return }
                 self.activityList[item].like = true
-                let viewModel = ActivityCardViewModel(model: self.activityList[item],
-                                                      userAvatarURL: URL(string: self.avatar))
+                let viewModel = PreferenceTextViewModel(model: self.activityList[item])
                 self.viewModels[item] = viewModel
                 if item > self.groupCount[0] - 1 {
                     self.collectionView.reloadItems(at: [IndexPath(item: item - self.groupCount[0], section: 1)])
@@ -288,7 +263,7 @@ extension ActivitiesController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.section == 0 ? indexPath.row : indexPath.row + groupCount[0]
         let viewModel = viewModels[index]
-        if viewModel.like == false {
+        if viewModel.isLike == false && viewModel.isHiddenLikeButton == false {
             showInputView(activityId: viewModel.activityId)
         }
     }
@@ -318,36 +293,6 @@ extension ActivitiesController: UICollectionViewDelegateFlowLayout {
         } else {
             return .zero
         }
-    }
-}
-
-extension ActivitiesController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "ActivityCell", for: indexPath) as? AcitivityCardTableViewCell else {fatalError()}
-        cell.update(viewModels[indexPath.row])
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModels.count
-    }
-  
-}
-
-extension ActivitiesController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (cardCellHeight - 50) / 4
-    }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModels.count - 1 {
-            loadMoreRequest()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewModel = viewModels[indexPath.row]
-        showOriginalCard(viewModel: viewModel)
     }
 }
 

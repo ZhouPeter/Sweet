@@ -23,6 +23,7 @@ enum WebAPI {
     case evaluationList(page: Int, userId: UInt64)
     case activityList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case preferenceList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
+    case preferenceTextList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
@@ -116,6 +117,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/profile/activity/list"
         case .preferenceList:
             return "/user/profile/preference/list"
+        case .preferenceTextList:
+            return "/user/profile/preference/text/list"
         case .searchUniversity:
             return "/network/university/search"
         case .searchCollege:
@@ -262,7 +265,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["userId": userId]
         case let .evaluationList(page, userId):
             parameters = ["page": page, "userId": userId]
-        case let .preferenceList(page, userId, contentId, preferenceId):
+        case let .preferenceList(page, userId, contentId, preferenceId),
+             let .preferenceTextList(page, userId, contentId, preferenceId):
             parameters = ["page": page, "userId": userId]
             if let contentId = contentId {
                 parameters["contentId"] = contentId

@@ -166,6 +166,14 @@
 		581CF95A217586400027A2A0 /* NavBarStyleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9582175863C0027A2A0 /* NavBarStyleChangeable.swift */; };
 		581CF95B217586410027A2A0 /* NavBarStyleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9582175863C0027A2A0 /* NavBarStyleChangeable.swift */; };
 		581CF95C217586410027A2A0 /* NavBarStyleChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9582175863C0027A2A0 /* NavBarStyleChangeable.swift */; };
+		581CF9612175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */; };
+		581CF9622175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */; };
+		581CF9632175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */; };
+		581CF9642175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */; };
+		581CF9682175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */; };
+		581CF9692175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */; };
+		581CF96A2175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */; };
+		581CF96B2175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */; };
 		581D7BE920D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
 		581D7BEA20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
 		581D7BEB20D8CCE0000D1E26 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */; };
@@ -1694,6 +1702,8 @@
 		58155E2F2091BE1300ADEFFB /* AboutRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRectView.swift; sourceTree = "<group>"; };
 		58155E342091D53E00ADEFFB /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		581CF9582175863C0027A2A0 /* NavBarStyleChangeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarStyleChangeable.swift; sourceTree = "<group>"; };
+		581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceTextListResponse.swift; sourceTree = "<group>"; };
+		581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceTextViewModel.swift; sourceTree = "<group>"; };
 		581D7BE820D8CCE0000D1E26 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		581D7BF320D9ED1F000D1E26 /* VersionUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionUpdateHelper.swift; sourceTree = "<group>"; };
 		58325B8D20A2F496000E851F /* ContactSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSearchController.swift; sourceTree = "<group>"; };
@@ -2314,6 +2324,7 @@
 				5843DA5920A03350005C8AD2 /* PhoneContactViewModel.swift */,
 				5843DA6820A1469A005C8AD2 /* ContactWithButtonViewModel.swift */,
 				583BC77F20CE1BBC00C4494E /* EvaluationViewModel.swift */,
+				581CF9672175DAA20027A2A0 /* PreferenceTextViewModel.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -3044,6 +3055,7 @@
 				58D3CCE420C8FA320078B36C /* StatusResponse.swift */,
 				580F888520FC91CC009148CC /* UpdateRemainResponse.swift */,
 				58AEFD29216F3AE000E048AA /* UserRankingListResponse.swift */,
+				581CF9602175D90A0027A2A0 /* PreferenceTextListResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3779,6 +3791,7 @@
 				5866330920BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				5863A83A20ABCE6F0016B089 /* StoryUvList.swift in Sources */,
 				AC525A95208DB1E9001070B2 /* MainController.swift in Sources */,
+				581CF9612175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */,
 				589E6BD620A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				580F888620FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				580F888D20FD8867009148CC /* GIFImageMake.swift in Sources */,
@@ -3913,6 +3926,7 @@
 				AC525A8A208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58AEFD12216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				587D18E220DB43D500D53708 /* StoriesGroupView.swift in Sources */,
+				581CF9682175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */,
 				AC2F978720904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758A20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5020A0261D005C8AD2 /* InviteController.swift in Sources */,
@@ -4237,6 +4251,7 @@
 				AC2F978920904A9900D5DE4F /* UserData.swift in Sources */,
 				58AEFD2C216F3AE000E048AA /* UserRankingListResponse.swift in Sources */,
 				AC87BC6820E1FD7D002BA32C /* Guide.swift in Sources */,
+				581CF9632175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */,
 				5866330420BBDFF60018680C /* ContactCategoryTableViewCell.swift in Sources */,
 				AC86A94020C4DC3F00334D4A /* User.swift in Sources */,
 				ACA3234C2087497900BDC92E /* AppDelegate.swift in Sources */,
@@ -4286,6 +4301,7 @@
 				58CAB37B20AC0418007230AA /* ActivitiesCardCollectionViewCell.swift in Sources */,
 				ACEFA0D82106D51D0098631F /* HandlerView.swift in Sources */,
 				587D18E420DB43D500D53708 /* StoriesGroupView.swift in Sources */,
+				581CF96A2175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */,
 				58D579082094566D00AE5D38 /* UpdateGenderTableViewCell.swift in Sources */,
 				58D578D12092E70000AE5D38 /* StoryCollectionViewCell.swift in Sources */,
 				58D3CCE720C8FA320078B36C /* StatusResponse.swift in Sources */,
@@ -4383,6 +4399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				581CF9642175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */,
 				AC9EF786208ECCA900C4907D /* IMFlowFactory.swift in Sources */,
 				ACA9CC4620C6764C00873643 /* SweetMessagesFlowLayout.swift in Sources */,
 				ACEFA0D52106D51D0098631F /* CropMaskView.swift in Sources */,
@@ -4670,6 +4687,7 @@
 				AC84FE8620E21BDB008FC795 /* Guide+StoryPlayTip.swift in Sources */,
 				585B60EB213679C9000AB22B /* Guide+ShowPreference.swift in Sources */,
 				5843DA5820A028C6005C8AD2 /* PhoneContactListResponse.swift in Sources */,
+				581CF96B2175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */,
 				5800C2D02152011900511F01 /* WeiboSDK+Message.swift in Sources */,
 				58D578CD2092D30500AE5D38 /* StoriesController.swift in Sources */,
 				58155E2420917A5F00ADEFFB /* ActionsTableViewCell.swift in Sources */,
@@ -4932,6 +4950,7 @@
 				5866330A20BBE3C30018680C /* ContactCategoryHeaderView.swift in Sources */,
 				58BD53552090A40A00F7C3E1 /* ProfileCoordinator.swift in Sources */,
 				AC525A96208DB1E9001070B2 /* MainController.swift in Sources */,
+				581CF9622175D90A0027A2A0 /* PreferenceTextListResponse.swift in Sources */,
 				589E6BD720A98DA20038FAED /* ContentCardCollectionViewCell.swift in Sources */,
 				580F888720FC91CC009148CC /* UpdateRemainResponse.swift in Sources */,
 				580F888E20FD8867009148CC /* GIFImageMake.swift in Sources */,
@@ -5066,6 +5085,7 @@
 				AC525A8B208D87CB001070B2 /* MainCoordinator.swift in Sources */,
 				58AEFD13216DFB4900E048AA /* ConstellationCell.swift in Sources */,
 				587D18E320DB43D500D53708 /* StoriesGroupView.swift in Sources */,
+				581CF9692175DAA20027A2A0 /* PreferenceTextViewModel.swift in Sources */,
 				AC2F978820904A9900D5DE4F /* UserData.swift in Sources */,
 				AC21758B20C105240089D4D1 /* SingleConversationController.swift in Sources */,
 				5843DA5120A0261D005C8AD2 /* InviteController.swift in Sources */,

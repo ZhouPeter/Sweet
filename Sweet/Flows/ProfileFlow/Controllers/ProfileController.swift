@@ -555,7 +555,7 @@ extension ProfileController: UITableViewDataSource {
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
             if user.userId == userId {
-                cell.update(activityTitle: "动态 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
+                cell.update(activityTitle: "我的喜欢 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
             } else {
                 cell.update(activityTitle: "共同喜欢 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
             }
