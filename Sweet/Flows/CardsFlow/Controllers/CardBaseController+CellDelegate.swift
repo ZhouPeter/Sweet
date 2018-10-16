@@ -307,9 +307,9 @@ extension CardsBaseController: SweetPlayerViewDelegate {
 }
 
 extension CardsBaseController: GroupCardCollectionViewCellDelegate {
-    func joinGroup(groupId: UInt64) {
+    func joinGroup(groupId: UInt64, cardId: String) {
         let isJoin = cards[index].join ?? false
-        web.request(WebAPI.joinGroup(cardId: nil, contentId: nil, groupId: groupId, comment: nil)) { (result) in
+        web.request(WebAPI.joinGroup(cardId: cardId, contentId: nil, groupId: groupId, comment: nil)) { (result) in
             switch result {
             case .failure(let error):
                 logger.error(error)

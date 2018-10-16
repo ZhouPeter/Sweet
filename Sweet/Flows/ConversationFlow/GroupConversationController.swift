@@ -63,11 +63,11 @@ final class GroupConversationController: ConversationViewController, GroupConver
             responseType: Response<UserRankingListResponse>.self) { (result) in
                 switch result {
                 case .success(let response):
-                    self.setMessagesCollectionViewHeader()
-                    self.topUsersView?.update(userRankingList: response.list)
+                    if response.list.count > 0 {
+                        self.setMessagesCollectionViewHeader()
+                        self.topUsersView?.update(userRankingList: response.list)
+                    }
                 case .failure(let error):
-//                    self.setMessagesCollectionViewHeader()
-//                    self.topUsersView?.update(userRankingList: [UserRankingResponse(avatar: self.user.avatar, userId: self.user.userId)])
                     logger.debug(error)
                 }
         }
@@ -136,8 +136,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
             if user.userId == member.userId {
                 string = "我"
             } else {
-                if let college = member.collegeName, college.isEmpty == false {
-                    string = "\(member.nickname) · \(college)"
+                if let university = member.universityName, university.isEmpty == false {
+                    string = "\(member.nickname) · \(university)"
                 } else {
                     string = member.nickname
                 }
@@ -154,8 +154,8 @@ final class GroupConversationController: ConversationViewController, GroupConver
 }
 extension GroupConversationController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffetY = scrollView.contentOffset.y
-        topUsersView?.frame.origin.y = -contentOffetY - messagesCollectionView.contentInset.top
+//        let contentOffetY = scrollView.contentOffset.y
+//        topUsersView?.frame.origin.y = -contentOffetY - messagesCollectionView.contentInset.top
     }
 }
 

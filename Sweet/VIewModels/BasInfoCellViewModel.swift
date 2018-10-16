@@ -29,7 +29,7 @@ struct BaseInfoCellViewModel {
         sexImage = user.gender == .male ? #imageLiteral(resourceName: "Man") : #imageLiteral(resourceName: "Woman")
         let userID = UInt64(Defaults[.userID] ?? "0")
         starString = "\(user.likeCount)"
-        relevantString =  "共同联系人\(user.common)人"
+        relevantString =  "共同联系人\(user.common)人·访问我的主页\(user.visitNum)次·给我点赞\(user.likeNum)次"
         collegeInfoString = user.universityName +
                             (user.collegeName == "" ? "" : ("·" + user.collegeName)) +
                             (user.enrollment <= 0 ? "" : ("·" + "\(user.enrollment)级"))

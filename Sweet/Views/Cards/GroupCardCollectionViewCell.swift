@@ -8,7 +8,7 @@
 
 import UIKit
 protocol GroupCardCollectionViewCellDelegate: NSObjectProtocol {
-    func joinGroup(groupId: UInt64)
+    func joinGroup(groupId: UInt64, cardId: String)
 }
 class GroupCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, CellReusable {
     typealias ViewModelType = GroupCardViewModel
@@ -93,7 +93,7 @@ class GroupCardCollectionViewCell: BaseCardCollectionViewCell, CellUpdatable, Ce
     
     @objc private func didPressJoin(_ sender: UIButton) {
         if let delegate = delegate as? GroupCardCollectionViewCellDelegate {
-            delegate.joinGroup(groupId: viewModel!.groupId)
+            delegate.joinGroup(groupId: viewModel!.groupId, cardId: viewModel!.cardId)
         }
     }
     

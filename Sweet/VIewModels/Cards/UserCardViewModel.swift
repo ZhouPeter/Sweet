@@ -27,7 +27,11 @@ struct UserCardViewModel {
         self.userId = model.userId
         self.type = model.type
         self.avatarURL = URL(string: model.avatar)!
-        self.nicknameString = model.nickname
+        if let gender = model.gender {
+            self.nicknameString = model.nickname + ( gender == .male ?  " ♂" : " ♀" )
+        } else {
+            self.nicknameString = model.nickname
+        }
         self.unviersityString = model.university
         self.commonContactString = model.info
         self.commentString = model.comment
