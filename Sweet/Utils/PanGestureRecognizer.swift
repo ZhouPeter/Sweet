@@ -32,15 +32,17 @@ class PanGestureRecognizer: UIPanGestureRecognizer {
         offsetX += previous.x - current.x
         offsetY += previous.y - current.y
         let threshold: CGFloat = 5
+        let deltaY = abs(current.y - previous.y)
+        let deltaX = abs(current.x - previous.x)
         if abs(offsetX) > threshold {
             if direction == .vertical {
-                if abs(current.y - previous.y) > abs(current.x - previous.x) {
+                if deltaY > deltaX {
                     isDragging = true
                 } else {
                     state = .failed
                 }
             } else {
-                if abs(current.y - previous.y) < abs(current.x - previous.x) {
+                if deltaY < deltaX {
                     isDragging = true
                 } else {
                     state = .failed
@@ -48,13 +50,13 @@ class PanGestureRecognizer: UIPanGestureRecognizer {
             }
         } else if abs(offsetY) > threshold {
             if direction == .horizontal {
-                if abs(current.y - previous.y) < abs(current.x - previous.x) {
+                if deltaY < deltaX {
                     isDragging = true
                 } else {
                     state = .failed
                 }
             } else {
-                if abs(current.y - previous.y) > abs(current.x - previous.x) {
+                if deltaY > deltaX {
                     isDragging = true
                 } else {
                     state = .failed
@@ -105,8 +107,10 @@ class CustomPanGestureRecognizer: UIPanGestureRecognizer {
     }
     
     private func setStates(current: CGPoint, previous: CGPoint) {
+        let deltaY = abs(current.y - previous.y)
+        let deltaX = abs(current.x - previous.x)
         if orientation == .up || orientation == .down {
-            if abs(current.y - previous.y) > abs(current.x - previous.x) {
+            if deltaY > deltaX {
                 if orientation == .up {
                     if current.y < previous.y {
                         isDragging = true
@@ -124,7 +128,7 @@ class CustomPanGestureRecognizer: UIPanGestureRecognizer {
                 state = .failed
             }
         } else if orientation == .left || orientation == .right {
-            if abs(current.y - previous.y) < abs(current.x - previous.x) {
+            if deltaY < deltaX {
                 if orientation == .left {
                     if current.x < previous.x {
                         isDragging = true
