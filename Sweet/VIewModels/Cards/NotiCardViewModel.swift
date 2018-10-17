@@ -43,6 +43,7 @@ struct LikeRankViewModel {
     var commentString: String
     let likeCount: UInt64
     let userId: UInt64
+    var backgroundColor: UIColor
     var showProfile: ((UInt64, SetTop?) -> Void)?
     init(model: LikeRankRecord) {
         index = model.index
@@ -51,5 +52,6 @@ struct LikeRankViewModel {
         commentString = model.info
         likeCount = model.likeCount
         userId = model.userId
+        backgroundColor = UIColor(hex: 0xf2f2f2)
     }
 }

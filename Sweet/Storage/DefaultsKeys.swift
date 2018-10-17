@@ -39,6 +39,7 @@ extension DefaultsKeys {
 extension DefaultsKeys {
     static let isInputTextSendMessage = DefaultsKey<Bool>("isInputTextSendMessage")
     static let isJoinGroupChat = DefaultsKey<Bool>("isJoinGroupChat")
+    static let isShowGetStarHelpMessage = DefaultsKey<Bool>("isShowGetStarHelpMessage")
 
 }
 
