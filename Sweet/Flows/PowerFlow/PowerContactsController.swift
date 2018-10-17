@@ -8,6 +8,8 @@
 
 import UIKit
 import Contacts
+import UserNotifications
+
 class PowerContactsController: BaseViewController, PowerContactsView {
     var onFinish: (() -> Void)?
     
@@ -98,13 +100,13 @@ extension PowerContactsController {
     }
     
     private func showNextController() {
-        DispatchQueue.main.async {
-            guard let settings = UIApplication.shared.currentUserNotificationSettings
-                else { return }
-            if settings.types == [] {
-                self.showPush?()
-            } else {
-                self.onFinish?()
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .authorized {
+                    self.onFinish?()
+                } else {
+                    self.showPush?()
+                }
             }
         }
     }
