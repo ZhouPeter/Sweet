@@ -302,21 +302,28 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             let subtitle = stories[currentIndex].subtitle
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)
             if isSelf {
-                bottomButton.isSelected = false
-                if stories[currentIndex].newReadCount == 0 {
-                    bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
-                    bottomButton.setTitle("", for: .normal)
-                } else {
-                    bottomButton.setImage(nil, for: .normal)
-                    bottomButton.setTitle("+\(stories[currentIndex].newReadCount)", for: .normal)
-                }
+                updateBottomButtomImageAddTitle(isSelected: false)
             } else {
                 bottomButton.isEnabled = !stories[currentIndex].like
-                bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             }
         }
     }
     
+    private func updateBottomButtomImageAddTitle(isSelected: Bool) {
+        bottomButton.isSelected = isSelected
+        if isSelected {
+            bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+            bottomButton.setTitle("", for: .normal)
+        } else {
+            if stories[currentIndex].uvNum == 0 {
+                bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+                bottomButton.setTitle("", for: .normal)
+            } else {
+                bottomButton.setImage(nil, for: .normal)
+                bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
+            }
+        }
+    }
     private func setStoryInfoAttribute(name: String, timestampString: String, subtitle: String) {
         let string = "\(name) \(timestampString)" + (subtitle != "" ? "\n\(subtitle)" : "")
         let attributeString = NSMutableAttributedString(string: string)
@@ -548,7 +555,6 @@ extension StoriesPlayerViewController {
     private func showStoryHistory() {
         pause()
         topContentView.isHidden = true
-        bottomButton.isSelected = true
         let storyId = stories[currentIndex].storyId
         uvViewController = StoryUVController(storyId: storyId, user: user)
         uvViewController.runProfileFlow = runProfileFlow
@@ -557,9 +563,7 @@ extension StoriesPlayerViewController {
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
         uvViewController.view.tag = 100
-        stories[currentIndex].newReadCount = 0
-        bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
-        bottomButton.setTitle("", for: .normal)
+        updateBottomButtomImageAddTitle(isSelected: true)
         delegate?.updateStory(story: stories[currentIndex], position: (groupIndex, currentIndex))
 
     }
@@ -1004,7 +1008,7 @@ extension StoriesPlayerViewController: StoryUVControllerDelegate {
         uvViewController.view.removeFromSuperview()
         uvViewController.removeFromParentViewController()
         topContentView.isHidden = false
-        bottomButton.isSelected = false
+        updateBottomButtomImageAddTitle(isSelected: false)
         play()
     }
 }

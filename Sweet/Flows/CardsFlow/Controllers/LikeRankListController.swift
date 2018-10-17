@@ -31,8 +31,10 @@ class LikeRankListController: BaseViewController, LikeRankListView {
     private var viewModels = [LikeRankViewModel]()
     private var rankChangeNum = 0
     private var titleString: String
-    init(title: String) {
+    private var buddyID: UInt64
+    init(title: String, buddyID: UInt64) {
         self.titleString = title
+        self.buddyID = buddyID
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +68,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
     
     
     private func requestLikeRankList(start: Int?, end: Int?) {
-        web.request(WebAPI.likeRankList(start: start, end: end), responseType: Response<LikeRank>.self) { (result) in
+        web.request(WebAPI.likeRankList(userId: buddyID, start: start, end: end), responseType: Response<LikeRank>.self) { (result) in
             switch result {
             case let .success(response):
                 self.rankChangeNum = response.rankChangeNum
@@ -81,7 +83,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
                 })
                 self.viewModels = self.viewModels.map({
                     var viewModel = $0
-                    if let IDString = Defaults[.userID], let userID = UInt64(IDString), userID == viewModel.userId {
+                    if self.buddyID == viewModel.userId {
                         indexPath.row = Int(viewModel.index - 1)
                         if response.rankChangeNum >= 0 {
                             if viewModel.index == 1 {
@@ -92,6 +94,7 @@ class LikeRankListController: BaseViewController, LikeRankListView {
                         } else {
                             viewModel.commentString = "回到之前的排名还需\(Int(self.viewModels[Int(viewModel.index - 1) + response.rankChangeNum].likeCount) - Int(viewModel.likeCount) + 1)❤️"
                         }
+                        viewModel.backgroundColor = .white
                     }
                     return viewModel
                 })

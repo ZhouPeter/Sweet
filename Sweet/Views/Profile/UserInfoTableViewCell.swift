@@ -259,17 +259,17 @@ class UserInfoTableViewCell: UITableViewCell {
         relevantInfoLabel.text = viewModel.relevantString
         collegeInfoLabel.text = viewModel.collegeInfoString
         signatureLabel.text = viewModel.signatureString
-        if viewModel.isLoginUser {
+        if viewModel.rankString == "" {
+            rankLabel.isHidden = true
+        } else {
             rankLabel.isHidden = false
+            rankLabel.text = viewModel.rankString
+        }
+        if viewModel.isLoginUser {
             if Defaults[.isShowGetStarHelpMessage] == false {
                 helpLabel.isHidden = false
             } else {
                 helpLabel.isHidden = true
-            }
-            if viewModel.rankString == "" {
-                rankLabel.isHidden = true
-            } else {
-                rankLabel.text = viewModel.rankString
             }
             segmentLineView1.isHidden = true
             relevantInfoButton.isHidden = true
@@ -280,7 +280,6 @@ class UserInfoTableViewCell: UITableViewCell {
             relevantInfoButton.isHidden = false
             relevantInfoLabel.isHidden = false
             collegeInfoTopLayoutConstraint?.constant = 0
-            rankLabel.isHidden = true
             helpLabel.isHidden = true
         }
         
