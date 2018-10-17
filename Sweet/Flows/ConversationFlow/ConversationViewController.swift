@@ -25,6 +25,21 @@ class ConversationViewController: MessagesViewController {
     var outgoingBubbleMaskCache = [UIView: UIImageView]()
     var contentInsetBottom: CGFloat?
     var contentOffset: CGPoint?
+    override var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.textColor = .black
+        return label
+    } ()
+    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private var loadingIndicatorWidthConstraint: NSLayoutConstraint?
+    private let titleView = UIView()
     
     // MARK: - Life Cycle
     
@@ -42,6 +57,20 @@ class ConversationViewController: MessagesViewController {
         resplaceWithSweetCollectionView()
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
+        
+        navigationItem.titleView = titleView
+        titleView.addSubview(titleLabel)
+        titleLabel.align(.left)
+        titleLabel.align(.top)
+        titleLabel.align(.bottom)
+        titleView.addSubview(loadingIndicator)
+        loadingIndicator.pin(.right, to: titleLabel)
+        loadingIndicator.centerY(to: titleLabel)
+        loadingIndicator.align(.right)
+        loadingIndicatorWidthConstraint = loadingIndicator.constrain(width: 0.1)
+        loadingIndicator.constrain(height: 40)
+        loadingIndicator.hidesWhenStopped = true
+        
         setupCollectionView()
         setupInputBar()
         setupBackItem()
@@ -73,6 +102,17 @@ class ConversationViewController: MessagesViewController {
         super.willMove(toParentViewController: parent)
         guard parent == nil else { return }
         delegate?.conversationDidFinish()
+    }
+    
+    func showLoadingIndicator(_ isShown: Bool) {
+        if isShown {
+            loadingIndicator.startAnimating()
+            loadingIndicatorWidthConstraint?.constant = 40
+        } else {
+            loadingIndicatorWidthConstraint?.constant = 0.1
+            loadingIndicator.stopAnimating()
+        }
+        view.layoutIfNeeded()
     }
     
     private var contentAttributedTextCaches = [String: NSAttributedString]()

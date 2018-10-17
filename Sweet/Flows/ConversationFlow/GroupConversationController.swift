@@ -18,6 +18,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
     private var group: Group
     private var conversation: IMConversation?
     private var userAttributedNames = [UInt64: NSAttributedString]()
+    private var topUsersView: TopUsersView?
     
     init(user: User, group: Group, conversation: IMConversation? = nil) {
         self.group = group
@@ -30,7 +31,7 @@ final class GroupConversationController: ConversationViewController, GroupConver
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private var topUsersView: TopUsersView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: 0xF2F2F2)
@@ -170,6 +171,16 @@ extension GroupConversationController: MessageInputBarDelegate {
 }
 
 extension GroupConversationController: MessengerDelegate {
+    func messengerDidBeginFetchMessages(group: Group) {
+        guard group.id == self.group.id else { return }
+        showLoadingIndicator(true)
+    }
+    
+    func messengerDidFetchMessages(group: Group) {
+        guard group.id == self.group.id else { return }
+        showLoadingIndicator(false)
+    }
+    
     func messengerDidLoadMessages(_ messages: [InstantMessage], group: Group) {
         guard group.id == self.group.id else { return }
         self.messages = messages

@@ -372,8 +372,10 @@ final class Messenger {
         var request = RecentGetReq()
         request.from = buddy.userId
         request.count = UInt32(messageLoadCount)
+        multicastDelegate.invoke({ $0.messengerDidBeginFetchMessages(buddy: buddy) })
         fetch(request, responseType: RecentGetResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
+                self.multicastDelegate.invoke({ $0.messengerDidFetchMessages(buddy: buddy) })
                 return
             }
             let messages = response.msgList.map({ proto -> InstantMessage in
@@ -386,6 +388,7 @@ final class Messenger {
             self.saveMessages(messages, callback: {
                 self.loadLocalMessages(from: buddy, callback: { (localMessages) in
                     self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(localMessages, buddy: buddy) })
+                    self.multicastDelegate.invoke({ $0.messengerDidFetchMessages(buddy: buddy) })
                 })
             })
         }
@@ -493,8 +496,10 @@ final class Messenger {
         logger.debug("")
         var request = GroupMessageRecentReq()
         request.groupID = group.id
+        multicastDelegate.invoke({ $0.messengerDidBeginFetchMessages(group: group) })
         fetch(request, responseType: GroupMessageRecentResp.self) { (response) in
             guard let response = response, response.resultCode == 0 else {
+                self.multicastDelegate.invoke({ $0.messengerDidFetchMessages(group: group) })
                 return
             }
             let messages = response.msgList.map({ proto -> InstantMessage in
@@ -507,6 +512,7 @@ final class Messenger {
             self.saveMessages(messages, callback: {
                 self.loadLocalMessages(from: group, callback: { (localMessages) in
                     self.multicastDelegate.invoke({ $0.messengerDidLoadMessages(messages, group: group) })
+                    self.multicastDelegate.invoke({ $0.messengerDidFetchMessages(group: group) })
                 })
             })
         }

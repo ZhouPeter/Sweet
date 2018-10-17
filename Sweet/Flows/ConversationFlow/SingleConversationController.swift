@@ -103,6 +103,16 @@ extension SingleConversationController: MessageInputBarDelegate {
 }
 
 extension SingleConversationController: MessengerDelegate {
+    func messengerDidBeginFetchMessages(buddy: User) {
+        guard buddy.userId == self.buddy.userId else { return }
+        showLoadingIndicator(true)
+    }
+    
+    func messengerDidFetchMessages(buddy: User) {
+        guard buddy.userId == self.buddy.userId else { return }
+        showLoadingIndicator(false)
+    }
+    
     func messengerDidLoadMessages(_ messages: [InstantMessage], buddy: User) {
         guard buddy.userId == self.buddy.userId else { return }
         self.messages = messages
