@@ -40,7 +40,6 @@ class StoriesPlayerGroupViewController: UIViewController, StoriesGroupView {
     
     func pause() {
         currentPlayController?.pause()
-        
     }
     
     func play() {
