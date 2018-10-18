@@ -376,7 +376,7 @@ class SweetPlayerLayerView: UIView {
                 }
             })
             
-            keepUpToken = item.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: { (_, _) in
+            fullToken = item.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: { (_, _) in
                 if item.isPlaybackBufferFull {
                     if self.state != .bufferFinished && self.hasReadyToPlay {
                         self.state = .bufferFinished

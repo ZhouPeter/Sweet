@@ -980,6 +980,7 @@ extension StoriesPlayerViewController {
                 }
             case .failed:
                 if let error = playerItem?.error, (error as NSError).code == -11800 {
+                    //目前发现iOS11有问题需要重新reload 12不存在
                     reloadPlayer()
                 }
                 logger.debug(playerItem?.error ?? "")
