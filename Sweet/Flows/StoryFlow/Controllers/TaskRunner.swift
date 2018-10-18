@@ -47,7 +47,7 @@ extension TaskRunner {
     func runUnfinishedStoryTasks(in storage: Storage) {
         var drafts = [StoryDraft]()
         storage.read({ (realm) in
-            drafts.append(contentsOf: realm.objects(StoryDraftData.self).flatMap(StoryDraft.init(data:)))
+            drafts.append(contentsOf: realm.objects(StoryDraftData.self).compactMap(StoryDraft.init(data:)))
         }) {
             drafts.forEach({ (draft) in
                 self.run(StoryPublishTask(storage: storage, draft: draft))
