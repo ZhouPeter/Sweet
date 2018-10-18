@@ -30,6 +30,8 @@ struct UserResponse: Codable {
     let common: Int
     let activityNum: UInt64
     let storyNum: UInt64
+    let likeNum: UInt64
+    let visitNum: UInt64
     let rank: UInt64
     var zodiac: String?
 }

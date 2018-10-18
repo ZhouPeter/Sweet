@@ -13,6 +13,7 @@ protocol StoriesPlayerScrollViewDelegate: NSObjectProtocol {
     func playScrollView(scrollView: StoriesPlayerScrollView, currentPlayerIndex: Int)
     func playToBack()
     func playToNext()
+    func imageLoadFinish()
 }
 
 class StoriesPlayerScrollView: UIScrollView {
@@ -113,10 +114,18 @@ extension StoriesPlayerScrollView {
     private func prepare(imageView: UIImageView, withStory: StoryCellViewModel?) {
         if let story = withStory {
             if let videoURL = story.videoURL {
-                imageView.sd_setImage(with: videoURL.videoThumbnail(), placeholderImage: nil, options: [.avoidDecodeImage])
+                let url = videoURL.videoThumbnail()
+                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage]) { (image, error, _, _) in
+                    if image != nil, error == nil, story.type == .poke {
+                        self.playerDelegate?.imageLoadFinish()
+                    }
+                }
             } else if let imageURL = story.imageURL {
                 let url = imageURL.imageView2(size: imageView.bounds.size)
-                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage]) { (_, _, _, _) in
+                imageView.sd_setImage(with: url, placeholderImage: nil, options: [.avoidDecodeImage]) { (image, error, _, _) in
+                    if image != nil, error == nil {
+                        self.playerDelegate?.imageLoadFinish()
+                    }
                     if story.type == .share {
                         self.effectView.alpha = 1
                     } else {

@@ -23,6 +23,7 @@ enum WebAPI {
     case evaluationList(page: Int, userId: UInt64)
     case activityList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case preferenceList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
+    case preferenceTextList(page: Int, userId: UInt64, contentId: String?, preferenceId: UInt64?)
     case searchUniversity(name: String)
     case searchCollege(collegeName: String, universityName: String)
     case upload(type: UploadType)
@@ -81,7 +82,7 @@ enum WebAPI {
     case quitGroup(groupID: UInt64)
     case joinGroup(cardId: String?, contentId: String?, groupId: UInt64, comment: String?)
     case muteGroup(groupID: UInt64, isMuted: Bool)
-    case likeRankList(start: Int?, end: Int?)
+    case likeRankList(userId: UInt64?, start: Int?, end: Int?)
     case startup
     case stealLike(cardId: String, duration: UInt64, success: Bool, toUserId: UInt64)
     case groupUserRanking(groupId: UInt64)
@@ -116,6 +117,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             return "/user/profile/activity/list"
         case .preferenceList:
             return "/user/profile/preference/list"
+        case .preferenceTextList:
+            return "/user/profile/preference/text/list"
         case .searchUniversity:
             return "/network/university/search"
         case .searchCollege:
@@ -262,7 +265,8 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters = ["userId": userId]
         case let .evaluationList(page, userId):
             parameters = ["page": page, "userId": userId]
-        case let .preferenceList(page, userId, contentId, preferenceId):
+        case let .preferenceList(page, userId, contentId, preferenceId),
+             let .preferenceTextList(page, userId, contentId, preferenceId):
             parameters = ["page": page, "userId": userId]
             if let contentId = contentId {
                 parameters["contentId"] = contentId
@@ -416,7 +420,10 @@ extension WebAPI: TargetType, AuthorizedTargetType, SignedTargetType {
             parameters["groupId"] = groupId
         case .muteGroup(let groupID, let isMuted):
             parameters = ["groupId": groupID, "mute": isMuted]
-        case let .likeRankList(start, end):
+        case let .likeRankList(userId, start, end):
+            if let userId = userId {
+                parameters["userId"] = userId
+            }
             if let start = start {
                 parameters["start"] = start
             }

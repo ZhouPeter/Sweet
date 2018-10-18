@@ -106,7 +106,7 @@ DEPENDENCIES:
   - UMCCommon
   - UMCPush
   - UMCSecurityPlugins
-  - VIMediaCache
+  - VIMediaCache (from `https://github.com/vitoziv/VIMediaCache.git`)
   - VolumeBar (~> 3.0.4)
   - WechatOpenSDK
   - Weibo_SDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
@@ -142,7 +142,6 @@ SPEC REPOS:
     - UMCCommon
     - UMCPush
     - UMCSecurityPlugins
-    - VIMediaCache
     - VolumeBar
     - WechatOpenSDK
     - YYText
@@ -157,6 +156,8 @@ EXTERNAL SOURCES:
   SDWebImage:
     :branch: 5.x
     :git: https://github.com/rs/SDWebImage.git
+  VIMediaCache:
+    :git: https://github.com/vitoziv/VIMediaCache.git
   Weibo_SDK:
     :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
@@ -170,6 +171,9 @@ CHECKOUT OPTIONS:
   SDWebImage:
     :commit: 2bb336bc12a5690dd11988c0bc8bef2c7318508d
     :git: https://github.com/rs/SDWebImage.git
+  VIMediaCache:
+    :commit: c0f57ba2b8bc661403032f4213d6169d6190be5d
+    :git: https://github.com/vitoziv/VIMediaCache.git
   Weibo_SDK:
     :commit: f5b138320aefe0ed20b76b8510521432f1a6c9ac
     :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
@@ -212,6 +216,6 @@ SPEC CHECKSUMS:
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 4e56dde4c70e9a77728900c984b0c4122461385f
+PODFILE CHECKSUM: 32c8cde594f7ae32a911ad76434b4c267eace5ad
 
 COCOAPODS: 1.5.3

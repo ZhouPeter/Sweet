@@ -203,8 +203,8 @@ extension ProfileCoordinator: LikeRankListViewDelegate {
     }
 }
 extension ProfileCoordinator: ProfileViewDelegate {
-    func showLikeRankList(title: String) {
-        let controller = LikeRankListController(title: title)
+    func showLikeRankList(title: String, buddyID: UInt64) {
+        let controller = LikeRankListController(title: title, buddyID: buddyID)
         controller.delegate = self
         router.push(controller.toPresent())
     }

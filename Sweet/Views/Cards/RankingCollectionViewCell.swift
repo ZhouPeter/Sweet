@@ -84,10 +84,6 @@ class RankingCollectionViewCell: UICollectionViewCell {
         nameLabel.text = viewModel.nameString
         commentLabel.text = viewModel.commentString
         likeCountLabel.text = "\(viewModel.likeCount)"
-        if let IDString = Defaults[.userID], let userID = UInt64(IDString), userID == viewModel.userId {
-            contentView.backgroundColor = .white
-        } else {
-            contentView.backgroundColor = UIColor(hex: 0xf2f2f2)
-        }
+        contentView.backgroundColor = viewModel.backgroundColor
     }
 }

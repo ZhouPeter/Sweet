@@ -29,7 +29,7 @@ protocol ProfileView: BaseView {
 protocol ProfileViewDelegate: class {
     func showAbout(user: UserResponse, updateRemain: UpdateRemainResponse, setting: UserSetting)
     func showConversation(user: User, buddy: User)
-    func showLikeRankList(title: String)
+    func showLikeRankList(title: String, buddyID: UInt64)
 }
 
 class ProfileController: BaseViewController, ProfileView, NavBarStyleChangeable {
@@ -555,7 +555,7 @@ extension ProfileController: UITableViewDataSource {
                 withIdentifier: "actionsCell",
                 for: indexPath) as? ActionsTableViewCell else { fatalError() }
             if user.userId == userId {
-                cell.update(activityTitle: "动态 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
+                cell.update(activityTitle: "我的喜欢 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
             } else {
                 cell.update(activityTitle: "共同喜欢 \(userResponse!.activityNum)", storyTitle: "小故事 \(userResponse!.storyNum)")
             }
@@ -570,7 +570,7 @@ extension ProfileController: UITableViewDataSource {
 
 extension ProfileController: UserInfoTableViewCellDelegate {
     func showLikeRankList() {
-        delegate?.showLikeRankList(title: userResponse!.universityName + "❤️优秀榜")
+        delegate?.showLikeRankList(title: userResponse!.universityName + "❤️优秀榜", buddyID: userResponse!.userId)
     }
     
     func didPressAvatarImageView(_ imageView: UIImageView, highURL: URL) {

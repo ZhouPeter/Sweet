@@ -129,5 +129,8 @@ extension UserResponse {
         storyNum = UInt64(data.storyNum)
         rank = UInt64(data.rank)
         zodiac = data.zodiac
+        
+        likeNum = 0
+        visitNum = 0
     }
 }

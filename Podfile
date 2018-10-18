@@ -18,7 +18,7 @@ target 'Sweet' do
   pod 'TapticEngine'
   pod 'PKHUD', '~> 5.0'
   pod 'NVActivityIndicatorView'
-  pod 'VIMediaCache'
+  pod 'VIMediaCache', :git => 'https://github.com/vitoziv/VIMediaCache.git'
   pod 'JXPhotoBrowser/Core'
   pod 'libimcloud', :git => 'https://gitee.com/miaobo/iOS.LIBIMCLOUD.git', :branch => 'master'
   pod 'SwiftProtobuf'
@@ -39,14 +39,5 @@ target 'Sweet' do
   target 'Sweet Dev' do
   end
   
-  target 'SweetTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'SweetUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
 
 end

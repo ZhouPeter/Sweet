@@ -144,7 +144,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         view.addGestureRecognizer(tap)
         return view
     }()
-    
+    private lazy var indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
     private lazy var bottomButton: UIButton = {
         let bottomButton = UIButton()
         bottomButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
@@ -200,6 +200,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     override func viewDidLoad() {
         super.viewDidLoad()
         setGesture()
+        view.backgroundColor = .black
         view.clipsToBounds = true
         let frame = CGRect(x: 0,
                            y: UIScreen.safeTopMargin(),
@@ -211,6 +212,9 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
         storiesScrollView.playerDelegate = self
         view.addSubview(pokeView)
         pokeView.frame = CGRect(origin: .zero, size: CGSize(width: 120, height: 120))
+        view.addSubview(indicator)
+        indicator.center(to: view)
+        indicator.constrain(width: 40, height: 40)
         setTopUI()
         setBottmUI()
         
@@ -302,21 +306,28 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
             let subtitle = stories[currentIndex].subtitle
             setStoryInfoAttribute(name: name, timestampString: "", subtitle: subtitle)
             if isSelf {
-                bottomButton.isSelected = false
-                if stories[currentIndex].newReadCount == 0 {
-                    bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
-                    bottomButton.setTitle("", for: .normal)
-                } else {
-                    bottomButton.setImage(nil, for: .normal)
-                    bottomButton.setTitle("+\(stories[currentIndex].newReadCount)", for: .normal)
-                }
+                updateBottomButtomImageAddTitle(isSelected: false)
             } else {
                 bottomButton.isEnabled = !stories[currentIndex].like
-                bottomButton.setImage(#imageLiteral(resourceName: "StoryUnLike"), for: .normal)
             }
         }
     }
     
+    private func updateBottomButtomImageAddTitle(isSelected: Bool) {
+        bottomButton.isSelected = isSelected
+        if isSelected {
+            bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+            bottomButton.setTitle("", for: .normal)
+        } else {
+            if stories[currentIndex].uvNum == 0 {
+                bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
+                bottomButton.setTitle("", for: .normal)
+            } else {
+                bottomButton.setImage(nil, for: .normal)
+                bottomButton.setTitle("\(stories[currentIndex].uvNum)", for: .normal)
+            }
+        }
+    }
     private func setStoryInfoAttribute(name: String, timestampString: String, subtitle: String) {
         let string = "\(name) \(timestampString)" + (subtitle != "" ? "\n\(subtitle)" : "")
         let attributeString = NSMutableAttributedString(string: string)
@@ -334,6 +345,7 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
     }
     
     private func updateForStories() {
+        indicator.startAnimating()
         updateUserData()
         storiesScrollView.updateForStories(stories: stories, currentIndex: currentIndex)
         updatePokeView()
@@ -428,10 +440,10 @@ class StoriesPlayerViewController: UIViewController, StoriesPlayerView {
                 view.insertSubview(playerView, belowSubview: pokeView)
             }
             playerView.isHidden = false
-            view.backgroundColor = .black
             (playerView.layer as! AVPlayerLayer).player = player
-            addVideoObservers()
             addKVOObservers()
+            addVideoObservers()
+       
         }
         player?.seek(to: CMTimeMakeWithSeconds(0.01, 1000), toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
         play()
@@ -548,7 +560,6 @@ extension StoriesPlayerViewController {
     private func showStoryHistory() {
         pause()
         topContentView.isHidden = true
-        bottomButton.isSelected = true
         let storyId = stories[currentIndex].storyId
         uvViewController = StoryUVController(storyId: storyId, user: user)
         uvViewController.runProfileFlow = runProfileFlow
@@ -557,9 +568,7 @@ extension StoriesPlayerViewController {
         uvViewController.view.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: view.bounds.height - 100))
         view.addSubview(uvViewController.view)
         uvViewController.view.tag = 100
-        stories[currentIndex].newReadCount = 0
-        bottomButton.setImage(#imageLiteral(resourceName: "UvClose"), for: .normal)
-        bottomButton.setTitle("", for: .normal)
+        updateBottomButtomImageAddTitle(isSelected: true)
         delegate?.updateStory(story: stories[currentIndex], position: (groupIndex, currentIndex))
 
     }
@@ -943,7 +952,7 @@ extension StoriesPlayerViewController {
     }
     
     private func addKVOObservers() {
-        statusToken = playerItem?.observe(\.status, options: [.new], changeHandler: { [weak self] (_, _) in
+        statusToken = playerItem?.observe(\.status, options: .new, changeHandler: { [weak self] (_, _) in
             self?.playItemStatusChange()
         })
     }
@@ -966,7 +975,14 @@ extension StoriesPlayerViewController {
                 if let value = playerItem?.duration.value, let scale = playerItem?.duration.timescale {
                     let totalSecond = Double(value) / Double(scale)
                     monitoringPlayback(totalSecond: totalSecond)
+                    play()
+                    indicator.stopAnimating()
                 }
+            case .failed:
+                if let error = playerItem?.error, (error as NSError).code == -11800 {
+                    reloadPlayer()
+                }
+                logger.debug(playerItem?.error ?? "")
             default: break
             }
         }
@@ -1004,12 +1020,16 @@ extension StoriesPlayerViewController: StoryUVControllerDelegate {
         uvViewController.view.removeFromSuperview()
         uvViewController.removeFromParentViewController()
         topContentView.isHidden = false
-        bottomButton.isSelected = false
+        updateBottomButtomImageAddTitle(isSelected: false)
         play()
     }
 }
 // MARK: - StoriesPlayerScrollViewDelegate
 extension StoriesPlayerViewController: StoriesPlayerScrollViewDelegate {
+    func imageLoadFinish() {
+        indicator.stopAnimating()
+    }
+    
     func playToBack() {
         delegate?.playToBack()
     }

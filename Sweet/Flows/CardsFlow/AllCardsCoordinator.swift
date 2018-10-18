@@ -64,7 +64,7 @@ extension AllCardsCoordinator: CardsBaseViewDelegate {
     }
     
     func showLikeRankList(title: String) {
-        let controller = LikeRankListController(title: title)
+        let controller = LikeRankListController(title: title, buddyID: user.userId)
         controller.delegate = self
         router.push(controller.toPresent())
     }
